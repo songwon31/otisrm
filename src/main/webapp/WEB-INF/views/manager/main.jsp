@@ -14,17 +14,17 @@
                 		<div id="menu-group-name1">SR 관리</div>	                	
 	                    <a class="nav-link" id="v-pills-requires-tab" data-toggle="pill" href="#v-pills-requires" role="tab" aria-controls="v-pills-requires" aria-selected="false">SR 요청관리</a>
 	                    <a class="nav-link" id="v-pills-reviews-tab" data-toggle="pill" href="#v-pills-reviews" role="tab" aria-controls="v-pills-reviews" aria-selected="false">SR 검토 관리</a>
-	                    <a class="nav-link" id="v-pills-develop-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">SR 개발 관리</a>
-	                    <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">SR 진척 관리</a>
+	                    <a class="nav-link" id="v-pills-develop-tab" data-toggle="pill" href="#v-pills-develop" role="tab" aria-controls="v-pills-develop" aria-selected="false">SR 개발 관리</a>
+	                    <a class="nav-link" id="v-pills-process-tab" data-toggle="pill" href="#v-pills-process" role="tab" aria-controls="v-pills-process" aria-selected="false">SR 진척 관리</a>
                 		<div id="menu-group-name2">게시판</div>	                	
-	                    <a class="nav-link" id="v-pills-require-tab" data-toggle="pill" href="#v-pills-require" role="tab" aria-controls="v-pills-profile" aria-selected="false">공지사항</a>
+	                    <a class="nav-link" id="v-pills-board-tab" data-toggle="pill" href="#v-pills-require" role="tab" aria-controls="v-pills-profile" aria-selected="false">공지사항</a>
 	                    <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">QnA 게시판</a>
 	                </div>
 	            </div>
 	            <div class="menuContent col-9">
 	                <div class="tab-content" id="v-pills-tabContent">
 	                    <div class="menuitem tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
-	                        <h3>메뉴 1 내용</h3>
+	                        <h3>Home</h3>
 	                        <p>이곳에 메뉴 1의 내용을 작성하세요.</p>
 	                    </div>
 	                    <div class="menuitem tab-pane fade" id="v-pills-requires" role="tabpanel" aria-labelledby="v-pills-requires-tab">
@@ -35,16 +35,16 @@
 	                        <h3>검토관리</h3>
 	                        <p>이곳에 메뉴 3의 내용을 작성하세요.</p>
 	                    </div>
-	                    <div class="menuitem tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
-	                        <h3>메뉴 4 내용</h3>
+	                    <div class="menuitem tab-pane fade" id="v-pills-develop" role="tabpanel" aria-labelledby="v-pills-develop-tab">
+	                        <h3>개발관리</h3>
+	                        <p>이곳에 메뉴 3의 내용을 작성하세요.</p>
+	                    </div>
+	                    <div class="menuitem tab-pane fade" id="v-pills-process" role="tabpanel" aria-labelledby="v-pills-process-tab">
+	                        <h3>진척관리</h3>
 	                        <p>이곳에 메뉴 3의 내용을 작성하세요.</p>
 	                    </div>
 	                    <div class="menuitem tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
-	                        <h3>메뉴 5 내용</h3>
-	                        <p>이곳에 메뉴 3의 내용을 작성하세요.</p>
-	                    </div>
-	                    <div class="menuitem tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
-	                        <h3>메뉴 6 내용</h3>
+	                        <h3>공지사항</h3>
 	                        <p>이곳에 메뉴 3의 내용을 작성하세요.</p>
 	                    </div>
 	                    <div class="menuitem tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">

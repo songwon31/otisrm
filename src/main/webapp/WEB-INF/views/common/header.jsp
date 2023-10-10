@@ -30,7 +30,7 @@
    
    <body>
 	  
-   	<nav class="navbar navbar-expand navbar-light bg-white topbar static-top shadow">
+   	<nav class="navbar navbar-expand navbar-light topbar static-top shadow">
 	    <!-- Sidebar Toggle (Topbar) -->
 	    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
 	        <i class="fa fa-bars"></i>
@@ -61,19 +61,19 @@
 	
 	        <!-- Nav Item - Alerts -->
 	        <li class="nav-item dropdown no-arrow mx-1">
-	            <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-	                <i class="fas fa-bell fa-fw"></i>
+	            <a class="nav-link dropdown-toggle" style="color: #f2f3f5;" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	                <i class="fas fa-bell fa-fw" style="color: #fff175;"></i>
 	                <!-- Counter - Alerts -->
 	                <span class="badge badge-danger badge-counter">3+</span>
 	            </a>
 	            <!-- Dropdown - Alerts -->
-	            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
+	            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" style="color: white;" aria-labelledby="alertsDropdown">
 	                <h6 class="dropdown-header">
 	                    Alerts Center
 	                </h6>
 	                <a class="dropdown-item d-flex align-items-center" href="#">
 	                    <div class="mr-3">
-	                        <div class="icon-circle bg-primary">
+	                        <div class="icon-circle bg-success">
 	                            <i class="fas fa-file-alt text-white"></i>
 	                        </div>
 	                    </div>
@@ -110,7 +110,7 @@
 	
 	        <!-- Nav Item - Messages -->
 	        <li class="nav-item dropdown no-arrow mx-1">
-	            <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	            <a class="nav-link dropdown-toggle" style="color: #f2f3f5;" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 	                <i class="fas fa-envelope fa-fw"></i>
 	                <!-- Counter - Messages -->
 	                <span class="badge badge-danger badge-counter">7</span>
@@ -172,7 +172,7 @@
 	
 	        <!-- Nav Item - User Information -->
 	        <li class="nav-item dropdown no-arrow">
-	            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	            <a class="nav-link dropdown-toggle" style="color: #f2f3f5;" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 	                <span class="mr-2 d-none d-lg-inline text-gray-600 small">user</span>
 	            </a>
 	            <!-- Dropdown - User Information -->

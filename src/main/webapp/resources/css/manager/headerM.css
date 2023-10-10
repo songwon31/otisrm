@@ -31,6 +31,7 @@
 nav {
     display: block;
     margin-bottom: 0px;
+    background-color:#012545; 
 }
 body {
     margin: 0;
@@ -40,7 +41,7 @@ body {
     line-height: 1.5;
     color: #858796;
     text-align: left;
-    background-color: #fff;
+    background-color: white;
     margin: 0px;
 }
 *, ::after, ::before {
@@ -48,4 +49,7 @@ body {
 }
 *, ::after, ::before {
     box-sizing: border-box;
+}
+.nav-link{
+	color: #f2f3f5;	
 }
