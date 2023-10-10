@@ -22,7 +22,7 @@
       <script src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.7/dist/loadingoverlay.min.js"></script>
    </head>
    <script src="${pageContext.request.contextPath}/resources/js/mainM.js"></script>
-   <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/manager/headerM.css"/>
+   <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/manager/header.css"/>
    
    
    <!-- 아이콘 사용을 위한 라이브러리 -->

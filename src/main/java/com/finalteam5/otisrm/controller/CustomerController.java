@@ -9,8 +9,8 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/customer")
 public class CustomerController {
 
-	@RequestMapping("/main")
+	@RequestMapping("/home")
 	public String main() {
-		return "customerMain";
+		return "customer/home";
 	}
 }
