@@ -21,8 +21,12 @@
       <!-- loading-overlay를 사용하기 위한 라이브러리 -->
       <script src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.7/dist/loadingoverlay.min.js"></script>
    </head>
- 
+   <script src="${pageContext.request.contextPath}/resources/js/mainM.js"></script>
    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/manager/headerM.css"/>
+   <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/manager/mainM.css"/>
+   
+   
+   <!-- 아이콘 사용을 위한 라이브러리 -->
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
    
    <body>
