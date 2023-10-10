@@ -1,3 +1,6 @@
+*{
+	margin: 0px;
+}
 .topbar {
     height: 4.375rem;
 }
@@ -27,6 +30,7 @@
 }
 nav {
     display: block;
+    margin-bottom: 0px;
 }
 body {
     margin: 0;
@@ -37,6 +41,7 @@ body {
     color: #858796;
     text-align: left;
     background-color: #fff;
+    margin: 0px;
 }
 *, ::after, ::before {
     box-sizing: border-box;

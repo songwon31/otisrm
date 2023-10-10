@@ -23,7 +23,6 @@
    </head>
    <script src="${pageContext.request.contextPath}/resources/js/mainM.js"></script>
    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/manager/headerM.css"/>
-   <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/manager/mainM.css"/>
    
    
    <!-- 아이콘 사용을 위한 라이브러리 -->
@@ -31,7 +30,7 @@
    
    <body>
 	  
-   	<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+   	<nav class="navbar navbar-expand navbar-light bg-white topbar static-top shadow">
 	    <!-- Sidebar Toggle (Topbar) -->
 	    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
 	        <i class="fa fa-bars"></i>

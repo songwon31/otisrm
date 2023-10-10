@@ -1,4 +1,7 @@
 /*Side Menu*/
+*{
+	margin: 0px;
+}
 #sideMenu{
 	margin: 0px;
 	background-color: #012545; 
