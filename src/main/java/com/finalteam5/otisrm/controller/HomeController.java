@@ -13,4 +13,9 @@ public class HomeController {
 		log.info("home 실행");
 		return "home";
 	}
+	
+	@RequestMapping("/header")
+	public String header() {
+		return "common/header";
+	}
 }
