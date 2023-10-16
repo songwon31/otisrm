@@ -5,8 +5,30 @@
 <!-- 폰트 -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap" rel="stylesheet">
-			<div class="card">
+			<link href="https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap" rel="stylesheet">
+			<div class="card mb-3 p-3">
+				<div class="card-body">
+					<div class="row mt-2">
+						<div class="col-md-8">
+							<div class="dropdown">
+								<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-expanded="false">선택</button>
+								<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+									<li><a class="dropdown-item" href="#">선택1</a></li>
+									<li><a class="dropdown-item" href="#">선택2</a></li>
+									<li><a class="dropdown-item" href="#">선택3</a></li>
+								</ul>
+							</div>
+						</div>
+						<div class="col-md-3">
+							<input type="text" class="form-control" placeholder="검색어를 입력하세요.">
+						</div>
+						<div class="col-md-1">
+							<button class="btn btn-secondary btn-block">검색</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="card mt-3">
 			  <div class="card-body">
 			    <h5 class="card-title">SR개발 목록</h5>
 			
