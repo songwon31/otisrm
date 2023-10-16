@@ -6,11 +6,10 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
-@RequestMapping("/developer")
-public class DeveloperController {
+public class DevelopManagementController {
 
-	@RequestMapping("/main")
-	public String main() {
-		return "developer/developerMain";
+	@RequestMapping("/srManagement/developManagement")
+	public String developManagement() {
+		return "/srManagement/developManagement";
 	}
 }
