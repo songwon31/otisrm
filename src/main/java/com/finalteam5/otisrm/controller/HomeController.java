@@ -11,7 +11,7 @@ public class HomeController {
 	@RequestMapping("/")
 	public String home() {
 		log.info("home 실행");
-		return "home";
+		return "login";
 	}
 	
 	
