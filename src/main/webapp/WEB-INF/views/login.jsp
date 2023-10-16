@@ -20,7 +20,7 @@
       
       <!-- loading-overlay를 사용하기 위한 라이브러리 -->
       <script src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.7/dist/loadingoverlay.min.js"></script>
-	  <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/common/login.css"/>
+	  <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/header/login.css"/>
 	</head>
 	
 	<body>

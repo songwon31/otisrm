@@ -13,6 +13,11 @@ public class HomeController {
 		log.info("home 실행");
 		return "login";
 	}
+	@RequestMapping("/alerts")
+	public String alerts() {
+		log.info("home 실행");
+		return "header/alerts";
+	}
 	
 	
 }
