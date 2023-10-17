@@ -36,6 +36,16 @@
 	background-color: rgba(255, 255, 255, 0.6);
 }
 
+/* Font Size */
+.form-control {
+	font-size: 14px;
+}
+
+.btn {
+	font-size: 14px;
+}
+
+/* Table */
 .sr-list thead {
 	background-color: #f2f2f2;
 }
@@ -58,11 +68,8 @@
 	cursor: pointer;
 }
 
-/* Font Size */
-.form-control {
-	font-size: 14px;
-}
-
-.btn {
-	font-size: 14px;
+@media screen and (max-width: 2400px) {
+    .table-container {
+        overflow-x: auto;
+    }
 }
