@@ -10,12 +10,16 @@ public class CommonController {
 
 	@RequestMapping("/")
 	public String home() {
-		log.info("home 실행");
+		return "redirect:/login";
+	}
+	
+	@RequestMapping("/login")
+	public String login() {
 		return "login";
 	}
+	
 	@RequestMapping("/alerts")
 	public String alerts() {
-		log.info("home 실행");
 		return "header/alerts";
 	}
 	
