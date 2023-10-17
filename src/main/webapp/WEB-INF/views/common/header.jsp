@@ -151,7 +151,7 @@
 		
 		    </ul>
 		</nav>	
-    	<div id="background" class="flex-grow-1 container-fluid">
+    	<div id="background" class="flex-grow-1 container-fluid px-3 py-2">
             <div class="m-2 row h-100">
                <div id="side-menu" class="col-md-2 p-3">
                   <div class="h-100 d-flex flex-column">
@@ -165,9 +165,9 @@
                </div>
             </div>
 
-            <div class="col-md-10 p-3">
+            <div class="col-md-10 pl-3 pr-0">
                   <div class=" h-100 d-flex flex-column">
-                     <div class="flex-grow-1 overflow-auto pr-3" style="height: 0px">
+                     <div class="flex-grow-1 overflow-auto" style="height: 0px">
 
                
 	  

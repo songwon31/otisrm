@@ -46,19 +46,20 @@
 				    	<input type="password" placeholder="비밀번호를 입력해주세요" name="psw" required>
 					</div>
 			  	</div>
-				<div class="d-flex justify-content-center">
-			   		<button class="btn btn-success" type="submit">Login</button>
-				</div>
-			    <div>			    
+			    <div class="d-flex">			    
 				    <label>
-				      <input type="checkbox" checked="checked" name="remember"> 아이디 저장
+				      <input type="checkbox" checked="checked" name="remember">아이디 저장
 				    </label>
+					<div class="container">
+					  <span class="findIdOrPsw d-felx justify-content-end"><a href="#">아이디/비밀번호 찾기</a></span>
+					</div>
 			    </div>
+				<div class="button-container">
+			   		<button class="btn btn-success" type="submit">로그인</button>
+			   		<button class="btn btn-outline-success" href="${pageContext.request.contextPath}/common/join">회원가입</button>
+				</div>
 			  </div>
 			
-			  <div class="container" style="background-color:#f1f1f1">
-			    <span class="findIdOrPsw d-felx justify-content-end"><a href="#">아이디/비밀번호 찾기</a></span>
-			  </div>
 			</form>
 		</div>
 	</body>

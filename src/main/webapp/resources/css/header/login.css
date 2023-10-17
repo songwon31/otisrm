@@ -10,7 +10,15 @@ body {
 }
 
 label{
-	padding-top: 20px;
+	font-size: 13px;
+}
+label input[type="checkbox"] {
+  transform: scale(0.8); /* 체크박스 크기를 작게 조절 */
+  display: inline-block;
+}
+#remember-chk{
+	font-size: 10px;
+	margin-left: 40px;
 }
 
 /* width input fields */
@@ -21,6 +29,7 @@ input[type=text], input[type=password] {
   display: inline-block;
   border: 1px solid #ccc;
   box-sizing: border-box;
+  font-size: 15px;
 }
 
 #id{
@@ -32,15 +41,19 @@ button {
   background-color: #04AA6D;
   color: white;
   padding: 14px 20px;
-  margin: 8px 0;
+  margin: 8px 2px;
   border: none;
   cursor: pointer;
-  width: 30%;
-  align-items: cen
+  align-self: center;
+  width: 75%;
 }
 
 button:hover {
   opacity: 0.8;
+}
+
+.button-container{
+  text-align: center; /* 가운데 정렬 */
 }
 
 /* Extra styles for the cancel button */
@@ -50,12 +63,11 @@ button:hover {
   background-color: #f44336;
 }
 .container {
-  padding: 16px;
+  padding: 8px;
 }
 
 span.findIdOrPsw {
-  float: right;
-  padding-top: 16px;
+  font-size: 12px;
 }
 
 /* The Modal (background) */

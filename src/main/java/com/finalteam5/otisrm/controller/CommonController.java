@@ -15,7 +15,7 @@ public class CommonController {
 	
 	@RequestMapping("/login")
 	public String login() {
-		return "login";
+		return "common/login";
 	}
 	
 	@RequestMapping("/alerts")
