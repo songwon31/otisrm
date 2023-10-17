@@ -1,3 +1,8 @@
+/* Font Size */
+.wrapper, .btn {
+	font-size: 14px;
+}
+
 /* Card */
 .card {
 	border: none;
@@ -36,23 +41,41 @@
 	background-color: rgba(255, 255, 255, 0.6);
 }
 
-/* Font Size */
-.form-control {
-	font-size: 14px;
+/* Table */
+.between-date {
+	padding-top: 7px;
+	background-color: #e9ecef;
+}
+
+.sr-search th {
+	width: 100px;
+	padding-top: 7px;
+}
+
+.sr-search td {
+	padding-right: 20px;
+	width: 330px;
 }
 
 .btn {
-	font-size: 14px;
+	padding: 0px 10px;
 }
 
-/* Table */
+.form-control {
+	width: auto;
+}
+
+.sr-search select {
+	width: 150px;
+}
+
 .sr-list thead {
 	background-color: #f2f2f2;
 }
 
 .sr-list thead th {
-	vertical-align: middle;
 	padding: 5px;
+	vertical-align: middle;
 }
 
 .sr-list th, .sr-list tr {
@@ -68,8 +91,14 @@
 	cursor: pointer;
 }
 
-@media screen and (max-width: 2400px) {
-    .table-container {
-        overflow-x: auto;
-    }
+@media screen and (max-width: 1610px) {
+	.table-container {
+		width: 100%;
+	    overflow-x: auto;
+	    white-space: nowrap;
+	}
+	
+	.table {
+		width: auto;
+	}
 }

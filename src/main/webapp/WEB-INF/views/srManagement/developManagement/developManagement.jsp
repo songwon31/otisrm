@@ -5,27 +5,62 @@
 <!-- 폰트 -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-			<link href="https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap" rel="stylesheet">
-			<div class="card mb-3 p-3 container-fluid">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap" rel="stylesheet">
+
+		<div class="wrapper">
+			<div class="card mb-3 p-3">
 				<div class="card-body">
-					<div class="row mt-2">
-						<div class="col-md-8">
-							<div class="dropdown">
-								<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-expanded="false">선택</button>
-								<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-									<li><a class="dropdown-item" href="#">선택1</a></li>
-									<li><a class="dropdown-item" href="#">선택2</a></li>
-									<li><a class="dropdown-item" href="#">선택3</a></li>
-								</ul>
-							</div>
-						</div>
-						<div class="col-md-3">
-							<input type="text" class="form-control" placeholder="검색어를 입력하세요.">
-						</div>
-						<div class="col-md-1">
-							<button class="btn btn-secondary btn-block">검색</button>
-						</div>
-					</div>
+					<table class="sr-search">
+						<tbody>
+							<tr class="d-flex mb-3">
+								<th scope="col">조회기간</th>
+								<td class="d-flex mr-5">
+									<input class="form-control form-control-sm mr-2" type="date" id="startDate" name="startDate">
+									<span class="btn btn-sm pt-1 mr-2 between-date">~</span>
+									<input class="form-control form-control-sm" type="date" id="endDate" name="endDate">
+								</td>
+								<th scope="col">관련시스템</th>
+								<td>
+									<select class="form-control form-control-sm" id="selectSystem" name="selectSystem">
+								        <option>시스템1</option>
+								        <option>시스템2</option>
+								        <option>시스템3</option>
+								        <option>시스템4</option>
+								    </select>
+								</td>
+								<th scope="col">진행상태</th>
+								<td>
+									<select class="form-control form-control-sm" id="selectProg" name="selectProg">
+								        <option>요청</option>
+								        <option>검토중</option>
+								        <option>접수</option>
+								        <option>개발중</option>
+								        <option>개발완료신청</option>
+								        <option>개발완료</option>
+								    </select>
+								</td>
+							</tr>
+							<tr class="d-flex">
+								<th scope="col">등록자 소속</th>
+								<td class="d-flex mr-5">
+									<input type="text" class="form-control form-control-sm placeholder mr-2">
+									<button class="btn btn-small btn-secondary">찾기</button>
+								</td>
+								<th scope="col">개발 부서</th>
+								<td>
+									<select class="form-control form-control-sm" id="selectDepartment" name="selectDepartment">
+								        <option>개발1팀</option>
+								        <option>개발2팀</option>
+								        <option>개발3팀</option>
+								    </select>
+								</td>
+								<td class="d-flex space-between">
+									<input type="text" class="form-control form-control-sm placeholder mr-2" placeholder="검색어를 입력하세요.">
+									<button class="btn btn-small btn-secondary">검색</button>
+								</td>
+							</tr>						
+						</tbody>
+					</table>
 				</div>
 			</div>
 			<div class="card mt-3">
@@ -89,5 +124,6 @@
 				</div>
 			  </div>
 			</div>
+		</div>
 	</body>
 </html>
