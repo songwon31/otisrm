@@ -3,22 +3,22 @@
 <%@ include file="/WEB-INF/views/common/header.jsp"%>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/systemManagement/userManagement.css" />
 
-<div class="border border-1 p-3" style="background-color:white; border-radius:15px;">
+<div class="border border-1 px-5 py-4" style="background-color:white; border-radius:15px;">
 	<form method="get">
 		<div class="p-0 container-fluid d-inline-flex flex-row">
-			<div style="width:20%;" class="d-inline-flex flex-row align-items-center border border-1">
+			<div style="width:20%;" class="d-inline-flex flex-row align-items-center">
 				<div style="width:100%;" class="p-0 d-inline-flex flex-row align-items-center ">
 					<div style="width:30%; display:flex; align-items:center;">
 						<svg style="width:4px; height:4px; margin: 0px 5px;"><rect width="4px" height="4px" fill="#222E3C" /></svg>
 						<span class="font-weight-bold" style="font-size:14px;">권한</span>
 					</div>
 					<div style="width:70%;">
-						<input type="text" name="userName" style="width:100%;"/>
+						<input type="text" name="userName" style="width:100%; font-size:14px; border-color:#ADB5BD; outline:none;" class="px-2 py-1 border border-1 rounded"/>
 					</div>
 				</div>
 			</div>
-			<div class="border border-1" style="width:10%;"></div>
-			<div style="width:20%;" class="d-inline-flex flex-row align-items-center border border-1">
+			<div style="width:7%;"></div>
+			<div style="width:20%;" class="d-inline-flex flex-row align-items-center">
 				<div style="width:100%;" class="p-0 d-inline-flex flex-row align-items-center">
 					<div style="width:30%; display:flex; align-items:center;">
 						<svg style="width:4px; height:4px; margin: 0px 5px;"><rect width="4px" height="4px" fill="#222E3C" /></svg>
@@ -29,14 +29,14 @@
 					</div>
 				</div>
 			</div>
-			<div class="border border-1" style="width:10%;"></div>
-			<div style="width:35%;" class="d-inline-flex flex-row align-items-center border border-1 border-danger">
+			<div style="width:7%;"></div>
+			<div style="width:35%;" class="d-inline-flex flex-row align-items-center">
 				<div style="width:100%;" class="p-0 d-inline-flex flex-row align-items-center">
 					<div style="width:30%; display:flex; align-items:center;">
 						<svg style="width:4px; height:4px; margin: 0px 5px;"><rect width="4px" height="4px" fill="#222E3C" /></svg>
 						<span class="font-weight-bold" style="font-size:14px;">키워드</span>
 					</div>
-					<div class="border border-1 border-primary" style="width:70%; display:flex; align-items:center;">
+					<div style="width:70%; display:flex; align-items:center;">
 						<div style="width:30%; font-size:14px;">
 							<label style="display:none;" for="keywordCategory"></label> 
 							<select id="keywordCategoty" name="keywordCategoty" style="width:100%">
@@ -45,17 +45,18 @@
 								<option value="userEmail">이메일</option>
 							</select>
 						</div>
+						<div style="width:2%"></div>
 						<div class="p-0 m-0" style="width:70%">
 							<label style="display:none;" for="keywordContent"></label>
-							<input type="text" id="keywordContent" name="keywordContent" style="width:100%;"/>
+							<input type="text" id="keywordContent" name="keywordContent" style="width:98%;"/>
 						</div>
 					</div>
 				</div>
 			</div>
-			<div class="border border-1" style="width:5%;"></div>
+			<div style="width:11%;"></div>
 		</div>
-		<div class="p-0 container-fluid d-inline-flex flex-row">
-			<div style="width:20%;" class="d-inline-flex flex-row align-items-center border border-1">
+		<div class="p-0 container-fluid d-inline-flex flex-row mt-3">
+			<div style="width:20%;" class="d-inline-flex flex-row align-items-center">
 				<div style="width:100%;" class="p-0 d-inline-flex flex-row align-items-center ">
 					<div style="width:30%; display:flex; align-items:center;">
 						<svg style="width:4px; height:4px; margin: 0px 5px;"><rect width="4px" height="4px" fill="#222E3C" /></svg>
@@ -66,8 +67,8 @@
 					</div>
 				</div>
 			</div>
-			<div class="border border-1" style="width:10%;"></div>
-			<div style="width:20%;" class="d-inline-flex flex-row align-items-center border border-1">
+			<div style="width:7%;"></div>
+			<div style="width:20%;" class="d-inline-flex flex-row align-items-center">
 				<div style="width:100%;" class="p-0 d-inline-flex flex-row align-items-center">
 					<div style="width:30%; display:flex; align-items:center;">
 						<svg style="width:4px; height:4px; margin: 0px 5px;"><rect width="4px" height="4px" fill="#222E3C" /></svg>
@@ -78,21 +79,23 @@
 					</div>
 				</div>
 			</div>
-			<div class="border border-1" style="width:10%;"></div>
-			<div style="width:35%;" class="d-inline-flex flex-row align-items-center border border-1 border-danger">
+			<div style="width:7%;"></div>
+			<div style="width:35%;" class="d-inline-flex flex-row align-items-center">
 				<div style="width:100%;" class="p-0 d-inline-flex flex-row align-items-center">
 					<div style="width:30%; display:flex; align-items:center;">
 						<svg style="width:4px; height:4px; margin: 0px 5px;"><rect width="4px" height="4px" fill="#222E3C" /></svg>
 						<span class="font-weight-bold" style="font-size:14px;">가입일</span>
 					</div>
-					<div class="border border-1 border-primary" style="width:70%; display:flex; align-items:center;">
-						<input type="date">
-						<span>~</span>
-						<input type="date">
+					<div style="width:70%; display:flex; align-items:center;">
+						<div style="width:100%; dispaly:flex; align-items:center">
+							<input style="width:45%; font-size:14px; border-color:#ADB5BD;" type="date" class="px-2 py-1 rounded">
+							<span style="width:10%; font-size:14px;">~</span>
+							<input style="width:45%; font-size:14px; border-color:#ADB5BD;" type="date" class="px-2 py-1 rounded">
+						</div>
 					</div>
 				</div>
 			</div>
-			<div class="border border-1" style="width:5%;"></div>
+			<div style="width:11%;"></div>
 		</div>
 	</form>
 </div>
