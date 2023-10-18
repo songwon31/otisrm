@@ -37,7 +37,7 @@
    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
    
    <body>
-	<div class="d-flex flex-column vh-100"> 
+	<div id="bodyDiv" class="d-flex flex-column vh-100"> 
 	   	<nav class="navbar navbar-expand navbar-light topbar static-top shadow">
 			<a class="font-sans-serif text-primary" href="#">
 			    <div id="logo-header" class="d-flex">
