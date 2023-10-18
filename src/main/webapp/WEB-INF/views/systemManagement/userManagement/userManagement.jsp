@@ -2,9 +2,11 @@
 
 <%@ include file="/WEB-INF/views/common/header.jsp"%>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/systemManagement/userManagementStyle.css" />
-<div class="border border-1 p-3" style="background-color:#FAFBFD; border-radius:15px;">
-	<div class="font-weight-bold" style="font-size:24px; color:#222E3C;">사용자 관리</div>
-	<div class="border border-1 mt-3 px-4 py-3" style="background-color:white; border-radius:15px;">
+<div id="userManagementDiv" class="border border-1 p-3 d-flex flex-column" style="background-color:#FAFBFD; border-radius:15px;">
+	<div id="userManagementTitleDiv" style="height:5%;">
+		<div class="font-weight-bold" style="font-size:24px; color:#222E3C;">사용자 관리</div>
+	</div>
+	<div id="userManagementSearchDiv" class="border border-1 mt-3 px-4 py-3" style="height:20%; background-color:white; border-radius:15px;">
 		<form id="searchForm" method="get">
 			<div class="p-0 container-fluid d-inline-flex flex-row">
 				<div style="width:20%;" class="d-inline-flex flex-row align-items-center">
@@ -136,124 +138,92 @@
 			</div>
 		</form>
 	</div>
-	<div class="border border-1 mt-3 px-4 py-3" style="background-color:white; border-radius:15px;">
-		<div class="font-weight-bold" style="font-size:20px; color:#222E3C;">사용자 목록</div>
-		<table class="table sr-list mt-2">
-			<thead class="thead-light">
-				<tr>
-					<th scope="col">ㅁ</th>
-					<th scope="col">이름</th>
-					<th scope="col">전화번호</th>
-					<th scope="col">이메일</th>
-					<th scope="col">소속</th>
-					<th scope="col">상태</th>
-					<th scope="col">가입일</th>
-					<th scope="col">상세</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<th scope="row">ㅁ</th>
-					<td class="text-align-left">송원석</td>
-					<td class="text-align-left">010-1234-5678</td>
-					<td>a1@naver.com</td>
-					<td>한국소프트웨어협회</td>
-					<td>승인 대기</td>
-					<td>2023-10-18</td>
-					<td>Y</td>
-				</tr>
-				<tr>
-					<th scope="row">ㅁ</th>
-					<td class="text-align-left">송원석</td>
-					<td class="text-align-left">010-1234-5678</td>
-					<td>a1@naver.com</td>
-					<td>한국소프트웨어협회</td>
-					<td>승인 대기</td>
-					<td>2023-10-18</td>
-					<td>Y</td>
-				</tr>
-				<tr>
-					<th scope="row">ㅁ</th>
-					<td class="text-align-left">송원석</td>
-					<td class="text-align-left">010-1234-5678</td>
-					<td>a1@naver.com</td>
-					<td>한국소프트웨어협회</td>
-					<td>승인 대기</td>
-					<td>2023-10-18</td>
-					<td>Y</td>
-				</tr>
-				<tr>
-					<th scope="row">ㅁ</th>
-					<td class="text-align-left">송원석</td>
-					<td class="text-align-left">010-1234-5678</td>
-					<td>a1@naver.com</td>
-					<td>한국소프트웨어협회</td>
-					<td>승인 대기</td>
-					<td>2023-10-18</td>
-					<td>Y</td>
-				</tr>
-				<tr>
-					<th scope="row">ㅁ</th>
-					<td class="text-align-left">송원석</td>
-					<td class="text-align-left">010-1234-5678</td>
-					<td>a1@naver.com</td>
-					<td>한국소프트웨어협회</td>
-					<td>승인 대기</td>
-					<td>2023-10-18</td>
-					<td>Y</td>
-				</tr>
-				<tr>
-					<th scope="row">ㅁ</th>
-					<td class="text-align-left">송원석</td>
-					<td class="text-align-left">010-1234-5678</td>
-					<td>a1@naver.com</td>
-					<td>한국소프트웨어협회</td>
-					<td>승인 대기</td>
-					<td>2023-10-18</td>
-					<td>Y</td>
-				</tr>
-				<tr>
-					<th scope="row">ㅁ</th>
-					<td class="text-align-left">송원석</td>
-					<td class="text-align-left">010-1234-5678</td>
-					<td>a1@naver.com</td>
-					<td>한국소프트웨어협회</td>
-					<td>승인 대기</td>
-					<td>2023-10-18</td>
-					<td>Y</td>
-				</tr>
-				<tr>
-					<th scope="row">ㅁ</th>
-					<td class="text-align-left">송원석</td>
-					<td class="text-align-left">010-1234-5678</td>
-					<td>a1@naver.com</td>
-					<td>한국소프트웨어협회</td>
-					<td>승인 대기</td>
-					<td>2023-10-18</td>
-					<td>Y</td>
-				</tr>
-				<tr>
-					<th scope="row">ㅁ</th>
-					<td class="text-align-left">송원석</td>
-					<td class="text-align-left">010-1234-5678</td>
-					<td>a1@naver.com</td>
-					<td>한국소프트웨어협회</td>
-					<td>승인 대기</td>
-					<td>2023-10-18</td>
-					<td>Y</td>
-				</tr>
-				<tr>
-					<th scope="row">ㅁ</th>
-					<td class="text-align-left">송원석</td>
-					<td class="text-align-left">010-1234-5678</td>
-					<td>a1@naver.com</td>
-					<td>한국소프트웨어협회</td>
-					<td>승인 대기</td>
-					<td>2023-10-18</td>
-					<td>Y</td>
-				</tr>
-			</tbody>
-		</table>
+	<div id="userManagementBoardDiv" class="d-flex flex-column border border-1 mt-3 px-4 py-3" 
+		style="height:75%; background-color:white; border-radius:15px;">
+		<div style="height:9%">
+			<div class="font-weight-bold" style="font-size:20px; color:#222E3C;">사용자 목록</div>
+		</div>
+		<div style="height:81%;">
+			<table class="table sr-list">
+				<thead class="thead-light">
+					<tr>
+						<th scope="col">ㅁ</th>
+						<th scope="col">이름</th>
+						<th scope="col">전화번호</th>
+						<th scope="col">이메일</th>
+						<th scope="col">소속</th>
+						<th scope="col">상태</th>
+						<th scope="col">가입일</th>
+						<th scope="col">상세</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<th scope="row">ㅁ</th>
+						<td class="text-align-left">송원석</td>
+						<td class="text-align-left">010-1234-5678</td>
+						<td>a1@naver.com</td>
+						<td>한국소프트웨어협회</td>
+						<td>승인 대기</td>
+						<td>2023-10-18</td>
+						<td>Y</td>
+					</tr>
+					<tr>
+						<th scope="row">ㅁ</th>
+						<td class="text-align-left">송원석</td>
+						<td class="text-align-left">010-1234-5678</td>
+						<td>a1@naver.com</td>
+						<td>한국소프트웨어협회</td>
+						<td>승인 대기</td>
+						<td>2023-10-18</td>
+						<td>Y</td>
+					</tr>
+					<tr>
+						<th scope="row">ㅁ</th>
+						<td class="text-align-left">송원석</td>
+						<td class="text-align-left">010-1234-5678</td>
+						<td>a1@naver.com</td>
+						<td>한국소프트웨어협회</td>
+						<td>승인 대기</td>
+						<td>2023-10-18</td>
+						<td>Y</td>
+					</tr>
+					<tr>
+						<th scope="row">ㅁ</th>
+						<td class="text-align-left">송원석</td>
+						<td class="text-align-left">010-1234-5678</td>
+						<td>a1@naver.com</td>
+						<td>한국소프트웨어협회</td>
+						<td>승인 대기</td>
+						<td>2023-10-18</td>
+						<td>Y</td>
+					</tr>
+					<tr>
+						<th scope="row">ㅁ</th>
+						<td class="text-align-left">송원석</td>
+						<td class="text-align-left">010-1234-5678</td>
+						<td>a1@naver.com</td>
+						<td>한국소프트웨어협회</td>
+						<td>승인 대기</td>
+						<td>2023-10-18</td>
+						<td>Y</td>
+					</tr>
+					<tr>
+						<th scope="row">ㅁ</th>
+						<td class="text-align-left">송원석</td>
+						<td class="text-align-left">010-1234-5678</td>
+						<td>a1@naver.com</td>
+						<td>한국소프트웨어협회</td>
+						<td>승인 대기</td>
+						<td>2023-10-18</td>
+						<td>Y</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div style="height:10%;" class="d-flex flex-row justify-content-center align-items-center">
+			페이징
+		</div>
 	</div>
 </div>
 <!-- 
