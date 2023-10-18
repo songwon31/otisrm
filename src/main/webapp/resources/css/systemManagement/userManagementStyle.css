@@ -30,3 +30,23 @@
 #searchForm select:focus {
 	outline: none;
 }
+
+#initBtn {
+	background-color:#868E96; 
+	border-radius:5px;
+}
+
+#initBtn:active {
+	background-color:#666E66; 
+	border-radius:5px;
+}
+
+#searchBtn {
+	background-color:#222E3C; 
+	border-radius:5px;
+}
+
+#searchBtn:active {
+	background-color:#020E1C; 
+	border-radius:5px;
+}
