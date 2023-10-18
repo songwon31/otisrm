@@ -1,15 +1,32 @@
-/* form */
-input:focus {
-	outline:none !important;
-	box-shadow:none !important;
+/*searchForm*/
+#searchForm input {
+	font-size:14px; 
+	padding:7px 8px; 
+	border:1px solid #ADB5BD; 
+	border-radius:3px;
+	font-size: 14px;
 }
 
-textarea:focus {
-	outline: none !important;
-	box-shadow:none !important;
+#searchForm input[type="date"] {
+	font-size:14px; 
+	padding:6px 8px; 
+	border:1px solid #ADB5BD; 
+	border-radius:3px;
+	font-size: 14px;
 }
 
-select:focus {
-	outline: none !important;
-	box-shadow:none !important;
+#searchForm input:focus {
+	outline: none;
+}
+
+#searchForm select {
+	font-size:14px; 
+	padding:5px 8px; 
+	border:1px solid #ADB5BD; 
+	border-radius:3px;
+	font-size: 14px;
+}
+
+#searchForm select:focus {
+	outline: none;
 }
