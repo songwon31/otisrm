@@ -8,7 +8,7 @@
 	</Appenders>
 
 	<Loggers>
-		<Logger name="com.webteam2.poster4j" level="info" additivity="false">
+		<Logger name="com.finalteam5.otisrm" level="info" additivity="false">
 			<AppenderRef ref="Out" />
 		</Logger>
 		<Root level="error">

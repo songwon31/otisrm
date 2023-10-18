@@ -17,6 +17,7 @@
       <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.min.js"></script>
       <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+      <script src="${pageContext.request.contextPath}/resources/javascript/common/login.js"></script>
       
       <!-- loading-overlay를 사용하기 위한 라이브러리 -->
       <script src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.7/dist/loadingoverlay.min.js"></script>
@@ -47,16 +48,16 @@
 					</div>
 			  	</div>
 			    <div class="d-flex">			    
-				    <label>
-				      <input type="checkbox" checked="checked" name="remember">아이디 저장
-				    </label>
-					<div class="container">
+					<div id="find-container" class="find-container">
+					  <label id="saveId">
+					    <input type="checkbox" checked="checked" name="remember">아이디 저장
+					  </label>
 					  <span class="findIdOrPsw d-felx justify-content-end"><a href="#">아이디/비밀번호 찾기</a></span>
 					</div>
 			    </div>
 				<div class="button-container">
-			   		<button class="btn btn-success" type="submit">로그인</button>
-			   		<button class="btn btn-outline-success" href="${pageContext.request.contextPath}/common/join">회원가입</button>
+			   		<button class="btn btn-primary" type="submit">로그인</button>
+			   		<a id="join-btn" class="btn btn-outline-primary" href="${pageContext.request.contextPath}/join/join" target="_blank" onclick="openSmallWindow(event)">회원가입</a>
 				</div>
 			  </div>
 			

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-config.dtd">
+  
+<configuration>
+	<settings>
+      <setting name="mapUnderscoreToCamelCase" value="true"/>
+   </settings>
+	<typeAliases>
+		<typeAlias alias="Inst" type="com.finalteam5.otisrm.dto.user.Inst"/>
+		<typeAlias alias="Ibps" type="com.finalteam5.otisrm.dto.user.Ibps"/>
+		<typeAlias alias="dept" type="com.finalteam5.otisrm.dto.user.Dept"/>
+		<typeAlias alias="UserAuthrt" type="com.finalteam5.otisrm.dto.user.UserAuthrt"/>
+		<typeAlias alias="Role" type="com.finalteam5.otisrm.dto.user.Role"/>
+		<typeAlias alias="User" type="com.finalteam5.otisrm.dto.user.User"/>
+		<typeAlias alias="Pager" type="com.finalteam5.otisrm.dto.Pager"/>
+	</typeAliases>
+</configuration>
+
+
+

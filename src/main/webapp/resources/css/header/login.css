@@ -11,6 +11,7 @@ body {
 
 label{
 	font-size: 13px;
+	padding-top: 5%;
 }
 label input[type="checkbox"] {
   transform: scale(0.8); /* 체크박스 크기를 작게 조절 */
@@ -24,12 +25,18 @@ label input[type="checkbox"] {
 /* width input fields */
 input[type=text], input[type=password] {
   width: 70%;
-  padding: 10px 15px;
+  padding: 10px 0;
   margin: 8px 0;
   display: inline-block;
   border: 1px solid #ccc;
   box-sizing: border-box;
-  font-size: 15px;
+}
+input::placeholder {
+  font-size: 13px; /* 원하는 작은 크기로 조절 */
+  padding-left: 10px;
+}
+#saveId{
+	padding-right: 40%;
 }
 
 #id{
@@ -56,6 +63,9 @@ button:hover {
   text-align: center; /* 가운데 정렬 */
 }
 
+#join-btn{
+	width: 75%;
+}
 /* Extra styles for the cancel button */
 .cancelbtn {
   width: auto;
@@ -64,6 +74,12 @@ button:hover {
 }
 .container {
   padding: 8px;
+}
+
+#find-container{
+	text-align: center;
+	paddingg: 0;
+	width: 100%;
 }
 
 span.findIdOrPsw {
