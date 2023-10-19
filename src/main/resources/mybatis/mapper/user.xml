@@ -16,9 +16,5 @@
     </select>
     
     <!-- 로그인 폼 -->
-	<select id="selectByUsersId" resultType="Login" parameterType="String">
-		select users_id, users_password, users_type, users_name, users_createdDate, users_imgFile, users_opoint
-		from users 
-		where users_id=#{users_id}
-	</select>	
+	
 </mapper>
