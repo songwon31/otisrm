@@ -1,29 +1,32 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/common/menu.css"/>
 
-<div class="menu-group-nm nav-link dropdown-indicator collapsed">
-	<div class="d-flex align-items-center">
-	  	<div class="mr-2">
-	  		<span class="nav-link-icon" class="nav-link-icon mr-2">
-	  			<svg class="svg-inline--fa fa-user fa-w-14"
-	  			 aria-hidden="true" focusable="false" width="20"
-	  			 data-prefix="fas" data-icon="user" role="img" xmlns="http://www.w3.org/2000/svg" 
-	  			 viewBox="0 0 448 512" data-fa-i2svg="">
-	  			 <path fill="currentColor" 
-	  			 d="M224 256c70.7 0 128-57.3 128-128S294.7 0 224 0 96 57.3 96 128s57.3 128 128 128zm89.6 32h-16.7c-22.2 10.2-46.9 
-	  			 16-72.9 16s-50.6-5.8-72.9-16h-16.7C60.2 288 0 348.2 0 422.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 
-	  			 48-48v-41.6c0-74.2-60.2-134.4-134.4-134.4z">
-	  			 </path></svg></span>
-	  	</div>
-	  	<div>My Potal</div>
-  </div>
-</div>
-<ul class="mt-3 ml-3 nav flex-column">
-  <li class="nav-item mb-3">
-     <a href="#">나의 할일</a>
-  </li> 
-</ul>
-
+<c:if test="${loginIng != null}">	        
+	<div class="menu-group-nm nav-link dropdown-indicator collapsed">
+		<div class="d-flex align-items-center">
+		  	<div class="mr-2">
+		  		<span class="nav-link-icon" class="nav-link-icon mr-2">
+		  			<svg class="svg-inline--fa fa-user fa-w-14"
+		  			 aria-hidden="true" focusable="false" width="20"
+		  			 data-prefix="fas" data-icon="user" role="img" xmlns="http://www.w3.org/2000/svg" 
+		  			 viewBox="0 0 448 512" data-fa-i2svg="">
+		  			 <path fill="currentColor" 
+		  			 d="M224 256c70.7 0 128-57.3 128-128S294.7 0 224 0 96 57.3 96 128s57.3 128 128 128zm89.6 32h-16.7c-22.2 10.2-46.9 
+		  			 16-72.9 16s-50.6-5.8-72.9-16h-16.7C60.2 288 0 348.2 0 422.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 
+		  			 48-48v-41.6c0-74.2-60.2-134.4-134.4-134.4z">
+		  			 </path></svg></span>
+		  	</div>
+		  	<div>My Potal</div>
+	  </div>
+	</div>
+	<ul class="mt-3 ml-3 nav flex-column">
+	  <li class="nav-item mb-3">
+	     <a href="#">나의 할일</a>
+	  </li> 
+	</ul>
+</c:if>
 <div class="menu-group-nm nav-link dropdown-indicator collapsed">
   <div class="d-flex align-items-center">
 	  <div>  

@@ -1,9 +1,10 @@
 $(init)
 
 function init() {
-  
+	modifyCheck();
+	checkValidation();
 }
-
+//회원가입 버튼 클릭 시 회원가입 폼 열기
 function openSmallWindow(event) {
     event.preventDefault();
 
@@ -16,4 +17,101 @@ function openSmallWindow(event) {
 
     // 새 창 열기
     window.open(event.target.href, '_blank', features);
+}
+
+function modifyCheck() {
+	var modifyMsg = $("#modifyMsg").val();
+	console.log(modifyMsg);
+	if(modifyMsg!="") {
+		alert(modifyMsg);
+		
+	}
+}
+
+
+
+function blink() {
+	var click = document.getElementById('eye');
+	var usrPswdType = document.getElementById("usrPswd").getAttribute("type");
+		if(click.src.match("eyeb")) {
+			click.src = "/otisrm/resources/images/eye.JPG";
+		} else {
+			click.src = "/otisrm/resources/images/eyeb.JPG";
+		}
+		if(usrPswdType === "password"){
+		    document.getElementById("usrPswd").setAttribute("type", "text");
+		}
+		 else if(pwdType === "text"){
+		    document.getElementById("usrPswd").setAttribute("type", "password");
+		}
+}
+
+function checkValidation() {
+   	var isValidation = true;	
+ 
+   	//모든 에러 메세지를 보여주지 않도록 초기화
+   	var errorMsgs = $(".errorMsg");
+   	console.log(errorMsgs);
+   	errorMsgs.each(function(index, item) {
+   		$(item).addClass("d-none");
+   	});
+   	
+	//모든 밑줄 회색처리
+    $(".form-group").children('div').removeClass("line-red");
+    $(".form-group").children('div').removeClass("line-blue");
+    $(".form-group").children('div').addClass("line-gray");
+    	
+   
+	//usrId 검사
+	var usrId = $("#usrId").val();
+	var usrIdErr1 = $("#usrIdErr1");
+	var usrIdErr2 = $("#usrIdErr2");
+	var usrIdErr3 = $("#usrIdErr3");
+
+	if(usrId ==="") {
+		isValidation = false;
+		uidErr2.addClass("d-none");
+		uidErr3.addClass("d-none");
+		uidErr1.removeClass("d-none");
+	} else {
+		var pattern = /^[a-z]+[a-z0-9]{4,19}$/g;
+    	var result = pattern.test(uid);
+    	if(!result) {
+    		isValidation = false;
+    		uidErr2.removeClass("d-none");
+    		uidErr1.addClass("d-none");
+    		uidErr3.addClass("d-none");
+    	} else {
+    		uidErr2.addClass("d-none");
+    		uidErr1.addClass("d-none");
+    		uidErr3.addClass("d-none");
+    	}
+	}
+		
+	//usrPswd검사
+	var usrPswd = $("#usrPswd").val();
+	var usrPswdErr1 = $("#usrPswdErr1");
+	var usrPswdErr2 = $("#usrPswdErr2");
+	if(pwd ==="") {
+		isValidation = false;
+		pwdErr2.addClass("d-none");
+		pwdErr3.addClass("d-none");
+		pwdErr1.removeClass("d-none");
+	} else {
+		var pattern = /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).{8,20}$/;
+    	var result = pattern.test(usrPswd);
+    	if(!result) {
+    		isValidation = false;
+    		usrPswdErr2.removeClass("d-none");
+    		usrPswdErr1.addClass("d-none");
+    	} else {
+    		usrPswdErr2.addClass("d-none");
+    		usrPswdErr1.addClass("d-none");
+    	}
+    }
+
+	if(!isValidation) {
+		event.preventDefault();
+	
+	}
 }

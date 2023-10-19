@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class Ibps {
-	String ibpsNo;		//직위 번호
-	String instNm;		//기관 번호
-	String ibpsNm;		//직위 이름
+	private String ibpsNo;		//직위 번호
+	private String instNm;		//기관 번호
+	private String ibpsNm;		//직위 이름
 }

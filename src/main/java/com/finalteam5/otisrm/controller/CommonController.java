@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.finalteam5.otisrm.dto.user.Inst;
-import com.finalteam5.otisrm.dto.user.UserAuthrt;
-import com.finalteam5.otisrm.service.user.UserService;
+import com.finalteam5.otisrm.dto.usr.Inst;
+import com.finalteam5.otisrm.dto.usr.UsrAuthrt;
+import com.finalteam5.otisrm.service.usr.UsrService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -18,7 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 public class CommonController {
 	@Autowired
-	private UserService userService;
+	private UsrService userService;
 
 	@RequestMapping("/")
 	public String home() {
@@ -37,7 +37,7 @@ public class CommonController {
 	    model.addAttribute("instOptions", instList);
 	    
 	    //가입 권한 목록 불러오기
-	    List<UserAuthrt> usetAuthrtList = userService.getUserAuthrtList();
+	    List<UsrAuthrt> usetAuthrtList = userService.getUsrAuthrtList();
 	    log.info(usetAuthrtList.toString());
 	    model.addAttribute("usetAuthrtOptions", usetAuthrtList);
 		

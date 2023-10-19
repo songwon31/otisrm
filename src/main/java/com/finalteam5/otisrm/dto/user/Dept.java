@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class Dept {
-	String deptNo;		//부서(팀)번호
-	String instNo;		//소속기관번호
-	String deptNm;		//부서(팀)이름
+	private String deptNo;		//부서(팀)번호
+	private String instNo;		//소속기관번호
+	private String deptNm;		//부서(팀)이름
 }

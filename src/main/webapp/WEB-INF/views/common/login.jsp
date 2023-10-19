@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 	<!-- 렌더링(사용자에게 보여주기 위한 시각화) 요소가 아니고, 브라우저에 제공되는 추가 정보 -->
@@ -25,8 +26,9 @@
 	</head>
 	
 	<body>
-		<div id="id01" class="madal" width="30%">	
-			<form class="modal-content animate" action="action_page.php" method="post">
+		<div id="id01" class="madal" width="30%">
+			<input type="hidden" id="modifyMsg" value="${msg}">	
+			<form id="login" name="login" action="login" onsubmit="checkValidation()" class="modal-content animate" method="post">
 			  <div class="container d-flex justify-content-center">
 				  <div>
 				    <img id="login-logo" src="${pageContext.request.contextPath}/resources/images/logo.png" width="30">
@@ -39,13 +41,35 @@
 			  <div class="container">
 			  	<div class="input-fields">			  					  	
 				    <div class="d-flex justify-content-center">			    
-				    	<label id="id" class="mr-2" for="userID"><b>ID</b></label>
-				    	<input type="text" placeholder="아이디를 입력해주세요" name="uname" required>
+				    	<label id="usrId" class="mr-2" for="usrId"><b>ID</b></label>
+				    	<input id="usrId" value="${login.usrId}" type="text" placeholder="아이디를 입력해주세요" name="usrId">
+				    	<span id="usrIdErr1" class="errorMsg text-danger d-none small" style="margin-left:10px; font-family: dotum,sans-serif; font-size: 12px;">아이디를 입력해주세요.</span>
+						<span id="usrIdErr2" class="errorMsg text-danger d-none small" style="margin-left:10px; font-family: dotum,sans-serif; font-size: 12px;">아이디 형식으로 입력해주세요.</span>
+						<c:if test="${error1 != null}">
+							<span id="usrPswdErr3" class="errorMsg text-danger small" style="margin-left:10px; font-family: dotum,sans-serif;
+	    						  font-size: 12px;">${error1}
+	    				    </span>
+						</c:if>
+						<c:if test="${error2 != null}">
+							<span id="usrIdErr3" class="errorMsg text-danger small" style="margin-left:10px; font-family: dotum,sans-serif;
+	    						  font-size: 12px;">${error2}
+	    				    </span>
+						</c:if>
 				    </div>					
 					<div class="d-flex justify-content-center">				
-				    	<label class="mr-2" for="userPwd"><b>PW</b></label>
-				    	<input type="password" placeholder="비밀번호를 입력해주세요" name="psw" required>
+				    	<label class="mr-2" for="usrPswd"><b>PW</b></label>			    				    	
+				    	<input id="usrPswd" type="password" placeholder="비밀번호를 입력해주세요" name="usrPswd">
+						<span style="position: relative;">
+							<img id="eye" onclick="blink()" src ="${pageContext.request.contextPath}/resources/images/eye.JPG" width="20">
+						</span> 
 					</div>
+			  		<span id="usrPswdErr1" class="errorMsg text-danger d-none small" style="margin-left:10px; font-family: dotum,sans-serif; font-size: 12px;">비밀번호를 입력해주세요.</span>
+					<span id="usrPswdErr2" class="errorMsg text-danger d-none small" style="margin-left:10px; font-family: dotum,sans-serif; font-size: 12px;">비밀번호를 형식에 맞게 입력해주세요.</span>
+    				<c:if test="${error3 != null}">
+						<span id="usrPswdErr3" class="errorMsg text-danger small" style="margin-left:10px; font-family: dotum,sans-serif;
+    						  font-size: 12px;">${error3}
+    				    </span>
+					</c:if>
 			  	</div>
 			    <div class="d-flex">			    
 					<div id="find-container" class="find-container">
@@ -56,7 +80,7 @@
 					</div>
 			    </div>
 				<div class="button-container">
-			   		<button class="btn btn-primary" type="submit">로그인</button>
+			   		<button id="login_btn" class="btn btn-primary" type="submit">로그인</button>
 			   		<a id="join-btn" class="btn btn-outline-primary" href="${pageContext.request.contextPath}/join/join" target="_blank" onclick="openSmallWindow(event)">회원가입</a>
 				</div>
 			  </div>

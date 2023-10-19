@@ -5,17 +5,18 @@
   
 <configuration>
 	<settings>
-      <setting name="mapUnderscoreToCamelCase" value="true"/>
-   </settings>
+   		<setting name="mapUnderscoreToCamelCase" value="true"/>
+	</settings>
 	<typeAliases>
-		<typeAlias alias="Inst" type="com.finalteam5.otisrm.dto.user.Inst"/>
-		<typeAlias alias="Ibps" type="com.finalteam5.otisrm.dto.user.Ibps"/>
-		<typeAlias alias="dept" type="com.finalteam5.otisrm.dto.user.Dept"/>
-		<typeAlias alias="UserAuthrt" type="com.finalteam5.otisrm.dto.user.UserAuthrt"/>
-		<typeAlias alias="Role" type="com.finalteam5.otisrm.dto.user.Role"/>
-		<typeAlias alias="Login" type="com.finalteam5.otisrm.dto.user.Login"/>
-		<typeAlias alias="Usr" type="com.finalteam5.otisrm.dto.user.Usr"/>
+		<typeAlias alias="Inst" type="com.finalteam5.otisrm.dto.usr.Inst"/>
+		<typeAlias alias="Ibps" type="com.finalteam5.otisrm.dto.usr.Ibps"/>
+		<typeAlias alias="dept" type="com.finalteam5.otisrm.dto.usr.Dept"/>
+		<typeAlias alias="UsrAuthrt" type="com.finalteam5.otisrm.dto.usr.UsrAuthrt"/>
+		<typeAlias alias="Role" type="com.finalteam5.otisrm.dto.usr.Role"/>
+		<typeAlias alias="Login" type="com.finalteam5.otisrm.dto.usr.Login"/>
+		<typeAlias alias="Usr" type="com.finalteam5.otisrm.dto.usr.Usr"/>
 		<typeAlias alias="Pager" type="com.finalteam5.otisrm.dto.Pager"/>
+		<typeAlias alias="UsrStts" type="com.finalteam5.otisrm.dto.usr.UsrStts"/>
 	</typeAliases>
 </configuration>
 
