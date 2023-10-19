@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.finalteam5.otisrm.dao.UserDao;
+import com.finalteam5.otisrm.dto.user.Dept;
 import com.finalteam5.otisrm.dto.user.Inst;
+import com.finalteam5.otisrm.dto.user.UserAuthrt;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -18,22 +20,25 @@ public class UserServiceImpl implements UserService{
 	
 	@Override
 	public List<Inst> getInstList() {
-		log.info("실행");
 		List<Inst> list = userDao.selectInstList();
-		if(list == null) {
-			log.info("list is null");
-		} else {
-			log.info(String.valueOf(list.size()));
-			log.info("목록: " + list.toString());
-			
-		}
-		
-
 		for(int i=0; i < list.size(); i++) {
 			if(list.get(i).getOutsrcYn().equals("Y")) {
 				list.get(i).setInstNm(list.get(i).getInstNm() + "(외부)");
 			}
 		}
+		log.info(list.toString());
+		return list;
+	}
+
+	@Override
+	public List<UserAuthrt> getUserAuthrtList() {
+		List<UserAuthrt> list = userDao.selectUserAuthrtList();
+		return list;
+	}
+
+	@Override
+	public List<Dept> getDeptListByInstNo(String instNo) {
+		List<Dept> list = userDao.selectDeptListByInstNo(instNo);
 		return list;
 	}
 	

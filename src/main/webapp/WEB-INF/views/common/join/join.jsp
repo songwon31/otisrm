@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 	<!-- 렌더링(사용자에게 보여주기 위한 시각화) 요소가 아니고, 브라우저에 제공되는 추가 정보 -->
@@ -311,7 +312,7 @@
 										</sc-label>
 										<sc-spacer class="style-scope es-spuser-reg" aria-disabled="false"></sc-spacer>
 									</sc-toolbar>
-									<iframe src="${pageContext.request.contextPath}/joinDetail" style="border-width:1px; border-color:#bcbcbc; border-style:solid;width:98%; height:200px" class="style-scope es-spuser-reg">
+									<iframe src="${pageContext.request.contextPath}/join/joinDetail" style="border-width:1px; border-color:#bcbcbc; border-style:solid;width:98%; height:200px" class="style-scope es-spuser-reg">
 									</iframe>
 									<div class="vspace-5 style-scope es-spuser-reg"></div>
 									<sc-toolbar class="style-scope es-spuser-reg" role="toolbar" aria-disabled="false">
@@ -354,21 +355,19 @@
 				            						</sc-label>
 				            					</th>
 				            					<td colspan="3" class="style-scope es-spuser-reg">
-				            						<div class="field-box style-scope es-spuser-reg">
-				            							<select id="option0" class="option custom-select m-3" name="cart_optionContent" onclick="myOption1()">
-															<option value="none">--소속기관--</option>
-															<c:forEach var="productOption" items="${instOptions}">
-																<option id="${instList.instNo}" value="${instList.instNo}">${instList.instNm}</option>
-															</c:forEach>
-														</select>
-				            							<div class="hspace-2 style-scope es-spuser-reg"></div>
-				            							<sc-label text="* srm 관리자에게  해당 개발부서 가입승인요청 메일이 전송됩니다." style="color:blue;" class="style-scope es-spuser-reg" aria-disabled="false">
-				            								<div class="bullet-container style-scope sc-label">
-				            									<div class="style-scope sc-label"></div>
-				            								</div>
-				            								<span class="style-scope sc-label">* srm 담당자에게 가입승인요청 메일이 전송됩니다.</span>
-				            							</sc-label>
-				            						</div>
+			            							<select id="option-inst" class="option custom-select m-3" name="inst" onclick="myInst()">
+														<option value="none">--소속기관--</option>
+														<c:forEach var="inst" items="${instOptions}">
+															<option id="${inst.instNo}" value="${inst.instNm}">${inst.instNm}</option>
+														</c:forEach>
+													</select>
+			            							<div class="hspace-2 style-scope es-spuser-reg"></div>
+			            							<sc-label text="* srm 관리자에게  해당 개발부서 가입승인요청 메일이 전송됩니다." style="color:blue;" class="style-scope es-spuser-reg" aria-disabled="false">
+			            								<div class="bullet-container style-scope sc-label">
+			            									<div class="style-scope sc-label"></div>
+			            								</div>
+			            								<span class="style-scope sc-label">* srm 담당자에게 가입승인요청 메일이 전송됩니다.</span>
+			            							</sc-label>
 				            					</td>
 				            				</tr>
 										  	<tr class="style-scope es-spuser-reg">
@@ -381,10 +380,10 @@
 										  			</sc-label>
 										  		</th>
 										  		<td colspan="3" class="style-scope es-spuser-reg">		
-				            						<select id="option0" class="option custom-select m-3" name="cart_optionContent" onclick="myOption1()">
+				            						<select id="option0" class="option custom-select m-3" name="userAuthrt" onclick="myOption1()">
 														<option value="none">--권한--</option>
-														<c:forEach var="productOption" items="${options}">
-															<option id="${productOption.productOption_no}" value="${productOption.productOption_type}">${productOption.productOption_type}</option>
+														<c:forEach var="usetAuthrt" items="${usetAuthrtOptions}">
+															<option id="${usetAuthrt.userAuthrtNo}" value="${usetAuthrt.userAuthrtNo}">${usetAuthrt.userAuthrtNm}</option>
 														</c:forEach>
 													</select>
 												</td>
@@ -562,11 +561,40 @@
 				            							</div>
 			            							</sc-text-field>
 			            							<div class="hspace-2 style-scope es-spuser-reg"></div>
-			            							<sc-button class="fa fa-search style-scope es-spuser-reg" style="padding:3px 7px 0px 7px;border:none;" role="button" tabindex="0" aria-disabled="false">
+			            							<sc-button class="fa fa-search style-scope es-spuser-reg" onclick="selectDeptBtn()" style="padding:3px 7px 0px 7px;border:none;" role="button" tabindex="0" aria-disabled="false">
 			            								<div class="button-container style-scope sc-button">
 			            									<div class="style-scope sc-button"></div>
-			            								</div>  </sc-button><sc-label text="* srm 관리자에게  해당 개발부서 가입승인요청 메일이 전송됩니다." style="color:blue;" class="style-scope es-spuser-reg" aria-disabled="false">
-			            						
+			            								</div>  
+			            							</sc-button>
+			            							<!-- 개발부서 모달 창 -->
+													<div class="modal" id="deptModal">
+													  <div class="modal-dialog">
+													    <div class="modal-content">
+													    
+													      <!-- Modal Header -->
+													      <div class="modal-header">
+													        <h4 class="modal-title">개발부서 선택</h4>
+													        <button type="button" class="close" onclick="closeBtn()">&times;</button>
+													      </div>
+													      
+													      <!-- Modal body -->
+													      <div class="modal-body">
+													        <p id="seleceded-inst"></p>
+
+															<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
+															
+															<table id="myTable">
+															  <tr class="header">
+															    <th style="width:60%;">부서코드</th>
+															    <th style="width:40%;">부서이름</th>
+															  </tr>
+															  <!-- 개발부서 리스트 json으로 불러오는 곳 -->
+															</table>
+													      </div>
+													    </div>
+													  </div>
+													</div>
+			            							<sc-label text="* srm 관리자에게  해당 개발부서 가입승인요청 메일이 전송됩니다." style="color:blue;" class="style-scope es-spuser-reg" aria-disabled="false">
 			            								<div class="bullet-container style-scope sc-label">
 			            									<div class="style-scope sc-label"></div>
 			            								</div>
@@ -669,80 +697,38 @@
 				            					</div>
 				            				</td>
 				            			</tr>
-				            			<tr class="style-scope es-spuser-reg"><th class="style-scope es-spuser-reg">
-				            				<sc-label text="첨부파일" class="style-scope es-spuser-reg" aria-disabled="false">
-				            					<div class="bullet-container style-scope sc-label">
-				            						<div class="style-scope sc-label"></div>
-				            					</div>
-				            					<span class="style-scope sc-label">첨부파일</span>
-				            				</sc-label>
-				            			</th>
-				            			<td colspan="3" class="style-scope es-spuser-reg">
-				            				<sc-grid id="gridPanel" class="h-100 style-scope es-spuser-reg" use-selection="false" use-state="false" container="">
-				            					<div class="content-wrapper style-scope sc-grid">
-					            					<div class="content style-scope sc-grid" style="position: absolute; width: 960.74px; height: 100px;">
-					            						<sc-grid-columns class="style-scope es-spuser-reg">
-					            							<sc-data-column data-field="label" header-text="첨부파일종류" width="250" text-align="center" class="style-scope es-spuser-reg">
-					            							</sc-data-column>
-					            							<sc-attachment-column data-field="grp_cd_cnt" header-text="첨부" width="60" text-align="center" shared-group-field="file_grp_cd" editable="true" popup-call-fn="callAttach" class="style-scope es-spuser-reg">
-					            							</sc-attachment-column>
-					            							<sc-attachment-column data-field="grp_cd_sample" header-text="공문다운로드" width="80" text-align="center" shared-group-field="dtl_cd_attr_val" class="style-scope es-spuser-reg">
-					            							</sc-attachment-column>
-					            						</sc-grid-columns>
-					            						<sc-grid-fields class="style-scope es-spuser-reg">
-					            							<sc-grid-field data-field="data" class="style-scope es-spuser-reg"></sc-grid-field>
-					            							<sc-grid-field data-field="file_grp_cd" class="style-scope es-spuser-reg"></sc-grid-field>
-					            						</sc-grid-fields>
-					            						<div class="grid-container style-scope sc-grid" id="sc-grid-1" style="height: 100px;">
-					            							<div style="position: relative; box-sizing: border-box; width: 100%; height: 100%; border-style: none; border-width: 0px; overflow: hidden;">
-					            								<canvas width="959" height="99" style="position: absolute; left: 0px; top: 0px; width: 100%; height: 100%; background: rgb(255, 255, 255); border-style: none; border-width: 0px; transform: translateZ(0px); cursor: auto;">
-					            									Your browser does not support HTML5 Canvas.
-					            								</canvas>
-					            								<div spellcheck="false" style="outline: none; position: absolute; z-index: 2000; box-sizing: border-box; overflow: hidden; border: none; width: 0px; height: 0px; padding: 0px; margin: 0px; box-shadow: none; resize: none;">
-					            									<input style="position: absolute; margin: 0px; padding: 0px 1px 0px 2px; font-style: normal; font-variant: normal; font-weight: normal; line-height: normal; overflow-wrap: normal; overflow: hidden; resize: none; border: none; outline: none; text-align: left; color: rgb(68, 84, 106); left: 0px; top: 0px; width: 100%; height: 100%; cursor: text; -webkit-user-modify: read-write-plaintext-only; white-space: pre-wrap; transform: translateZ(0px); text-transform: none;" readonly="" maxlength="1000000">
-					            								</div>
-					            							</div>
-					            						</div>
-					            						<div class="grid-bottom-status style-scope sc-grid">
-					            							<span class="style-scope sc-grid"></span>
-					            						</div>
+					            		<tr class="style-scope es-spuser-reg">
+					            			<th width="100px" class="style-scope es-spuser-reg">
+					            				<sc-label text="보안문자" class="style-scope es-spuser-reg" aria-disabled="false">
+					            					<div class="bullet-container style-scope sc-label">
+					            						<div class="style-scope sc-label"></div>
 					            					</div>
-				            					</div>
-				            				</sc-grid>
-				            			</td>
+					            					<span class="style-scope sc-label">보안문자</span>
+					            				</sc-label>
+					            			</th>
+					            			<td colspan="3" class="style-scope es-spuser-reg">
+					            				<div style="display:inline-flex; width:100%;vertical-align:middle;" class="style-scope es-spuser-reg">
+												    <img src="https://www.cpsrm.com/sp/oms/common/semesCaptchaImg.do" alt="보안문자" id="semes_captcha" class="style-scope es-spuser-reg">
+												    <div class="hspace-5 style-scope es-spuser-reg"></div>
+												    <sc-text-field class="w-30 style-scope es-spuser-reg" input-clear="true" aria-disabled="false" field="">
+												        <div class="field-container style-scope sc-text-field">
+												            <input id="input" class="style-scope sc-text-field" autocomplete="off">
+												        </div>
+												    </sc-text-field>
+												    <div class="hspace-5 style-scope es-spuser-reg"></div>
+												    <sc-button text="새로고침" class="style-scope es-spuser-reg" role="button" tabindex="0" aria-disabled="false" onclick="refreshCaptcha()">
+												        <div class="button-container style-scope sc-button">
+												            <div class="style-scope sc-button"></div>
+												        </div>
+												        새로고침
+												    </sc-button>
+												</div>
+					            				<p class="style-scope es-spuser-reg">※ 프로그램을 이용한 자동 입력을 방지하기 위한 보안절차입니다</p>
+					            		</td>
 				            		</tr>
-				            		<tr class="style-scope es-spuser-reg">
-				            			<th width="100px" class="style-scope es-spuser-reg">
-				            				<sc-label text="보안문자" class="style-scope es-spuser-reg" aria-disabled="false">
-				            					<div class="bullet-container style-scope sc-label">
-				            						<div class="style-scope sc-label"></div>
-				            					</div>
-				            					<span class="style-scope sc-label">보안문자</span>
-				            				</sc-label>
-				            			</th>
-				            			<td colspan="3" class="style-scope es-spuser-reg">
-				            				<div style="display:inline-flex; width:100%;vertical-align:middle;" class="style-scope es-spuser-reg">
-											    <img src="https://www.cpsrm.com/sp/oms/common/semesCaptchaImg.do" alt="보안문자" id="semes_captcha" class="style-scope es-spuser-reg">
-											    <div class="hspace-5 style-scope es-spuser-reg"></div>
-											    <sc-text-field class="w-30 style-scope es-spuser-reg" input-clear="true" aria-disabled="false" field="">
-											        <div class="field-container style-scope sc-text-field">
-											            <input id="input" class="style-scope sc-text-field" autocomplete="off">
-											        </div>
-											    </sc-text-field>
-											    <div class="hspace-5 style-scope es-spuser-reg"></div>
-											    <sc-button text="새로고침" class="style-scope es-spuser-reg" role="button" tabindex="0" aria-disabled="false" onclick="refreshCaptcha()">
-											        <div class="button-container style-scope sc-button">
-											            <div class="style-scope sc-button"></div>
-											        </div>
-											        새로고침
-											    </sc-button>
-											</div>
-				            				<p class="style-scope es-spuser-reg">※ 프로그램을 이용한 자동 입력을 방지하기 위한 보안절차입니다</p>
-				            		</td>
-			            		</tr>
-			            	</tbody>
-			            </table>
-					</form>
+			            		</tbody>
+			            	</table>
+						</form>
 		           </es-spuser-reg>
 		          </sc-pages>
 		         </em-spuser-reg>

@@ -91,6 +91,49 @@ environmentHandler = function() {
 	},1)
 };
 
+//소속기관 선택
+function myInst(){
+	//선택된 옵션 id
+	var selectedOptionId = $(event.target).find('option:selected').attr('id');
+	//선택된 옵션 내용
+	var selectedOptionNm = $(event.target).val();
+	//선택된 옵션 내용 모달에 표시
+	$("#seleceded-inst").html("소속기관: " + selectedOptionNm);
+	
+	// AJAX를 사용하여 서버에서 개발부서 목록을 가져옴
+    showDept(selectedOptionId);
+}
+
+function showDept(selectedOptionId) {
+    $.ajax({
+        type: "GET", // 또는 "GET", 요청 유형에 따라 선택
+        url: "join/join", // 서버 측 엔드포인트 URL로 변경
+        data: { instNo: selectedOptionId }, // 선택한 소속기관 ID를 서버로 전달
+        success: function (data) {
+            // 서버 응답을 처리하여 개발부서 목록을 업데이트
+            
+        },
+        error: function (error) {
+            console.error("오류 발생:", error);
+        }
+    });
+}
+
+//개발 부서 검색버튼 
+function selectDeptBtn(){
+    var selectedOption = $("#option-inst option:selected").val();
+	if(selectedOption == "none"){
+		 alert("소속기관을 먼저 선택해 주세요.");
+	}else{
+		$("#deptModal").show();
+	}
+}
+
+//개발부서 모달창 닫기 버튼
+function closeBtn(){
+	$("#deptModal").hide();
+}
+
 //보안문자 새로고침 버튼
 function refreshCaptcha() {
     // 보안문자 이미지 엘리먼트 가져오기
