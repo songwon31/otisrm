@@ -26,6 +26,7 @@ public class SystemManagementController {
 	@RequestMapping("/usrManagement")
 	public String usrManagement(Model model, HttpSession session) {
 		UsrManagementPageConfigure usrManagementPageConfigure = usrService.getUsrManagementPageConfigureData();
+		model.addAttribute("usrManagementPageConfigure", usrManagementPageConfigure);
 		
 		return "/systemManagement/usrManagement/usrManagement";
 	}

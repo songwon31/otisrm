@@ -53,6 +53,8 @@ public class UsrServiceImpl implements UsrService{
 		
 		usrManagementPageConfigure.setUsrAuthrtList(usrDao.selectUsrAuthrtList());
 		usrManagementPageConfigure.setUsrSttsList(usrDao.selectUsrSttsList());
+		usrManagementPageConfigure.setInstList(usrDao.selectInstList());
+		usrManagementPageConfigure.setDeptList(usrDao.selectDeptListByInstNo(null));
 		
 		return usrManagementPageConfigure;
 	}
