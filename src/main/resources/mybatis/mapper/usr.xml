@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.finalteam5.otisrm.dao.UserDao">
+<mapper namespace="com.finalteam5.otisrm.dao.UsrDao">
 	<!-- 회원가입 폼 -->
 	<!-- 기관(inst) 목록 불러오기 -->
 	<select id="selectInstList"  resultType="Inst">
 	       select * from inst order by inst_no desc		 
     </select>
 	<!--가입 권한(UserAuthrt) 목록 불러오기 -->
-	<select id="selectUserAuthrtList"  resultType="UserAuthrt">
-	        select * from user_authrt		 
+	<select id="selectUsrAuthrtList"  resultType="UsrAuthrt">
+	        select * from usr_authrt		 
     </select>
 	<!--가입 권한(UserAuthrt) 목록 불러오기 -->
 	<select id="selectDeptListByInstNo" parameterType="String" resultType="Dept">
@@ -16,5 +16,11 @@
     </select>
     
     <!-- 로그인 폼 -->
+    
+    
+    <!-- 사용자 상태(UsrStts) 목록 불러오기 -->
+    <select id="selectUsrSttsList"  resultType="UsrStts">
+	        select * from usr_stts	 
+    </select>
 	
 </mapper>

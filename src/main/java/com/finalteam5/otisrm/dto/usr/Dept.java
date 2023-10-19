@@ -1,4 +1,4 @@
-package com.finalteam5.otisrm.dto.user;
+package com.finalteam5.otisrm.dto.usr;
 
 import lombok.Data;
 

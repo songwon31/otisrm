@@ -5,7 +5,7 @@
  -->
 
 <%@ include file="/WEB-INF/views/common/header.jsp"%>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/systemManagement/userManagementStyle.css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/systemManagement/usrManagementStyle.css" />
 <div id="userManagementDiv" class="border border-1 p-3 d-flex flex-column" style="background-color:#FAFBFD; border-radius:15px;">
 	<div id="userManagementTitleDiv">
 		<div class="font-weight-bold" style="font-size:24px; color:#222E3C;">사용자 관리</div>
