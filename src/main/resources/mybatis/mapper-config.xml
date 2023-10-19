@@ -14,7 +14,7 @@
 		<typeAlias alias="UserAuthrt" type="com.finalteam5.otisrm.dto.user.UserAuthrt"/>
 		<typeAlias alias="Role" type="com.finalteam5.otisrm.dto.user.Role"/>
 		<typeAlias alias="Login" type="com.finalteam5.otisrm.dto.user.Login"/>
-		<typeAlias alias="User" type="com.finalteam5.otisrm.dto.user.User"/>
+		<typeAlias alias="Usr" type="com.finalteam5.otisrm.dto.user.Usr"/>
 		<typeAlias alias="Pager" type="com.finalteam5.otisrm.dto.Pager"/>
 	</typeAliases>
 </configuration>
