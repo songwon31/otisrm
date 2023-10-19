@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.finalteam5.otisrm.dto.user.Login;
 import com.finalteam5.otisrm.dto.usr.Dept;
 import com.finalteam5.otisrm.dto.usr.Ibps;
 import com.finalteam5.otisrm.dto.usr.Inst;
@@ -21,6 +22,7 @@ public interface UsrDao {
 	public List<Role> selectRoleList(String instNo);
 	
 	//로그인
+	public Login selectByUsrId(String usrId);
 	
 	
 	

@@ -12,16 +12,32 @@
     </select>
 	<!--가입 권한(UserAuthrt) 목록 불러오기 -->
 	<select id="selectDeptListByInstNo" parameterType="String" resultType="Dept">
-	       select * from dept 
-	       <if test="instNo != null">
-	       		where inst_no= #{instNo};
-	       </if>
+	       select * from dept where inst_no= #{instNo};		 
     </select>
     
     <!-- 로그인 폼 -->
+	<select id="selectByUsrId" parameterType="String" resultType="Login">
+		select u.usr_no, u.usr_nm, u.usr_authrt_no, u.usr_id, u.usr_pswd, u.usr_stts_no, u.rprs_img, a.usr_authrt_nm
+		from usr u
+		JOIN usr_authrt a ON u.usr_authrt_no = a.usr_authrt_no
+		where usr_Id = #{usrId};		 
+    </select>
+    <!--
+      	로그인 틀린 횟수 업데이트
+	<update id="updateLgnFailCnt" parameterType="String">
+	    UPDATE users
+	    SET lgn_fail_cnt = lgn_fail_cnt + 1
+	    WHERE usr_id = #{usr_id}
+	</update>
+	
+	<update id="resetLgnFailCnt" parameterType="String">
+	    UPDATE users
+	    SET login_failure_count = 0
+	    WHERE usr_id = #{usr_id}
+	</update>
+	 -->
     
-    
-    <!-- 사용자 상태(UsrStts) 목록 불러오기 -->
+    <!-- 작성자: 송원석 /사용자 상태(UsrStts) 목록 불러오기 -->
     <select id="selectUsrSttsList"  resultType="UsrStts">
 	        select * from usr_stts	 
     </select>

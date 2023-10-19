@@ -1,11 +1,14 @@
 package com.finalteam5.otisrm.service.usr;
 
+import java.util.Base64;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.finalteam5.otisrm.dao.UsrDao;
+import com.finalteam5.otisrm.dto.user.Login;
+import com.finalteam5.otisrm.dto.user.Usr;
 import com.finalteam5.otisrm.dto.usr.Dept;
 import com.finalteam5.otisrm.dto.usr.Inst;
 import com.finalteam5.otisrm.dto.usr.UsrAuthrt;
@@ -19,6 +22,7 @@ public class UsrServiceImpl implements UsrService{
 	@Autowired
 	private UsrDao usrDao;
 	
+	//회원가입
 	@Override
 	public List<Inst> getInstList() {
 		List<Inst> list = usrDao.selectInstList();
@@ -43,6 +47,64 @@ public class UsrServiceImpl implements UsrService{
 		return list;
 	}
 	
+	@Override
+	public JoinResult join(Usr usr) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<UsrAuthrt> getUserAuthrtList() {
+		List<UsrAuthrt> list = usrDao.selectUsrAuthrtList();
+		return list;
+	}
+	
+	//로그인
+	@Override
+	public LoginResult login(Login loginUsr) {
+		Login usr = usrDao.selectByUsrId(loginUsr.getUsrId());
+		if(usr.equals(null)) {
+			return LoginResult.FAIL_UID;
+		}
+		/*PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+		if(passwordEncoder!= null) {			
+			if(passwordEncoder.matches(usr.getUsrPswd(), usr.getUsrPswd())) {
+				if(usr.getUsrSttsNo().equals("US_STTS_02")) {
+					return LoginResult.SUCCESS;
+				} else {
+					return LoginResult.FAIL_ENABLED;
+				}
+			} else {
+				return LoginResult.FAIL_PASSWORD;
+			}                                      
+		}else{
+			
+			
+		}*/
+		if(usr.getUsrPswd().equals(loginUsr.getUsrPswd())) {
+			return LoginResult.SUCCESS;
+		}else {
+			return LoginResult.FAIL_PASSWORD;
+		}
+	}
+
+	@Override
+	public Login getUsr(String usrId) {
+		Login usr = usrDao.selectByUsrId(usrId);
+		// 등록한 이미지가 있다면 base64로 인코딩
+		if(usr.getRprsImg() != null) {
+			String base64Img = Base64.getEncoder().encodeToString(usr.getRprsImg());
+			usr.setUsrEcdImg(base64Img);
+		}
+		return usr;
+	}
+
+	@Override
+	public void logout(String uid) {
+		// TODO Auto-generated method stub
+		
+	}
+	
 	/**
 	 * @author 송원석
 	 * 사용자 관리 페이지 구성 데이터를 가져오는 메서드
@@ -58,5 +120,6 @@ public class UsrServiceImpl implements UsrService{
 		
 		return usrManagementPageConfigure;
 	}
+
 	
 }
