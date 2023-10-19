@@ -3,10 +3,10 @@
 <%@ include file="/WEB-INF/views/common/header.jsp"%>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/systemManagement/userManagementStyle.css" />
 <div id="userManagementDiv" class="border border-1 p-3 d-flex flex-column" style="background-color:#FAFBFD; border-radius:15px;">
-	<div id="userManagementTitleDiv" style="height:5%;">
+	<div id="userManagementTitleDiv">
 		<div class="font-weight-bold" style="font-size:24px; color:#222E3C;">사용자 관리</div>
 	</div>
-	<div id="userManagementSearchDiv" class="border border-1 mt-3 px-4 py-3" style="height:20%; background-color:white; border-radius:15px;">
+	<div id="userManagementSearchDiv" class="border border-1 mt-3 px-4 py-3" style="background-color:white; border-radius:15px;">
 		<form id="searchForm" method="get">
 			<div class="p-0 container-fluid d-inline-flex flex-row">
 				<div style="width:20%;" class="d-inline-flex flex-row align-items-center">
@@ -139,11 +139,11 @@
 		</form>
 	</div>
 	<div id="userManagementBoardDiv" class="d-flex flex-column border border-1 mt-3 px-4 py-3" 
-		style="height:75%; background-color:white; border-radius:15px;">
-		<div style="height:9%">
+		style="flex-grow:1; height:75%; background-color:white; border-radius:15px;">
+		<div>
 			<div class="font-weight-bold" style="font-size:20px; color:#222E3C;">사용자 목록</div>
 		</div>
-		<div style="height:81%;">
+		<div class="py-2" style="flex-grow:1; overflow-y:auto;">
 			<table class="table sr-list">
 				<thead class="thead-light">
 					<tr>
