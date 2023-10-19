@@ -7,10 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.finalteam5.otisrm.dao.UsrDao;
-import com.finalteam5.otisrm.dto.user.Login;
-import com.finalteam5.otisrm.dto.user.Usr;
 import com.finalteam5.otisrm.dto.usr.Dept;
 import com.finalteam5.otisrm.dto.usr.Inst;
+import com.finalteam5.otisrm.dto.usr.Login;
+import com.finalteam5.otisrm.dto.usr.Usr;
 import com.finalteam5.otisrm.dto.usr.UsrAuthrt;
 import com.finalteam5.otisrm.dto.usr.UsrManagementPageConfigure;
 

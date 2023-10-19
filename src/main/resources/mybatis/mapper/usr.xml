@@ -20,7 +20,7 @@
 		select u.usr_no, u.usr_nm, u.usr_authrt_no, u.usr_id, u.usr_pswd, u.usr_stts_no, u.rprs_img, a.usr_authrt_nm
 		from usr u
 		JOIN usr_authrt a ON u.usr_authrt_no = a.usr_authrt_no
-		where usr_Id = #{usrId};		 
+		where usr_Id = #{usrId}		 
     </select>
     <!--
       	로그인 틀린 횟수 업데이트
@@ -39,7 +39,7 @@
     
     <!-- 작성자: 송원석 /사용자 상태(UsrStts) 목록 불러오기 -->
     <select id="selectUsrSttsList"  resultType="UsrStts">
-	        select * from usr_stts	 
+	 	select * from usr_stts	 
     </select>
 	
 </mapper>

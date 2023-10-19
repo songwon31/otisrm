@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.finalteam5.otisrm.dto.user.Login;
 import com.finalteam5.otisrm.dto.usr.Inst;
+import com.finalteam5.otisrm.dto.usr.Login;
 import com.finalteam5.otisrm.dto.usr.UsrAuthrt;
 import com.finalteam5.otisrm.service.usr.UsrService;
 import com.finalteam5.otisrm.service.usr.UsrService.LoginResult;
