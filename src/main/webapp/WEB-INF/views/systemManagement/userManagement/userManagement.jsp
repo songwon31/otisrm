@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
+<!-- 
+작성자: 송원석
+ -->
+
 <%@ include file="/WEB-INF/views/common/header.jsp"%>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/systemManagement/userManagementStyle.css" />
 <div id="userManagementDiv" class="border border-1 p-3 d-flex flex-column" style="background-color:#FAFBFD; border-radius:15px;">
@@ -143,8 +147,18 @@
 		<div>
 			<div class="font-weight-bold" style="font-size:20px; color:#222E3C;">사용자 목록</div>
 		</div>
-		<div class="py-2" style="flex-grow:1; overflow-y:auto;">
-			<table class="table sr-list">
+		<div class="d-flex flex-column border border-1" style="flex-grow:1; margin:10px 0px;">
+			<table class="table m-0">
+				<colgroup>
+					<col width="3%"/>
+					<col width="10%"/>
+					<col width="20%"/>
+					<col width="20%"/>
+					<col width="20%"/>
+					<col width="10%"/>
+					<col width="10%"/>
+					<col width="12%"/>
+				</colgroup>
 				<thead class="thead-light">
 					<tr>
 						<th scope="col">ㅁ</th>
@@ -218,129 +232,196 @@
 						<td>2023-10-18</td>
 						<td>Y</td>
 					</tr>
+					<tr>
+						<th scope="row">ㅁ</th>
+						<td class="text-align-left">송원석</td>
+						<td class="text-align-left">010-1234-5678</td>
+						<td>a1@naver.com</td>
+						<td>한국소프트웨어협회</td>
+						<td>승인 대기</td>
+						<td>2023-10-18</td>
+						<td>Y</td>
+					</tr>
+					<tr>
+						<th scope="row">ㅁ</th>
+						<td class="text-align-left">송원석</td>
+						<td class="text-align-left">010-1234-5678</td>
+						<td>a1@naver.com</td>
+						<td>한국소프트웨어협회</td>
+						<td>승인 대기</td>
+						<td>2023-10-18</td>
+						<td>Y</td>
+					</tr>
+					<tr>
+						<th scope="row">ㅁ</th>
+						<td class="text-align-left">송원석</td>
+						<td class="text-align-left">010-1234-5678</td>
+						<td>a1@naver.com</td>
+						<td>한국소프트웨어협회</td>
+						<td>승인 대기</td>
+						<td>2023-10-18</td>
+						<td>Y</td>
+					</tr>
+					<tr>
+						<th scope="row">ㅁ</th>
+						<td class="text-align-left">송원석</td>
+						<td class="text-align-left">010-1234-5678</td>
+						<td>a1@naver.com</td>
+						<td>한국소프트웨어협회</td>
+						<td>승인 대기</td>
+						<td>2023-10-18</td>
+						<td>Y</td>
+					</tr>
 				</tbody>
 			</table>
+			<!-- 
+			<div>
+				<table class="table m-0" style="background-color:#dee2e6;">
+					<colgroup>
+						<col width="3%"/>
+						<col width="10%"/>
+						<col width="20%"/>
+						<col width="20%"/>
+						<col width="20%"/>
+						<col width="10%"/>
+						<col width="10%"/>
+						<col width="12%"/>
+					</colgroup>
+					<thead>
+						<tr>
+							<th scope="col">ㅁ</th>
+							<th scope="col">이름</th>
+							<th scope="col">전화번호</th>
+							<th scope="col">이메일</th>
+							<th scope="col">소속</th>
+							<th scope="col">상태</th>
+							<th scope="col">가입일</th>
+							<th scope="col">상세</th>
+						</tr>
+					</thead>
+				</table>
+			</div>
+			<div style="flex-grow:1; overflow-y:auto;">
+				<table class="table">
+					<colgroup>
+						<col width="3%"/>
+						<col width="10%"/>
+						<col width="20%"/>
+						<col width="20%"/>
+						<col width="20%"/>
+						<col width="10%"/>
+						<col width="10%"/>
+						<col width="12%"/>
+					</colgroup>
+					<tbody>
+						<tr>
+							<th scope="row">ㅁ</th>
+							<td class="text-align-left">송원석</td>
+							<td class="text-align-left">010-1234-5678</td>
+							<td>a1@naver.com</td>
+							<td>한국소프트웨어협회</td>
+							<td>승인 대기</td>
+							<td>2023-10-18</td>
+							<td>Y</td>
+						</tr>
+						<tr>
+							<th scope="row">ㅁ</th>
+							<td class="text-align-left">송원석</td>
+							<td class="text-align-left">010-1234-5678</td>
+							<td>a1@naver.com</td>
+							<td>한국소프트웨어협회</td>
+							<td>승인 대기</td>
+							<td>2023-10-18</td>
+							<td>Y</td>
+						</tr>
+						<tr>
+							<th scope="row">ㅁ</th>
+							<td class="text-align-left">송원석</td>
+							<td class="text-align-left">010-1234-5678</td>
+							<td>a1@naver.com</td>
+							<td>한국소프트웨어협회</td>
+							<td>승인 대기</td>
+							<td>2023-10-18</td>
+							<td>Y</td>
+						</tr>
+						<tr>
+							<th scope="row">ㅁ</th>
+							<td class="text-align-left">송원석</td>
+							<td class="text-align-left">010-1234-5678</td>
+							<td>a1@naver.com</td>
+							<td>한국소프트웨어협회</td>
+							<td>승인 대기</td>
+							<td>2023-10-18</td>
+							<td>Y</td>
+						</tr>
+						<tr>
+							<th scope="row">ㅁ</th>
+							<td class="text-align-left">송원석</td>
+							<td class="text-align-left">010-1234-5678</td>
+							<td>a1@naver.com</td>
+							<td>한국소프트웨어협회</td>
+							<td>승인 대기</td>
+							<td>2023-10-18</td>
+							<td>Y</td>
+						</tr>
+						<tr>
+							<th scope="row">ㅁ</th>
+							<td class="text-align-left">송원석</td>
+							<td class="text-align-left">010-1234-5678</td>
+							<td>a1@naver.com</td>
+							<td>한국소프트웨어협회</td>
+							<td>승인 대기</td>
+							<td>2023-10-18</td>
+							<td>Y</td>
+						</tr>
+						<tr>
+							<th scope="row">ㅁ</th>
+							<td class="text-align-left">송원석</td>
+							<td class="text-align-left">010-1234-5678</td>
+							<td>a1@naver.com</td>
+							<td>한국소프트웨어협회</td>
+							<td>승인 대기</td>
+							<td>2023-10-18</td>
+							<td>Y</td>
+						</tr>
+						<tr>
+							<th scope="row">ㅁ</th>
+							<td class="text-align-left">송원석</td>
+							<td class="text-align-left">010-1234-5678</td>
+							<td>a1@naver.com</td>
+							<td>한국소프트웨어협회</td>
+							<td>승인 대기</td>
+							<td>2023-10-18</td>
+							<td>Y</td>
+						</tr>
+						<tr>
+							<th scope="row">ㅁ</th>
+							<td class="text-align-left">송원석</td>
+							<td class="text-align-left">010-1234-5678</td>
+							<td>a1@naver.com</td>
+							<td>한국소프트웨어협회</td>
+							<td>승인 대기</td>
+							<td>2023-10-18</td>
+							<td>Y</td>
+						</tr>
+						<tr>
+							<th scope="row">ㅁ</th>
+							<td class="text-align-left">송원석</td>
+							<td class="text-align-left">010-1234-5678</td>
+							<td>a1@naver.com</td>
+							<td>한국소프트웨어협회</td>
+							<td>승인 대기</td>
+							<td>2023-10-18</td>
+							<td>Y</td>
+						</tr>
+					</tbody>
+				</table>
+			</div> 
+			-->
 		</div>
 		<div style="height:10%;" class="d-flex flex-row justify-content-center align-items-center">
 			페이징
 		</div>
 	</div>
 </div>
-<!-- 
-<div class="border border-1 p-3" style="background-color:#FAFBFD; border-radius:15px;">
-	<div class="font-weight-bold" style="font-size:24px; color:#222E3C;">사용자 관리</div>
-	<div class="border border-1 my-3 p-3" style="background-color:#FBFCFE;">
-		<form method="get">
-			<div class="mb-2 p-0 container-fluid d-inline-flex flex-row">
-				<div style="width:20%;">
-					<div class="p-0 d-inline-flex flex-row align-items-center ">
-						<div style="width:30%; display:flex; align-items:center;">
-							<svg style="width:4px; height:4px; margin: 0px 5px;"><rect width="4px" height="4px" fill="#222E3C" /></svg>
-							<span class="font-weight-bold" style="font-size:14px;">권한</span>
-						</div>
-						<div style="width:70%;">
-							<input type="text" name="userName" style="width:100%;"/>
-						</div>
-					</div>
-				</div>
-				<div style="width:10%;"></div>
-				<div style="width:20%;">
-					<div class="p-0">
-						<div style="float:left; display:flex; align-items:center;">
-							<svg style="width:4px; height:4px; margin: 0px 5px;"><rect width="4px" height="4px" fill="#222E3C" /></svg>
-							<span class="font-weight-bold" style="font-size:14px;">상태</span>
-						</div>
-						<div style="float:right;">
-							<input type="text" name="userName" style="width:150px;"/>
-						</div>
-					</div>
-				</div>
-				<div style="width:10%;"></div>
-				<div style="width:30%;">
-					<div class="p-0">
-						<div class="row">
-							<div class="col-4 pr-0" style="display:flex; align-items:center;">
-								<div style="float:left; display:flex; align-items:center;">
-									<svg style="width:4px; height:4px; margin: 0px 5px;"><rect width="4px" height="4px" fill="#222E3C" /></svg>
-									<span class="font-weight-bold" style="font-size:14px;">키워드</span>
-								</div>
-							</div>
-							<div class="col-8 p-0 border">
-								<div class="d-inline-flex flex-row">
-									<div class="form-group m-0 p-0" style="font-size:14px;">
-										<label for="keywordCategory"></label> 
-										<select id="keywordCategoty" name="keywordCategoty">
-											<option value="userName" selected>이름</option>
-											<option value="userTelno">전화번호</option>
-											<option value="userEmail">이메일</option>
-										</select>
-									</div>
-									<div class="form-group m-0 px-2">
-										<label for="keywordContent"></label>
-										<input type="text" id="keywordContent" name="keywordContent"/>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="mb-2 p-0 container-fluid d-inline-flex flex-row">
-				<div style="width:25%;">
-					<div class="container-fluid p-0">
-						<div style="float:left; display:flex; align-items:center;">
-							<svg style="width:4px; height:4px; margin: 0px 5px;"><rect width="4px" height="4px" fill="#222E3C" /></svg>
-							<span class="font-weight-bold" style="font-size:14px;">소속</span>
-						</div>
-						<div style="float:right;">
-							<input type="text" name="userName" style="width:150px;"/>
-						</div>
-					</div>
-				</div>
-				<div style="width:8%;"></div>
-				<div style="width:25%;">
-					<div class="container-fluid p-0">
-						<div style="float:left; display:flex; align-items:center;">
-							<svg style="width:4px; height:4px; margin: 0px 5px;"><rect width="4px" height="4px" fill="#222E3C" /></svg>
-							<span class="font-weight-bold" style="font-size:14px;">부서</span>
-						</div>
-						<div style="float:right;">
-							<input type="text" name="userName" style="width:150px;"/>
-						</div>
-					</div>
-				</div>
-				<div style="width:8%;"></div>
-				<div style="width:25%;">
-					<div class="container-fluid p-0">
-						<div class="row">
-							<div class="col-4 pr-0" style="display:flex; align-items:center;">
-								<div style="float:left; display:flex; align-items:center;">
-									<svg style="width:4px; height:4px; margin: 0px 5px;"><rect width="4px" height="4px" fill="#222E3C" /></svg>
-									<span class="font-weight-bold" style="font-size:14px;">키워드</span>
-								</div>
-							</div>
-							<div class="col-8 p-0 border">
-								<div class="d-inline-flex flex-row">
-									<div class="form-group m-0 p-0" style="font-size:14px;">
-										<label for="keywordCategory"></label> 
-										<select id="keywordCategoty" name="keywordCategoty">
-											<option value="userName" selected>이름</option>
-											<option value="userTelno">전화번호</option>
-											<option value="userEmail">이메일</option>
-										</select>
-									</div>
-									<div class="form-group m-0 px-2">
-										<label for="keywordContent"></label>
-										<input type="text" id="keywordContent" name="keywordContent"/>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</form>
-	</div>
-</div> 
--->
 <%@ include file="/WEB-INF/views/common/footer.jsp"%>

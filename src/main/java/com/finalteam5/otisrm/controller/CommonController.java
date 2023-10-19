@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.finalteam5.otisrm.dto.user.Inst;
-import com.finalteam5.otisrm.dto.user.UserAuthrt;
+import com.finalteam5.otisrm.dto.user.UsrAuthrt;
 import com.finalteam5.otisrm.service.user.UserService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -37,7 +37,7 @@ public class CommonController {
 	    model.addAttribute("instOptions", instList);
 	    
 	    //가입 권한 목록 불러오기
-	    List<UserAuthrt> usetAuthrtList = userService.getUserAuthrtList();
+	    List<UsrAuthrt> usetAuthrtList = userService.getUserAuthrtList();
 	    log.info(usetAuthrtList.toString());
 	    model.addAttribute("usetAuthrtOptions", usetAuthrtList);
 		

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import com.finalteam5.otisrm.dao.UserDao;
 import com.finalteam5.otisrm.dto.user.Dept;
 import com.finalteam5.otisrm.dto.user.Inst;
-import com.finalteam5.otisrm.dto.user.UserAuthrt;
+import com.finalteam5.otisrm.dto.user.UsrAuthrt;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -31,8 +31,8 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public List<UserAuthrt> getUserAuthrtList() {
-		List<UserAuthrt> list = userDao.selectUserAuthrtList();
+	public List<UsrAuthrt> getUserAuthrtList() {
+		List<UsrAuthrt> list = userDao.selectUserAuthrtList();
 		return list;
 	}
 
