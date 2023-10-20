@@ -1,3 +1,38 @@
+/* Layout */
+.w-10 {
+	width: 10%;
+}
+
+.w-25 {
+	width: 25%;
+}
+
+.w-30 {
+	width: 30%;
+}
+
+.w-35 {
+	width: 35%;
+}
+
+.w-45 {
+	width: 45%;
+}
+
+.test {
+	display: flex;
+	width: 100%;
+}
+
+.test div {
+	padding: 10px;
+}
+
+.test div:nth-of-type(1) {flex-grow: 2;}
+.test div:nth-of-type(2) {flex-grow: 3;}
+.test div:nth-of-type(3) {flex-grow: 2;}
+.test div:nth-of-type(4) {flex-grow: 1;}
+
 /* Icon */
 .material-symbols-outlined {
   font-variation-settings:
@@ -11,11 +46,44 @@
 	cursor: pointer;
 }
 
+.top-icon {
+	font-size: 22px;
+	vertical-align: middle;
+}
+
+/* Buttons */
+.search-btn {
+	padding: 0px 10px;
+}
+
+.plan-btn {
+	background-color: #001ed2;
+}
+
+.plan-btn:hover {
+	background-color: #222e3c;
+}
+
+.btn-container .btn{
+	margin-top: 5px;
+	padding: 4px 10px;
+}
+
+.btn-container {
+	padding: 0px !important;
+}
+
 /* Modal */
 .modal-header {
 	background-color: #222e3c;
 	color: white;
 	padding: 10px;
+}
+
+.modal-sub-title {
+	color: #007bff;
+	font-size: 16px;
+	font-weight: 700;
 }
 
 .col-form-label {
@@ -42,11 +110,19 @@
 }
 
 .card-title {
-	padding: 20px 0 10px 0;
-	font-size: 18px;
+	margin-top: 12px;
 	font-weight: 700;
 	color: #012970;
 	font-family: 'Noto Sans', sans-serif;
+}
+
+.top-title {
+	font-size: 22px;
+	text-shadow: 1px 1px lightgray;
+}
+
+.list-title {
+	font-size: 18px;
 }
 
 .card-title span {
@@ -90,19 +166,6 @@
 
 .sr-search select {
 	width: 150px;
-}
-
-.btn {
-	padding: 0px 10px;
-}
-
-.btn-container .btn{
-	margin-top: 5px;
-	padding: 4px 10px;
-}
-
-.btn-container {
-	padding: 0px !important;
 }
 
 .form-control {
