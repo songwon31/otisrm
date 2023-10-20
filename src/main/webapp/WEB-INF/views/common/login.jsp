@@ -43,17 +43,17 @@
 				    <div class="d-flex justify-content-center">			    
 				    	<label id="usrId" class="mr-2" for="usrId"><b>ID</b></label>
 				    	<input id="usrId" value="${login.usrId}" type="text" placeholder="아이디를 입력해주세요" name="usrId">
-				    	<span id="usrIdErr1" class="errorMsg text-danger d-none small" style="margin-left:10px; font-family: dotum,sans-serif; font-size: 12px;">아이디를 입력해주세요.</span>
-						<span id="usrIdErr2" class="errorMsg text-danger d-none small" style="margin-left:10px; font-family: dotum,sans-serif; font-size: 12px;">아이디 형식으로 입력해주세요.</span>
+				    	<div id="usrIdErr1" class="errorMsg text-danger d-none small" style="margin-left:10px; font-family: dotum,sans-serif; font-size: 12px;">아이디를 입력해주세요.</div>
+						<div id="usrIdErr2" class="errorMsg text-danger d-none small" style="margin-left:10px; font-family: dotum,sans-serif; font-size: 12px;">아이디 형식으로 입력해주세요.</div>
 						<c:if test="${error1 != null}">
-							<span id="usrPswdErr3" class="errorMsg text-danger small" style="margin-left:10px; font-family: dotum,sans-serif;
+							<div id="usrPswdErr3" class="errorMsg text-danger small" style="margin-left:10px; font-family: dotum,sans-serif;
 	    						  font-size: 12px;">${error1}
-	    				    </span>
+	    				    </div>
 						</c:if>
 						<c:if test="${error2 != null}">
-							<span id="usrIdErr3" class="errorMsg text-danger small" style="margin-left:10px; font-family: dotum,sans-serif;
+							<div id="usrIdErr3" class="errorMsg text-danger small" style="margin-left:10px; font-family: dotum,sans-serif;
 	    						  font-size: 12px;">${error2}
-	    				    </span>
+	    				    </div>
 						</c:if>
 				    </div>					
 					<div class="d-flex justify-content-center">				
@@ -63,12 +63,12 @@
 							<img id="eye" onclick="blink()" src ="${pageContext.request.contextPath}/resources/images/eye.JPG" width="20">
 						</span> 
 					</div>
-			  		<span id="usrPswdErr1" class="errorMsg text-danger d-none small" style="margin-left:10px; font-family: dotum,sans-serif; font-size: 12px;">비밀번호를 입력해주세요.</span>
-					<span id="usrPswdErr2" class="errorMsg text-danger d-none small" style="margin-left:10px; font-family: dotum,sans-serif; font-size: 12px;">비밀번호를 형식에 맞게 입력해주세요.</span>
+			  		<div id="usrPswdErr1" class="errorMsg text-danger d-none small" style="margin-left:10px; font-family: dotum,sans-serif; font-size: 12px;">비밀번호를 입력해주세요.</div>
+					<div id="usrPswdErr2" class="errorMsg text-danger d-none small" style="margin-left:10px; font-family: dotum,sans-serif; font-size: 12px;">비밀번호를 형식에 맞게 입력해주세요.</div>
     				<c:if test="${error3 != null}">
-						<span id="usrPswdErr3" class="errorMsg text-danger small" style="margin-left:10px; font-family: dotum,sans-serif;
+						<div id="usrPswdErr3" class="errorMsg text-danger small" style="margin-left:10px; font-family: dotum,sans-serif;
     						  font-size: 12px;">${error3}
-    				    </span>
+    				    </div>
 					</c:if>
 			  	</div>
 			    <div class="d-flex">			    

@@ -383,7 +383,7 @@
 				            						<select id="option0" class="option custom-select m-3" name="userAuthrt" onclick="myOption1()">
 														<option value="none">--권한--</option>
 														<c:forEach var="usetAuthrt" items="${usetAuthrtOptions}">
-															<option id="${usetAuthrt.userAuthrtNo}" value="${usetAuthrt.userAuthrtNo}">${usetAuthrt.userAuthrtNm}</option>
+															<option id="${usetAuthrt.usrAuthrtNo}" value="${usetAuthrt.usrAuthrtNo}">${usetAuthrt.usrAuthrtNm}</option>
 														</c:forEach>
 													</select>
 												</td>
@@ -442,7 +442,7 @@
 												<td class="style-scope es-spuser-reg">
 													<sc-text-field input-clear="true" class="w-150 style-scope es-spuser-reg" aria-disabled="false" field="">
 														<div class="field-container style-scope sc-text-field">
-															<input id="pwd" type="password" name="userPswd"value="${user.userPswd}" class="style-scope sc-text-field" autocomplete="off">
+															<input id="pwd" type="password" name="userPswd"value="${usr.usrPswd}" class="style-scope sc-text-field" autocomplete="off">
 														</div>
 														<span id="pwdErr1" class="errorMsg text-danger d-none small" style="margin-left:10px; font-family: dotum,sans-serif; font-size: 12px;">비밀번호를 입력해주세요.</span>
 													    <span id="pwdErr2" class="errorMsg text-danger d-none small" style="margin-left:10px; font-family: dotum,sans-serif; font-size: 12px;">영문/숫자/특수문자 조합으로 8~20자 입력해주세요.</span>

@@ -7,7 +7,7 @@
 작성자: 송원석
  -->
 
-<%@ include file="/WEB-INF/views/common/header.jsp"%>
+<%@ include file="/WEB-INF/views/common/header2.jsp"%>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/systemManagement/usrManagementStyle.css" />
 <div id="userManagementDiv" class="border border-1 p-3 d-flex flex-column" style="background-color:#FAFBFD; border-radius:15px;">
 	<div id="userManagementTitleDiv">

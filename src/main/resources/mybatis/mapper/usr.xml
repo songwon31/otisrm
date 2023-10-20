@@ -22,7 +22,7 @@
 	<select id="selectByUsrId" parameterType="String" resultType="Login">
 		select u.usr_no, u.usr_nm, u.usr_authrt_no, u.usr_id, u.usr_pswd, u.usr_stts_no, u.rprs_img, a.usr_authrt_nm
 		from usr u
-		JOIN usr_authrt a ON u.usr_authrt_no = a.usr_authrt_no
+		join usr_authrt a on u.usr_authrt_no = a.usr_authrt_no
 		where usr_Id = #{usrId}		 
     </select>
     <!--

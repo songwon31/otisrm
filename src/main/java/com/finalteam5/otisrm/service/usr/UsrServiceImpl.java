@@ -121,5 +121,4 @@ public class UsrServiceImpl implements UsrService{
 		return usrManagementPageConfigure;
 	}
 
-	
 }

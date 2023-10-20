@@ -64,13 +64,13 @@ public class CommonController {
 			
 			if(session.getAttribute("redirectUrl") == null) {
 				session.removeAttribute("redirectUrl");
-				return "redirect:/";
+				return "/systemManagement/usrManagement/usrManagement";
 			}else {
 				session.removeAttribute("redirectUrl");
 				return "redirect:" + redirectUrl;				
 			}
 		}
-		return "/systemManagement/userManagement/userManagement";
+		return "common/login";
 	}
 	
 	//로그아웃 요청

@@ -1,7 +1,9 @@
 *{
 	margin: 0px;
+	
 }
 /* logo */
+/*로고 글씨체 임포트*/
 @import url('https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap');
 #logo-text{
 	font-family: 'Archivo Black', sans-serif;
@@ -12,7 +14,7 @@
 }
 /* header-bar */
 .topbar {
-    height: 4.375rem;
+    height: 70px;
 }
 .mb-4, .my-4 {
     margin-bottom: 1.5rem!important;

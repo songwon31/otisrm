@@ -28,8 +28,6 @@ function modifyCheck() {
 	}
 }
 
-
-
 function blink() {
 	var click = document.getElementById('eye');
 	var usrPswdType = document.getElementById("usrPswd").getAttribute("type");
@@ -41,12 +39,12 @@ function blink() {
 		if(usrPswdType === "password"){
 		    document.getElementById("usrPswd").setAttribute("type", "text");
 		}
-		 else if(pwdType === "text"){
+		 else if(Type === "text"){
 		    document.getElementById("usrPswd").setAttribute("type", "password");
 		}
 }
 
-function checkValidation() {
+/*function checkValidation() {
    	var isValidation = true;	
  
    	//모든 에러 메세지를 보여주지 않도록 초기화
@@ -56,12 +54,6 @@ function checkValidation() {
    		$(item).addClass("d-none");
    	});
    	
-	//모든 밑줄 회색처리
-    $(".form-group").children('div').removeClass("line-red");
-    $(".form-group").children('div').removeClass("line-blue");
-    $(".form-group").children('div').addClass("line-gray");
-    	
-   
 	//usrId 검사
 	var usrId = $("#usrId").val();
 	var usrIdErr1 = $("#usrIdErr1");
@@ -70,21 +62,21 @@ function checkValidation() {
 
 	if(usrId ==="") {
 		isValidation = false;
-		uidErr2.addClass("d-none");
-		uidErr3.addClass("d-none");
-		uidErr1.removeClass("d-none");
+		usrIdErr2.addClass("d-none");
+		usrIdErr3.addClass("d-none");
+		usrIdErr1.removeClass("d-none");
 	} else {
 		var pattern = /^[a-z]+[a-z0-9]{4,19}$/g;
-    	var result = pattern.test(uid);
+    	var result = pattern.test(usrId);
     	if(!result) {
     		isValidation = false;
-    		uidErr2.removeClass("d-none");
-    		uidErr1.addClass("d-none");
-    		uidErr3.addClass("d-none");
+    		usrIdErr2.removeClass("d-none");
+    		usrIdErr1.addClass("d-none");
+    		usrIdErr3.addClass("d-none");
     	} else {
-    		uidErr2.addClass("d-none");
-    		uidErr1.addClass("d-none");
-    		uidErr3.addClass("d-none");
+    		usrIdErr2.addClass("d-none");
+    		usrIdErr1.addClass("d-none");
+    		usrIdErr3.addClass("d-none");
     	}
 	}
 		
@@ -92,11 +84,11 @@ function checkValidation() {
 	var usrPswd = $("#usrPswd").val();
 	var usrPswdErr1 = $("#usrPswdErr1");
 	var usrPswdErr2 = $("#usrPswdErr2");
-	if(pwd ==="") {
+	if(usrPswd ==="") {
 		isValidation = false;
-		pwdErr2.addClass("d-none");
-		pwdErr3.addClass("d-none");
-		pwdErr1.removeClass("d-none");
+		usrPswdErr2.addClass("d-none");
+		usrPswdErr3.addClass("d-none");
+		usrPswdErr1.removeClass("d-none");
 	} else {
 		var pattern = /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).{8,20}$/;
     	var result = pattern.test(usrPswd);
@@ -115,3 +107,4 @@ function checkValidation() {
 	
 	}
 }
+*/

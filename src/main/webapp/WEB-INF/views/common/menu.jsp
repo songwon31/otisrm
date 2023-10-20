@@ -20,12 +20,12 @@
 		  	</div>
 		  	<div>My Potal</div>
 	  </div>
-	</div>
+	</div>		
 	<ul class="mt-3 ml-3 nav flex-column">
 	  <li class="nav-item mb-3">
 	     <a href="#">나의 할일</a>
 	  </li> 
-	</ul>
+	</ul>	
 </c:if>
 <div class="menu-group-nm nav-link dropdown-indicator collapsed">
   <div class="d-flex align-items-center">
