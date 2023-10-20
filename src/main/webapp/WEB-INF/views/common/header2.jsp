@@ -24,13 +24,6 @@
    </head>
    <script src="${pageContext.request.contextPath}/resources/js/mainM.js"></script>
    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/common/header.css"/>
-   <!-- logo -->
-   <style>
-   	@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap');
-	#logo-text{
-		font-family: 'Archivo Black', sans-serif;
-	}
-   </style>
    
    <!-- 아이콘 사용을 위한 라이브러리 -->
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
@@ -38,15 +31,14 @@
    
    <body>
 	<div id="bodyDiv" class="d-flex flex-column vh-100"> 
-	   	<nav class="navbar navbar-expand navbar-light topbar static-top shadow">
-			<a class="font-sans-serif text-primary" href="#">
-			    <div id="logo-header" class="d-flex">
-			    	<div>			    	
-						<img class="mt-1" src="${pageContext.request.contextPath}/resources/images/srmlogo.png" alt="" width="40">
-			    	</div>			    
-			    	<div id="logo-text" class="text-primary">SRM</div>
-			    </div>
-			</a>
+	   	<nav id="header-bar" class="navbar navbar-expand navbar-light topbar static-top shadow">
+		    <div id="logo-header" class="d-flex">
+		    	<div id="logo-img-box">			    	
+					<img src="${pageContext.request.contextPath}/resources/images/srmlogo.png" alt="" width="40">
+		    	</div>			    
+		    	<div id="logo-text" class="text-primary">SRM</div>
+		    </div>
+	
 		    <!-- Sidebar Toggle (Topbar) -->
 		    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
 		        <i class="fa fa-bars"></i>
@@ -130,7 +122,7 @@
 		            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 		                <img class="img-profile rounded-circle" src="https://themewagon.github.io/stisla-1/assets/img/avatar/avatar-1.png" width="25">
 		                <span id="profile_name" class="mr-2 d-none d-lg-inline text-gray-600 small">송원석</span>
-		                <span id="profile_authority" class="mr-2 d-none d-lg-inline text-gray-600 small">(SR유지보수 )</span>
+		                <span id="profile_authority" class="mr-2 d-none d-lg-inline text-gray-600 small">(SR 유지보수 )</span>
 		            </a>
 		            <!-- Dropdown - User Information -->
 		            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
