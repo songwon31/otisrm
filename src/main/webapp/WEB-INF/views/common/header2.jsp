@@ -31,6 +31,7 @@
 	  <!-- 아이콘 사용을 위한 라이브러리 -->
 	  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 	  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
    </head>
    
    
@@ -105,8 +106,8 @@
 		            <a class="dropdown-toggle p-0" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
 		            	style="font-size: 2rem; display:flex; flex-direction:row; align-items:center;">
 		                <img class="img-profile rounded-circle" src="https://themewagon.github.io/stisla-1/assets/img/avatar/avatar-1.png" style="height:4rem; width:4rem; margin-right:1rem;">
-		                <span id="profile_name" class="d-none d-lg-inline text-gray-600 small" style="margin-right:0.7rem;">송원석</span>
-		                <span id="profile_authority" class="d-none d-lg-inline text-gray-600 small" style="margin-right:0.7rem;">(SR 유지보수)</span>
+		                <span id="profile_name" class="d-none d-lg-inline text-gray-600 small" style="font-size:1.7rem; margin-right:0.7rem;">송원석</span>
+		                <span id="profile_authority" class="d-none d-lg-inline text-gray-600 small" style="font-size:1.7rem; margin-right:0.7rem;">(SR 유지보수)</span>
 		            </a>
 		            <!-- Dropdown - User Information -->
 		            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown"

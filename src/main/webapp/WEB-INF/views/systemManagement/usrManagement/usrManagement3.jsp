@@ -14,9 +14,9 @@
 	</div>
 	
 	<div id="userManagementSearchDiv" class="shadow" 
-		style="height:13rem; margin:1rem 0rem; padding:2rem; background-color:white; border-radius:10px;">
+		style="height:13rem; margin:1rem 0rem; padding:3rem 2rem; background-color:white; border-radius:10px;">
 		<form id="searchForm" method="get" action="usrManagement">
-			<div class="p-0 container-fluid d-inline-flex flex-row" style="height:4rem;">
+			<div class="p-0 container-fluid d-inline-flex flex-row" style="height:3rem;">
 				<div style="width:20%;" class="d-inline-flex flex-row align-items-center">
 					<div style="width:100%;" class="p-0 d-inline-flex flex-row align-items-center ">
 						<div style="width:30%; display:flex; align-items:center;">
@@ -82,7 +82,7 @@
 					</button>
 				</div>
 			</div>
-			<div class="p-0 container-fluid d-inline-flex flex-row" style="margin-top:0.5rem; height:4rem;">
+			<div class="p-0 container-fluid d-inline-flex flex-row" style="margin-top:1.2rem; height:3rem;">
 				<div style="width:20%;" class="d-inline-flex flex-row align-items-center">
 					<div style="width:100%;" class="p-0 d-inline-flex flex-row align-items-center ">
 						<div style="width:30%; display:flex; align-items:center;">
