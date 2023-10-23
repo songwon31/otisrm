@@ -10,13 +10,49 @@
 	<select id="selectUsrAuthrtList"  resultType="UsrAuthrt">
 	        select * from usr_authrt		 
     </select>
-	<!--가입 권한(UserAuthrt) 목록 불러오기 -->
+	<!--기관에 해당하는 개발부서 목록 불러오기 -->
 	<select id="selectDeptListByInstNo" parameterType="String" resultType="Dept">
 	       select * from dept
 	       <if test="instNo != null">
 	       		where inst_no = #{instNo}
 	       </if>
     </select>
+	<!--기관에 해당하는 직위 목록 불러오기 -->
+	<select id="selectIbpsListByInstNo" parameterType="String" resultType="Ibps">
+	       select * from ibps
+	       <if test="instNo != null">
+	       		where inst_no = #{instNo}
+	       </if>
+    </select>
+	<!--기관에 해당하는 역할 목록 불러오기 -->
+	<select id="selectRoleListByInstNo" parameterType="String" resultType="Role">
+	       select * from role
+	       <if test="instNo != null">
+	       		where inst_no = #{instNo}
+	       </if>
+    </select>
+	<!--아이디 중복검사 -->
+	<select id="selectNumOfOverlapUsrId" parameterType="String" resultType="int">
+	       select count(*) from usr where usr_id = #{usrId}
+    </select>
+    <!-- 회원가입 폼 제출  -->
+    <insert id="insertUsr" parameterType="Usr">
+	    <![CDATA[
+	     DECLARE
+	        l_generated_usr_no VARCHAR2(6);
+	     BEGIN
+	     	l_generated_usr_no := 'US' || LPAD(TO_CHAR(FLOOR(DBMS_RANDOM.VALUE(1000, 10000))), 4, '0');
+		    INSERT INTO usr(
+		        USR_NO, USR_ID, USR_PSWD, USR_NM, USR_RRNO, USR_TELNO, USR_EML, INST_NO,
+		        DEPT_NO, IBPS_NO, ROLE_NO, USR_AUTHRT_NO, USR_STTS_NO, LGN_FAIL_CNT,
+		        RPRS_IMG, USR_JOIN_DT, USR_WHDWL_DT
+		    ) values(
+		       l_generated_usr_no, #{usrId}, #{usrPswd}, #{usrNm},#{usrRrno},#{usrTelno},#{usrEml},#{instNo}, 
+		        #{deptNo}, #{ibpsNo}, #{roleNo}, #{usrAuthrtNo},'PENDING', 0, null, sysdate, null
+		    );
+		 END;
+ 		]]>
+	</insert>
     
     <!-- 로그인 폼 -->
 	<select id="selectByUsrId" parameterType="String" resultType="Login">

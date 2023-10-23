@@ -10,7 +10,7 @@ function openSmallWindow(event) {
 
     // 새 창의 크기 및 속성 설정
     var width = 1100;
-    var height = 1300;
+    var height = 1500;
     var left = (window.innerWidth - width) / 2; // 화면 가로 중앙
     var top = (window.innerHeight - height) / 2; // 화면 세로 중앙
     var features = `width=${width},height=${height},left=${left},top=${top}`;
@@ -44,67 +44,3 @@ function blink() {
 		}
 }
 
-/*function checkValidation() {
-   	var isValidation = true;	
- 
-   	//모든 에러 메세지를 보여주지 않도록 초기화
-   	var errorMsgs = $(".errorMsg");
-   	console.log(errorMsgs);
-   	errorMsgs.each(function(index, item) {
-   		$(item).addClass("d-none");
-   	});
-   	
-	//usrId 검사
-	var usrId = $("#usrId").val();
-	var usrIdErr1 = $("#usrIdErr1");
-	var usrIdErr2 = $("#usrIdErr2");
-	var usrIdErr3 = $("#usrIdErr3");
-
-	if(usrId ==="") {
-		isValidation = false;
-		usrIdErr2.addClass("d-none");
-		usrIdErr3.addClass("d-none");
-		usrIdErr1.removeClass("d-none");
-	} else {
-		var pattern = /^[a-z]+[a-z0-9]{4,19}$/g;
-    	var result = pattern.test(usrId);
-    	if(!result) {
-    		isValidation = false;
-    		usrIdErr2.removeClass("d-none");
-    		usrIdErr1.addClass("d-none");
-    		usrIdErr3.addClass("d-none");
-    	} else {
-    		usrIdErr2.addClass("d-none");
-    		usrIdErr1.addClass("d-none");
-    		usrIdErr3.addClass("d-none");
-    	}
-	}
-		
-	//usrPswd검사
-	var usrPswd = $("#usrPswd").val();
-	var usrPswdErr1 = $("#usrPswdErr1");
-	var usrPswdErr2 = $("#usrPswdErr2");
-	if(usrPswd ==="") {
-		isValidation = false;
-		usrPswdErr2.addClass("d-none");
-		usrPswdErr3.addClass("d-none");
-		usrPswdErr1.removeClass("d-none");
-	} else {
-		var pattern = /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).{8,20}$/;
-    	var result = pattern.test(usrPswd);
-    	if(!result) {
-    		isValidation = false;
-    		usrPswdErr2.removeClass("d-none");
-    		usrPswdErr1.addClass("d-none");
-    	} else {
-    		usrPswdErr2.addClass("d-none");
-    		usrPswdErr1.addClass("d-none");
-    	}
-    }
-
-	if(!isValidation) {
-		event.preventDefault();
-	
-	}
-}
-*/

@@ -4,12 +4,16 @@ import java.util.Base64;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.finalteam5.otisrm.dao.UsrDao;
 import com.finalteam5.otisrm.dto.usr.Dept;
+import com.finalteam5.otisrm.dto.usr.Ibps;
 import com.finalteam5.otisrm.dto.usr.Inst;
 import com.finalteam5.otisrm.dto.usr.Login;
+import com.finalteam5.otisrm.dto.usr.Role;
 import com.finalteam5.otisrm.dto.usr.Usr;
 import com.finalteam5.otisrm.dto.usr.UsrAuthrt;
 import com.finalteam5.otisrm.dto.usr.UsrManagementPageConfigure;
@@ -24,6 +28,20 @@ public class UsrServiceImpl implements UsrService{
 	
 	//회원가입
 	@Override
+	public JoinResult join(Usr usr) {
+		int numOfOverLapUsrId = usrDao.selectNumOfOverlapUsrId(usr.getUsrId());
+		if(numOfOverLapUsrId != 0) {
+			return JoinResult.FAIL_DUPLICATED_UID;
+		} else {
+			PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+			usr.setUsrPswd(passwordEncoder.encode(usr.getUsrPswd()));
+			usrDao.insertUsr(usr);		
+			return JoinResult.SUCCESS;
+		}
+	}
+	//회원가입 폼
+	//기관 목록 불러오기
+	@Override
 	public List<Inst> getInstList() {
 		List<Inst> list = usrDao.selectInstList();
 		for(int i=0; i < list.size(); i++) {
@@ -31,39 +49,45 @@ public class UsrServiceImpl implements UsrService{
 				list.get(i).setInstNm(list.get(i).getInstNm() + "(외부)");
 			}
 		}
-		log.info(list.toString());
 		return list;
 	}
-
+	//권한 목록 불러오기
 	@Override
 	public List<UsrAuthrt> getUsrAuthrtList() {
 		List<UsrAuthrt> list = usrDao.selectUsrAuthrtList();
 		return list;
 	}
-
+	//기관에 해당하는 개발 부서 불러오기
 	@Override
 	public List<Dept> getDeptListByInstNo(String instNo) {
 		List<Dept> list = usrDao.selectDeptListByInstNo(instNo);
 		return list;
 	}
-	
+	//기관에 해당하는 직위 목록 불러오기
 	@Override
-	public JoinResult join(Usr usr) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<UsrAuthrt> getUserAuthrtList() {
-		List<UsrAuthrt> list = usrDao.selectUsrAuthrtList();
+	public List<Ibps> getIbpsListByInstNo(String instNo) {
+		List<Ibps> list = usrDao.selectIbpsListByInstNo(instNo);
 		return list;
 	}
+	//기관에 해당하는 역할 목록 불러오기
+	@Override
+	public List<Role> getRoleListByInstNo(String instNo) {
+		List<Role> list = usrDao.selectRoleListByInstNo(instNo);
+		return list;
+	}
+	//아이디 중복검사
+	@Override
+	public int getNumOfOverlapUsrId(String usrId) {
+		int numOfOverlapUsrId = usrDao.selectNumOfOverlapUsrId(usrId);
+		return numOfOverlapUsrId;
+	}
+
 	
 	//로그인
 	@Override
 	public LoginResult login(Login loginUsr) {
-		Login usr = usrDao.selectByUsrId(loginUsr.getUsrId());
-		if(usr.equals(null)) {
+		Login dbUsr = usrDao.selectByUsrId(loginUsr.getUsrId());
+		if(dbUsr.getUsrId().equals(loginUsr.getUsrId())) {
 			return LoginResult.FAIL_UID;
 		}
 		/*PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
@@ -81,7 +105,7 @@ public class UsrServiceImpl implements UsrService{
 			
 			
 		}*/
-		if(usr.getUsrPswd().equals(loginUsr.getUsrPswd())) {
+		if(dbUsr.getUsrPswd().equals(loginUsr.getUsrPswd())) {
 			return LoginResult.SUCCESS;
 		}else {
 			return LoginResult.FAIL_PASSWORD;
@@ -105,6 +129,8 @@ public class UsrServiceImpl implements UsrService{
 		
 	}
 	
+	
+	
 	/**
 	 * @author 송원석
 	 * 사용자 관리 페이지 구성 데이터를 가져오는 메서드
@@ -120,5 +146,7 @@ public class UsrServiceImpl implements UsrService{
 		
 		return usrManagementPageConfigure;
 	}
+	
+	
 
 }

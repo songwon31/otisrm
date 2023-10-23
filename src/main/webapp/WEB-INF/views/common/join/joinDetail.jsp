@@ -27,8 +27,9 @@
             		</td>
             	</tr>            	      	
             <tr>
-            	<td>
-						<div>□ 개인정보 수집∙이용 내역(필수)</div><br>
+            	<td>	
+            		<br>
+						<div>개인정보 수집∙이용 내역(필수)</div><br>
 							<table border="1" bgcolor="#bcbcbc" width="900px" style="border-collapse:collapse; border:1px gray solid;">
 								<tbody>
 									<tr bgcolor="#ffffff" height="30px">
@@ -38,9 +39,12 @@
 										<td align="center" bgcolor="#bcbcbc" width="200px">보유∙이용 기간</td>
 									</tr>
 								  	<tr bgcolor="#ffffff" height="30px">
-										<td align="center" rowspan="3" width="75px">거래처유형</td>
+										<td align="center" rowspan="3" width="75px">소속기관 유형</td>
 										<td align="center" width="75px">공통</td>
-										<td align="center">아이디, 이름</td>
+										<td align="center">
+											소속기관(외부, 내부), 가입권한(고객사/담당자/개발자/검토자/시스템 개발자), 이름, 아이디, 비밀번호,
+											이메일 주소, 휴대폰번호, 전화번호(선택), 주민등록번호, 개발부서, 역할, 직위
+										</td>
 										<td align="left" rowspan="4"><!-- 회원가입을 위한 개인식별<br>이용자의 사용유형 확인 및 <br>고지사항 전달, 불만처리 등을 위한 의사소통 경로 확보<br>세메스 사내시스템 운영을 위한 데이터 연계 -->
 											<ul style="padding-left:15px;">
 												<li>회원가입을 위한 개인식별</li>
@@ -53,14 +57,6 @@
 											<b>회원탈퇴 시 파기,<br>1년이상 미 접속 시 파기</b>
 										</td>	
 									</tr>
-									<tr bgcolor="#ffffff" height="30px">
-										<td align="center">SEMES</td>
-										<td align="center">거래처유형(SEMES/SEMES외),<br>협력사(국가, 사업자번호, 업체명, 대표자명),<br>이메일, 휴대전화번호</td>	
-									</tr>
-									<tr bgcolor="#ffffff" height="30px">
-										<td align="center">SEMES 외</td>
-										<td align="center">거래처유형(SEMES/SEMES외),<br>협력사(국가, 사업자번호, 업체명, 대표자명),<br>이메일, 휴대전화번호, 거래처, 거래처담당자</td>	
-									</tr>
 								</tbody>
 							</table>
 							<div class="d-flex justify-content-start">							
@@ -72,51 +68,17 @@
 		            <tr>
 		            	<td align="left"> 
 							<form name="frm" style="padding-top: 1%;"> 
-								<input type="radio" class="agree" name="agree1" id="chk1" value="Y" onclick="fn_agree1('Y');"> 개인정보의 수집 및 이용에 동의합니다.
+								<input class="agree" type="checkbox" checked="checked" name="remember2"> 개인정보의 수집 및 이용에 동의합니다.
 							</form>
 		            	</td>
 		            </tr>
 		            <tr>
 		            	<td align="left"> 
 							<form name="frm"> 
-								<pre><input type="radio" class="agree" name="agree3" id="chk3" value="Y" onclick="fn_agree3('Y');"> 본인은 <b>만 14세 이상</b>입니다.</pre> 
+								<pre><input class="agree" type="checkbox" checked="checked" name="remember2"> 본인은 <b>만 14세 이상</b>입니다.</pre> 
 							</form>
 		            	</td>
-		            </tr>            
-	           		<tr>
-	            		<td>
-							<input class="agree" type="checkbox" checked="checked" name="remember"> 개인정보 수집∙이용 내역(선택)<br>
-							<table border="1" bgcolor="#bcbcbc" width="900px" style="border-collapse:collapse; border:1px gray solid;">
-								<tbody>
-									<tr bgcolor="#ffffff" height="30px">
-										<td align="center" bgcolor="#bcbcbc" width="150px" colspan="2">구분</td>
-										<td align="center" bgcolor="#bcbcbc" width="350px">항목</td>
-										<td align="center" bgcolor="#bcbcbc" width="200px">수집∙이용 목적</td>
-										<td align="center" bgcolor="#bcbcbc" width="200px">보유∙이용 기간</td>
-									</tr>
-									<tr bgcolor="#ffffff" height="40px">
-										<td align="center" width="75px">거래처유형</td>
-										<td align="center" width="75px">공통</td>
-										<td align="center">이름(영문), 전화번호, FAX 번호</td>	
-										<td align="center">새로운 서비스 및 정보 등의 안내</td>		
-										<td align="center" style="text-decoration:underline"><b>회원탈퇴 시 파기,<br>1년 이상 미 접속 시 파기</b></td>	
-									</tr>
-								</tbody>
-							</table>
-							<div class="">							
-								※ 귀하께서는 본 선택항목 수집·이용에 대한 동의를 거부하시는 경우에도 SRM 협업시스템 서비스를 
-								이용하실 수 있습니다.
-							</div>
-	            	    </td>
-		            <tr>
-		            	<td align="left"> 
-							<form action=""> 
-							<div class="d-flex justify-content-start">							
-								<input type="radio"  class="agree" name="agree2" id="chk2" value="Y" onclick="fn_agree2('Y');"> 개인정보의 수집 및 이용에 동의합니다.</pre> 
-							</div>
-							</form>
-		            	</td>
-		            </tr>                       	           
+		            </tr>                               	           
 			</tbody>
 		</table>
 	</body>

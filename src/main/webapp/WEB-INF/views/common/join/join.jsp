@@ -31,8 +31,6 @@
 	<body>
 		<sc-mdi id="mdiMain" use-single-page="true" use-storage-menu="false">
 			<div id="headWrap" class="style-scope sc-mdi" hidden="true">
-				<sc-ajax id="sessionTimeUpdate" url="https://www.cpsrm.com/ui/lib/mdi/sessionTimeUpdate.do" class="style-scope sc-mdi" hidden="">
-				</sc-ajax>
 				<div class="toolbar style-scope sc-mdi">
 					<div class="mdiLogo supplier style-scope sc-mdi">
 					</div>
@@ -72,20 +70,6 @@
 							</div>
 						</div>
 					</sc-mdi-searchbar>
-					<div id="sessionTimer" class="timer style-scope sc-mdi" title="Session Time Reset">01:54:32</div>
-						<div class="mdi_lan style-scope sc-mdi">
-							<a class="style-scope sc-mdi">한국어</a>
-							<div class="lan_list style-scope sc-mdi">
-							<ul class="style-scope sc-mdi">
-								<li class="style-scope sc-mdi">
-									<a class="style-scope sc-mdi">English</a>
-								</li>
-								<li class="style-scope sc-mdi">
-									<a class="style-scope sc-mdi">日本語</a></li>
-									<template id="localeList" is="dom-repeat" as="locale" filter="_onLocaleFilter" class="style-scope sc-mdi"></template>
-							</ul>
-						</div>
-					</div>
 					<ul class="top_func style-scope sc-mdi">
 						<li class="info style-scope sc-mdi">
 							<sc-button id="infoBtn" class="info-btn style-scope sc-mdi" tabindex="0" role="button" aria-disabled="false">
@@ -104,13 +88,6 @@
 									</div>
 								</sc-button>
 							</smartsuite-notice>
-						</li>
-						<li class="logout style-scope sc-mdi">
-							<sc-button title="Logout" tabindex="0" class="style-scope sc-mdi" role="button" aria-disabled="false">
-								<div class="button-container style-scope sc-button">
-									<div class="style-scope sc-button"></div>
-								</div>  
-							</sc-button>
 						</li>
 					</ul>
 				</div>
@@ -144,10 +121,7 @@
 				</div>
 			</div>
 			<div id="containerWrap" class="containerWrap style-scope sc-mdi" style="width: 1110px; height: 955px;">
-				<div class="style-scope sc-mdi"></div>
 				<sc-mdi-leftmenu id="mdiLeftMenu" class="style-scope sc-mdi" hidden="">
-					<sc-ajax id="saveMyFavorite" url="https://www.cpsrm.com/saveMyFavorite.do" class="style-scope sc-mdi-leftmenu" hidden="">
-					</sc-ajax>
 					<div id="leftWrap" class="leftWrap style-scope sc-mdi-leftmenu" style="width: 0px; display: none;">
 						<div class="leftTabArea style-scope sc-mdi-leftmenu">
 							<div id="leftMenuTit" class="leftMenuTit style-scope sc-mdi-leftmenu">
@@ -302,7 +276,6 @@
 											<b class="style-scope es-spuser-reg">회원가입</b>
 										</div>
 									</div>
-									<div class="vspace-5 style-scope es-spuser-reg"></div>
 									<sc-toolbar class="style-scope es-spuser-reg" role="toolbar" aria-disabled="false">
 										<sc-label text="개인정보 수집 및 이용에 관한 동의" class="style-scope es-spuser-reg" aria-disabled="false">
 											<div class="bullet-container style-scope sc-label">
@@ -312,9 +285,10 @@
 										</sc-label>
 										<sc-spacer class="style-scope es-spuser-reg" aria-disabled="false"></sc-spacer>
 									</sc-toolbar>
-									<iframe src="${pageContext.request.contextPath}/join/joinDetail" style="border-width:1px; border-color:#bcbcbc; border-style:solid;width:98%; height:200px" class="style-scope es-spuser-reg">
+									<iframe src="${pageContext.request.contextPath}/join/joinDetail" style="border-width:1px; border-color:#bcbcbc; border-style:solid;width:100%; height:200px" class="style-scope es-spuser-reg">
 									</iframe>
 									<div class="vspace-5 style-scope es-spuser-reg"></div>
+								  <form id="join" name="join" action="join" onsubmit="checkValidation()" method="post">  
 									<sc-toolbar class="style-scope es-spuser-reg" role="toolbar" aria-disabled="false">
 										<sc-label text="회원가입" class="style-scope es-spuser-reg" aria-disabled="false">
 											<div class="bullet-container style-scope sc-label">
@@ -324,19 +298,18 @@
 								        </sc-label>
 								        <sc-spacer class="style-scope es-spuser-reg" aria-disabled="false">
 								        </sc-spacer>
-								        <sc-button type="submit" id="continue_btn" text="저장" class="auth-s style-scope es-spuser-reg" role="button" tabindex="0" aria-disabled="false">
-								        	<div class="button-container style-scope sc-button">
+								        <button type="submit" id="continue_btn" text="제출" class="btn btn-primary auth-s style-scope es-spuser-reg" role="submit" tabindex="0" aria-disabled="false">
+								        	<div  type="submit" class="button-container style-scope sc-button">
 								        		<div class="style-scope sc-button"></div>
 								        	</div> 제출
-								        </sc-button>
-								        <sc-button text="닫기" class="style-scope es-spuser-reg" role="button" tabindex="0" aria-disabled="false">
+								        </button>
+								        <button text="닫기" class="btn btn-secondary style-scope es-spuser-reg" role="button" tabindex="0" aria-disabled="false">
 								        	<div class="button-container style-scope sc-button">
 								        		<div class="style-scope sc-button"></div>
 								        	</div> 닫기
-								        </sc-button>
-								  </sc-toolbar>
-								  <div class="vspace-5 style-scope es-spuser-reg"></div>
-								  <form id="joinForm" name="joinForm" action="joinForm" onsubmit="checkValidation()" method="post">  
+								        </button>
+								  	</sc-toolbar>
+								  	<div class="vspace-5 style-scope es-spuser-reg"></div>
 									  <table class="tb-form style-scope es-spuser-reg" validation-group="data">
 									  	<colgroup class="style-scope es-spuser-reg">
 									  		<col style="width:10%" class="style-scope es-spuser-reg">
@@ -355,12 +328,13 @@
 				            						</sc-label>
 				            					</th>
 				            					<td colspan="3" class="style-scope es-spuser-reg">
-			            							<select id="option-inst" class="option custom-select m-3" name="inst" onclick="myInst()">
+			            							<select id="inst-select" class="option custom-select m-3" name="inst" onclick="myInst()">
 														<option value="none">--소속기관--</option>
 														<c:forEach var="inst" items="${instOptions}">
-															<option id="${inst.instNo}" value="${inst.instNm}">${inst.instNm}</option>
+															<option id="${inst.instNo}" value="${inst.instNo}">${inst.instNm}</option>
 														</c:forEach>
 													</select>
+													<input id="submitInst" type="hidden" name="instNo">
 			            							<div class="hspace-2 style-scope es-spuser-reg"></div>
 			            							<sc-label text="* srm 관리자에게  해당 개발부서 가입승인요청 메일이 전송됩니다." style="color:blue;" class="style-scope es-spuser-reg" aria-disabled="false">
 			            								<div class="bullet-container style-scope sc-label">
@@ -380,12 +354,13 @@
 										  			</sc-label>
 										  		</th>
 										  		<td colspan="3" class="style-scope es-spuser-reg">		
-				            						<select id="option0" class="option custom-select m-3" name="userAuthrt" onclick="myOption1()">
+				            						<select class="option custom-select m-3" onclick="myAuthrt()">
 														<option value="none">--권한--</option>
-														<c:forEach var="usetAuthrt" items="${usetAuthrtOptions}">
-															<option id="${usetAuthrt.usrAuthrtNo}" value="${usetAuthrt.usrAuthrtNo}">${usetAuthrt.usrAuthrtNm}</option>
+														<c:forEach var="usrAuthrt" items="${usrAuthrtOptions}">
+															<option id="${usrAuthrt.usrAuthrtNo}" value="${usrAuthrt.usrAuthrtNo}">${usrAuthrt.usrAuthrtNm}</option>
 														</c:forEach>
 													</select>
+													<input id="submitUsrAuthrt" type="hidden" name="usrAuthrtNo">
 												</td>
 											</tr>
 											<tr class="style-scope es-spuser-reg">
@@ -399,11 +374,12 @@
 												</th>
 												<td colspan="3" class="style-scope es-spuser-reg">
 													<div class="hbox flex style-scope es-spuser-reg" style="overflow-y: hidden;">
-														<sc-text-field input-clear="true" class="w-150 style-scope es-spuser-reg" required="" max-length="19" mask-re="/[A-Za-z\0-9\-]/" strip-chars-re="/[ㄱ-힣~!@#$%^&amp;*|<>?:{}()+,]/" aria-disabled="false" field="">
+														<sc-text-field input-clear="true" class="w-150 style-scope es-spuser-reg" required="" max-length="19" aria-disabled="false" field="">
 															<div class="field-container style-scope sc-text-field">
-																<input id="input" class="style-scope sc-text-field" autocomplete="off" maxlength="19">
+																<input id="name" name="usrNm" value="${usr.usrNm}" class="style-scope sc-text-field" autocomplete="off" maxlength="19">
 															</div>
 														</sc-text-field>
+														<span id="nameErr" class="errorMsg text-danger d-none small mt-2" style="margin-left:10px; font-family: dotum,sans-serif; font-size: 12px;">이름을 정확히 입력하세요.</span>
 													</div>
 												</td>
 											</tr>
@@ -420,40 +396,54 @@
 													<div class="hbox flex style-scope es-spuser-reg" style="overflow-y: hidden;">
 														<sc-text-field input-clear="true" class="w-150 style-scope es-spuser-reg" required="" max-length="19" mask-re="/[A-Za-z\0-9\-]/" strip-chars-re="/[ㄱ-힣~!@#$%^&amp;*|<>?:{}()+,]/" aria-disabled="false" field="">
 															<div class="field-container style-scope sc-text-field">
-																<input id="uid" name="userId" class="style-scope sc-text-field" autocomplete="off" maxlength="19"  value="${User.userId}">
+																<input id="usrId" name="usrId" class="style-scope sc-text-field" autocomplete="off" maxlength="19"  value="${usr.usrId}">
 															</div>
 														</sc-text-field>
-														<div class="hspace-5 style-scope es-spuser-reg"></div>
-														<sc-button text="중복체크" class="auth-r style-scope es-spuser-reg" style="display:inline;padding:1px 3px;" role="button" tabindex="0" aria-disabled="false">
+														<div class="hspace-2 style-scope es-spuser-reg"></div>
+														<sc-button text="중복체크" class="hspace-2 style-scope es-spuser-reg" onclick="selectOverlapUsrId()" style="display:inline;padding:1px 3px;" role="button" tabindex="0" aria-disabled="false">
 															<div class="button-container style-scope sc-button">
 																<div class="style-scope sc-button"></div>
 															</div>  중복체크
 														</sc-button>
 													</div>
+													<div>
+														<span id="usrIdInfo" class="errorMsg text-success" style="font-family: dotum,sans-serif; font-size: 12px;"></span>
+														<span id="usrIdErr" class="errorMsg text-danger" style="font-family: dotum,sans-serif; font-size: 12px;"></span>
+													</div>
 												</td>
 												<th class="style-scope es-spuser-reg">
 													<sc-label text="비밀번호" class="style-scope es-spuser-reg" aria-disabled="false">
-													<div class="bullet-container style-scope sc-label">
-														<div class="style-scope sc-label"></div>
-													</div>
-													<span class="style-scope sc-label">비밀번호</span>
+														<div class="bullet-container style-scope sc-label">
+															<div class="style-scope sc-label"></div>
+														</div>
+														<span class="style-scope sc-label">비밀번호</span>
 													</sc-label>
 												</th>
 												<td class="style-scope es-spuser-reg">
-													<sc-text-field input-clear="true" class="w-150 style-scope es-spuser-reg" aria-disabled="false" field="">
-														<div class="field-container style-scope sc-text-field">
-															<input id="pwd" type="password" name="userPswd"value="${usr.usrPswd}" class="style-scope sc-text-field" autocomplete="off">
-														</div>
-														<span id="pwdErr1" class="errorMsg text-danger d-none small" style="margin-left:10px; font-family: dotum,sans-serif; font-size: 12px;">비밀번호를 입력해주세요.</span>
-													    <span id="pwdErr2" class="errorMsg text-danger d-none small" style="margin-left:10px; font-family: dotum,sans-serif; font-size: 12px;">영문/숫자/특수문자 조합으로 8~20자 입력해주세요.</span>
-													    <span id="pwdErr3" class="errorMsg text-success d-none small" style="margin-left:10px; font-family: dotum,sans-serif; font-size: 12px;">사용 가능한 비밀번호입니다.</span>
-														<div class="field-container style-scope sc-text-field mt-1">
-															<input id="pwd-check" type="password" placeholder="비밀번호 확인" class="style-scope sc-text-field" autocomplete="off">
-														</div>
-														<span id="pwdCheckErr1" class="errorMsg text-danger d-none small" style="margin-left:10px; font-family: dotum,sans-serif; font-size: 12px;">확인을 위해 비밀번호를 다시 입력해주세요.</span>
-														<span id="pwdCheckErr2" class="errorMsg text-danger d-none small" style="margin-left:10px; font-family: dotum,sans-serif; font-size: 12px;">비밀번호가 일치하지 않습니다.</span>
-														<span id="pwdCheckErr3" class="errorMsg text-success d-none small" style="margin-left:10px; font-family: dotum,sans-serif; font-size: 12px;">비밀번호가 일치합니다.</span>
-													</sc-text-field>
+													<div>
+														<sc-text-field input-clear="true" class="w-150 style-scope es-spuser-reg" aria-disabled="false" field="">
+															<div class="field-container style-scope sc-text-field">
+																<input id="pwd" type="password" name="usrPswd" value="${usr.usrPswd}" class="style-scope sc-text-field" autocomplete="off">
+															</div>
+														</sc-text-field>
+													</div>
+													<div class="errMsg">
+														<span id="pwdErr1" class="errorMsg text-danger d-none small" style="font-family: dotum,sans-serif; font-size: 12px;">비밀번호를 입력해주세요.</span>
+													    <span id="pwdErr2" class="errorMsg text-danger d-none small" style="font-family: dotum,sans-serif; font-size: 12px;">영문/숫자/특수문자 조합으로 8~20자 입력해주세요.</span>
+													    <span id="pwdErr3" class="errorMsg text-success d-none small" style="font-family: dotum,sans-serif; font-size: 12px;">사용 가능한 비밀번호입니다.</span>
+													</div>
+													<div>
+														<sc-text-field input-clear="true" class="w-150 style-scope es-spuser-reg" aria-disabled="false" field="">
+															<div class="field-container style-scope sc-text-field mt-1">
+																<input id="pwd-check" type="password" placeholder="비밀번호 확인" class="style-scope sc-text-field" autocomplete="off">
+															</div>
+														</sc-text-field>
+													</div>
+													<div class="errMsg">
+														<span id="pwdCheckErr1" class="errorMsg text-danger d-none small" style="font-family: dotum,sans-serif; font-size: 12px;">확인을 위해 비밀번호를 다시 입력해주세요.</span>
+														<span id="pwdCheckErr2" class="errorMsg text-danger d-none small" style="font-family: dotum,sans-serif; font-size: 12px;">비밀번호가 일치하지 않습니다.</span>
+														<span id="pwdCheckErr3" class="errorMsg text-success d-none small" style="font-family: dotum,sans-serif; font-size: 12px;">비밀번호가 일치합니다.</span>
+													</div>
 			            						</td>
 			            					</tr>
 			            					<tr class="style-scope es-spuser-reg"><th class="style-scope es-spuser-reg">
@@ -467,9 +457,13 @@
 			            					<td colspan="3" class="style-scope es-spuser-reg">
 			            						<sc-text-field input-clear="true" class="w-150 style-scope es-spuser-reg" required="" aria-disabled="false" field="">
 			            							<div class="field-container style-scope sc-text-field">
-			            								<input id="input" class="style-scope sc-text-field" autocomplete="off">
+			            								<input id="email" class="style-scope sc-text-field" name="usrEml" value="${usr.usrEml}" autocomplete="off">
 			            							</div>
 			            						</sc-text-field>
+			            						<div>
+			            							<span id="emailErr1" class="errorMsg text-danger d-none small" style="font-family: dotum,sans-serif; font-size: 12px;">이메일을 입력해주세요.</span>
+													<span id="emailErr2" class="errorMsg text-danger d-none small" style="font-family: dotum,sans-serif; font-size: 12px;">이메일 형식으로 입력해주세요.</span>
+			            						</div>
 			            						<div class="field-box style-scope es-spuser-reg">
 			            							<sc-checkbox-field checked-value="Y" un-checked-value="N" default-value="N" class="style-scope es-spuser-reg" aria-disabled="false" field="" toggles="" checked="">
 			            								<div class="check-default style-scope sc-checkbox-field checked"></div>
@@ -504,28 +498,18 @@
 			            							<span class="style-scope sc-label">휴대전화번호</span>
 			            						</sc-label>
 			            					</th>
-			            					<td class="style-scope es-spuser-reg">
-			            						<sc-text-field input-clear="true" class="w-150 style-scope es-spuser-reg" maxlength="60" mask-re="/[0-9\-+]/" validator-type="mobile" required="" aria-disabled="false" field="">
-			            							<div class="field-container style-scope sc-text-field">
-			            								<input id="input" class="style-scope sc-text-field" autocomplete="off" maxlength="60">
-			            							</div>
-			            						</sc-text-field> ex)xxx-xxxx-xxxx (선택)
-			            					</td>
-			            					<th class="style-scope es-spuser-reg">
-			            						<sc-label text="전화번호" class="style-scope es-spuser-reg" aria-disabled="false">
-			            							<div class="bullet-container style-scope sc-label">
-			            								<div class="style-scope sc-label"></div>
-			            							</div>
-			            							<span class="style-scope sc-label">전화번호</span>
-			            						</sc-label>
-			            					</th>
-			            					<td class="style-scope es-spuser-reg">
-			            						<sc-text-field input-clear="true" class="w-150 style-scope es-spuser-reg" maxlength="60" mask-re="/[0-9\-+]/" validator-type="phone" aria-disabled="false" field="">
-			            							<div class="field-container style-scope sc-text-field">
-			            								<input id="input" class="style-scope sc-text-field" autocomplete="off" maxlength="60">
-			            							</div>
-			            						</sc-text-field> ex)xxx-xxxx-xxxx (선택)
-			            					</td>
+			            					<td colspan="3" class="style-scope es-spuser-reg">
+												<div class="hbox flex style-scope es-spuser-reg" style="overflow-y: hidden;">
+													<sc-text-field input-clear="true" class="w-150 style-scope es-spuser-reg" required="" aria-disabled="false" field="">
+														<div class="field-container style-scope sc-text-field">
+															<input id="tel" type="tel"  name="usrTelno" value="${usr.usrTelno}" class="style-scope sc-text-field"  max-length="13" pattern="010-[0-9]{3,4}-[0-9]{4}" autocomplete="off">
+														</div>
+													</sc-text-field>
+												</div>
+												<div>
+													<span id="telErr1" class="errorMsg text-danger d-none small" style="font-family: dotum,sans-serif; font-size: 12px;">휴대폰 번호를 정확하게 입력하세요.</span>
+												</div>
+											</td>
 			            				</tr>
 			            				<tr class="style-scope es-spuser-reg">
 			            					<th class="style-scope es-spuser-reg">
@@ -537,11 +521,18 @@
 			            						</sc-label>
 			            					</th>
 			            					<td colspan="3" class="style-scope es-spuser-reg">
-			            						<sc-text-field input-clear="true" class="w-150 style-scope es-spuser-reg" maxlength="60" mask-re="/[0-9\-+]/" validator-type="phone" aria-disabled="false" field="">
-			            							<div class="field-container style-scope sc-text-field">
-			            								<input id="input" class="style-scope sc-text-field" autocomplete="off" maxlength="60">
-			            							</div>
-			            						</sc-text-field> 
+			            						<div class="d-flex">			            						
+				            						<sc-text-field input-clear="true" class="w-150 style-scope es-spuser-reg" aria-disabled="false" field="">
+				            							<div class="field-container style-scope sc-text-field">
+				            								<input id="rrn" name="usrRrno" value="${usr.usrRrno}" class="style-scope sc-text-field" autocomplete="off" maxlength="7">
+				            							</div>
+				            						</sc-text-field>
+				            						<div class="m-1">(주민등록번호 뒷자리는 앞에 한자리만 입력해주세요.(예: xxxxxx-1))</div>
+				            						<div>			
+					            						<span id="rrnErr1" class="errorMsg text-danger d-none small" style="font-family: dotum,sans-serif; font-size: 12px;">주민등록번호 형식 오류입니다.</span>
+					            						<span id="rrnErr2" class="errorMsg text-danger d-none small" style="font-family: dotum,sans-serif; font-size: 12px;">주민등록번호를 입력해주세요.</span>
+				            						</div>
+			            						</div>
 			            					</td>
 			            				</tr>
 			            				<tr class="true style-scope es-spuser-reg">
@@ -557,15 +548,16 @@
 			            						<div class="field-box style-scope es-spuser-reg">
 			            							<sc-text-field input-clear="true" class="w-150 style-scope es-spuser-reg" readonly="" disabled="" required="" aria-disabled="true" field="">
 				            							<div class="field-container style-scope sc-text-field">
-				            								<input id="input" class="style-scope sc-text-field" disabled="" readonly="" autocomplete="off">
+				            								<input id="submit-deptNm" class="style-scope sc-text-field" disabled="" readonly="" autocomplete="off">
+				            								<input id="submit-deptNo" type="hidden" name="deptNo" value="${usr.deptNo}">
 				            							</div>
 			            							</sc-text-field>
 			            							<div class="hspace-2 style-scope es-spuser-reg"></div>
-			            							<sc-button class="fa fa-search style-scope es-spuser-reg" onclick="selectDeptBtn()" style="padding:3px 7px 0px 7px;border:none;" role="button" tabindex="0" aria-disabled="false">
-			            								<div class="button-container style-scope sc-button">
-			            									<div class="style-scope sc-button"></div>
-			            								</div>  
-			            							</sc-button>
+				            							<sc-button class="fa fa-search style-scope es-spuser-reg" onclick="selectDeptBtn()" style="padding:3px 7px 0px 7px;border:none;" role="button" tabindex="0" aria-disabled="false">
+				            								<div class="button-container style-scope sc-button">
+				            									<div class="style-scope sc-button"></div>
+				            								</div>  
+				            							</sc-button>
 			            							<!-- 개발부서 모달 창 -->
 													<div class="modal" id="deptModal">
 													  <div class="modal-dialog">
@@ -579,17 +571,23 @@
 													      
 													      <!-- Modal body -->
 													      <div class="modal-body">
-													        <p id="seleceded-inst"></p>
-
-															<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
-															
-															<table id="myTable">
-															  <tr class="header">
-															    <th style="width:60%;">부서코드</th>
-															    <th style="width:40%;">부서이름</th>
-															  </tr>
-															  <!-- 개발부서 리스트 json으로 불러오는 곳 -->
+													      	해당하는 개발부서를 선택해주세요.
+															<table id="deptTable">
+																<thead>			
+																	<tr class="header">
+																		<th style="width:50px;"></th>
+																		<th style="width:250px;">부서코드</th>
+																		<th style="width:600px;">부서이름</th>
+																	</tr>
+																</thead>
+																<tbody id="deptList">
+																<!-- Json으로 목록 불러오는곳 -->
+																</tbody>
 															</table>
+															<div class="m-2">
+																개발부서:<span id="myDept"></span> 
+															</div>
+															<div id="dept-ok" class="btn btn-primary" onclick="closeBtn()">확인</div>
 													      </div>
 													    </div>
 													  </div>
@@ -613,12 +611,10 @@
 			            						</sc-label>
 			            					</th>
 			            					<td class="style-scope es-spuser-reg">
-			            						<select id="option1" class="option custom-select m-3" name="cart_optionContent" onclick="myOption1()">
+			            						<select id="role-select" class="option custom-select m-3" onclick="selectedoption1()">
 													<option value="none">--역할--</option>
-													<c:forEach var="productOption" items="${options}">
-														<option id="${productOption.productOption_no}" value="${productOption.productOption_type}">${productOption.productOption_type}</option>
-													</c:forEach>
 												</select>
+												<input id="submitRole" type="hidden" name="roleNo">
 			            					</td>
 			            					<th class="style-scope es-spuser-reg">
 			            						<sc-label text="직위" class="style-scope es-spuser-reg" aria-disabled="false">
@@ -629,12 +625,10 @@
 			            						</sc-label>
 			            					</th>
 			            					<td class="style-scope es-spuser-reg">
-			            						<select id="option2" class="option custom-select m-3" name="cart_optionContent" onclick="myOption2()">
+			            						<select id="ibps-select" class="option custom-select m-3" onclick="selectedoption2()">
 													<option value="none">--직위--</option>
-													<c:forEach var="productOption" items="${options}">
-														<option id="${productOption.productOption_no}" value="${productOption.productOption_type}">${productOption.productOption_type}</option>
-													</c:forEach>
 												</select>
+												<input id="submitIbps" type="hidden" name="ibpsNo">
 			            					</td>
 			            				</tr>
 			            				<tr class="false style-scope es-spuser-reg">
@@ -663,37 +657,6 @@
 				            							</div>
 				            						</sc-text-field>
 				            						<div class="hspace-5 style-scope es-spuser-reg"></div>
-				            					</div>
-				            				</td>
-				            			</tr>
-				            			<tr class="false style-scope es-spuser-reg">
-				            				<th class="style-scope es-spuser-reg">
-				            					<sc-label text="거래처담당자" class="style-scope es-spuser-reg" aria-disabled="false">
-				            						<div class="bullet-container style-scope sc-label">
-				            							<div class="style-scope sc-label"></div>
-				            						</div>
-				            						<span class="style-scope sc-label">거래처담당자</span>
-				            					</sc-label>
-				            				</th>
-				            				<td colspan="3" class="style-scope es-spuser-reg">
-				            					<div class="field-box style-scope es-spuser-reg">
-				            						<sc-text-field input-clear="true" class="w-150 style-scope es-spuser-reg" readonly="" disabled="" required="" aria-disabled="true" field="">
-				            							<div class="field-container style-scope sc-text-field">
-				            								<input id="input" class="style-scope sc-text-field" disabled="" readonly="" autocomplete="off">
-				            							</div>
-				            						</sc-text-field>
-				            						<div class="hspace-2 style-scope es-spuser-reg"></div>
-				            						<sc-button class="fa fa-search style-scope es-spuser-reg" style="padding:3px 7px 0px 7px;border:none;" role="button" tabindex="0" aria-disabled="false">
-				            							<div class="button-container style-scope sc-button">
-				            								<div class="style-scope sc-button"></div>
-				            							</div>  
-				            						</sc-button>
-				            						<sc-label text="* 거래처 담당자에게 가입승인요청 메일이 전송됩니다." style="color:blue;" class="style-scope es-spuser-reg" aria-disabled="false">
-				            							<div class="bullet-container style-scope sc-label">
-				            								<div class="style-scope sc-label"></div>
-				            							</div>
-				            							<span class="style-scope sc-label">* 거래처 담당자에게 가입승인요청 메일이 전송됩니다.</span>
-				            						</sc-label>
 				            					</div>
 				            				</td>
 				            			</tr>
@@ -932,16 +895,6 @@
     					</div>
     				</ep-spuser-chr-list>
     			</div>
-    		</div>
-    		<div class="interact-resizable-handle style-scope sc-window" skip-upgrade="">
-    			<div class="interact-resizable-north style-scope sc-window"></div>
-    			<div class="interact-resizable-south style-scope sc-window"></div>
-    			<div class="interact-resizable-west style-scope sc-window"></div>
-    			<div class="interact-resizable-east style-scope sc-window"></div>
-    			<div class="interact-resizable-northwest style-scope sc-window"></div>
-    			<div class="interact-resizable-northeast style-scope sc-window"></div>
-    			<div class="interact-resizable-southwest style-scope sc-window"></div>
-    			<div class="interact-resizable-southeast style-scope sc-window"></div>
     		</div>
     	</sc-window>
 	</body>
