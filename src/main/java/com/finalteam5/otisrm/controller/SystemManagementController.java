@@ -42,4 +42,12 @@ public class SystemManagementController {
 		return "/systemManagement/usrManagement/usrManagement";
 	}
 	
+	@RequestMapping("/usrManagement2")
+	public String usrManagement2(Model model, HttpSession session, @Valid UsrManagementSearchForm usrManagementSearchForm, Errors errors) {
+		UsrManagementPageConfigure usrManagementPageConfigure = usrService.getUsrManagementPageConfigureData();
+		model.addAttribute("usrManagementPageConfigure", usrManagementPageConfigure);
+		
+		return "/systemManagement/usrManagement/usrManagement2";
+	}
+	
 }

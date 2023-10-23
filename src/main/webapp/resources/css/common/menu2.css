@@ -1,0 +1,9 @@
+#side-menu {
+	height: 88rem; 
+	width:15%; 
+	padding:2rem; 
+	background-color:#FAFBFD; 
+	border:1px solid #ADB5BD; 
+	border-radius:10px;
+	font-size: 2rem;
+}

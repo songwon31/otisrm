@@ -1,0 +1,67 @@
+#userManagementDiv {
+	height: 88rem;
+	font-size: 1.5rem;
+	padding:2rem; 
+	background-color:#FAFBFD; 
+	border-radius:10px; 
+	display:flex; 
+	flex-direction:column;
+}
+
+#userManagementTitleDiv, #userManagementSearchDiv, #userManagementBoardDiv {
+	overflow-y: hidden;
+}
+
+/*searchForm*/
+#searchForm input {
+	font-size: 1.6rem;
+	padding:0.2rem 0.8rem;
+	border:1px solid #ADB5BD; 
+	border-radius:3px;
+}
+
+#searchForm input[type="date"] {
+	font-size: 1.6rem;
+	padding:0.2rem 0.5rem;
+	border:1px solid #ADB5BD; 
+	border-radius:3px;
+}
+
+#searchForm input:focus {
+	outline: none;
+}
+
+#searchForm select {
+	font-size: 1.6rem;
+	padding:0.2rem 0rem;
+	border:1px solid #ADB5BD; 
+	border-radius:3px;
+}
+
+#searchForm select:focus {
+	outline: none;
+}
+
+#initBtn {
+	background-color:#868E96; 
+	border-radius:5px;
+}
+
+#initBtn:active {
+	background-color:#666E66; 
+	border-radius:5px;
+}
+
+#searchBtn {
+	background-color:#222E3C; 
+	border-radius:5px;
+}
+
+#searchBtn:active {
+	background-color:#020E1C; 
+	border-radius:5px;
+}
+
+#mainTable tbody th {
+	
+}

@@ -1,0 +1,47 @@
+/*공통*/
+
+/*구분*/
+#header-bar {
+	height: 8rem; 
+	box-shadow: 0 1rem 1rem rgba(0,0,0,0.1);
+	padding: 2rem;
+	display: flex; 
+	flex-direction: row;
+	justify-content: space-between;
+	/*overflow: hidden;*/
+}
+
+#logo {
+	line-height: 4rem;
+	display: flex; 
+	flex-direction: row;
+	overflow: hidden;
+}
+
+#logo-img {
+	height: 4rem;
+	width: 4rem;
+}
+
+#logo-gap {
+	width: 0.5rem;
+}
+
+#logo-text {
+	line-height: 3.5rem;
+	font-size: 5rem;
+	color: #007bff;
+	font-weight: 900;
+}
+
+#header-list {
+	line-height: 4rem;
+	display: flex; 
+	flex-direction: row;
+}
+
+#background {
+	height:92rem;
+	padding: 2rem;
+	background-color: gray;
+}
