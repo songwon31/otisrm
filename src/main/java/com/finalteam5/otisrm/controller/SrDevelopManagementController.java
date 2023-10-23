@@ -13,4 +13,9 @@ public class SrDevelopManagementController {
 		return "/srManagement/developManagement/developManagement";
 	}
 	
+	@RequestMapping("/srManagement/developManagement2")
+	public String developManagement2() {
+		return "/srManagement/developManagement/developManagement2";
+	}
+	
 }
