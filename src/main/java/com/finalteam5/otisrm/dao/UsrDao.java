@@ -27,7 +27,5 @@ public interface UsrDao {
 	//로그인
 	public Login selectByUsrId(String usrId);
 	
-	
-	
 	public List<UsrStts> selectUsrSttsList();
 }
