@@ -1,61 +1,84 @@
+.shadow {
+	border: none;
+	border-radius: 5px;
+	box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
+}
+
 #userManagementDiv {
-	height: 100%;
-	overflow-y: hidden;
+	height: 88rem;
+	font-size: 1.5rem;
+	padding:2rem; 
+	background-color: white; 
+	border-radius:10px; 
+	display:flex; 
+	flex-direction:column;
 }
 
 #userManagementTitleDiv, #userManagementSearchDiv, #userManagementBoardDiv {
 	overflow-y: hidden;
 }
 
-/*searchForm*/
-#searchForm input {
-	font-size:14px; 
-	padding:7px 8px; 
+/* Input, Select */
+#searchForm input[type="date"], #searchForm input[type="text"], #searchForm select {
+	font-size: 1.6rem;
+	padding:0 0.8rem;
 	border:1px solid #ADB5BD; 
 	border-radius:3px;
-	font-size: 14px;
+	height: 3rem;
+	width: 6rem;
 }
 
-#searchForm input[type="date"] {
-	font-size:14px; 
-	padding:6px 8px; 
-	border:1px solid #ADB5BD; 
-	border-radius:3px;
-	font-size: 14px;
-}
-
-#searchForm input:focus {
+#searchForm input:focus, #searchForm select:focus {
 	outline: none;
 }
 
-#searchForm select {
-	font-size:14px; 
-	padding:5px 8px; 
-	border:1px solid #ADB5BD; 
-	border-radius:3px;
-	font-size: 14px;
+#searchForm input[type="checkbox"] {
+	height: 3rem;
 }
 
-#searchForm select:focus {
-	outline: none;
-}
-
+/* Button */
 #initBtn {
-	background-color:#868E96; 
-	border-radius:5px;
+	border: none;
+	font-size: 1.6rem;
+	color: white;
+	background-color: #868E96;
+	border-radius: 5px;
+	height: 3rem;
+	width: 8rem;
 }
 
 #initBtn:active {
-	background-color:#666E66; 
-	border-radius:5px;
+	background-color:#007bff;
 }
 
 #searchBtn {
+	border: none;
+	font-size:1.6rem;
+	color:white;
 	background-color:#222E3C; 
 	border-radius:5px;
+	height: 3rem;
+	width: 8rem;
 }
 
 #searchBtn:active {
-	background-color:#020E1C; 
-	border-radius:5px;
+	background-color:#007bff; 
+}
+
+/* Table */
+#mainTable tbody tr {
+	border-bottom: 1px solid #e9ecef;
+}
+
+#mainTable tbody tr:hover {
+	background-color: #f3f6fd;
+	cursor: pointer;
+}
+
+.text-align-left {
+	text-align: left;
+}
+
+#mainTable thead th, #mainTable tbody tr {
+	text-align: center;
 }

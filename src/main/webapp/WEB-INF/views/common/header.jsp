@@ -21,72 +21,47 @@
       
       <!-- loading-overlay를 사용하기 위한 라이브러리 -->
       <script src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.7/dist/loadingoverlay.min.js"></script>
-   </head>
-   <script src="${pageContext.request.contextPath}/resources/js/mainM.js"></script>
-   <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/common/header.css"/>
-   <!-- logo -->
-   <style>
-   	@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap');
-	#logo-text{
-		font-family: 'Archivo Black', sans-serif;
-	}
-   </style>
+      
+      <!-- javascript 코드 -->
+      <script src="${pageContext.request.contextPath}/resources/javascript/common/header.js"></script>
+      
+      <!-- css 코드 -->
+      <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/common/header.css"/>
    
-   <!-- 아이콘 사용을 위한 라이브러리 -->
-   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	  <!-- 아이콘 사용을 위한 라이브러리 -->
+	  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+	  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+   </head>
+   
    
    <body>
-	<div id="bodyDiv" class="d-flex flex-column vh-100"> 
-	   	<nav class="navbar navbar-expand navbar-light topbar static-top shadow">
-			<a class="font-sans-serif text-primary" href="#">
-			    <div id="logo-header" class="d-flex">
-			    	<div>			    	
-						<img class="mt-1" src="${pageContext.request.contextPath}/resources/images/srmlogo.png" alt="" width="40">
-			    	</div>			    
-			    	<div id="logo-text" class="text-primary">SRM</div>
-			    </div>
-			</a>
-		    <!-- Sidebar Toggle (Topbar) -->
-		    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-		        <i class="fa fa-bars"></i>
-		    </button>
-		
+	<div id="bodyDiv">
+	   	<nav id="header-bar">
+		    <div id="logo">		    	
+				<img id="logo-img" src="${pageContext.request.contextPath}/resources/images/logo2.png" alt=""/>
+				<span id="logo-gap"></span>	    
+		    	<span id="logo-text">SRM</span>
+		    </div>
+	
 		    <!-- Topbar Navbar -->
-		    <ul class="navbar-nav ml-auto">
-		
-		        <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-		        <li class="nav-item dropdown no-arrow d-sm-none">
-		            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-		                <i class="fas fa-search fa-fw"></i>
-		            </a>
-		            <!-- Dropdown - Messages -->
-		            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
-		                <form class="form-inline mr-auto w-100 navbar-search">
-		                    <div class="input-group">
-		                        <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-		                        <div class="input-group-append">
-		                            <button class="btn btn-primary" type="button">
-		                                <i class="fas fa-search fa-sm"></i>
-		                            </button>
-		                        </div>
-		                    </div>
-		                </form>
-		            </div>
-		        </li>
-		
+		    <div id="header-list">
 		        <!-- Nav Item - Alerts -->
-		        <li class="nav-item dropdown no-arrow mx-1">
-		            <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		        <div class="dropdown">
+		            <a class="dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+		            	style="padding:0.9rem 0rem; font-size:2rem; 0rem; display:flex; flex-direction:row; align-items:center;">
 		                <i class="fas fa-bell fa-fw"></i>
+		                <div style="width:0.5rem;"></div>
 		                <!-- Counter - Alerts -->
-		                <span class="badge badge-danger badge-counter">3+</span>
+		                <span class="badge badge-danger badge-counter" style="font-size: 1.5rem;">3+</span>
+		                <div style="width:0.5rem;"></div>
 		            </a>
 		            <!-- Dropdown - Alerts -->
-		            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" style="color: white; " aria-labelledby="alertsDropdown">
-		                <h6 class="dropdown-header">
+		            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" 
+		            	style="font-size:2rem; color: white; " aria-labelledby="alertsDropdown">
+		                <div class="dropdown-header" style="font-size:2rem;">
 		                    Alerts Center
-		                </h6>
+		                </div>
 		                <a class="dropdown-item d-flex align-items-center" href="#">
 		                    <div class="mr-3">
 		                        <div class="icon-circle bg-success">
@@ -122,53 +97,47 @@
 		                </a>
 		                <a class="dropdown-item text-center small text-gray-500" href="${pageContext.request.contextPath}/alerts">Show All Alerts</a>
 		            </div>
-		        </li>
+		        </div>
+		
+				<div style="width:3rem;"></div>
 		
 		        <!-- Nav Item - User Information -->
-	        	<c:if test="${loginIng != null}">	        	
-			        <li class="nav-item dropdown no-arrow">
-			            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-			                <img class="img-profile rounded-circle" src="https://themewagon.github.io/stisla-1/assets/img/avatar/avatar-1.png" width="25">
-			                <span id="profile_name" class="mr-2 d-none d-lg-inline text-gray-600 small">${loginIng.usrNm}</span>
-			                <span id="profile_authority" class="mr-2 d-none d-lg-inline text-gray-600 small">( ${loginIng.usrAuthrtNM} )</span>
-			            </a>
-			            <!-- Dropdown - User Information -->
-			            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-			                <a class="dropdown-item" href="#">
-			                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-			                    Profile
-			                </a>
-			                <a class="dropdown-item" href="#">
-			                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-			                    Settings
-			                </a>
-			                <div class="dropdown-divider"></div>
-			                <a class="dropdown-item" href="${pageContext.request.contextPath}/logout" data-toggle="modal" data-target="#logoutModal">
-			                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-			                    Logout
-			                </a>
-			            </div>
-			        </li>
-	        	</c:if>
-		    </ul>
+		        <div class="dropdown" style="height:4rem;">
+		            <a class="dropdown-toggle p-0" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+		            	style="font-size: 2rem; display:flex; flex-direction:row; align-items:center;">
+		                <img class="img-profile rounded-circle" src="https://themewagon.github.io/stisla-1/assets/img/avatar/avatar-1.png" style="height:4rem; width:4rem; margin-right:1rem;">
+		                <span id="profile_name" class="d-none d-lg-inline text-gray-600 small" style="font-size:1.7rem; margin-right:0.7rem;">송원석</span>
+		                <span id="profile_authority" class="d-none d-lg-inline text-gray-600 small" style="font-size:1.7rem; margin-right:0.7rem;">(SR 유지보수)</span>
+		            </a>
+		            <!-- Dropdown - User Information -->
+		            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown"
+		            	style="font-size:2rem;">
+		                <a class="dropdown-item" href="#">
+		                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+		                    Profile
+		                </a>
+		                <a class="dropdown-item" href="#">
+		                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+		                    Settings
+		                </a>
+		                <div class="dropdown-divider"></div>
+		                <a class="dropdown-item" href="${pageContext.request.contextPath}/logout" data-toggle="modal" data-target="#logoutModal">
+		                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+		                    Logout
+		                </a>
+		            </div>
+		        </div>   
+		    </div>
 		</nav>	
-    	<div id="background" class="flex-grow-1 container-fluid px-3 py-3">
-            <div class="row mx-2 h-100">
-               <div id="side-menu" class="col-md-2 p-3">
-                  <div class="h-100 d-flex flex-column">
-                     <div  class="flex-grow-1" style="height: 0px; overflow-y: auto; overflow-x: hidden;">
-					<%-- 
-					1) menu.jsp의 소스 코드를 복사해서 붙여넣기 
-					2) 절대경로/ 웹애플리케이션의 로컬루트(WebContent 폴더)
-					--%>
-                    <%@ include file="/WEB-INF/views/common/menu.jsp" %>
-                  </div>
-               </div>
-            </div>
-
-            <div class="col-md-10 pl-3 pr-0">
-                  <div class="h-100 d-flex flex-column">
-                     <div class="flex-grow-1 overflow-auto" style="height: 0px">
+    	<div id="background">
+        	<div style="display:flex; flex-direction:row;">
+				<%-- 
+				1) menu.jsp의 소스 코드를 복사해서 붙여넣기 
+				2) 절대경로/ 웹애플리케이션의 로컬루트(WebContent 폴더)
+				--%>
+                <%@ include file="/WEB-INF/views/common/menu.jsp" %>
+	
+	            <div style="height: 88rem; width:85%; padding-left:2rem;">
 
                
 	  

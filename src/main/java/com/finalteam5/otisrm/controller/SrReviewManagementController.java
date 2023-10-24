@@ -7,11 +7,10 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Controller
 @RequestMapping("/srManagement")
-public class SrDevelopManagementController {
-
-	@RequestMapping("/developManagement")
-	public String developManagement() {
-		return "/srManagement/developManagement/developManagement";
-	}
+public class SrReviewManagementController {
 	
+	@RequestMapping("/reviewManagement")
+	public String reviewManagement() {
+		return "/srManagement/reviewManagement/reviewManagement";
+	}
 }

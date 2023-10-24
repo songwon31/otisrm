@@ -1,68 +1,49 @@
-*{
-	margin: 0px;
-	padding: 0px;
-}
-/* 글씨체 임포트*/
-@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/variable/pretendardvariable.css');
-body {
-    width: 1707px;
-    height: 950px;
-    font-family: 'Pretendard';
-} 
-/* header-bar */
-#header-bar{
-
-}
-.shadow {
-    box-shadow: 2px 28px rgba(58,59,69,.15);
+/*공통*/
+a {
+	text-decoration: none;
 }
 
-.navbar-expand {
-    flex-flow: row nowrap;
-    justify-content: flex-start;
-}
-.navbar {
-    position: relative;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
+/*구분*/
+#header-bar {
+	height: 8rem; 
+	box-shadow: 0 1rem 1rem rgba(0,0,0,0.1);
+	padding: 2rem;
+	display: flex; 
+	justify-content: space-between;
+	/*overflow: hidden;*/
 }
 
-nav {
-    display: block;
-    margin-bottom: 0px;
-    background-color:#fafbfd; 
+#logo {
+	line-height: 4rem;
+	display: flex; 
+	flex-direction: row;
+	overflow: hidden;
 }
 
-.nav-link{
-	color: #6a757b;	
-}
-div {
-    display: block;
+#logo-img {
+	height: 4rem;
+	width: 4rem;
 }
 
-
-.sidenav-light {
-    background-color: #fff;
-    color: #212832;
-}
-.sidenav {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    flex-wrap: nowrap;
-    font-size: 0.9rem;
+#logo-gap {
+	width: 0.5rem;
 }
 
-/*side menu*/
-#side-menu{
-	border-radius: 15px;
-	background-color: #222e3c;
+#logo-text {
+	line-height: 3.5rem;
+	font-size: 5rem;
+	color: #007bff;
+	font-weight: 900;
 }
 
-/* background-color */
-#background{
-	background-color:#edf2f8;
-	padding: 0px; 
+#header-list {
+	line-height: 4rem;
+	display: flex; 
+	flex-direction: row;
+}
+
+#background {
+	height:92rem;
+	padding: 2rem;
+	background-color: #edf2f8;
 }

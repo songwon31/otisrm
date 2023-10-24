@@ -1,13 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <%@ include file="/WEB-INF/views/common/header.jsp"%>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/srManagement/developManagement/developManagement.css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/srManagement/developManagementcss" />
 
 <div id="userManagementDiv" class="shadow">
 	<div id="userManagementTitleDiv" style="height:4rem;">
 		<div class="font-weight-bold d-flex" style="font-size:2.5rem; height:4rem; vertical-align: center;">
 			<i class="material-icons top-icon" style="font-size:3.5rem; height:4rem; line-height: 4rem;">developer_board</i>
-			<span style="margin-left: 1rem;">SR개발관리</span>
+			<span style="margin-left: 1rem;">SR진척관리</span>
 		</div>
 	</div>
 	<!-- <div style="width:160.07rem; height:1rem; background-color: red;"></div> -->

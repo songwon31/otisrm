@@ -1,38 +1,9 @@
-*{
-	margin: 0px;
-	padding: 0px;
-}
-/* 사이드 */
-.nav {
-    bs-nav-link-padding-x: 1rem;
-    bs-nav-link-padding-y: 0.5mre;
-    bs-nav-link-color: var(--bs-link-color);
-    bs-nav-link-hover-color: var(--bs-link-hover-color);
-    bs-nav-link-disabled-color: #69707a;
-    display: flex;
-    flex-wrap: wrap;
-    padding-left: 0;
-    margin-bottom: 0;
-    list-style: none;
-}
-.menu-group{
-	font-weight: bold;
-	color: #9da9b9;
-}
-#menu-group-icon1{
-	margin-right: 5px;
-}
-#menu-group-icon2{
-	margin-right: 5px;
-}
-.menu-group-nm{
-	border-bottom: 1px solid #9da9b9;
-}
-a{
-	color: #98a3b5; /* 링크 텍스트 색상 설정 */
-    text-decoration: none; 
-}
-a:hover{
-	color: white;
-	text-decoration: none; 
+#side-menu {
+	height: 88rem; 
+	width:15%; 
+	padding:2rem; 
+	background-color:#FAFBFD; 
+	border:1px solid #ADB5BD; 
+	border-radius:10px;
+	font-size: 2rem;
 }

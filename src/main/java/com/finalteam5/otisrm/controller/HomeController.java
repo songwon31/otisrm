@@ -6,12 +6,24 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
-@RequestMapping("/srManagement")
-public class SrDevelopManagementController {
+public class HomeController {
 
-	@RequestMapping("/developManagement")
+	@RequestMapping("/home")
 	public String developManagement() {
-		return "/srManagement/developManagement/developManagement";
+
+		boolean a = true;
+		if (a) {
+			return null;
+		} else if (a) {
+			return null;
+		} else if (a) {
+			return null;
+		} else if (a) {
+			return null;
+		} else {
+			return null;
+		}
 	}
+	
 	
 }

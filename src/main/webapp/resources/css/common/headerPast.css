@@ -1,0 +1,68 @@
+*{
+	margin: 0px;
+	padding: 0px;
+}
+/* 글씨체 임포트*/
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/variable/pretendardvariable.css');
+body {
+    width: 1707px;
+    height: 950px;
+    font-family: 'Pretendard';
+} 
+/* header-bar */
+#header-bar{
+
+}
+.shadow {
+    box-shadow: 2px 28px rgba(58,59,69,.15);
+}
+
+.navbar-expand {
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+}
+.navbar {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+}
+
+nav {
+    display: block;
+    margin-bottom: 0px;
+    background-color:#fafbfd; 
+}
+
+.nav-link{
+	color: #6a757b;	
+}
+div {
+    display: block;
+}
+
+
+.sidenav-light {
+    background-color: #fff;
+    color: #212832;
+}
+.sidenav {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    flex-wrap: nowrap;
+    font-size: 0.9rem;
+}
+
+/*side menu*/
+#side-menu{
+	border-radius: 15px;
+	background-color: #222e3c;
+}
+
+/* background-color */
+#background{
+	background-color:#edf2f8;
+	padding: 0px; 
+}

@@ -21,9 +21,9 @@ import com.finalteam5.otisrm.dto.usr.Login;
 import com.finalteam5.otisrm.dto.usr.Role;
 import com.finalteam5.otisrm.dto.usr.Usr;
 import com.finalteam5.otisrm.dto.usr.UsrAuthrt;
-import com.finalteam5.otisrm.service.usr.UsrService;
-import com.finalteam5.otisrm.service.usr.UsrService.JoinResult;
-import com.finalteam5.otisrm.service.usr.UsrService.LoginResult;
+import com.finalteam5.otisrm.service.UsrService;
+import com.finalteam5.otisrm.service.UsrService.JoinResult;
+import com.finalteam5.otisrm.service.UsrService.LoginResult;
 
 import lombok.extern.slf4j.Slf4j;
 
