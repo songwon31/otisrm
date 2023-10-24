@@ -6,6 +6,13 @@
 	<artifactId>otisrm</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
+
+	<properties>
+		<java-version>1.8</java-version>
+		<springframework-version>5.3.29</springframework-version>
+		<springframework-security-version>5.8.5</springframework-security-version>
+	</properties>
+
 	<build>
 		<plugins>
 			<plugin>
@@ -22,7 +29,7 @@
 			</plugin>
 		</plugins>
 	</build>
-	
+
 	<dependencies>
 		<!-- 서블릿 4.0 의존 설정 -->
 		<!-- 참조: https://tomcat.apache.org/whichversion.html -->
@@ -146,13 +153,6 @@
 			<version>2.1.1</version>
 		</dependency>
 
-		<!-- PasswordEncoder를 사용하기 위해 필요한 라이브러리 -->
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-core</artifactId>
-			<version>5.5.8</version>
-		</dependency>
-
 		<!-- AOP 사용을 위한 의존 라이브러리 -->
 		<dependency>
 			<groupId>org.aspectj</groupId>
@@ -161,6 +161,32 @@
 			<scope>runtime</scope>
 		</dependency>
 
+		<!-- Spring Security를 위한 의존 라이브러리 설정 -->
+		<!-- PasswordEncoder를 사용하기 위해 필요한 라이브러리 -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-core</artifactId>
+			<version>${springframework-security-version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-web</artifactId>
+			<version>${springframework-security-version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-config</artifactId>
+			<version>${springframework-security-version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-taglibs</artifactId>
+			<version>${springframework-security-version}</version>
+		</dependency>
+
 	</dependencies>
-	
+
 </project>

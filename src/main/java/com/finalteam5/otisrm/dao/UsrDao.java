@@ -27,4 +27,7 @@ public interface UsrDao {
 	//로그인
 	public Login selectByUsrId(String usrId);
 	public List<UsrStts> selectUsrSttsList();
+	
+	//Spring Security 로그인
+	public Usr selectUsrDetailsByUsrId(String usrId);
 }

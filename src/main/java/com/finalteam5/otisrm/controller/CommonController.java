@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,8 +36,12 @@ public class CommonController {
 	private UsrService usrService;
 	
 	@RequestMapping("/")
-	public String home() {
-		return "redirect:/login";
+	public String home(Authentication authentication) {
+		if (authentication != null && authentication.isAuthenticated()) {
+			return "redirect:/home";
+		} else {
+			return "redirect:/login";
+		}
 	}
 	
 	//로그인 폼 불러오기
@@ -47,6 +52,7 @@ public class CommonController {
 	}
 		
 	//로그인 요청
+	/*
 	@PostMapping("/login")
 	public String login(Login usr, Model model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
 		String redirectUrl = (String) session.getAttribute("redirectUrl");
@@ -79,7 +85,7 @@ public class CommonController {
 		}
 		return "common/login";
 	}
-	
+	*/
 	//로그아웃 요청
 	@GetMapping("/logout")
 	public String logout(HttpSession session) {

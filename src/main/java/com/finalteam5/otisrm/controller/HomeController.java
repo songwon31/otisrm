@@ -10,8 +10,8 @@ public class HomeController {
 
 	@RequestMapping("/home")
 	public String developManagement() {
-
-		boolean a = true;
+		return "/systemManagement/usrManagement/usrManagement";
+		/*boolean a = true;
 		if (a) {
 			return null;
 		} else if (a) {
@@ -22,7 +22,7 @@ public class HomeController {
 			return null;
 		} else {
 			return null;
-		}
+		}*/
 	}
 	
 	
