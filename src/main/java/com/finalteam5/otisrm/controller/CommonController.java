@@ -92,6 +92,7 @@ public class CommonController {
 	public String join (Model model) {
 		//소속기관 목록 불러오기
 	    List<Inst> instList = usrService.getInstList();
+	    log.info("instList: " + instList);
 	    model.addAttribute("instOptions", instList);
 	    
 	    //가입 권한 목록 불러오기
