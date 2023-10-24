@@ -42,9 +42,9 @@
 	</div>
 	<div style="border:1px solid #ADB5BD; margin:1rem 0rem;"></div>
 	<ul style="list-style:none; padding:0; margin:0;">
-		<li style="font-weight:500; margin-bottom:0.8rem;"><a href="#">SR요청관리</a></li>
-		<li style="font-weight:500; margin-bottom:0.8rem;"><a href="#">SR검토관리</a></li>
-		<li style="font-weight:500; margin-bottom:0.8rem;"><a href="#">SR개발관리</a></li>
+		<li style="font-weight:500; margin-bottom:0.8rem;"><a href="${pageContext.request.contextPath}/systemManagement/usrManagement2">SR요청관리</a></li>
+		<li style="font-weight:500; margin-bottom:0.8rem;"><a href="${pageContext.request.contextPath}/systemManagement/usrManagement4">SR검토관리</a></li>
+		<li style="font-weight:500; margin-bottom:0.8rem;"><a href="${pageContext.request.contextPath}/systemManagement/usrManagement5">SR개발관리</a></li>
 		<li><a href="#" style="font-weight:500;">SR진척관리</a></li>
 	</ul>
 	

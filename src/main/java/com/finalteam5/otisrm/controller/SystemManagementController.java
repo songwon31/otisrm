@@ -58,4 +58,20 @@ public class SystemManagementController {
 		return "/systemManagement/usrManagement/usrManagement3";
 	}
 	
+	@RequestMapping("/usrManagement4")
+	public String usrManagement4(Model model, HttpSession session, @Valid UsrManagementSearchForm usrManagementSearchForm, Errors errors) {
+		UsrManagementPageConfigure usrManagementPageConfigure = usrService.getUsrManagementPageConfigureData();
+		model.addAttribute("usrManagementPageConfigure", usrManagementPageConfigure);
+		
+		return "/systemManagement/usrManagement/usrManagement4";
+	}
+	
+	@RequestMapping("/usrManagement5")
+	public String usrManagement5(Model model, HttpSession session, @Valid UsrManagementSearchForm usrManagementSearchForm, Errors errors) {
+		UsrManagementPageConfigure usrManagementPageConfigure = usrService.getUsrManagementPageConfigureData();
+		model.addAttribute("usrManagementPageConfigure", usrManagementPageConfigure);
+		
+		return "/systemManagement/usrManagement/usrManagement5";
+	}
+	
 }
