@@ -41,7 +41,7 @@
 			  <div class="container">
 			  	<div class="input-fields">			  					  	
 				    <div class="d-flex justify-content-center">			    
-				    	<label id="usrId" class="mr-2" for="usrId"><b>ID</b></label>
+				    	<label id="usrId" class="mr-3" for="usrId"><b>ID</b></label>
 				    	<input id="usrId" value="${login.usrId}" type="text" placeholder="아이디를 입력해주세요" name="usrId">
 				    	<div id="usrIdErr1" class="errorMsg text-danger d-none small" style="margin-left:10px; font-family: dotum,sans-serif; font-size: 12px;">아이디를 입력해주세요.</div>
 						<div id="usrIdErr2" class="errorMsg text-danger d-none small" style="margin-left:10px; font-family: dotum,sans-serif; font-size: 12px;">아이디 형식으로 입력해주세요.</div>
@@ -58,9 +58,9 @@
 				    </div>					
 					<div class="d-flex justify-content-center">				
 				    	<label class="mr-2" for="usrPswd"><b>PW</b></label>			    				    	
-				    	<input id="usrPswd" type="password" placeholder="비밀번호를 입력해주세요" name="usrPswd">
+				    	<input id="usrPswd" value="${login.usrPswd}" type="password" placeholder="비밀번호를 입력해주세요" name="usrPswd">
 						<span style="position: relative;">
-							<img id="eye" onclick="blink()" src ="${pageContext.request.contextPath}/resources/images/eye.JPG" width="20">
+							<img id="eye" onclick="blink()" src ="${pageContext.request.contextPath}/resources/images/eye.JPG" width="30">
 						</span> 
 					</div>
 			  		<div id="usrPswdErr1" class="errorMsg text-danger d-none small" style="margin-left:10px; font-family: dotum,sans-serif; font-size: 12px;">비밀번호를 입력해주세요.</div>
@@ -84,7 +84,6 @@
 			   		<a id="join-btn" class="btn btn-outline-primary" href="${pageContext.request.contextPath}/join/join" target="_blank" onclick="openSmallWindow(event)">회원가입</a>
 				</div>
 			  </div>
-			
 			</form>
 		</div>
 	</body>

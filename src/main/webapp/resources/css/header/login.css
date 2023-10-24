@@ -43,6 +43,27 @@ input::placeholder {
 	padding-right: 9px;
 }
 
+b{
+	width: 20.95px;
+}
+
+.input-container {
+    position: relative;
+}
+
+.input-container input {
+    padding-right: 30px; /* input 우측에 충분한 공간을 확보 */
+}
+
+#eye{
+    position: absolute;
+    padding-right: 10px;
+    z-index: 100;
+    right: 5px; /* 이미지를 우측에 위치시킴 */
+    top: 50%; /* 이미지를 수직 가운데 정렬 */
+    transform: translateY(-50%); /* 수직 가운데 정렬을 위해 translateY 사용 */
+}
+
 /* Set a style for all buttons */
 button {
   background-color: #04AA6D;

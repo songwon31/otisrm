@@ -87,26 +87,16 @@ public class UsrServiceImpl implements UsrService{
 	@Override
 	public LoginResult login(Login loginUsr) {
 		Login dbUsr = usrDao.selectByUsrId(loginUsr.getUsrId());
-		if(dbUsr.getUsrId().equals(loginUsr.getUsrId())) {
+		if(dbUsr == null) {
 			return LoginResult.FAIL_UID;
 		}
-		/*PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
-		if(passwordEncoder!= null) {			
-			if(passwordEncoder.matches(usr.getUsrPswd(), usr.getUsrPswd())) {
-				if(usr.getUsrSttsNo().equals("US_STTS_02")) {
-					return LoginResult.SUCCESS;
-				} else {
-					return LoginResult.FAIL_ENABLED;
-				}
-			} else {
-				return LoginResult.FAIL_PASSWORD;
-			}                                      
-		}else{
-			
-			
-		}*/
-		if(dbUsr.getUsrPswd().equals(loginUsr.getUsrPswd())) {
-			return LoginResult.SUCCESS;
+		PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+		if(passwordEncoder.matches(loginUsr.getUsrPswd(), dbUsr.getUsrPswd())) {
+			if(dbUsr.getUsrSttsNo().equals("NORMAL")) {
+				return LoginResult.SUCCESS;
+			}else {
+				return LoginResult.FAIL_ENABLED;
+			}
 		}else {
 			return LoginResult.FAIL_PASSWORD;
 		}

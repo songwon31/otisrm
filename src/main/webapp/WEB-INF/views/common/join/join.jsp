@@ -303,7 +303,7 @@
 								        		<div class="style-scope sc-button"></div>
 								        	</div> 제출
 								        </button>
-								        <button text="닫기" class="btn btn-secondary style-scope es-spuser-reg" role="button" tabindex="0" aria-disabled="false">
+								        <button type="button" text="닫기" class="btn btn-secondary style-scope es-spuser-reg" role="button" tabindex="0" aria-disabled="false">
 								        	<div class="button-container style-scope sc-button">
 								        		<div class="style-scope sc-button"></div>
 								        	</div> 닫기
@@ -407,8 +407,10 @@
 														</sc-button>
 													</div>
 													<div>
-														<span id="usrIdInfo" class="errorMsg text-success" style="font-family: dotum,sans-serif; font-size: 12px;"></span>
-														<span id="usrIdErr" class="errorMsg text-danger" style="font-family: dotum,sans-serif; font-size: 12px;"></span>
+														<span id="idErr1" class="errorMsg text-danger" style="font-family: dotum,sans-serif; font-size: 12px;">아이디를 입력해주세요.</span>
+														<span id="idErr2" class="errorMsg text-danger" style="font-family: dotum,sans-serif; font-size: 12px;">아이디를 올바르게 입력해주세요.</span>
+														<span id="idErr3" class="errorMsg text-danger" style="font-family: dotum,sans-serif; font-size: 12px;">이미 존재하는 아이디 입니다.</span>
+														<span id="idCheck" class="errorMsg text-success" style="font-family: dotum,sans-serif; font-size: 12px;">사용가능한 아이디 입니다.</span>
 													</div>
 												</td>
 												<th class="style-scope es-spuser-reg">
@@ -524,11 +526,11 @@
 			            						<div class="d-flex">			            						
 				            						<sc-text-field input-clear="true" class="w-150 style-scope es-spuser-reg" aria-disabled="false" field="">
 				            							<div class="field-container style-scope sc-text-field">
-				            								<input id="rrn" name="usrRrno" value="${usr.usrRrno}" class="style-scope sc-text-field" autocomplete="off" maxlength="7">
+				            								<input id="rrn" name="usrRrno" value="${usr.usrRrno}" class="style-scope sc-text-field" autocomplete="off" maxlength="8">
 				            							</div>
 				            						</sc-text-field>
 				            						<div class="m-1">(주민등록번호 뒷자리는 앞에 한자리만 입력해주세요.(예: xxxxxx-1))</div>
-				            						<div>			
+				            						<div class="m-1">			
 					            						<span id="rrnErr1" class="errorMsg text-danger d-none small" style="font-family: dotum,sans-serif; font-size: 12px;">주민등록번호 형식 오류입니다.</span>
 					            						<span id="rrnErr2" class="errorMsg text-danger d-none small" style="font-family: dotum,sans-serif; font-size: 12px;">주민등록번호를 입력해주세요.</span>
 				            						</div>

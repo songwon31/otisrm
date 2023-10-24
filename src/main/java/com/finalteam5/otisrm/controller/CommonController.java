@@ -99,20 +99,18 @@ public class CommonController {
 	    log.info(usrAuthrtList.toString());
 	    model.addAttribute("usrAuthrtOptions", usrAuthrtList);
 	    
-        
 	    return "common/join/join";
 	}
-	//회원가입 폼 제출
 	@PostMapping("/join/join")
 	public String submitJoin(Usr usr, Model model) {
-		JoinResult result = usrService.join(usr);
-		if(result == JoinResult.FAIL_DUPLICATED_UID) {
-			String error1 = "이미 가입된 아이디입니다.";
-			model.addAttribute("error1", error1);
-			return "join/joinForm";
-		}else{
-			return "redirect:/login";
-		}
+	    JoinResult result = usrService.join(usr);
+	    if (result == JoinResult.FAIL_DUPLICATED_UID) {
+	        String error1 = "이미 가입된 아이디입니다.";
+	        model.addAttribute("error1", error1);
+	        return "join/joinForm";
+	    } else {
+	        return "redirect:/join";
+	    }
 	}
 	//회원가입 상세내용 불러오기
 	@RequestMapping("join/joinDetail")

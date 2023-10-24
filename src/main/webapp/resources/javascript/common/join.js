@@ -4,14 +4,31 @@ function init() {
    loading();
    jsonProduct();
    $("#btn_delete").hide();
-   $('.content-row').hide();
-   submitAndClose();
+   $('.content-row').hide();  
 }
 
 $(document).ready(function(){
-	
-    //input 블러 시 유효성 검사 및 밑줄 처리
+	// 페이지가 로드될 때 초기에 모든 에러 메시지를 숨김
+    var idErr1 = $("#idErr1");
+    var idErr2 = $("#idErr2");
+    var idErr3 = $("#idErr3");
+    var idCheck = $("#idCheck");
+    
+    idErr1.addClass("d-none");
+    idErr2.addClass("d-none");
+    idErr3.addClass("d-none");
+    idCheck.addClass("d-none");
+    
+    //input 블러 시 유효성 검사 
     $("input").blur(function(event) {
+    	//모든 에러 메세지를 보여주지 않도록 초기화
+       	var errorMsgs = $(".errorMsg");
+       	console.log(errorMsgs);
+       	errorMsgs.each(function(index, item) {
+       		$(item).addClass("d-none");
+       		
+       	});
+       	
     	//이름 검사
     	nmIsValidation();
     	
@@ -27,8 +44,9 @@ $(document).ready(function(){
     	//주민번호 유효성 검사
     	rrnIsValidation();
     });
-
+    
 });
+
 
 //소속기관 선택
 function myInst(){
@@ -92,7 +110,7 @@ function selectDeptBtn(){
 }
 
 function selectDept() {
-    // 선택된 라디오 버튼의 ID 값을 가져옵니다.
+    // 선택된 라디오 버튼의 ID 값을 가져오기
     var selectedDeptNo = $("input[name='deptNm']:checked").attr("id");
     var selectedDeptNm = $("input[name='deptNm']:checked").val();
     $("#myDept").html(selectedDeptNm);
@@ -171,16 +189,23 @@ function showIbps(selectedOptionId) {
 	});
 }
 
-
+	
 //아이디 유효성검사
 function selectOverlapUsrId(){
+
 	console.log("클릭");
 	let myUsrId = $("#usrId").val();
+	var idErr1 = $("#idErr1");
+	var idErr2 = $("#idErr2");
+	var idErr3 = $("#idErr3");
+	var idCheck = $("#idCheck");
 	if(myUsrId === null || myUsrId===""){
 		console.log("클릭-입력안함");
-		$("#usrIdInfo").hide();
-		$("#usrIdErr").show();
-		$("#usrIdErr").html("아이디를 입력해주세요.");
+		isValidation1 = false;
+		idErr1.removeClass("d-none");
+		idErr2.addClass("d-none");
+		idErr3.addClass("d-none");
+		idCheck.addClass("d-none");
 	}else{
 		console.log("검사시작");
 		$.ajax({
@@ -192,21 +217,27 @@ function selectOverlapUsrId(){
 					var pattern = /^[a-z]+[a-z0-9]{4,19}$/g;
 		    		var result = pattern.test(myUsrId);
 					if(result === false){
+						isValidation = false;
 						console.log("아이디 틀림");
-						$("#usrIdInfo").hide();
-						$("#usrIdErr").show();
-						$("#usrIdErr").html("아이디를 올바르게 입력해주세요.");
-					}else{
+						idErr1.addClass("d-none");
+						idErr2.removeClass("d-none");
+						idErr3.addClass("d-none");
+						idCheck.addClass("d-none");
+					}else{ 
+						isValidation = true;
 						console.log("사용가능");
-						$("#usrIdErr").hide();
-						$("#usrIdInfo").show();
-						$("#usrIdInfo").html("사용가능한 아이디 입니다.");
+						idErr1.addClass("d-none");
+						idErr2.addClass("d-none");
+						idErr3.addClass("d-none");
+						idCheck.removeClass("d-none");
 					}	
 				}else{
+					isValidation = false;
 					console.log("이미존재");
-					$("#usrIdInfo").hide();
-					$("#usrIdErr").show();
-					$("#usrIdErr").html("이미 존재하는 아이디 입니다.");
+					dErr1.addClass("d-none");
+					idErr2.addClass("d-none");
+					idErr3.removeClass("d-none");
+					idCheck.addClass("d-none");
 				}
 	       },
 			error: function (error) {
@@ -232,6 +263,7 @@ function nmIsValidation(){
     			isValidation = false;
     			nameErr.removeClass("d-none");
     		} else {
+    			isValidation = true;
     			nameErr.addClass("d-none");
     		}
     	}
@@ -240,8 +272,6 @@ function nmIsValidation(){
 }
 //비밀번호 유효성검사
 function pswdIsValidation(){
-	//유효성 검사
-    var isValidation = true;
 	//pwd검사
 	if($(event.target).attr('id') == "pwd") {
     	var pwd = $("#pwd").val();
@@ -263,6 +293,7 @@ function pswdIsValidation(){
 	    			pwdErr2.removeClass("d-none");
 	    			pwdErr1.addClass("d-none");
 	    		} else {
+	    			isValidation = true;
 	    			pwdErr2.addClass("d-none");
 	    			pwdErr3.removeClass("d-none");
 	    			pwdErr1.addClass("d-none");
@@ -291,6 +322,7 @@ function pswdIsValidation(){
     			pwdCheckErr2.removeClass("d-none");
     			pwdCheckErr1.addClass("d-none");
     		} else {
+    			isValidation = true;
     			pwdCheckErr2.addClass("d-none");
     			pwdCheckErr3.removeClass("d-none");
     			pwdCheckErr1.addClass("d-none");
@@ -318,6 +350,7 @@ function telIsValidation(){
     			telErr1.removeClass("d-none");
 	    		//telErr2.addClass("d-none");
     		} else {
+    			isValidation = true;
     			telErr1.addClass("d-none");
     			//telErr2.addClass("d-none");
     		}
@@ -352,11 +385,13 @@ function emailIsValidation(){
     			emailErr2.removeClass("d-none");
     			emailErr3.addClass("d-none");
     		} else {
+    			isValidation = true;
     			emailErr2.addClass("d-none");
     			emailErr3.addClass("d-none");
     			emailErr1.addClass("d-none");
     		}
     	}
+    	
 	}
 }
 //주민번호 유효성검사
@@ -364,12 +399,15 @@ function rrnIsValidation(){
 	if($(event.target).attr('id') == "rrn"){		
 		var rrn = $("#rrn").val();
 		console.log("rrnDate: " + rrn);
+		var rrnPattern = $("#rrn").val($("#rrn").val().replace(/[^0-9]/g, "").replace(/(\d{6})(\d{1})/, "$1-$2"));
+		console.log("흐앗: " + rrnPattern);
 		var rrnErr1 = $("#rrnErr1");
 		var rrnErr2 = $("#rrnErr2");
 	
 		var pattern = /^(?:[0-9]{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[1,2][0-9]|3[0,1]))-?[1-4]$/;
 		var result = pattern.test(rrn);
 		if(rrn === ""){
+			isValidation = false;
 			console.log("작성안함")
 			rnnErr1.addClass("d-none");
 			rrnErr2.removeClass("d-none");
@@ -380,11 +418,33 @@ function rrnIsValidation(){
 				rrnErr1.removeClass("d-none");
 				rnnErr2.addClass("d-none");
 			}else{
+				isValidation = true;
 				console.log("안틀림");
 				rnnErr1.addClass("d-none");
-				rnnErr2.addClass("d-none");
-				
+				rnnErr2.addClass("d-none");				
 			}
+		}
+		
+	}
+}
+
+//회원가입 폼 제출 유효성검사
+var isValidation = false;
+function checkValidation(){
+	if(isValidation === false) {
+		event.preventDefault();
+		window.alert('회원가입에 실패하였습니다.');
+	}
+}
+
+function submitForm() {
+	if(isValidation === true){		
+		var confirmation = window.confirm('회원가입을 성공적으로 완료했습니다.');
+		if (confirmation) {
+			// 현재 창을 닫음
+			setTimeout(function () {
+				window.close();
+			}, 0);
 		}
 	}
 }
@@ -400,13 +460,6 @@ function refreshCaptcha() {
 
     // 이미지를 새 URL로 변경
     captchaImage.src = newImageUrl;
-}
-
-//자동하이픈기능추가
-const autoHyphen = (target) => {
-	 target.value = target.value
-	  .replace(/[^0-9]/g, '')
-	  .replace(/^(\d{0,3})(\d{0,4})(\d{0,4})$/g, "$1-$2-$3").replace(/(\-{1,2})$/g, "");
 }
 
 
