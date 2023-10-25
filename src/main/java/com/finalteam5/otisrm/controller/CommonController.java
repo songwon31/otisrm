@@ -87,11 +87,11 @@ public class CommonController {
 	}
 	*/
 	//로그아웃 요청
-	@GetMapping("/logout")
+	/*@GetMapping("/logout")
 	public String logout(HttpSession session) {
 		session.invalidate();
 	    return "redirect:/";
-	}
+	}*/
 	
 	//회원가입 폼
 	@GetMapping("/join/join")
