@@ -3,49 +3,45 @@
 <%@ include file="/WEB-INF/views/common/header.jsp"%>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/srManagement/developManagement/developManagement.css" />
 
-<div id="userManagementDiv" class="shadow">
-	<div id="userManagementTitleDiv" style="height:4rem;">
+<div id="developManagementDiv" class="shadow">
+	<div id="developManagementTitleDiv" style="height:4rem;">
 		<div class="font-weight-bold d-flex" style="font-size:2.5rem; height:4rem; vertical-align: center;">
 			<i class="material-icons top-icon" style="font-size:3.5rem; height:4rem; line-height: 4rem;">developer_board</i>
 			<span style="margin-left: 1rem;">SR개발관리</span>
 		</div>
 	</div>
-	<!-- <div style="width:160.07rem; height:1rem; background-color: red;"></div> -->
-	<div id="userManagementSearchDiv" class="shadow" style="height:13rem; margin:2rem 0rem; padding:3rem 2rem; background-color:white; border-radius:1rem;">
+	<div id="developManagementSearchDiv" class="shadow" style="height:13rem; margin:2rem 0rem; padding:3rem 2rem; background-color:white; border-radius:1rem;">
 		<form id="searchForm" method="get" action="">
 			<div class="d-flex" style="height:3rem;">
 				<!-- 조회기간 -->
-				<div style="width:14rem; display:flex; align-items:center;">
+				<div style="width: 8.94%; display:flex; align-items:center;">
 					<svg style="width:0.5rem; height:0.5rem; margin: 0rem 0.5rem;"><rect width="0.5rem" height="0.5rem" fill="#222E3C" /></svg>
 					<span style="font-size:1.6rem; font-weight:700;">조회기간</span>
 				</div>
-				<div style="width:33rem; display:flex; align-items:center;">
-						<input name="joinDateStart" type="date">
-						<div style="margin: 0 1rem; font-size:1.6rem; display:flex; flex-direction:row; justify-content:center; align-items:center;">~</div>
-						<input name="joinDateEnd" type="date">
+				<div style="width: 22.57%; display:flex; align-items:center;">
+						<input style="width: 45%;" name="startDate" type="date">
+						<div style="width: 10%; margin: 0 1rem; font-size:1.6rem; display:flex; flex-direction:row; justify-content:center; align-items:center;">~</div>
+						<input style="width: 45%;" name="endDate" type="date">
 				</div>
-				<div style="width: 7.19rem;"></div>
+				<div style="width: 3.5%;"></div>
 				<!-- 관련 시스템 -->
-				<div style="width:14rem; display:flex; align-items:center;">
+				<div style="width: 8.94%; display:flex; align-items:center;">
 					<svg style="width:0.5rem; height:0.5rem; margin: 0rem 0.5rem;"><rect width="0.5rem" height="0.5rem" fill="#222E3C" /></svg>
 					<span style="font-size:1.6rem; font-weight:700;">관련 시스템</span>
 				</div>
-				<div style="width:15rem;">
-					<select id="usrAuthrt" name="usrAuthrt">
+				<div style="width: 9.59%;">
+					<select style="width:100%;" id="selectSystem" name="selectSystem">
 						<option value="" selected>전체</option>
-						<c:forEach var="usrAuthrt" items="${usrManagementPageConfigure.usrAuthrtList}" varStatus="status">
-							<option value="${usrAuthrt.usrAuthrtNo}">${usrAuthrt.usrAuthrtNm}</option>
-						</c:forEach>
 					</select>
 				</div>
-				<div style="width: 7.19rem;"></div>
+				<div style="width: 3.5%;"></div>
 				<!-- 진행 상태 -->
-				<div style="width:14rem; display:flex; align-items:center;">
+				<div style="width: 8.94%; display:flex; align-items:center;">
 					<svg style="width:0.5rem; height:0.5rem; margin: 0rem 0.5rem;"><rect width="0.5rem" height="0.5rem" fill="#222E3C" /></svg>
 					<span style="font-size:1.6rem; font-weight:700;">진행상태</span>
 				</div>
-				<div style="width:36rem;">
-					<select style="width:13rem;" id="selectProg" name="selectProg">
+				<div style="width: 24.73%;">
+					<select style="width:30%;" id="selectProg" name="selectProg">
 						<option value="" selected>전체</option>
 				        <option>요청</option>
 				        <option>검토중</option>
@@ -55,9 +51,9 @@
 				        <option>개발완료</option>
 				    </select>
 				</div>
-				<div style="width: 7.19rem;"></div>
+				<div style="width: 3.5%;"></div>
 				<!-- 담당 SR -->
-				<div style="width: 8.5rem;" class="d-flex flex-row-reverse align-items-center">
+				<div style="width: 5.79%;" class="d-flex flex-row-reverse align-items-center">
 					<span style="font-size:1.6rem; margin-left: 1rem;">담당 SR</span>
 		        	<input type="checkbox" id="myDevCheck" name="myDevCheck" value="False">
 		        </div>
@@ -66,25 +62,25 @@
 			<!-- LINE2 -->
 			<div class="d-flex" style="margin-top:1.2rem; height:3rem;">
 				<!-- 등록자 소속 -->
-				<div style="width:14rem; display:flex; align-items:center;">
+				<div style="width: 8.94%; display:flex; align-items:center;">
 					<svg style="width:0.5rem; height:0.5rem; margin: 0rem 0.5rem;"><rect width="0.5rem" height="0.5rem" fill="#222E3C" /></svg>
 					<span style="font-size:1.6rem; font-weight:700;">등록자 소속</span>
 				</div>
-				<div style="width:33rem; display:flex; align-items:center;">
-						<input type="text" id="keywordContent" name="keywordContent" style="width: 24rem;"/>
+				<div style="width: 22.57%; display:flex; align-items:center;">
+						<input type="text" id="keywordContent" name="keywordContent" class="flex-grow-1"/>
 						<button id="searchBtn" style="margin-left: 1rem;" class="d-inline-flex align-items-center justify-content-center" 
 							onclick="location.href='#';">
 							찾기
 						</button>
 				</div>
-				<div style="width: 7.19rem;"></div>
+				<div style="width: 3.5%;"></div>
 				<!-- 개발 부서 -->
-				<div style="width:14rem; display:flex; align-items:center;">
+				<div style="width: 8.94%; display:flex; align-items:center;">
 					<svg style="width:0.5rem; height:0.5rem; margin: 0rem 0.5rem;"><rect width="0.5rem" height="0.5rem" fill="#222E3C" /></svg>
 					<span style="font-size:1.6rem; font-weight:700;">개발 부서</span>
 				</div>
-				<div style="width:15rem;">
-					<select id="devDepartment" name="devDepartment" style="width:100%">
+				<div style="width: 9.59%;">
+					<select id="selectDevDepartment" name="selectDevDepartment" style="width:100%">
 						<option value="" selected>전체</option>
 						<option>개발1팀</option>
 				        <option>개발2팀</option>
@@ -92,32 +88,32 @@
 					</select>
 
 				</div>
-				<div style="width: 7.19rem;"></div>
+				<div style="width: 3.5%;"></div>
 				<!-- 키워드 검색 -->
-				<div style="width:14rem; display:flex; align-items:center;">
+				<div style="width: 8.94%; display:flex; align-items:center;">
 					<svg style="width:0.5rem; height:0.5rem; margin: 0rem 0.5rem;"><rect width="0.5rem" height="0.5rem" fill="#222E3C" /></svg>
 					<span style="font-size:1.6rem; font-weight:700;">키워드</span>
 				</div>
-				<div style="width:36rem; display: flex;">
-					<select style="width:13rem;" id="userStts" name="userStts">
+				<div style="width: 24.73%; display: flex;">
+					<select style="width:30%;" id="userStts" name="userStts">
 						<option value="" selected>전체</option>
 						<c:forEach var="usrStts" items="${usrManagementPageConfigure.usrSttsList}" varStatus="status">
 							<option value="${usrStts.usrSttsNo}">${usrStts.usrSttsNm}</option>
 						</c:forEach>
 					</select>
-					<input type="text" id="keywordContent" name="keywordContent" style="width: 22rem; margin-left:1rem;"/>
+					<div style="width:1rem;" ></div>
+					<input type="text" id="keywordContent" name="keywordContent" class="flex-grow-1"/>
 				</div>
-				<div style="width: 7.6rem;"></div>
+				<div style="width: 3.5%;"></div>
 				<!-- 검색버튼 -->
-				<button id="searchBtn" class="d-inline-flex flex-end align-items-center justify-content-center"  
+				<button id="searchBtn" style="width: 5.79%;" class="d-inline-flex flex-row-reverse align-items-center justify-content-center"  
 					onclick="location.href='#';">
 					검색
 				</button>
 			</div>
-
 		</form>
 	</div>
-	<div id="userManagementBoardDiv" class="shadow" 
+	<div id="developManagementBoardDiv" class="shadow" 
 		style="height:65rem; background-color:white; border-radius:1rem; padding:2rem;">
 		<div style="height:3.5rem; font-size:2.2rem; font-weight:700; color:#222E3C;">SR개발목록</div>
 		<div class="" style="height:52rem; margin:0.75rem 0rem;">
@@ -125,8 +121,8 @@
 				<colgroup>
 					<col width="4%" />
 					<col width="10%" />
-					<col width="18%" />
-					<col width="6%" />
+					<col width="16%" />
+					<col width="8%" />
 					<col width="6%" />
 					<col width="6%" />
 					<col width="6%" />
@@ -139,7 +135,7 @@
 					<col width="6%" />
 				</colgroup>
 				<thead style="background-color: #e9ecef;">
-					<tr style="height: 5rem; font-size: 1.7rem; font-weight: 700;">
+					<tr style="height: 5rem; font-size: 1.6rem; font-weight: 700;">
 						<th scope="col"></th>
 						<th scope="col">요청번호</th>
 						<th scope="col">제목</th>
@@ -159,9 +155,9 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr style="height: 4.7rem; font-size: 1.7rem;">
-						<th scope="row">1</th>
-						<td class="text-align-left">SR231013_0001</td>
+					<tr style="height: 4.7rem; font-size: 1.6rem;">
+						<td>1</td>
+						<td>SR231013_0001</td>
 						<td class="text-align-left">SRM 시스템 개발 요청</td>
 						<td>SoftNet</td>
 						<td>홍길동</td>
@@ -175,9 +171,9 @@
 						<td>N</td>
 						<td><button class="detailViewBtn">상세보기</button></td>
 					</tr>
-					<tr style="height: 4.7rem; font-size: 1.7rem;">
-						<th scope="row">1</th>
-						<td class="text-align-left">SR231013_0001</td>
+					<tr style="height: 4.7rem; font-size: 1.6rem;">
+						<td>1</td>
+						<td>SR231013_0001</td>
 						<td class="text-align-left">SRM 시스템 개발 요청</td>
 						<td>SoftNet</td>
 						<td>홍길동</td>
@@ -191,9 +187,9 @@
 						<td>N</td>
 						<td><button class="detailViewBtn">상세보기</button></td>
 					</tr>
-					<tr style="height: 4.7rem; font-size: 1.7rem;">
-						<th scope="row">1</th>
-						<td class="text-align-left">SR231013_0001</td>
+					<tr style="height: 4.7rem; font-size: 1.6rem;">
+						<td>1</td>
+						<td>SR231013_0001</td>
 						<td class="text-align-left">SRM 시스템 개발 요청</td>
 						<td>SoftNet</td>
 						<td>홍길동</td>
@@ -207,9 +203,9 @@
 						<td>N</td>
 						<td><button class="detailViewBtn">상세보기</button></td>
 					</tr>
-					<tr style="height: 4.7rem; font-size: 1.7rem;">
-						<th scope="row">1</th>
-						<td class="text-align-left">SR231013_0001</td>
+					<tr style="height: 4.7rem; font-size: 1.6rem;">
+						<td>1</td>
+						<td>SR231013_0001</td>
 						<td class="text-align-left">SRM 시스템 개발 요청</td>
 						<td>SoftNet</td>
 						<td>홍길동</td>
@@ -223,9 +219,9 @@
 						<td>N</td>
 						<td><button class="detailViewBtn">상세보기</button></td>
 					</tr>
-					<tr style="height: 4.7rem; font-size: 1.7rem;">
-						<th scope="row">1</th>
-						<td class="text-align-left">SR231013_0001</td>
+					<tr style="height: 4.7rem; font-size: 1.6rem;">
+						<td>1</td>
+						<td>SR231013_0001</td>
 						<td class="text-align-left">SRM 시스템 개발 요청</td>
 						<td>SoftNet</td>
 						<td>홍길동</td>
@@ -239,9 +235,9 @@
 						<td>N</td>
 						<td><button class="detailViewBtn">상세보기</button></td>
 					</tr>
-					<tr style="height: 4.7rem; font-size: 1.7rem;">
-						<th scope="row">1</th>
-						<td class="text-align-left">SR231013_0001</td>
+					<tr style="height: 4.7rem; font-size: 1.6rem;">
+						<td>1</td>
+						<td>SR231013_0001</td>
 						<td class="text-align-left">SRM 시스템 개발 요청</td>
 						<td>SoftNet</td>
 						<td>홍길동</td>
@@ -255,9 +251,9 @@
 						<td>N</td>
 						<td><button class="detailViewBtn">상세보기</button></td>
 					</tr>
-					<tr style="height: 4.7rem; font-size: 1.7rem;">
-						<th scope="row">1</th>
-						<td class="text-align-left">SR231013_0001</td>
+					<tr style="height: 4.7rem; font-size: 1.6rem;">
+						<td>1</td>
+						<td>SR231013_0001</td>
 						<td class="text-align-left">SRM 시스템 개발 요청</td>
 						<td>SoftNet</td>
 						<td>홍길동</td>
@@ -271,9 +267,9 @@
 						<td>N</td>
 						<td><button class="detailViewBtn">상세보기</button></td>
 					</tr>
-					<tr style="height: 4.7rem; font-size: 1.7rem;">
-						<th scope="row">1</th>
-						<td class="text-align-left">SR231013_0001</td>
+					<tr style="height: 4.7rem; font-size: 1.6rem;">
+						<td>1</td>
+						<td>SR231013_0001</td>
 						<td class="text-align-left">SRM 시스템 개발 요청</td>
 						<td>SoftNet</td>
 						<td>홍길동</td>
@@ -287,9 +283,9 @@
 						<td>N</td>
 						<td><button class="detailViewBtn">상세보기</button></td>
 					</tr>
-					<tr style="height: 4.7rem; font-size: 1.7rem;">
-						<th scope="row">1</th>
-						<td class="text-align-left">SR231013_0001</td>
+					<tr style="height: 4.7rem; font-size: 1.6rem;">
+						<td>1</td>
+						<td>SR231013_0001</td>
 						<td class="text-align-left">SRM 시스템 개발 요청</td>
 						<td>SoftNet</td>
 						<td>홍길동</td>
@@ -303,9 +299,9 @@
 						<td>N</td>
 						<td><button class="detailViewBtn">상세보기</button></td>
 					</tr>
-					<tr style="height: 4.7rem; font-size: 1.7rem;">
-						<th scope="row">1</th>
-						<td class="text-align-left">SR231013_0001</td>
+					<tr style="height: 4.7rem; font-size: 1.6rem;">
+						<td>1</td>
+						<td>SR231013_0001</td>
 						<td class="text-align-left">SRM 시스템 개발 요청</td>
 						<td>SoftNet</td>
 						<td>홍길동</td>

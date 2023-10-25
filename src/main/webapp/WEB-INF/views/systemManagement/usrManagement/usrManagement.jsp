@@ -12,9 +12,8 @@
 			<span style="margin-left: 9.5px;">사용자관리</span>
 		</div>
 	</div>
-	
 	<div id="userManagementSearchDiv" class="shadow" 
-		style="height:13rem; margin:1rem 0rem; padding:3rem 2rem; background-color:white; border-radius:10px;">
+		style="height:13rem; margin:2rem 0rem; padding:3rem 2rem; background-color:white; border-radius:10px;">
 		<form id="searchForm" method="get" action="usrManagement">
 			<div class="p-0 container-fluid d-inline-flex flex-row" style="height:3rem;">
 				<div style="width:20%;" class="d-inline-flex flex-row align-items-center">
@@ -158,7 +157,7 @@
 					<col width="12%"/>
 				</colgroup>
 				<thead style="background-color:#e9ecef;">
-					<tr style="height:5rem; font-size:1.7rem; font-weight:700;">
+					<tr style="height:5rem; font-size:1.6rem; font-weight:700;">
 						<th scope="col">ㅁ</th>
 						<th scope="col">이름</th>
 						<th scope="col">전화번호</th>
@@ -170,7 +169,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr style="height:4.7rem; font-size:1.7rem;">
+					<tr style="height:4.7rem; font-size:1.6rem;">
 						<th scope="row">ㅁ</th>
 						<td class="">송원석</td>
 						<td class="">010-1234-5678</td>
@@ -180,7 +179,7 @@
 						<td>2023-10-18</td>
 						<td>Y</td>
 					</tr>
-					<tr style="height:4.7rem; font-size:1.7rem;">
+					<tr style="height:4.7rem; font-size:1.6rem;">
 						<th scope="row">ㅁ</th>
 						<td class="">송원석</td>
 						<td class="">010-1234-5678</td>
@@ -190,7 +189,7 @@
 						<td>2023-10-18</td>
 						<td>Y</td>
 					</tr>
-					<tr style="height:4.7rem; font-size:1.7rem;">
+					<tr style="height:4.7rem; font-size:1.6rem;">
 						<th scope="row">ㅁ</th>
 						<td class="">송원석</td>
 						<td class="">010-1234-5678</td>
@@ -200,7 +199,7 @@
 						<td>2023-10-18</td>
 						<td>Y</td>
 					</tr>
-					<tr style="height:4.7rem; font-size:1.7rem;">
+					<tr style="height:4.7rem; font-size:1.6rem;">
 						<th scope="row">ㅁ</th>
 						<td class="">송원석</td>
 						<td class="">010-1234-5678</td>
@@ -210,7 +209,7 @@
 						<td>2023-10-18</td>
 						<td>Y</td>
 					</tr>
-					<tr style="height:4.7rem; font-size:1.7rem;">
+					<tr style="height:4.7rem; font-size:1.6rem;">
 						<th scope="row">ㅁ</th>
 						<td class="">송원석</td>
 						<td class="">010-1234-5678</td>
@@ -220,7 +219,7 @@
 						<td>2023-10-18</td>
 						<td>Y</td>
 					</tr>
-					<tr style="height:4.7rem; font-size:1.7rem;">
+					<tr style="height:4.7rem; font-size:1.6rem;">
 						<th scope="row">ㅁ</th>
 						<td class="">송원석</td>
 						<td class="">010-1234-5678</td>
@@ -230,7 +229,7 @@
 						<td>2023-10-18</td>
 						<td>Y</td>
 					</tr>
-					<tr style="height:4.7rem; font-size:1.7rem;">
+					<tr style="height:4.7rem; font-size:1.6rem;">
 						<th scope="row">ㅁ</th>
 						<td class="">송원석</td>
 						<td class="">010-1234-5678</td>
@@ -240,7 +239,7 @@
 						<td>2023-10-18</td>
 						<td>Y</td>
 					</tr>
-					<tr style="height:4.7rem; font-size:1.7rem;">
+					<tr style="height:4.7rem; font-size:1.6rem;">
 						<th scope="row">ㅁ</th>
 						<td class="">송원석</td>
 						<td class="">010-1234-5678</td>
@@ -250,7 +249,7 @@
 						<td>2023-10-18</td>
 						<td>Y</td>
 					</tr>
-					<tr style="height:4.7rem; font-size:1.7rem;">
+					<tr style="height:4.7rem; font-size:1.6rem;">
 						<th scope="row">ㅁ</th>
 						<td class="">송원석</td>
 						<td class="">010-1234-5678</td>
@@ -260,7 +259,7 @@
 						<td>2023-10-18</td>
 						<td>Y</td>
 					</tr>
-					<tr style="height:4.7rem; font-size:1.7rem;">
+					<tr style="height:4.7rem; font-size:1.6rem;">
 						<th scope="row">ㅁ</th>
 						<td class="">송원석</td>
 						<td class="">010-1234-5678</td>
