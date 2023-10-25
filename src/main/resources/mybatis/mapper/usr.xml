@@ -83,11 +83,12 @@
     
     <!-- 작성자: 송원석 /usrId를 통해 사용자 테이블 정보 불러오기 -->
     <select id="selectUsrDetailsByUsrId" parameterType="String" resultType="Usr">
-    	select usr_no, usr_id, usr_pswd, usr_nm, usr_rrno, usr_telno, usr_eml,
-    		inst_no, dept_no, ibps_no, role_no, usr_authrt_no, usr_stts_no, 
-    		lgn_fail_cnt, usr_join_dt, usr_whdwl_dt
-    	from usr
-    	where usr_id = #{usrId}
+    	select u.usr_no, u.usr_id, u.usr_pswd, u.usr_nm, u.usr_rrno, u.usr_telno, u.usr_eml,
+    		u.inst_no, u.dept_no, u.ibps_no, u.role_no, u.usr_authrt_no, u.usr_stts_no, 
+    		u.lgn_fail_cnt, u.usr_join_dt, u.usr_whdwl_dt, a.usr_authrt_nm
+    	from usr u
+    	join usr_authrt a on u.usr_authrt_no = a.usr_authrt_no
+		where usr_Id = #{usrId}		 
     </select>
 	
 </mapper>

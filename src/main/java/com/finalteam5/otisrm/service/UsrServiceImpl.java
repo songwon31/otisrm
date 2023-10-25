@@ -119,6 +119,11 @@ public class UsrServiceImpl implements UsrService{
 		
 	}
 	
+	@Override
+	public Usr getUsrDetailByUsrId(String usrId) {
+		Usr loginUsr = usrDao.selectUsrDetailsByUsrId(usrId);
+		return loginUsr;
+	}
 	
 	
 	/**
@@ -136,6 +141,7 @@ public class UsrServiceImpl implements UsrService{
 		
 		return usrManagementPageConfigure;
 	}
+	
 	
 	
 

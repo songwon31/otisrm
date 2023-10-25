@@ -42,6 +42,9 @@ public interface UsrService {
 	
 	//로그아웃
 	public void logout(String uid);
+	
+	//로그인한 회원정보 불러오기
+	public Usr getUsrDetailByUsrId(String usrId);
 
 	/**
 	 * @author 송원석

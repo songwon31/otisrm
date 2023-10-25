@@ -36,6 +36,7 @@ public class UsrDetailsService implements UserDetailsService {
 		authorities.add(new SimpleGrantedAuthority(usr.getUsrAuthrtNo()));
 		
 		UsrDetails usrDetails = new UsrDetails(usr, authorities);
+		
 		return usrDetails;
 	}
 }

@@ -13,6 +13,18 @@ a {
 	/*overflow: hidden;*/
 }
 
+nav {
+    display: block;
+    margin-bottom: 0px;
+    background-color:#fafbfd; 
+}
+.nav-link{
+	color: #6a757b;	
+}
+div {
+    display: block;
+}
+
 #logo {
 	line-height: 4rem;
 	display: flex; 
@@ -21,8 +33,8 @@ a {
 }
 
 #logo-img {
-	height: 4rem;
-	width: 4rem;
+	height: 3.5rem;
+	width: 3.5rem;
 }
 
 #logo-gap {
@@ -30,20 +42,24 @@ a {
 }
 
 #logo-text {
-	line-height: 3.5rem;
-	font-size: 5rem;
+	line-height: 3rem;
+	font-size: 4.5rem;
 	color: #007bff;
 	font-weight: 900;
 }
 
 #header-list {
-	line-height: 4rem;
+	line-height: 3.5rem;
 	display: flex; 
 	flex-direction: row;
 }
 
 #background {
-	height:92rem;
+	height:91.5rem;
 	padding: 2rem;
 	background-color: #edf2f8;
+}
+
+.shadow {
+    box-shadow: 2px 28px rgba(58,59,69,.15);
 }

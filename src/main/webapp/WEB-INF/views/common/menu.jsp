@@ -4,7 +4,7 @@
 
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/common/menu.css" />
 
-<div id="side-menu">
+<div id="side-menu" class="shadow">
 	<c:if test="${loginIng != null}">
 		<div style="display:flex; flex-direction:row; align-items:center;">
 			<svg class="svg-inline--fa fa-chart-pie fa-w-17" aria-hidden="true"

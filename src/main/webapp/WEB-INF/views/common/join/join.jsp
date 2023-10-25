@@ -134,7 +134,7 @@
 								<span class="style-scope sc-mdi-leftmenu"></span>
 							</div>
 						</div>
-						<div id="menuListDiv" class="menuList style-scope sc-mdi-leftmenu" style="height: 955px;">
+						<div id="menuListDiv" class="menuList style-scope sc-mdi-leftmenu" style="height: 800px;">
 							<ul id="leftMenu" class="lnbMenu style-scope sc-mdi-leftmenu">
 								<li id="NOT00010" ismenuitem="Y" class="style-scope sc-mdi-leftmenu selected">
 									<a class="style-scope sc-mdi-leftmenu">
@@ -271,7 +271,7 @@
 										<sc-ajax id="selectUserCount" url="https://www.cpsrm.com/ui/sp/oms/user/selectUserCount.do" class="style-scope es-spuser-reg" hidden=""></sc-ajax>
 										<sc-ajax id="selectSameUser" url="https://www.cpsrm.com/ui/sp/oms/user/selectSameUser.do" class="style-scope es-spuser-reg" hidden=""></sc-ajax>
 										<sc-ajax id="semesCaptchaVerify" url="https://www.cpsrm.com/sp/oms/common/semesCaptchaVerify.do" class="style-scope es-spuser-reg" hidden=""></sc-ajax>
-										<div class="popupWrap style-scope es-spuser-reg">
+										<div id="titleHead" class="popupWrap style-scope es-spuser-reg">
 											<div class="popupHead style-scope es-spuser-reg">
 											<b class="style-scope es-spuser-reg">회원가입</b>
 										</div>
@@ -285,7 +285,7 @@
 										</sc-label>
 										<sc-spacer class="style-scope es-spuser-reg" aria-disabled="false"></sc-spacer>
 									</sc-toolbar>
-									<iframe src="${pageContext.request.contextPath}/join/joinDetail" style="border-width:1px; border-color:#bcbcbc; border-style:solid;width:100%; height:200px" class="style-scope es-spuser-reg">
+									<iframe src="${pageContext.request.contextPath}/joinDetail" style="border-width:1px; border-color:#bcbcbc; border-style:solid;width:100%; height:200px" class="style-scope es-spuser-reg">
 									</iframe>
 									<div class="vspace-5 style-scope es-spuser-reg"></div>
 								  <form id="join" name="join" action="join" onsubmit="checkValidation()" method="post">  
@@ -303,7 +303,7 @@
 								        		<div class="style-scope sc-button"></div>
 								        	</div> 제출
 								        </button>
-								        <button type="button" text="닫기" class="btn btn-secondary style-scope es-spuser-reg" role="button" tabindex="0" aria-disabled="false">
+								        <button text="닫기" class="btn btn-secondary style-scope es-spuser-reg" role="button" tabindex="0" aria-disabled="false">
 								        	<div class="button-container style-scope sc-button">
 								        		<div class="style-scope sc-button"></div>
 								        	</div> 닫기

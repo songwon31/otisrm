@@ -18,6 +18,7 @@ public class Usr {
 	String roleNo;			//역할번호
 	String ibpsNo;			//직위번호
 	String usrAuthrtNo;		//사용자권한번호
+	String usrAuthrtNm;		//사용자권한이름
 	String usrSttsNo;		//사용자상태번호
 	String lgnFailCnt;		//로그인 실패 횟수
 	String rprsImg;			//대표이미지

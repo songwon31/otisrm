@@ -36,7 +36,7 @@
    
    
    <body>
-	<div id="bodyDiv">
+	<div id="bodyDiv" class="shadow">
 	   	<nav id="header-bar">
 		    <div id="logo">		    	
 				<img id="logo-img" src="${pageContext.request.contextPath}/resources/images/logo2.png" alt=""/>
@@ -106,8 +106,8 @@
 		            <a class="dropdown-toggle p-0" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
 		            	style="font-size: 2rem; display:flex; flex-direction:row; align-items:center;">
 		                <img class="img-profile rounded-circle" src="https://themewagon.github.io/stisla-1/assets/img/avatar/avatar-1.png" style="height:4rem; width:4rem; margin-right:1rem;">
-		                <span id="profile_name" class="d-none d-lg-inline text-gray-600 small" style="font-size:1.7rem; margin-right:0.7rem;">송원석</span>
-		                <span id="profile_authority" class="d-none d-lg-inline text-gray-600 small" style="font-size:1.7rem; margin-right:0.7rem;">(SR 유지보수)</span>
+		                <span id="profile_name" class="d-none d-lg-inline text-gray-600 small" style="font-size:1.7rem; margin-right:0.7rem;">${usr.usrNm}</span>
+		                <span id="profile_authority" class="d-none d-lg-inline text-gray-600 small" style="font-size:1.7rem; margin-right:0.7rem;">(${usr.usrAuthrtNm})</span>
 		            </a>
 		            <!-- Dropdown - User Information -->
 		            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown"

@@ -47,12 +47,12 @@
 						<div id="usrIdErr2" class="errorMsg text-danger d-none small" style="margin-left:10px; font-family: dotum,sans-serif; font-size: 12px;">아이디 형식으로 입력해주세요.</div>
 				    </div>					
 					<c:if test="${error1 != null}">
-						<div id="usrPswdErr3" class="errorMsg text-danger small" style="margin-left:10px; font-family: dotum,sans-serif;
+						<div id="usrIdErr1" class="errorMsg text-danger small" style="margin-left:70px; font-family: dotum,sans-serif;
     						  font-size: 12px;">${error1}
     				    </div>
 					</c:if>
 					<c:if test="${error2 != null}">
-						<div id="usrIdErr3" class="errorMsg text-danger small" style="margin-left:100px; font-family: dotum,sans-serif;
+						<div id="usrIdErr2" class="errorMsg text-danger small" style="margin-left:70px; font-family: dotum,sans-serif;
     						  font-size: 12px;">${error2}
     				    </div>
 					</c:if>
@@ -64,10 +64,10 @@
 						</span> 
 					</div>
 			  	</div>
-		  		<div id="usrPswdErr1" class="errorMsg text-danger d-none small" style="margin-left:10px; font-family: dotum,sans-serif; font-size: 12px;">비밀번호를 입력해주세요.</div>
-				<div id="usrPswdErr2" class="errorMsg text-danger d-none small" style="margin-left:10px; font-family: dotum,sans-serif; font-size: 12px;">비밀번호를 형식에 맞게 입력해주세요.</div>
+		  		<div id="usrPswdErr1" class="errorMsg text-danger d-none small" style="margin-left:70px; font-family: dotum,sans-serif; font-size: 12px;">비밀번호를 입력해주세요.</div>
+				<div id="usrPswdErr2" class="errorMsg text-danger d-none small" style="margin-left:70px; font-family: dotum,sans-serif; font-size: 12px;">비밀번호를 형식에 맞게 입력해주세요.</div>
    				<c:if test="${error3 != null}">
-					<div id="usrPswdErr3" class="errorMsg text-danger small" style="margin-left:10px; font-family: dotum,sans-serif;
+					<div id="usrPswdErr3" class="errorMsg text-danger small" style="margin-left:70px; font-family: dotum,sans-serif;
    						  font-size: 12px;">${error3}
    				    </div>
 				</c:if>
@@ -81,7 +81,7 @@
 			    </div>
 				<div class="button-container">
 			   		<button id="login_btn" class="btn btn-primary" type="submit">로그인</button>
-			   		<a id="join-btn" class="btn btn-outline-primary" href="${pageContext.request.contextPath}/join/join" target="_blank" onclick="openSmallWindow(event)">회원가입</a>
+			   		<a id="join-btn" class="btn btn-outline-primary" href="${pageContext.request.contextPath}/join/join" target="_blank">회원가입</a>
 				</div>
 			  </div>
 			</form>

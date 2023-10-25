@@ -1,12 +1,9 @@
 package com.finalteam5.otisrm.controller;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,16 +12,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.finalteam5.otisrm.dao.UsrDao;
 import com.finalteam5.otisrm.dto.usr.Dept;
 import com.finalteam5.otisrm.dto.usr.Ibps;
 import com.finalteam5.otisrm.dto.usr.Inst;
-import com.finalteam5.otisrm.dto.usr.Login;
 import com.finalteam5.otisrm.dto.usr.Role;
 import com.finalteam5.otisrm.dto.usr.Usr;
 import com.finalteam5.otisrm.dto.usr.UsrAuthrt;
+import com.finalteam5.otisrm.security.UsrDetails;
+import com.finalteam5.otisrm.security.UsrDetailsService;
 import com.finalteam5.otisrm.service.UsrService;
 import com.finalteam5.otisrm.service.UsrService.JoinResult;
-import com.finalteam5.otisrm.service.UsrService.LoginResult;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -34,7 +32,7 @@ public class CommonController {
 
 	@Autowired
 	private UsrService usrService;
-	
+
 	@RequestMapping("/")
 	public String home(Authentication authentication) {
 		if (authentication != null && authentication.isAuthenticated()) {
@@ -116,7 +114,7 @@ public class CommonController {
 	        model.addAttribute("error1", error1);
 	        return "join/joinForm";
 	    } else {
-	        return "redirect:/join";
+	        return "redirect:/login";
 	    }
 	}
 	//회원가입 상세내용 불러오기
