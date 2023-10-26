@@ -13,6 +13,20 @@ function selectSrProgressTableFilter(e) {
 	$('.srProgressTableSelectElement').removeClass('filterTabSelected');
 	// 클릭한 요소에 filterTabSelected 클래스를 추가
 	$(e).addClass('filterTabSelected');
+	
+	if ($(e).hasClass('srProgressRquest')) {
+		$('.bottomSubDiv').css('display', 'none');
+		$('#srRqstInfo').css('display', '');
+	} else if ($(e).hasClass('srProgressPlan')) {
+		$('.bottomSubDiv').css('display', 'none');
+		$('#srPlanInfo').css('display', '');
+	} else if ($(e).hasClass('srProgressHr')) {
+		$('.bottomSubDiv').css('display', 'none');
+		$('#srHrInfo').css('display', '');
+	} else if ($(e).hasClass('srProgressPercentage')) {
+		$('.bottomSubDiv').css('display', 'none');
+		$('#srProgressInfo').css('display', '');
+	}
 }
 
 /*

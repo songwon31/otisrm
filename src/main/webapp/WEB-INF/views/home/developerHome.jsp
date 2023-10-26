@@ -46,14 +46,14 @@
 					<span>)</span>
 				</a>
 				<a href="javascript:void(0)" onclick="selectMainTableFilter(this)" 
-					class="mainTableSelectElement filterTab" style="width:10%;">
-					<span>요구정의(</span>
+					class="mainTableSelectElement filterTab" style="width:8%;">
+					<span>분석(</span>
 					<span>0</span>
 					<span>)</span>
 				</a>
 				<a href="javascript:void(0)" onclick="selectMainTableFilter(this)" 
-					class="mainTableSelectElement filterTab" style="width:10%;">
-					<span>분석/설계(</span>
+					class="mainTableSelectElement filterTab" style="width:8%;">
+					<span>설계(</span>
 					<span>0</span>
 					<span>)</span>
 				</a>
@@ -298,25 +298,25 @@
 			</div>
 			<div id="srProgressChoiceDiv">
 				<a href="javascript:void(0)" onclick="selectSrProgressTableFilter(this)" 
-					class="srProgressTableSelectElement filterTab filterTabSelected" style="width:10%">
+					class="srProgressTableSelectElement srProgressRquest filterTab filterTabSelected" style="width:10%">
 					<span>SR요청정보</span>
 				</a>
 				<a href="javascript:void(0)" onclick="selectSrProgressTableFilter(this)" 
-					class="srProgressTableSelectElement filterTab" style="width:10%">
+					class="srProgressTableSelectElement srProgressPlan filterTab" style="width:10%">
 					<span>SR계획정보</span>
 				</a>
 				<a href="javascript:void(0)" onclick="selectSrProgressTableFilter(this)" 
-					class="srProgressTableSelectElement filterTab" style="width:10%">
+					class="srProgressTableSelectElement srProgressHr filterTab" style="width:10%">
 					<span>SR자원정보</span>
 				</a>
 				<a href="javascript:void(0)" onclick="selectSrProgressTableFilter(this)" 
-					class="srProgressTableSelectElement filterTab" style="width:10%">
+					class="srProgressTableSelectElement srProgressPercentage filterTab" style="width:10%">
 					<span>SR진척률</span>
 				</a>
 				<div style="flex-grow:1; border-bottom:1.5px solid #edf2f8;"></div>
 			</div>
 			<!-- SR요청정보 div -->
-			<div id="srRqstInfo">
+			<div id="srRqstInfo" class="bottomSubDiv">
 				<div style="height:4rem; display:flex; flex-direction:row;">
 					<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#f9fafe;">SR번호</div>
 					<div style="height:4rem; width:35%; padding-left:0.5rem; display:flex; align-items:center;">EIS_SR_2023_0167</div>
@@ -364,7 +364,7 @@
 				</div>
 			</div>
 			<!-- SR계획정보 div -->
-			<div id="srPlanInfo" style="display:none;">
+			<div id="srPlanInfo" class="bottomSubDiv" style="display:none;">
 				<div style="height:4rem; display:flex; flex-direction:row;">
 					<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#f9fafe;">요청구분</div>
 					<div style="height:4rem; width:35%; padding-left:0.5rem; display:flex; align-items:center;">
@@ -424,7 +424,7 @@
 					<input style="width:35%;" type="date">
 				</div>
 				<div style="height:11rem; display:flex; flex-direction:row;">
-					<div style="height:11rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#f9fafe;">특이사항</div>
+					<div style="height:11rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#f9fafe;">참고사항</div>
 					<div style="height:11rem; width:85%; padding-left:0.5rem; display:flex; flex-direction: column;">
 						<div style="height:11rem; display:flex; flex-direction: row; align-items:center; ">
 							<div style="height:10rem; width: 100%; border:1px solid gray; padding:0.3rem; overflow-y:auto;">
@@ -438,7 +438,7 @@
 				</div>
 			</div>
 			<!-- SR자원정보 -->
-			<div id="srHrInfo" style="display:none;">
+			<div id="srHrInfo" class="bottomSubDiv" style="display:none;">
 				<div style="height:27rem; background-color:#f1f3f5;">
 					<table style="width:100%; text-align:center;">
 						<colgroup>
@@ -472,7 +472,7 @@
 				</div>
 			</div>
 			<!-- SR진척률 -->
-			<div id="srProgressInfo" style="display:none;">
+			<div id="srProgressInfo" class="bottomSubDiv" style="display:none;">
 				<div style="height:31rem; background-color:#f1f3f5; border-radius:10px;">
 					<table style="width:100%; text-align:center;">
 						<colgroup>
