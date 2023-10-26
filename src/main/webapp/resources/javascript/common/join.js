@@ -234,7 +234,7 @@ function selectOverlapUsrId(){
 				}else{
 					isValidation = false;
 					console.log("이미존재");
-					dErr1.addClass("d-none");
+					idErr1.addClass("d-none");
 					idErr2.addClass("d-none");
 					idErr3.removeClass("d-none");
 					idCheck.addClass("d-none");

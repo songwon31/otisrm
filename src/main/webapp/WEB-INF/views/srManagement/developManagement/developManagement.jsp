@@ -120,8 +120,8 @@
 			<table id="mainTable" style="width: 100%;">
 				<colgroup>
 					<col width="4%" />
-					<col width="10%" />
-					<col width="16%" />
+					<col width="10%"/>
+					<col width="16%"/>
 					<col width="8%" />
 					<col width="6%" />
 					<col width="6%" />

@@ -6,22 +6,23 @@ import lombok.Data;
 
 @Data
 public class Usr {
-	String usrNo;			//사용자 번호
-	String usrId;			//사용자 아이디
-	String usrPswd;			//사용자 비밀번호
-	String usrNm;			//사용자 이름
-	String usrRrno;			//사용자 주민번호
-	String usrTelno;		//사용자 전화번호
-	String usrEml;			//사용자 이메일
-	String instNo;			//기관번호
-	String deptNo;			//부서번호
-	String roleNo;			//역할번호
-	String ibpsNo;			//직위번호
-	String usrAuthrtNo;		//사용자권한번호
-	String usrAuthrtNm;		//사용자권한이름
-	String usrSttsNo;		//사용자상태번호
-	String lgnFailCnt;		//로그인 실패 횟수
-	String rprsImg;			//대표이미지
-	Date usrJoinDt;			//가입일
-	Date usrWhdwlDt;		//탈퇴일	
+	private String usrNo;			//사용자 번호
+	private String usrId;			//사용자 아이디
+	private String usrPswd;			//사용자 비밀번호
+	private String usrNm;			//사용자 이름
+	private String usrRrno;			//사용자 주민번호
+	private String usrTelno;		//사용자 전화번호
+	private String usrEml;			//사용자 이메일
+	private String instNo;			//기관번호
+	private String instNm;			//기관이름
+	private String deptNo;			//부서번호
+	private String roleNo;			//역할번호
+	private String ibpsNo;			//직위번호
+	private String usrAuthrtNo;		//사용자권한번호
+	private String usrAuthrtNm;		//사용자권한이름
+	private String usrSttsNo;		//사용자상태번호
+	private String lgnFailCnt;		//로그인 실패 횟수
+	private String rprsImg;			//대표이미지
+	private Date usrJoinDt;			//가입일
+	private Date usrWhdwlDt;		//탈퇴일	
 }

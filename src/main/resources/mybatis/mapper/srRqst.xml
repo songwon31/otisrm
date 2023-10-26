@@ -1,8 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.finalteam5.otisrm.dao.srRqstDao">
+<mapper namespace="com.finalteam5.otisrm.dao.SrRqstDao">
 	<select id="countSrRqst" resultType="int">
 		count * from sr_rqst
 	</select>
-	
+	<!-- 요청등록 폼 -->
+	<!-- 부서번호에 해당하는 관련 시스템 목록 불러오기 -->
+	<select id="selectSysByDeptNo" parameterType="String" resultType="Sys">
+		select * from sys where dept_no = #{deptNo}
+	</select>
+	<!-- 요청 등록하기 -->
+	<!-- PK는 트리거를 사용해서 null로 지정할  경우 자동으로 정해진 포멧으로 삽입됨 -->
+	<insert id="insertSrRqst" parameterType="SrRqst">
+		insert into sr_rqst(
+		    sr_rqst_no, sr_ttl, sr_prps, sr_reqstr_no, sr_conts, 
+		    sr_rqst_reg_dt, sr_rqst_mdfcn_dt, sr_rqst_stts_no, sys_no, 
+		    sr_rqst_emrg_yn, sr_rqst_rvw_rsn, sr_rqst_vld_yn
+		) values(
+	       null, #{srTtl, jdbcType=VARCHAR}, #{srPrps, jdbcType=VARCHAR}, 
+	       #{srReqstrNo , jdbcType=VARCHAR}, #{srConts, jdbcType=VARCHAR},
+	       sysdate, #{srRqstMdfcnDt, jdbcType=DATE}, 'RQST', #{sysNo, jdbcType=VARCHAR}, 
+	       #{srRqstEmrgYn, jdbcType=VARCHAR}, #{srRqstRvwRsn, jdbcType=VARCHAR}, 'N'
+    	)
+	</insert>
+	<!-- 요청 불러오기 -->
 </mapper>

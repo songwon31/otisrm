@@ -81,13 +81,14 @@
 	 	select * from usr_stts
     </select>
     
-    <!-- 작성자: 송원석 /usrId를 통해 사용자 테이블 정보 불러오기 -->
+    <!-- 작성자: 송원석 , 성유짱/usrId를 통해 사용자 테이블 정보 불러오기 -->
     <select id="selectUsrDetailsByUsrId" parameterType="String" resultType="Usr">
     	select u.usr_no, u.usr_id, u.usr_pswd, u.usr_nm, u.usr_rrno, u.usr_telno, u.usr_eml,
     		u.inst_no, u.dept_no, u.ibps_no, u.role_no, u.usr_authrt_no, u.usr_stts_no, 
-    		u.lgn_fail_cnt, u.usr_join_dt, u.usr_whdwl_dt, a.usr_authrt_nm
+    		u.lgn_fail_cnt, u.usr_join_dt, u.usr_whdwl_dt, a.usr_authrt_nm, i.inst_nm
     	from usr u
     	join usr_authrt a on u.usr_authrt_no = a.usr_authrt_no
+    	join inst i on u.inst_no = i.inst_no
 		where usr_Id = #{usrId}		 
     </select>
 	

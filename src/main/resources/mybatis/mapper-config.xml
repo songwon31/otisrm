@@ -15,8 +15,11 @@
 		<typeAlias alias="Role" type="com.finalteam5.otisrm.dto.usr.Role"/>
 		<typeAlias alias="Login" type="com.finalteam5.otisrm.dto.usr.Login"/>
 		<typeAlias alias="Usr" type="com.finalteam5.otisrm.dto.usr.Usr"/>
-		<typeAlias alias="Pager" type="com.finalteam5.otisrm.dto.Pager"/>
 		<typeAlias alias="UsrStts" type="com.finalteam5.otisrm.dto.usr.UsrStts"/>
+		<typeAlias alias="Pager" type="com.finalteam5.otisrm.dto.Pager"/>
+		<typeAlias alias="Sys" type="com.finalteam5.otisrm.dto.Sys"/>
+		<typeAlias alias="SrRqst" type="com.finalteam5.otisrm.dto.srRequest.SrRqst"/>
+		<typeAlias alias="SrRqstAtch" type="com.finalteam5.otisrm.dto.srRequest.SrRqstAtch"/>
 	</typeAliases>
 </configuration>
 

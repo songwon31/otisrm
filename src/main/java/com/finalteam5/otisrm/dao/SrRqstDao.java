@@ -4,16 +4,15 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.finalteam5.otisrm.dto.usr.Dept;
-import com.finalteam5.otisrm.dto.usr.Ibps;
-import com.finalteam5.otisrm.dto.usr.Inst;
-import com.finalteam5.otisrm.dto.usr.Login;
-import com.finalteam5.otisrm.dto.usr.Role;
-import com.finalteam5.otisrm.dto.usr.Usr;
-import com.finalteam5.otisrm.dto.usr.UsrAuthrt;
-import com.finalteam5.otisrm.dto.usr.UsrStts;
+import com.finalteam5.otisrm.dto.Sys;
+import com.finalteam5.otisrm.dto.srRequest.SrRqst;
 
 @Mapper
 public interface SrRqstDao {
 	public int countSrRqst();
+	//요청등록폼
+	//개발부서에 따른 관련시스템 불러오기
+	public List<Sys> selectSysByDeptNo(String deptNo);	
+	//요청등록하기
+	public int insertSrRqst(SrRqst srRqst);
 }
