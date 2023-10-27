@@ -11,7 +11,7 @@ public class UsrDetails extends User  {
 	private Usr usr;
 	
 	public UsrDetails(Usr usr, List<GrantedAuthority> authorities) {
-		super(usr.getUsrId(), usr.getUsrPswd(), true, true, true, true, authorities);
+		super(usr.getUsrId(), usr.getUsrPswd(), usr.isEnabled(), true, true, true, authorities);
 		this.usr = usr;
 	}
 

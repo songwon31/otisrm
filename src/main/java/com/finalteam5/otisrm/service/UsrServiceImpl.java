@@ -122,6 +122,11 @@ public class UsrServiceImpl implements UsrService{
 	@Override
 	public Usr getUsrDetailByUsrId(String usrId) {
 		Usr loginUsr = usrDao.selectUsrDetailsByUsrId(usrId);
+		if(loginUsr.getUsrSttsNo().equals("PENDING")||loginUsr.getUsrSttsNo().equals("WITHDRAWL")){
+			loginUsr.setEnabled(false);
+		}else {
+			loginUsr.setEnabled(true);
+		}
 		return loginUsr;
 	}
 	

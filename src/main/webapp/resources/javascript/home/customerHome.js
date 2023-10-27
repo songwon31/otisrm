@@ -45,14 +45,17 @@ function requestInsertDate(){
 }
 
 function submitSrRqst(){
-	//요청등록하기
+	console.log("제출");
+    //요청등록하기
 	$.ajax({
 	    type: "POST",
-	    url: "/writeSrRqst", // 요청을 보낼 URL
+	    url: "writeSrRqst", // 요청을 보낼 URL
 	    data: formData, // 폼 데이터를 전송
 	    success: function (data) {
 	        // 성공적으로 요청이 완료된 경우 실행할 코드
-	        console.log("요청이 성공적으로 완료되었습니다.");
+	        var currentURL = window.location.href;
+	        console.log(currentURL);
+	        window.location.href = "/home"; // 또는 다른 원하는 URL로 변경
 	    },
 	    error: function (error) {
 	        // 요청 중 오류가 발생한 경우 실행할 코드
@@ -70,3 +73,22 @@ function isImportendChecked(){
 		$("#submitYn").val("N")
 	}
 }
+
+//로그 메시지 저장
+function logToStorage(message) {
+    var logs = JSON.parse(localStorage.getItem('consoleLogs')) || [];
+    logs.push(message);
+    localStorage.setItem('consoleLogs', JSON.stringify(logs));
+    console.log(message);
+}
+
+// 페이지 로드 시 저장된 로그 메시지를 다시 불러옴
+function loadLogsFromStorage() {
+    var logs = JSON.parse(localStorage.getItem('consoleLogs')) || [];
+    logs.forEach(function (log) {
+        console.log(log);
+    });
+}
+
+// 페이지 로드 시 저장된 로그 메시지 불러오기
+window.addEventListener('load', loadLogsFromStorage);

@@ -21,6 +21,7 @@ public class Usr {
 	private String usrAuthrtNo;		//사용자권한번호
 	private String usrAuthrtNm;		//사용자권한이름
 	private String usrSttsNo;		//사용자상태번호
+	private boolean isEnabled;		//사용자 계정 유효 여부
 	private String lgnFailCnt;		//로그인 실패 횟수
 	private String rprsImg;			//대표이미지
 	private Date usrJoinDt;			//가입일

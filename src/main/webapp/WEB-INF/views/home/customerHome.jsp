@@ -77,10 +77,47 @@
 					<td><button class="btn-2">상세보기</button></td>
 				</tr>
 			</tbody>
-		</table>	
+		</table>
+		<!-- 페이징 -->
+		<div class="d-flex justify-content-center m-4">
+			<a class="btn" href="?pageNo=1">처음</a>
+			<c:if test="${srRqstpager.groupNo>1}">
+				<a class="btn" href="?pageNo=${srRqstpager.startPageNo-1}">이전</a>
+			</c:if>
+			
+			<c:forEach var="i" begin="${srRqstpager.startPageNo}" end="${srRqstpager.endPageNo}">
+				<c:if test="${srRqstpager.pageNo != i}">
+					<a class="btn" href="?pageNo=${i}">${i}</a>
+				</c:if>
+				<c:if test="${srRqstpager.pageNo == i}">
+					<a class="btn" href="?pageNo=${i}">${i}</a>
+				</c:if>
+			</c:forEach>
+			
+			<c:if test="${srRqstpager.groupNo<srRqstpager.totalGroupNo}">
+				<a class="btn" href="?pageNo=${srRqstpager.endPageNo+1}">다음</a>
+			</c:if>
+			<a class="btn" href="?pageNo=${srRqstpager.totalPageNo}">맨끝</a>
+	    </div>	
+   	  </div>
+    </div>
+   </div>
+   <div class="potalBottom">
+   	  <div class="subcontentTitle">
+	   	  <div class="d-flex st-ct">
+	   	  	<i class="material-icons stt-ic">chevron_right</i>
+	   	  	<span class="pt-1">게시판</span>
+	   	  </div>
+   	  </div>
+   	  <div class="d-flex">
+	   	  <div class="tableContainer w-50">
+	   	  </div>
+	   	  <div class="tableContainer w-50">
+	   	  </div>
    	  </div>
    </div>
-    <!-- 요청등록 모달 -->
+</div>
+ <!-- 요청등록 모달 -->
     <div id="addRequestmodal" class="modal" data-backdrop="static">
 	  <div class="modal-dialog modal-dialog-centered modal-lg">
 	    <div class="modal-content">
@@ -177,28 +214,12 @@
 	      	</div>
 	      </div>
 	      <div class="modal-footer py-1">
-	        <button type="submit" class="btn-1">저장</button>
+	        <button class="btn-1" type="submit">저장</button>
 	        <button type="button" class="btn-3" data-dismiss="modal">닫기</button>
 	      </div>
 	    </form>
 	    </div>
 	  </div>
-	</div>
-   <div class="potalBottom">
-   	  <div class="subcontentTitle">
-	   	  <div class="d-flex st-ct">
-	   	  	<i class="material-icons stt-ic">chevron_right</i>
-	   	  	<span class="pt-1">게시판</span>
-	   	  </div>
-   	  </div>
-   	  <div class="d-flex">
-	   	  <div class="tableContainer w-50">
-	   	  </div>
-	   	  <div class="tableContainer w-50">
-	   	  </div>
-   	  </div>
-   </div>
-</div>
-		
+	</div>	
 
 <%@ include file="/WEB-INF/views/common/footer.jsp"%>

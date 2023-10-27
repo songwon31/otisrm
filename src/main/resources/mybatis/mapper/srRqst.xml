@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.finalteam5.otisrm.dao.SrRqstDao">
-	<select id="countSrRqst" resultType="int">
-		count * from sr_rqst
-	</select>
 	<!-- 요청등록 폼 -->
 	<!-- 부서번호에 해당하는 관련 시스템 목록 불러오기 -->
 	<select id="selectSysByDeptNo" parameterType="String" resultType="Sys">
@@ -23,5 +20,38 @@
 	       #{srRqstEmrgYn, jdbcType=VARCHAR}, #{srRqstRvwRsn, jdbcType=VARCHAR}, 'N'
     	)
 	</insert>
+	
 	<!-- 요청 불러오기 -->
+	<select id="selectSrRqstListByPage" parameterType="Map" resultType="SrRqst">
+			select rnum, sr_rqst_no, sr_ttl, sr_reqstr_no, sr_rqst_reg_dt, sr_rqst_mdfcn_dt, 
+			sr_rqst_stts_no, sys_no, sr_rqst_emrg_yn, sr_rqst_rvw_rsn, sr_rqst_vld_yn 
+			from (
+			    select rownum as rnum, sr_rqst_no, sr_ttl, sr_reqstr_no, sr_rqst_reg_dt, sr_rqst_mdfcn_dt, 
+			    sr_rqst_stts_no, sys_no, sr_rqst_emrg_yn, sr_rqst_rvw_rsn, sr_rqst_vld_yn 
+			    from(
+			        select sr_rqst_no, sr_ttl, sr_reqstr_no, sr_rqst_reg_dt, sr_rqst_mdfcn_dt, 
+			        sr_rqst_stts_no, sys_no, sr_rqst_emrg_yn, sr_rqst_rvw_rsn, sr_rqst_vld_yn 
+			        from sr_rqst
+			        <if test='keyword != null and keyword != ""'>
+	                	<where>
+	                		REGEXP_REPLACE(LOWER(REPLACE(pg_name,' ','')), '[[:punct:]]', '') LIKE '%'||REGEXP_REPLACE(LOWER(REPLACE(#{keyword},' ','')), '[[:punct:]]', '')||'%'
+	                	</where>
+	               	</if>	
+			        <if test='isMine != null and isMine != ""'>
+	                	<where>
+	                		sr_reqstr_no=#{srReqsrNo}
+	                	</where>
+	               	</if>	
+			        order by sr_rqst_no desc
+			    )
+		<![CDATA[
+			    where rownum <= #{endRowNo}
+			 )
+			 where rnum >= #{startRowNo}
+		]]>
+	</select>
+	<!-- 전체 요청 수(페이징을 위함) -->
+	<select id="countSrRqst" resultType="int">
+		select count(*) from sr_rqst
+	</select>
 </mapper>

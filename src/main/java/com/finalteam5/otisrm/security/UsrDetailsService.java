@@ -29,6 +29,12 @@ public class UsrDetailsService implements UserDetailsService {
 			throw new UsernameNotFoundException(username);
 		}
 		
+		if(usr.getUsrSttsNo().equals("PENDING")||usr.getUsrSttsNo().equals("WITHDRAWL")){
+			usr.setEnabled(false);
+		}else {
+			usr.setEnabled(true);
+		}
+		
 		//권한이 여러개일 경우 권한 테이블로부터 모든 권한을 불러와서 잘 사용해야 함.
 		//List<String> listRole = member.getRole("mid");
 		
