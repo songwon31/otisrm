@@ -76,8 +76,6 @@
 /* Table */
 #mainTable thead{
 	border: 1.5px solid #e9ecef;
-	border-left: none;
-	border-write: none;
 	background-color: #f9fafe;
 }
 #mainTable thead tr{
@@ -85,19 +83,24 @@
 	font-size: 1.6rem; 
 	font-weight: 700;
 }
-#mainTable tbody tr{
-	height: 5rem; 
+#mainTable tbody{
+	border: 1.5px solid #e9ecef;
+}
+#mainTable tbody tr{ 
 	font-size: 1.6rem; 
+	height: 4.7rem; 
+	font-size: 1.5rem;
 }
 #mainTable td{
 	text-align: center;
+	border-bottom: 1.5px solid #e0e7ed;
 }
 /* 필터링 탭  */
 .filterTabWrap{
 	height: 3rem;
 }
 .filterTab{
-	width: 8%;
+	width: 72.16px;
 	height: 3rem;
 	border: 1.5px solid #e0e7ed;
 	border-bottom: none;
@@ -109,7 +112,15 @@
 }
 .tableContainer{
 	height: 31rem;
-	border: 1px solid green;
+}
+/* 테이블 항목(col사이즈보다 넘어갈경우 .. 처리) */
+.truncate-text {
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis; 
+}
+.col-max-width {
+    max-width: 100%; /* 최대 너비 설정 (col 요소의 너비에 따라 조정) */
 }
 /* button */
 #requestAddBtnWrap{

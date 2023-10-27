@@ -33,54 +33,54 @@
 				</div>
    	  		</div>
    	  	</div>
-   	  	<table id="mainTable" style="width: 100%; text-align: center;">
-			<colgroup>
-				<col width="4%" />
-		        <col width="10%" />
-		        <col width="16%" />
-		        <col width="8%" />
-		        <col width="6%" />
-		        <col width="6%" />
-		        <col width="6%" />
-		        <col width="8%" />
-		        <col width="4%" />
-		        <col width="6%" />
-			</colgroup>
-			<thead>
-				<tr>
-					<th scope="col"></th>
-					<th scope="col">요청번호</th>
-					<th scope="col">제목</th>
-					<th scope="col">관련시스템</th>
-					<th scope="col">등록자</th>
-					<th scope="col">소속</th>
-					<th scope="col">상태</th>
-					<th scope="col">요청일</th>
-					<th scope="col">중요</th>
-					<th scope="col">상세보기</th>
-				</tr>
-			</thead>
-			<tbody>
-				<c:forEach var="srRqst" items="${srRqsts}" varStatus="status">	
-					<tr style="height: 4.7rem; font-size: 1.5rem;">
-					    <td>${status.count}</td>
-				        <td>${srRqst.srRqstNo}</td>
-				        <td>${srRqst.srTtl}</td>
-				        <td>${srRqst.sysNm}</td>
-				        <td>${srRqst.usrNm}</td>
-				        <td>${srRqst.instNm}</td>
-				        <td>${srRqst.srRqstSttsNm}</td>
-				        <c:set var="srRqstRegDt" value="${srRqst.srRqstRegDt}" />
-				        <fmt:formatDate value="${srRqstRegDt}" pattern="yyyy-MM-dd" var="formattedDate" />
-				        <td>${formattedDate}</td> 
-				        <td>${srRqst.srRqstEmrgYn}</td>
-				        <td><button class="btn-2">상세보기</button></td>
-					</tr>
-				</c:forEach>
-			</tbody>
+   	  <table id="mainTable" style="width: 100%; text-align: center;">
+		    <colgroup>
+		        <col width="45.04px" />
+		        <col width="118.99px" />
+		        <col width="221.32px" />
+		        <col width="144.64px" />
+		        <col width="67.56px" />
+		        <col width="69.64px" />
+		        <col width="67.56px" />
+		        <col width="90.08px" />
+		        <col width="45.04px" />
+		        <col width="67.7px" />
+		    </colgroup>
+		    <thead>
+		        <tr>
+		            <th scope="col"></th>
+		            <th scope="col">요청번호</th>
+		            <th scope="col">제목</th>
+		            <th scope="col">관련시스템</th>
+		            <th scope="col">등록자</th>
+		            <th scope="col">소속</th>
+		            <th scope="col">상태</th>
+		            <th scope="col">요청일</th>
+		            <th scope="col">중요</th>
+		            <th scope="col">상세보기</th>
+		        </tr>
+		    </thead>
+		    <tbody>
+		        <c:forEach var="srRqst" items="${srRqsts}" varStatus="status">    
+		            <tr>
+		                <td>${status.count}</td>
+		                <td>${srRqst.srRqstNo}</td>
+		                <td class="truncate-text" style="max-width: 221.32px;">${srRqst.srTtl}</td>
+		                <td class="truncate-text" style="max-width: 144.64px;">${srRqst.sysNm}</td>
+		                <td class="truncate-text" style="max-width: 67.56px;">${srRqst.usrNm}</td>
+		                <td class="truncate-text" style="max-width: 69.64px;">${srRqst.instNm}</td>
+		                <td class="truncate-text" style="max-width: 67.56px;">${srRqst.srRqstSttsNm}</td>
+		                <c:set var="srRqstRegDt" value="${srRqst.srRqstRegDt}" />
+		                <fmt:formatDate value="${srRqstRegDt}" pattern="yyyy-MM-dd" var="formattedDate" />
+		                <td class="truncate-text" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 90.08px;">${formattedDate}</td> 
+		                <td>${srRqst.srRqstEmrgYn}</td>
+		                <td><button class="btn-2">상세보기</button></td>
+		            </tr>
+		        </c:forEach>
+		    </tbody>
 		</table>
 		<!-- 페이징 -->
-		<div class="d-flex justify-content-center m-4">
+		<div class="d-flex justify-content-center">
 			<a class="btn" href="?srRqstPageNo=1">처음</a>
 			<c:if test="${srRqstpager.groupNo>1}">
 				<a class="btn" href="?srRqstPageNo=${srRqstpager.startPageNo-1}">이전</a>
