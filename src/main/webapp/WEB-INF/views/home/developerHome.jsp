@@ -91,79 +91,37 @@
 			</div>
 			<table id="mainTable" style="width:100%;">
 				<colgroup>
-					<col width="3%"/>
+					<col width="15%"/>
+					<col width="15%"/>
+					<col width="15%"/>
+					<col width="25%"/>
 					<col width="10%"/>
-					<col width="20%"/>
-					<col width="20%"/>
-					<col width="20%"/>
 					<col width="10%"/>
 					<col width="10%"/>
-					<col width="12%"/>
 				</colgroup>
 				<thead>
 					<tr style="height:4.5rem; font-size:1.6rem; font-weight:700;">
-						<th scope="col">ㅁ</th>
-						<th scope="col">이름</th>
-						<th scope="col">전화번호</th>
-						<th scope="col">이메일</th>
-						<th scope="col">소속</th>
-						<th scope="col">상태</th>
-						<th scope="col">가입일</th>
-						<th scope="col">상세</th>
+						<th scope="col">SR번호</th>
+						<th scope="col">시스템구분</th>
+						<th scope="col">업무구분</th>
+						<th scope="col">SR제목</th>
+						<th scope="col">담당자</th>
+						<th scope="col">진행상태</th>
+						<th scope="col">상세보기</th>
 					</tr>
 				</thead>
 				<tbody>
-					<a href="javascript:void(0)">
-					<tr style="height:4.5rem; font-size:1.6rem;">
-						<th scope="row">ㅁ</th>
-						<td class="">송원석</td>
-						<td class="">010-1234-5678</td>
-						<td>a1@naver.com</td>
-						<td>한국소프트웨어협회</td>
-						<td>승인 대기</td>
-						<td>2023-10-18</td>
-						<td><button class="btn-2">상세보기</button></td>
-					</tr>
-					<tr style="height:4.5rem; font-size:1.6rem;">
-						<th scope="row">ㅁ</th>
-						<td class="">송원석</td>
-						<td class="">010-1234-5678</td>
-						<td>a1@naver.com</td>
-						<td>한국소프트웨어협회</td>
-						<td>승인 대기</td>
-						<td>2023-10-18</td>
-						<td><button class="btn-2">상세보기</button></td>
-					</tr>
-					<tr style="height:4.5rem; font-size:1.6rem;">
-						<th scope="row">ㅁ</th>
-						<td class="">송원석</td>
-						<td class="">010-1234-5678</td>
-						<td>a1@naver.com</td>
-						<td>한국소프트웨어협회</td>
-						<td>승인 대기</td>
-						<td>2023-10-18</td>
-						<td><button class="btn-2">상세보기</button></td>
-					</tr>
-					<tr style="height:4.5rem; font-size:1.6rem;">
-						<th scope="row">ㅁ</th>
-						<td class="">송원석</td>
-						<td class="">010-1234-5678</td>
-						<td>a1@naver.com</td>
-						<td>한국소프트웨어협회</td>
-						<td>승인 대기</td>
-						<td>2023-10-18</td>
-						<td><button class="btn-2">상세보기</button></td>
-					</tr>
-					<tr style="height:4.5rem; font-size:1.6rem;">
-						<th scope="row">ㅁ</th>
-						<td class="">송원석</td>
-						<td class="">010-1234-5678</td>
-						<td>a1@naver.com</td>
-						<td>한국소프트웨어협회</td>
-						<td>승인 대기</td>
-						<td>2023-10-18</td>
-						<td><button class="btn-2">상세보기</button></td>
-					</tr>
+					<c:forEach var="sr" items="${srList}" varStatus="status">
+						<tr style="height:4.5rem; font-size:1.6rem;">
+							<th scope="row">${sr.srNo}</th>
+							<td>${sr.sysNm}</td>
+							<td>${sr.srDmndNm}</td>
+							<td>${sr.srTtl}</td>
+							<td>${sr.usrNm}</td>
+							<td>${sr.srPrgrsSttsNm}</td>
+							<td><button class="btn-2">상세보기</button></td>
+						</tr>
+					</c:forEach>
 				</tbody>
 			</table>
 			<div style="height:4.5rem; font-size:1.6rem; display:flex; flex-direction:row; justify-content:center; align-items:center;">

@@ -5,4 +5,47 @@
 		count * from sr
 	</select>
 	
+	<select id="countTotalTransferedSrNumByUsrId" parameterType="String" resultType="int">
+		select count(*) 
+		from sr_trnsf_plan s
+		join usr u on s.usr_no=u.usr_no
+		where u.usr_id=#{usrId}
+	</select>
+	
+	<select id="selectSrForDeveloperHomeBoardListByUsrId" parameterType="String" resultType="com.finalteam5.otisrm.dto.sr.SrForDeveloperHomeBoard">
+		SELECT sr.sr_no, sys.sys_nm, srd.sr_dmnd_nm, srr.sr_ttl, u2.usr_nm, srp.sr_prgrs_stts_nm
+		FROM usr u1
+		JOIN sr_trnsf_plan srt ON u1.usr_no = srt.usr_no
+		JOIN sr ON srt.sr_no = sr.sr_no
+		JOIN usr u2 ON sr.pic_usr_no = u2.usr_no
+		JOIN sr_rqst srr ON sr.sr_rqst_no = srr.sr_rqst_no
+		JOIN sys ON srr.sys_no = sys.sys_no
+		JOIN sr_dmnd_clsf srd ON srt.sr_dmnd_no = srd.sr_dmnd_no
+		JOIN sr_prgrs_stts srp ON srt.sr_prgrs_stts_no = srp.sr_prgrs_stts_no
+		WHERE u1.usr_id = #{usrId}
+	</select>
+	
+	<select id="selectSrForDeveloperHomeBoardListByUsrIdAndPager" parameterType="map" resultType="com.finalteam5.otisrm.dto.sr.SrForDeveloperHomeBoard">
+		<![CDATA[
+		SELECT rnum, sr_no, sys_nm, sr_dmnd_nm, sr_ttl, usr_nm, sr_prgrs_stts_nm
+		FROM(
+			SELECT rownum as rnum, sr_no, sys_nm, sr_dmnd_nm, sr_ttl, usr_nm, sr_prgrs_stts_nm
+			FROM (	
+				SELECT sr.sr_no, sys.sys_nm, srd.sr_dmnd_nm, srr.sr_ttl, u2.usr_nm, srp.sr_prgrs_stts_nm
+				FROM usr u1
+				JOIN sr_trnsf_plan srt ON u1.usr_no = srt.usr_no
+				JOIN sr ON srt.sr_no = sr.sr_no
+				JOIN usr u2 ON sr.pic_usr_no = u2.usr_no
+				JOIN sr_rqst srr ON sr.sr_rqst_no = srr.sr_rqst_no
+				JOIN sys ON srr.sys_no = sys.sys_no
+				JOIN sr_dmnd_clsf srd ON srt.sr_dmnd_no = srd.sr_dmnd_no
+				JOIN sr_prgrs_stts srp ON srt.sr_prgrs_stts_no = srp.sr_prgrs_stts_no
+				WHERE u1.usr_id = #{usrId}
+				ORDER BY sr.sr_no
+			)
+			WHERE rownum <= #{pager.endRowNo}
+		)
+		where rnum >= #{pager.startRowNo}
+		]]>
+	</select>
 </mapper>
