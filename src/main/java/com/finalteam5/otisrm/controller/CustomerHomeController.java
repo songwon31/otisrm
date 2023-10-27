@@ -60,13 +60,14 @@ public class CustomerHomeController {
 		Map<String, Object>map = new HashMap<>();
 		map.put("startRowNo", srRqstpager.getStartRowNo());
 		map.put("endRowNo", srRqstpager.getEndRowNo());
+		
+		//페이지 별 요청 목록 불러오기
 		List<SrRqst> list = srRqstService.getSrRqstListByPager(map);
 		model.addAttribute("srRqstpager", srRqstpager);
-		model.addAttribute("srRqstList", list);
+		model.addAttribute("srRqsts", list);
 		
 		return "/home/customerHome";
 	}
-		
 	
 	//고객사 홈 페이지에서 요청등록 모달에 소속부서에 해당하는 관련시스템 목록불러오기
 	@GetMapping("getSysByDeptNo")

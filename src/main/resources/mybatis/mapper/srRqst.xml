@@ -23,27 +23,31 @@
 	
 	<!-- 요청 불러오기 -->
 	<select id="selectSrRqstListByPage" parameterType="Map" resultType="SrRqst">
-			select rnum, sr_rqst_no, sr_ttl, sr_reqstr_no, sr_rqst_reg_dt, sr_rqst_mdfcn_dt, 
-			sr_rqst_stts_no, sys_no, sr_rqst_emrg_yn, sr_rqst_rvw_rsn, sr_rqst_vld_yn 
-			from (
-			    select rownum as rnum, sr_rqst_no, sr_ttl, sr_reqstr_no, sr_rqst_reg_dt, sr_rqst_mdfcn_dt, 
-			    sr_rqst_stts_no, sys_no, sr_rqst_emrg_yn, sr_rqst_rvw_rsn, sr_rqst_vld_yn 
-			    from(
-			        select sr_rqst_no, sr_ttl, sr_reqstr_no, sr_rqst_reg_dt, sr_rqst_mdfcn_dt, 
-			        sr_rqst_stts_no, sys_no, sr_rqst_emrg_yn, sr_rqst_rvw_rsn, sr_rqst_vld_yn 
-			        from sr_rqst
-			        <if test='keyword != null and keyword != ""'>
-	                	<where>
-	                		REGEXP_REPLACE(LOWER(REPLACE(pg_name,' ','')), '[[:punct:]]', '') LIKE '%'||REGEXP_REPLACE(LOWER(REPLACE(#{keyword},' ','')), '[[:punct:]]', '')||'%'
-	                	</where>
-	               	</if>	
-			        <if test='isMine != null and isMine != ""'>
-	                	<where>
-	                		sr_reqstr_no=#{srReqsrNo}
-	                	</where>
-	               	</if>	
-			        order by sr_rqst_no desc
-			    )
+		select rnum, sr_rqst_no, sr_ttl, sr_reqstr_no, sr_rqst_reg_dt, sr_rqst_mdfcn_dt, 
+		sr_rqst_stts_no, sys_no, sr_rqst_emrg_yn, sr_rqst_rvw_rsn, sr_rqst_vld_yn, sys_nm, usr_nm, inst_nm, sr_rqst_stts_nm  
+		from (
+		    select rownum as rnum, sr_rqst_no, sr_ttl, sr_reqstr_no, sr_rqst_reg_dt, sr_rqst_mdfcn_dt, 
+		    sr_rqst_stts_no, sys_no, sr_rqst_emrg_yn, sr_rqst_rvw_rsn, sr_rqst_vld_yn, sys_nm, usr_nm, inst_nm, sr_rqst_stts_nm  
+		    from(
+		        select r.sr_rqst_no, r.sr_ttl, sr_reqstr_no, r.sr_rqst_reg_dt, r.sr_rqst_mdfcn_dt, r.sr_rqst_stts_no,
+		        r.sys_no, r.sr_rqst_emrg_yn, r.sr_rqst_rvw_rsn, r.sr_rqst_vld_yn, s.sys_nm, u.usr_nm, u.inst_no, i.inst_nm, q.sr_rqst_stts_nm 
+		        from sr_rqst r
+		        join sys s on s.sys_no = r.sys_no 
+		        join usr u on u.usr_no = r.sr_reqstr_no
+		        join inst i on i.inst_no = u.inst_no
+		        join sr_rqst_stts q on q.sr_rqst_stts_no = r.sr_rqst_stts_no
+		        <if test='keyword != null and keyword != ""'>
+                	<where>
+                		REGEXP_REPLACE(LOWER(REPLACE(pg_name,' ','')), '[[:punct:]]', '') LIKE '%'||REGEXP_REPLACE(LOWER(REPLACE(#{keyword},' ','')), '[[:punct:]]', '')||'%'
+                	</where>
+               	</if>	
+		        <if test='isMine != null and isMine != ""'>
+                	<where>
+                		sr_reqstr_no=#{srReqsrNo}
+                	</where>
+               	</if>	
+		        order by sr_rqst_no desc
+		    )
 		<![CDATA[
 			    where rownum <= #{endRowNo}
 			 )

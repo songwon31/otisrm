@@ -33,7 +33,7 @@
 				</div>
    	  		</div>
    	  	</div>
-   	  	<table id="mainTable" style="width: 100%;">
+   	  	<table id="mainTable" style="width: 100%; text-align: center;">
 			<colgroup>
 				<col width="4%" />
 		        <col width="10%" />
@@ -42,7 +42,6 @@
 		        <col width="6%" />
 		        <col width="6%" />
 		        <col width="6%" />
-		        <col width="8%" />
 		        <col width="8%" />
 		        <col width="4%" />
 		        <col width="6%" />
@@ -57,47 +56,49 @@
 					<th scope="col">소속</th>
 					<th scope="col">상태</th>
 					<th scope="col">요청일</th>
-					<th scope="col">완료예정일</th>
 					<th scope="col">중요</th>
 					<th scope="col">상세보기</th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr style="height: 4.7rem; font-size: 1.5rem;">
-					<td>1</td>
-					<td>SR231013_0001</td>
-					<td>SRM 시스템 개발 요청</td>
-					<td>SoftNet</td>
-					<td>홍길동</td>
-					<td>한소원</td>
-					<td>접수</td>
-					<td>2023-10-13</td>
-					<td>2023-10-31</td>
-					<td>Y</td>
-					<td><button class="btn-2">상세보기</button></td>
-				</tr>
+				<c:forEach var="srRqst" items="${srRqsts}" varStatus="status">	
+					<tr style="height: 4.7rem; font-size: 1.5rem;">
+					    <td>${status.count}</td>
+				        <td>${srRqst.srRqstNo}</td>
+				        <td>${srRqst.srTtl}</td>
+				        <td>${srRqst.sysNm}</td>
+				        <td>${srRqst.usrNm}</td>
+				        <td>${srRqst.instNm}</td>
+				        <td>${srRqst.srRqstSttsNm}</td>
+				        <c:set var="srRqstRegDt" value="${srRqst.srRqstRegDt}" />
+				        <fmt:formatDate value="${srRqstRegDt}" pattern="yyyy-MM-dd" var="formattedDate" />
+				        <td>${formattedDate}</td> 
+				        <td>${srRqst.srRqstEmrgYn}</td>
+				        <td><button class="btn-2">상세보기</button></td>
+					</tr>
+				</c:forEach>
 			</tbody>
 		</table>
 		<!-- 페이징 -->
 		<div class="d-flex justify-content-center m-4">
-			<a class="btn" href="?pageNo=1">처음</a>
+			<a class="btn" href="?srRqstPageNo=1">처음</a>
 			<c:if test="${srRqstpager.groupNo>1}">
-				<a class="btn" href="?pageNo=${srRqstpager.startPageNo-1}">이전</a>
+				<a class="btn" href="?srRqstPageNo=${srRqstpager.startPageNo-1}">이전</a>
 			</c:if>
 			
 			<c:forEach var="i" begin="${srRqstpager.startPageNo}" end="${srRqstpager.endPageNo}">
 				<c:if test="${srRqstpager.pageNo != i}">
-					<a class="btn" href="?pageNo=${i}">${i}</a>
+					<a class="btn" href="?srRqstPageNo=${i}">${i}</a>
 				</c:if>
 				<c:if test="${srRqstpager.pageNo == i}">
-					<a class="btn" href="?pageNo=${i}">${i}</a>
+					<a class="btn" href="?srRqstPageNo=${i}">${i}</a>
 				</c:if>
 			</c:forEach>
 			
 			<c:if test="${srRqstpager.groupNo<srRqstpager.totalGroupNo}">
-				<a class="btn" href="?pageNo=${srRqstpager.endPageNo+1}">다음</a>
+				<a class="btn" href="?srRqstPageNo=${srRqstpager.endPageNo+1}">다음</a>
 			</c:if>
-			<a class="btn" href="?pageNo=${srRqstpager.totalPageNo}">맨끝</a>
+			<a class="btn" href="?=${srRqstpager.totalPageNo}">맨끝</a>
 	    </div>	
    	  </div>
     </div>
