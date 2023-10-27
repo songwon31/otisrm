@@ -42,37 +42,37 @@
 				<a href="javascript:void(0)" onclick="selectMainTableFilter(this)" 
 					class="mainTableSelectElement filterTab" style="width:8%;">
 					<span>요청(</span>
-					<span>0</span>
+					<span>${requestNum}</span>
 					<span>)</span>
 				</a>
 				<a href="javascript:void(0)" onclick="selectMainTableFilter(this)" 
 					class="mainTableSelectElement filterTab" style="width:8%;">
 					<span>분석(</span>
-					<span>0</span>
+					<span>${analysisNum}</span>
 					<span>)</span>
 				</a>
 				<a href="javascript:void(0)" onclick="selectMainTableFilter(this)" 
 					class="mainTableSelectElement filterTab" style="width:8%;">
 					<span>설계(</span>
-					<span>0</span>
+					<span>${designNum}</span>
 					<span>)</span>
 				</a>
 				<a href="javascript:void(0)" onclick="selectMainTableFilter(this)" 
 					class="mainTableSelectElement filterTab" style="width:8%;">
 					<span>구현(</span>
-					<span>0</span>
+					<span>${implementNum}</span>
 					<span>)</span>
 				</a>
 				<a href="javascript:void(0)" onclick="selectMainTableFilter(this)" 
 					class="mainTableSelectElement filterTab" style="width:8%;">
 					<span>시험(</span>
-					<span>0</span>
+					<span>${testNum}</span>
 					<span>)</span>
 				</a>
 				<a href="javascript:void(0)" onclick="selectMainTableFilter(this)" 
 					class="mainTableSelectElement filterTab" style="width:10%;">
 					<span>운영반영(</span>
-					<span>0</span>
+					<span>${applyNum}</span>
 					<span>)</span>
 				</a>
 				<a href="javascript:void(0)" onclick="selectMainTableFilter(this)" 
@@ -89,7 +89,7 @@
 				</a>
 				<div style="flex-grow:1; border-bottom:1.5px solid #edf2f8;"></div>
 			</div>
-			<table id="mainTable" style="width:100%;">
+			<table id="mainTable" style="width:100%; text-align:center;">
 				<colgroup>
 					<col width="15%"/>
 					<col width="15%"/>
@@ -100,7 +100,7 @@
 					<col width="10%"/>
 				</colgroup>
 				<thead>
-					<tr style="height:4.5rem; font-size:1.6rem; font-weight:700;">
+					<tr style="height:4.5rem; font-size:1.5rem; font-weight:700;">
 						<th scope="col">SR번호</th>
 						<th scope="col">시스템구분</th>
 						<th scope="col">업무구분</th>
@@ -112,8 +112,8 @@
 				</thead>
 				<tbody>
 					<c:forEach var="sr" items="${srList}" varStatus="status">
-						<tr style="height:4.5rem; font-size:1.6rem;">
-							<th scope="row">${sr.srNo}</th>
+						<tr style="height:4.5rem; font-size:1.5rem;">
+							<td>${sr.srNo}</td>
 							<td>${sr.sysNm}</td>
 							<td>${sr.srDmndNm}</td>
 							<td>${sr.srTtl}</td>
@@ -125,7 +125,35 @@
 				</tbody>
 			</table>
 			<div style="height:4.5rem; font-size:1.6rem; display:flex; flex-direction:row; justify-content:center; align-items:center;">
-				페이징
+				<a href="javascript:void(0)">
+					<i class="material-icons" style="font-size:2rem; height:3rem; line-height: 3rem; display:flex; align-content:center;">first_page</i>
+				</a>
+				<c:if test="${pager.groupNo>1}">
+					<a href="javascript:void(0)">
+						<i class="material-icons" style="font-size:2rem; height:3rem; line-height: 3rem; display:flex; align-content:center;">chevron_left</i>
+					</a>
+				</c:if>
+				
+				<c:forEach var="i" begin="${pager.startPageNo}" end="${pager.endPageNo}">
+					<div style="width:0.25rem;"></div>
+					<c:if test="${pager.pageNo != i}">
+						<a href="javascript:void(0)" onclick="movePage(${i})" style="font-size:1.6rem; height:3rem; line-height: 3rem;">${i}</a>
+					</c:if>
+					<c:if test="${pager.pageNo == i}">
+						<a href="javascript:void(0)" style="font-size:1.6rem; height:3rem; line-height: 3rem;">${i}</a>
+					</c:if>
+					<div style="width:0.25rem;"></div>
+				</c:forEach>
+				
+				<c:if test="${pager.groupNo<pager.totalGroupNo}">
+					<a href="javascript:void(0)">
+						<i class="material-icons" style="font-size:2rem; height:3rem; line-height: 3rem; display:flex; align-content:center;">chevron_right</i>
+					</a>
+				</c:if>
+				
+				<a href="javascript:void(0)">
+					<i class="material-icons" style="font-size:2rem; height:3rem; line-height: 3rem; display:flex; align-content:center;">last_page</i>
+				</a>
 			</div>
 		</div>
 		<div id="calendarDiv">

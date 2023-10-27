@@ -32,9 +32,40 @@ public class DeveloperHomeController {
 			
 			int totalTransferedSrNum = srService.getTotalTransferedSrNumByUsrId(usr.getUsrId());
 			Pager pager = new Pager(5, 5, totalTransferedSrNum, 1);
+			model.addAttribute("pager", pager);
 			
 			List<SrForDeveloperHomeBoard> srList = srService.getSrForDeveloperHomeBoardListByUsrIdAndPager(usr.getUsrId(), pager);
 			model.addAttribute("srList", srList);
+			
+			List<SrForDeveloperHomeBoard> totalSrList = srService.getSrForDeveloperHomeBoardListByUsrId(usr.getUsrId());
+			
+			int requestNum = 0;
+			int analysisNum = 0;
+			int designNum = 0;
+			int implementNum = 0;
+			int testNum = 0;
+			int applyNum = 0;
+			for (SrForDeveloperHomeBoard sr : totalSrList) {
+				if (sr.getSrPrgrsSttsNm().equals("요청")) {
+					requestNum++;
+				} else if (sr.getSrPrgrsSttsNm().equals("분석")) {
+					analysisNum++;
+				} else if (sr.getSrPrgrsSttsNm().equals("설계")) {
+					designNum++;
+				} else if (sr.getSrPrgrsSttsNm().equals("구현")) {
+					implementNum++;
+				} else if (sr.getSrPrgrsSttsNm().equals("시험")) {
+					testNum++;
+				} else if (sr.getSrPrgrsSttsNm().equals("반영요청")) {
+					applyNum++;
+				}
+			}
+			model.addAttribute("requestNum", requestNum);
+			model.addAttribute("analysisNum", analysisNum);
+			model.addAttribute("designNum", designNum);
+			model.addAttribute("implementNum", implementNum);
+			model.addAttribute("testNum", testNum);
+			model.addAttribute("applyNum", applyNum);
 			
 			return "/home/developerHome";
 		} else {
