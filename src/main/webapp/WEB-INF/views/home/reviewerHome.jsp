@@ -19,85 +19,90 @@
 			<div id="reviewerHomeCountDiv" class="shadow" style="height:10.5rem; margin: 0.5rem 0; background-color:white; border-radius:1rem; padding:1rem;" >
 				<div class="reviewerHomeSecondTitle">미처리 검토 현황</div>
 				<div style="width: 100%;" class="d-flex">
-					<div class="countcard">검토요청   5건</div>
+					<div class="countcard">
+						<span class="mr-3">검토요청:</span>
+						<span id="requestReviewCount" class="mr-3">5</span>
+						<span>건</span>
+					</div>
 					<div style="width: 1%;"></div>
-					<div class="countcard">접수요청   7건</div>
+					<div class="countcard">
+						<span class="mr-3">접수요청:</span>
+						<span id="requestReceptionCount" class="mr-3">7</span>
+						<span>건</span>
+					</div>
 					<div style="width: 1%;"></div>
-					<div class="countcard">완료요청   1건</div>
+					<div class="countcard">
+						<span class="mr-3">완료요청:</span>
+						<span id="requestCompleteCount" class="mr-3">1</span>
+						<span>건</span>
+					</div>
 				</div>
 			</div>
 			<div id="reviewerHomeBoardDiv" class="shadow" style="height:40.5rem; background-color:white; border-radius:1rem; padding:1rem;">
 				<div class="reviewerHomeSecondTitle">검토 목록</div>
 				<div id="statusChoiceBtnDiv">
 					<a href="javascript:void(0)" onclick="selectMainTableFilter(this)" 
-						class="mainTableSelectElement filterTab filterTabSelected" style="width:6%;">
+						class="mainTableSelectElement filterTab filterTabSelected" style="width:10%;">
 						<span>전체</span>
 					</a>
 					<a href="javascript:void(0)" onclick="selectMainTableFilter(this)" 
-						class="mainTableSelectElement filterTab" style="width:8%;">
+						class="mainTableSelectElement filterTab" style="width:10%;">
 						<span>요청(</span>
 						<span>0</span>
 						<span>)</span>
 					</a>
 					<a href="javascript:void(0)" onclick="selectMainTableFilter(this)" 
 						class="mainTableSelectElement filterTab" style="width:10%;">
-						<span>요구정의(</span>
+						<span>검토중(</span>
 						<span>0</span>
 						<span>)</span>
 					</a>
 					<a href="javascript:void(0)" onclick="selectMainTableFilter(this)" 
 						class="mainTableSelectElement filterTab" style="width:10%;">
-						<span>분석/설계(</span>
-						<span>0</span>
-						<span>)</span>
-					</a>
-					<a href="javascript:void(0)" onclick="selectMainTableFilter(this)" 
-						class="mainTableSelectElement filterTab" style="width:8%;">
-						<span>구현(</span>
-						<span>0</span>
-						<span>)</span>
-					</a>
-					<a href="javascript:void(0)" onclick="selectMainTableFilter(this)" 
-						class="mainTableSelectElement filterTab" style="width:8%;">
-						<span>시험(</span>
+						<span>접수(</span>
 						<span>0</span>
 						<span>)</span>
 					</a>
 					<a href="javascript:void(0)" onclick="selectMainTableFilter(this)" 
 						class="mainTableSelectElement filterTab" style="width:10%;">
-						<span>운영반영(</span>
+						<span>개발중(</span>
 						<span>0</span>
 						<span>)</span>
 					</a>
 					<a href="javascript:void(0)" onclick="selectMainTableFilter(this)" 
-						class="mainTableSelectElement filterTab" style="width:15%;">
-						<span>SR일정변경요청(</span>
+						class="mainTableSelectElement filterTab" style="width:10%;">
+						<span>테스트(</span>
 						<span>0</span>
 						<span>)</span>
 					</a>
 					<a href="javascript:void(0)" onclick="selectMainTableFilter(this)" 
-						class="mainTableSelectElement filterTab" style="width:18%;">
-						<span>SR테스트 승인/반려(</span>
+						class="mainTableSelectElement filterTab" style="width:10%;">
+						<span>완료요청(</span>
 						<span>0</span>
 						<span>)</span>
 					</a>
-					<div style="flex-grow:1; border-bottom:1.5px solid #edf2f8;"></div>
+					<a href="javascript:void(0)" onclick="selectMainTableFilter(this)" 
+						class="mainTableSelectElement filterTab" style="width:10%;">
+						<span>개발완료(</span>
+						<span>0</span>
+						<span>)</span>
+					</a>
 				</div>
-				<table id="mainTable" style="width: 100%;" class="">
+				<table id="mainTable" style="width: 100%;">
 					<colgroup>
-						<col width="4%" />
+						<col width="5%" />
+						<col width="12.5%" />
+						<col width="20%" />
 						<col width="10%" />
-						<col width="16%" />
-						<col width="8%" />
-						<col width="6%" />
-						<col width="6%" />
-						<col width="6%" />
-						<col width="8%" />
-						<col width="8%" />
-						<col width="6%" />
+						<col width="7.5%" />
+						<col width="7.5%" />
+						<col width="7.5%" />
+						<col width="10%" />
+						<col width="10%" />
+						<col width="7.5%" />
 					</colgroup>
 					<thead>
-						<tr style="height: 5rem; font-size: 1.6rem; font-weight: 700;">
+						<tr style="height: 5rem; font-size: 1.5rem; font-weight: 700;">
 							<th scope="col"></th>
 							<th scope="col">SR번호</th>
 							<th scope="col">제목</th>
@@ -111,70 +116,43 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr style="height: 4.5rem; font-size: 1.6rem;">
-							<td>1</td>
-							<td>SR231013_0001</td>
-							<td class="text-align-left">SRM 시스템 개발 요청</td>
-							<td>SoftNet</td>
-							<td>홍길동</td>
-							<td>한소원</td>
-							<td>접수</td>
-							<td>2023-10-13</td>
-							<td>2023-10-31</td>
-							<td><button class="btn-1" data-toggle="modal" data-target="#detailmodal">상세보기</button></td>
-						</tr>
-						<tr style="height: 4.5rem; font-size: 1.6rem;">
-							<td>1</td>
-							<td>SR231013_0001</td>
-							<td class="text-align-left">SRM 시스템 개발 요청</td>
-							<td>SoftNet</td>
-							<td>홍길동</td>
-							<td>한소원</td>
-							<td>접수</td>
-							<td>2023-10-13</td>
-							<td>2023-10-31</td>
-							<td><button class="btn-1" data-toggle="modal" data-target="#detailmodal">상세보기</button></td>
-						</tr>
-						<tr style="height: 4.5rem; font-size: 1.6rem;">
-							<td>1</td>
-							<td>SR231013_0001</td>
-							<td class="text-align-left">SRM 시스템 개발 요청</td>
-							<td>SoftNet</td>
-							<td>홍길동</td>
-							<td>한소원</td>
-							<td>접수</td>
-							<td>2023-10-13</td>
-							<td>2023-10-31</td>
-							<td><button class="btn-1" data-toggle="modal" data-target="#detailmodal">상세보기</button></td>
-						</tr>
-						<tr style="height: 4.5rem; font-size: 1.6rem;">
-							<td>1</td>
-							<td>SR231013_0001</td>
-							<td class="text-align-left">SRM 시스템 개발 요청</td>
-							<td>SoftNet</td>
-							<td>홍길동</td>
-							<td>한소원</td>
-							<td>접수</td>
-							<td>2023-10-13</td>
-							<td>2023-10-31</td>
-							<td><button class="btn-1" data-toggle="modal" data-target="#detailmodal">상세보기</button></td>
-						</tr>
-						<tr style="height: 4.5rem; font-size: 1.6rem;">
-							<td>1</td>
-							<td>SR231013_0001</td>
-							<td class="text-align-left">SRM 시스템 개발 요청</td>
-							<td>SoftNet</td>
-							<td>홍길동</td>
-							<td>한소원</td>
-							<td>접수</td>
-							<td>2023-10-13</td>
-							<td>2023-10-31</td>
-							<td><button class="btn-1" data-toggle="modal" data-target="#detailmodal">상세보기</button></td>
-						</tr>
+						<c:forEach var="boardList" items="${reviewerHomeBoardList}" varStatus="status">	
+							<tr style="height: 4.5rem; font-size: 1.5rem;" onclick="selectSrFromBoardList()">
+							    <td>${reviewerHomeBoardPager.startRowNo + status.index}</td>
+						        <td>${boardList.srRqstNo}</td>
+						        <td class="text-align-left">${boardList.srTtl}</td>
+						        <td>${boardList.sysNm}</td>
+						        <td>${boardList.usrNm}</td>
+						        <td>${boardList.instNm}</td>
+						        <td>${boardList.srRqstSttsNm}</td>
+						        <fmt:formatDate value="${boardList.srRqstRegDt}" pattern="yyyy-MM-dd" var="formattedRegDt" />
+						        <td>${formattedRegDt}</td>
+						        <fmt:formatDate value="${boardList.srCmptnPrnmntDt}" pattern="yyyy-MM-dd" var="formattedCmptnPrnmntDt" />
+						        <td>${formattedCmptnPrnmntDt}</td>
+						        <td><button class="btn-1" data-toggle="modal" data-target="#detailmodal">상세보기</button></td>
+							</tr>
+						</c:forEach>
 					</tbody>
 				</table>
-				<div style="height: 4rem; padding: 0.5rem 0;" class="d-flex flex-row justify-content-center align-items-center">
-					페이징
+				<div id="mainTablePaging" style="height: 4rem; padding: 0.5rem 0;" class="d-flex flex-row justify-content-center align-items-center">
+					<a class="btn" href="?reviewerHomeBoardPageNo=1">처음</a>
+					<c:if test="${reviewerHomeBoardPager.groupNo>1}">
+						<a class="btn" href="?reviewerHomeBoardPageNo=${reviewerHomeBoardPager.startPageNo-1}">이전</a>
+					</c:if>
+					
+					<c:forEach var="i" begin="${reviewerHomeBoardPager.startPageNo}" end="${reviewerHomeBoardPager.endPageNo}">
+						<c:if test="${reviewerHomeBoardPager.pageNo != i}">
+							<a class="btn" href="?reviewerHomeBoardPageNo=${i}">${i}</a>
+						</c:if>
+						<c:if test="${reviewerHomeBoardPager.pageNo == i}">
+							<a class="btn" href="?reviewerHomeBoardPageNo=${i}">${i}</a>
+						</c:if>
+					</c:forEach>
+					
+					<c:if test="${reviewerHomeBoardPager.groupNo<reviewerHomeBoardPager.totalGroupNo}">
+						<a class="btn" href="?reviewerHomeBoardPageNo=${reviewerHomeBoardPager.endPageNo+1}">다음</a>
+					</c:if>
+					<a class="btn" href="?=${reviewerHomeBoardPager.totalPageNo}">맨끝</a>
 				</div>
 				
 				<!-- 상세보기 모달 -->
@@ -300,6 +278,10 @@
 		<div style="width: 30%; padding-left: 0.5rem;" class="">
 			<div id="reviewerHomeChartDiv" class="shadow" style="height:52rem; background-color:white; border-radius:1rem; padding:1rem;" >
 				<div class="reviewerHomeSecondTitle ">시스템별 검토 현황</div>
+				<c:forEach var="i" items="${totalSytemList}" varStatus="status">	
+					<div>${i}</div>
+					<div style="width:100%; height: 1.5rem; background-color: #3b82f6; opacity: 0.5;"></div>
+				</c:forEach>
 				
 				<!-- Chart -->
  			    <!--<script src= "https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script> 
@@ -351,23 +333,64 @@
 		</div>
 	</div>
 	
-	<div id="reviewerHomeSrProgressDiv" class="shadow" style="height:28rem; width: 100%; background-color:white; border-radius:1rem; margin-top: 0.5rem; padding:1rem;">
+	<div id="reviewerHomeSrProgressDiv" class="shadow" style="height:27.5rem; width: 100%; background-color:white; border-radius:1rem; margin-top: 0.5rem; padding:1rem;">
        <div class="reviewerHomeSecondTitle ">SR진행현황</div>
-       <div class="d-flex" style="margin: 2rem 0;">
+       <div class="d-flex" style="margin: 0.5rem 1rem 2rem 1rem;">
        		<span class="badgeitem mr-3">SR번호</span>
        		<span class="mr-3">SR231013_0001</span>
        		<span class="badgeitem mr-3">SR제목</span>
        		<span>SRM 시스템 개발 요청</span>
        </div>
-       <div class="srProgress flat">
-		<a href="#" class="">요청</a>
-		<a href="#" class="active">검토중</a>
-		<a href="#">접수</a>
-		<a href="#">개발중</a>
-		<a href="#">테스트</a>
-		<a href="#">완료요청</a>
-	    <a href="#">개발완료</a>
-	   </div>
+       <div id="progressCircles">
+			<div class="progress-steps">
+				<div class="progress-step">
+					<div class="progress-content">
+						<div class="inner-circle"></div>
+						<p class="mt-3 mb-1">요청</p>
+						<div style="width: 10rem; background-color: lightgray; border-radius: 0.5rem; padding: 1rem 0;">
+							<div>2023-10-27</div>
+							<div>성유짱</div>
+						</div>
+					</div>
+				</div>
+				<div class="progress-step">
+					<div class="progress-content">
+						<div class="inner-circle"></div>
+						<p class="mt-3 mb-1">검토중</p>
+					</div>
+				</div>
+				<div class="progress-step">
+					<div class="progress-content">
+						<div class="inner-circle"></div>
+						<p class="mt-3 mb-1">접수</p>
+					</div>
+				</div>
+				<div class="progress-step">
+					<div class="progress-content">
+						<div class="inner-circle"></div>
+						<p class="mt-3 mb-1">개발중</p>
+					</div>
+				</div>
+				<div class="progress-step mb-0">
+					<div class="progress-content">
+						<div class="inner-circle"></div>
+						<p class="mt-3 mb-1">테스트</p>
+					</div>
+				</div>
+				<div class="progress-step mb-0">
+					<div class="progress-content">
+						<div class="inner-circle"></div>
+						<p class="mt-3 mb-1">완료신청</p>
+					</div>
+				</div>
+				<div class="progress-step mb-0">
+					<div class="progress-content">
+						<div class="inner-circle"></div>
+						<p class="mt-3 mb-1">개발완료</p>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 </div>
 

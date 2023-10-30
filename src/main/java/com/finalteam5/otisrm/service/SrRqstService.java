@@ -3,8 +3,10 @@ package com.finalteam5.otisrm.service;
 import java.util.List;
 import java.util.Map;
 
+import com.finalteam5.otisrm.dto.Pager;
 import com.finalteam5.otisrm.dto.Sys;
 import com.finalteam5.otisrm.dto.srRequest.SrRqst;
+import com.finalteam5.otisrm.dto.srRequest.SrRqstForReviewerHomeBoard;
 
 public interface SrRqstService {
 	//요청등록폼
@@ -17,4 +19,10 @@ public interface SrRqstService {
 	public List<SrRqst> getSrRqstListByPager(Map<String, Object> map);
 	//전체 요청 수
 	public int totalSrRqst();
+	
+	//요청목록불러오기(검토자 홈)
+	public List<SrRqstForReviewerHomeBoard> getSrRqstForReviewerHomeBoardListByPage(Pager pager);
+	
+	//전체 시스템 이름 가져오기
+	public List<String> getTotalSysNm();
 }

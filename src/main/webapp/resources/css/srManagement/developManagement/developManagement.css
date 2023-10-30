@@ -5,7 +5,7 @@
 
 #developManagementDiv {
 	height: 88rem;
-	font-size: 1.5rem;
+	font-size: 1.6rem;
 	font-family: pretendard;
 	padding: 2rem; 
 	background-color: white; 
@@ -50,6 +50,16 @@
 }
 
 /* Button */
+#excelDownloadBtn {
+	border: none;
+	font-size:1.6rem;
+	color:white;
+	background-color: #222E3C; 
+	border-radius: 0.5rem;
+	height: 3rem;
+	width: 12rem;
+}
+
 .detailViewBtn {
 	border: none;
 	font-size:1.6rem;
@@ -88,6 +98,52 @@
 	background-color: black; 
 }
 
+.btn-1 {
+   border: none;
+   font-size: 1.3rem;
+   color: #f3ffff;
+   background-color:#2c7be4; 
+   border-radius:3px;
+   height: 2.8rem;
+   width: 8rem;
+}
+
+.btn-1:active {
+   background-color:#4177bf; 
+}
+
+.btn-2 {
+   border: none;
+   font-size:1rem;
+   color: #f3ffff;
+   background-color:#2c7be4; 
+   border-radius:3px;
+   height: 2.5rem;
+   width: 55px;
+}
+
+.btn-2:active {
+   background-color:#4177bf; 
+}
+
+.btn-3 {
+   border: none;
+   font-size:1.3rem;
+   color: #f3ffff;
+   background-color:#949494; 
+   border-radius:3px;
+   height: 2.8rem;
+   width: 8rem;
+}
+
+.btn-3:active {
+   background-color:#7c7c7c; 
+}
+
+.close-icon:hover {
+	cursor: pointer;
+}
+
 /* Table */
 #mainTable tbody tr {
 	border-bottom: 1px solid #e9ecef;
@@ -104,4 +160,61 @@
 
 #mainTable thead th, #mainTable tbody tr {
 	text-align: center;
+}
+
+/* Modal */
+#detailmodal {
+	font-size: 1.5rem;
+	border-radius: 1rem;
+}
+
+.w-label {
+	width: 20.83%;
+}
+
+.w-content {
+	width: 79.17%;
+}
+
+.modal-header {
+	background-color: #222e3c;
+	color: white;
+	font-weight: 700;
+}
+
+.modal-sub-title {
+	color: #007bff;
+	font-weight: 700;
+}
+
+.col-form-label {
+	font-weight: 700;
+}
+
+#detailmodal i {
+	font-size: 2.5rem;
+	font-weight: 700;
+}
+
+#detailmodal textarea {
+	font-size: 1.5rem;
+	border:1px solid #ADB5BD;
+	border-radius:0.5rem;
+}
+
+select {
+	outline-style: none;
+}
+
+#detailmodal input, #detailmodal select {
+	font-size: 1.5rem;
+	height: 3rem;
+	display: flex;
+	align-content: center;
+	align-self: center;
+}
+
+#detailmodal input[type="text"], #detailmodal input[type="date"] {
+	border:1px solid #ADB5BD; 
+	border-radius:0.5rem;
 }

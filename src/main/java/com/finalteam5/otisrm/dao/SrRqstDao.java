@@ -5,8 +5,10 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.finalteam5.otisrm.dto.Pager;
 import com.finalteam5.otisrm.dto.Sys;
 import com.finalteam5.otisrm.dto.srRequest.SrRqst;
+import com.finalteam5.otisrm.dto.srRequest.SrRqstForReviewerHomeBoard;
 
 @Mapper
 public interface SrRqstDao {
@@ -21,4 +23,10 @@ public interface SrRqstDao {
 	public List<SrRqst> selectSrRqstListByPage(Map<String, Object> map);
 	//전체 요청 수
 	public int countSrRqst();
+	
+	//페이지별로 요청 불러오기(검토자 홈)
+	public List<SrRqstForReviewerHomeBoard> selectSrRqstForReviewerHomeBoardListByPage(Pager pager);
+	
+	//전체 시스템 이름 가져오기
+	public List<String> selectTotalSysNm();
 }

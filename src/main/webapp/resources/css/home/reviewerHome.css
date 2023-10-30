@@ -48,7 +48,20 @@ a, a:hover {
 	align-items: center;
 }
 
+/* Width */
+.w-40 {
+	width: 40%;
+}
+
+.w-60 {
+	width: 60%;
+}
+
 /* Button */
+#mainTablePaging a {
+	font-size: 1.5rem;
+}
+
 .detailViewBtn {
 	border: none;
 	font-size:1.6rem;
@@ -175,6 +188,10 @@ a, a:hover {
 }
 
 /* Modal */
+.requestInfo, .requestInfo input, .requestInfo textarea {
+	font-size: 1.5rem;
+}
+
 #detailmodal {
 	font-size: 1.5rem;
 	border-radius: 1rem;
@@ -243,86 +260,61 @@ select {
 	padding: 0 0.5rem;
 }
 
-/* Progress */
-.srProgress {
-	/*centering*/
-	display: inline-block;
-	height: 5.69rem;
-	overflow: hidden;
-	border-radius: 5px;
+/* Shape */
+.progress-steps {
+    display: flex;
+    flex-wrap: wrap;
 }
 
-.srProgress a {
-	text-decoration: none;
-	outline: none;
-	display: block;
-	float: left;
-	line-height: 36px;
-	color: white;
-	/*need more margin on the left of links to accomodate the numbers*/
-	padding: 0 20px 0 36px;
-	background: #666;
-	position: relative;
-}
-/*since the first link does not have a triangle before it we can reduce the left padding to make it look consistent with other links*/
-.srProgress a:first-child {
-	padding-left: 16px;
-	border-radius: 5px 0 0 5px; /*to match with the parent's radius*/
-}
-.srProgress a:first-child:before {
-	left: 14px;
-}
-.srProgress a:last-child {
-	padding-right: 20px;
+.progress-steps .progress-step {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin: 1rem;
 }
 
-/*adding the arrows for the srProgresss using rotated pseudo elements*/
-.srProgress a:after {
-	content: '';
-	position: absolute;
-	top: 0; 
-	right: -18px; /*half of square's length*/
-	/*same dimension as the line-height of .srProgress a */
-	width: 36px; 
-	height: 36px;
-	/*as you see the rotated square takes a larger height. which makes it tough to position it properly. So we are going to scale it down so that the diagonals become equal to the line-height of the link. We scale it to 70.7% because if square's: 
-	length = 1; diagonal = (1^2 + 1^2)^0.5 = 1.414 (pythagoras theorem)
-	if diagonal required = 1; length = 1/1.414 = 0.707*/
-	transform: scale(0.707) rotate(45deg);
-	z-index: 1;
-	background: #666;
-	box-shadow: 
-		2px -2px 0 2px rgba(0, 0, 0, 0.4), 
-		3px -3px 0 2px rgba(255, 255, 255, 0.1);
-	border-radius: 0 5px 0 50px;
+.progress-steps .progress-step:not(:last-child):after {
+    content: "";
+    display: block;
+    border-top: .25rem dotted #3b82f6;
+    width: 3.435rem;
+    position: absolute;
+    left: 7.5rem;
+    top: 0.3125rem;
+}
+.progress-steps .progress-step:not(:first-child):before {
+    content: "";
+    display: block;
+    border-top: .25rem dotted #3b82f6;
+    width: 3.8rem;
+    position: absolute;
+    right: 7.5rem;
+    top: 0.3125rem;
 }
 
-.srProgress a:last-child:after {
-	content: none;
+.progress-steps .progress-content {
+    width: 10rem;
+    text-align: center;
 }
 
-.srProgress a:before {
-	border-radius: 100%;
-	width: 20px;
-	height: 20px;
-	line-height: 20px;
-	margin: 8px 0;
-	position: absolute;
-	top: 0;
-	left: 30px;
-	background: #444;
-	font-weight: bold;
+.progress-steps .progress-content .inner-circle {
+    border-radius: 1.5rem;
+    height: 1rem;
+    width: 1rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #3b82f6;
 }
 
-.flat a, .flat a:after {
-	background: #e9ecef;
-	color: black;
-}
-
-.flat a:before {
-	background: #e9ecef;
-	box-shadow: 0 0 0 1px #ccc;
-}
-.flat a.active, .flat a.active:after{
-	background: #9EEB62;
+.progress-steps .progress-content .inner-circle:before {
+    content: "";
+    background-color: #3b82f6;
+    display: inline-block;
+    height: 3rem;
+    width: 3rem;
+    min-width: 3rem;
+    border-radius: 6.25rem;
+    opacity: 0.5;
 }

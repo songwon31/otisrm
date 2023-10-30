@@ -58,4 +58,30 @@
 	<select id="countSrRqst" resultType="int">
 		select count(*) from sr_rqst
 	</select>
+	
+	<!-- 검토자 홈 요청목록 불러오기 -->
+	<select id="selectSrRqstForReviewerHomeBoardListByPage" parameterType="map" resultType="com.finalteam5.otisrm.dto.srRequest.SrRqstForReviewerHomeBoard">
+		<![CDATA[
+		select rnum, sr_rqst_no, sr_ttl, sys_nm, usr_nm, inst_nm, sr_rqst_stts_nm, sr_rqst_reg_dt, sr_cmptn_prnmnt_dt
+		from (
+		    select rownum as rnum, sr_rqst_no, sr_ttl, sys_nm, usr_nm, inst_nm, sr_rqst_stts_nm, sr_rqst_reg_dt, sr_cmptn_prnmnt_dt
+		    from(
+		        select r.sr_rqst_no, r.sr_ttl, s.sys_nm, u.usr_nm, i.inst_nm, rs.sr_rqst_stts_nm, r.sr_rqst_reg_dt, sr.sr_cmptn_prnmnt_dt
+		        from sr_rqst r
+		        join sys s on s.sys_no = r.sys_no 
+		        join usr u on u.usr_no = r.sr_reqstr_no
+		        join inst i on i.inst_no = u.inst_no
+		        join sr_rqst_stts rs on rs.sr_rqst_stts_no = r.sr_rqst_stts_no
+		        left join sr on sr.sr_rqst_no = r.sr_rqst_no
+		        order by sr_rqst_no desc
+		        )
+			where rownum <= #{endRowNo}
+		)
+		where rnum >= #{startRowNo}	
+		]]>
+	</select>
+	
+	<select id="selectTotalSysNm" resultType="String">
+		select distinct sys_nm from sys
+	</select>
 </mapper>
