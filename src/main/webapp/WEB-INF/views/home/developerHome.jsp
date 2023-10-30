@@ -1,14 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <%@ include file="/WEB-INF/views/common/header.jsp"%>
 <head>
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/home/developerHomeStyle.css" />
 	<!-- javascript 코드 -->
-    <script src="${pageContext.request.contextPath}/resources/javascript/home/developerHome.js"></script>
-      
+	<script src="${pageContext.request.contextPath}/resources/javascript/home/developerHome.js"></script>
+	
 	<!-- 아이콘 -->
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-
+	
 	<!-- fullcalendar css -->
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.css">
 	
@@ -21,143 +23,134 @@
 
 <div id="developerHomeDiv" class="shadow">
 	<div id="userManagementTitleDiv">
-		<div class="font-weight-bold d-flex" style="font-size:2.5rem; height:4rem; vertical-align: center;">
-			<i class="material-icons" style="font-size:3.5rem; height:4rem; line-height: 4rem;">person</i>
+		<div class="font-weight-bold d-flex"
+			style="font-size: 2.5rem; height: 4rem; vertical-align: center;">
+			<i class="material-icons" style="font-size: 3.5rem; height: 4rem; line-height: 4rem;">person</i>
 			<span style="margin-left: 1.3rem;">My Portal</span>
 		</div>
 	</div>
 	<div id="userManagementMiddleDiv">
 		<div id="tableDiv">
 			<div>
-				<div class="font-weight-bold d-flex" style="font-size:2rem; height:3rem; vertical-align: center; margin-bottom:0.5rem;">
-					<i class="material-icons" style="font-size:2rem; height:3rem; line-height: 3rem;">chevron_right</i>
+				<div class="font-weight-bold d-flex"
+					style="font-size: 2rem; height: 3rem; vertical-align: center; margin-bottom: 0.5rem;">
+					<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem;">chevron_right</i>
 					<span>나의 할 일</span>
 				</div>
 			</div>
 			<div id="statusChoiceBtnDiv">
-				<a href="javascript:void(0)" onclick="selectMainTableFilter(this)" 
-					class="mainTableSelectElement filterTab filterTabSelected" style="width:6%;">
-					<span>전체</span>
+				<a href="javascript:void(0)" onclick="selectMainTableFilter(this)"
+					class="mainTableSelectElement filterTab filterTabSelected"
+					style="width: 6%;"> <span>전체</span>
+				</a> <a href="javascript:void(0)" onclick="selectMainTableFilter(this)"
+					class="mainTableSelectElement filterTab" style="width: 6%;"> <span>요청(</span>
+					<span>${requestNum}</span> <span>)</span>
+				</a> <a href="javascript:void(0)" onclick="selectMainTableFilter(this)"
+					class="mainTableSelectElement filterTab" style="width: 6%;"> <span>분석(</span>
+					<span>${analysisNum}</span> <span>)</span>
+				</a> <a href="javascript:void(0)" onclick="selectMainTableFilter(this)"
+					class="mainTableSelectElement filterTab" style="width: 6%;"> <span>설계(</span>
+					<span>${designNum}</span> <span>)</span>
+				</a> <a href="javascript:void(0)" onclick="selectMainTableFilter(this)"
+					class="mainTableSelectElement filterTab" style="width: 6%;"> <span>구현(</span>
+					<span>${implementNum}</span> <span>)</span>
+				</a> <a href="javascript:void(0)" onclick="selectMainTableFilter(this)"
+					class="mainTableSelectElement filterTab" style="width: 6%;"> <span>시험(</span>
+					<span>${testNum}</span> <span>)</span>
+				</a> <a href="javascript:void(0)" onclick="selectMainTableFilter(this)"
+					class="mainTableSelectElement filterTab" style="width: 8%;"> <span>운영반영(</span>
+					<span>${applyNum}</span> <span>)</span>
+				</a> <a href="javascript:void(0)" onclick="selectMainTableFilter(this)"
+					class="mainTableSelectElement filterTab" style="width: 12%;"> <span>SR일정변경요청(</span>
+					<span>0</span> <span>)</span>
+				</a> <a href="javascript:void(0)" onclick="selectMainTableFilter(this)"
+					class="mainTableSelectElement filterTab" style="width: 15%;"> <span>SR테스트
+						승인/반려(</span> <span>0</span> <span>)</span>
 				</a>
-				<a href="javascript:void(0)" onclick="selectMainTableFilter(this)" 
-					class="mainTableSelectElement filterTab" style="width:8%;">
-					<span>요청(</span>
-					<span>${requestNum}</span>
-					<span>)</span>
-				</a>
-				<a href="javascript:void(0)" onclick="selectMainTableFilter(this)" 
-					class="mainTableSelectElement filterTab" style="width:8%;">
-					<span>분석(</span>
-					<span>${analysisNum}</span>
-					<span>)</span>
-				</a>
-				<a href="javascript:void(0)" onclick="selectMainTableFilter(this)" 
-					class="mainTableSelectElement filterTab" style="width:8%;">
-					<span>설계(</span>
-					<span>${designNum}</span>
-					<span>)</span>
-				</a>
-				<a href="javascript:void(0)" onclick="selectMainTableFilter(this)" 
-					class="mainTableSelectElement filterTab" style="width:8%;">
-					<span>구현(</span>
-					<span>${implementNum}</span>
-					<span>)</span>
-				</a>
-				<a href="javascript:void(0)" onclick="selectMainTableFilter(this)" 
-					class="mainTableSelectElement filterTab" style="width:8%;">
-					<span>시험(</span>
-					<span>${testNum}</span>
-					<span>)</span>
-				</a>
-				<a href="javascript:void(0)" onclick="selectMainTableFilter(this)" 
-					class="mainTableSelectElement filterTab" style="width:10%;">
-					<span>운영반영(</span>
-					<span>${applyNum}</span>
-					<span>)</span>
-				</a>
-				<a href="javascript:void(0)" onclick="selectMainTableFilter(this)" 
-					class="mainTableSelectElement filterTab" style="width:15%;">
-					<span>SR일정변경요청(</span>
-					<span>0</span>
-					<span>)</span>
-				</a>
-				<a href="javascript:void(0)" onclick="selectMainTableFilter(this)" 
-					class="mainTableSelectElement filterTab" style="width:18%;">
-					<span>SR테스트 승인/반려(</span>
-					<span>0</span>
-					<span>)</span>
-				</a>
-				<div style="flex-grow:1; border-bottom:1.5px solid #edf2f8;"></div>
+				<div style="flex-grow: 1; border-bottom: 1.5px solid #edf2f8;"></div>
 			</div>
-			<table id="mainTable" style="width:100%; text-align:center;">
-				<colgroup>
-					<col width="15%"/>
-					<col width="15%"/>
-					<col width="15%"/>
-					<col width="25%"/>
-					<col width="10%"/>
-					<col width="10%"/>
-					<col width="10%"/>
-				</colgroup>
-				<thead>
-					<tr style="height:4.5rem; font-size:1.5rem; font-weight:700;">
-						<th scope="col">SR번호</th>
-						<th scope="col">시스템구분</th>
-						<th scope="col">업무구분</th>
-						<th scope="col">SR제목</th>
-						<th scope="col">담당자</th>
-						<th scope="col">진행상태</th>
-						<th scope="col">상세보기</th>
-					</tr>
-				</thead>
-				<tbody>
-					<c:forEach var="sr" items="${srList}" varStatus="status">
-						<tr style="height:4.5rem; font-size:1.5rem;">
-							<td>${sr.srNo}</td>
-							<td>${sr.sysNm}</td>
-							<td>${sr.srDmndNm}</td>
-							<td>${sr.srTtl}</td>
-							<td>${sr.usrNm}</td>
-							<td>${sr.srPrgrsSttsNm}</td>
-							<td><button class="btn-2">상세보기</button></td>
+			<div style="height:27rem; background-color:#f9fafe;">
+				<table id="mainTable" style="width: 100%; text-align: center;">
+					<colgroup>
+						<col width="10%" />
+						<col width="10%" />
+						<col width="10%" />
+						<col width="20%" />
+						<col width="10%" />
+						<col width="10%" />
+						<col width="10%" />
+						<col width="10%" />
+						<col width="10%" />
+					</colgroup>
+					<thead>
+						<tr style="height: 4.5rem; font-size: 1.5rem; font-weight: 700;">
+							<th scope="col">SR번호</th>
+							<th scope="col">시스템구분</th>
+							<th scope="col">업무구분</th>
+							<th scope="col">SR제목</th>
+							<th scope="col">요청자</th>
+							<th scope="col">완료요청일</th>
+							<th scope="col">완료예정일</th>
+							<th scope="col">진행상태</th>
+							<th scope="col">요청상세</th>
 						</tr>
-					</c:forEach>
-				</tbody>
-			</table>
-			<div style="height:4.5rem; font-size:1.6rem; display:flex; flex-direction:row; justify-content:center; align-items:center;">
-				<a href="javascript:void(0)">
-					<i class="material-icons" style="font-size:2rem; height:3rem; line-height: 3rem; display:flex; align-content:center;">first_page</i>
+					</thead>
+					<tbody>
+						<c:forEach var="sr" items="${srList}" varStatus="status">
+							<tr style="height: 4.5rem; font-size: 1.5rem; background-color:white;">
+								<td>${sr.srNo}</td>
+								<td>${sr.sysNm}</td>
+								<td>${sr.srDmndNm}</td>
+								<td>${sr.srTtl}</td>
+								<td>${sr.usrNm}</td>
+								<td><fmt:formatDate value="${sr.srCmptnPrnmntDt}" pattern="yyyy-MM-dd"/></td>
+								<td><fmt:formatDate value="${sr.srTrgtCmptnDt}" pattern="yyyy-MM-dd"/></td>
+								<td>${sr.srPrgrsSttsNm}</td>
+								<td>
+									<button data-toggle="modal" data-target="#requestDetailModal" class="btn-2 detail-button" 
+											onclick="showRequestDetail('${sr.srNo}')">요청상세</button>
+								</td>
+							</tr>
+						</c:forEach>
+					</tbody>
+				</table>
+			</div>
+			<div
+				style="height: 4.5rem; font-size: 1.6rem; display: flex; flex-direction: row; justify-content: center; align-items: center;">
+				<a href="javascript:void(0)"> <i class="material-icons"
+					style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center;">first_page</i>
 				</a>
 				<c:if test="${pager.groupNo>1}">
-					<a href="javascript:void(0)">
-						<i class="material-icons" style="font-size:2rem; height:3rem; line-height: 3rem; display:flex; align-content:center;">chevron_left</i>
+					<a href="javascript:void(0)"> <i class="material-icons"
+						style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center;">chevron_left</i>
 					</a>
 				</c:if>
-				
-				<c:forEach var="i" begin="${pager.startPageNo}" end="${pager.endPageNo}">
-					<div style="width:0.25rem;"></div>
+
+				<c:forEach var="i" begin="${pager.startPageNo}"
+					end="${pager.endPageNo}">
+					<div style="width: 0.25rem;"></div>
 					<c:if test="${pager.pageNo != i}">
-						<a href="javascript:void(0)" onclick="movePage(${i})" style="font-size:1.6rem; height:3rem; line-height: 3rem;">${i}</a>
+						<a href="javascript:void(0)" onclick="movePage(${i})" style="font-size: 1.6rem; height: 3rem; line-height: 3rem;">${i}</a>
 					</c:if>
 					<c:if test="${pager.pageNo == i}">
-						<a href="javascript:void(0)" style="font-size:1.6rem; height:3rem; line-height: 3rem;">${i}</a>
+						<a href="javascript:void(0)" style="font-size: 1.6rem; height: 3rem; line-height: 3rem;">${i}</a>
 					</c:if>
-					<div style="width:0.25rem;"></div>
+					<div style="width: 0.25rem;"></div>
 				</c:forEach>
-				
+
 				<c:if test="${pager.groupNo<pager.totalGroupNo}">
-					<a href="javascript:void(0)">
-						<i class="material-icons" style="font-size:2rem; height:3rem; line-height: 3rem; display:flex; align-content:center;">chevron_right</i>
+					<a href="javascript:void(0)"> <i class="material-icons"
+						style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center;">chevron_right</i>
 					</a>
 				</c:if>
-				
-				<a href="javascript:void(0)">
-					<i class="material-icons" style="font-size:2rem; height:3rem; line-height: 3rem; display:flex; align-content:center;">last_page</i>
+
+				<a href="javascript:void(0)"> <i class="material-icons"
+					style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center;">last_page</i>
 				</a>
 			</div>
 		</div>
+		<!-- 
 		<div id="calendarDiv">
-			<!-- 
 			<div id="calendar"></div>
 			<script>
 				document.addEventListener('DOMContentLoaded', function() {
@@ -271,38 +264,48 @@
 				});
 				
 			</script>
-			 -->
 		</div>
+		 -->
 	</div>
 	<div id="userManagementBottomDiv">
 		<div id="srProgressDiv">
 			<div>
-				<div class="font-weight-bold d-flex" style="font-size:2rem; height:3rem; vertical-align: center; margin-bottom:0.5rem;">
-					<i class="material-icons" style="font-size:2rem; height:3rem; line-height: 3rem;">chevron_right</i>
+				<div class="font-weight-bold d-flex" style="font-size: 2rem; height: 3rem; vertical-align: center; margin-bottom: 0.5rem;">
+					<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem;">chevron_right</i>
 					<span>SR요청 처리 정보</span>
 				</div>
 			</div>
 			<div id="srProgressChoiceDiv">
+				<!-- 
 				<a href="javascript:void(0)" onclick="selectSrProgressTableFilter(this)" 
-					class="srProgressTableSelectElement srProgressRquest filterTab filterTabSelected" style="width:10%">
+					class="srProgressTableSelectElement srProgressRquest filterTab" 
+					style="width:10%">
 					<span>SR요청정보</span>
 				</a>
-				<a href="javascript:void(0)" onclick="selectSrProgressTableFilter(this)" 
-					class="srProgressTableSelectElement srProgressPlan filterTab" style="width:10%">
+				-->
+				<a href="javascript:void(0)"
+					onclick="selectSrProgressTableFilter(this)"
+					class="srProgressTableSelectElement srProgressPlan filterTab filterTabSelected"
+					style="width: 10%"> 
 					<span>SR계획정보</span>
-				</a>
-				<a href="javascript:void(0)" onclick="selectSrProgressTableFilter(this)" 
-					class="srProgressTableSelectElement srProgressHr filterTab" style="width:10%">
+				</a> 
+				<a href="javascript:void(0)"
+					onclick="selectSrProgressTableFilter(this)"
+					class="srProgressTableSelectElement srProgressHr filterTab"
+					style="width: 10%"> 
 					<span>SR자원정보</span>
-				</a>
-				<a href="javascript:void(0)" onclick="selectSrProgressTableFilter(this)" 
-					class="srProgressTableSelectElement srProgressPercentage filterTab" style="width:10%">
+				</a> 
+				<a href="javascript:void(0)"
+					onclick="selectSrProgressTableFilter(this)"
+					class="srProgressTableSelectElement srProgressPercentage filterTab"
+					style="width: 10%"> 
 					<span>SR진척률</span>
 				</a>
-				<div style="flex-grow:1; border-bottom:1.5px solid #edf2f8;"></div>
+				<div style="flex-grow: 1; border-bottom: 1.5px solid #edf2f8;"></div>
 			</div>
 			<!-- SR요청정보 div -->
-			<div id="srRqstInfo" class="bottomSubDiv">
+			<!-- 
+			<div id="srRqstInfo" class="bottomSubDiv" style="display:none;">
 				<div style="height:4rem; display:flex; flex-direction:row;">
 					<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#f9fafe;">SR번호</div>
 					<div style="height:4rem; width:35%; padding-left:0.5rem; display:flex; align-items:center;">EIS_SR_2023_0167</div>
@@ -349,92 +352,68 @@
 					<div style="height:4rem; width:85%; padding-left:0.5rem; display:flex; align-items:center;">(요청내용)230712_EIS변경요청.hwp</div>
 				</div>
 			</div>
+			 -->
 			<!-- SR계획정보 div -->
-			<div id="srPlanInfo" class="bottomSubDiv" style="display:none;">
-				<div style="height:4rem; display:flex; flex-direction:row;">
-					<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#f9fafe;">요청구분</div>
-					<div style="height:4rem; width:35%; padding-left:0.5rem; display:flex; align-items:center;">
-						<label style="display:none;" for="usrAuthrt"></label> 
-						<select id="usrAuthrt" name="usrAuthrt" style="width:90%">
-							<option value="" selected>선택</option>
-							<c:forEach var="usrAuthrt" items="${usrManagementPageConfigure.usrAuthrtList}" varStatus="status">
-								<option value="${usrAuthrt.usrAuthrtNo}">${usrAuthrt.usrAuthrtNm}</option>
-							</c:forEach>
-						</select>
+			<div id="srPlanInfo" class="bottomSubDiv">
+				<div style="height: 4rem; display: flex; flex-direction: row;">
+					<div style="height: 4rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #f9fafe;">요청구분</div>
+					<div id="srPlanInfoDmnd" style="height: 4rem; width: 35%; padding-left: 0.5rem; display: flex; align-items: center;">
+
 					</div>
-					<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#f9fafe;">업무구분</div>
-					<div style="height:4rem; width:35%; padding-left:0.5rem; display:flex; align-items:center;">
-						<label style="display:none;" for="usrAuthrt"></label> 
-						<select id="usrAuthrt" name="usrAuthrt" style="width:90%">
-							<option value="" selected>선택</option>
-							<c:forEach var="usrAuthrt" items="${usrManagementPageConfigure.usrAuthrtList}" varStatus="status">
-								<option value="${usrAuthrt.usrAuthrtNo}">${usrAuthrt.usrAuthrtNm}</option>
-							</c:forEach>
-						</select>
+					<div style="height: 4rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #f9fafe;">업무구분</div>
+					<div id="srPlanInfoTask" style="height: 4rem; width: 35%; padding-left: 0.5rem; display: flex; align-items: center;">
+
 					</div>
 				</div>
-				<div style="height:4rem; display:flex; flex-direction:row;">
-					<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#f9fafe;">요청사</div>
-					<div style="height:4rem; width:35%; padding-left:0.5rem; display:flex; align-items:center;">
-						<label style="display:none;" for="usrAuthrt"></label> 
-						<select id="usrAuthrt" name="usrAuthrt" style="width:90%">
-							<option value="" selected>선택</option>
-							<c:forEach var="usrAuthrt" items="${usrManagementPageConfigure.usrAuthrtList}" varStatus="status">
-								<option value="${usrAuthrt.usrAuthrtNo}">${usrAuthrt.usrAuthrtNm}</option>
-							</c:forEach>
-						</select>
+				<div style="height: 4rem; display: flex; flex-direction: row;">
+					<div style="height: 4rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #f9fafe;">요청사</div>
+					<div id="srPlanInfoInst" style="height: 4rem; width: 35%; padding-left: 0.5rem; display: flex; align-items: center;">
+
 					</div>
-					<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#f9fafe;">요청팀</div>
-					<div style="height:4rem; width:35%; padding-left:0.5rem; display:flex; align-items:center;">
-						<label style="display:none;" for="usrAuthrt"></label> 
-						<select id="usrAuthrt" name="usrAuthrt" style="width:90%">
-							<option value="" selected>선택</option>
-							<c:forEach var="usrAuthrt" items="${usrManagementPageConfigure.usrAuthrtList}" varStatus="status">
-								<option value="${usrAuthrt.usrAuthrtNo}">${usrAuthrt.usrAuthrtNm}</option>
-							</c:forEach>
-						</select>
+					<div style="height: 4rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #f9fafe;">요청팀</div>
+					<div id="srPlanInfoDept" style="height: 4rem; width: 35%; padding-left: 0.5rem; display: flex; align-items: center;">
+
 					</div>
 				</div>
-				<div style="height:4rem; display:flex; flex-direction:row;">
-					<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#f9fafe;">담당자</div>
-					<div style="height:4rem; width:35%; padding-left:0.5rem; display:flex; align-items:center;">
-						<input type="text" style="width:55%;">
-						<div style="width:5%;"></div>
-						<a style="width:30%; border:1px solid gray;" href="#">탐색</a>
+				<div style="height: 4rem; display: flex; flex-direction: row;">
+					<div style="height: 4rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #f9fafe;">담당자</div>
+					<div id="srPlanInfoPic" style="height: 4rem; width: 35%; padding-left: 0.5rem; display: flex; align-items: center;">
+
 					</div>
 				</div>
-				<div style="height:4rem; display:flex; flex-direction:row;">
-					<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#f9fafe;">목표시작일</div>
-					<input style="width:35%;" type="date">
-					<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#f9fafe;">목표완료일</div>
-					<input style="width:35%;" type="date">
+				<div style="height: 4rem; display: flex; flex-direction: row;">
+					<div style="height: 4rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #f9fafe;">목표시작일</div>
+					<div id="srPlanInfoBgngDt" style="height: 4rem; width: 35%; padding-left: 0.5rem; display: flex; align-items: center;">
+
+					</div>
+					<div style="height: 4rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #f9fafe;">목표완료일</div>
+					<div id="srPlanInfoCmptnDt" style="height: 4rem; width: 35%; padding-left: 0.5rem; display: flex; align-items: center;">
+					
+					</div>
 				</div>
-				<div style="height:11rem; display:flex; flex-direction:row;">
-					<div style="height:11rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#f9fafe;">참고사항</div>
-					<div style="height:11rem; width:85%; padding-left:0.5rem; display:flex; flex-direction: column;">
-						<div style="height:11rem; display:flex; flex-direction: row; align-items:center; ">
-							<div style="height:10rem; width: 100%; border:1px solid gray; padding:0.3rem; overflow-y:auto;">
-								향후 로직 전달드리겠습니다.<br>* 첨부파일 내 6번 해당 <br><br>
+				<div style="height: 15rem; display: flex; flex-direction: row;">
+					<div style="height: 15rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #f9fafe; border-radius: 0px 0px 0px 10px;">참고사항</div>
+					<div style="height: 15rem; width: 85%; padding-left: 0.5rem; display: flex; flex-direction: column;">
+						<div style="height: 15rem; display: flex; flex-direction: row; align-items: center;">
+							<div id="srPlanInfoNote" style="height: 14rem; width: 100%; border: 1px solid gray; padding: 0.3rem; overflow-y: auto; white-space: pre-line;">
+
 							</div>
 						</div>
 					</div>
 				</div>
-				<div style="height:4rem; display:flex; flex-direction:row; align-items:center; justify-content:right;">
-					<a style="height:3rem; width: 5rem; border:1px solid gray; border-radius:5px; display:flex; flex-direction:row; justify-content:center; align-items:center;" href="#">저장</a>
-				</div>
 			</div>
 			<!-- SR자원정보 -->
-			<div id="srHrInfo" class="bottomSubDiv" style="display:none;">
-				<div style="height:27rem; background-color:#f1f3f5;">
-					<table style="width:100%; text-align:center;">
+			<div id="srHrInfo" class="bottomSubDiv" style="display: none;">
+				<div style="height: 27rem; background-color: #f9fafe;">
+					<table style="width: 100%; text-align: center;">
 						<colgroup>
-							<col width="5%"/>
-							<col width="15%"/>
-							<col width="15%"/>
-							<col width="65%"/>
+							<col width="5%" />
+							<col width="15%" />
+							<col width="15%" />
+							<col width="65%" />
 						</colgroup>
-						<thead style="background-color:#e9ecef;">
-							<tr style="height:4rem; font-size:1.6rem; font-weight:700;">
+						<thead style="background-color: #f9fafe;">
+							<tr style="height: 4rem; font-size: 1.6rem; font-weight: 700;">
 								<th scope="col">ㅁ</th>
 								<th scope="col">담당자명</th>
 								<th scope="col">역할</th>
@@ -442,34 +421,30 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr style="height:4rem; font-size:1.6rem; background-color:white;">
-								<th scope="row">ㅁ</th>
-								<td>송원석</td>
-								<td>개발자</td>
-								<td>분석 설계 구현 시험</td>
-							</tr>
+
 						</tbody>
 					</table>
 				</div>
-				<div style="height:4rem; display:flex; flex-direction:row; align-items:center;">
-					<a style="height:3rem; width: 5rem; border:1px solid gray; border-radius:5px; display:flex; flex-direction:row; justify-content:center; align-items:center;" href="#">추가</a>
-					<a style="height:3rem; width: 8rem; border:1px solid gray; border-radius:5px; display:flex; flex-direction:row; justify-content:center; align-items:center; margin-left:0.5rem;" href="#">선택삭제</a>
-					<a style="height:3rem; width: 5rem; border:1px solid gray; border-radius:5px; display:flex; flex-direction:row; justify-content:center; align-items:center; margin-left:0.5rem;" href="#">저장</a>
+				<div
+					style="height: 4rem; display: flex; flex-direction: row; align-items: center;">
+					<a style="height: 3rem; width: 5rem; border: 1px solid gray; border-radius: 5px; display: flex; flex-direction: row; justify-content: center; align-items: center;" href="#">추가</a> 
+					<a style="height: 3rem; width: 8rem; border: 1px solid gray; border-radius: 5px; display: flex; flex-direction: row; justify-content: center; align-items: center; margin-left: 0.5rem;" href="#">선택삭제</a> 
+					<a style="height: 3rem; width: 5rem; border: 1px solid gray; border-radius: 5px; display: flex; flex-direction: row; justify-content: center; align-items: center; margin-left: 0.5rem;" href="#">저장</a>
 				</div>
 			</div>
 			<!-- SR진척률 -->
-			<div id="srProgressInfo" class="bottomSubDiv" style="display:none;">
-				<div style="height:31rem; background-color:#f1f3f5; border-radius:10px;">
-					<table style="width:100%; text-align:center;">
+			<div id="srProgressInfo" class="bottomSubDiv" style="display: none;">
+				<div style="height: 31rem; background-color: #f9fafe; border-radius: 10px;">
+					<table id="prgrsTable" style="width: 100%; text-align: center;">
 						<colgroup>
-							<col width="20%"/>
-							<col width="20%"/>
-							<col width="20%"/>
-							<col width="20%"/>
-							<col width="20%"/>
+							<col width="20%" />
+							<col width="20%" />
+							<col width="20%" />
+							<col width="20%" />
+							<col width="20%" />
 						</colgroup>
-						<thead style="background-color:#e9ecef;">
-							<tr style="height:4rem; font-size:1.6rem; font-weight:700;">
+						<thead style="background-color: #f9fafe;">
+							<tr style="height: 4rem; font-size: 1.6rem; font-weight: 700;">
 								<th scope="col">작업구분</th>
 								<th scope="col">시작일</th>
 								<th scope="col">종료일</th>
@@ -478,48 +453,128 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr style="height:4rem; font-size:1.6rem; background-color:white;">
-								<td>분석</td>
-								<td>2023-08-08</td>
-								<td>2023-08-09</td>
-								<td>10</td>
-								<td>버튼</td>
+							<tr
+								style="height: 4rem; font-size: 1.6rem; background-color: white;">
+								<th>분석</th>
+								<td id="srAnalysisBgngDt"></td>
+								<td id="srAnalysisCmptnDt"></td>
+								<td id="srAnalysisPrgrs"></td>
+								<td id="srAnalysisOtptBtn">버튼</td>
 							</tr>
-							<tr style="height:4rem; font-size:1.6rem; background-color:white;">
-								<td>설계</td>
-								<td>2023-08-10</td>
-								<td>2023-08-11</td>
-								<td>20</td>
-								<td>버튼</td>
+							<tr
+								style="height: 4rem; font-size: 1.6rem; background-color: white;">
+								<th>설계</th>
+								<td id="srDesignBgngDt"></td>
+								<td id="srDesignCmptnDt"></td>
+								<td id="srDesignPrgrs"></td>
+								<td id="srDesignOtptBtn">버튼</td>
 							</tr>
-							<tr style="height:4rem; font-size:1.6rem; background-color:white;">
-								<td>구현</td>
-								<td>2023-08-14</td>
-								<td>2023-09-20</td>
-								<td>70</td>
-								<td>버튼</td>
+							<tr
+								style="height: 4rem; font-size: 1.6rem; background-color: white;">
+								<th>구현</th>
+								<td id="srImplBgngDt"></td>
+								<td id="srImplCmptnDt"></td>
+								<td id="srImplPrgrs"></td>
+								<td id="srImplOtptBtn">버튼</td>
 							</tr>
-							<tr style="height:4rem; font-size:1.6rem; background-color:white;">
-								<td>시험</td>
-								<td>2023-09-21</td>
-								<td></td>
-								<td>87</td>
-								<td>버튼</td>
+							<tr
+								style="height: 4rem; font-size: 1.6rem; background-color: white;">
+								<th>시험</th>
+								<td id="srTestBgngDt"></td>
+								<td id="srTestBgngDt"></td>
+								<td id="srTestPrgrs"></td>
+								<td id="srTestOtptBtn">버튼</td>
 							</tr>
-							<tr style="height:4rem; font-size:1.6rem; background-color:white;">
-								<td>반영요청</td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td>버튼</td>
+							<tr
+								style="height: 4rem; font-size: 1.6rem; background-color: white;">
+								<th>반영요청</th>
+								<td id="srApplyBgngDt"></td>
+								<td id="srApplyCmptnDt"></td>
+								<td id="srApplyPrgrs"></td>
+								<td id="srApplyOtptBtn">버튼</td>
 							</tr>
 						</tbody>
 					</table>
 				</div>
 			</div>
 		</div>
-		<div id="teamInfoDiv">
-		
+		<div id="teamInfoDiv"></div>
+	</div>
+</div>
+
+<!-- 상세보기 모달 -->
+<div id="requestDetailModal" class="modal" data-backdrop="static">
+	<div class="modal-dialog modal-dialog-centered modal-lg" style="width:100rem;">
+		<div class="modal-content">
+			<div class="modal-header">
+				<div class="modal-title" style="font-size:2rem; font-weight:700;">SR요청 상세정보</div>
+				<i class="material-icons close-icon" data-dismiss="mod	al" style="cursor: pointer;">close</i>
+			</div>
+			<div class="modal-body" style="margin:0px; padding:0px; font-size:1.5rem;">
+				<div id="srRqstInfo">
+					<div style="height:4rem; display:flex; flex-direction:row;">
+						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#f9fafe;">SR번호</div>
+						<div style="height:4rem; width:35%; padding-left:0.5rem; display:flex; align-items:center;"></div>
+						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#f9fafe;">SR요청번호</div>
+						<div style="height:4rem; width:35%; padding-left:0.5rem; display:flex; align-items:center;"></div>
+					</div>
+					<div style="height:4rem; display:flex; flex-direction:row;">
+						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#f9fafe;">시스템구분</div>
+						<div style="height:4rem; width:35%; padding-left:0.5rem; display:flex; align-items:center;"></div>
+						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#f9fafe;">업무구분</div>
+						<div style="height:4rem; width:35%; padding-left:0.5rem; display:flex; align-items:center;"></div>
+					</div>
+					<div style="height:4rem; display:flex; flex-direction:row;">
+						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#f9fafe;">SR제목</div>
+						<div style="height:4rem; width:85%; padding-left:0.5rem; display:flex; align-items:center;">[국취] 맞춤분석 내 분석항목(전역예정장병, 재학생(졸업예정자)) 구분 항목 추가</div>
+					</div>
+					<div style="height:4rem; display:flex; flex-direction:row;">
+						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#f9fafe;">SR목적</div>
+						<div style="height:4rem; width:85%; padding-left:0.5rem; display:flex; align-items:center;"></div>
+					</div>
+					<div style="height:4rem; display:flex; flex-direction:row;">
+						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#f9fafe;">요청팀</div>
+						<div style="height:4rem; width:35%; padding-left:0.5rem; display:flex; align-items:center;"></div>
+						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#f9fafe;">요청자</div>
+						<div style="height:4rem; width:35%; padding-left:0.5rem; display:flex; align-items:center;"></div>
+					</div>
+					<div style="height:4rem; display:flex; flex-direction:row;">
+						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#f9fafe;">요청일</div>
+						<div style="height:4rem; width:35%; padding-left:0.5rem; display:flex; align-items:center;">2023-10-11</div>
+						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#f9fafe;">완료요청일</div>
+						<div style="height:4rem; width:35%; padding-left:0.5rem; display:flex; align-items:center;">2024-02-29</div>
+					</div>
+					<div style="height:4rem; display:flex; flex-direction:row;">
+						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#f9fafe;">협력사</div>
+						<div style="height:4rem; width:35%; padding-left:0.5rem; display:flex; align-items:center;">SR231011_0010</div>
+						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#f9fafe;">유지보수 이관일</div>
+						<div style="height:4rem; width:35%; padding-left:0.5rem; display:flex; align-items:center;">EIS</div>
+					</div>
+					<div style="height:11rem; display:flex; flex-direction:row;">
+						<div style="height:11rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#f9fafe;">SR내용</div>
+						<div style="height:11rem; width:85%; padding-left:0.5rem; display:flex; flex-direction: column;">
+							<div style="height:3rem;">
+								<form>
+									<div style="display:flex; flex-direction: row; align-items:center;">
+										<input type="radio" name="srContentType" value="requestContent" style="width:1.6rem; height:1.6rem; margin-right:0.2rem;">요청내용
+										<div style="width:1rem;"></div>
+										<input type="radio" name="srContentType" value="developContent" style="width:1.6rem; height:1.6rem; margin-right:0.2rem;">개발내용
+									</div>
+								</form>
+							</div>
+							<div style="height:8rem; display:flex; flex-direction: row; align-items:center; ">
+								<div style="height:7rem; width: 100%; border:1px solid gray; padding:0.3rem; overflow-y:auto;">
+									향후 로직 전달드리겠습니다.<br>* 첨부파일 내 6번 해당 <br><br>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div style="height:4rem; display:flex; flex-direction:row;">
+						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#f9fafe; border-radius:0px 0px 0px 10px/0px 0px 0px 10px">첨부파일</div>
+						<div style="height:4rem; width:85%; padding-left:0.5rem; display:flex; align-items:center;">(요청내용)230712_EIS변경요청.hwp</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>

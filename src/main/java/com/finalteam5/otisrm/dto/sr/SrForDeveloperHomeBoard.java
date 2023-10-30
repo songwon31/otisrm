@@ -11,5 +11,7 @@ public class SrForDeveloperHomeBoard {
 	private String srDmndNm;
 	private String srTtl;
 	private String usrNm;
+	private Date srCmptnPrnmntDt;
+	private Date srTrgtCmptnDt;
 	private String srPrgrsSttsNm;
 }

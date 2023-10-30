@@ -6,10 +6,15 @@ import javax.annotation.Resource;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.finalteam5.otisrm.dto.Pager;
 import com.finalteam5.otisrm.dto.sr.SrForDeveloperHomeBoard;
+import com.finalteam5.otisrm.dto.sr.SrRequestDetailForDeveloperHome;
+import com.finalteam5.otisrm.dto.sr.SrTrnsfInfoForDeveloperHome;
 import com.finalteam5.otisrm.dto.usr.Usr;
 import com.finalteam5.otisrm.security.UsrDetails;
 import com.finalteam5.otisrm.service.SrServiceImpl;
@@ -73,5 +78,16 @@ public class DeveloperHomeController {
 		}
 	}
 	
+	@PostMapping("/getSrTransferInfo")
+	@ResponseBody
+	public SrTrnsfInfoForDeveloperHome getSrTransferInfo(Authentication authentication, @RequestParam("srNo") String srNo) {
+		return srService.getSrTrnsfInfoForDeveloperHome(srNo);
+	}
+	
+	@PostMapping("/getSrDetailInfo")
+	@ResponseBody
+	public SrRequestDetailForDeveloperHome getSrDetailInfo(@RequestParam("srNo") String srNo) {
+		return srService.getSrRequestDetailForDeveloperHome(srNo);
+	}
 	
 }

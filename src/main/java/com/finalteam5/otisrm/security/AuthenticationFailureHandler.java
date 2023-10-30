@@ -29,7 +29,7 @@ public class AuthenticationFailureHandler
 			AuthenticationException exception) 
 			throws IOException, ServletException {
 		
-		logger.info("실행");
+		logger.info("" + exception);
 		
 		//로그인 실패후 리다이렉트로 이동할 경로
 		//setDefaultFailureUrl("/ch17/loginForm");
