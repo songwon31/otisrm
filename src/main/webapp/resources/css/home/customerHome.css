@@ -98,6 +98,7 @@
 /* 필터링 탭  */
 .filterTabWrap{
 	height: 3rem;
+	cursor: pointer;
 }
 .filterTab{
 	width: 72.16px;
@@ -109,9 +110,11 @@
 	background-color: #edf2f8;
 	font-weight: bold;
 	color: #5d6e7e;
+	cursor: pointer;
 }
 .tableContainer{
 	height: 31rem;
+	border: 1px solid pink;
 }
 /* 테이블 항목(col사이즈보다 넘어갈경우 .. 처리) */
 .truncate-text {
@@ -124,7 +127,7 @@
 }
 /* button */
 #requestAddBtnWrap{
-	margin-left:430px;
+	margin-left:283px;
 }
 .btn-1 {
 	border: none;

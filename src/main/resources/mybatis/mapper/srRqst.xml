@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.finalteam5.otisrm.dao.SrRqstDao">
-	<!-- 요청등록 폼 -->
+	<!-- sr요청등록 폼 -->
 	<!-- 부서번호에 해당하는 관련 시스템 목록 불러오기 -->
 	<select id="selectSysByDeptNo" parameterType="String" resultType="Sys">
 		select * from sys where dept_no = #{deptNo}
 	</select>
-	<!-- 요청 등록하기 -->
+	<!-- sr요청 등록하기 -->
 	<!-- PK는 트리거를 사용해서 null로 지정할  경우 자동으로 정해진 포멧으로 삽입됨 -->
 	<insert id="insertSrRqst" parameterType="SrRqst">
 		insert into sr_rqst(
@@ -21,7 +21,7 @@
     	)
 	</insert>
 	
-	<!-- 요청 불러오기 -->
+	<!-- sr요청 불러오기 -->
 	<select id="selectSrRqstListByPage" parameterType="Map" resultType="SrRqst">
 		select rnum, sr_rqst_no, sr_ttl, sr_reqstr_no, sr_rqst_reg_dt, sr_rqst_mdfcn_dt, 
 		sr_rqst_stts_no, sys_no, sr_rqst_emrg_yn, sr_rqst_rvw_rsn, sr_rqst_vld_yn, sys_nm, usr_nm, inst_nm, sr_rqst_stts_nm  
@@ -36,17 +36,19 @@
 		        join usr u on u.usr_no = r.sr_reqstr_no
 		        join inst i on i.inst_no = u.inst_no
 		        join sr_rqst_stts q on q.sr_rqst_stts_no = r.sr_rqst_stts_no
+		        <if test='status != null and status != ""'>
+                	<where>
+                		r.sr_rqst_stts_no=#{srRqstSttNo, jdbcType=VARCHAR}
+                	</where>
+               	</if>
 		        <if test='keyword != null and keyword != ""'>
                 	<where>
                 		REGEXP_REPLACE(LOWER(REPLACE(pg_name,' ','')), '[[:punct:]]', '') LIKE '%'||REGEXP_REPLACE(LOWER(REPLACE(#{keyword},' ','')), '[[:punct:]]', '')||'%'
                 	</where>
                	</if>	
-		        <if test='isMine != null and isMine != ""'>
-                	<where>
-                		sr_reqstr_no=#{srReqsrNo}
-                	</where>
-               	</if>	
-		        order by sr_rqst_no desc
+               	<if test='kind == null and kind == ""'>
+			    	order by sr_rqst_no desc
+				</if>	
 		    )
 		<![CDATA[
 			    where rownum <= #{endRowNo}
@@ -54,8 +56,26 @@
 			 where rnum >= #{startRowNo}
 		]]>
 	</select>
-	<!-- 전체 요청 수(페이징을 위함) -->
+	<!-- 전체 sr요청 수(페이징을 위함) -->
 	<select id="countSrRqst" resultType="int">
 		select count(*) from sr_rqst
 	</select>
+	<!-- sr요청 상세 불러오기-->
+	<select id="selectSrRqstBySrRqstNo" parameterType="String" resultType="SrRqst">
+		select r.*, s.sys_nm, u.usr_nm, u.inst_no, i.inst_nm, q.sr_rqst_stts_nm 
+		from sr_rqst r
+		join sys s on s.sys_no = r.sys_no 
+		join usr u on u.usr_no = r.sr_reqstr_no
+		join inst i on i.inst_no = u.inst_no
+		join sr_rqst_stts q on q.sr_rqst_stts_no = r.sr_rqst_stts_no
+		where sr_rqst_no=#{srRqstNo}	
+	</select>
+	
+	<!-- 등록한 sr요청 수정 -->
+	<update id="updateSrRqst" parameterType="String">
+		update sr_rqst set sr_ttl=#{srTtl, jdbcType=VARCHAR}, sr_prps=#{srPrps, jdbcType=VARCHAR}, sr_rqst_emrg_yn=#{srRqstEmrgYn, jdbcType=VARCHAR},
+		sr_conts= #{srConts, jdbcType=VARCHAR}, sr_rqst_mdfcn_dt = sysdate
+		where sr_rqst_stts_no = 'RQST' 
+		and sr_rqst_no= #{srRqstNo, jdbcType=VARCHAR}
+	</update>
 </mapper>

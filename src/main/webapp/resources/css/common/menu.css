@@ -18,3 +18,27 @@
     flex-wrap: nowrap;
     font-size: 0.9rem;
 }
+.menu-item{
+	font-weight:500; 
+	margin-bottom:0.8rem;
+	margin-left: 0.8rem;
+}
+
+/* 메뉴 a태그 효과 */
+.menu-item a{
+	color: #5d6e82;
+	font-weight: 600;
+	font-size: 1.8rem;
+}
+
+.menu-item a:hover {
+	text-decoration: none;
+    color: #2c7be4; /* 호버(마우스를 올려 놓을 때) 했을 때 색상 변경 */
+}
+
+.menu-item a:active {
+	text-decoration: none;
+    color: #4177bf; /* 클릭하는 동안 색상 변경 */
+}
+
+

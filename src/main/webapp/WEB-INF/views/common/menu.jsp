@@ -21,7 +21,7 @@
 		</div>
 		<div style="border:1px solid #ADB5BD; margin:1rem 0rem;"></div>
 		<ul style="list-style:none; padding:0; margin:0;">
-			<li><a href="#" style="font-weight:500;">나의 할일</a></li>
+			<li class="menu-item"><a href="#" style="font-weight:500;">나의 할일</a></li>
 		</ul>
 		
 		<div style="height:3rem;"></div>
@@ -42,10 +42,10 @@
 	</div>
 	<div style="border:1px solid #ADB5BD; margin:1rem 0rem;"></div>
 	<ul style="list-style:none; padding:0; margin:0;">
-		<li style="font-weight:500; margin-bottom:0.8rem;"><a href="${pageContext.request.contextPath}/systemManagement/usrManagement2">SR요청관리</a></li>
-		<li style="font-weight:500; margin-bottom:0.8rem;"><a href="${pageContext.request.contextPath}/systemManagement/usrManagement4">SR검토관리</a></li>
-		<li style="font-weight:500; margin-bottom:0.8rem;"><a href="${pageContext.request.contextPath}/systemManagement/usrManagement5">SR개발관리</a></li>
-		<li><a href="#" style="font-weight:500;">SR진척관리</a></li>
+		<li class="menu-item"><a href="${pageContext.request.contextPath}/systemManagement/usrManagement2">SR요청관리</a></li>
+		<li class="menu-item"><a href="${pageContext.request.contextPath}/systemManagement/usrManagement4">SR검토관리</a></li>
+		<li class="menu-item"><a href="${pageContext.request.contextPath}/systemManagement/usrManagement5">SR개발관리</a></li>
+		<li class="menu-item"><a href="#">SR진척관리</a></li>
 	</ul>
 	
 	<div style="height:3rem;"></div>
@@ -64,7 +64,7 @@
 	</div>
 	<div style="border:1px solid #ADB5BD; margin:1rem 0rem;"></div>
 	<ul style="list-style:none; padding:0; margin:0;">
-		<li style="margin-bottom:0.8rem; font-weight:500;"><a href="#">공지사항</a></li>
-		<li><a href="#">문의게시판</a></li>
+		<li class="menu-item"><a href="#">공지사항</a></li>
+		<li class="menu-item"><a href="#">문의게시판</a></li>
 	</ul>
 </div>

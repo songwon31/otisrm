@@ -1,4 +1,4 @@
-package com.finalteam5.otisrm.controller;
+package com.finalteam5.otisrm.controller.customer;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,9 +33,8 @@ public class CustomerHomeController {
 	
 	@GetMapping("home")
 	@Secured("CUSTOMER")
-	public String developManagement(Authentication authentication, String srRqstPageNo, Model model, HttpSession session) {
+	public String customerHome(Authentication authentication, String srRqstPageNo, Model model, HttpSession session) {
 		if (authentication != null && authentication.isAuthenticated()) {
-			
 			//로그인한 회원의 정보
 			UsrDetails usrDetails = (UsrDetails) authentication.getPrincipal();
 			Usr usr = usrDetails.getUsr();
@@ -60,11 +59,9 @@ public class CustomerHomeController {
 		Map<String, Object>map = new HashMap<>();
 		map.put("startRowNo", srRqstpager.getStartRowNo());
 		map.put("endRowNo", srRqstpager.getEndRowNo());
-		
-		//페이지 별 요청 목록 불러오기
-		List<SrRqst> list = srRqstService.getSrRqstListByPager(map);
+
 		model.addAttribute("srRqstpager", srRqstpager);
-		model.addAttribute("srRqsts", list);
+		
 		
 		return "/home/customerHome";
 	}
@@ -81,8 +78,15 @@ public class CustomerHomeController {
 	@PostMapping("writeSrRqst")
 	@Secured("CUSTOMER")
 	public String writeSrRqst(SrRqst srRqst) {
-		srRqstService.writeSrRqst(srRqst);
-		return "redirect:/home";
+	    srRqstService.writeSrRqst(srRqst);
+	    return "redirect:/home";
+	}
+	
+	//고객사 홈 페이지에서 등록한 요청 수정하기
+	@PostMapping("modifySrRqst")
+	@ResponseBody
+	public void modifySrRqst(String srRqstNo) {
+		srRqstService.modifySrRqst(srRqstNo);
 	}
 	
 }

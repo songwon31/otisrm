@@ -1,6 +1,5 @@
 package com.finalteam5.otisrm.service;
 
-import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
 
@@ -42,6 +41,18 @@ public class SrRqstServiceImpl implements SrRqstService{
 	public int totalSrRqst() {
 		int NumOfTotalSrRqst = srRqstDao.countSrRqst();
 		return NumOfTotalSrRqst;
+	}
+	//요청에 해당하는 상세 요청
+	@Override
+	public SrRqst getSrRqstBySrRqstNo(String srRqstNo) {
+		SrRqst srRqst = srRqstDao.selectSrRqstBySrRqstNo(srRqstNo);
+		return srRqst;
+	}
+	
+	//등록한 요청 수정하기
+	@Override
+	public void modifySrRqst(String srRqstNo) {
+		srRqstDao.updateSrRqst(srRqstNo);
 	}
 	
 }

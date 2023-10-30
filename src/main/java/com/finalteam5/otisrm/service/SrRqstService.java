@@ -17,4 +17,10 @@ public interface SrRqstService {
 	public List<SrRqst> getSrRqstListByPager(Map<String, Object> map);
 	//전체 요청 수
 	public int totalSrRqst();
+	
+	//요청에 해당하는 상세 정보 불러오기
+	public SrRqst getSrRqstBySrRqstNo(String srRqstNo);
+
+	//등록한 요청 수정하기
+	public void modifySrRqst(String srRqstNo);
 }

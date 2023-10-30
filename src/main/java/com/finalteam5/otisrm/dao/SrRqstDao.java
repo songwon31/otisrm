@@ -21,4 +21,11 @@ public interface SrRqstDao {
 	public List<SrRqst> selectSrRqstListByPage(Map<String, Object> map);
 	//전체 요청 수
 	public int countSrRqst();
+	
+	//요청에 해당하는 상세 정보 불러오기
+	public SrRqst selectSrRqstBySrRqstNo(String srRqstNo);
+	
+	//등록한 요청 수정하기
+	public void updateSrRqst(String srRqstNo);
+	
 }
