@@ -87,6 +87,8 @@
 	<select id="selectSrRequestDetailForDeveloperHome" parameterType="String" resultType="com.finalteam5.otisrm.dto.sr.SrRequestDetailForDeveloperHome">
 		SELECT
 		FROM sr
+		JOIN sr_rqst srr ON sr.sr_rqst_no = srr.sr_rqst_no
+		JOIN dept ON 
 		WHERE sr.sr_no = #{srNo}
 	</select>
 </mapper>
