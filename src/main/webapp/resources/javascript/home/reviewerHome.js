@@ -9,8 +9,12 @@ function selectMainTableFilter(e) {
 	$(e).addClass('filterTabSelected');
 }
 
-function selectSrProgressTableFilter(e) {
-	$('.srProgressTableSelectElement').removeClass('filterTabSelected');
-	// 클릭한 요소에 filterTabSelected 클래스를 추가
-	$(e).addClass('filterTabSelected');
+function selectSrFromBoardList() {
+	$.ajax({
+		type: "POST",
+		url: "/reviewerHome/srProgress",
+		success: function(data) {
+			console.log("test");
+		}
+	});
 }

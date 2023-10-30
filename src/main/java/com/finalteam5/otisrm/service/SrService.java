@@ -4,6 +4,8 @@ import java.util.List;
 
 import com.finalteam5.otisrm.dto.Pager;
 import com.finalteam5.otisrm.dto.sr.SrForDeveloperHomeBoard;
+import com.finalteam5.otisrm.dto.sr.SrRequestDetailForDeveloperHome;
+import com.finalteam5.otisrm.dto.sr.SrTrnsfInfoForDeveloperHome;
 
 public interface SrService {
 	/**
@@ -13,4 +15,6 @@ public interface SrService {
 	public int getTotalTransferedSrNumByUsrId(String usrId);
 	public List<SrForDeveloperHomeBoard> getSrForDeveloperHomeBoardListByUsrId(String usrId);
 	public List<SrForDeveloperHomeBoard> getSrForDeveloperHomeBoardListByUsrIdAndPager(String usrId, Pager pager);
+	public SrTrnsfInfoForDeveloperHome getSrTrnsfInfoForDeveloperHome(String srNo);
+	public SrRequestDetailForDeveloperHome getSrRequestDetailForDeveloperHome(String srNo);
 }

@@ -35,7 +35,7 @@ input:focus, select:focus {
 }
 
 #tableDiv {
-	width:70%;
+	width:100%;
 	display:flex;
 	flex-direction:column;
 	padding: 1rem;
@@ -85,13 +85,13 @@ input:focus, select:focus {
 .btn-2:active {
 	background-color:#4177bf; 
 }
-
+/* 
 #calendarDiv {
 	width:30%;
 	border: 1px solid gray;
 	border-radius: 10px;
 }
-
+ */
 #userManagementBottomDiv {
 	height:39.5rem;
 	margin-top:0.5rem;
@@ -131,3 +131,17 @@ input:focus, select:focus {
 	padding: 1rem;
 	background-color:white;
 }
+
+
+/* modal */
+.modal-header {
+	display:flex; 
+	align-items:center; 
+	background-color:#222e3c; 
+	color:white;
+}
+
+#srRqstInfo > div {
+	border-top: 1px solid #f9fafe;
+}
+

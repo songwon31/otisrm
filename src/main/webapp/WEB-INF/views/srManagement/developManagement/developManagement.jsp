@@ -54,7 +54,7 @@
 				<div style="width: 3.5%;"></div>
 				<!-- 담당 SR -->
 				<div style="width: 5.79%;" class="d-flex flex-row-reverse align-items-center">
-					<span style="font-size:1.6rem; margin-left: 1rem;">담당 SR</span>
+					<span style="font-size:1.6rem; margin-left: 0.5rem;">담당 SR</span>
 		        	<input type="checkbox" id="myDevCheck" name="myDevCheck" value="False">
 		        </div>
 			</div>
@@ -115,7 +115,10 @@
 	</div>
 	<div id="developManagementBoardDiv" class="shadow" 
 		style="height:65rem; background-color:white; border-radius:1rem; padding:2rem;">
-		<div style="height:3.5rem; font-size:2.2rem; font-weight:700; color:#222E3C;">SR개발목록</div>
+		<div class="d-flex">
+			<span class="mr-auto" style="height:3.5rem; font-size:2.2rem; font-weight:700; color:#222E3C;">SR개발목록</span>
+			<button id="excelDownloadBtn" onclick="location.href='#';">엑셀 다운로드</button>
+		</div>
 		<div class="" style="height:52rem; margin:0.75rem 0rem;">
 			<table id="mainTable" style="width: 100%;">
 				<colgroup>
@@ -169,7 +172,103 @@
 						<td>Y</td>
 						<td>Y</td>
 						<td>N</td>
-						<td><button class="detailViewBtn">상세보기</button></td>
+						<td><button class="detailViewBtn" data-toggle="modal" data-target="#detailmodal">상세보기</button></td>
+					</tr>
+					<tr style="height: 4.7rem; font-size: 1.6rem;">
+						<td>1</td>
+						<td>SR231013_0001</td>
+						<td class="text-align-left">SRM 시스템 개발 요청</td>
+						<td>SoftNet</td>
+						<td>홍길동</td>
+						<td>한소원</td>
+						<td>접수</td>
+						<td>2023-10-13</td>
+						<td>2023-10-31</td>
+						<td>Y</td>
+						<td>Y</td>
+						<td>Y</td>
+						<td>N</td>
+						<td><button class="detailViewBtn" data-toggle="modal" data-target="#detailmodal">상세보기</button></td>
+					</tr>
+					<tr style="height: 4.7rem; font-size: 1.6rem;">
+						<td>1</td>
+						<td>SR231013_0001</td>
+						<td class="text-align-left">SRM 시스템 개발 요청</td>
+						<td>SoftNet</td>
+						<td>홍길동</td>
+						<td>한소원</td>
+						<td>접수</td>
+						<td>2023-10-13</td>
+						<td>2023-10-31</td>
+						<td>Y</td>
+						<td>Y</td>
+						<td>Y</td>
+						<td>N</td>
+						<td><button class="detailViewBtn" data-toggle="modal" data-target="#detailmodal">상세보기</button></td>
+					</tr>
+					<tr style="height: 4.7rem; font-size: 1.6rem;">
+						<td>1</td>
+						<td>SR231013_0001</td>
+						<td class="text-align-left">SRM 시스템 개발 요청</td>
+						<td>SoftNet</td>
+						<td>홍길동</td>
+						<td>한소원</td>
+						<td>접수</td>
+						<td>2023-10-13</td>
+						<td>2023-10-31</td>
+						<td>Y</td>
+						<td>Y</td>
+						<td>Y</td>
+						<td>N</td>
+						<td><button class="detailViewBtn" data-toggle="modal" data-target="#detailmodal">상세보기</button></td>
+					</tr>
+					<tr style="height: 4.7rem; font-size: 1.6rem;">
+						<td>1</td>
+						<td>SR231013_0001</td>
+						<td class="text-align-left">SRM 시스템 개발 요청</td>
+						<td>SoftNet</td>
+						<td>홍길동</td>
+						<td>한소원</td>
+						<td>접수</td>
+						<td>2023-10-13</td>
+						<td>2023-10-31</td>
+						<td>Y</td>
+						<td>Y</td>
+						<td>Y</td>
+						<td>N</td>
+						<td><button class="detailViewBtn" data-toggle="modal" data-target="#detailmodal">상세보기</button></td>
+					</tr>
+					<tr style="height: 4.7rem; font-size: 1.6rem;">
+						<td>1</td>
+						<td>SR231013_0001</td>
+						<td class="text-align-left">SRM 시스템 개발 요청</td>
+						<td>SoftNet</td>
+						<td>홍길동</td>
+						<td>한소원</td>
+						<td>접수</td>
+						<td>2023-10-13</td>
+						<td>2023-10-31</td>
+						<td>Y</td>
+						<td>Y</td>
+						<td>Y</td>
+						<td>N</td>
+						<td><button class="detailViewBtn" data-toggle="modal" data-target="#detailmodal">상세보기</button></td>
+					</tr>
+					<tr style="height: 4.7rem; font-size: 1.6rem;">
+						<td>1</td>
+						<td>SR231013_0001</td>
+						<td class="text-align-left">SRM 시스템 개발 요청</td>
+						<td>SoftNet</td>
+						<td>홍길동</td>
+						<td>한소원</td>
+						<td>접수</td>
+						<td>2023-10-13</td>
+						<td>2023-10-31</td>
+						<td>Y</td>
+						<td>Y</td>
+						<td>Y</td>
+						<td>N</td>
+						<td><button class="detailViewBtn" data-toggle="modal" data-target="#detailmodal">상세보기</button></td>
 					</tr>
 					<tr style="height: 4.7rem; font-size: 1.6rem;">
 						<td>1</td>
@@ -201,7 +300,7 @@
 						<td>Y</td>
 						<td>Y</td>
 						<td>N</td>
-						<td><button class="detailViewBtn">상세보기</button></td>
+						<td><button class="detailViewBtn" data-toggle="modal" data-target="#detailmodal">상세보기</button></td>
 					</tr>
 					<tr style="height: 4.7rem; font-size: 1.6rem;">
 						<td>1</td>
@@ -217,103 +316,7 @@
 						<td>Y</td>
 						<td>Y</td>
 						<td>N</td>
-						<td><button class="detailViewBtn">상세보기</button></td>
-					</tr>
-					<tr style="height: 4.7rem; font-size: 1.6rem;">
-						<td>1</td>
-						<td>SR231013_0001</td>
-						<td class="text-align-left">SRM 시스템 개발 요청</td>
-						<td>SoftNet</td>
-						<td>홍길동</td>
-						<td>한소원</td>
-						<td>접수</td>
-						<td>2023-10-13</td>
-						<td>2023-10-31</td>
-						<td>Y</td>
-						<td>Y</td>
-						<td>Y</td>
-						<td>N</td>
-						<td><button class="detailViewBtn">상세보기</button></td>
-					</tr>
-					<tr style="height: 4.7rem; font-size: 1.6rem;">
-						<td>1</td>
-						<td>SR231013_0001</td>
-						<td class="text-align-left">SRM 시스템 개발 요청</td>
-						<td>SoftNet</td>
-						<td>홍길동</td>
-						<td>한소원</td>
-						<td>접수</td>
-						<td>2023-10-13</td>
-						<td>2023-10-31</td>
-						<td>Y</td>
-						<td>Y</td>
-						<td>Y</td>
-						<td>N</td>
-						<td><button class="detailViewBtn">상세보기</button></td>
-					</tr>
-					<tr style="height: 4.7rem; font-size: 1.6rem;">
-						<td>1</td>
-						<td>SR231013_0001</td>
-						<td class="text-align-left">SRM 시스템 개발 요청</td>
-						<td>SoftNet</td>
-						<td>홍길동</td>
-						<td>한소원</td>
-						<td>접수</td>
-						<td>2023-10-13</td>
-						<td>2023-10-31</td>
-						<td>Y</td>
-						<td>Y</td>
-						<td>Y</td>
-						<td>N</td>
-						<td><button class="detailViewBtn">상세보기</button></td>
-					</tr>
-					<tr style="height: 4.7rem; font-size: 1.6rem;">
-						<td>1</td>
-						<td>SR231013_0001</td>
-						<td class="text-align-left">SRM 시스템 개발 요청</td>
-						<td>SoftNet</td>
-						<td>홍길동</td>
-						<td>한소원</td>
-						<td>접수</td>
-						<td>2023-10-13</td>
-						<td>2023-10-31</td>
-						<td>Y</td>
-						<td>Y</td>
-						<td>Y</td>
-						<td>N</td>
-						<td><button class="detailViewBtn">상세보기</button></td>
-					</tr>
-					<tr style="height: 4.7rem; font-size: 1.6rem;">
-						<td>1</td>
-						<td>SR231013_0001</td>
-						<td class="text-align-left">SRM 시스템 개발 요청</td>
-						<td>SoftNet</td>
-						<td>홍길동</td>
-						<td>한소원</td>
-						<td>접수</td>
-						<td>2023-10-13</td>
-						<td>2023-10-31</td>
-						<td>Y</td>
-						<td>Y</td>
-						<td>Y</td>
-						<td>N</td>
-						<td><button class="detailViewBtn">상세보기</button></td>
-					</tr>
-					<tr style="height: 4.7rem; font-size: 1.6rem;">
-						<td>1</td>
-						<td>SR231013_0001</td>
-						<td class="text-align-left">SRM 시스템 개발 요청</td>
-						<td>SoftNet</td>
-						<td>홍길동</td>
-						<td>한소원</td>
-						<td>접수</td>
-						<td>2023-10-13</td>
-						<td>2023-10-31</td>
-						<td>Y</td>
-						<td>Y</td>
-						<td>Y</td>
-						<td>N</td>
-						<td><button class="detailViewBtn">상세보기</button></td>
+						<td><button class="detailViewBtn" data-toggle="modal" data-target="#detailmodal">상세보기</button></td>
 					</tr>
 				</tbody>
 			</table>
@@ -321,6 +324,125 @@
 		<div style="height:3.5rem;" class="d-flex flex-row justify-content-center align-items-center">
 			페이징
 		</div>
+		
+		<!-- 상세보기 모달 -->
+	    <div id="detailmodal" class="modal" data-backdrop="static">
+		  <div class="modal-dialog modal-dialog-centered">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <span class="modal-title">SR 상세</span>
+		        <i class="material-icons close-icon" data-dismiss="modal">close</i>
+		      </div>
+		      <div class="modal-body">
+		      		<!-- SR요청정보 -->
+		      		<div class="d-flex mb-2">
+		      			<span class="modal-sub-title mr-auto">SR요청정보</span>
+		      			<select id="requestResult" name="requestResult" class="mr-2">
+					        <option>승인</option>
+					        <option>반려</option>
+					        <option>재검토</option>
+					    </select>
+		      			<button type="button" class="btn-1">처리</button>
+		      		</div>
+		      		<div class="card p-2 mb-2">
+				      	<div class="row mx-0 mt-0 mb-2">
+				          <div class="col-sm row">
+				            <label for="writer" class="col-form-label col-5 pl-0">등록자</label>
+				            <input type="text" class="form-control form-control-sm col-7" id="writer">
+				          </div>
+				          <div class="col-sm row">
+				            <label for="writerDepartment" class="col-form-label col-5">소속</label>
+				            <input type="text" class="form-control form-control-sm col-7" id="writerDepartment">
+				          </div>
+						</div>
+						<div class="row mx-0 mt-0 mb-2">
+				          <div class="col-sm row">
+				            <label for="writeDate" class="col-form-label col-5 pl-0">등록일</label>
+				            <input type="date" class="form-control form-control-sm col-7" id="writeDate">
+				          </div>
+				          <div class="col-sm row">
+				            <label for="systemName" class="col-form-label col-5">관련시스템</label>
+				            <input type="text" class="form-control form-control-sm col-7" id="systemName">
+				          </div>
+						</div>
+			          <div class="d-flex mb-2 w-100">
+			            <label for="srTitle" class="w-label col-form-label pl-0">SR제목</label>
+			            <input type="text" class="w-content form-control form-control-sm" id="srTitle">
+			          </div>
+			          <div class="d-flex mb-2 w-100">
+			            <label for="srContent" class="w-label col-form-label pl-0">SR내용</label>
+			            <textarea class="w-content form-control form-control-sm"  id="srContent" rows="3" cols="50"></textarea>
+			          </div>
+			          <div class="d-flex mb-2 w-100">
+			            <label for="srFile" class="w-label col-form-label pl-0">첨부파일</label>
+						<input type="file" id="srFile" class="w-content form-control-file form-control-sm px-0">
+			          </div>
+					</div>
+					<div class="card p-2 mb-4">
+				      <div class="d-flex mb-2 w-100">
+			            <label for="srFile" class="w-label col-form-label pl-0">검토의견</label>
+						<textarea class="w-content form-control form-control-sm"  id="srContent" rows="3" cols="50"></textarea>
+			          </div>
+					</div>
+					
+					<!-- SR개발정보 -->
+		      		<div class="d-flex mb-2">
+		      			<span class="modal-sub-title mr-auto">SR개발정보</span>
+	      				<select id="receptionResult" name="receptionResult" class="mr-2">
+					        <option>승인</option>
+					        <option>반려</option>
+					        <option>재검토</option>
+					    </select>
+		      			<button type="button" class="btn-1">처리</button>
+		      		</div>
+		      		<div class="card p-2">
+			      		<div class="row mx-0 mt-0 mb-2">
+				          <div class="col-sm row">
+				            <label for="devPic" class="col-form-label col-5 pl-0">개발담당자</label>
+				            <input type="text" class="form-control form-control-sm col-7" id="devPic">
+				          </div>
+				          <div class="col-sm row">
+				            <label for="devDepartment" class="col-form-label col-5">개발부서</label>
+				            <input type="text" class="form-control form-control-sm col-7" id="devDepartment">
+				          </div>
+						</div>
+						<div class="row mx-0 mt-0 mb-2">
+				          <div class="col-sm row">
+				            <label for="progStts" class="col-form-label col-5 pl-0">진행상태</label>
+				            <input type="text" class="form-control form-control-sm col-7" id="progStts">
+				          </div>
+				          <div class="col-sm row">
+				            <label for="devEndDate" class="col-form-label col-5">완료예정일</label>
+				            <input type="date" class="form-control form-control-sm col-7" id="devEndDate">
+				          </div>
+						</div>
+						<div class="row mx-0 mt-0 mb-2">
+				          <div class="col-sm row">
+				            <label for="devCount" class="col-form-label col-5 pl-0">투입인력</label>
+				            <input type="text" class="form-control form-control-sm col-7" id="devCount">
+				          </div>
+				          <div class="col-sm row">
+				            <label for="devBudget" class="col-form-label col-5">소요예산</label>
+				            <input type="text" class="form-control form-control-sm col-7" id="devBudget">
+				          </div>
+						</div>
+			      		<div class="d-flex mb-2 w-100">
+				            <label for="srContent" class="w-label col-form-label pl-0">개발내용</label>
+				            <textarea class="w-content form-control form-control-sm"  id="srContent" rows="3" cols="50"></textarea>
+				          </div>
+				          <div class="d-flex mb-2 w-100">
+				            <label for="srFile" class="w-label col-form-label pl-0">첨부파일</label>
+							<input type="file" id="srFile" class="w-content form-control-file form-control-sm px-0">
+				          </div>
+					</div>
+		      </div>
+		      <div class="modal-footer py-1">
+		        <button type="button" class="btn-3" data-dismiss="modal">닫기</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+		
 	</div>
 </div>
 <%@ include file="/WEB-INF/views/common/footer.jsp"%>

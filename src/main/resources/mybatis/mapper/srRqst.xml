@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.finalteam5.otisrm.dao.SrRqstDao">
+	<!-- 작성자: 성유진  -->
 	<!-- sr요청등록 폼 -->
 	<!-- 부서번호에 해당하는 관련 시스템 목록 불러오기 -->
 	<select id="selectSysByDeptNo" parameterType="String" resultType="Sys">
@@ -60,6 +61,7 @@
 	<select id="countSrRqst" resultType="int">
 		select count(*) from sr_rqst
 	</select>
+
 	<!-- sr요청 상세 불러오기-->
 	<select id="selectSrRqstBySrRqstNo" parameterType="String" resultType="SrRqst">
 		select r.*, s.sys_nm, u.usr_nm, u.inst_no, i.inst_nm, q.sr_rqst_stts_nm 
@@ -78,4 +80,31 @@
 		where sr_rqst_stts_no = 'RQST' 
 		and sr_rqst_no= #{srRqstNo, jdbcType=VARCHAR}
 	</update>
+	
+	<!-- 작성자: 이현주  -->
+	<!-- 검토자 홈 요청목록 불러오기 -->
+	<select id="selectSrRqstForReviewerHomeBoardListByPage" parameterType="map" resultType="com.finalteam5.otisrm.dto.srRequest.SrRqstForReviewerHomeBoard">
+		<![CDATA[
+		select rnum, sr_rqst_no, sr_ttl, sys_nm, usr_nm, inst_nm, sr_rqst_stts_nm, sr_rqst_reg_dt, sr_cmptn_prnmnt_dt
+		from (
+		    select rownum as rnum, sr_rqst_no, sr_ttl, sys_nm, usr_nm, inst_nm, sr_rqst_stts_nm, sr_rqst_reg_dt, sr_cmptn_prnmnt_dt
+		    from(
+		        select r.sr_rqst_no, r.sr_ttl, s.sys_nm, u.usr_nm, i.inst_nm, rs.sr_rqst_stts_nm, r.sr_rqst_reg_dt, sr.sr_cmptn_prnmnt_dt
+		        from sr_rqst r
+		        join sys s on s.sys_no = r.sys_no 
+		        join usr u on u.usr_no = r.sr_reqstr_no
+		        join inst i on i.inst_no = u.inst_no
+		        join sr_rqst_stts rs on rs.sr_rqst_stts_no = r.sr_rqst_stts_no
+		        left join sr on sr.sr_rqst_no = r.sr_rqst_no
+		        order by sr_rqst_no desc
+		        )
+			where rownum <= #{endRowNo}
+		)
+		where rnum >= #{startRowNo}	
+		]]>
+	</select>
+	
+	<select id="selectTotalSysNm" resultType="String">
+		select distinct sys_nm from sys
+	</select>
 </mapper>
