@@ -5,7 +5,6 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/common/menu.css" />
 
 <div id="side-menu" class="shadow">
-	<c:if test="${loginIng != null}">
 		<div style="display:flex; flex-direction:row; align-items:center;">
 			<svg class="svg-inline--fa fa-chart-pie fa-w-17" aria-hidden="true"
 				data-prefix="fas" data-icon="chart-pie" role="img"
@@ -20,12 +19,18 @@
 			<div style="margin-left:1rem; font-weight:700;">My Portal</div>
 		</div>
 		<div style="border:1px solid #ADB5BD; margin:1rem 0rem;"></div>
-		<ul style="list-style:none; padding:0; margin:0;">
-			<li class="menu-item"><a href="#" style="font-weight:500;">나의 할일</a></li>
-		</ul>
+		<c:if test="${usr.usrNo != null && usr.usrAuthrtNo != 'SYS_MANAGER'}">
+			<ul style="list-style:none; padding:0; margin:0;">
+				<li class="menu-item"><a href="${pageContext.request.contextPath}/home">나의 할일</a></li>
+			</ul>
+		</c:if>
+		<c:if test="${usr.usrNo != null && usr.usrAuthrtNo == 'SYS_MANAGER'}">
+			<ul style="list-style:none; padding:0; margin:0;">
+				<li class="menu-item"><a href="${pageContext.request.contextPath}/home">시스템 관리</a></li>
+			</ul>
+		</c:if>
 		
 		<div style="height:3rem;"></div>
-	</c:if>
 	<div style="display:flex; flex-direction:row; align-items:center;">
 		<svg class="svg-inline--fa fa-chart-pie fa-w-17" aria-hidden="true"
 			data-prefix="fas" data-icon="chart-pie" role="img"
@@ -42,10 +47,10 @@
 	</div>
 	<div style="border:1px solid #ADB5BD; margin:1rem 0rem;"></div>
 	<ul style="list-style:none; padding:0; margin:0;">
-		<li class="menu-item"><a href="${pageContext.request.contextPath}/systemManagement/usrManagement2">SR요청관리</a></li>
-		<li class="menu-item"><a href="${pageContext.request.contextPath}/systemManagement/usrManagement4">SR검토관리</a></li>
-		<li class="menu-item"><a href="${pageContext.request.contextPath}/systemManagement/usrManagement5">SR개발관리</a></li>
-		<li class="menu-item"><a href="#">SR진척관리</a></li>
+		<li class="menu-item"><a href="${pageContext.request.contextPath}/srManagement/requestManagement">SR요청관리</a></li>
+		<li class="menu-item"><a href="${pageContext.request.contextPath}/srManagement/reviewManagement">SR검토관리</a></li>
+		<li class="menu-item"><a href="${pageContext.request.contextPath}/srManagement/developManagement">SR개발관리</a></li>
+		<li class="menu-item"><a href="${pageContext.request.contextPath}/srManagement/progressManagement">SR진척관리</a></li>
 	</ul>
 	
 	<div style="height:3rem;"></div>
@@ -64,7 +69,7 @@
 	</div>
 	<div style="border:1px solid #ADB5BD; margin:1rem 0rem;"></div>
 	<ul style="list-style:none; padding:0; margin:0;">
-		<li class="menu-item"><a href="#">공지사항</a></li>
+		<li class="menu-item"><a href="${pageContext.request.contextPath}/boardManagement/requestManagement">공지사항</a></li>
 		<li class="menu-item"><a href="#">문의게시판</a></li>
 	</ul>
 </div>

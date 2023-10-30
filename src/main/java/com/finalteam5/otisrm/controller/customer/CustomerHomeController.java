@@ -39,6 +39,7 @@ public class CustomerHomeController {
 			UsrDetails usrDetails = (UsrDetails) authentication.getPrincipal();
 			Usr usr = usrDetails.getUsr();
 			model.addAttribute("usr", usr);
+			session.setAttribute("loginUsrNo", usr.getUsrNo());
 		} 
 		//SR요청 목록 페이징  
 		if(srRqstPageNo == null) {
