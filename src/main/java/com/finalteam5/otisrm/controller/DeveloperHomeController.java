@@ -35,7 +35,7 @@ public class DeveloperHomeController {
 			UsrDetails usrDetails = (UsrDetails) authentication.getPrincipal();
 			Usr usr = usrDetails.getUsr();
 			model.addAttribute("usr", usr);
-			
+			/*
 			int totalTransferedSrNum = srService.getTotalTransferedSrNumByUsrId(usr.getUsrId());
 			//log.info(""+totalTransferedSrNum);
 			Pager pager = new Pager(5, 5, totalTransferedSrNum, 1);
@@ -76,7 +76,7 @@ public class DeveloperHomeController {
 			model.addAttribute("implementNum", implementNum);
 			model.addAttribute("testNum", testNum);
 			model.addAttribute("applyNum", applyNum);
-			
+			*/
 			return "/home/developerHome";
 		} else {
 			return "/home/developerHome";

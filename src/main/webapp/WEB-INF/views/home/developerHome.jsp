@@ -42,43 +42,43 @@
 				<a id="mainTableTotalTab" href="javascript:void(0)" onclick="refactorMainTable('TOTAL', 1)"
 					class="mainTableSelectElement filterTab filterTabSelected" style="width: 6%;"> 
 					<span>전체(</span>
-					<span id="totalNum">${totalNum}</span> 
+					<span id="totalNum"></span> 
 					<span>)</span>
 				</a>
 				<a id="mainTableRqstTab" href="javascript:void(0)" onclick="refactorMainTable('RQST', 1)"
 					class="mainTableSelectElement filterTab" style="width: 6%;"> 
 					<span>요청(</span>
-					<span id="requestNum">${requestNum}</span> 
+					<span id="requestNum"></span> 
 					<span>)</span>
 				</a> 
 				<a id="mainTableAnalysisTab" href="javascript:void(0)" onclick="refactorMainTable('ANALYSIS', 1)"
 					class="mainTableSelectElement filterTab" style="width: 6%;"> 
 					<span>분석(</span>
-					<span id="analysisNum">${analysisNum}</span> 
+					<span id="analysisNum"></span> 
 					<span>)</span>
 				</a> 
 				<a id="mainTableDesignTab" href="javascript:void(0)" onclick="refactorMainTable('DESIGN', 1)"
 					class="mainTableSelectElement filterTab" style="width: 6%;"> 
 					<span>설계(</span>
-					<span id="designNum">${designNum}</span> 
+					<span id="designNum"></span> 
 					<span>)</span>
 				</a> 
 				<a id="mainTableImplementTab" href="javascript:void(0)" onclick="refactorMainTable('IMPLEMENT', 1)"
 					class="mainTableSelectElement filterTab" style="width: 6%;"> 
 					<span>구현(</span>
-					<span id="implementNum">${implementNum}</span> 
+					<span id="implementNum"></span> 
 					<span>)</span>
 				</a> 
 				<a id="mainTableTestTab" href="javascript:void(0)" onclick="refactorMainTable('TEST', 1)"
 					class="mainTableSelectElement filterTab" style="width: 6%;"> 
 					<span>시험(</span>
-					<span id="testNum">${testNum}</span> 
+					<span id="testNum"></span> 
 					<span>)</span>
 				</a> 
 				<a id="mainTableApplyRequestTab" href="javascript:void(0)" onclick="refactorMainTable('APPLY_REQUEST', 1)"
 					class="mainTableSelectElement filterTab" style="width: 8%;"> 
 					<span>반영요청(</span>
-					<span id="applyNum">${applyNum}</span> 
+					<span id="applyNum"></span> 
 					<span>)</span>
 				</a> 
 				<a href="javascript:void(0)" onclick="selectMainTableFilter(this)"
@@ -122,6 +122,7 @@
 						</tr>
 					</thead>
 					<tbody>
+						<%-- 
 						<c:forEach var="sr" items="${srList}" varStatus="status">
 							<tr style="height: 4.5rem; font-size: 1.5rem; background-color:white;">
 								<td>${sr.srNo}</td>
@@ -138,10 +139,12 @@
 								</td>
 							</tr>
 						</c:forEach>
+						 --%>
 					</tbody>
 				</table>
 			</div>
 			<div id="pager_div" style="height: 4.5rem; font-size: 1.6rem; display: flex; flex-direction: row; justify-content: center; align-items: center;">
+				<%-- 
 				<a href="javascript:void(0)"> 
 					<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center;">first_page</i>
 				</a>
@@ -171,6 +174,7 @@
 				<a href="javascript:void(0)"> 
 					<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center;">last_page</i>
 				</a>
+				 --%>
 			</div>
 		</div>
 		<!-- 
@@ -307,20 +311,20 @@
 					<span>SR요청정보</span>
 				</a>
 				-->
-				<a href="javascript:void(0)"
-					onclick="selectSrProgressTableFilter(this)"
+				<a id="srRqstInfoTab" href="javascript:void(0)"
+					onclick="selectSrProgressTableFilter('srRqstInfoTab')"
 					class="srProgressTableSelectElement srProgressPlan filterTab filterTabSelected"
 					style="width: 10%"> 
 					<span>SR계획정보</span>
 				</a> 
-				<a href="javascript:void(0)"
-					onclick="selectSrProgressTableFilter(this)"
+				<a id="srHrInfoTab" href="javascript:void(0)"
+					onclick="selectSrProgressTableFilter('srHrInfoTab')"
 					class="srProgressTableSelectElement srProgressHr filterTab"
 					style="width: 10%"> 
 					<span>SR자원정보</span>
 				</a> 
-				<a href="javascript:void(0)"
-					onclick="selectSrProgressTableFilter(this)"
+				<a id="srPrgrsInfoTab" href="javascript:void(0)"
+					onclick="selectSrProgressTableFilter('srPrgrsInfoTab')"
 					class="srProgressTableSelectElement srProgressPercentage filterTab"
 					style="width: 10%"> 
 					<span>SR진척률</span>
