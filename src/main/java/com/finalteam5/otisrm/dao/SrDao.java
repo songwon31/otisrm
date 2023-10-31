@@ -22,4 +22,9 @@ public interface SrDao {
 	public SrTrnsfInfoForDeveloperHome selectSrTrnsfInfoForDeveloperHomeBySrNo(String srNo);
 	public List<SrPrgrsForDeveloperHome> selectSrPrgrsForDeveloperHomeList(String srNo);
 	public SrRequestDetailForDeveloperHome selectSrRequestDetailForDeveloperHome(String srNo);
+	
+	public List<SrForDeveloperHomeBoard> selectSrListForDeveloperHomeBoardByUsrIdAndStts(
+			@Param("usrId") String usrId, @Param("srPrgrsSttsNo") String srPrgrsSttsNo);
+	public List<SrForDeveloperHomeBoard> selectSrListForDeveloperHomeBoardByUsrIdAndSttsAndPager(
+			@Param("usrId") String usrId, @Param("srPrgrsSttsNo") String srPrgrsSttsNo, @Param("pager") Pager pager);
 }

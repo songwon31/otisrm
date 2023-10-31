@@ -1,5 +1,7 @@
 $(init);
 
+var mainTableFilter = 'Total';
+
 function init() {
 	//테이블 행 선택 시 하단 작업창에 데이터 세팅
 	$('#mainTable tr').click(function() {
@@ -98,6 +100,18 @@ function init() {
 			}
 		})
 	});
+	
+	$("#modal_sr_conts_btn").on("click", function() {
+        if ($(this).is(":checked")) {
+        	modal_sr_conts_btn_checked();
+        }
+    });
+	
+	$("#modal_sr_dvl_conts_btn").on("click", function() {
+        if ($(this).is(":checked")) {
+        	modal_sr_dvl_conts_btn_checked();
+        }
+    });
 }
 
 //날짜 형식을 변환하는 함수
@@ -108,9 +122,157 @@ function formatDate(date) {
     return year + '-' + month + '-' + day;
 }
 
-function selectMainTableFilter(e) {
-	$('.mainTableSelectElement').removeClass('filterTabSelected');
-	$(e).addClass('filterTabSelected');
+function formatDateTime(date) {
+    var year = date.getFullYear();
+    var month = (date.getMonth() + 1).toString().padStart(2, '0');
+    var day = date.getDate().toString().padStart(2, '0');
+    var hours = date.getHours().toString().padStart(2, '0');
+    var minutes = date.getMinutes().toString().padStart(2, '0');
+    var seconds = date.getSeconds().toString().padStart(2, '0');
+    return year + '-' + month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds;
+}
+
+function refactorMainTable(filterType, page) {
+	//페이지 변경 버튼을 눌렀을 경우 
+	if (filterType == 'change_page') {
+		filterType = mainTableFilter;
+	}
+	
+	let requestData = {
+        filterType: filterType,
+        page: page
+    };
+	
+	$.ajax({
+		type: "POST",
+		url: "/otisrm/getTableInfo",
+		data: requestData,
+		success: function(data) {
+			//탭 구성
+			mainTableFilter = filterType;
+			//전체
+			if (mainTableFilter == 'TOTAL') {
+				$('.mainTableSelectElement').removeClass('filterTabSelected');
+				$('.mainTableSelectElement').css('pointer-events', '');
+				$('.mainTableSelectElement').css('cursor', 'pointer');
+				$('#mainTableTotalTab').addClass('filterTabSelected');
+				$('#mainTableTotalTab').css('pointer-events', 'none');
+				$('#mainTableTotalTab').css('cursor', 'default');
+			//요청
+			} else if (mainTableFilter == 'RQST') {
+				$('.mainTableSelectElement').removeClass('filterTabSelected');
+				$('.mainTableSelectElement').css('pointer-events', '');
+				$('.mainTableSelectElement').css('cursor', 'pointer');
+				$('#mainTableRqstTab').addClass('filterTabSelected');
+				$('#mainTableRqstTab').css('pointer-events', 'none');
+				$('#mainTableRqstTab').css('cursor', 'default');
+			//분석
+			} else if (mainTableFilter == 'ANALYSIS') {
+				$('.mainTableSelectElement').removeClass('filterTabSelected');
+				$('.mainTableSelectElement').css('pointer-events', '');
+				$('.mainTableSelectElement').css('cursor', 'pointer');
+				$('#mainTableAnalysisTab').addClass('filterTabSelected');
+				$('#mainTableAnalysisTab').css('pointer-events', 'none');
+				$('#mainTableAnalysisTab').css('cursor', 'default');
+			//설계
+			} else if (mainTableFilter == 'DESIGN') {
+				$('.mainTableSelectElement').removeClass('filterTabSelected');
+				$('.mainTableSelectElement').css('pointer-events', '');
+				$('.mainTableSelectElement').css('cursor', 'pointer');
+				$('#mainTableDesignTab').addClass('filterTabSelected');
+				$('#mainTableDesignTab').css('pointer-events', 'none');
+				$('#mainTableDesignTab').css('cursor', 'default');
+			//구현
+			} else if (mainTableFilter == 'IMPLEMENT') {
+				$('.mainTableSelectElement').removeClass('filterTabSelected');
+				$('.mainTableSelectElement').css('pointer-events', '');
+				$('.mainTableSelectElement').css('cursor', 'pointer');
+				$('#mainTableImplementTab').addClass('filterTabSelected');
+				$('#mainTableImplementTab').css('pointer-events', 'none');
+				$('#mainTableImplementTab').css('cursor', 'default');
+			//시험
+			} else if (mainTableFilter == 'TEST') {
+				$('.mainTableSelectElement').removeClass('filterTabSelected');
+				$('.mainTableSelectElement').css('pointer-events', '');
+				$('.mainTableSelectElement').css('cursor', 'pointer');
+				$('#mainTableTestTab').addClass('filterTabSelected');
+				$('#mainTableTestTab').css('pointer-events', 'none');
+				$('#mainTableTestTab').css('cursor', 'default');
+			//반영요청
+			} else if (mainTableFilter == 'APPLY_REQUEST') {
+				$('.mainTableSelectElement').removeClass('filterTabSelected');
+				$('.mainTableSelectElement').css('pointer-events', '');
+				$('.mainTableSelectElement').css('cursor', 'pointer');
+				$('#mainTableApplyRequestTab').addClass('filterTabSelected');
+				$('#mainTableApplyRequestTab').css('pointer-events', 'none');
+				$('#mainTableApplyRequestTab').css('cursor', 'default');
+			}
+			
+			//원소 개수 구성
+			$('#totalNum').html(data.totalNum);
+			$('#requestNum').html(data.requestNum);
+			$('#analysisNum').html(data.analysisNum);
+			$('#designNum').html(data.designNum);
+			$('#implementNum').html(data.implementNum);
+			$('#testNum').html(data.testNum);
+			$('#applyNum').html(data.applyNum);
+			
+			
+			//테이블 body 구성
+			//테이블 body 초기화
+			$('#mainTable tbody').html('');
+			console.log(data.srList.length);
+			//테이블 body 재구성
+			for (let i=0; i<data.srList.length; ++i) {
+				let sr = data.srList[i];
+				let srTrHtml = '';
+				srTrHtml += '<tr style="height: 4.5rem; font-size: 1.5rem; background-color:white;">';
+				srTrHtml += '<td>' + sr.srNo + '</td>';
+				srTrHtml += '<td>' + sr.sysNm + '</td>';
+				srTrHtml += '<td>' + sr.srDmndNm + '</td>';
+				srTrHtml += '<td>' + sr.srTtl + '</td>';
+				srTrHtml += '<td>' + sr.usrNm + '</td>';
+				let srCmptnPrnmntDt = new Date(sr.srCmptnPrnmntDt);
+		        let srTrgtCmptnDt = new Date(sr.srTrgtCmptnDt);
+		        srTrHtml += '<td>' + formatDate(srCmptnPrnmntDt) + '</td>';
+				srTrHtml += '<td>' + formatDate(srTrgtCmptnDt) + '</td>';
+				srTrHtml += '<td>' + sr.srPrgrsSttsNm + '</td>';
+				srTrHtml += '<td> <button data-toggle="modal" data-target="#requestDetailModal" class="btn-2 detail-button"  onclick="showRequestDetail(\'' + sr.srNo + '\')">요청상세</button> </td>';
+				//jsp에 삽입
+				$('#mainTable tbody').append(srTrHtml);
+			}
+			
+			
+			//페이징 파트 구성
+			let pagerHtml = '';
+			pagerHtml += '<a href="javascript:void(0)">';
+			pagerHtml += '<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center;">first_page</i>';
+			pagerHtml += '</a>';
+			pagerHtml += '<a href="javascript:void(0)">';
+			pagerHtml += '<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center;">chevron_left</i>';
+			pagerHtml += '</a>';
+			for (let i=data.pager.startPageNo; i<=data.pager.endPageNo; ++i) {
+				pagerHtml += '<div style="width: 0.25rem;"></div>';
+				if (data.pager.pageNo != i) {
+					pagerHtml += '<a href="javascript:void(0)" onclick="movePage('+i+')" style="font-size: 1.6rem; height: 3rem; line-height: 3rem;">'+i+'</a>';
+				} else {
+					pagerHtml += '<a href="javascript:void(0)" style="font-size: 1.6rem; height: 3rem; line-height: 3rem;">'+i+'</a>';
+				}
+				pagerHtml += '<div style="width: 0.25rem;"></div>';
+				
+			}
+			pagerHtml += '<a href="javascript:void(0)">';
+			pagerHtml += '<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center;">chevron_right</i>';
+			pagerHtml += '</a>';	
+			pagerHtml += '<a href="javascript:void(0)">';
+			pagerHtml += '<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center;">last_page</i>';
+			pagerHtml += '</a>';
+			$('#pager_div').html(pagerHtml);
+			
+			init();
+		}
+	});
+	
 }
 
 function selectSrProgressTableFilter(e) {
@@ -145,12 +307,38 @@ function showRequestDetail(srNo) {
 		url: "getSrDetailInfo", 
 		data: requestData, 
 		success: function (data) {
-			
+			$('#modal_sr_no').html(data.srNo);
+			$('#modal_sr_rqst_no').html(data.srRqstNo);
+			$('#modal_sys_nm').html(data.sysNm);
+			$('#modal_sr_task_nm').html(data.srTaskNm);
+			$('#modal_sr_ttl').html(data.srTtl);
+			$('#modal_sr_prps').html(data.srPrps);
+			$('#modal_dept_nm').html(data.deptNm);
+			$('#modal_pic_nm').html(data.usrNm);
+			let regDt = new Date(data.srRqstRegDt);
+			let cmptnPrnmntDt = new Date(data.srCmptnPrnmntDt);
+			let trnsfDt = new Date(data.srTrnsfDt);
+			$('#modal_sr_rqst_reg_dt').html(formatDate(regDt));
+			$('#modal_sr_cmptn_prnmnt_dt').html(formatDate(cmptnPrnmntDt));
+			$('#modal_inst_nm').html(data.instNm);
+			$('#modal_sr_trnsf_dt').html(formatDateTime(trnsfDt));
+			$('#modal_sr_conts').html(data.srConts);
+			$('#modal_sr_dvl_conts').html(data.srDvlConts);
         },
 		error: function (error) {
 			console.error("오류 발생:", error);
 		}
 	});
+}
+
+function modal_sr_conts_btn_checked() {
+	$('#modal_sr_dvl_conts_div').css('display', 'none');
+	$('#modal_sr_conts_div').css('display', '');
+}
+
+function modal_sr_dvl_conts_btn_checked() {
+	$('#modal_sr_conts_div').css('display', 'none');
+	$('#modal_sr_dvl_conts_div').css('display', '');
 }
 
 /*
