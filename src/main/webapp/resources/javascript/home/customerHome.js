@@ -4,7 +4,7 @@ function init() {
 	 requestInsertDate();
 }
  
-var srRqstSttsNo = null;
+var choiceSrRqstSttsNo = null;
 $(document).ready(function() {
 	$(".filterTab").click(function() {
 	    // 클릭된 요소의 스타일을 변경
@@ -17,26 +17,25 @@ $(document).ready(function() {
 	        "color": ""
 	    });
 	    
-	    srRqstSttsNo = $(event.target).attr("id");
-	    console.log(srRqstSttsNo);
+	    choiceSrRqstSttsNo = $(event.target).attr("id");
+	    console.log(choiceSrRqstSttsNo);
 	    //필터링 된 상품 불러오기
-	    loadSRRequests(1, srRqstSttsNo)
+	    loadSRRequests(1, choiceSrRqstSttsNo);
 	    // 클릭되지 않은 다른 요소들의 스타일 초기화
 	});	
-	
-  loadSRRequests(1, srRqstSttsNo); //페이지 로딩 시 초기 데이터 로드
-  changePage(pageNo);
+  loadSRRequests(1, choiceSrRqstSttsNo); //페이지 로딩 시 초기 데이터 로드
+  changePage(pageNo); 
 });
 
 // 페이지 번호 변경 시 SR 요청 데이터 로드
 function changePage(pageNo) {
-  loadSRRequests(pageNo);
+  loadSRRequests(pageNo, choiceSrRqstSttsNo);
   
   // 사용자가 페이징 버튼을 클릭할 때 loadPage 함수를 호출
   $('#pagination-container').on('click', 'a', function(e) {
       e.preventDefault();
       var pageNo = $(this).attr('href').split('=')[1];
-      loadPage(pageNo);
+      loadPage(pageNo, choiceSrRqstSttsNo);
   });
 }
 
@@ -58,12 +57,12 @@ function formatDateToYYYYMMDD(timestamp) {
 }
 
 //**요청목록 불러오기
-function loadSRRequests(pageNo, srRqstSttsNo) {
-  $.ajax({
+function loadSRRequests(pageNo, choiceSrRqstSttsNo) {
+	$.ajax({
     url: "getSRRequestsByPageNo",
     data: { 
     	srRqstPageNo: pageNo,
-    	status: srRqstSttsNo
+    	status: choiceSrRqstSttsNo
     },
     dataType: "json",
     method: "GET",
@@ -75,9 +74,13 @@ function loadSRRequests(pageNo, srRqstSttsNo) {
 			 html += '	<td></td>';
 			 html += '	<td></td>';
 			 html += '	<td></td>';
-			 html += '	<td style="width:300px;">';
+			 html += '	<td style="width:200px;">';
 			 html += '		<p class="t2_nonMessage">해당 목록 결과가 없습니다.</p>';
 			 html += '	</td>';
+			 html += '	<td></td>';
+			 html += '	<td></td>';
+			 html += '	<td></td>';
+			 html += '	<td></td>';
 			 html += '	<td></td>';
 			 html += '	<td></td>';
 			 html += '</tr>';
@@ -86,7 +89,6 @@ function loadSRRequests(pageNo, srRqstSttsNo) {
       data.forEach((item, index)=>{
     	  // item.srRqstRegDt를 YYYY-MM-dd 문자열로 변환
     	  const formattedDate = formatDateToYYYYMMDD(item.srRqstRegDt);
-    	  
     	  var indexOnPage = index + indexOffset + 1; // 페이지 내에서의 index 계산
     	  html += '<tr>';
     	  html += '	<td>' + indexOnPage + '</td>';
@@ -100,9 +102,22 @@ function loadSRRequests(pageNo, srRqstSttsNo) {
     	  html += '	<td>'+ item.srRqstEmrgYn +'</td>';
     	  html += '	<td><button id="showSrRqstDetailBtn" type="button" class="btn-2" data-toggle="modal" data-target="#srRqstBySrNo" onclick="showSrRqstBySrRqstNo(\''+ item.srRqstNo +'\')">상세보기</button></td>';
     	  html += '</tr>';
+    	  html +='<tr class="empty-tr" style="height: 100%;">';
+    	  html +='</tr>';
       });
       $("#getSrReqstListByPageNo").html(html);
-      console.log("성공");
+      
+      //데이터가 없을 경우 페이징 숨기기
+      var paginationContainer = document.getElementById("pagination-container");
+  
+      if(data.length<1){
+    	  console.log($("pagination-container"));
+    	  $(".btn").hide();
+    	  console.log("데이터 없움");
+      }else{
+    	  $(".btn").show();
+    	  console.log("데이터 있움");
+      }
     },
     error: function(error) {
       console.error("데이터를 불러오는 중 오류가 발생했습니다.");
@@ -143,13 +158,14 @@ function showSrRqstBySrRqstNo(choiceSrRqstNo){
         	$("#srRqst-srPrps").val(data.srPrps);
         	$("#srRqst-srConts").val(data.srConts);
         	$("#srRqst-srRqstRegDt").val(formattedDate);
+        	
         	//첨부파일
         	if (data.srRqstEmrgYn === "Y") {
         	    $("#srRqst-importantChk").prop("checked", true);
         	    submitSrRqst();
         	} else {
         	    $("#srRqst-importantChk").prop("checked", false);
-        	}
+        	}     		
         	
         },
         error: function() {
@@ -201,9 +217,8 @@ function requestInsertDate(){
 	document.getElementById('writeDate').value = todayFormatted;
 }
 
+//요청등록하기
 function submitSrRqst(){
-	console.log("제출");
-    //요청등록하기
 	$.ajax({
 	    type: "POST",
 	    url: "writeSrRqst", // 요청을 보낼 URL
@@ -220,7 +235,7 @@ function submitSrRqst(){
 	    }
 	});
 }
-
+//sr요청 등록 폼에  체크여부
 function isImportendChecked(){
 	var isChecked = $("#importantChk").prop("checked");
 	if(isChecked === true){
@@ -230,25 +245,57 @@ function isImportendChecked(){
 	}
 }
 
-//sr요청 수정
-function modifySrRqst(){
-	alert("제츨.");
-    //요청등록하기
-	$.ajax({
-	    type: "POST",
-	    url: "modifySrRqst", // 요청을 보낼 URL
-	    data: formData, // 폼 데이터를 전송
-	    success: function (data) {
-	        // 성공적으로 요청이 완료된 경우 실행할 코드
-	    	alert("수정성공.");
-	        window.location.href = ""; // 또는 다른 원하는 URL로 변경
-	        loadSRRequests(pageNo);
-	    },
-	    error: function (error) {
-	        // 요청 중 오류가 발생한 경우 실행할 코드
-	        console.error("오류 발생:", error);
-	        alert("수정실패");
-	    }
-	});
+//sr요청 수정 폼에 체크여부
+function isImportendChecked2(){
+	var isChecked = $("#srRqst-importantChk").prop("checked");
+	if(isChecked === true){
+		$("#submit_Yn").val("Y");
+	}else{
+		$("#submit_Yn").val("N");
+	}
+}
+
+//sr요청 수정 폼 제출 데이터 세팅
+function modifySubmitData(){
+	$("#submitSrRqst-srTtl").val($("#srRqst-srTtl").val());
+	$("#submitSrRqst-srPrps").val($("#srRqst-srPrps").val());
+	$("#submitSrRqst-srConts").val($("#srRqst-srConts").val());
+	var isChecked = $("#srRqst-importantChk").prop("checked");
+	if(isChecked === true){
+		$("#submit_Yn").val("Y");
+	}else{
+		$("#submit_Yn").val("N");
+	}
+}
+
+//sr 요청 수정
+function modifySrRqst(srRqstNo) {
+	modifySubmitData();
+	// 데이터 수집 및 가공
+    var data = {
+    	srRqstNo: $("#srRqst-srRqstNo").val(),
+        srTtl: $("#submitSrRqst-srTtl").val(),
+        srPrps: $("#submitSrRqst-srPrps").val(),
+        srConts: $("#submitSrRqst-srConts").val(),
+        srRqstEmrgYn: $("#submit_Yn").val()
+    };
+    console.log(data);
+    // Ajax 요청 보내기
+    $.ajax({
+        type: "POST",
+        url: "modifySrRqst",
+        data: data,
+        success: function (response) {
+            // 성공적으로 요청이 완료된 경우 실행할 코드
+            var currentURL = window.location.href;
+            window.location.href = currentURL; // 원하는 URL로 변경
+            loadSRRequests(1, choiceSrRqstSttsNo);
+        },
+        error: function (error) {
+            // 요청 중 오류가 발생한 경우 실행할 코드
+            console.error("오류 발생:", error);
+            alert("수정 실패");
+        }
+    });
 }
 

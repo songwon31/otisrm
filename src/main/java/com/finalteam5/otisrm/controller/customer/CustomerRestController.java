@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -79,9 +80,9 @@ public class CustomerRestController {
 	
 	//요청에 해당하는 상세정보 불러오기
 	@GetMapping("getSrRqstBySrRqstNo")
-	public SrRqst getSrRqstBySrRqstNo(String srRqstNo) {
+	public SrRqst getSrRqstBySrRqstNo(String srRqstNo, Model model) {
 		SrRqst srRqst = srRqstService.getSrRqstBySrRqstNo(srRqstNo);
-		
+		model.addAttribute("srRqstNo", srRqstNo);
 		return srRqst;
 	}
 }

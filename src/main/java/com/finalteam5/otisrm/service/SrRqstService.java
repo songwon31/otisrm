@@ -26,7 +26,7 @@ public interface SrRqstService {
 	public SrRqst getSrRqstBySrRqstNo(String srRqstNo);
 
 	//등록한 요청 수정하기
-	public void modifySrRqst(String srRqstNo);
+	public void modifySrRqst(SrRqst srRqst);
     
 	
 	//작성자: 이현주

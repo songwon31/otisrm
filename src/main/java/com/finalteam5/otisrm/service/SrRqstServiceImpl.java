@@ -54,8 +54,8 @@ public class SrRqstServiceImpl implements SrRqstService{
 	
 	//등록한 요청 수정하기
 	@Override
-	public void modifySrRqst(String srRqstNo) {
-		srRqstDao.updateSrRqst(srRqstNo);
+	public void modifySrRqst(SrRqst srRqst) {
+		srRqstDao.updateSrRqst(srRqst);
 	}
 	
 	//작성자: 이현주 

@@ -74,6 +74,9 @@
 
 
 /* Table */
+#mainTable{
+	background-color: #f9fafe;
+}
 #mainTable thead{
 	border: 1.5px solid #e9ecef;
 	background-color: #f9fafe;
@@ -83,6 +86,7 @@
 	font-size: 1.6rem; 
 	font-weight: 700;
 }
+
 #mainTable tbody{
 	border: 1.5px solid #e9ecef;
 }
@@ -90,6 +94,13 @@
 	font-size: 1.6rem; 
 	height: 4.7rem; 
 	font-size: 1.5rem;
+}
+#mainTable tbody tr td{
+	background-color: white; 
+}
+#mainTable tbody tr:hover{
+	background-color: #e0e7ed;
+	cursor: pointer;
 }
 #mainTable td{
 	text-align: center;
@@ -101,7 +112,7 @@
 	cursor: pointer;
 }
 .filterTab{
-	width: 72.16px;
+	width: 100px;
 	height: 3rem;
 	border: 1.5px solid #e0e7ed;
 	border-bottom: none;
@@ -127,7 +138,7 @@
 }
 /* button */
 #requestAddBtnWrap{
-	margin-left:283px;
+	margin-left:50px;
 }
 .btn-1 {
 	border: none;
@@ -190,6 +201,12 @@
 }
 #srContent{
 	height: 15rem;
+}
+.form-label{
+	font-size: 15px;
+}
+.form-control{
+	font-size: 13px;
 }
 
 /* width */

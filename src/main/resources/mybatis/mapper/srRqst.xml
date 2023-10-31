@@ -21,7 +21,6 @@
 	       #{srRqstEmrgYn, jdbcType=VARCHAR}, #{srRqstRvwRsn, jdbcType=VARCHAR}, 'N'
     	)
 	</insert>
-	
 	<!-- sr요청 불러오기 -->
 	<select id="selectSrRqstListByPage" parameterType="Map" resultType="SrRqst">
 		select rnum, sr_rqst_no, sr_ttl, sr_reqstr_no, sr_rqst_reg_dt, sr_rqst_mdfcn_dt, 
@@ -39,7 +38,7 @@
 		        join sr_rqst_stts q on q.sr_rqst_stts_no = r.sr_rqst_stts_no
 		        <if test='status != null and status != ""'>
                 	<where>
-                		r.sr_rqst_stts_no=#{srRqstSttNo, jdbcType=VARCHAR}
+                		r.sr_rqst_stts_no=#{status, jdbcType=VARCHAR}
                 	</where>
                	</if>
 		        <if test='keyword != null and keyword != ""'>
@@ -74,12 +73,14 @@
 	</select>
 	
 	<!-- 등록한 sr요청 수정 -->
-	<update id="updateSrRqst" parameterType="String">
+	<update id="updateSrRqst" parameterType="SrRqst">
 		update sr_rqst set sr_ttl=#{srTtl, jdbcType=VARCHAR}, sr_prps=#{srPrps, jdbcType=VARCHAR}, sr_rqst_emrg_yn=#{srRqstEmrgYn, jdbcType=VARCHAR},
 		sr_conts= #{srConts, jdbcType=VARCHAR}, sr_rqst_mdfcn_dt = sysdate
 		where sr_rqst_stts_no = 'RQST' 
 		and sr_rqst_no= #{srRqstNo, jdbcType=VARCHAR}
 	</update>
+	
+	
 	
 	<!-- 작성자: 이현주  -->
 	<!-- 검토자 홈 요청목록 불러오기 -->

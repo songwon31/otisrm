@@ -23,7 +23,7 @@ public class SrProgressManagementController {
 			model.addAttribute("usr", usr);
 			return "/srManagement/progressManagement/progressManagement";
 		}else {
-			return "redirect:/home";
+			return "redirect:/";
 		}
 	}
 }

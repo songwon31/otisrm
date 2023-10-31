@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.finalteam5.otisrm.dto.Pager;
@@ -32,7 +33,6 @@ public class CustomerHomeController {
 	private SrRqstService srRqstService;
 	
 	@GetMapping("home")
-	@Secured("CUSTOMER")
 	public String customerHome(Authentication authentication, String srRqstPageNo, Model model, HttpSession session) {
 		if (authentication != null && authentication.isAuthenticated()) {
 			//로그인한 회원의 정보
@@ -63,7 +63,6 @@ public class CustomerHomeController {
 
 		model.addAttribute("srRqstpager", srRqstpager);
 		
-		
 		return "/home/customerHome";
 	}
 	
@@ -77,17 +76,17 @@ public class CustomerHomeController {
 	
 	//고객사 홈 페이지에서 요청등록하기
 	@PostMapping("writeSrRqst")
-	@Secured("CUSTOMER")
 	public String writeSrRqst(SrRqst srRqst) {
 	    srRqstService.writeSrRqst(srRqst);
 	    return "redirect:/home";
 	}
 	
-	//고객사 홈 페이지에서 등록한 요청 수정하기
+	//고객사 홈 페이지에서 요청 수정하기
 	@PostMapping("modifySrRqst")
-	@ResponseBody
-	public void modifySrRqst(String srRqstNo) {
-		srRqstService.modifySrRqst(srRqstNo);
+	public String modifySrRqst(SrRqst srRqst) {
+	    srRqstService.modifySrRqst(srRqst);
+	   
+	    return "redirect:/home";
 	}
 	
 }

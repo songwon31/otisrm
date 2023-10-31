@@ -29,7 +29,7 @@ public interface SrRqstDao {
 	public SrRqst selectSrRqstBySrRqstNo(String srRqstNo);
 	
 	//등록한 요청 수정하기
-	public void updateSrRqst(String srRqstNo);
+	public void updateSrRqst(SrRqst srRqst);
 	
 	//작성자: 이현주
 	//페이지별로 요청 불러오기(검토자 홈)

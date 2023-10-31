@@ -1,11 +1,12 @@
 package com.finalteam5.otisrm.dto.usr;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import lombok.Data;
 
 @Data
-public class Usr {
+public class Usr implements Serializable{
 	private String usrNo;			//사용자 번호
 	private String usrId;			//사용자 아이디
 	private String usrPswd;			//사용자 비밀번호

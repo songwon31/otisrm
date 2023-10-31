@@ -22,13 +22,15 @@
    	  	<div class="filterTabWrap">
    	  		<div class="d-flex">
    	  			<div class="filterTab pt-2" style="background-color: #f9fafe; color: black;">전체</div>
-   	  			<div id="RQST" class="filterTab pt-2">요청</div>
-   	  			<div id="RV_ING" class="filterTab pt-2">검토중</div>
-   	  			<div id="RCPT"  class="filterTab pt-2">접수</div>
-   	  			<div id="DEP_ING"  class="filterTab pt-2">개발중</div>
-   	  			<div id="TEST"  class="filterTab pt-2">테스트</div>
-   	  			<div id="CMPTN_RQST"  class="filterTab pt-2">완료요청</div>
-   	  			<div id="DEP_CMPTN"  class="filterTab pt-2">개발완료</div>
+   	  			<div id="RQST" class="filterTab pt-2">요청<span id="rqst-count"></span></div>
+   	  			<div id="APRV_WAIT" class="filterTab pt-2">승인대기<span id="rqst-count"></span></div>
+   	  			<div id="APRV" class="filterTab pt-2">승인<span id="rqst-count"></span></div>
+   	  			<div id="RCPT_WAIT"  class="filterTab pt-2">접수대기<span id="rqst-count"></span></div>
+   	  			<div id="RCPT"  class="filterTab pt-2">접수<span id="rqst-count"></span></div>
+   	  			<div id="DEP_ING"  class="filterTab pt-2">개발중<span id="rqst-count"></span></div>
+   	  			<div id="TEST"  class="filterTab pt-2">테스트<span id="rqst-count"></span></div>
+   	  			<div id="CMPTN_RQST"  class="filterTab pt-2">완료요청<span id="rqst-count"></span></div>
+   	  			<div id="DEP_CMPTN"  class="filterTab pt-2">개발완료<span id="rqst-count"></span></div>
    	  			<div id="requestAddBtnWrap" class="d-flex flex-row-reverse align-items-end">
 					<button id="requestAddBtn" data-toggle="modal" data-target="#addSrRqst" class="btn-1 d-inline-flex flex-row align-items-center justify-content-center mb-1" onclick="showSysByDeptNo('${usr.deptNo}')">
 						요청 등록
@@ -68,7 +70,7 @@
 		    </tbody>
 		</table>
 		<!-- 페이징 -->
-		<div  id="pagination-container" class="d-flex justify-content-center">
+		<div  id="pagination-container" class="paging d-flex justify-content-center">
 			<a class="btn" href="javascript:loadSRRequests(1)">처음</a>
 			<c:if test="${srRqstpager.groupNo>1}">
 				<a class="btn" href="javascript:loadSRRequests(${srRqstpager.startPageNo-1})">이전</a>
@@ -324,7 +326,6 @@
 				 			<div class="w-45">
 					            <input id="srRqst-UsrNm" type="text" class="form-control" id="writer" disabled>
 				 			</div>
-				            <input id="srRqst-srRqstNo" type="hidden" name="srReqstrNo" value="">
 				        </div>
 				        <div class="d-flex w-50">
 					        <div class="w-30">
@@ -362,7 +363,7 @@
 			          <label for="srRqst-srTtl" class="form-label">SR제목</label>
 			        </div>
 			        <div style="width: 550.41px;">
-			          <input id="srRqst-srTtl" type="text" class="form-control" name="srTtl">
+			          <input id="srRqst-srTtl" type="text" class="form-control">
 			        </div>
 			    </div>
 		        <div class="d-flex w-100 pt-2">
@@ -370,7 +371,7 @@
 			          <label for="srRqst-srPrps" class="form-label">관련근거/목적</label>
 			        </div>
 			        <div style="width: 550.41px;">
-			          <input id="srRqst-srPrps" type="text" class="form-control" name="srPrps">
+			          <input id="srRqst-srPrps" type="text" class="form-control">
 			        </div>
 			    </div>
 		        <div class="d-flex w-100 pt-2">
@@ -378,7 +379,7 @@
 			          <label for="systemName" class="form-label">SR 내용</label>
 			        </div>
 			        <div style="width: 550.41px;">
-			          <textarea id="srRqst-srConts" class="form-control" id="srContent" name="srConts"></textarea>
+			          <textarea id="srRqst-srConts" class="form-control" id="srContent"></textarea>
 			        </div>
 			    </div>
 		        <div class="d-flex w-100 pt-2">
@@ -389,15 +390,19 @@
 			          <input type="file" class="" id="systemName" multiple disabled>
 			        </div>
 			        <div>
-			        	<input id="srRqst-importantChk" type="checkbox" onclick="isImportendChecked()"><span> 중요</span>
+			        	<input id="srRqst-importantChk" type="checkbox" onclick="isImportendChecked2()"><span> 중요</span>
 			        </div>
-			        <input id="submitYn" type="hidden" name="srRqstEmrgYn" value="">
 			    </div>
 			</div>
       	</div>
       </div>
       <div class="modal-footer py-1">
-        <button id="saveButton" class="btn-1">저장</button>
+      	<input id="srRqst-srRqstNo" type="hidden" name="srReqstrNo">
+      	<input id="submitSrRqst-srTtl" type="hidden" class="form-control" name="srTtl">
+		<input id="submitSrRqst-srPrps" type="hidden" class="form-control" name="srPrps">
+		<input id="submitSrRqst-srConts" type="hidden" class="form-control" name="srConts">
+		<input id="submit_Yn" type="hidden" name="srRqstEmrgYn">
+        <button id="saveButton" class="btn-1" type="button" onclick="modifySrRqst(${srRqstNo})">저장</button>
         <button type="button" class="btn-3" data-dismiss="modal">닫기</button>
       </div>
     </form>
