@@ -176,7 +176,19 @@
 .btn-3:active {
 	background-color:#7c7c7c; 
 }
-
+.btn-4 {
+	border: none;
+	font-size:1.4rem;
+	color: #f3ffff;
+	font-weight: bold;
+	background-color:#949494; 
+	border-radius:3px;
+	height: 2.8rem;
+	width: 30px;
+}
+.btn-4:active {
+	background-color:#7c7c7c; 
+}
 /* Modal */
 .modal-header {
 	background-color: #222e3c;
@@ -203,10 +215,10 @@
 	height: 15rem;
 }
 .form-label{
-	font-size: 15px;
+	font-size: 1.5rem;
 }
 .form-control{
-	font-size: 13px;
+	font-size: 1.3rem;
 }
 
 /* width */

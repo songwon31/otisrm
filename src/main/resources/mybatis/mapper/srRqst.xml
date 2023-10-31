@@ -2,14 +2,16 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.finalteam5.otisrm.dao.SrRqstDao">
 	<!-- 작성자: 성유진  -->
+	
 	<!-- sr요청등록 폼 -->
 	<!-- 부서번호에 해당하는 관련 시스템 목록 불러오기 -->
 	<select id="selectSysByDeptNo" parameterType="String" resultType="Sys">
 		select * from sys where dept_no = #{deptNo}
 	</select>
+	
 	<!-- sr요청 등록하기 -->
 	<!-- PK는 트리거를 사용해서 null로 지정할  경우 자동으로 정해진 포멧으로 삽입됨 -->
-	<insert id="insertSrRqst" parameterType="SrRqst">
+	<insert id="insertSrRqst" parameterType="SrRqstSubmit">
 		insert into sr_rqst(
 		    sr_rqst_no, sr_ttl, sr_prps, sr_reqstr_no, sr_conts, 
 		    sr_rqst_reg_dt, sr_rqst_mdfcn_dt, sr_rqst_stts_no, sys_no, 
@@ -21,6 +23,20 @@
 	       #{srRqstEmrgYn, jdbcType=VARCHAR}, #{srRqstRvwRsn, jdbcType=VARCHAR}, 'N'
     	)
 	</insert>
+	
+	<!-- sr요청 등록 첨부파일 업로드 -->
+	<!-- PK는 트리거를 사용해서 null로 지정할  경우 자동으로 정해진 포멧으로 삽입됨 -->
+	<insert id="insertSrRqstAtch" parameterType="SrRqstAtch">
+	    insert into sr_rqst_atch(
+	        sr_rqst_atch_no, sr_rqst_no, sr_rqst_atch_nm, sr_rqst_atch_mime_type,
+	        sr_rqst_atch_data, sr_rqst_atch_size
+	    ) values(
+	        null, #{srRqstNo, jdbcType=VARCHAR}, #{srRqstAtchNm, jdbcType=VARCHAR},
+	        #{srRqstAtchMimeType, jdbcType=VARCHAR}, #{srRqstAtchData, jdbcType=BLOB},
+	        #{srRqstAtchSize, jdbcType=NUMERIC}
+	    )
+	</insert>
+	
 	<!-- sr요청 불러오기 -->
 	<select id="selectSrRqstListByPage" parameterType="Map" resultType="SrRqst">
 		select rnum, sr_rqst_no, sr_ttl, sr_reqstr_no, sr_rqst_reg_dt, sr_rqst_mdfcn_dt, 
@@ -56,9 +72,15 @@
 			 where rnum >= #{startRowNo}
 		]]>
 	</select>
+	
 	<!-- 전체 sr요청 수(페이징을 위함) -->
 	<select id="countSrRqst" resultType="int">
 		select count(*) from sr_rqst
+		<if test='status != null and status != ""'>
+        	<where>
+            	sr_rqst_stts_no=#{status, jdbcType=VARCHAR}
+            </where>
+        </if>
 	</select>
 
 	<!-- sr요청 상세 불러오기-->
@@ -73,13 +95,12 @@
 	</select>
 	
 	<!-- 등록한 sr요청 수정 -->
-	<update id="updateSrRqst" parameterType="SrRqst">
+	<update id="updateSrRqst" parameterType="SrRqstSubmit">
 		update sr_rqst set sr_ttl=#{srTtl, jdbcType=VARCHAR}, sr_prps=#{srPrps, jdbcType=VARCHAR}, sr_rqst_emrg_yn=#{srRqstEmrgYn, jdbcType=VARCHAR},
 		sr_conts= #{srConts, jdbcType=VARCHAR}, sr_rqst_mdfcn_dt = sysdate
 		where sr_rqst_stts_no = 'RQST' 
 		and sr_rqst_no= #{srRqstNo, jdbcType=VARCHAR}
 	</update>
-	
 	
 	
 	<!-- 작성자: 이현주  -->

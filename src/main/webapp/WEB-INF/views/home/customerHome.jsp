@@ -203,11 +203,11 @@
   <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h6 class="modal-title">SR 요청</h6>
+        <h6 class="modal-title">SR 요청 등록</h6>
         <i class="material-icons close-icon" data-dismiss="modal" style="cursor: pointer;">close</i>
       </div>
       <div id="srRqstBySrRqstNoForm" class="modal-body">
-      	<form id="writeSrRqst" action="writeSrRqst" method="post">
+      	<form id="writeSrRqst" action="writeSrRqst" method="post" enctype="multipart/form-data">
       		<!-- SR요청정보 -->
       		<h6 class="modal-sub-title">SR요청등록</h6>
       		<div class="card p-3 mb-4">
@@ -218,9 +218,9 @@
 				            	<label for="writer" class="form-label">등록자</label>
 				          	</div>
 				 			<div class="w-45">
-					            <input type="text" class="form-control" id="writer" value="${usr.usrNm}" disabled>
+					            <input type="text" class="form-control" id="data-usrNm" value="${usr.usrNm}" disabled>
 				 			</div>
-				            <input type="hidden" name="srReqstrNo" value="${usr.usrNo}">
+				            <input type="hidden" id="srReqstrNo" name="srReqstrNo" value="${usr.usrNo}">
 				        </div>
 				        <div class="d-flex w-50">
 					        <div class="w-30">
@@ -239,16 +239,15 @@
 				            	<label for="writeDate" class="form-label">등록일</label>
 				          	</div>
 				 			<div class="w-45">
-					            <input type="date" class="form-control" name="" value="" id="writeDate" disabled>
+					            <input type="date" class="form-control" id="writeDate" disabled>
 				 			</div>
 				        </div>
 				        <div class="d-flex w-50">
-				        	<input type="hidden" name="srRqstNo">
 					        <div class="w-30">
 					          <label for="systemName" class="form-label">관련시스템</label>
 					        </div>
 					        <div class="w-45">
-					          <select class="form-control" id="systemName" name="sysNo">
+					          <select class="form-control" id="sysNo" name="sysNo">
 					          	<option>--관련시스템--</option>
 					          </select>
 					        </div>
@@ -276,7 +275,7 @@
 			          <label for="systemName" class="form-label">SR 내용</label>
 			        </div>
 			        <div style="width: 550.41px;">
-			          <textarea class="form-control" id="srContent" name="srConts"></textarea>
+			          <textarea class="form-control" id="srConts" name="srConts"></textarea>
 			        </div>
 			    </div>
 		        <div class="d-flex w-100 pt-2">
@@ -284,22 +283,22 @@
 			          <label for="systemName" class="form-label modal-input">첨부파일</label>
 			        </div>
 			        <div style="width: 500px;">
-			          <input type="file" class="" id="systemName" multiple>
+			        	 <input id="file" type="file" name="file" class="form-control" >
 			        </div>
 			        <div>
 			        	<input id="importantChk" type="checkbox" onclick="isImportendChecked()"><span> 중요</span>
 			        </div>
-			        <input id="submitYn" type="hidden" name="SrRqstEmrgYn" value="N">
+			        <input id="srRqstEmrgYn" type="hidden" name="srRqstEmrgYn" value="N">
 			    </div>
 			</div>
       	</div>
       </div>
       <div class="modal-footer py-1">
-        <button class="btn-1" type="submit">저장</button>
+        <button class="btn-1">저장</button>
         <button type="button" class="btn-3" data-dismiss="modal">닫기</button>
       </div>
     </form>
-    </div>
+   </div>
   </div>
  </div>
 </div>
@@ -309,7 +308,7 @@
   <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h6 class="modal-title">SR 요청</h6>
+        <h6 class="modal-title">SR 요청 상세</h6>
         <i class="material-icons close-icon" data-dismiss="modal" style="cursor: pointer;">close</i>
       </div>
       <div class="modal-body">

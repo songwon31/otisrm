@@ -9,5 +9,5 @@ public class SrRqstAtch {
 	private String srRqstAtchNm;
 	private String srRqstAtchMimeType;
 	private byte[] srRqstAtchData;
-	private  int srRqstAtchSize;
+	private long srRqstAtchSize;
 }

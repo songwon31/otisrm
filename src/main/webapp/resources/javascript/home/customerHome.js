@@ -30,7 +30,6 @@ $(document).ready(function() {
 // 페이지 번호 변경 시 SR 요청 데이터 로드
 function changePage(pageNo) {
   loadSRRequests(pageNo, choiceSrRqstSttsNo);
-  
   // 사용자가 페이징 버튼을 클릭할 때 loadPage 함수를 호출
   $('#pagination-container').on('click', 'a', function(e) {
       e.preventDefault();
@@ -174,9 +173,6 @@ function showSrRqstBySrRqstNo(choiceSrRqstNo){
     });
 }
 
-
-
-
 //부서번호에 해당하는 관련시스템 목록
 function showSysByDeptNo(myDeptNo) {
 	$.ajax({
@@ -191,7 +187,7 @@ function showSysByDeptNo(myDeptNo) {
            	html += '<option value="'+item.sysNo+'">'+item.sysNm+'</option>';
       		});
 		   // HTML 콘텐츠를 검색한 부서 데이터로 업데이트
-           $("#systemName").html(html); 
+           $("#sysNo").html(html); 
            console.log("시스템 완료");
        },
 		error: function (error) {
@@ -219,29 +215,40 @@ function requestInsertDate(){
 
 //요청등록하기
 function submitSrRqst(){
+	var form = $("#writeSrRqst")[0];
+	var formData = new FormData(form); // 폼 엘리먼트를 선택하고, [0]을 사용하여 DOM 요소로 변환
+	console.log(form);
+	console.log(formData);
 	$.ajax({
-	    type: "POST",
 	    url: "writeSrRqst", // 요청을 보낼 URL
+	    method: "POST",
 	    data: formData, // 폼 데이터를 전송
 	    success: function (data) {
+	    	 alert("삽입");
+	    	 console.log(data);
 	        // 성공적으로 요청이 완료된 경우 실행할 코드
 	        var currentURL = window.location.href;
 	        console.log(currentURL);
 	        window.location.href = "/home"; // 또는 다른 원하는 URL로 변경
 	    },
 	    error: function (error) {
+	    	 alert("삽ㄴ입 실패");
 	        // 요청 중 오류가 발생한 경우 실행할 코드
-	        console.error("오류 발생:", error);
-	    }
+	        console.error("으어아으우어");
+	    },
+	    cache: false,
+	    processData: false, // 필수: 데이터를 query 문자열로 변환하지 않도록 설정
+        contentType: false, // 필수: 데이터 유형을 false로 설정하여 컨텐츠 유형 헤더를 설정하지 않도록 설정
 	});
 }
+
 //sr요청 등록 폼에  체크여부
 function isImportendChecked(){
 	var isChecked = $("#importantChk").prop("checked");
 	if(isChecked === true){
-		$("#submitYn").val("Y");
+		$("#srRqstEmrgYn").val("Y");
 	}else{
-		$("#submitYn").val("N");
+		$("#srRqstEmrgYn").val("N");
 	}
 }
 
@@ -279,7 +286,6 @@ function modifySrRqst(srRqstNo) {
         srConts: $("#submitSrRqst-srConts").val(),
         srRqstEmrgYn: $("#submit_Yn").val()
     };
-    console.log(data);
     // Ajax 요청 보내기
     $.ajax({
         type: "POST",

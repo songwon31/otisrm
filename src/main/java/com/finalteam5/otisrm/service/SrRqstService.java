@@ -6,27 +6,32 @@ import java.util.Map;
 import com.finalteam5.otisrm.dto.Pager;
 import com.finalteam5.otisrm.dto.Sys;
 import com.finalteam5.otisrm.dto.srRequest.SrRqst;
+import com.finalteam5.otisrm.dto.srRequest.SrRqstAtch;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstForReviewerHomeBoard;
+import com.finalteam5.otisrm.dto.srRequest.SrRqstSubmit;
 
 public interface SrRqstService {	
 	//작성자: 성유진
-	//요청등록폼
-	//개발부서에 따른 관련시스템 불러오기
+	//sr요청등록폼: 개발부서에 따른 관련시스템 불러오기
 	public List<Sys> getSysByDeptNo(String deptNo);
-	//요청등록하기
-	public int writeSrRqst(SrRqst srRqst);
-
-	//요청목록불러오기
-	public List<SrRqst> getSrRqstListByPager(Map<String, Object> map);
-	//전체 요청 수
-	public int totalSrRqst();
 	
+	//sr요청등록폼: 요청등록하기
+	public int writeSrRqst(SrRqstSubmit srRqstSubmit);
+	
+	//sr요청등록폼: 첨부파일 업로드
+	public int uploadSrRqstAtch(SrRqstAtch srRqstAtch);
+	
+	//sr요청목록불러오기
+	public List<SrRqst> getSrRqstListByPager(Map<String, Object> map);
 
-	//요청에 해당하는 상세 정보 불러오기
+	//전체 sr요청 수
+	public int totalSrRqst();
+
+	//sr요청에 해당하는 상세 정보 불러오기
 	public SrRqst getSrRqstBySrRqstNo(String srRqstNo);
 
-	//등록한 요청 수정하기
-	public void modifySrRqst(SrRqst srRqst);
+	//등록한 sr요청 수정하기
+	public void modifySrRqst(SrRqstSubmit srRqstSubmit);
     
 	
 	//작성자: 이현주

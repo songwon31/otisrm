@@ -8,28 +8,33 @@ import org.apache.ibatis.annotations.Mapper;
 import com.finalteam5.otisrm.dto.Pager;
 import com.finalteam5.otisrm.dto.Sys;
 import com.finalteam5.otisrm.dto.srRequest.SrRqst;
+import com.finalteam5.otisrm.dto.srRequest.SrRqstAtch;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstForReviewerHomeBoard;
+import com.finalteam5.otisrm.dto.srRequest.SrRqstSubmit;
 
 @Mapper
 public interface SrRqstDao {
 	//작성자: 성유진
-	//요청등록폼
-	//개발부서에 따른 관련시스템 불러오기
-	public List<Sys> selectSysByDeptNo(String deptNo);	
-	//요청등록하기
-	public int insertSrRqst(SrRqst srRqst);
 	
-	//요청목록 불러오기
-	//페이지별로 요청 불러오기(고객사 홈)
+	//sr요청등록폼: 개발부서에 따른 관련시스템 불러오기
+	public List<Sys> selectSysByDeptNo(String deptNo);	
+	//sr요청등록폼: sr요청등록하기
+	public int insertSrRqst(SrRqstSubmit srRqstSubmit);
+	//sr요청등록폼: sr요청 등록 첨부파일 업로드
+	public int insertSrRqstAtch(SrRqstAtch srRqstAtch);
+	
+	//sr요청목록 불러오기: 페이지별로 sr요청 불러오기(고객사 홈)
 	public List<SrRqst> selectSrRqstListByPage(Map<String, Object> map);
-	//전체 요청 수
+	
+	//전체 sr요청목록 불러오기: 요청 수(페이징 처리를 위함)
 	public int countSrRqst();
 	
-	//요청에 해당하는 상세 정보 불러오기
+	//sr요청에 해당하는 상세 정보 불러오기
 	public SrRqst selectSrRqstBySrRqstNo(String srRqstNo);
 	
-	//등록한 요청 수정하기
-	public void updateSrRqst(SrRqst srRqst);
+	//등록한 sr요청 수정하기
+	public void updateSrRqst(SrRqstSubmit srRqstSubmit);
+	
 	
 	//작성자: 이현주
 	//페이지별로 요청 불러오기(검토자 홈)

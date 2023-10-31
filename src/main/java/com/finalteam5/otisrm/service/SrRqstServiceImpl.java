@@ -10,7 +10,9 @@ import com.finalteam5.otisrm.dao.SrRqstDao;
 import com.finalteam5.otisrm.dto.Pager;
 import com.finalteam5.otisrm.dto.Sys;
 import com.finalteam5.otisrm.dto.srRequest.SrRqst;
+import com.finalteam5.otisrm.dto.srRequest.SrRqstAtch;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstForReviewerHomeBoard;
+import com.finalteam5.otisrm.dto.srRequest.SrRqstSubmit;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -27,35 +29,41 @@ public class SrRqstServiceImpl implements SrRqstService{
 		List<Sys> list = srRqstDao.selectSysByDeptNo(deptNo);
 		return list;
 	}
-	//요청등록하기
+	//sr요청등록하기
 	@Override
-	public int writeSrRqst(SrRqst srRqst) {
-		int numOfInsert = srRqstDao.insertSrRqst(srRqst);
+	public int writeSrRqst(SrRqstSubmit srRqstSubmit) {
+		int numOfInsert = srRqstDao.insertSrRqst(srRqstSubmit);
 		return numOfInsert;
 	}
-	//요청목록 불러오기
+	//sr요청 첨부파일 업로드
+	@Override
+	public int uploadSrRqstAtch(SrRqstAtch srRqstAtch) {
+		int numOfInsert = srRqstDao.insertSrRqstAtch(srRqstAtch);
+		return numOfInsert;
+	}
+	//sr요청목록 불러오기
 	@Override
 	public List<SrRqst> getSrRqstListByPager(Map<String, Object> map) {
 		List<SrRqst> list = srRqstDao.selectSrRqstListByPage(map);
 		return list;
 	}
-	//전체 요청 수
+	//전체 sr요청 수
 	@Override
 	public int totalSrRqst() {
 		int NumOfTotalSrRqst = srRqstDao.countSrRqst();
 		return NumOfTotalSrRqst;
 	}
-	//요청에 해당하는 상세 요청
+	//sr요청에 해당하는 상세 요청
 	@Override
 	public SrRqst getSrRqstBySrRqstNo(String srRqstNo) {
 		SrRqst srRqst = srRqstDao.selectSrRqstBySrRqstNo(srRqstNo);
 		return srRqst;
 	}
 	
-	//등록한 요청 수정하기
+	//등록한 sr요청 수정하기
 	@Override
-	public void modifySrRqst(SrRqst srRqst) {
-		srRqstDao.updateSrRqst(srRqst);
+	public void modifySrRqst(SrRqstSubmit srRqstSubmit) {
+		srRqstDao.updateSrRqst(srRqstSubmit);
 	}
 	
 	//작성자: 이현주 
@@ -69,5 +77,6 @@ public class SrRqstServiceImpl implements SrRqstService{
 	public List<String> getTotalSysNm() {
 		return srRqstDao.selectTotalSysNm();
 	}
+	
 	
 }
