@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.finalteam5.otisrm.dto.Pager;
 import com.finalteam5.otisrm.dto.sr.SrForDeveloperHomeBoard;
 import com.finalteam5.otisrm.dto.sr.SrRequestDetailForDeveloperHome;
+import com.finalteam5.otisrm.dto.sr.SrTableElementsForDeveloperHome;
 import com.finalteam5.otisrm.dto.sr.SrTrnsfInfoForDeveloperHome;
 import com.finalteam5.otisrm.dto.usr.Usr;
 import com.finalteam5.otisrm.security.UsrDetails;
@@ -36,7 +37,9 @@ public class DeveloperHomeController {
 			model.addAttribute("usr", usr);
 			
 			int totalTransferedSrNum = srService.getTotalTransferedSrNumByUsrId(usr.getUsrId());
+			//log.info(""+totalTransferedSrNum);
 			Pager pager = new Pager(5, 5, totalTransferedSrNum, 1);
+			//log.info("" + pager.getEndPageNo());
 			model.addAttribute("pager", pager);
 			
 			List<SrForDeveloperHomeBoard> srList = srService.getSrForDeveloperHomeBoardListByUsrIdAndPager(usr.getUsrId(), pager);
@@ -44,6 +47,7 @@ public class DeveloperHomeController {
 			
 			List<SrForDeveloperHomeBoard> totalSrList = srService.getSrForDeveloperHomeBoardListByUsrId(usr.getUsrId());
 			
+			int totalNum = totalSrList.size();
 			int requestNum = 0;
 			int analysisNum = 0;
 			int designNum = 0;
@@ -65,6 +69,7 @@ public class DeveloperHomeController {
 					applyNum++;
 				}
 			}
+			model.addAttribute("totalNum", totalNum);
 			model.addAttribute("requestNum", requestNum);
 			model.addAttribute("analysisNum", analysisNum);
 			model.addAttribute("designNum", designNum);
@@ -88,6 +93,23 @@ public class DeveloperHomeController {
 	@ResponseBody
 	public SrRequestDetailForDeveloperHome getSrDetailInfo(@RequestParam("srNo") String srNo) {
 		return srService.getSrRequestDetailForDeveloperHome(srNo);
+	}
+	
+	@PostMapping("/getTableInfo")
+	@ResponseBody
+	public SrTableElementsForDeveloperHome getFilteredTableInfo(
+			Authentication authentication, 
+			@RequestParam("filterType") String filterType, 
+			@RequestParam("page") int page) {
+		
+		if (authentication != null && authentication.isAuthenticated()) {
+			UsrDetails usrDetails = (UsrDetails) authentication.getPrincipal();
+			Usr usr = usrDetails.getUsr();
+			
+			return srService.getSrTableElementsForDeveloperHome(usr.getUsrId(), filterType, page);
+		} else {
+			return null;
+		}
 	}
 	
 }
