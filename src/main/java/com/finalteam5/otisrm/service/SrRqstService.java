@@ -21,6 +21,9 @@ public interface SrRqstService {
 	//sr요청등록폼: 첨부파일 업로드
 	public int uploadSrRqstAtch(SrRqstAtch srRqstAtch);
 	
+	//sr요청등록폼: 삽입한 요청 PK가져오기(첨부파일 업로드를 위함)
+	public String getAddSrRqstPk();
+	
 	//sr요청목록불러오기
 	public List<SrRqst> getSrRqstListByPager(Map<String, Object> map);
 

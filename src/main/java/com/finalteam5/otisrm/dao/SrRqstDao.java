@@ -18,10 +18,15 @@ public interface SrRqstDao {
 	
 	//sr요청등록폼: 개발부서에 따른 관련시스템 불러오기
 	public List<Sys> selectSysByDeptNo(String deptNo);	
+	
 	//sr요청등록폼: sr요청등록하기
 	public int insertSrRqst(SrRqstSubmit srRqstSubmit);
+	
 	//sr요청등록폼: sr요청 등록 첨부파일 업로드
 	public int insertSrRqstAtch(SrRqstAtch srRqstAtch);
+	
+	//sr요청등록폼: 삽입한 요청 PK가져오기(첨부파일 업로드를 위함)
+	public String selectAddSrRqstPk();
 	
 	//sr요청목록 불러오기: 페이지별로 sr요청 불러오기(고객사 홈)
 	public List<SrRqst> selectSrRqstListByPage(Map<String, Object> map);

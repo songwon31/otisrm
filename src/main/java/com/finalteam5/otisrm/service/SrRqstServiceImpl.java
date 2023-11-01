@@ -41,6 +41,14 @@ public class SrRqstServiceImpl implements SrRqstService{
 		int numOfInsert = srRqstDao.insertSrRqstAtch(srRqstAtch);
 		return numOfInsert;
 	}
+	
+	//삽입한 요청 PK가져오기(첨부파일 업로드를 위함)
+	@Override
+	public String getAddSrRqstPk() {
+		String addSrRqstPk = srRqstDao.selectAddSrRqstPk();
+		return addSrRqstPk;
+	}
+	
 	//sr요청목록 불러오기
 	@Override
 	public List<SrRqst> getSrRqstListByPager(Map<String, Object> map) {
@@ -77,6 +85,7 @@ public class SrRqstServiceImpl implements SrRqstService{
 	public List<String> getTotalSysNm() {
 		return srRqstDao.selectTotalSysNm();
 	}
+	
 	
 	
 }

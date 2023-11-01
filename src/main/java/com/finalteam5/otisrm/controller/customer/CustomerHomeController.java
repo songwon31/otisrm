@@ -90,7 +90,8 @@ public class CustomerHomeController {
 			SrRqstAtch srRqstAtch = new SrRqstAtch();
 			if(!file.isEmpty()) {
 				//첨부파일을 업로드한 sr요청 번호 
-	    		srRqstAtch.setSrRqstNo(srRqstSubmit.getSrRqstNo());
+				String srRqstPk = srRqstService.getAddSrRqstPk();
+	    		srRqstAtch.setSrRqstNo(srRqstPk);
 	    		//브라우저에서 선택한 파일 이름 설정
 	    		srRqstAtch.setSrRqstAtchNm(file.getOriginalFilename());
 	    		//파일의 형식(MIME타입)을 설정
