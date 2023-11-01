@@ -43,7 +43,10 @@ public interface SrRqstDao {
 	
 	//작성자: 이현주
 	//페이지별로 요청 불러오기(검토자 홈)
-	public List<SrRqstForReviewerHomeBoard> selectSrRqstForReviewerHomeBoardListByPage(Pager pager);
+	public List<SrRqstForReviewerHomeBoard> selectSrRqstForReviewerHomeBoardListByPage(Map<String, Object> params);
+	
+	//상태별 요청수 가져오기
+	public int countSrRqstBySttsNm(String srRqstSttNm);
 	
 	//전체 시스템 이름 가져오기
 	public List<String> selectTotalSysNm();

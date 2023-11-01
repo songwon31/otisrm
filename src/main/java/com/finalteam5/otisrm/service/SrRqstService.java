@@ -39,7 +39,10 @@ public interface SrRqstService {
 	
 	//작성자: 이현주
 	//요청목록불러오기(검토자 홈)
-	public List<SrRqstForReviewerHomeBoard> getSrRqstForReviewerHomeBoardListByPage(Pager pager);
+	public List<SrRqstForReviewerHomeBoard> getSrRqstForReviewerHomeBoardListByPage(Map<String, Object> params);
+	
+	//상태별 요청 수
+	public int getCountSrRqstBySttsNm(String srRqstSttNm);
 	
 	//전체 시스템 이름 가져오기
 	public List<String> getTotalSysNm();

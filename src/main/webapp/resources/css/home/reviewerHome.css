@@ -58,7 +58,7 @@ a, a:hover {
 }
 
 /* Button */
-#mainTablePaging a {
+#reviewerHomeMainTablePaging a {
 	font-size: 1.5rem;
 }
 
@@ -163,11 +163,11 @@ a, a:hover {
 }
 
 /* Table */
-#mainTable tbody tr {
+#reviewerHomeMainTable tbody tr {
 	border-bottom: 1px solid #e9ecef;
 }
 
-#mainTable tbody tr:hover {
+#reviewerHomeMainTable tbody tr:hover {
 	background-color: #f3f6fd;
 	cursor: pointer;
 }
@@ -176,11 +176,11 @@ a, a:hover {
 	text-align: left;
 }
 
-#mainTable thead th, #mainTable tbody tr {
+#reviewerHomeMainTable thead th, #reviewerHomeMainTable tbody tr {
 	text-align: center;
 }
 
-#mainTable thead {
+#reviewerHomeMainTable thead {
 	border-bottom: 1.5px solid #edf2f8;
 	border-left: none;
 	border-right: none;
@@ -316,5 +316,5 @@ select {
     width: 3rem;
     min-width: 3rem;
     border-radius: 6.25rem;
-    opacity: 0.5;
+    opacity: .5;
 }
