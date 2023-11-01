@@ -1,12 +1,21 @@
 package com.finalteam5.otisrm.controller.customer;
 
+import java.io.OutputStream;
+import java.net.URLEncoder;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.finalteam5.otisrm.dto.Pager;
 import com.finalteam5.otisrm.dto.srRequest.SrRqst;
+import com.finalteam5.otisrm.dto.srRequest.SrRqstAtch;
 import com.finalteam5.otisrm.service.SrRqstService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -25,6 +35,8 @@ import lombok.extern.slf4j.Slf4j;
 public class CustomerRestController {
 	@Autowired
     private SrRqstService srRqstService;
+	@Value("${file.upload.dir}")
+	private String fileUploadDir;
 	
 	//페이지 번호를 가져오기 위함
 	@GetMapping("getPageNo")
@@ -80,9 +92,41 @@ public class CustomerRestController {
 	
 	//요청에 해당하는 상세정보 불러오기
 	@GetMapping("getSrRqstBySrRqstNo")
-	public SrRqst getSrRqstBySrRqstNo(String srRqstNo, Model model) {
+	public SrRqst getSrRqstBySrRqstNo(String srRqstNo, Model model, HttpSession session) {
 		SrRqst srRqst = srRqstService.getSrRqstBySrRqstNo(srRqstNo);
+		List<SrRqstAtch> list = srRqstService.getSrRqstAtchBySrRqstNo(srRqstNo);
+		srRqst.setSrRqstAtchList(list);
 		model.addAttribute("srRqstNo", srRqstNo);
 		return srRqst;
 	}
+	
+	/*//첨부파일 다운로드
+	@PostMapping(value="/filedownload", produces="application/json; charset=UTF-8")
+	@ResponseBody
+	public SrRqstAtch filedownload(SrRqst srRqst) throws Exception{
+		List<SrRqstAtch> list = srRqst.getSrRqstAtchList();
+		for(SrRqstAtch srRqstAtch: list) {
+			//받은 파일을 영구적으로 저장하기
+			//실제 서버에 저장되는 파일 이름(중복이 되면 안됌)
+			String saveFilename = new Date().getTime() + "-" + srRqstAtch.getSrRqstAtchNm();
+		}
+		log.info("title: " + fileUpload.getTitle());
+		log.info("desc: " + fileUpload.getDesc());
+		log.info("originalFilename: " + fileUpload.getAttach().getOriginalFilename());
+		log.info("contentType: " + fileUpload.getAttach().getContentType());
+		log.info("file size: " + fileUpload.getAttach().getSize());
+		
+		//받은 파일을 영구적으로 저장하기
+		//실제 서버에 저장되는 파일 이름(중복이 되면 안됌)
+		String saveFilename = new Date().getTime() + "-" + fileUpload.getAttach().getOriginalFilename();
+		String saveFilepath = "C:/OTI/uploadfiles/" + saveFilename;
+		File file = new File(saveFilepath);
+		fileUpload.getAttach().transferTo(file);
+		
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("result", "success");
+		jsonObject.put("saveFilename", saveFilename);
+		String json = jsonObject.toString();
+		return json;
+	}*/
 }

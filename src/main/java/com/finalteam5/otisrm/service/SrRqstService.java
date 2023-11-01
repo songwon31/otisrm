@@ -32,7 +32,13 @@ public interface SrRqstService {
 
 	//sr요청에 해당하는 상세 정보 불러오기
 	public SrRqst getSrRqstBySrRqstNo(String srRqstNo);
-
+	
+	//sr요청 상세정보에 해당하는 첨부파일 불러오기
+	public List<SrRqstAtch> getSrRqstAtchBySrRqstNo(String srRqstNo);
+	
+	//sr첨부파일 번호에 해당하는 첨부파일 가져오기(파일 다운로드를 위함)
+	public SrRqstAtch getSrRqstAtchBySrRqstAtchNo(String srRqstAtchNo);
+	
 	//등록한 sr요청 수정하기
 	public void modifySrRqst(SrRqstSubmit srRqstSubmit);
     

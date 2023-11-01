@@ -23,11 +23,14 @@
 	       #{srRqstEmrgYn, jdbcType=VARCHAR}, #{srRqstRvwRsn, jdbcType=VARCHAR}, 'N'
     	)
 	</insert>
+	
+	<!-- 최근 삽입한 sr요청 불러오기(첨부파일 등록을 위함) -->
 	<select id="selectAddSrRqstPk" resultType="String">
 		select sr_rqst_no from (
 		  select * from sr_rqst order by sr_rqst_reg_dt desc
 		) where rownum = 1
 	</select>
+	
 	<!-- sr요청 등록 첨부파일 업로드 -->
 	<!-- PK는 트리거를 사용해서 null로 지정할  경우 자동으로 정해진 포멧으로 삽입됨 -->
 	<insert id="insertSrRqstAtch" parameterType="SrRqstAtch">
@@ -66,9 +69,7 @@
                 		REGEXP_REPLACE(LOWER(REPLACE(pg_name,' ','')), '[[:punct:]]', '') LIKE '%'||REGEXP_REPLACE(LOWER(REPLACE(#{keyword},' ','')), '[[:punct:]]', '')||'%'
                 	</where>
                	</if>	
-               	<if test='kind == null and kind == ""'>
-			    	order by sr_rqst_no desc
-				</if>	
+			    order by sr_rqst_reg_dt desc
 		    )
 		<![CDATA[
 			    where rownum <= #{endRowNo}
@@ -89,13 +90,23 @@
 
 	<!-- sr요청 상세 불러오기-->
 	<select id="selectSrRqstBySrRqstNo" parameterType="String" resultType="SrRqst">
-		select r.*, s.sys_nm, u.usr_nm, u.inst_no, i.inst_nm, q.sr_rqst_stts_nm 
+		select r.*, s.sys_nm, u.usr_nm, u.inst_no, i.inst_nm, q.sr_rqst_stts_nm
 		from sr_rqst r
 		join sys s on s.sys_no = r.sys_no 
 		join usr u on u.usr_no = r.sr_reqstr_no
 		join inst i on i.inst_no = u.inst_no
-		join sr_rqst_stts q on q.sr_rqst_stts_no = r.sr_rqst_stts_no
-		where sr_rqst_no=#{srRqstNo}	
+		join sr_rqst_stts q on q.sr_rqst_stts_no = r.sr_rqst_stts_no	
+		where r.sr_rqst_no=#{srRqstNo}	
+	</select>
+	
+	<!-- sr요청 상세에 해당하는 첨부파일 불러오기 -->
+	<select id="selectSrRqstAtchBySrRqstNo" parameterType="String" resultType="SrRqstAtch" >
+		select * from sr_rqst_atch where sr_rqst_no = #{srRqstNo}
+	</select>
+	
+	<!-- sr요청첨부파일 번호에 해당하는 첨부파일 불러오기 -->
+	<select id="selectSrRqstAtchBySrRqstAtchNo" parameterType="String" resultType="SrRqstAtch">
+		select * from sr_rqst_atch where sr_rqst_atch_no = #{srRqstAtchNo}
 	</select>
 	
 	<!-- 등록한 sr요청 수정 -->

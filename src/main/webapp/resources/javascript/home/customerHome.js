@@ -2,6 +2,7 @@ $(init)
 
 function init() {
 	 requestInsertDate();
+	 eventPreventSrRqstAtch();
 }
  
 var choiceSrRqstSttsNo = null;
@@ -25,6 +26,7 @@ $(document).ready(function() {
 	});	
   loadSRRequests(1, choiceSrRqstSttsNo); //페이지 로딩 시 초기 데이터 로드
   changePage(pageNo); 
+  
 });
 
 // 페이지 번호 변경 시 SR 요청 데이터 로드
@@ -73,7 +75,7 @@ function loadSRRequests(pageNo, choiceSrRqstSttsNo) {
 			 html += '	<td></td>';
 			 html += '	<td></td>';
 			 html += '	<td></td>';
-			 html += '	<td style="width:200px;">';
+			 html += '	<td style="width:190px;">';
 			 html += '		<p class="t2_nonMessage">해당 목록 결과가 없습니다.</p>';
 			 html += '	</td>';
 			 html += '	<td></td>';
@@ -99,11 +101,11 @@ function loadSRRequests(pageNo, choiceSrRqstSttsNo) {
     	  html += '	<td class="truncate-text" style="max-width: 67.56px;">' + item.srRqstSttsNm + '</td>';
     	  html += '	<td>'+ formattedDate +'</td>'
     	  html += '	<td>'+ item.srRqstEmrgYn +'</td>';
-    	  html += '	<td><button id="showSrRqstDetailBtn" type="button" class="btn-2" data-toggle="modal" data-target="#srRqstBySrNo" onclick="showSrRqstBySrRqstNo(\''+ item.srRqstNo +'\')">상세보기</button></td>';
+    	  html += '	<td><button type="button" id="showSrRqstDetailBtn" class="btn-2" data-toggle="modal" data-target="#srRqstBySrNo" onclick="showSrRqstBySrRqstNo(\''+ item.srRqstNo +'\')">상세보기</button></td>';
     	  html += '</tr>';
-    	  html +='<tr class="empty-tr" style="height: 100%;">';
-    	  html +='</tr>';
       });
+      html +='<tr class="empty-tr" style="height: 100%;">';
+      html +='</tr>';
       $("#getSrReqstListByPageNo").html(html);
       
       //데이터가 없을 경우 페이징 숨기기
@@ -124,6 +126,10 @@ function loadSRRequests(pageNo, choiceSrRqstSttsNo) {
   });
 }
 
+//Byte를 KB로 변환
+function bytesToKB(bytes) {
+    return (bytes / 1024).toFixed(2); // 소수점 두 자리까지 표시
+}
 //요청에 해당하는 상세 정보 모달
 function showSrRqstBySrRqstNo(choiceSrRqstNo){
 	console.log("상세클릭");
@@ -132,6 +138,7 @@ function showSrRqstBySrRqstNo(choiceSrRqstNo){
         url: "getSrRqstBySrRqstNo",
         data: {srRqstNo: choiceSrRqstNo},
         success: function(data) {
+        	$("#showSrRqstAtch").hide();
         	var date = new Date(data.srRqstRegDt);
         	console.log(data);
         	//저장버튼(로그인한 회원의 요청만 저장버튼 활성화)
@@ -157,8 +164,36 @@ function showSrRqstBySrRqstNo(choiceSrRqstNo){
         	$("#srRqst-srPrps").val(data.srPrps);
         	$("#srRqst-srConts").val(data.srConts);
         	$("#srRqst-srRqstRegDt").val(formattedDate);
-        	
         	//첨부파일
+        	if (data.srRqstAtchList && typeof data.srRqstAtchList === "object") {
+        	    // data.srRqstAtchList는 객체일 때
+        	    const keys = Object.keys(data.srRqstAtchList);
+        	    if (keys.length !== 0) {
+        	        let html = "";
+        	        for (const key of keys) {
+        	            const srRqstAtch = data.srRqstAtchList[key];
+        	            console.log(srRqstAtch);
+        	            if (srRqstAtch && srRqstAtch.srRqstNo === data.srRqstNo) {
+        	                $("#showSrRqstAtch").show();
+        	                console.log("같음");
+        	                var size = bytesToKB(srRqstAtch.srRqstAtchSize);
+        	                html += '<a href="filedownload2?srRqstAtchNo='+ srRqstAtch.srRqstAtchNo +'" class="d-flex srRqstAtchWrap">';
+        	                html += '    <div>';
+        	                html += '    	<i class="material-icons atch-ic">download</i>';
+        	                html += '    </div>';
+        	                html += '    <div id="' + srRqstAtch.srRqstAtchNo + '" class="srRqstAtch p-1">' + srRqstAtch.srRqstAtchNm + ' (' + size + 'KB)</div>';
+        	                html += '</a>';
+        	            }
+        	        }
+        	        $("#showSrRqstAtch").html(html);
+        	    } else {
+        	        // srRqstAtchList가 객체지만 아무 항목도 없을 때
+        	        $("#showSrRqstAtch").hide();
+        	    }
+        	} else {
+        	    // srRqstAtchList가 객체가 아닐 때
+        	    $("#showSrRqstAtch").hide();
+        	}
         	if (data.srRqstEmrgYn === "Y") {
         	    $("#srRqst-importantChk").prop("checked", true);
         	    submitSrRqst();
@@ -171,6 +206,18 @@ function showSrRqstBySrRqstNo(choiceSrRqstNo){
           console.log(error);
         }
     });
+}
+//a태그 클릭시 폼 제출 막기
+function eventPreventSrRqstAtch(){
+	// 해당 클래스를 가진 모든 요소를 찾기
+	var links = document.querySelectorAll(".srRqstAtchWrap");
+
+	// 각 링크에 클릭 이벤트 리스너 추가
+	for (var i = 0; i < links.length; i++) {
+	    links[i].addEventListener("click", function(event) {
+	        event.preventDefault(); // 폼 제출을 막음
+	    });
+	}
 }
 
 //부서번호에 해당하는 관련시스템 목록
@@ -224,21 +271,21 @@ function submitSrRqst(){
 	    method: "POST",
 	    data: formData, // 폼 데이터를 전송
 	    success: function (data) {
-	    	 alert("삽입");
 	    	 console.log(data);
+	    	 loadSRRequests(pageNo, choiceSrRqstSttsNo);
 	        // 성공적으로 요청이 완료된 경우 실행할 코드
 	        var currentURL = window.location.href;
 	        console.log(currentURL);
 	        window.location.href = "/home"; // 또는 다른 원하는 URL로 변경
+	        
 	    },
 	    error: function (error) {
-	    	 alert("삽ㄴ입 실패");
 	        // 요청 중 오류가 발생한 경우 실행할 코드
 	        console.error("으어아으우어");
 	    },
-	    cache: false,
-	    processData: false, // 필수: 데이터를 query 문자열로 변환하지 않도록 설정
-        contentType: false, // 필수: 데이터 유형을 false로 설정하여 컨텐츠 유형 헤더를 설정하지 않도록 설정
+	    cache: false,        //파일이 포함되어 있으니, 브라우저 메모리에 저장하지 마라
+	    processData: false,  //title=xxx&desc=yyy& 씩으로 만들지 마라
+	    contentType: false,   //파트마다 Content-Type이 포함되기 때문에 따로 헤더에 Content-Type에 추가하지 마라(mutiple-> 파일마다 모두 다름)
 	});
 }
 

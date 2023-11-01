@@ -68,6 +68,19 @@ public class SrRqstServiceImpl implements SrRqstService{
 		return srRqst;
 	}
 	
+	//sr요청 상세 정보에 해당하는 첨부파일 불러오기
+	@Override
+	public List<SrRqstAtch> getSrRqstAtchBySrRqstNo(String srRqstNo) {
+		List<SrRqstAtch> list = srRqstDao.selectSrRqstAtchBySrRqstNo(srRqstNo);
+		return list;
+	}
+	
+	@Override
+	public SrRqstAtch getSrRqstAtchBySrRqstAtchNo(String srRqstAtchNo) {
+		SrRqstAtch srRqstAtch = srRqstDao.selectSrRqstAtchBySrRqstAtchNo(srRqstAtchNo);
+		return srRqstAtch;
+	}
+	
 	//등록한 sr요청 수정하기
 	@Override
 	public void modifySrRqst(SrRqstSubmit srRqstSubmit) {
@@ -85,7 +98,5 @@ public class SrRqstServiceImpl implements SrRqstService{
 	public List<String> getTotalSysNm() {
 		return srRqstDao.selectTotalSysNm();
 	}
-	
-	
 	
 }

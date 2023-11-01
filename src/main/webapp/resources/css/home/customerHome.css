@@ -42,6 +42,15 @@
 	height:4rem; 
 	line-height: 4rem;
 }
+.stt-ic{
+	font-size:2rem; 
+	height:3rem; 
+	line-height: 3rem;
+}
+.atch-ic{
+	font-size:2rem;
+	color: #666d75;
+}
 
 /* subTitle */
 .subcontentTitle{
@@ -52,12 +61,6 @@
 }
 .st-ct{
 	vertical-align: center;
-}
-/* icon */
-.stt-ic{
-	font-size:2rem; 
-	height:3rem; 
-	line-height: 3rem;
 }
 
 /* 페이지 내용 */
@@ -71,8 +74,10 @@
 	 border: 1px solid red;
 	 padding: 1rem;
 }
-
-
+.srRqstAtchWrap{
+	width: 555.41px;
+	cursor: pointer;
+}
 /* Table */
 #mainTable{
 	background-color: #f9fafe;
@@ -80,6 +85,7 @@
 #mainTable thead{
 	border: 1.5px solid #e9ecef;
 	background-color: #f9fafe;
+	height: 4.3rem;
 }
 #mainTable thead tr{
 	height: 5rem; 
@@ -136,6 +142,7 @@
 .col-max-width {
     max-width: 100%; /* 최대 너비 설정 (col 요소의 너비에 따라 조정) */
 }
+
 /* button */
 #requestAddBtnWrap{
 	margin-left:50px;

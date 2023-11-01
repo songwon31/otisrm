@@ -283,7 +283,7 @@
 			          <label for="systemName" class="form-label modal-input">첨부파일</label>
 			        </div>
 			        <div style="width: 500px;">
-			        	 <input id="file" type="file" name="file" class="form-control" >
+			        	 <input id="file" type="file" name="file">
 			        </div>
 			        <div>
 			        	<input id="importantChk" type="checkbox" onclick="isImportendChecked()"><span> 중요</span>
@@ -312,7 +312,7 @@
         <i class="material-icons close-icon" data-dismiss="modal" style="cursor: pointer;">close</i>
       </div>
       <div class="modal-body">
-      	<form id="modifySrRqst" action="modifySrRqst" method="post">
+      	<form id="modifySrRqst" action="modifySrRqst" method="post" enctype="multipart/form-data">
       		<!-- SR요청정보 -->
       		<h6 class="modal-sub-title">SR요청등록</h6>
       		<div class="card p-3 mb-4">
@@ -386,11 +386,16 @@
 			          <label for="systemName" class="form-label modal-input">첨부파일</label>
 			        </div>
 			        <div style="width: 500px;">
-			          <input type="file" class="" id="systemName" multiple disabled>
+			          <input type="file" id="file" name=file multiple>	
 			        </div>
 			        <div>
 			        	<input id="srRqst-importantChk" type="checkbox" onclick="isImportendChecked2()"><span> 중요</span>
 			        </div>
+			    </div>
+			    <div class="d-flex w-100 pt-2">
+			    	<div style="width: 113.9px;"></div>
+			    	<div id="showSrRqstAtch">
+			    	</div>
 			    </div>
 			</div>
       	</div>

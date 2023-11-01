@@ -1,6 +1,7 @@
 package com.finalteam5.otisrm.dto.srRequest;
 
 import java.util.Date;
+import java.util.List;
 
 import lombok.Data;
 
@@ -22,6 +23,7 @@ public class SrRqst {
 	private String srRqstEmrgYn;	//중요여부
 	private String srRqstRvwRsn;	//검토사유
 	private String srRqstVldYn;		//sr요청 유효성(삭제여부)
-	//첨부파일 번호
-	private String srRqstAtchNo;	
+	
+	//첨부파일 
+	private List<SrRqstAtch> srRqstAtchList;
 }
