@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.finalteam5.otisrm.dao.SrRqstDao;
-import com.finalteam5.otisrm.dto.Pager;
 import com.finalteam5.otisrm.dto.Sys;
 import com.finalteam5.otisrm.dto.srRequest.SrRqst;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstAtch;
@@ -90,9 +89,15 @@ public class SrRqstServiceImpl implements SrRqstService{
 	//작성자: 이현주 
 	//요청목록 불러오기(검토자 홈)
 	@Override
-	public List<SrRqstForReviewerHomeBoard> getSrRqstForReviewerHomeBoardListByPage(Pager pager) {
-		return srRqstDao.selectSrRqstForReviewerHomeBoardListByPage(pager);
+	public List<SrRqstForReviewerHomeBoard> getSrRqstForReviewerHomeBoardListByPage(Map<String, Object> params) {
+		return srRqstDao.selectSrRqstForReviewerHomeBoardListByPage(params);
 	}
+	//상태별 요청수
+	@Override
+	public int getCountSrRqstBySttsNm(String srRqstSttNm) {
+		return srRqstDao.countSrRqstBySttsNm(srRqstSttNm);
+	}
+	
 	//전체 시스템 이름 가져오기
 	@Override
 	public List<String> getTotalSysNm() {
