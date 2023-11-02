@@ -9,7 +9,7 @@ public class SrTrnsfPlanForm {
 	private String srNo;
 	private String deptNm;
 	private String usrNm;
-	private Date srTrgtBgngDt;
-	private Date srTrgtCmptnDt;
+	private String srTrgtBgngDt;
+	private String srTrgtCmptnDt;
 	private String srTrnsfNote;
 }

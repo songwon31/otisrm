@@ -597,6 +597,25 @@ function editSrTrnsfPlan() {
 		url: "/otisrm/editSrTrnsfPlan",
 		data: requestData,
 		success: function(data) {
+			refactorMainTable(mainTableFilter, currentPageNo);
+			setSrDetail(srNo);
+		}
+	});
+}
+
+//HR수정 모달
+function showSetHrModal() {
+	let srNo = currentDetailSrNo
+	
+	let requestData = {
+		srNo: srNo
+    };
+	
+	$.ajax({
+		type: "POST",
+		url: "/otisrm/showSetHrModal",
+		data: requestData,
+		success: function(data) {
 			
 		}
 	});

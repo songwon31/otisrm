@@ -266,4 +266,28 @@
 		WHERE rnum >= #{pager.startRowNo}
 		]]>
 	</select>
+	
+	<!-- sr이관 계획 수정 -->
+	<select id="selectDeptNoByDeptNmAndSrNo" parameterType="map" resultType="String">
+		SELECT dept_no
+		FROM sr
+		JOIN dept ON dept.inst_no = sr_trnsf_inst_no
+		WHERE sr.sr_no = #{srNo} AND dept.dept_nm = #{deptNm}
+	</select>
+	
+	<select id="selectUsrNoByUsrNm" parameterType="String" resultType="String">
+		SELECT usr_no
+		FROM usr
+		WHERE usr_nm = #{usrNm}
+	</select>
+	
+	<update id="updateSrTrnsfPlan" parameterType="com.finalteam5.otisrm.dto.SrTrnsfPlan">
+		UPDATE sr_trnsf_plan
+		SET dept_no = #{deptNo},
+			usr_no = #{usrNo},
+			sr_trgt_bgng_dt = #{srTrgtBgngDt},
+			sr_trgt_cmptn_dt = #{srTrgtCmptnDt},
+			sr_trnsf_note = #{srTrnsfNote, jdbcType=VARCHAR}
+		WHERE sr_no = #{srNo}
+	</update>
 </mapper>

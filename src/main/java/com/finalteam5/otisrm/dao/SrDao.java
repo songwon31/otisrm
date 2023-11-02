@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Param;
 import com.finalteam5.otisrm.dto.Pager;
 import com.finalteam5.otisrm.dto.SrDmndClsf;
 import com.finalteam5.otisrm.dto.SrTaskClsf;
+import com.finalteam5.otisrm.dto.SrTrnsfPlan;
 import com.finalteam5.otisrm.dto.sr.SrForDeveloperHomeBoard;
 import com.finalteam5.otisrm.dto.sr.SrPrgrsForDeveloperHome;
 import com.finalteam5.otisrm.dto.sr.SrRequestDetailForDeveloperHome;
@@ -47,4 +48,9 @@ public interface SrDao {
 			@Param("usrId") String usrId, @Param("deptNo") String deptNo, @Param("usrNm") String usrNm);
 	public List<SrTrnsfFindPicModalUsrInfo> selectSrTrnsfFindPicModalCompose(
 			@Param("usrId") String usrId, @Param("deptNo") String deptNo, @Param("usrNm") String usrNm, @Param("pager") Pager pager);
+	
+	//sr 이관 계획 수정
+	public String selectDeptNoByDeptNmAndSrNo(@Param("deptNm") String deptNm, @Param("srNo") String srNo);
+	public String selectUsrNoByUsrNm(String usrNm);
+	public int updateSrTrnsfPlan(SrTrnsfPlan srTrnsfPlan);
 }

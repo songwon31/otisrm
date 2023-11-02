@@ -113,7 +113,14 @@ public class DeveloperHomeController {
 	@PostMapping("/editSrTrnsfPlan")
 	@ResponseBody
 	public String editSrTrnsfPlan(SrTrnsfPlanForm srTrnsfPlanForm) {
-		
+		srService.editSrTrnsfPlan(srTrnsfPlanForm);
+		return "success";
+	}
+	
+	//자원관리 모달 구성
+	@PostMapping("/showSetHrModal")
+	@ResponseBody
+	public String showSetHrModal(@RequestParam("srNo") String srNo) {
 		return "success";
 	}
 	

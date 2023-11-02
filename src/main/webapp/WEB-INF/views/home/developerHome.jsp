@@ -164,12 +164,8 @@
 				<div id="srProgressBtnDiv" style="display:flex; line-height:3rem; justify-content:flex-end; align-items:center; width:40%; border-bottom: 1.5px solid #edf2f8;">
 					<a data-toggle="modal" data-target="#srPlanInfoEditModal" onclick="showSrPlanInfoEditModal()" class="srProgressBtn srPlanBtn" href="javascript:void(0)" 
 						style="pointer-events: none; height: 2.5rem; width: 5rem; border: 1px solid gray; border-radius: 5px; display: flex; flex-direction: row; justify-content: center; align-items: center;">수정</a> 
-					<a class="srProgressBtn srHrBtn" href="javascript:void(0)" 
-						style="pointer-events: none; height: 2.5rem; width: 5rem; border: 1px solid gray; border-radius: 5px; display: none; flex-direction: row; justify-content: center; align-items: center;">추가</a> 
-					<a class="srProgressBtn srHrBtn" href="javascript:void(0)" 
-						style="pointer-events: none; height: 2.5rem; width: 8rem; border: 1px solid gray; border-radius: 5px; display: none; flex-direction: row; justify-content: center; align-items: center; margin-left: 0.5rem;">선택삭제</a> 
-					<a class="srProgressBtn srHrBtn" href="javascript:void(0)" 
-						style="pointer-events: none; height: 2.5rem; width: 5rem; border: 1px solid gray; border-radius: 5px; display: none; flex-direction: row; justify-content: center; align-items: center; margin-left: 0.5rem;">저장</a>
+					<a data-toggle="modal" data-target="#setHrModal" onclick="showSetSrHrModal()" class="srProgressBtn srHrBtn" href="javascript:void(0)" 
+						style="pointer-events: none; height: 2.5rem; width: 5rem; border: 1px solid gray; border-radius: 5px; display: none; flex-direction: row; justify-content: center; align-items: center;">수정</a> 
 					<a class="srProgressBtn srPrgrsBtn" href="javascript:void(0)" 
 						style="pointer-events: none; height: 2.5rem; width: 5rem; border: 1px solid gray; border-radius: 5px; display: none; flex-direction: row; justify-content: center; align-items: center;">저장</a> 
 				</div>
@@ -443,7 +439,7 @@
 							</textarea>
 						</div>
 					<div style="height:4rem; display: flex; flex-direction: row; align-items:center; justify-content:flex-end;">
-						<a href="javascript:void(0)"
+						<a href="javascript:void(0)" onclick="editSrTrnsfPlan()"
 							style="height: 3rem; width: 5rem; border-radius: 5px; background-color:#222e3c; color:white; font-weight:700; margin-right:0.5rem;
 							display: flex; flex-direction: row; justify-content: center; align-items: center;">저장</a>
 						<a href="javascript:void(0)" data-dismiss="modal"
@@ -462,6 +458,181 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<div class="modal-title" style="font-size:2rem; font-weight:700;">담당자 검색</div>
+				<i class="material-icons close-icon" data-dismiss="modal" style="cursor: pointer;">close</i>
+			</div>
+			<div class="modal-body" style="margin:0px; padding:0px; font-size:1.5rem;">
+				<div id="srPlanInfoFindPic">
+					<div id="srPlanInfoFindPicSearchDiv" style="margin:0.5rem; padding:0.5rem; border: 1px solid #222e3c; border-radius:5px;">
+						<div style="height: 4rem; display: flex; flex-direction: row;">
+							<div style="height: 4rem; width: 10%; padding-left: 0.5rem; display: flex; align-items: center;">
+								<svg style="width:0.5rem; height:0.5rem; margin: 0rem 0.5rem;"><rect width="0.5rem" height="0.5rem" fill="#222E3C" /></svg>
+								처리팀
+							</div>
+							<div style="height: 4rem; width: 25%; display: flex; align-items: center;">
+								<select id="findPicModalDeptSelect" name="modalRqstSelect" style="width:70%; height:3rem; margin:0rem 0.5rem;">
+									<option value="" selected>선택</option>
+								</select>
+							</div>
+							<div style="height: 4rem; width: 10%; padding-left: 0.5rem; display: flex; align-items: center;">
+								<svg style="width:0.5rem; height:0.5rem; margin: 0rem 0.5rem;"><rect width="0.5rem" height="0.5rem" fill="#222E3C" /></svg>
+								담당자
+							</div>
+							<div style="height: 4rem; width: 25%; display: flex; align-items: center;">
+								<input id="findPicModalPicInput" value="" style="width:70%; height:3rem; margin:0rem 0.5rem;">
+							</div>
+							<div style="height:4rem; flex-grow:1; display:flex; justify-content:flex-end; align-items:center;">
+								<a href="javascript:void(0)" onclick="composeFindPicModalTable(1)"
+									style="height: 3rem; width: 5rem; border-radius: 5px; background-color:#2c7be4; color:white; font-weight:700; margin-right:0.5rem;
+									display: flex; flex-direction: row; justify-content: center; align-items: center;">검색</a>
+							</div>
+						</div>
+					</div>
+					<div style="display: flex; flex-direction: column; justify-contents:center; margin:0 0 0 0.5rem;">
+						<span style="font-size:1.6rem; font-weight:700;">조회결과</span>
+						<div style="height:27rem; background-color:#f9fafe; margin:0.5rem;">
+							<table id="findPicModalTable" style="width: 100%; text-align: center; border-radius:5px;">
+								<colgroup>
+									<col width="20%"/>
+									<col width="20%"/>
+									<col width="20%"/>
+									<col width="20%"/>
+									<col width="20%"/>
+								</colgroup>
+								<thead>
+									<tr style="height: 4.3rem; font-size: 1.5rem; font-weight: 700;">
+										<th scope="col">소속팀</th>
+										<th scope="col">직책</th>
+										<th scope="col">직위</th>
+										<th scope="col">이름</th>
+										<th scope="col">선택</th>
+									</tr>
+								</thead>
+								<tbody>
+									
+								</tbody>
+							</table>
+						</div>
+						<div id="findPicModalTablePagerDiv" style="height: 4.5rem; font-size: 1.6rem; display: flex; flex-direction: row; justify-content: center; align-items: center;">
+							
+						</div>
+						<div style="height:4rem; display: flex; flex-direction: row; align-items:center; justify-content:flex-end;">
+							<a href="javascript:void(0)" onclick="editSrTrnsfPlan()"
+								style="height: 3rem; width: 5rem; border-radius: 5px; background-color:#222e3c; color:white; font-weight:700; margin-right:0.5rem;
+								display: flex; flex-direction: row; justify-content: center; align-items: center;">저장</a>
+							<a href="javascript:void(0)" data-dismiss="modal"
+								style="height: 3rem; width: 5rem; border-radius: 5px; background-color:red; color:white; font-weight:700; margin-right:0.5rem;
+								display: flex; flex-direction: row; justify-content: center; align-items: center; cursor: pointer;">닫기</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- SR계획 이관 협력사 담당자 수정 모달 -->
+<div id="setHrModal" class="modal" data-backdrop="static">
+	<div class="modal-dialog modal-dialog-centered modal-sm" style="width:100rem;">
+		<div class="modal-content">
+			<div class="modal-header">
+				<div class="modal-title" style="font-size:2rem; font-weight:700;">SR자원정보</div>
+				<i class="material-icons close-icon" data-dismiss="modal" style="cursor: pointer;">close</i>
+			</div>
+			<div class="modal-body" style="margin:0px; padding:0px; font-size:1.5rem;">
+				<div id="srPlanInfoFindPic">
+					<div style="height: 4rem; display: flex; flex-direction: row; margin-top:0.5rem;">
+						<div style="height: 4rem; width: 20%; padding-left: 0.5rem; display: flex; align-items: center;">
+							<svg style="width:0.5rem; height:0.5rem; margin: 0rem 0.5rem;"><rect width="0.5rem" height="0.5rem" fill="#222E3C" /></svg>
+							<span style="font-size:1.6rem; font-weight:700;">처리팀</span>
+						</div>
+						<div style="height: 4rem; width: 40%; display: flex; align-items: center;">
+							<input id="setHrModalDeptInput" disabled value="" style="width:100%; height:3rem; margin:0rem 1rem;">
+						</div>
+					</div>
+					<div style="display: flex; flex-direction: column; justify-contents:center; margin:0 0 0 0.5rem;">
+						<!-- <span style="font-size:1.6rem; font-weight:700;">HR관리</span> -->
+						<div style="background-color:#f9fafe; margin:0.5rem;">
+							<table id="setHrModalTable" style="width: 100%; text-align: center; border-radius:5px;">
+								<colgroup>
+									<col width="40%"/>
+									<col width="60%"/>
+								</colgroup>
+								<thead>
+									<tr style="height: 4.3rem; font-size: 1.5rem; font-weight: 700;">
+										<th scope="col">작업</th>
+										<th scope="col">담당자</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr style="height:4rem; font-size:1.6rem; background-color:white;">
+										<td>분석</td>
+										<td style="height:4rem; display:flex; flex-direction:row; justify-content:center; align-items:center;">
+											<input id="findPicModalPicInput" disabled value="" style="width:50%; height:3rem; margin:0rem 0.5rem;">
+											<a data-toggle="modal" data-target="#setHrFindPicModal" onclick="showSetHrModal()" href="javascript:void(0)" 
+												style="height: 3rem; width: 20%; border-radius: 5px; background-color:#2c7be4; color:white; font-weight:700; 
+												display: flex; flex-direction: row; justify-content: center; align-items: center;">찾기</a>
+										</td>
+									</tr>
+									<tr style="height:4rem; font-size:1.6rem; background-color:white;">
+										<td>설계</td>
+										<td  style="height:4rem; display:flex; flex-direction:row; justify-content:center; align-items:center;">
+											<input id="findPicModalPicInput" disabled value="" style="width:50%; height:3rem; margin:0rem 0.5rem;">
+											<a data-toggle="modal" data-target="#setHrFindPicModal" onclick="showSetHrModal()" href="javascript:void(0)" 
+												style="height: 3rem; width: 20%; border-radius: 5px; background-color:#2c7be4; color:white; font-weight:700; 
+												display: flex; flex-direction: row; justify-content: center; align-items: center;">찾기</a> 
+										</td>	
+									</tr>
+									<tr style="height:4rem; font-size:1.6rem; background-color:white;">
+										<td>구현</td>
+										<td style="height:4rem; display:flex; flex-direction:row; justify-content:center; align-items:center;">
+											<input id="findPicModalPicInput" disabled value="" style="width:50%; height:3rem; margin:0rem 0.5rem;">
+											<a data-toggle="modal" data-target="#setHrFindPicModal" onclick="showSetHrModal()" href="javascript:void(0)" 
+												style="height: 3rem; width: 20%; border-radius: 5px; background-color:#2c7be4; color:white; font-weight:700; 
+												display: flex; flex-direction: row; justify-content: center; align-items: center;">찾기</a> 
+										</td>
+									</tr>
+									<tr style="height:4rem; font-size:1.6rem; background-color:white;">
+										<td>시험</td>
+										<td style="height:4rem; display:flex; flex-direction:row; justify-content:center; align-items:center;">
+											<input id="findPicModalPicInput" disabled value="" style="width:50%; height:3rem; margin:0rem 0.5rem;">
+											<a data-toggle="modal" data-target="#setHrFindPicModal" onclick="showSetHrModal()" href="javascript:void(0)" 
+												style="height: 3rem; width: 20%; border-radius: 5px; background-color:#2c7be4; color:white; font-weight:700; 
+												display: flex; flex-direction: row; justify-content: center; align-items: center;">찾기</a> 
+										</td>
+									</tr>
+									<tr style="height:4rem; font-size:1.6rem; background-color:white;">
+										<td>반영요청</td>
+										<td style="height:4rem; display:flex; flex-direction:row; justify-content:center; align-items:center;">
+											<input id="findPicModalPicInput" disabled value="" style="width:50%; height:3rem; margin:0rem 0.5rem;">
+											<a data-toggle="modal" data-target="#setHrFindPicModal" onclick="showSetHrModal()" href="javascript:void(0)" 
+												style="height: 3rem; width: 20%; border-radius: 5px; background-color:#2c7be4; color:white; font-weight:700; 
+												display: flex; flex-direction: row; justify-content: center; align-items: center;">찾기</a> 
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<div style="height:4rem; display: flex; flex-direction: row; align-items:center; justify-content:flex-end;">
+							<a href="javascript:void(0)" onclick="editSrTrnsfPlan()"
+								style="height: 3rem; width: 5rem; border-radius: 5px; background-color:#222e3c; color:white; font-weight:700; margin-right:0.5rem;
+								display: flex; flex-direction: row; justify-content: center; align-items: center;">저장</a>
+							<a href="javascript:void(0)" data-dismiss="modal"
+								style="height: 3rem; width: 5rem; border-radius: 5px; background-color:red; color:white; font-weight:700; margin-right:0.5rem;
+								display: flex; flex-direction: row; justify-content: center; align-items: center; cursor: pointer;">닫기</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- HR 담당자 선택 모달 -->
+<div id="setHrFindPicModal" class="modal" data-backdrop="static">
+	<div class="modal-dialog modal-dialog-centered modal-lg" style="width:100rem;">
+		<div class="modal-content">
+			<div class="modal-header">
+				<div class="modal-title" style="font-size:2rem; font-weight:700;">HR검색</div>
 				<i class="material-icons close-icon" data-dismiss="modal" style="cursor: pointer;">close</i>
 			</div>
 			<div class="modal-body" style="margin:0px; padding:0px; font-size:1.5rem;">

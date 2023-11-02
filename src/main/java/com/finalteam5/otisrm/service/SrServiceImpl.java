@@ -1,5 +1,6 @@
 package com.finalteam5.otisrm.service;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,8 +9,8 @@ import org.springframework.stereotype.Service;
 
 import com.finalteam5.otisrm.dao.SrDao;
 import com.finalteam5.otisrm.dto.Pager;
-import com.finalteam5.otisrm.dto.SrDmndClsf;
-import com.finalteam5.otisrm.dto.SrTaskClsf;
+import com.finalteam5.otisrm.dto.SrTrnsfPlan;
+import com.finalteam5.otisrm.dto.SrTrnsfPlanForm;
 import com.finalteam5.otisrm.dto.sr.SrForDeveloperHomeBoard;
 import com.finalteam5.otisrm.dto.sr.SrPrgrsForDeveloperHome;
 import com.finalteam5.otisrm.dto.sr.SrPrgrsPicForDeveloperHome;
@@ -20,7 +21,6 @@ import com.finalteam5.otisrm.dto.sr.SrTrnsfFindPicModalUsrInfo;
 import com.finalteam5.otisrm.dto.sr.SrTrnsfInfoForDeveloperHome;
 import com.finalteam5.otisrm.dto.sr.SrTrnsfPlanModalCompose;
 import com.finalteam5.otisrm.dto.usr.Dept;
-import com.finalteam5.otisrm.dto.usr.Usr;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -156,5 +156,28 @@ public class SrServiceImpl implements SrService{
 		srTrnsfFindPicModalCompose.setPager(pager);
 		srTrnsfFindPicModalCompose.setUsrList(usrList);
 		return srTrnsfFindPicModalCompose;
+	}
+	
+	//sr이관 계획 정보 수정
+	@Override
+	public int editSrTrnsfPlan(SrTrnsfPlanForm srTrnsfPlanForm) {
+		SrTrnsfPlan srTrnsfPlan = new SrTrnsfPlan();
+		srTrnsfPlan.setSrNo(srTrnsfPlanForm.getSrNo());
+		srTrnsfPlan.setDeptNo(srDao.selectDeptNoByDeptNmAndSrNo(srTrnsfPlanForm.getDeptNm(), srTrnsfPlanForm.getSrNo()));
+		srTrnsfPlan.setUsrNo(srDao.selectUsrNoByUsrNm(srTrnsfPlanForm.getUsrNm()));
+		
+		 // SimpleDateFormat을 사용하여 문자열을 Date로 변환
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        
+        try {
+        	srTrnsfPlan.setSrTrgtBgngDt(dateFormat.parse(srTrnsfPlanForm.getSrTrgtBgngDt()));
+        	srTrnsfPlan.setSrTrgtCmptnDt(dateFormat.parse(srTrnsfPlanForm.getSrTrgtCmptnDt()));
+        } catch(Exception e) {
+        	e.printStackTrace();
+        }
+        
+        srTrnsfPlan.setSrTrnsfNote(srTrnsfPlanForm.getSrTrnsfNote());
+        
+		return srDao.updateSrTrnsfPlan(srTrnsfPlan);
 	}
 }

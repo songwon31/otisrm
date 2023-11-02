@@ -3,6 +3,7 @@ package com.finalteam5.otisrm.service;
 import java.util.List;
 
 import com.finalteam5.otisrm.dto.Pager;
+import com.finalteam5.otisrm.dto.SrTrnsfPlanForm;
 import com.finalteam5.otisrm.dto.sr.SrForDeveloperHomeBoard;
 import com.finalteam5.otisrm.dto.sr.SrRequestDetailForDeveloperHome;
 import com.finalteam5.otisrm.dto.sr.SrTableElementsForDeveloperHome;
@@ -31,4 +32,7 @@ public interface SrService {
 	public List<Dept> getDeptListByUsrId(String usrId);
 	//담당자 선택 모달 테이블 구성
 	public SrTrnsfFindPicModalCompose getSrTrnsfFindPicModalCompose(String usrId, String deptNo, String usrNm, int pageNo);
+	
+	//sr이관 계획 정보 수정
+	public int editSrTrnsfPlan(SrTrnsfPlanForm srTrnsfPlanForm);
 }
