@@ -12,11 +12,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.finalteam5.otisrm.dto.SrTrnsfPlanForm;
+import com.finalteam5.otisrm.dto.sr.SrPrgrsForm;
 import com.finalteam5.otisrm.dto.sr.SrRequestDetailForDeveloperHome;
 import com.finalteam5.otisrm.dto.sr.SrTableElementsForDeveloperHome;
 import com.finalteam5.otisrm.dto.sr.SrTrnsfFindPicModalCompose;
 import com.finalteam5.otisrm.dto.sr.SrTrnsfInfoForDeveloperHome;
 import com.finalteam5.otisrm.dto.sr.SrTrnsfPlanModalCompose;
+import com.finalteam5.otisrm.dto.sr.SrTrnsfPrgrsPic;
+import com.finalteam5.otisrm.dto.sr.SrTrnsfSetHrModalCompose;
 import com.finalteam5.otisrm.dto.usr.Dept;
 import com.finalteam5.otisrm.dto.usr.Usr;
 import com.finalteam5.otisrm.security.UsrDetails;
@@ -106,7 +109,6 @@ public class DeveloperHomeController {
 		if (usrNm.equals("")) {
 			usrNm = null;
 		}
-		log.info("in");
 		return srService.getSrTrnsfFindPicModalCompose(usr.getUsrId(), deptNo, usrNm, pageNo);
 	}
 	
@@ -120,8 +122,44 @@ public class DeveloperHomeController {
 	//자원관리 모달 구성
 	@PostMapping("/showSetHrModal")
 	@ResponseBody
-	public String showSetHrModal(@RequestParam("srNo") String srNo) {
+	public SrTrnsfSetHrModalCompose showSetHrModal(@RequestParam("srNo") String srNo) {
+		return srService.getSrTrnsfSetHrModalCompose(srNo);
+	}
+	
+	@PostMapping("/getDeptNoByDeptNm")
+	@ResponseBody
+	public String getDeptNoByDeptNm(@RequestParam("deptNm") String deptNm, @RequestParam("srNo") String srNo) {
+		return srService.getDeptNoByDeptNm(deptNm, srNo);
+	}
+	
+	@PostMapping("/updateSrPrgrs")
+	@ResponseBody
+	public String updateSrPrgrs(SrTrnsfPrgrsPic srTrnsfPrgrsPic) {
+		if (srTrnsfPrgrsPic.getAnalysisPicNm().equals("")) {
+			srTrnsfPrgrsPic.setAnalysisPicNm(null);
+		} 
+		if (srTrnsfPrgrsPic.getDesignPicNm().equals("")) {
+			srTrnsfPrgrsPic.setDesignPicNm(null);
+		}
+		if (srTrnsfPrgrsPic.getImplementPicNm().equals("")) {
+			srTrnsfPrgrsPic.setImplementPicNm(null);
+		}
+		if (srTrnsfPrgrsPic.getTestPicNm().equals("")) {
+			srTrnsfPrgrsPic.setTestPicNm(null);
+		}
+		if (srTrnsfPrgrsPic.getApplyRequestPicNm().equals("")) {
+			srTrnsfPrgrsPic.setApplyRequestPicNm(null);
+		}
+		log.info(""+srTrnsfPrgrsPic);
+		srService.updateSrPrgrs(srTrnsfPrgrsPic);
 		return "success";
 	}
 	
+	@PostMapping("/updateSrTrnsfPrgrs")
+	@ResponseBody
+	public String updateSrTrnsfPrgrs(SrPrgrsForm srPrgrsForm) {
+		srService.updateSrTrnsfPrgrs(srPrgrsForm);
+		return "success";
+	}
 }
+

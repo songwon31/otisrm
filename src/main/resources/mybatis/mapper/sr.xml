@@ -6,6 +6,14 @@
 	</select>
 	
 	<!-- 메인 테이블 구성 -->
+	<select id="checkStatusBySrNo" parameterType="String" resultType="String">
+		SELECT sr_prgrs_stts_no
+		FROM sr_trnsf_plan
+		WHERE sr_no = #{srNo}
+	</select>
+	
+	
+	
 	<select id="selectSrListForDeveloperHomeBoardByUsrIdAndStts" parameterType="map" resultType="com.finalteam5.otisrm.dto.sr.SrForDeveloperHomeBoard">
 		SELECT sr.sr_no, sys.sys_nm, srtk.sr_task_nm, srr.sr_ttl, u2.usr_nm, sr.sr_cmptn_prnmnt_dt, srt.sr_trgt_cmptn_dt, srp.sr_prgrs_stts_nm
 		FROM usr u1
@@ -154,7 +162,14 @@
 		ORDER BY sr_no
 	</select>
 	
-	
+	<select id="selectSrTrnsfInfoForDeveloperHomeBySrNoRqst" parameterType="String" resultType="com.finalteam5.otisrm.dto.sr.SrTrnsfInfoForDeveloperHome">
+		SELECT srd.sr_dmnd_nm, srk.sr_task_nm
+		FROM sr_trnsf_plan srt
+		JOIN sr ON srt.sr_no = sr.sr_no
+		JOIN sr_dmnd_clsf srd ON srt.sr_dmnd_no = srd.sr_dmnd_no
+		JOIN sr_task_clsf srk ON sr.sr_task_no = srk.sr_task_no
+		WHERE srt.sr_no = #{srNo}
+	</select>
 	
 	<select id="selectSrTrnsfInfoForDeveloperHomeBySrNo" parameterType="String" resultType="com.finalteam5.otisrm.dto.sr.SrTrnsfInfoForDeveloperHome">
 		SELECT srd.sr_dmnd_nm, srk.sr_task_nm, inst.inst_nm, dept.dept_nm, usr.usr_nm, srt.sr_trgt_bgng_dt, srt.sr_trgt_cmptn_dt, srt.sr_trnsf_note
@@ -228,6 +243,15 @@
 		WHERE srt.sr_no = #{srNo}
 	</select>
 	
+	<select id="getCurrentSrTrnsfPlanInfoRqst" parameterType="String" resultType="com.finalteam5.otisrm.dto.sr.SrTrnsfPlanModalCompose">
+		SELECT srd.sr_dmnd_nm, srtk.sr_task_nm
+		FROM sr_trnsf_plan srt
+        JOIN sr ON srt.sr_no = sr.sr_no
+		JOIN sr_dmnd_clsf srd ON srt.sr_dmnd_no = srd.sr_dmnd_no
+		JOIN sr_task_clsf srtk ON sr.sr_task_no = srtk.sr_task_no
+		WHERE srt.sr_no = #{srNo}
+	</select>
+	
 	<!-- 담당자 선택 모달 구성 -->
 	<select id="countSrTrnsfFindPicModalCompose" parameterType="map" resultType="int">
 		SELECT COUNT(*)
@@ -288,6 +312,166 @@
 			sr_trgt_bgng_dt = #{srTrgtBgngDt},
 			sr_trgt_cmptn_dt = #{srTrgtCmptnDt},
 			sr_trnsf_note = #{srTrnsfNote, jdbcType=VARCHAR}
+		WHERE sr_no = #{srNo}
+	</update>
+	
+	<!-- 요청->접수 상태로 변경 -->
+	<insert id="insertAnalysisPrgrs" parameterType="String">
+		INSERT INTO sr_prgrs (sr_prgrs_no, sr_no, sr_prgrs_stts_no)
+		VALUES(#{srNo}||'_analysis', #{srNo}, 'ANALYSIS')
+	</insert>
+	
+	<insert id="insertDesignPrgrs" parameterType="String">
+		INSERT INTO sr_prgrs (sr_prgrs_no, sr_no, sr_prgrs_stts_no)
+		VALUES(#{srNo}||'_design', #{srNo}, 'DESIGN')
+	</insert>
+	
+	<insert id="insertImplementPrgrs" parameterType="String">
+		INSERT INTO sr_prgrs (sr_prgrs_no, sr_no, sr_prgrs_stts_no)
+		VALUES(#{srNo}||'_implement', #{srNo}, 'IMPLEMENT')
+	</insert>
+	
+	<insert id="insertTestPrgrs" parameterType="String">
+		INSERT INTO sr_prgrs (sr_prgrs_no, sr_no, sr_prgrs_stts_no)
+		VALUES(#{srNo}||'_test', #{srNo}, 'TEST')
+	</insert>
+	
+	<insert id="insertApplyRequestPrgrs" parameterType="String">
+		INSERT INTO sr_prgrs (sr_prgrs_no, sr_no, sr_prgrs_stts_no)
+		VALUES(#{srNo}||'_apply_request', #{srNo}, 'APPLY_REQUEST')
+	</insert>
+	
+	<update id="updateSttsToReceipt" parameterType="String">
+		UPDATE sr_trnsf_plan
+		SET sr_prgrs_stts_no = 'RECEIPT'
+		WHERE sr_no = #{srNo}
+	</update>
+	
+	<!-- HR설정 모달 구성 -->
+	<select id="selectDeptNmBySrNo" parameterType="String" resultType="String">
+		SELECT dept_nm
+		FROM sr_trnsf_plan srt
+		JOIN dept ON srt.dept_no = dept.dept_no
+		WHERE srt.sr_no = #{srNo}
+	</select>
+	
+	<select id="selectAnalysisPicNm" parameterType="String" resultType="String">
+		SELECT usr.usr_nm
+		FROM sr_prgrs srp
+		JOIN usr ON srp.usr_no = usr.usr_no
+		WHERE srp.sr_prgrs_no = #{srNo} || '_analysis'
+	</select>
+	
+	<select id="selectDesignPicNm" parameterType="String" resultType="String">
+		SELECT usr.usr_nm
+		FROM sr_prgrs srp
+		JOIN usr ON srp.usr_no = usr.usr_no
+		WHERE srp.sr_prgrs_no = #{srNo} || '_design'
+	</select>
+	
+	<select id="selectImplementPicNm" parameterType="String" resultType="String">
+		SELECT usr.usr_nm
+		FROM sr_prgrs srp
+		JOIN usr ON srp.usr_no = usr.usr_no
+		WHERE srp.sr_prgrs_no = #{srNo} || '_implement'
+	</select>
+	
+	<select id="selectTestPicNm" parameterType="String" resultType="String">
+		SELECT usr.usr_nm
+		FROM sr_prgrs srp
+		JOIN usr ON srp.usr_no = usr.usr_no
+		WHERE srp.sr_prgrs_no = #{srNo} || '_test'
+	</select>
+	
+	<select id="selectApplyRequestPicNm" parameterType="String" resultType="String">
+		SELECT usr.usr_nm
+		FROM sr_prgrs srp
+		JOIN usr ON srp.usr_no = usr.usr_no
+		WHERE srp.sr_prgrs_no = #{srNo} || '_apply_request'
+	</select>
+	
+	<!-- HR PIC 업데이트 -->
+	<update id="updateAnalysisPicNm" parameterType="map">
+		UPDATE sr_prgrs
+		SET usr_no = (SELECT usr_no FROM usr WHERE usr_nm = #{picNm})
+		WHERE sr_prgrs_no = #{srNo} || '_analysis'
+	</update>
+	
+	<update id="updateDesignPicNm" parameterType="map">
+		UPDATE sr_prgrs
+		SET usr_no = (SELECT usr_no FROM usr WHERE usr_nm = #{picNm})
+		WHERE sr_prgrs_no = #{srNo} || '_design'
+	</update>
+	
+	<update id="updateImplementPicNm" parameterType="map">
+		UPDATE sr_prgrs
+		SET usr_no = (SELECT usr_no FROM usr WHERE usr_nm = #{picNm})
+		WHERE sr_prgrs_no = #{srNo} || '_implement'
+	</update>
+	
+	<update id="updateTestPicNm" parameterType="map">
+		UPDATE sr_prgrs
+		SET usr_no = (SELECT usr_no FROM usr WHERE usr_nm = #{picNm})
+		WHERE sr_prgrs_no = #{srNo} || '_test'
+	</update>
+	
+	<update id="updateApplyRequestPicNm" parameterType="map">
+		UPDATE sr_prgrs
+		SET usr_no = (SELECT usr_no FROM usr WHERE usr_nm = #{picNm})
+		WHERE sr_prgrs_no = #{srNo} || '_apply_request'
+	</update>
+	
+	<!-- SR 이관 진행률 업데이트 -->
+	<select id="selectAnalysisPrgrs" parameterType="String" resultType="Integer">
+		SELECT sr_prgrs
+		FROM sr_prgrs
+		WHERE sr_prgrs_no = #{srNo}||'_analysis'
+	</select>
+	
+	<select id="selectDesignPrgrs" parameterType="String" resultType="Integer">
+		SELECT sr_prgrs
+		FROM sr_prgrs
+		WHERE sr_prgrs_no = #{srNo}||'_design'
+	</select>
+	
+	<select id="selectImplementPrgrs" parameterType="String" resultType="Integer">
+		SELECT sr_prgrs
+		FROM sr_prgrs
+		WHERE sr_prgrs_no = #{srNo}||'_implement'
+	</select>
+	
+	<select id="selectTestPrgrs" parameterType="String" resultType="Integer">
+		SELECT sr_prgrs
+		FROM sr_prgrs
+		WHERE sr_prgrs_no = #{srNo}||'_test'
+	</select>
+	
+	<select id="selectApplyRequestPrgrs" parameterType="String" resultType="Integer">
+		SELECT sr_prgrs
+		FROM sr_prgrs
+		WHERE sr_prgrs_no = #{srNo}||'_apply_request'
+	</select>
+	
+	<update id="updateSrPrgrs" parameterType="com.finalteam5.otisrm.dto.SrPrgrs">
+		UPDATE sr_prgrs
+		<if test='srPrgrsBgngDt != null and srPrgrsCmptnDt != null'>
+			SET sr_prgrs_bgng_dt = #{srPrgrsBgngDt}, sr_prgrs_cmptn_dt = #{srPrgrsCmptnDt}, sr_prgrs = #{srPrgrs}
+		</if>
+		<if test='srPrgrsBgngDt != null and srPrgrsCmptnDt == null'>
+			SET sr_prgrs_bgng_dt = #{srPrgrsBgngDt}, sr_prgrs = #{srPrgrs}
+		</if>
+		<if test='srPrgrsBgngDt == null and srPrgrsCmptnDt != null'>
+			SET sr_prgrs_cmptn_dt = #{srPrgrsCmptnDt}, sr_prgrs = #{srPrgrs}
+		</if>
+		<if test='srPrgrsBgngDt == null and srPrgrsCmptnDt == null'>
+			SET sr_prgrs = #{srPrgrs}
+		</if>
+		WHERE sr_prgrs_no = #{srPrgrsNo}
+	</update>
+	
+	<update id="updateSrTrnsfStts" parameterType="map">
+		UPDATE sr_trnsf_plan
+		SET sr_prgrs_stts_no = #{srPrgrsSttsNo}
 		WHERE sr_no = #{srNo}
 	</update>
 </mapper>
