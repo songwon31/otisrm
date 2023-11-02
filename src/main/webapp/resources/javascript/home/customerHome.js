@@ -501,7 +501,7 @@ function modifySrRqst(srRqstNo) {
 //로딩 스피너 함수
 function loading() {
   LoadingWithMask();
-  setTimeout("closeLoadingWithMask()", 1000);
+  setTimeout("closeLoadingWithMask()", 800);
 }
 
 //스피너와 마스크 표시
