@@ -8,8 +8,6 @@ var currentBottomTabFilter;
 function init() {
 	//테이블 행 선택 시 하단 작업창에 데이터 세팅
 	$('#mainTable tr').click(function() {
-		console.log("tr이 클릭됨");
-		
 		//행 element 탐색
 		let row = $(this).closest('tr');
 		
@@ -124,6 +122,14 @@ function refactorMainTable(filterType, page) {
 				$('#mainTableRqstTab').addClass('filterTabSelected');
 				$('#mainTableRqstTab').css('pointer-events', 'none');
 				$('#mainTableRqstTab').css('cursor', 'default');
+			//접수
+			} else if (mainTableFilter == 'RECEIPT') {
+				$('.mainTableSelectElement').removeClass('filterTabSelected');
+				$('.mainTableSelectElement').css('pointer-events', '');
+				$('.mainTableSelectElement').css('cursor', 'pointer');
+				$('#mainTableReceiptTab').addClass('filterTabSelected');
+				$('#mainTableReceiptTab').css('pointer-events', 'none');
+				$('#mainTableReceiptTab').css('cursor', 'default');
 			//분석
 			} else if (mainTableFilter == 'ANALYSIS') {
 				$('.mainTableSelectElement').removeClass('filterTabSelected');
@@ -170,6 +176,7 @@ function refactorMainTable(filterType, page) {
 			$('#totalNum').html(data.totalNum);
 			$('#requestNum').html(data.requestNum);
 			$('#analysisNum').html(data.analysisNum);
+			$('#receiptNum').html(data.receiptNum);
 			$('#designNum').html(data.designNum);
 			$('#implementNum').html(data.implementNum);
 			$('#testNum').html(data.testNum);
@@ -262,21 +269,18 @@ function refactorMainTable(filterType, page) {
 function selectSrProgressTableFilter(tabStyle) {
 	$('.srProgressTableSelectElement').removeClass('filterTabSelected');
 	if (tabStyle == 'srRqstInfoTab') {
-		console.log("1");
 		$('#srRqstInfoTab').addClass('filterTabSelected');
 		$('.bottomSubDiv').css('display', 'none');
 		$('#srPlanInfo').css('display', '');
 		$('.srProgressBtn').css('display', 'none');
 		$('.srPlanBtn').css('display', 'flex');
 	} else if (tabStyle == 'srHrInfoTab') {
-		console.log("2");
 		$('#srHrInfoTab').addClass('filterTabSelected');
 		$('.bottomSubDiv').css('display', 'none');
 		$('#srHrInfo').css('display', '');
 		$('.srProgressBtn').css('display', 'none');
 		$('.srHrBtn').css('display', 'flex');
 	} else if (tabStyle == 'srPrgrsInfoTab') {
-		console.log("3");
 		$('#srPrgrsInfoTab').addClass('filterTabSelected');
 		$('.bottomSubDiv').css('display', 'none');
 		$('#srProgressInfo').css('display', '');
@@ -340,10 +344,18 @@ function setSrDetail(srNo) {
 			$('#srPlanInfoInst').html(data.instNm);
 			$('#srPlanInfoDept').html(data.deptNm);
 			$('#srPlanInfoPic').html(data.usrNm);
-			let bgngDt = new Date(data.srTrgtBgngDt);
-	        let cmptnDt = new Date(data.srTrgtCmptnDt);
-			$('#srPlanInfoBgngDt').html(formatDate(bgngDt));
-			$('#srPlanInfoCmptnDt').html(formatDate(cmptnDt));
+			if (data.srTrgtBgngDt == '' || data.srTrgtBgngDt == null) {
+				$('#srPlanInfoBgngDt').html('');
+			} else {
+				let bgngDt = new Date(data.srTrgtBgngDt);
+				$('#srPlanInfoBgngDt').html(formatDate(bgngDt));
+			}
+			if (data.srTrgtCmptnDt == '' || data.srTrgtCmptnDt == null) {
+				$('#srPlanInfoCmptnDt').html('');
+			} else {
+				let cmptnDt = new Date(data.srTrgtCmptnDt);
+				$('#srPlanInfoCmptnDt').html(formatDate(cmptnDt));
+			}
 			$('#srPlanInfoNote').html(data.srTrnsfNote);
 			
 			//SR자원정보 구성
@@ -378,30 +390,80 @@ function setSrDetail(srNo) {
 					let bgngDt = new Date(srPrgrs.srPrgrsBgngDt);
 			        let cmptnDt = new Date(srPrgrs.srPrgrsCmptnDt);
 					if (srPrgrs.srPrgrsSttsNm == '분석') {
-						$('#srAnalysisBgngDt').html(formatDate(bgngDt));
-						$('#srAnalysisCmptnDt').html(formatDate(cmptnDt));
-						$('#srAnalysisPrgrs').html(srPrgrs.srPrgrs);
-						$('#srAnalysisOtptBtn').html('버튼');
+						if (srPrgrs.srPrgrsBgngDt != null) {
+							$('#srAnalysisBgngDt').html(formatDate(bgngDt));
+						}
+						if (srPrgrs.srPrgrsCmptnDt != null) {
+							$('#srAnalysisCmptnDt').html(formatDate(cmptnDt));
+						}
+						$('#srAnalysisPrgrs').html('<input value="" style="width:40%; height:3rem; margin:0rem 1rem; text-align: center;">');
+						if (srPrgrs.srPrgrs > 0) {
+							$('#srAnalysisPrgrs input').val(srPrgrs.srPrgrs);
+						}
+						let btnHtml = '<center><a href="javascript:void(0)" onclick=""';
+						btnHtml += 'style="height: 3rem; width: 30%; border-radius: 5px; background-color:#2c7be4; color:white; font-weight:700;';
+						btnHtml += 'display: flex; flex-direction: row; justify-content: center; align-items: center;">관리</a></center>';
+						$('#srAnalysisOtptBtn').html(btnHtml);
 					} else if (srPrgrs.srPrgrsSttsNm == '설계') {
-						$('#srDesignBgngDt').html(formatDate(bgngDt));
-						$('#srDesignCmptnDt').html(formatDate(cmptnDt));
-						$('#srDesignPrgrs').html(srPrgrs.srPrgrs);
-						$('#srDesignOtptBtn').html('버튼');
+						if (srPrgrs.srPrgrsBgngDt != null) {
+							$('#srDesignBgngDt').html(formatDate(bgngDt));
+						}
+						if (srPrgrs.srPrgrsCmptnDt != null) {
+							$('#srDesignCmptnDt').html(formatDate(cmptnDt));
+						}
+						$('#srDesignPrgrs').html('<input value="" style="width:40%; height:3rem; margin:0rem 1rem; text-align: center;">');
+						if (srPrgrs.srPrgrs > 0) {
+							$('#srDesignPrgrs input').val(srPrgrs.srPrgrs);
+						}
+						let btnHtml = '<center><a href="javascript:void(0)" onclick=""';
+						btnHtml += 'style="height: 3rem; width: 30%; border-radius: 5px; background-color:#2c7be4; color:white; font-weight:700;';
+						btnHtml += 'display: flex; flex-direction: row; justify-content: center; align-items: center;">관리</a></center>';
+						$('#srDesignOtptBtn').html(btnHtml);
 					} else if (srPrgrs.srPrgrsSttsNm == '구현') {
-						$('#srImplBgngDt').html(formatDate(bgngDt));
-						$('#srImplCmptnDt').html(formatDate(cmptnDt));
-						$('#srImplPrgrs').html(srPrgrs.srPrgrs);
-						$('#srImplOtptBtn').html('버튼');
+						if (srPrgrs.srPrgrsBgngDt != null) {
+							$('#srImplBgngDt').html(formatDate(bgngDt));
+						}
+						if (srPrgrs.srPrgrsCmptnDt != null) {
+							$('#srImplCmptnDt').html(formatDate(cmptnDt));
+						}
+						$('#srImplPrgrs').html('<input value="" style="width:40%; height:3rem; margin:0rem 1rem; text-align: center;">');
+						if (srPrgrs.srPrgrs > 0) {
+							$('#srImplPrgrs input').val(srPrgrs.srPrgrs);
+						}
+						let btnHtml = '<center><a href="javascript:void(0)" onclick=""';
+						btnHtml += 'style="height: 3rem; width: 30%; border-radius: 5px; background-color:#2c7be4; color:white; font-weight:700;';
+						btnHtml += 'display: flex; flex-direction: row; justify-content: center; align-items: center;">관리</a></center>';
+						$('#srImplOtptBtn').html(btnHtml);
 					} else if (srPrgrs.srPrgrsSttsNm == '시험') {
-						$('#srTestBgngDt').html(formatDate(bgngDt));
-						$('#srTestCmptnDt').html(formatDate(cmptnDt));
-						$('#srTestPrgrs').html(srPrgrs.srPrgrs);
-						$('#srTestOtptBtn').html('버튼');
+						if (srPrgrs.srPrgrsBgngDt != null) {
+							$('#srTestBgngDt').html(formatDate(bgngDt));
+						}
+						if (srPrgrs.srPrgrsCmptnDt != null) {
+							$('#srTestCmptnDt').html(formatDate(cmptnDt));
+						}
+						$('#srTestPrgrs').html('<input value="" style="width:40%; height:3rem; margin:0rem 1rem; text-align: center;">');
+						if (srPrgrs.srPrgrs > 0) {
+							$('#srTestPrgrs input').val(srPrgrs.srPrgrs);
+						}
+						let btnHtml = '<center><a href="javascript:void(0)" onclick=""';
+						btnHtml += 'style="height: 3rem; width: 30%; border-radius: 5px; background-color:#2c7be4; color:white; font-weight:700;';
+						btnHtml += 'display: flex; flex-direction: row; justify-content: center; align-items: center;">관리</a></center>';
+						$('#srTestOtptBtn').html(btnHtml);
 					} else if (srPrgrs.srPrgrsSttsNm == '반영요청') {
-						$('#srApplyBgngDt').html(formatDate(bgngDt));
-						$('#srApplyCmptnDt').html(formatDate(cmptnDt));
-						$('#srApplyPrgrs').html(srPrgrs.srPrgrs);
-						$('#srApplyOtptBtn').html('버튼');
+						if (srPrgrs.srPrgrsBgngDt != null) {
+							$('#srApplyBgngDt').html(formatDate(bgngDt));
+						}
+						if (srPrgrs.srPrgrsCmptnDt != null) {
+							$('#srApplyCmptnDt').html(formatDate(cmptnDt));
+						}
+						$('#srApplyPrgrs').html('<input value="" style="width:40%; height:3rem; margin:0rem 1rem; text-align: center;">');
+						if (srPrgrs.srPrgrs > 0) {
+							$('#srApplyPrgrs input').val(srPrgrs.srPrgrs);
+						}
+						let btnHtml = '<center><a href="javascript:void(0)" onclick=""';
+						btnHtml += 'style="height: 3rem; width: 30%; border-radius: 5px; background-color:#2c7be4; color:white; font-weight:700;';
+						btnHtml += 'display: flex; flex-direction: row; justify-content: center; align-items: center;">관리</a></center>';
+						$('#srApplyOtptBtn').html(btnHtml);
 					}
 				}
 			}
@@ -459,11 +521,18 @@ function showSrPlanInfoEditModal() {
 			$('#srPlanModalTaskInput').val(data.srTaskNm);
 			$('#srPlanModalDeptInput').val(data.deptNm);
 			$('#srPlanModalPicInput').val(data.usrNm);
-			
-			let trgtBgngDt = new Date(data.srTrgtBgngDt);
-			$('#srPlanModalTrgtBgngDt').val(formatDate(trgtBgngDt));
-			let trgtCmptnDt = new Date(data.srTrgtCmptnDt);
-			$('#srPlanModalTrgtCmptnDt').val(formatDate(trgtCmptnDt));
+			if (data.srTrgtBgngDt == null) {
+				$('#srPlanModalTrgtBgngDt').val('');
+			} else {
+				let trgtBgngDt = new Date(data.srTrgtBgngDt);
+				$('#srPlanModalTrgtBgngDt').val(formatDate(trgtBgngDt));
+			}
+			if (data.srTrgtCmptnDt == null) {
+				$('#srPlanModalTrgtCmptnDt').val('');
+			} else {
+				let trgtCmptnDt = new Date(data.srTrgtCmptnDt);
+				$('#srPlanModalTrgtCmptnDt').val(formatDate(trgtCmptnDt));
+			}
 			$('#srPlanModalTrnsfNote').html(data.srTrnsfNote);
 		}
 	});
@@ -582,14 +651,19 @@ function setFindPicModalPic(deptNm, usrNm) {
 //sr계획 작성/수정
 function editSrTrnsfPlan() {
 	let srNo = currentDetailSrNo;
+	let deptNm = $('#srPlanModalDeptInput').val();
+	let usrNm = $('#srPlanModalPicInput').val();
+	let srTrgtBgngDt = $('#srPlanModalTrgtBgngDt').val();
+	let srTrgtCmptnDt = $('#srPlanModalTrgtCmptnDt').val();
+	let srTrnsfNote = $('#srPlanModalTrnsfNote').val();
 	
 	let requestData = {
 		srNo: srNo,
-		deptNm: $('#srPlanModalDeptInput').val(),
-        usrNm: $('#srPlanModalPicInput').val(),
-        srTrgtBgngDt: $('#srPlanModalTrgtBgngDt').val(),
-        srTrgtCmptnDt: $('#srPlanModalTrgtCmptnDt').val(),
-        srTrnsfNote: $('#srPlanModalTrnsfNote').val()
+		deptNm: deptNm,
+        usrNm: usrNm,
+        srTrgtBgngDt: srTrgtBgngDt,
+        srTrgtCmptnDt: srTrgtCmptnDt,
+        srTrnsfNote: srTrnsfNote
     };
 	
 	$.ajax({
@@ -601,6 +675,8 @@ function editSrTrnsfPlan() {
 			setSrDetail(srNo);
 		}
 	});
+	
+	refactorMainTable(mainTableFilter, currentPageNo);
 }
 
 //HR수정 모달
@@ -616,7 +692,186 @@ function showSetHrModal() {
 		url: "/otisrm/showSetHrModal",
 		data: requestData,
 		success: function(data) {
+			$('#setHrModalDeptInput').val(data.deptNm);
+			$('#setHrModalAnalysisPicInput').val(data.analysisPicNm);
+			$('#setHrModalDesignPicInput').val(data.designPicNm);
+			$('#setHrModalImplementPicInput').val(data.implementPicNm);
+			$('#setHrModalTestPicInput').val(data.testPicNm);
+			$('#setHrModalApplyRequestPicInput').val(data.applyRequestPicNm);
+		}
+	});
+}
+
+
+//HR담당자 검색 모달 구성
+function composeSetHrFindPicModal(e) {
+	let deptNm = $('#setHrModalDeptInput').val();
+	$('#setHrFindPicModalDeptInput').val(deptNm);
+	
+	let td = $(e).closest('td');
+	let inputId = td.find('input').attr('id');
+	
+	$('#setHrFindPicModalCallerInputId').html(inputId);
+	console.log(inputId);
+	
+	composeSetHrFindPicModalTable(1);
+}
+
+//HR담당 검색 모달 테이블 구성
+function composeSetHrFindPicModalTable(pageNo) {
+	
+	//데이터 준비
+	let deptNm = $('#setHrFindPicModalDeptInput').val();
+	
+	$.ajax({
+		type: "POST",
+		url: "/otisrm/getDeptNoByDeptNm",
+		data: {deptNm: deptNm,
+			   srNo: currentDetailSrNo},
+		success: function(data) {
+			let deptNo = data;
+			let usrNm = $('#setHrFindPicModalPicInput').val();
 			
+			let requestData = {
+		        deptNo: deptNo,
+		        usrNm: usrNm,
+		        pageNo: pageNo
+		    };
+			
+			//테이블 구성
+			$.ajax({
+				type: "POST",
+				url: "/otisrm/getFindPicModalCompose",
+				data: requestData,
+				success: function(data) {
+					//테이블 body 구성
+					//테이블 body 초기화
+					$('#setHrFindPicModalTable tbody').html('');
+					//테이블 body 재구성
+					for (let i=0; i<data.usrList.length; ++i) {
+						let usr = data.usrList[i];
+						let findPicTableHtml = '';
+						findPicTableHtml += '<tr style="height: 4.5rem; font-size: 1.5rem; background-color:white;">';
+						findPicTableHtml += '<td>' + usr.deptNm + '</td>';
+						findPicTableHtml += '<td>' + usr.roleNm + '</td>';
+						findPicTableHtml += '<td>' + usr.ibpsNm + '</td>';
+						findPicTableHtml += '<td>' + usr.usrNm + '</td>';
+						findPicTableHtml += '<td> <button class="btn-2 detail-button" data-dismiss="modal" onclick="setHrModalPic(\'' + usr.usrNm + '\')">선택</button> </td>';
+						//jsp에 삽입
+						$('#setHrFindPicModalTable tbody').append(findPicTableHtml);
+					}
+					
+					
+					//페이징 파트 구성
+					let pagerHtml = '';
+					if (data.pager.totalRows == 0) {
+						pagerHtml += '<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center; color:#868e96; cursor:default;">first_page</i>';
+						pagerHtml += '<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center; color:#868e96; cursor:default;">chevron_left</i>';
+						pagerHtml += '<a href="javascript:void(0)" style="font-size: 1.6rem; height: 3rem; line-height: 3rem;">1</a>';
+						pagerHtml += '<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center; color:#868e96; cursor:default;">chevron_right</i>';
+						pagerHtml += '<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center; color:#868e96; cursor:default;">last_page</i>';
+					} else {
+						currentPageNo = data.pager.pageNo;
+						if (data.pager.groupNo == 1) {
+							pagerHtml += '<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center; color:#868e96; cursor:default;">first_page</i>';
+							pagerHtml += '<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center; color:#868e96; cursor:default;">chevron_left</i>';
+						} else {
+							pagerHtml += '<a href="javascript:void(0) onclick="composeSetHrFindPicModalTable('+1+')">';
+							pagerHtml += '<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center;">first_page</i>';
+							pagerHtml += '</a>';
+							pagerHtml += '<a href="javascript:void(0)  onclick="composeSetHrFindPicModalTable(' + ((data.pager.groupNo - data.pager.pagesPerGroup) * 5) + ')">';
+							pagerHtml += '<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center;">chevron_left</i>';
+							pagerHtml += '</a>';
+						}
+						
+						for (let i=data.pager.startPageNo; i<=data.pager.endPageNo; ++i) {
+							pagerHtml += '<div style="width: 0.25rem;"></div>';
+							if (data.pager.pageNo != i) {
+								pagerHtml += '<a href="javascript:void(0)" onclick="composeSetHrFindPicModalTable('+i+')" style="font-size: 1.6rem; height: 3rem; line-height: 3rem;">'+i+'</a>';
+							} else {
+								pagerHtml += '<a href="javascript:void(0)" style="font-size: 1.6rem; height: 3rem; line-height: 3rem;">'+i+'</a>';
+							}
+							pagerHtml += '<div style="width: 0.25rem;"></div>';
+							
+						}
+						if (data.pager.groupNo == data.pager.totalGroupNo) {
+							pagerHtml += '<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center; color:#868e96; cursor:default;">chevron_right</i>';
+							pagerHtml += '<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center; color:#868e96; cursor:default;">last_page</i>';
+						} else {
+							pagerHtml += '<a href="javascript:void(0) onclick="composeSetHrFindPicModalTable(' + ((data.pager.groupNo * data.pager.pagesPerGroup)+1) + ')">';
+							pagerHtml += '<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center;">chevron_right</i>';
+							pagerHtml += '</a>';	
+							pagerHtml += '<a href="javascript:void(0) onclick="composeSetHrFindPicModalTable(' + data.pager.endPageNo + ')"">';
+							pagerHtml += '<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center;">last_page</i>';
+							pagerHtml += '</a>';
+						}
+						
+						$('#setHrFindPicModalTablePagerDiv').html(pagerHtml);
+					}
+				}
+			});
+			
+		}
+	});	
+}
+
+function setHrModalPic(usrNm) {
+	let inputId = '#' + $('#setHrFindPicModalCallerInputId').html();
+	$(inputId).val(usrNm);
+}
+
+function updateSrPrgrs() {
+	let srNo = currentDetailSrNo;
+	let analysisPicNm = $('#setHrModalAnalysisPicInput').val();
+	let designPicNm = $('#setHrModalDesignPicInput').val();
+	let implementPicNm = $('#setHrModalImplementPicInput').val();
+	let testPicNm = $('#setHrModalTestPicInput').val();
+	let applyRequestPicNm = $('#setHrModalApplyRequestPicInput').val();
+	
+
+	let requestData = {
+		srNo: srNo,
+		analysisPicNm: analysisPicNm,
+		designPicNm: designPicNm,
+		implementPicNm: implementPicNm,
+		testPicNm: testPicNm,
+		applyRequestPicNm: applyRequestPicNm
+    };
+	
+	$.ajax({
+		type: "POST",
+		url: "/otisrm/updateSrPrgrs",
+		data: requestData,
+		success: function(data) {
+			setSrDetail(srNo);
+		}
+	});
+}
+
+function updatePrgrs() {
+	let srNo = currentDetailSrNo;
+	let analysisPrgrs = $('#srAnalysisPrgrs input').val();
+	let designPrgrs = $('#srDesignPrgrs input').val();
+	let implementPrgrs = $('#srImplPrgrs input').val();
+	let testPrgrs = $('#srTestPrgrs input').val();
+	let applyRequestPrgrs = $('#srApplyPrgrs input').val();
+	
+	let requestData = {
+		srNo: srNo,
+		analysisPrgrs: analysisPrgrs,
+		designPrgrs: designPrgrs,
+		implementPrgrs: implementPrgrs,
+		testPrgrs: testPrgrs,
+		applyRequestPrgrs: applyRequestPrgrs
+    };
+	
+	$.ajax({
+		type: "POST",
+		url: "/otisrm/updateSrTrnsfPrgrs",
+		data: requestData,
+		success: function(data) {
+			refactorMainTable(mainTableFilter, currentPageNo);
+			setSrDetail(srNo);
 		}
 	});
 }

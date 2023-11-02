@@ -13,6 +13,7 @@ public class SrTableElementsForDeveloperHome {
 	private int totalNum;
 	private int requestNum;
 	private int analysisNum;
+	private int receiptNum;
 	private int designNum;
 	private int implementNum;
 	private int testNum;

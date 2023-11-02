@@ -5,11 +5,14 @@ import java.util.List;
 import com.finalteam5.otisrm.dto.Pager;
 import com.finalteam5.otisrm.dto.SrTrnsfPlanForm;
 import com.finalteam5.otisrm.dto.sr.SrForDeveloperHomeBoard;
+import com.finalteam5.otisrm.dto.sr.SrPrgrsForm;
 import com.finalteam5.otisrm.dto.sr.SrRequestDetailForDeveloperHome;
 import com.finalteam5.otisrm.dto.sr.SrTableElementsForDeveloperHome;
 import com.finalteam5.otisrm.dto.sr.SrTrnsfFindPicModalCompose;
 import com.finalteam5.otisrm.dto.sr.SrTrnsfInfoForDeveloperHome;
 import com.finalteam5.otisrm.dto.sr.SrTrnsfPlanModalCompose;
+import com.finalteam5.otisrm.dto.sr.SrTrnsfPrgrsPic;
+import com.finalteam5.otisrm.dto.sr.SrTrnsfSetHrModalCompose;
 import com.finalteam5.otisrm.dto.usr.Dept;
 
 public interface SrService {
@@ -35,4 +38,16 @@ public interface SrService {
 	
 	//sr이관 계획 정보 수정
 	public int editSrTrnsfPlan(SrTrnsfPlanForm srTrnsfPlanForm);
+	
+	//sr HR 선택 모달 구성
+	public SrTrnsfSetHrModalCompose getSrTrnsfSetHrModalCompose(String srNo);
+	
+	//HR Pic 선택 모달 구성
+	public String getDeptNoByDeptNm(String deptNm, String srNo);
+	
+	//HR PIC 업데이트
+	public int updateSrPrgrs(SrTrnsfPrgrsPic srTrnsfPrgrsPic);
+	
+	//SR 이관 진행률 업데이트
+	public int updateSrTrnsfPrgrs(SrPrgrsForm srPrgrsForm);
 }
