@@ -138,6 +138,9 @@
 	color: #5d6e7e;
 	cursor: pointer;
 }
+.filterTab div{
+	font-size: 1.3rem;
+}
 .tableContainer{
 	height: 31rem;
 }
@@ -289,5 +292,7 @@
 	width: 8%;
 }
 
-/* margin */
-
+/* font-size */
+.fs-16{
+	
+}

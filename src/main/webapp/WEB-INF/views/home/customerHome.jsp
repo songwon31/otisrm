@@ -27,16 +27,47 @@
 		   	  <div class="tableContainer">
 		   	  	<div class="filterTabWrap">
 		   	  		<div class="d-flex">
-		   	  			<div id="" class="filterTab pt-2" style="background-color: #edf2f8; color: black;">전체</div>
-		   	  			<div id="RQST" class="filterTab pt-2">요청<span id="rqst-count"></span></div>
-		   	  			<div id="APRV_WAIT" class="filterTab pt-2">승인대기<span id="rqst-count"></span></div>
-		   	  			<div id="APRV" class="filterTab pt-2">승인<span id="rqst-count"></span></div>
-		   	  			<div id="RCPT_WAIT"  class="filterTab pt-2">접수대기<span id="rqst-count"></span></div>
-		   	  			<div id="RCPT"  class="filterTab pt-2">접수<span id="rqst-count"></span></div>
-		   	  			<div id="DEP_ING"  class="filterTab pt-2">개발중<span id="rqst-count"></span></div>
-		   	  			<div id="TEST"  class="filterTab pt-2">테스트<span id="rqst-count"></span></div>
-		   	  			<div id="CMPTN_RQST"  class="filterTab pt-2">완료요청<span id="rqst-count"></span></div>
-		   	  			<div id="DEP_CMPTN"  class="filterTab pt-2">개발완료<span id="rqst-count"></span></div>
+		   	  			<div id="" class="filterTab d-flex justify-content-center align-items-center" 
+		   	  				style="background-color: #edf2f8; color: black;">
+			   	  			<div>전체</div>
+			   	  			<div id="numOfAll" class="pb-1"></div>
+		   	  			</div>
+		   	  			<div id="RQST" class="filterTab d-flex justify-content-center align-items-center">
+		   	  				<div>요청</div>
+		   	  				<div id="numOfRqst" class="pb-1"></div>
+		   	  			</div>
+		   	  			<div id="APRV_WAIT" class="filterTab d-flex justify-content-center align-items-center">
+			   	  			<div>승인대기</div>
+			   	  			<div id="numOfAprvWait" class="pb-1"></div>
+		   	  			</div>
+		   	  			<div id="APRV" class="filterTab d-flex justify-content-center align-items-center">
+		   	  				<div>승인</div>
+		   	  				<div id="numOfAprv" class="pb-1"></div>
+		   	  			</div>
+		   	  			<div id="RCPT_WAIT" class="filterTab d-flex justify-content-center align-items-center">
+		   	  				<div>접수대기</div>
+		   	  				<div id="numOfRcptWait" class="pb-1"></div>
+		   	  			</div>
+		   	  			<div id="RCPT"  class="filterTab d-flex justify-content-center align-items-center">
+			   	  			<div>접수</div>
+			   	  			<div id="numOfRcpt" class="pb-1"></div>
+		   	  			</div>
+		   	  			<div id="DEP_ING"  class="filterTab d-flex justify-content-center align-items-center">
+		   	  				<div>개발중</div>
+		   	  				<div id="numOfDepIng" class="pb-1"></div>
+		   	  			</div>
+		   	  			<div id="TEST" class="filterTab d-flex justify-content-center align-items-center">
+			   	  			<div>테스트</div>
+			   	  			<div id="numOfTest" class="pb-1"></div>
+		   	  			</div>
+		   	  			<div id="CMPTN_RQST" class="filterTab d-flex justify-content-center align-items-center">
+			   	  			<div>완료요청</div>
+			   	  			<div id="numOfCmptnRqst"class="pb-1"></div>
+		   	  			</div>
+		   	  			<div id="DEP_CMPTN" class="filterTab d-flex justify-content-center align-items-center">
+			   	  			<div>개발완료</div>
+			   	  			<div id="numOfDepCmptn" class="m-1"></div>
+		   	  			</div>
 		   	  			<div id="requestAddBtnWrap" class="d-flex flex-row-reverse align-items-end">
 							<button id="requestAddBtn" data-toggle="modal" data-target="#addSrRqst" class="btn-1 d-inline-flex flex-row align-items-center justify-content-center mb-1" onclick="showSysByDeptNo('${usr.deptNo}')">
 								요청 등록

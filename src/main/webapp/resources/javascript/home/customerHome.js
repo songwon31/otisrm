@@ -3,12 +3,13 @@ $(init)
 function init() {
 	 requestInsertDate();
 	 eventPreventSrRqstAtch();
+	 numOftotalRows();
+	 getTotalRows(choiceSrRqstSttsNo);
 }
  
 var choiceSrRqstSttsNo = "";
 var pageNo = 1;
 $(document).ready(function() {
-	  console.log("으아ready");
 	//필터링 텝 선택 효과
 	$(".filterTab").click(function() {
 	    // 클릭된 요소의 스타일을 변경
@@ -20,8 +21,7 @@ $(document).ready(function() {
 	        "background-color": "",
 	        "color": ""
 	    });
-	    
-	    choiceSrRqstSttsNo = $(event.target).attr("id");
+	    choiceSrRqstSttsNo = $(event.target).parent().attr("id");
 	    console.log(choiceSrRqstSttsNo);
 	    //필터링 된 상품 불러오기
 	    loadSRRequests(1, choiceSrRqstSttsNo);
@@ -129,18 +129,77 @@ function loadSRRequests(pageNo, choiceSrRqstSttsNo) {
   });
 }
 
-function getTotalRows(choiceSrRqstSttsNo){
-	 $.ajax({
-		    url: "getCountSRRequestsByStatus",
-		    data: {
-		      status: choiceSrRqstSttsNo
-		    },
-		    dataType: "json",
-		    method: "GET",
-		    success:function(totalRows){
-		    	return totalRows;
-		    }
-	 });
+//sr요청 상태 탭 별  행수 표시
+function numOftotalRows(){
+	//전체
+	getTotalRows("").then(function (totalRows) {
+		  console.log(totalRows);
+		  $("#numOfAll").html("("+ totalRows + ")");
+		});
+	//요청
+	getTotalRows("RQST").then(function (totalRows) {
+		  console.log(totalRows);
+		  $("#numOfRqst").html("("+ totalRows + ")");
+		});
+	//승인대기 
+	getTotalRows("APRV_WAIT").then(function (totalRows) {
+		console.log(totalRows);
+		$("#numOfAprvWait").html("("+ totalRows + ")");
+	});
+	//승인
+	getTotalRows("APRV").then(function (totalRows) {
+		console.log(totalRows);
+		$("#numOfAprv").html("("+ totalRows + ")");
+	});
+	//접수대기
+	getTotalRows("RCPT_WAIT").then(function (totalRows) {
+		console.log(totalRows);
+		$("#numOfRcptWait").html("("+ totalRows + ")");
+	});
+	//접수
+	getTotalRows("RCPT").then(function (totalRows) {
+		console.log(totalRows);
+		$("#numOfRcpt").html("("+ totalRows + ")");
+	});
+	//개발중
+	getTotalRows("DEP_ING").then(function (totalRows) {
+		console.log(totalRows);
+		$("#numOfDepIng").html("("+ totalRows + ")");
+	});
+	//테스트
+	getTotalRows("TEST").then(function (totalRows) {
+		console.log(totalRows);
+		$("#numOfTest").html("("+ totalRows + ")");
+	});
+	//완료요청
+	getTotalRows("CMPTN_RQST").then(function (totalRows) {
+		console.log(totalRows);
+		$("#numOfCmptnRqst").html("("+ totalRows + ")");
+	});
+	//개발완료
+	getTotalRows("DEP_CMPTN").then(function (totalRows) {
+		console.log(totalRows);
+		$("#numOfDepCmptn").html("("+ totalRows + ")");
+	});
+}
+//총 행수 구하기
+function getTotalRows(choiceSrRqstSttsNo) {
+  return new Promise(function (resolve, reject) {
+    $.ajax({
+      url: "getCountSRRequestsByStatus",
+      data: {
+        status: choiceSrRqstSttsNo
+      },
+      dataType: "json",
+      method: "GET",
+      success: function (totalRows) {
+        resolve(totalRows);
+      },
+      error: function (error) {
+        reject(error);
+      }
+    });
+  });
 }
 
 //페이징 업데이트 함수
