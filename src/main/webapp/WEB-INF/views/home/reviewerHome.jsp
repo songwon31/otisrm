@@ -124,41 +124,41 @@
 				      		<div class="card p-2 mb-2">
 						      	<div class="row mx-0 mt-0 mb-2">
 						          <div class="col-sm row">
-						            <label for="writer" class="col-form-label col-5 pl-0">등록자</label>
-						            <input type="text" class="form-control form-control-sm col-7" id="writer">
+						            <label for="detailmodal_srReqstrNm" class="col-form-label col-5 pl-0">등록자</label>
+						            <input id="detailmodal_srReqstrNm" type="text" class="form-control form-control-sm col-7">
 						          </div>
 						          <div class="col-sm row">
-						            <label for="writerDepartment" class="col-form-label col-5">소속</label>
-						            <input type="text" class="form-control form-control-sm col-7" id="writerDepartment">
+						            <label for="detailmodal_reqstrInstNm" class="col-form-label col-5">소속</label>
+						            <input id="detailmodal_reqstrInstNm" type="text" class="form-control form-control-sm col-7">
 						          </div>
 								</div>
 								<div class="row mx-0 mt-0 mb-2">
 						          <div class="col-sm row">
-						            <label for="writeDate" class="col-form-label col-5 pl-0">등록일</label>
-						            <input type="date" class="form-control form-control-sm col-7" id="writeDate">
+						            <label for="detailmodal_srRqstRegDt" class="col-form-label col-5 pl-0">등록일</label>
+						            <input id="detailmodal_srRqstRegDt" type="date" class="form-control form-control-sm col-7">
 						          </div>
 						          <div class="col-sm row">
-						            <label for="systemName" class="col-form-label col-5">관련시스템</label>
-						            <input type="text" class="form-control form-control-sm col-7" id="systemName">
+						            <label for="detailmodal_sysNm" class="col-form-label col-5">관련시스템</label>
+						            <input id="detailmodal_sysNm" type="text" class="form-control form-control-sm col-7">
 						          </div>
 								</div>
 					          <div class="d-flex mb-2 w-100">
-					            <label for="srTitle" class="w-label col-form-label pl-0">SR제목</label>
-					            <input type="text" class="w-content form-control form-control-sm" id="srTitle">
+					            <label for="detailmodal_srTtl" class="w-label col-form-label pl-0">SR제목</label>
+					            <input id="detailmodal_srTtl" type="text" class="w-content form-control form-control-sm">
 					          </div>
 					          <div class="d-flex mb-2 w-100">
-					            <label for="srContent" class="w-label col-form-label pl-0">SR내용</label>
-					            <textarea class="w-content form-control form-control-sm"  id="srContent" rows="3" cols="50"></textarea>
+					            <label for="detailmodal_srConts" class="w-label col-form-label pl-0">SR내용</label>
+					            <textarea id="detailmodal_srConts" class="w-content form-control form-control-sm" rows="3" cols="50"></textarea>
 					          </div>
 					          <div class="d-flex mb-2 w-100">
-					            <label for="srFile" class="w-label col-form-label pl-0">첨부파일</label>
-								<input type="file" id="srFile" class="w-content form-control-file form-control-sm px-0">
+					            <label for="detailmodal_srRqstAtchData" class="w-label col-form-label pl-0">첨부파일</label>
+								<input id="detailmodal_srRqstAtchData" type="file" id="srFile" class="w-content form-control-file form-control-sm px-0">
 					          </div>
 							</div>
 							<div class="card p-2 mb-4">
 						      <div class="d-flex mb-2 w-100">
 					            <label for="srFile" class="w-label col-form-label pl-0">검토의견</label>
-								<textarea class="w-content form-control form-control-sm"  id="srContent" rows="3" cols="50"></textarea>
+								<textarea id="detailmodal_srRqstRvwRsn" class="w-content form-control form-control-sm" rows="3" cols="50"></textarea>
 					          </div>
 							</div>
 							
@@ -175,41 +175,41 @@
 				      		<div class="card p-2">
 					      		<div class="row mx-0 mt-0 mb-2">
 						          <div class="col-sm row">
-						            <label for="devPic" class="col-form-label col-5 pl-0">개발담당자</label>
-						            <input type="text" class="form-control form-control-sm col-7" id="devPic">
+						            <label for="detailmodal_srPicUsrNm" class="col-form-label col-5 pl-0">개발담당자</label>
+						            <input id="detailmodal_srPicUsrNm" type="text" class="form-control form-control-sm col-7">
 						          </div>
 						          <div class="col-sm row">
-						            <label for="devDepartment" class="col-form-label col-5">개발부서</label>
-						            <input type="text" class="form-control form-control-sm col-7" id="devDepartment">
-						          </div>
-								</div>
-								<div class="row mx-0 mt-0 mb-2">
-						          <div class="col-sm row">
-						            <label for="progStts" class="col-form-label col-5 pl-0">이관여부</label>
-						            <input type="text" class="form-control form-control-sm col-7" id="progStts">
-						          </div>
-						          <div class="col-sm row">
-						            <label for="devEndDate" class="col-form-label col-5">완료예정일</label>
-						            <input type="date" class="form-control form-control-sm col-7" id="devEndDate">
+						            <label for="detailmodal_deptNm" class="col-form-label col-5">개발부서</label>
+						            <input id="detailmodal_deptNm" type="text" class="form-control form-control-sm col-7">
 						          </div>
 								</div>
 								<div class="row mx-0 mt-0 mb-2">
 						          <div class="col-sm row">
-						            <label for="devCount" class="col-form-label col-5 pl-0">투입인력</label>
-						            <input type="text" class="form-control form-control-sm col-7" id="devCount">
+						            <label for="detailmodal_srTrnsfYn" class="col-form-label col-5 pl-0">이관여부</label>
+						            <input id="detailmodal_srTrnsfYn" type="text" class="form-control form-control-sm col-7">
 						          </div>
 						          <div class="col-sm row">
-						            <label for="devBudget" class="col-form-label col-5">소요예산</label>
-						            <input type="text" class="form-control form-control-sm col-7" id="devBudget">
+						            <label for="detailmodal_srTrnsfInstNm" class="col-form-label col-5">이관기관</label>
+						            <input id="detailmodal_srTrnsfInstNm" type="text" class="form-control form-control-sm col-7">
+						          </div>
+								</div>
+								<div class="row mx-0 mt-0 mb-2">
+						          <div class="col-sm row">
+						            <label for="detailmodal_srReqBgt" class="col-form-label col-5 pl-0">소요예산</label>
+						            <input id="detailmodal_srReqBgt" type="text" class="form-control form-control-sm col-7">
+						          </div>
+						          <div class="col-sm row">
+						            <label for="detailmodal_srCmptnPrnmntDt" class="col-form-label col-5">완료예정일</label>
+						            <input id="detailmodal_srCmptnPrnmntDt" type="date" class="form-control form-control-sm col-7">
 						          </div>
 								</div>
 					      		<div class="d-flex mb-2 w-100">
-						            <label for="srContent" class="w-label col-form-label pl-0">개발내용</label>
-						            <textarea class="w-content form-control form-control-sm"  id="srContent" rows="3" cols="50"></textarea>
+						            <label for="detailmodal_srDvlConts" class="w-label col-form-label pl-0">개발내용</label>
+						            <textarea id="detailmodal_srDvlConts" class="w-content form-control form-control-sm"  id="srContent" rows="3" cols="50"></textarea>
 						          </div>
 						          <div class="d-flex mb-2 w-100">
-						            <label for="srFile" class="w-label col-form-label pl-0">첨부파일</label>
-									<input type="file" id="srFile" class="w-content form-control-file form-control-sm px-0">
+						            <label for="detailmodal_srAtchData" class="w-label col-form-label pl-0">첨부파일</label>
+									<input id="detailmodal_srAtchData" type="file" id="srFile" class="w-content form-control-file form-control-sm px-0">
 						          </div>
 							</div>
 				      </div>

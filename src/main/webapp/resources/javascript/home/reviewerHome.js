@@ -39,8 +39,8 @@ function loadReviewerHomeBoardList(pageNo) {
 		success: function(data) {			
 			var html = "";
 			data.list.forEach((item, index)=>{
-				const formattedRegDt = formatDateToYYYYMMDD(item.srRqstRegDt);
-				const formattedCmptnPrnmntDt = formatDateToYYYYMMDD(item.srCmptnPrnmntDt);
+				const formattedSrRqstRegDt = formatDateToYYYYMMDD(item.srRqstRegDt);
+				const formattedSrCmptnPrnmntDt = formatDateToYYYYMMDD(item.srCmptnPrnmntDt);
 				const trIndex = (pageNo - 1) * 5 + index + 1;
 				
 				html += '<tr style="height: 4.5rem; font-size: 1.5rem; background-color: white;">';
@@ -51,9 +51,9 @@ function loadReviewerHomeBoardList(pageNo) {
 				html += '	<td>' + item.usrNm + '</td>';
 				html += '	<td>' + item.instNm + '</td>';
 				html += '	<td>' + item.srRqstSttsNm + '</td>';
-				html += '	<td>' + formattedRegDt + '</td>';
-				html += '	<td>' + formattedCmptnPrnmntDt + '</td>';
-				html += '	<td><button class="btn-1" data-toggle="modal" data-target="#detailmodal">상세보기</button></td>';
+				html += '	<td>' + formattedSrRqstRegDt + '</td>';
+				html += '	<td>' + formattedSrCmptnPrnmntDt + '</td>';
+				html += '	<td><button class="btn-1" data-toggle="modal" data-target="#detailmodal" onclick="showDetailModal(\''+ item.srRqstNo +'\')">상세보기</button></td>';
 				html += '</tr>';
 			});
 			$("#reviewerHomeBoardList").html(html);
@@ -85,6 +85,41 @@ function loadReviewerHomeBoardList(pageNo) {
 			    pagingHtml += '<a class="btn" href="javascript:loadReviewerHomeBoardList(' + reviewerHomeBoardPager.totalPageNo + ')">맨끝</a>';
 			}
 			$("#reviewerHomeMainTablePaging").html(pagingHtml);
+		}
+	});
+}
+
+function showDetailModal(srRqstNo) {
+	$.ajax({
+		type: "GET",
+		url: "/otisrm/getSrRqstForReviewerModal",
+		data: {selectedSrRqstNo: srRqstNo},
+		success: function(data) {
+			const formattedSrRqstRegDt = formatDateToYYYYMMDD(data.srRqstRegDt);
+			const formattedSrCmptnPrnmntDt = formatDateToYYYYMMDD(data.srCmptnPrnmntDt);
+			
+			console.log(data.reqstrNm);
+			//SR요청정보
+			$("#detailmodal_srReqstrNm").val(data.srReqstrNm);
+        	$("#detailmodal_reqstrInstNm").val(data.reqstrInstNm);
+        	$("#detailmodal_srRqstRegDt").val(formattedSrRqstRegDt);
+        	$("#detailmodal_sysNm").val(data.sysNm);
+        	$("#detailmodal_srTtl").val(data.srTtl);
+        	$("#detailmodal_srConts").val(data.srConts);
+        	$("#detailmodal_srRqstRvwRsn").val(data.srRqstRvwRsn);
+			
+			//SR개발정보
+        	$("#detailmodal_srPicUsrNm").val(data.srPicUsrNm);
+        	$("#detailmodal_deptNm").val(data.deptNm);
+        	$("#detailmodal_srTrnsfYn").val(data.srTrnsfYn);
+        	$("#detailmodal_srTrnsfInstNm").val(data.srTrnsfInstNm);
+        	if(data.srReqBgt == 0) {
+        		$("#detailmodal_srReqBgt").val("");
+        	} else {
+        		$("#detailmodal_srReqBgt").val(data.srReqBgt);
+        	}
+        	$("#detailmodal_srCmptnPrnmntDt").val(formattedSrCmptnPrnmntDt);
+        	$("#detailmodal_srDvlConts").val(data.srDvlConts);
 		}
 	});
 }

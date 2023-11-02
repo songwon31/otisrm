@@ -142,6 +142,35 @@
 		]]>
 	</select>
 	
+	<!-- 검토자 상세모달로 SR정보 가져오기 -->
+	<select id="selectSrRqstForReviewerModal" parameterType="String" resultType="com.finalteam5.otisrm.dto.srRequest.SrRqstForReviewerModal">
+		select 
+		    r.sr_rqst_no as sr_rqst_no,
+		    reqstr.usr_nm as sr_reqstr_nm,
+		    reqstr_inst.inst_nm as reqstr_inst_nm,
+		    r.sr_rqst_reg_dt,
+		    sys.sys_nm,
+		    r.sr_ttl,
+		    r.sr_conts,
+		    r.sr_rqst_rvw_rsn,
+		    pic.usr_nm as sr_pic_usr_nm,
+		    dept.dept_nm,
+		    sr.sr_trnsf_yn,
+		    trnsf_inst.inst_nm as sr_trnsf_inst_nm,
+		    sr.sr_req_bgt,
+		    sr.sr_cmptn_prnmnt_dt,
+		    sr.sr_dvl_conts
+		from sr_rqst r
+		join sys on r.sys_no = sys.sys_no
+		join usr reqstr on r.sr_reqstr_no = reqstr.usr_no
+		join inst reqstr_inst on reqstr.inst_no = reqstr_inst.inst_no
+		left join sr on r.sr_rqst_no = sr.sr_rqst_no
+		left join usr pic on pic.usr_no = sr.pic_usr_no 
+		left join inst trnsf_inst on trnsf_inst.inst_no = sr.sr_trnsf_inst_no
+		left join dept on dept.dept_no =pic.dept_no
+		where r.sr_rqst_no = #{selectedSrRqstNo}
+	</select>
+	
 	<!-- 상태별 요청수 가져오기 -->
 	<select id="countSrRqstBySttsNm" parameterType="String" resultType="int">
 		select count(*)

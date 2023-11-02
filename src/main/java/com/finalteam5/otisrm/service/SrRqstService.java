@@ -7,6 +7,7 @@ import com.finalteam5.otisrm.dto.Sys;
 import com.finalteam5.otisrm.dto.srRequest.SrRqst;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstAtch;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstForReviewerHomeBoard;
+import com.finalteam5.otisrm.dto.srRequest.SrRqstForReviewerModal;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstSubmit;
 
 public interface SrRqstService {	
@@ -48,6 +49,9 @@ public interface SrRqstService {
 	
 	//상태별 요청 수
 	public int getCountSrRqstBySttsNm(String srRqstSttNm);
+	
+	//검토자 상세모달로 SR정보 가져오기
+	public SrRqstForReviewerModal getSrRqstForReviewerModal(String selectedSrRqstNo);
 	
 	//전체 시스템 이름 가져오기
 	public List<String> getTotalSysNm();

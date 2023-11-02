@@ -11,6 +11,7 @@ import com.finalteam5.otisrm.dto.Sys;
 import com.finalteam5.otisrm.dto.srRequest.SrRqst;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstAtch;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstForReviewerHomeBoard;
+import com.finalteam5.otisrm.dto.srRequest.SrRqstForReviewerModal;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstSubmit;
 
 import lombok.extern.slf4j.Slf4j;
@@ -92,6 +93,13 @@ public class SrRqstServiceImpl implements SrRqstService{
 	public List<SrRqstForReviewerHomeBoard> getSrRqstForReviewerHomeBoardListByPage(Map<String, Object> params) {
 		return srRqstDao.selectSrRqstForReviewerHomeBoardListByPage(params);
 	}
+	
+	//검토자 상세모달로 SR정보 가져오기
+	@Override
+	public SrRqstForReviewerModal getSrRqstForReviewerModal(String selectedSrRqstNo) {
+		return srRqstDao.selectSrRqstForReviewerModal(selectedSrRqstNo);
+	}
+	
 	//상태별 요청수
 	@Override
 	public int getCountSrRqstBySttsNm(String srRqstSttNm) {
