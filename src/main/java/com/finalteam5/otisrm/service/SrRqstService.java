@@ -28,7 +28,7 @@ public interface SrRqstService {
 	public List<SrRqst> getSrRqstListByPager(Map<String, Object> map);
 
 	//전체 sr요청 수
-	public int totalSrRqst(String status);
+	public int totalSrRqst(Map<String, Object> map);
 
 	//sr요청에 해당하는 상세 정보 불러오기
 	public SrRqst getSrRqstBySrRqstNo(String srRqstNo);

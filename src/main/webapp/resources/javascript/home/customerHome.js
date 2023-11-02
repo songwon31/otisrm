@@ -82,29 +82,25 @@ function loadSRRequests(pageNo, choiceSrRqstSttsNo) {
     	  // item.srRqstRegDt를 YYYY-MM-dd 문자열로 변환
     	  const formattedDate = formatDateToYYYYMMDD(item.srRqstRegDt);
     	  var indexOnPage = index + indexOffset + 1; // 페이지 내에서의 index 계산
-    	  var count = 0;
-    	  if(item.srReqstrNo === $("#loginUsrNo").val()){    
-    		  console.log("앙")
-    		  html += '<tr class="data-tr" style="background-color: white;">';
-    		  html += '	<td>' + indexOnPage + '</td>';
-    		  html += '	<td>' + item.srRqstNo + '</td>';
-    		  html += '	<td class="truncate-text" style="max-width: 221.32px;">' + item.srTtl + '</td>';
-    		  html += '	<td class="truncate-text" style="max-width: 144.64px;">' + item.sysNm + '</td>';
-    		  html += '	<td class="truncate-text" style="max-width: 67.56px;">' + item.usrNm + '</td>';
-    		  html += '	<td class="truncate-text" style="max-width: 69.64px;">' + item.instNm + '</td>';
-    		  html += '	<td class="truncate-text" style="max-width: 67.56px;">' + item.srRqstSttsNm + '</td>';
-    		  html += '	<td>'+ formattedDate +'</td>'
-    		  html += '	<td>'+ item.srRqstEmrgYn +'</td>';
-    		  html += '	<td><button type="button" id="showSrRqstDetailBtn" class="btn-2" data-toggle="modal" data-target="#srRqstBySrNo" onclick="showSrRqstBySrRqstNo(\''+ item.srRqstNo +'\')">상세보기</button></td>';
-    		  html += '</tr>';
-    		  
-    		  count ++;
-    	  }
+
+		  html += '<tr class="data-tr" style="background-color: white;">';
+		  html += '	<td>' + indexOnPage + '</td>';
+		  html += '	<td>' + item.srRqstNo + '</td>';
+		  html += '	<td class="truncate-text" style="max-width: 221.32px;">' + item.srTtl + '</td>';
+		  html += '	<td class="truncate-text" style="max-width: 144.64px;">' + item.sysNm + '</td>';
+		  html += '	<td class="truncate-text" style="max-width: 67.56px;">' + item.usrNm + '</td>';
+		  html += '	<td class="truncate-text" style="max-width: 69.64px;">' + item.instNm + '</td>';
+		  html += '	<td class="truncate-text" style="max-width: 67.56px;">' + item.srRqstSttsNm + '</td>';
+		  html += '	<td>'+ formattedDate +'</td>'
+		  html += '	<td>'+ item.srRqstEmrgYn +'</td>';
+		  html += '	<td><button type="button" id="showSrRqstDetailBtn" class="btn-2" data-toggle="modal" data-target="#srRqstBySrNo" onclick="showSrRqstBySrRqstNo(\''+ item.srRqstNo +'\')">상세보기</button></td>';
+		  html += '</tr>';
+    	  
       });
       html +='<tr class="empty-tr" style="height: 100%;">';
       html +='</tr>';
       $("#getSrReqstListByPageNo").html(html);
-      
+      console.log("행수");
       //데이터가 없을 경우 페이징 숨기기
       var paginationContainer = document.getElementById("pagination-container");
   
@@ -221,6 +217,7 @@ function updatePagination(pageNo, choiceSrRqstSttsNo) {
     method: "GET",
     success: function (totalRows) {
     	console.log("페이지: " + totalRows);
+    	
     	// totalRows를 기반으로 페이징을 업데이트
         var totalPageNo = Math.ceil(totalRows / 5); // 페이지 수 계산 (5는 페이지당 항목 수)
         

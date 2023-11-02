@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.Authentication;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.finalteam5.otisrm.dto.Pager;
 import com.finalteam5.otisrm.dto.srRequest.SrRqst;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstAtch;
+import com.finalteam5.otisrm.dto.usr.Usr;
+import com.finalteam5.otisrm.security.UsrDetails;
 import com.finalteam5.otisrm.service.SrRqstService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -33,13 +36,25 @@ public class CustomerRestController {
 	//페이지 번호를 가져오기 위함
 	@GetMapping("getPageNo")
 	  public Map<String, Object> getSRRequests(
+			  Authentication authentication, 
 			  @RequestParam(required = false, defaultValue = "1") int srRqstPageNo,
-			  @RequestParam(name="status", required=false)String status) {
-        Map<String, Object> response = new HashMap<>();
+			  @RequestParam(name="status", required=false)String status,
+			  HttpSession session) {
+		
+		Map<String, Object> response = new HashMap<>();
         
-        int totalRows = srRqstService.totalSrRqst(status);
-        Pager srRqstpager = new Pager(5, 5, totalRows, srRqstPageNo);
         Map<String, Object> map = new HashMap<>();
+        if (authentication != null && authentication.isAuthenticated()) {
+			//로그인한 회원의 정보
+			UsrDetails usrDetails = (UsrDetails) authentication.getPrincipal();
+			Usr usr = usrDetails.getUsr();
+			map.put("usr", usr.getUsrNo());
+        }
+        map.put("status", status);
+        
+        //총 행수 구하기
+        int totalRows = srRqstService.totalSrRqst(map);
+        Pager srRqstpager = new Pager(5, 5, totalRows, srRqstPageNo);
         map.put("startRowNo", srRqstpager.getStartRowNo());
         map.put("endRowNo", srRqstpager.getEndRowNo());
 
@@ -52,12 +67,19 @@ public class CustomerRestController {
 	
 	@GetMapping("getSRRequestsByPageNo")
 	public List<SrRqst> getSRRequests(
+			Authentication authentication, 
 			@RequestParam String srRqstPageNo, 
 			@RequestParam(name="status", required=false)String status, 
 			HttpSession session) {
 		//파라미터로 전달받은 값 전달
 		Map<String, Object>map = new HashMap<>();
 		map.put("status", status);
+		if (authentication != null && authentication.isAuthenticated()) {
+			//로그인한 회원의 정보
+			UsrDetails usrDetails = (UsrDetails) authentication.getPrincipal();
+			Usr usr = usrDetails.getUsr();
+			map.put("usr", usr.getUsrNo());
+		} 
 		//SR요청 목록 페이징  
 		if(srRqstPageNo == null) {
 			 //세션에 저장되어 있는지 확인
@@ -70,10 +92,9 @@ public class CustomerRestController {
 		
 		//세션에 현재 sr요청 페이지번호 저장
 		session.setAttribute("srRqstPageNo", String.valueOf(srRqstPageNo));
-		
 		//문자열을 정수로 변환
 		int intSrRqstPageNo = Integer.parseInt(srRqstPageNo);
-		int totalRows = srRqstService.totalSrRqst(status);
+		int totalRows = srRqstService.totalSrRqst(map);
 		Pager srRqstpager = new Pager(5, 5, totalRows, intSrRqstPageNo);
 		
 		map.put("startRowNo", srRqstpager.getStartRowNo());
@@ -86,9 +107,20 @@ public class CustomerRestController {
 	
 	//상태에 따른 sr요청 총 행수 불러오기
 	@GetMapping("getCountSRRequestsByStatus")
-	public int countSRRequestsByStatus(@RequestParam(name="status") String status) {
-	    // status에 따른 총 행 수를 가져오는 쿼리 실행
-	    int totalRows = srRqstService.totalSrRqst(status);
+	public int countSRRequestsByStatus(
+			Authentication authentication,
+			@RequestParam(name="status") String status) {
+		//파라미터로 전달받은 값 전달
+		Map<String, Object>map = new HashMap<>();
+		map.put("status", status);
+		if (authentication != null && authentication.isAuthenticated()) {
+			//로그인한 회원의 정보
+			UsrDetails usrDetails = (UsrDetails) authentication.getPrincipal();
+			Usr usr = usrDetails.getUsr();
+			map.put("usr", usr.getUsrNo());
+		} 
+		// status에 따른 총 행 수를 가져오는 쿼리 실행
+	    int totalRows = srRqstService.totalSrRqst(map);
 	    
 	    return totalRows;
 	}

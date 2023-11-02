@@ -51,10 +51,14 @@ public class SrRequestManagementController {
 			session.setAttribute("srRqstMngPageNo", String.valueOf(srRqstMngPageNo));
 			
 			//문자열을 정수로 변환
-			int intSrRqstMngPageNo = Integer.parseInt(srRqstMngPageNo);
-			int totalRows = srRqstService.totalSrRqst(status);
-			Pager srRqstpagerOfMng = new Pager(10, 5, totalRows, intSrRqstMngPageNo);
 			Map<String, Object>map = new HashMap<>();
+			int intSrRqstMngPageNo = Integer.parseInt(srRqstMngPageNo);
+			//총 행수 구하기
+			map.put("status", status);
+			map.put("usr", usr.getUsrNo());
+			int totalRows = srRqstService.totalSrRqst(map);
+			
+			Pager srRqstpagerOfMng = new Pager(10, 5, totalRows, intSrRqstMngPageNo);
 			map.put("startRowNo", srRqstpagerOfMng.getStartRowNo());
 			map.put("endRowNo", srRqstpagerOfMng.getEndRowNo());
 

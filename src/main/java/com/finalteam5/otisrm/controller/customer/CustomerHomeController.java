@@ -54,28 +54,33 @@ public class CustomerHomeController {
 			Usr usr = usrDetails.getUsr();
 			model.addAttribute("usr", usr);
 			session.setAttribute("loginUsrNo", usr.getUsrNo());
+			//SR요청 목록 페이징  
+			if(srRqstPageNo == null) {
+				//세션에 저장되어 있는지 확인
+				if(session.getAttribute("srRqstPageNo") == null || session.getAttribute("srRqstPageNo") == "") {
+					srRqstPageNo = "1";  
+				}else {
+					srRqstPageNo =  (String) session.getAttribute("srRqstPageNo");
+				}
+			}
+			//세션에 현재 sr요청 페이지번호 저장
+			session.setAttribute("srRqstPageNo", String.valueOf(srRqstPageNo));
+			
+			Map<String, Object>map = new HashMap<>();
+			
+			//문자열을 정수로 변환
+			int intSrRqstPageNo = Integer.parseInt(srRqstPageNo);
+			
+			//총 행수 구하기
+			map.put("status", status);
+			map.put("usr", usr.getUsrNo());
+			int totalRows = srRqstService.totalSrRqst(map);
+			Pager srRqstpager = new Pager(5, 5, totalRows, intSrRqstPageNo);
+			map.put("startRowNo", srRqstpager.getStartRowNo());
+			map.put("endRowNo", srRqstpager.getEndRowNo());
+			
+			model.addAttribute("srRqstpager", srRqstpager);
 		} 
-		//SR요청 목록 페이징  
-		if(srRqstPageNo == null) {
-			 //세션에 저장되어 있는지 확인
-	         if(session.getAttribute("srRqstPageNo") == null || session.getAttribute("srRqstPageNo") == "") {
-	        	 srRqstPageNo = "1";  
-	         }else {
-	        	 srRqstPageNo =  (String) session.getAttribute("srRqstPageNo");
-	         }
-		}
-		//세션에 현재 sr요청 페이지번호 저장
-		session.setAttribute("srRqstPageNo", String.valueOf(srRqstPageNo));
-		
-		//문자열을 정수로 변환
-		int intSrRqstPageNo = Integer.parseInt(srRqstPageNo);
-		int totalRows = srRqstService.totalSrRqst(status);
-		Pager srRqstpager = new Pager(5, 5, totalRows, intSrRqstPageNo);
-		Map<String, Object>map = new HashMap<>();
-		map.put("startRowNo", srRqstpager.getStartRowNo());
-		map.put("endRowNo", srRqstpager.getEndRowNo());
-
-		model.addAttribute("srRqstpager", srRqstpager);
 	
 		return "/home/customerHome";
 	}

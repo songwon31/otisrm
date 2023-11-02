@@ -61,33 +61,48 @@
 		        join dept d on d.dept_no = u.dept_no 
 		        join inst i on i.inst_no = u.inst_no
 		        join sr_rqst_stts q on q.sr_rqst_stts_no = r.sr_rqst_stts_no
-		        <if test='status != null and status != ""'>
-                	<where>
-                		r.sr_rqst_stts_no=#{status, jdbcType=VARCHAR}
-                	</where>
-               	</if>
-		        <if test='keyword != null and keyword != ""'>
-                	<where>
-                		REGEXP_REPLACE(LOWER(REPLACE(pg_name,' ','')), '[[:punct:]]', '') LIKE '%'||REGEXP_REPLACE(LOWER(REPLACE(#{keyword},' ','')), '[[:punct:]]', '')||'%'
-                	</where>
-               	</if>	
+		        <if test="status != null and status != '' or usr != null and usr != '' or keyword != null and keyword != ''">
+				  <where>
+				    <if test="status != null and status != ''">
+				      r.sr_rqst_stts_no = #{status, jdbcType=VARCHAR}
+				    </if>
+				    <if test="status != null and status != '' and (usr != null and usr != '' or keyword != null and keyword != '')">
+				      AND
+				    </if>
+				    <if test="usr != null and usr != ''">
+				      sr_reqstr_no = #{usr, jdbcType=VARCHAR}
+				    </if>
+				    <if test="keyword != null and keyword != ''">
+				      REGEXP_REPLACE(LOWER(REPLACE(pg_name, ' ', '')), '[[:punct:]]', '') LIKE '%' || REGEXP_REPLACE(LOWER(REPLACE(#{keyword}, ' ', '')), '[[:punct:]]', '') || '%'
+				    </if>
+				  </where>
+				</if>
 			    order by sr_rqst_reg_dt desc
 		    )
 		<![CDATA[
 			    where rownum <= #{endRowNo}
+			    
 			 )
 			 where rnum >= #{startRowNo}
 		]]>
 	</select>
 	
 	<!-- 전체 sr요청 수(페이징을 위함) -->
-	<select id="countSrRqst" parameterType="String" resultType="int">
+	<select id="countSrRqst" parameterType="Map" resultType="int">
 		select count(*) from sr_rqst
-		<if test='status != null and status != ""'>
-        	<where>
-            	sr_rqst_stts_no=#{status, jdbcType=VARCHAR}
-            </where>
-        </if>
+		<if test="status != null and status != '' or usr != null and usr != ''">
+		  <where>
+		    <if test="status != null and status != ''">
+		       sr_rqst_stts_no = #{status, jdbcType=VARCHAR}
+		    </if>
+		    <if test="status != null and status != '' and usr != null and usr != ''">
+		      AND
+		    </if>
+		    <if test="usr != null and usr != ''">
+		      sr_reqstr_no = #{usr, jdbcType=VARCHAR}
+		    </if>
+		  </where>
+		</if>
 	</select>
 
 	<!-- sr요청 상세 불러오기-->
@@ -118,6 +133,10 @@
 		where sr_rqst_stts_no = 'RQST' 
 		and sr_rqst_no= #{srRqstNo, jdbcType=VARCHAR}
 	</update>
+	
+	<!-- sr요청 메뉴 검색창 -->
+	<!-- 관련 시스템 전체 목록 불러오기 -->
+	
 	
 	
 	<!-- 작성자: 이현주  -->

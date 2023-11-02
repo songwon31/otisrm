@@ -38,9 +38,11 @@ public class SrRqstManagementRestController {
 			  @RequestParam(name="status", required=false)String status) {
         Map<String, Object> response = new HashMap<>();
         
-        int totalRows = srRqstService.totalSrRqst(status);
-        Pager srRqstpagerOfMng = new Pager(10, 5, totalRows, srRqstMngPageNo);
         Map<String, Object> map = new HashMap<>();
+        //파라미터로 받은 값 전달
+        map.put("status", status);
+        int totalRows = srRqstService.totalSrRqst(map);
+        Pager srRqstpagerOfMng = new Pager(10, 5, totalRows, srRqstMngPageNo);
         map.put("startRowNo", srRqstpagerOfMng.getStartRowNo());
         map.put("endRowNo", srRqstpagerOfMng.getEndRowNo());
 
@@ -74,7 +76,7 @@ public class SrRqstManagementRestController {
 		
 		//문자열을 정수로 변환
 		int intSrRqstMngPageNo = Integer.parseInt(srRqstMngPageNo);
-		int totalRows = srRqstService.totalSrRqst(status);
+		int totalRows = srRqstService.totalSrRqst(map);
 		Pager srRqstpagerOfMng = new Pager(10, 5, totalRows, intSrRqstMngPageNo);
 		
 		map.put("startRowNo", srRqstpagerOfMng.getStartRowNo());
@@ -88,8 +90,10 @@ public class SrRqstManagementRestController {
 	//상태에 따른 sr요청 총 행수 불러오기
 	@GetMapping("getCountSRRequestsByStatus")
 	public int countSRRequestsByStatus(@RequestParam(name="status") String status) {
-	    // status에 따른 총 행 수를 가져오는 쿼리 실행
-	    int totalRows = srRqstService.totalSrRqst(status);
+		 Map<String, Object> map = new HashMap<>();
+		 map.put("status", status);
+		// status에 따른 총 행 수를 가져오는 쿼리 실행
+	    int totalRows = srRqstService.totalSrRqst(map);
 	    
 	    return totalRows;
 	}
