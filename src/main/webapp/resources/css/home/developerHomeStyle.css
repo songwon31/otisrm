@@ -132,12 +132,16 @@ input:focus, select:focus {
 	background-color:white;
 }
 
+#srPlanInfo > div {
+	border-bottom: 1px solid #f9fafe;
+}
+
 
 /* modal */
 .modal-header {
 	display:flex; 
 	align-items:center; 
-	background-color:#222e3c; 
+	background-color:#222e3c;
 	color:white;
 }
 

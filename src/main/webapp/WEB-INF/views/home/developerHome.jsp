@@ -122,178 +122,14 @@
 						</tr>
 					</thead>
 					<tbody>
-						<%-- 
-						<c:forEach var="sr" items="${srList}" varStatus="status">
-							<tr style="height: 4.5rem; font-size: 1.5rem; background-color:white;">
-								<td>${sr.srNo}</td>
-								<td>${sr.sysNm}</td>
-								<td>${sr.srDmndNm}</td>
-								<td>${sr.srTtl}</td>
-								<td>${sr.usrNm}</td>
-								<td><fmt:formatDate value="${sr.srCmptnPrnmntDt}" pattern="yyyy-MM-dd"/></td>
-								<td><fmt:formatDate value="${sr.srTrgtCmptnDt}" pattern="yyyy-MM-dd"/></td>
-								<td>${sr.srPrgrsSttsNm}</td>
-								<td>
-									<button data-toggle="modal" data-target="#requestDetailModal" class="btn-2 detail-button" 
-											onclick="showRequestDetail('${sr.srNo}')">요청상세</button>
-								</td>
-							</tr>
-						</c:forEach>
-						 --%>
+						
 					</tbody>
 				</table>
 			</div>
 			<div id="pager_div" style="height: 4.5rem; font-size: 1.6rem; display: flex; flex-direction: row; justify-content: center; align-items: center;">
-				<%-- 
-				<a href="javascript:void(0)"> 
-					<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center;">first_page</i>
-				</a>
-				<c:if test="${pager.groupNo>1}">
-					<a href="javascript:void(0)"> 
-						<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center;">chevron_left</i>
-					</a>
-				</c:if>
-
-				<c:forEach var="i" begin="${pager.startPageNo}" end="${pager.endPageNo}">
-					<div style="width: 0.25rem;"></div>
-					<c:if test="${pager.pageNo != i}">
-						<a href="javascript:void(0)" style="font-size: 1.6rem; height: 3rem; line-height: 3rem;">${i}</a>
-					</c:if>
-					<c:if test="${pager.pageNo == i}">
-						<a href="javascript:void(0)" style="font-size: 1.6rem; height: 3rem; line-height: 3rem;">${i}</a>
-					</c:if>
-					<div style="width: 0.25rem;"></div>
-				</c:forEach>
-
-				<c:if test="${pager.groupNo<pager.totalGroupNo}">
-					<a href="javascript:void(0)"> 
-					<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center;">chevron_right</i>
-					</a>
-				</c:if>
-
-				<a href="javascript:void(0)"> 
-					<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center;">last_page</i>
-				</a>
-				 --%>
+				
 			</div>
 		</div>
-		<!-- 
-		<div id="calendarDiv">
-			<div id="calendar"></div>
-			<script>
-				document.addEventListener('DOMContentLoaded', function() {
-					var calendarEl = document.getElementById('calendar');
-					var calendar = new FullCalendar.Calendar(calendarEl, {
-						height: '40rem', // calendar 높이 설정
-						aspectRatio: 1,
-						//fixedWeekCount: false,
-				        //expandRows: true, // 화면에 맞게 높이 재설정
-				        slotMinTime: '08:00', // Day 캘린더에서 시작 시간
-				        slotMaxTime: '20:00', // Day 캘린더에서 종료 시간
-				        // 해더에 표시할 툴바
-				        headerToolbar: {
-				          left: 'title',	
-				          center: 'dayGridMonth',
-				          right: 'prev,next'
-				        },
-				        initialView: 'dayGridMonth', // 초기 로드 될때 보이는 캘린더 화면(기본 설정: 달)
-				        //initialDate: '2021-07-15', // 초기 날짜 설정 (설정하지 않으면 오늘 날짜가 보인다.)
-				        //navLinks: true, // 날짜를 선택하면 Day 캘린더나 Week 캘린더로 링크
-				        //editable: true, // 수정 가능?
-				        //selectable: true, // 달력 일자 드래그 설정가능
-				        //nowIndicator: true, // 현재 시간 마크
-				        //dayMaxEvents: true, // 이벤트가 오버되면 높이 제한 (+ 몇 개식으로 표현)
-				        locale: 'ko', // 한국어 설정
-				        eventAdd: function(obj) { // 이벤트가 추가되면 발생하는 이벤트
-				          console.log(obj);
-				        },
-				        eventChange: function(obj) { // 이벤트가 수정되면 발생하는 이벤트
-				          console.log(obj);
-				        },
-				        eventRemove: function(obj){ // 이벤트가 삭제되면 발생하는 이벤트
-				          console.log(obj);
-				        },
-				        /* select: function(arg) { // 캘린더에서 드래그로 이벤트를 생성할 수 있다.
-				          var title = prompt('Event Title:');
-				          if (title) {
-				            calendar.addEvent({
-				              title: title,
-				              start: arg.start,
-				              end: arg.end,
-				              allDay: arg.allDay
-				            })
-				          }
-				          calendar.unselect()
-				        }, */
-				        // 이벤트 
-				        events: [
-				          {
-				            title: 'All Day Event',
-				            start: '2021-07-01',
-				          },
-				          {
-				            title: 'Long Event',
-				            start: '2021-07-07',
-				            end: '2021-07-10'
-				          },
-				          {
-				            groupId: 999,
-				            title: 'Repeating Event',
-				            start: '2021-07-09T16:00:00'
-				          },
-				          {
-				            groupId: 999,
-				            title: 'Repeating Event',
-				            start: '2021-07-16T16:00:00'
-				          },
-				          {
-				            title: 'Conference',
-				            start: '2021-07-11',
-				            end: '2021-07-13'
-				          },
-				          {
-				            title: 'Meeting',
-				            start: '2021-07-12T10:30:00',
-				            end: '2021-07-12T12:30:00'
-				          },
-				          {
-				            title: 'Lunch',
-				            start: '2021-07-12T12:00:00'
-				          },
-				          {
-				            title: 'Meeting',
-				            start: '2021-07-12T14:30:00'
-				          },
-				          {
-				            title: 'Happy Hour',
-				            start: '2021-07-12T17:30:00'
-				          },
-				          {
-				            title: 'Dinner',
-				            start: '2021-07-12T20:00:00'
-				          },
-				          {
-				            title: 'Birthday Party',
-				            start: '2021-07-13T07:00:00'
-				          },
-				          {
-					      	title: 'project',
-					      	start: '2023-10-25T07:00:00',
-					      	end: '2023-10-27T16:00:00'
-					      },
-				          {
-				            title: 'Click for Google',
-				            url: 'http://google.com/', // 클릭시 해당 url로 이동
-				            start: '2021-07-28'
-				          }
-				        ]
-				      });
-					calendar.render();
-				});
-				
-			</script>
-		</div>
-		 -->
 	</div>
 	<div id="userManagementBottomDiv">
 		<div id="srProgressDiv">
@@ -303,90 +139,47 @@
 					<span>SR요청 처리 정보</span>
 				</div>
 			</div>
-			<div id="srProgressChoiceDiv">
-				<!-- 
-				<a href="javascript:void(0)" onclick="selectSrProgressTableFilter(this)" 
-					class="srProgressTableSelectElement srProgressRquest filterTab" 
-					style="width:10%">
-					<span>SR요청정보</span>
-				</a>
-				-->
-				<a id="srRqstInfoTab" href="javascript:void(0)"
-					onclick="selectSrProgressTableFilter('srRqstInfoTab')"
-					class="srProgressTableSelectElement srProgressPlan filterTab filterTabSelected"
-					style="width: 10%"> 
-					<span>SR계획정보</span>
-				</a> 
-				<a id="srHrInfoTab" href="javascript:void(0)"
-					onclick="selectSrProgressTableFilter('srHrInfoTab')"
-					class="srProgressTableSelectElement srProgressHr filterTab"
-					style="width: 10%"> 
-					<span>SR자원정보</span>
-				</a> 
-				<a id="srPrgrsInfoTab" href="javascript:void(0)"
-					onclick="selectSrProgressTableFilter('srPrgrsInfoTab')"
-					class="srProgressTableSelectElement srProgressPercentage filterTab"
-					style="width: 10%"> 
-					<span>SR진척률</span>
-				</a>
-				<div style="flex-grow: 1; border-bottom: 1.5px solid #edf2f8;"></div>
-			</div>
-			<!-- SR요청정보 div -->
-			<!-- 
-			<div id="srRqstInfo" class="bottomSubDiv" style="display:none;">
-				<div style="height:4rem; display:flex; flex-direction:row;">
-					<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#f9fafe;">SR번호</div>
-					<div style="height:4rem; width:35%; padding-left:0.5rem; display:flex; align-items:center;">EIS_SR_2023_0167</div>
-					<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#f9fafe;">시스템구분</div>
-					<div style="height:4rem; width:35%; padding-left:0.5rem; display:flex; align-items:center;">EIS</div>
+			<div style="display:flex;">
+				<div id="srProgressChoiceDiv" style="width:60%;">
+					<a id="srRqstInfoTab" href="javascript:void(0)"
+						onclick="selectSrProgressTableFilter('srRqstInfoTab')"
+						class="srProgressTableSelectElement srProgressPlan filterTab filterTabSelected"
+						style="width: 25%"> 
+						<span>SR계획정보</span>
+					</a> 
+					<a id="srHrInfoTab" href="javascript:void(0)"
+						onclick="selectSrProgressTableFilter('srHrInfoTab')"
+						class="srProgressTableSelectElement srProgressHr filterTab"
+						style="width: 25%"> 
+						<span>SR자원정보</span>
+					</a> 
+					<a id="srPrgrsInfoTab" href="javascript:void(0)"
+						onclick="selectSrProgressTableFilter('srPrgrsInfoTab')"
+						class="srProgressTableSelectElement srProgressPercentage filterTab"
+						style="width: 25%"> 
+						<span>SR진척률</span>
+					</a>
+					<div style="flex-grow: 1; border-bottom: 1.5px solid #edf2f8;"></div>
 				</div>
-				<div style="height:4rem; display:flex; flex-direction:row;">
-					<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#f9fafe;">SR제목</div>
-					<div style="height:4rem; width:85%; padding-left:0.5rem; display:flex; align-items:center;">[국취] 맞춤분석 내 분석항목(전역예정장병, 재학생(졸업예정자)) 구분 항목 추가</div>
-				</div>
-				<div style="height:4rem; display:flex; flex-direction:row;">
-					<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#f9fafe;">요청일</div>
-					<div style="height:4rem; width:35%; padding-left:0.5rem; display:flex; align-items:center;">2023-10-11</div>
-					<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#f9fafe;">완료요청일</div>
-					<div style="height:4rem; width:35%; padding-left:0.5rem; display:flex; align-items:center;">2024-02-29</div>
-				</div>
-				<div style="height:4rem; display:flex; flex-direction:row;">
-					<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#f9fafe;">SR요청번호</div>
-					<div style="height:4rem; width:35%; padding-left:0.5rem; display:flex; align-items:center;">SR231011_0010</div>
-					<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#f9fafe;">유지보수 이관일</div>
-					<div style="height:4rem; width:35%; padding-left:0.5rem; display:flex; align-items:center;">EIS</div>
-				</div>
-				<div style="height:11rem; display:flex; flex-direction:row;">
-					<div style="height:11rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#f9fafe;">SR내용</div>
-					<div style="height:11rem; width:85%; padding-left:0.5rem; display:flex; flex-direction: column;">
-						<div style="height:3rem;">
-							<form>
-								<div style="display:flex; flex-direction: row; align-items:center;">
-									<input type="radio" name="srContentType" value="requestContent" style="width:1.6rem; height:1.6rem; margin-right:0.2rem;">요청내용
-									<div style="width:1rem;"></div>
-									<input type="radio" name="srContentType" value="developContent" style="width:1.6rem; height:1.6rem; margin-right:0.2rem;">개발내용
-								</div>
-							</form>
-						</div>
-						<div style="height:8rem; display:flex; flex-direction: row; align-items:center; ">
-							<div style="height:7rem; width: 100%; border:1px solid gray; padding:0.3rem; overflow-y:auto;">
-								향후 로직 전달드리겠습니다.<br>* 첨부파일 내 6번 해당 <br><br>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div style="height:4rem; display:flex; flex-direction:row;">
-					<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#f9fafe; border-radius:0px 0px 0px 10px/0px 0px 0px 10px">첨부파일</div>
-					<div style="height:4rem; width:85%; padding-left:0.5rem; display:flex; align-items:center;">(요청내용)230712_EIS변경요청.hwp</div>
+				<div id="srProgressBtnDiv" style="display:flex; line-height:3rem; justify-content:flex-end; align-items:center; width:40%; border-bottom: 1.5px solid #edf2f8;">
+					<a data-toggle="modal" data-target="#srPlanInfoEditModal" onclick="showSrPlanInfoEditModal()" class="srProgressBtn srPlanBtn" href="javascript:void(0)" 
+						style="pointer-events: none; height: 2.5rem; width: 5rem; border: 1px solid gray; border-radius: 5px; display: flex; flex-direction: row; justify-content: center; align-items: center;">수정</a> 
+					<a class="srProgressBtn srHrBtn" href="javascript:void(0)" 
+						style="pointer-events: none; height: 2.5rem; width: 5rem; border: 1px solid gray; border-radius: 5px; display: none; flex-direction: row; justify-content: center; align-items: center;">추가</a> 
+					<a class="srProgressBtn srHrBtn" href="javascript:void(0)" 
+						style="pointer-events: none; height: 2.5rem; width: 8rem; border: 1px solid gray; border-radius: 5px; display: none; flex-direction: row; justify-content: center; align-items: center; margin-left: 0.5rem;">선택삭제</a> 
+					<a class="srProgressBtn srHrBtn" href="javascript:void(0)" 
+						style="pointer-events: none; height: 2.5rem; width: 5rem; border: 1px solid gray; border-radius: 5px; display: none; flex-direction: row; justify-content: center; align-items: center; margin-left: 0.5rem;">저장</a>
+					<a class="srProgressBtn srPrgrsBtn" href="javascript:void(0)" 
+						style="pointer-events: none; height: 2.5rem; width: 5rem; border: 1px solid gray; border-radius: 5px; display: none; flex-direction: row; justify-content: center; align-items: center;">저장</a> 
 				</div>
 			</div>
-			 -->
 			<!-- SR계획정보 div -->
 			<div id="srPlanInfo" class="bottomSubDiv">
 				<div style="height: 4rem; display: flex; flex-direction: row;">
 					<div style="height: 4rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #f9fafe;">요청구분</div>
 					<div id="srPlanInfoDmnd" style="height: 4rem; width: 35%; padding-left: 0.5rem; display: flex; align-items: center;">
-
+						
 					</div>
 					<div style="height: 4rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #f9fafe;">업무구분</div>
 					<div id="srPlanInfoTask" style="height: 4rem; width: 35%; padding-left: 0.5rem; display: flex; align-items: center;">
@@ -394,16 +187,10 @@
 					</div>
 				</div>
 				<div style="height: 4rem; display: flex; flex-direction: row;">
-					<div style="height: 4rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #f9fafe;">요청사</div>
-					<div id="srPlanInfoInst" style="height: 4rem; width: 35%; padding-left: 0.5rem; display: flex; align-items: center;">
-
-					</div>
-					<div style="height: 4rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #f9fafe;">요청팀</div>
+					<div style="height: 4rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #f9fafe;">처리팀</div>
 					<div id="srPlanInfoDept" style="height: 4rem; width: 35%; padding-left: 0.5rem; display: flex; align-items: center;">
 
 					</div>
-				</div>
-				<div style="height: 4rem; display: flex; flex-direction: row;">
 					<div style="height: 4rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #f9fafe;">담당자</div>
 					<div id="srPlanInfoPic" style="height: 4rem; width: 35%; padding-left: 0.5rem; display: flex; align-items: center;">
 
@@ -419,11 +206,11 @@
 					
 					</div>
 				</div>
-				<div style="height: 15rem; display: flex; flex-direction: row;">
-					<div style="height: 15rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #f9fafe; border-radius: 0px 0px 0px 10px;">참고사항</div>
-					<div style="height: 15rem; width: 85%; padding-left: 0.5rem; display: flex; flex-direction: column;">
-						<div style="height: 15rem; display: flex; flex-direction: row; align-items: center;">
-							<div id="srPlanInfoNote" style="height: 14rem; width: 100%; border: 1px solid gray; padding: 0.3rem; overflow-y: auto; white-space: pre-line;">
+				<div style="height: 19rem; display: flex; flex-direction: row;">
+					<div style="height: 19rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #f9fafe; border-radius: 0px 0px 0px 10px;">참고사항</div>
+					<div style="height: 19rem; width: 85%; padding-left: 0.5rem; display: flex; flex-direction: column;">
+						<div style="height: 19rem; display: flex; flex-direction: row; align-items: center;">
+							<div id="srPlanInfoNote" style="height: 18rem; width: 100%; padding: 0.3rem; overflow-y: auto; white-space: pre-line;">
 
 							</div>
 						</div>
@@ -432,13 +219,13 @@
 			</div>
 			<!-- SR자원정보 -->
 			<div id="srHrInfo" class="bottomSubDiv" style="display: none;">
-				<div style="height: 27rem; background-color: #f9fafe;">
+				<div style="height: 31rem; background-color: #f9fafe; border-radius: 10px;">
 					<table style="width: 100%; text-align: center;">
 						<colgroup>
-							<col width="5%" />
-							<col width="15%" />
-							<col width="15%" />
-							<col width="65%" />
+							<col width="5%" >
+							<col width="15%"/>
+							<col width="15%"/>
+							<col width="65%"/>
 						</colgroup>
 						<thead style="background-color: #f9fafe;">
 							<tr style="height: 4rem; font-size: 1.6rem; font-weight: 700;">
@@ -452,12 +239,6 @@
 
 						</tbody>
 					</table>
-				</div>
-				<div
-					style="height: 4rem; display: flex; flex-direction: row; align-items: center;">
-					<a style="height: 3rem; width: 5rem; border: 1px solid gray; border-radius: 5px; display: flex; flex-direction: row; justify-content: center; align-items: center;" href="#">추가</a> 
-					<a style="height: 3rem; width: 8rem; border: 1px solid gray; border-radius: 5px; display: flex; flex-direction: row; justify-content: center; align-items: center; margin-left: 0.5rem;" href="#">선택삭제</a> 
-					<a style="height: 3rem; width: 5rem; border: 1px solid gray; border-radius: 5px; display: flex; flex-direction: row; justify-content: center; align-items: center; margin-left: 0.5rem;" href="#">저장</a>
 				</div>
 			</div>
 			<!-- SR진척률 -->
@@ -530,7 +311,7 @@
 	</div>
 </div>
 
-<!-- 상세보기 모달 -->
+<!-- SR요청 상세정보 모달 -->
 <div id="requestDetailModal" class="modal" data-backdrop="static">
 	<div class="modal-dialog modal-dialog-centered modal-lg" style="width:100rem;">
 		<div class="modal-content">
@@ -605,6 +386,147 @@
 					<div style="height:4rem; display:flex; flex-direction:row;">
 						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#f9fafe; border-radius:0px 0px 0px 10px/0px 0px 0px 10px;  font-weight:700;">첨부파일</div>
 						<div style="height:4rem; width:85%; padding-left:0.5rem; display:flex; align-items:center;">(요청내용)230712_EIS변경요청.hwp</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- SR계획정보  수정 모달 -->
+<div id="srPlanInfoEditModal" class="modal" data-backdrop="static">
+	<div class="modal-dialog modal-dialog-centered modal-lg" style="width:100rem;">
+		<div class="modal-content">
+			<div class="modal-header">
+				<div class="modal-title" style="font-size:2rem; font-weight:700;">SR계획정보</div>
+				<i class="material-icons close-icon" data-dismiss="modal" style="cursor: pointer;">close</i>
+			</div>
+			<div class="modal-body" style="margin:0px; padding:0px; font-size:1.5rem;">
+				<div id="srPlanInfo" class="bottomSubDiv">
+					<div style="height: 4rem; display: flex; flex-direction: row;">
+						<div style="height: 4rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #f9fafe;">요청구분</div>
+						<div style="height: 4rem; width: 35%; display: flex; align-items: center;">
+							<input id="srPlanModalDmndInput" type="text" disabled style="width:80%; height:3rem; margin:0 0 0 0.5rem;">
+						</div>
+						<div style="height: 4rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #f9fafe;">업무구분</div>
+						<div style="height: 4rem; width: 35%; display: flex; align-items: center;">
+							<input id="srPlanModalTaskInput" type="text" disabled style="width:80%; height:3rem; margin:0 0 0 0.5rem;">
+						</div>
+					</div>
+					<div style="height: 4rem; display: flex; flex-direction: row;">
+						<div style="height: 4rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #f9fafe;">처리팀</div>
+						<div style="height: 4rem; width: 35%; display: flex; align-items: center;">
+							<input id="srPlanModalDeptInput" type="text" disabled style="width:80%; height:3rem; margin:0 0 0 0.5rem;">
+						</div>
+						<div style="height: 4rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #f9fafe;">담당자</div>
+						<div style="height: 4rem; width: 35%; display: flex; align-items: center;">
+							<input id="srPlanModalPicInput" type="text" disabled style="width:62%; height:3rem; margin:0 0 0 0.5rem;">
+							<div style="width:3%"></div>
+							<a data-toggle="modal" data-target="#srPlanInfoFindPicModal" onclick="composeFindPicModal()" class="srProgressBtn srPlanBtn" href="javascript:void(0)" 
+								style="height: 3rem; width: 15%; border-radius: 5px; background-color:#2c7be4; color:white; font-weight:700; 
+								display: flex; flex-direction: row; justify-content: center; align-items: center;">찾기</a> 
+						</div>
+					</div>
+					<div style="height: 4rem; display: flex; flex-direction: row;">
+						<div style="height: 4rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #f9fafe;">목표시작일</div>
+						<div style="height: 4rem; width: 35%; display: flex; align-items: center;">
+							<input id="srPlanModalTrgtBgngDt" type="date" style="width:80%; height:3rem; margin:0rem 0.5rem;">
+						</div>
+						<div style="height: 4rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #f9fafe;">목표완료일</div>
+						<div style="height: 4rem; width: 35%; display: flex; align-items: center;">
+							<input id="srPlanModalTrgtCmptnDt" type="date" style="width:80%; height:3rem; margin:0rem 0.5rem;">
+						</div>
+					</div>
+					<div style="height: 15rem; display: flex; flex-direction: row;">
+						<div style="height: 15rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #f9fafe; border-radius: 0px 0px 0px 10px;">검토내용</div>
+							<textarea id="srPlanModalTrnsfNote" style="width:85%; resize:none; margin:0.5rem;">
+							</textarea>
+						</div>
+					<div style="height:4rem; display: flex; flex-direction: row; align-items:center; justify-content:flex-end;">
+						<a href="javascript:void(0)"
+							style="height: 3rem; width: 5rem; border-radius: 5px; background-color:#222e3c; color:white; font-weight:700; margin-right:0.5rem;
+							display: flex; flex-direction: row; justify-content: center; align-items: center;">저장</a>
+						<a href="javascript:void(0)" data-dismiss="modal"
+							style="height: 3rem; width: 5rem; border-radius: 5px; background-color:red; color:white; font-weight:700; margin-right:0.5rem;
+							display: flex; flex-direction: row; justify-content: center; align-items: center; cursor: pointer;">닫기</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- SR계획 이관 협력사 담당자 수정 모달 -->
+<div id="srPlanInfoFindPicModal" class="modal" data-backdrop="static">
+	<div class="modal-dialog modal-dialog-centered modal-lg" style="width:100rem;">
+		<div class="modal-content">
+			<div class="modal-header">
+				<div class="modal-title" style="font-size:2rem; font-weight:700;">담당자 검색</div>
+				<i class="material-icons close-icon" data-dismiss="modal" style="cursor: pointer;">close</i>
+			</div>
+			<div class="modal-body" style="margin:0px; padding:0px; font-size:1.5rem;">
+				<div id="srPlanInfoFindPic">
+					<div id="srPlanInfoFindPicSearchDiv" style="margin:0.5rem; padding:0.5rem; border: 1px solid #222e3c; border-radius:5px;">
+						<div style="height: 4rem; display: flex; flex-direction: row;">
+							<div style="height: 4rem; width: 10%; padding-left: 0.5rem; display: flex; align-items: center;">
+								<svg style="width:0.5rem; height:0.5rem; margin: 0rem 0.5rem;"><rect width="0.5rem" height="0.5rem" fill="#222E3C" /></svg>
+								처리팀
+							</div>
+							<div style="height: 4rem; width: 25%; display: flex; align-items: center;">
+								<select id="findPicModalDeptSelect" name="modalRqstSelect" style="width:70%; height:3rem; margin:0rem 0.5rem;">
+									<option value="" selected>선택</option>
+								</select>
+							</div>
+							<div style="height: 4rem; width: 10%; padding-left: 0.5rem; display: flex; align-items: center;">
+								<svg style="width:0.5rem; height:0.5rem; margin: 0rem 0.5rem;"><rect width="0.5rem" height="0.5rem" fill="#222E3C" /></svg>
+								담당자
+							</div>
+							<div style="height: 4rem; width: 25%; display: flex; align-items: center;">
+								<input id="findPicModalPicInput" value="" style="width:70%; height:3rem; margin:0rem 0.5rem;">
+							</div>
+							<div style="height:4rem; flex-grow:1; display:flex; justify-content:flex-end; align-items:center;">
+								<a href="javascript:void(0)" onclick="composeFindPicModalTable(1)"
+									style="height: 3rem; width: 5rem; border-radius: 5px; background-color:#2c7be4; color:white; font-weight:700; margin-right:0.5rem;
+									display: flex; flex-direction: row; justify-content: center; align-items: center;">검색</a>
+							</div>
+						</div>
+					</div>
+					<div style="display: flex; flex-direction: column; justify-contents:center; margin:0 0 0 0.5rem;">
+						<span style="font-size:1.6rem; font-weight:700;">조회결과</span>
+						<div style="height:27rem; background-color:#f9fafe; margin:0.5rem;">
+							<table id="findPicModalTable" style="width: 100%; text-align: center; border-radius:5px;">
+								<colgroup>
+									<col width="20%"/>
+									<col width="20%"/>
+									<col width="20%"/>
+									<col width="20%"/>
+									<col width="20%"/>
+								</colgroup>
+								<thead>
+									<tr style="height: 4.3rem; font-size: 1.5rem; font-weight: 700;">
+										<th scope="col">소속팀</th>
+										<th scope="col">직책</th>
+										<th scope="col">직위</th>
+										<th scope="col">이름</th>
+										<th scope="col">선택</th>
+									</tr>
+								</thead>
+								<tbody>
+									
+								</tbody>
+							</table>
+						</div>
+						<div id="findPicModalTablePagerDiv" style="height: 4.5rem; font-size: 1.6rem; display: flex; flex-direction: row; justify-content: center; align-items: center;">
+							
+						</div>
+						<div style="height:4rem; display: flex; flex-direction: row; align-items:center; justify-content:flex-end;">
+							<a href="javascript:void(0)" onclick="editSrTrnsfPlan()"
+								style="height: 3rem; width: 5rem; border-radius: 5px; background-color:#222e3c; color:white; font-weight:700; margin-right:0.5rem;
+								display: flex; flex-direction: row; justify-content: center; align-items: center;">저장</a>
+							<a href="javascript:void(0)" data-dismiss="modal"
+								style="height: 3rem; width: 5rem; border-radius: 5px; background-color:red; color:white; font-weight:700; margin-right:0.5rem;
+								display: flex; flex-direction: row; justify-content: center; align-items: center; cursor: pointer;">닫기</a>
+						</div>
 					</div>
 				</div>
 			</div>

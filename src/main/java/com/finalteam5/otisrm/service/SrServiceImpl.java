@@ -8,12 +8,19 @@ import org.springframework.stereotype.Service;
 
 import com.finalteam5.otisrm.dao.SrDao;
 import com.finalteam5.otisrm.dto.Pager;
+import com.finalteam5.otisrm.dto.SrDmndClsf;
+import com.finalteam5.otisrm.dto.SrTaskClsf;
 import com.finalteam5.otisrm.dto.sr.SrForDeveloperHomeBoard;
 import com.finalteam5.otisrm.dto.sr.SrPrgrsForDeveloperHome;
 import com.finalteam5.otisrm.dto.sr.SrPrgrsPicForDeveloperHome;
 import com.finalteam5.otisrm.dto.sr.SrRequestDetailForDeveloperHome;
 import com.finalteam5.otisrm.dto.sr.SrTableElementsForDeveloperHome;
+import com.finalteam5.otisrm.dto.sr.SrTrnsfFindPicModalCompose;
+import com.finalteam5.otisrm.dto.sr.SrTrnsfFindPicModalUsrInfo;
 import com.finalteam5.otisrm.dto.sr.SrTrnsfInfoForDeveloperHome;
+import com.finalteam5.otisrm.dto.sr.SrTrnsfPlanModalCompose;
+import com.finalteam5.otisrm.dto.usr.Dept;
+import com.finalteam5.otisrm.dto.usr.Usr;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -124,5 +131,30 @@ public class SrServiceImpl implements SrService{
 		srTableElementsForDeveloperHome.setApplyNum(applyNum);
 		
 		return srTableElementsForDeveloperHome;
+	}
+	
+	//SR계획정보 모달 구성
+	@Override
+	public SrTrnsfPlanModalCompose getSrTrnsfPlanModalComposeBySrNoAndUsrId(String usrId, String srNo) {
+		return  srDao.getCurrentSrTrnsfPlanInfo(srNo);
+	}
+	
+	//담당자 선택 dept select 구성
+	@Override
+	public List<Dept> getDeptListByUsrId(String usrId) {
+		return srDao.selectDeptListByUsrId(usrId);
+	}
+	
+	//담당자 선택 모달 구성
+	@Override
+	public SrTrnsfFindPicModalCompose getSrTrnsfFindPicModalCompose(String usrId, String deptNo, String usrNm, int pageNo) {
+		SrTrnsfFindPicModalCompose srTrnsfFindPicModalCompose = new SrTrnsfFindPicModalCompose();
+		int totalUsrNum = srDao.countSrTrnsfFindPicModalCompose(usrId, deptNo, usrNm);
+		Pager pager = new Pager(5, 5, totalUsrNum, pageNo);
+		log.info(""+pager);
+		List<SrTrnsfFindPicModalUsrInfo> usrList = srDao.selectSrTrnsfFindPicModalCompose(usrId, deptNo, usrNm, pager);
+		srTrnsfFindPicModalCompose.setPager(pager);
+		srTrnsfFindPicModalCompose.setUsrList(usrList);
+		return srTrnsfFindPicModalCompose;
 	}
 }

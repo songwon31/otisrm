@@ -11,11 +11,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.finalteam5.otisrm.dto.Pager;
-import com.finalteam5.otisrm.dto.sr.SrForDeveloperHomeBoard;
+import com.finalteam5.otisrm.dto.SrTrnsfPlanForm;
 import com.finalteam5.otisrm.dto.sr.SrRequestDetailForDeveloperHome;
 import com.finalteam5.otisrm.dto.sr.SrTableElementsForDeveloperHome;
+import com.finalteam5.otisrm.dto.sr.SrTrnsfFindPicModalCompose;
 import com.finalteam5.otisrm.dto.sr.SrTrnsfInfoForDeveloperHome;
+import com.finalteam5.otisrm.dto.sr.SrTrnsfPlanModalCompose;
+import com.finalteam5.otisrm.dto.usr.Dept;
 import com.finalteam5.otisrm.dto.usr.Usr;
 import com.finalteam5.otisrm.security.UsrDetails;
 import com.finalteam5.otisrm.service.SrServiceImpl;
@@ -35,48 +37,6 @@ public class DeveloperHomeController {
 			UsrDetails usrDetails = (UsrDetails) authentication.getPrincipal();
 			Usr usr = usrDetails.getUsr();
 			model.addAttribute("usr", usr);
-			/*
-			int totalTransferedSrNum = srService.getTotalTransferedSrNumByUsrId(usr.getUsrId());
-			//log.info(""+totalTransferedSrNum);
-			Pager pager = new Pager(5, 5, totalTransferedSrNum, 1);
-			//log.info("" + pager.getEndPageNo());
-			model.addAttribute("pager", pager);
-			
-			List<SrForDeveloperHomeBoard> srList = srService.getSrForDeveloperHomeBoardListByUsrIdAndPager(usr.getUsrId(), pager);
-			model.addAttribute("srList", srList);
-			
-			List<SrForDeveloperHomeBoard> totalSrList = srService.getSrForDeveloperHomeBoardListByUsrId(usr.getUsrId());
-			
-			int totalNum = totalSrList.size();
-			int requestNum = 0;
-			int analysisNum = 0;
-			int designNum = 0;
-			int implementNum = 0;
-			int testNum = 0;
-			int applyNum = 0;
-			for (SrForDeveloperHomeBoard sr : totalSrList) {
-				if (sr.getSrPrgrsSttsNm().equals("요청")) {
-					requestNum++;
-				} else if (sr.getSrPrgrsSttsNm().equals("분석")) {
-					analysisNum++;
-				} else if (sr.getSrPrgrsSttsNm().equals("설계")) {
-					designNum++;
-				} else if (sr.getSrPrgrsSttsNm().equals("구현")) {
-					implementNum++;
-				} else if (sr.getSrPrgrsSttsNm().equals("시험")) {
-					testNum++;
-				} else if (sr.getSrPrgrsSttsNm().equals("반영요청")) {
-					applyNum++;
-				}
-			}
-			model.addAttribute("totalNum", totalNum);
-			model.addAttribute("requestNum", requestNum);
-			model.addAttribute("analysisNum", analysisNum);
-			model.addAttribute("designNum", designNum);
-			model.addAttribute("implementNum", implementNum);
-			model.addAttribute("testNum", testNum);
-			model.addAttribute("applyNum", applyNum);
-			*/
 			return "/home/developerHome";
 		} else {
 			return "/home/developerHome";
@@ -110,6 +70,51 @@ public class DeveloperHomeController {
 		} else {
 			return null;
 		}
+	}
+	
+	//SR계획정보 모달 구성
+	@PostMapping("/getSrPlanModalCompose")
+	@ResponseBody
+	public SrTrnsfPlanModalCompose getSrPlanModalCompose(Authentication authentication, @RequestParam("srNo") String srNo) {
+		UsrDetails usrDetails = (UsrDetails) authentication.getPrincipal();
+		Usr usr = usrDetails.getUsr();
+		return srService.getSrTrnsfPlanModalComposeBySrNoAndUsrId(usr.getUsrId(), srNo);
+	}
+	
+	//담당자 선택 모달 dept select 구성
+	@PostMapping("/getFindPicModalDeptSelectList")
+	@ResponseBody
+	public List<Dept> getFindPicModalDeptSelectList(Authentication authentication) {
+		UsrDetails usrDetails = (UsrDetails) authentication.getPrincipal();
+		Usr usr = usrDetails.getUsr();
+		return srService.getDeptListByUsrId(usr.getUsrId());
+	}
+	
+	//담당자 선택 모달 테이블 구성
+	@PostMapping("/getFindPicModalCompose")
+	@ResponseBody
+	public SrTrnsfFindPicModalCompose getFindPicModalCompose(
+			Authentication authentication, 
+			@RequestParam("deptNo") String deptNo,
+			@RequestParam("usrNm") String usrNm,
+			@RequestParam("pageNo") int pageNo) {
+		UsrDetails usrDetails = (UsrDetails) authentication.getPrincipal();
+		Usr usr = usrDetails.getUsr();
+		if (deptNo.equals("")) {
+			deptNo = null;
+		}
+		if (usrNm.equals("")) {
+			usrNm = null;
+		}
+		log.info("in");
+		return srService.getSrTrnsfFindPicModalCompose(usr.getUsrId(), deptNo, usrNm, pageNo);
+	}
+	
+	@PostMapping("/editSrTrnsfPlan")
+	@ResponseBody
+	public String editSrTrnsfPlan(SrTrnsfPlanForm srTrnsfPlanForm) {
+		
+		return "success";
 	}
 	
 }

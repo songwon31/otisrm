@@ -8,7 +8,7 @@ import lombok.Data;
 public class SrForDeveloperHomeBoard {
 	private String srNo;
 	private String sysNm;
-	private String srDmndNm;
+	private String srTaskNm;
 	private String srTtl;
 	private String usrNm;
 	private Date srCmptnPrnmntDt;

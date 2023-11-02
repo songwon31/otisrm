@@ -186,57 +186,68 @@ function refactorMainTable(filterType, page) {
 				srTrHtml += '<tr style="height: 4.5rem; font-size: 1.5rem; background-color:white;">';
 				srTrHtml += '<td>' + sr.srNo + '</td>';
 				srTrHtml += '<td>' + sr.sysNm + '</td>';
-				srTrHtml += '<td>' + sr.srDmndNm + '</td>';
+				srTrHtml += '<td>' + sr.srTaskNm + '</td>';
 				srTrHtml += '<td>' + sr.srTtl + '</td>';
 				srTrHtml += '<td>' + sr.usrNm + '</td>';
 				let srCmptnPrnmntDt = new Date(sr.srCmptnPrnmntDt);
-		        let srTrgtCmptnDt = new Date(sr.srTrgtCmptnDt);
 		        srTrHtml += '<td>' + formatDate(srCmptnPrnmntDt) + '</td>';
-				srTrHtml += '<td>' + formatDate(srTrgtCmptnDt) + '</td>';
+		        if (sr.srTrgtCmptnDt == null) {
+		        	srTrHtml += '<td></td>';
+		        } else {
+		        	let srTrgtCmptnDt = new Date(sr.srTrgtCmptnDt);
+					srTrHtml += '<td>' + formatDate(srTrgtCmptnDt) + '</td>';
+		        }
 				srTrHtml += '<td>' + sr.srPrgrsSttsNm + '</td>';
-				srTrHtml += '<td> <button data-toggle="modal" data-target="#requestDetailModal" class="btn-2 detail-button"  onclick="showRequestDetail(\'' + sr.srNo + '\')">요청상세</button> </td>';
+				srTrHtml += '<td> <button data-toggle="modal" data-target="#requestDetailModal" class="btn-2 detail-button" onclick="showRequestDetail(\'' + sr.srNo + '\')">요청상세</button> </td>';
 				//jsp에 삽입
 				$('#mainTable tbody').append(srTrHtml);
 			}
 			
 			
 			//페이징 파트 구성
-			currentPageNo = data.pager.pageNo;
 			let pagerHtml = '';
-			if (data.pager.groupNo == 1) {
+			if (data.pager.totalRows == 0) {
 				pagerHtml += '<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center; color:#868e96; cursor:default;">first_page</i>';
 				pagerHtml += '<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center; color:#868e96; cursor:default;">chevron_left</i>';
-			} else {
-				pagerHtml += '<a href="javascript:void(0) onclick="refactorMainTable(\'change_page\', '+1+')">';
-				pagerHtml += '<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center;">first_page</i>';
-				pagerHtml += '</a>';
-				pagerHtml += '<a href="javascript:void(0)  onclick="refactorMainTable(\'change_page\', ' + ((data.pager.groupNo - data.pager.pagesPerGroup) * 5) + ')">';
-				pagerHtml += '<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center;">chevron_left</i>';
-				pagerHtml += '</a>';
-			}
-			
-			for (let i=data.pager.startPageNo; i<=data.pager.endPageNo; ++i) {
-				pagerHtml += '<div style="width: 0.25rem;"></div>';
-				if (data.pager.pageNo != i) {
-					pagerHtml += '<a href="javascript:void(0)" onclick="refactorMainTable(\'change_page\', '+i+')" style="font-size: 1.6rem; height: 3rem; line-height: 3rem;">'+i+'</a>';
-				} else {
-					pagerHtml += '<a href="javascript:void(0)" style="font-size: 1.6rem; height: 3rem; line-height: 3rem;">'+i+'</a>';
-				}
-				pagerHtml += '<div style="width: 0.25rem;"></div>';
-				
-			}
-			if (data.pager.groupNo == data.pager.totalGroupNo) {
+				pagerHtml += '<a href="javascript:void(0)" style="font-size: 1.6rem; height: 3rem; line-height: 3rem;">1</a>';
 				pagerHtml += '<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center; color:#868e96; cursor:default;">chevron_right</i>';
 				pagerHtml += '<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center; color:#868e96; cursor:default;">last_page</i>';
 			} else {
-				pagerHtml += '<a href="javascript:void(0) onclick="refactorMainTable(\'change_page\', ' + ((data.pager.groupNo * data.pager.pagesPerGroup)+1) + ')">';
-				pagerHtml += '<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center;">chevron_right</i>';
-				pagerHtml += '</a>';	
-				pagerHtml += '<a href="javascript:void(0) onclick="refactorMainTable(\'change_page\', ' + data.pager.endPageNo + ')"">';
-				pagerHtml += '<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center;">last_page</i>';
-				pagerHtml += '</a>';
+				currentPageNo = data.pager.pageNo;
+				if (data.pager.groupNo == 1) {
+					pagerHtml += '<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center; color:#868e96; cursor:default;">first_page</i>';
+					pagerHtml += '<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center; color:#868e96; cursor:default;">chevron_left</i>';
+				} else {
+					pagerHtml += '<a href="javascript:void(0) onclick="refactorMainTable(\'change_page\', '+1+')">';
+					pagerHtml += '<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center;">first_page</i>';
+					pagerHtml += '</a>';
+					pagerHtml += '<a href="javascript:void(0)  onclick="refactorMainTable(\'change_page\', ' + ((data.pager.groupNo - data.pager.pagesPerGroup) * 5) + ')">';
+					pagerHtml += '<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center;">chevron_left</i>';
+					pagerHtml += '</a>';
+				}
+				
+				for (let i=data.pager.startPageNo; i<=data.pager.endPageNo; ++i) {
+					pagerHtml += '<div style="width: 0.25rem;"></div>';
+					if (data.pager.pageNo != i) {
+						pagerHtml += '<a href="javascript:void(0)" onclick="refactorMainTable(\'change_page\', '+i+')" style="font-size: 1.6rem; height: 3rem; line-height: 3rem;">'+i+'</a>';
+					} else {
+						pagerHtml += '<a href="javascript:void(0)" style="font-size: 1.6rem; height: 3rem; line-height: 3rem;">'+i+'</a>';
+					}
+					pagerHtml += '<div style="width: 0.25rem;"></div>';
+					
+				}
+				if (data.pager.groupNo == data.pager.totalGroupNo) {
+					pagerHtml += '<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center; color:#868e96; cursor:default;">chevron_right</i>';
+					pagerHtml += '<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center; color:#868e96; cursor:default;">last_page</i>';
+				} else {
+					pagerHtml += '<a href="javascript:void(0) onclick="refactorMainTable(\'change_page\', ' + ((data.pager.groupNo * data.pager.pagesPerGroup)+1) + ')">';
+					pagerHtml += '<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center;">chevron_right</i>';
+					pagerHtml += '</a>';	
+					pagerHtml += '<a href="javascript:void(0) onclick="refactorMainTable(\'change_page\', ' + data.pager.endPageNo + ')"">';
+					pagerHtml += '<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center;">last_page</i>';
+					pagerHtml += '</a>';
+				}
 			}
-			
 			$('#pager_div').html(pagerHtml);
 				
 			sessionStorage.setItem('developerHomeMainTableFilter', mainTableFilter);
@@ -251,17 +262,26 @@ function refactorMainTable(filterType, page) {
 function selectSrProgressTableFilter(tabStyle) {
 	$('.srProgressTableSelectElement').removeClass('filterTabSelected');
 	if (tabStyle == 'srRqstInfoTab') {
+		console.log("1");
 		$('#srRqstInfoTab').addClass('filterTabSelected');
 		$('.bottomSubDiv').css('display', 'none');
 		$('#srPlanInfo').css('display', '');
+		$('.srProgressBtn').css('display', 'none');
+		$('.srPlanBtn').css('display', 'flex');
 	} else if (tabStyle == 'srHrInfoTab') {
+		console.log("2");
 		$('#srHrInfoTab').addClass('filterTabSelected');
 		$('.bottomSubDiv').css('display', 'none');
 		$('#srHrInfo').css('display', '');
+		$('.srProgressBtn').css('display', 'none');
+		$('.srHrBtn').css('display', 'flex');
 	} else if (tabStyle == 'srPrgrsInfoTab') {
+		console.log("3");
 		$('#srPrgrsInfoTab').addClass('filterTabSelected');
 		$('.bottomSubDiv').css('display', 'none');
 		$('#srProgressInfo').css('display', '');
+		$('.srProgressBtn').css('display', 'none');
+		$('.srPrgrsBtn').css('display', 'flex');
 	}	
 	currentBottomTabFilter = tabStyle;
 	sessionStorage.setItem('developerHomecurrentBottomTabFilter', currentBottomTabFilter);
@@ -390,6 +410,9 @@ function setSrDetail(srNo) {
 		}
 	});
 	
+	//버튼 비활성화 해제
+	$('.srProgressBtn').css('pointer-events', '');
+	
 	currentDetailSrNo = srNo;
 	sessionStorage.setItem('developerHomeCurrentDetailSrNo', currentDetailSrNo);
 }
@@ -404,41 +427,177 @@ function modal_sr_dvl_conts_btn_checked() {
 	$('#modal_sr_dvl_conts_div').css('display', '');
 }
 
-/*
- * $(document).ready(function() {
- * 
- * var button = document.querySelector('.fc-dayGridMonth-button');
- * console.log("button: ", button); button.click(); button.style.display =
- * 'none';
- * 
- * $('.fc-daygrid-day-number').css('font-size', '1.4rem');
- * $('.fc-daygrid-day-number').css('padding', '0');
- * $('.fc-header-toolbar').css('margin', '0');
- * $('.fc-header-toolbar').css('margin-bottom', '0.5rem');
- * $('.fc-button').css('padding', '0rem');
- * $('.fc-toolbar-title').css('font-size', '2rem');
- * 
- * var parentElement = document.querySelector('.fc-view-harness'); // 부모 요소가
- * 존재하면 if (parentElement) { // 부모 요소의 하위 요소를 모두 가져와서 반복 var childElements =
- * parentElement.querySelectorAll('*'); for (var i = 0; i <
- * childElements.length; i++) { // 각 하위 요소에 overflow: hidden 스타일 적용
- * childElements[i].style.overflow = 'hidden'; } }
- * 
- * $('.fc-button').click(onCalendarChange);
- * 
- * 
- * });
- * 
- * function onCalendarChange() { $('.fc-daygrid-day-number').css('font-size',
- * '1.4rem'); $('.fc-daygrid-day-number').css('padding', '0');
- * $('.fc-header-toolbar').css('margin', '0');
- * $('.fc-header-toolbar').css('margin-bottom', '0.5rem');
- * $('.fc-button').css('padding', '0rem');
- * $('.fc-toolbar-title').css('font-size', '2rem');
- * 
- * var parentElement = document.querySelector('.fc-view-harness'); // 부모 요소가
- * 존재하면 if (parentElement) { // 부모 요소의 하위 요소를 모두 가져와서 반복 var childElements =
- * parentElement.querySelectorAll('*'); for (var i = 0; i <
- * childElements.length; i++) { // 각 하위 요소에 overflow: hidden 스타일 적용
- * childElements[i].style.overflow = 'hidden'; } } }
- */
+//SR계획정보 모달 구성
+function showSrPlanInfoEditModal() {
+	let srNo = currentDetailSrNo;
+	
+	let requestData = {
+        srNo: srNo
+    };
+	
+	$.ajax({
+		type: "POST",
+		url: "/otisrm/getSrPlanModalCompose",
+		data: requestData,
+		success: function(data) {
+			//SR계획정보 구성
+			/*
+			for (let i=0; i<data.dmndList.length; ++i) {
+				let dmnd = data.dmndList[i];
+				let srPlanModalDmndSelectHtml = '';
+				srPlanModalDmndSelectHtml += '<option value="' + dmnd.srDmndNo + '">' + dmnd.srDmndNm + '</option>';
+				$('#srPlanModalDmndSelect').append(srPlanModalDmndSelectHtml);
+			}
+			if (data.srDmndNm != null && data.srDmndNm != '') {
+				$("#srPlanModalDmndSelect option:selected").prop("selected", false);
+			    $("#srPlanModalDmndSelect option").filter(function() {
+			        return $(this).text() == data.srDmndNm;
+			    }).prop("selected", true);
+			}
+			*/
+			$('#srPlanModalDmndInput').val(data.srDmndNm);
+			$('#srPlanModalTaskInput').val(data.srTaskNm);
+			$('#srPlanModalDeptInput').val(data.deptNm);
+			$('#srPlanModalPicInput').val(data.usrNm);
+			
+			let trgtBgngDt = new Date(data.srTrgtBgngDt);
+			$('#srPlanModalTrgtBgngDt').val(formatDate(trgtBgngDt));
+			let trgtCmptnDt = new Date(data.srTrgtCmptnDt);
+			$('#srPlanModalTrgtCmptnDt').val(formatDate(trgtCmptnDt));
+			$('#srPlanModalTrnsfNote').html(data.srTrnsfNote);
+		}
+	});
+}
+
+//담당자 검색 모달 구성
+function composeFindPicModal() {
+	//dept select 구성
+	$.ajax({
+		type: "POST",
+		url: "/otisrm/getFindPicModalDeptSelectList",
+		data: {},
+		success: function(data) {
+			for (let i=0; i<data.length; ++i) {
+				let html = '<option value="' + data[i].deptNo + '">' + data[i].deptNm + '</option>';
+				$('#findPicModalDeptSelect').append(html);
+			}
+		}
+	});
+	
+	composeFindPicModalTable(1);
+}
+
+//담당자 검색 모달 테이블 구성
+function composeFindPicModalTable(pageNo) {
+	//데이터 준비
+	let deptNo = $('#findPicModalDeptSelect').val();
+	let usrNm = $('#findPicModalPicInput').val();
+	
+	let requestData = {
+        deptNo: deptNo,
+        usrNm: usrNm,
+        pageNo: pageNo
+    };
+	
+	//테이블 구성
+	$.ajax({
+		type: "POST",
+		url: "/otisrm/getFindPicModalCompose",
+		data: requestData,
+		success: function(data) {
+			//테이블 body 구성
+			//테이블 body 초기화
+			$('#findPicModalTable tbody').html('');
+			//테이블 body 재구성
+			for (let i=0; i<data.usrList.length; ++i) {
+				let usr = data.usrList[i];
+				let findPicTableHtml = '';
+				findPicTableHtml += '<tr style="height: 4.5rem; font-size: 1.5rem; background-color:white;">';
+				findPicTableHtml += '<td>' + usr.deptNm + '</td>';
+				findPicTableHtml += '<td>' + usr.roleNm + '</td>';
+				findPicTableHtml += '<td>' + usr.ibpsNm + '</td>';
+				findPicTableHtml += '<td>' + usr.usrNm + '</td>';
+				findPicTableHtml += '<td> <button class="btn-2 detail-button" data-dismiss="modal" onclick="setFindPicModalPic(\'' + usr.deptNm + '\', \'' + usr.usrNm + '\')">선택</button> </td>';
+				//jsp에 삽입
+				$('#findPicModalTable tbody').append(findPicTableHtml);
+			}
+			
+			
+			//페이징 파트 구성
+			let pagerHtml = '';
+			if (data.pager.totalRows == 0) {
+				pagerHtml += '<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center; color:#868e96; cursor:default;">first_page</i>';
+				pagerHtml += '<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center; color:#868e96; cursor:default;">chevron_left</i>';
+				pagerHtml += '<a href="javascript:void(0)" style="font-size: 1.6rem; height: 3rem; line-height: 3rem;">1</a>';
+				pagerHtml += '<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center; color:#868e96; cursor:default;">chevron_right</i>';
+				pagerHtml += '<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center; color:#868e96; cursor:default;">last_page</i>';
+			} else {
+				currentPageNo = data.pager.pageNo;
+				if (data.pager.groupNo == 1) {
+					pagerHtml += '<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center; color:#868e96; cursor:default;">first_page</i>';
+					pagerHtml += '<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center; color:#868e96; cursor:default;">chevron_left</i>';
+				} else {
+					pagerHtml += '<a href="javascript:void(0) onclick="composeFindPicModalTable('+1+')">';
+					pagerHtml += '<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center;">first_page</i>';
+					pagerHtml += '</a>';
+					pagerHtml += '<a href="javascript:void(0)  onclick="composeFindPicModalTable(' + ((data.pager.groupNo - data.pager.pagesPerGroup) * 5) + ')">';
+					pagerHtml += '<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center;">chevron_left</i>';
+					pagerHtml += '</a>';
+				}
+				
+				for (let i=data.pager.startPageNo; i<=data.pager.endPageNo; ++i) {
+					pagerHtml += '<div style="width: 0.25rem;"></div>';
+					if (data.pager.pageNo != i) {
+						pagerHtml += '<a href="javascript:void(0)" onclick="composeFindPicModalTable('+i+')" style="font-size: 1.6rem; height: 3rem; line-height: 3rem;">'+i+'</a>';
+					} else {
+						pagerHtml += '<a href="javascript:void(0)" style="font-size: 1.6rem; height: 3rem; line-height: 3rem;">'+i+'</a>';
+					}
+					pagerHtml += '<div style="width: 0.25rem;"></div>';
+					
+				}
+				if (data.pager.groupNo == data.pager.totalGroupNo) {
+					pagerHtml += '<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center; color:#868e96; cursor:default;">chevron_right</i>';
+					pagerHtml += '<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center; color:#868e96; cursor:default;">last_page</i>';
+				} else {
+					pagerHtml += '<a href="javascript:void(0) onclick="composeFindPicModalTable(' + ((data.pager.groupNo * data.pager.pagesPerGroup)+1) + ')">';
+					pagerHtml += '<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center;">chevron_right</i>';
+					pagerHtml += '</a>';	
+					pagerHtml += '<a href="javascript:void(0) onclick="composeFindPicModalTable(' + data.pager.endPageNo + ')"">';
+					pagerHtml += '<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center;">last_page</i>';
+					pagerHtml += '</a>';
+				}
+				
+				$('#findPicModalTablePagerDiv').html(pagerHtml);
+			}
+		}
+	});
+}
+
+//담당자 검색 모달에서 선택시 SR계획정보로 데이터 전달
+function setFindPicModalPic(deptNm, usrNm) {
+    $('#srPlanModalDeptInput').val(deptNm);
+    $('#srPlanModalPicInput').val(usrNm);
+}
+
+//sr계획 작성/수정
+function editSrTrnsfPlan() {
+	let srNo = currentDetailSrNo;
+	
+	let requestData = {
+		srNo: srNo,
+		deptNm: $('#srPlanModalDeptInput').val(),
+        usrNm: $('#srPlanModalPicInput').val(),
+        srTrgtBgngDt: $('#srPlanModalTrgtBgngDt').val(),
+        srTrgtCmptnDt: $('#srPlanModalTrgtCmptnDt').val(),
+        srTrnsfNote: $('#srPlanModalTrnsfNote').val()
+    };
+	
+	$.ajax({
+		type: "POST",
+		url: "/otisrm/editSrTrnsfPlan",
+		data: requestData,
+		success: function(data) {
+			
+		}
+	});
+}
