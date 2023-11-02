@@ -5,12 +5,15 @@ function init() {
 	 eventPreventSrRqstAtch();
 }
  
-var choiceSrRqstSttsNo = null;
+var choiceSrRqstSttsNo = "";
+var pageNo = 1;
 $(document).ready(function() {
+	  console.log("으아ready");
+	//필터링 텝 선택 효과
 	$(".filterTab").click(function() {
 	    // 클릭된 요소의 스타일을 변경
 	    $(this).css({
-	        "background-color": "#f9fafe",
+	    	"background-color": "#edf2f8",
 	        "color": "black"
 	    });
 	    $(".filterTab").not(this).css({
@@ -25,20 +28,7 @@ $(document).ready(function() {
 	    // 클릭되지 않은 다른 요소들의 스타일 초기화
 	});	
   loadSRRequests(1, choiceSrRqstSttsNo); //페이지 로딩 시 초기 데이터 로드
-  changePage(pageNo); 
-  
 });
-
-// 페이지 번호 변경 시 SR 요청 데이터 로드
-function changePage(pageNo) {
-  loadSRRequests(pageNo, choiceSrRqstSttsNo);
-  // 사용자가 페이징 버튼을 클릭할 때 loadPage 함수를 호출
-  $('#pagination-container').on('click', 'a', function(e) {
-      e.preventDefault();
-      var pageNo = $(this).attr('href').split('=')[1];
-      loadPage(pageNo, choiceSrRqstSttsNo);
-  });
-}
 
 //timestamp 객체를 YYYY-MM-dd 형식의 문자열로 변환하는 함수
 function formatDateToYYYYMMDD(timestamp) {
@@ -71,7 +61,7 @@ function loadSRRequests(pageNo, choiceSrRqstSttsNo) {
       html="";
       console.log(data);
       if(data<1){
-			 html += '<tr>';
+			 html += '<tr style="background-color: white;">';
 			 html += '	<td></td>';
 			 html += '	<td></td>';
 			 html += '	<td></td>';
@@ -91,7 +81,7 @@ function loadSRRequests(pageNo, choiceSrRqstSttsNo) {
     	  // item.srRqstRegDt를 YYYY-MM-dd 문자열로 변환
     	  const formattedDate = formatDateToYYYYMMDD(item.srRqstRegDt);
     	  var indexOnPage = index + indexOffset + 1; // 페이지 내에서의 index 계산
-    	  html += '<tr>';
+    	  html += '<tr class="data-tr" style="background-color: white;">';
     	  html += '	<td>' + indexOnPage + '</td>';
     	  html += '	<td>' + item.srRqstNo + '</td>';
     	  html += '	<td class="truncate-text" style="max-width: 221.32px;">' + item.srTtl + '</td>';
@@ -116,12 +106,98 @@ function loadSRRequests(pageNo, choiceSrRqstSttsNo) {
     	  $(".btn").hide();
     	  console.log("데이터 없움");
       }else{
+    	  updatePagination(pageNo, choiceSrRqstSttsNo);
     	  $(".btn").show();
     	  console.log("데이터 있움");
       }
+      //tr 요소에 대한 hover 이벤트 처리
+      $('.data-tr').hover(
+        function() {
+        	console.log("올림");
+          // 마우스가 요소 위에 있을 때 배경색 변경
+          $(this).css('background-color', '#f3f6fd');
+        },
+        function() {
+          // 마우스가 요소를 벗어날 때 배경색 원래대로 변경
+          $(this).css('background-color', 'white');
+        }
+      );
     },
     error: function(error) {
       console.error("데이터를 불러오는 중 오류가 발생했습니다.");
+    }
+  });
+}
+
+function getTotalRows(choiceSrRqstSttsNo){
+	 $.ajax({
+		    url: "getCountSRRequestsByStatus",
+		    data: {
+		      status: choiceSrRqstSttsNo
+		    },
+		    dataType: "json",
+		    method: "GET",
+		    success:function(totalRows){
+		    	return totalRows;
+		    }
+	 });
+}
+
+//페이징 업데이트 함수
+function updatePagination(pageNo, choiceSrRqstSttsNo) {
+  $.ajax({
+    url: "getCountSRRequestsByStatus",
+    data: {
+      status: choiceSrRqstSttsNo
+    },
+    dataType: "json",
+    method: "GET",
+    success: function (totalRows) {
+    	console.log("페이지: " + totalRows);
+    	// totalRows를 기반으로 페이징을 업데이트
+        var totalPageNo = Math.ceil(totalRows / 5); // 페이지 수 계산 (5는 페이지당 항목 수)
+        
+        // 현재 페이지 번호 업데이트
+        var currentPageNo = pageNo;
+        
+        // 이전/다음 페이지 버튼 표시 여부 결정
+        var showPrev = currentPageNo > 1;
+        var showNext = currentPageNo < totalPageNo;
+        
+        // 이전/다음 페이지 버튼 생성
+        var prevButton = '<a class="page-button btn" href="javascript:loadSRRequests(' + (currentPageNo - 1) + ',\''+ choiceSrRqstSttsNo +'\')">이전</a>';
+        var nextButton = '<a class="page-button btn" href="javascript:loadSRRequests(' + (currentPageNo + 1) + ',\''+ choiceSrRqstSttsNo +'\')">다음</a>';
+        
+        // 페이지 번호 버튼 생성
+        var pageButtons = '';
+        for (var i = 1; i <= totalPageNo; i++) {
+          if (i === currentPageNo) {
+            // 현재 페이지 번호는 활성화된 스타일을 적용
+            pageButtons += '<a class="page-button btn active" href="javascript:loadSRRequests(' + i + ',\''+ choiceSrRqstSttsNo +'\')">' + i + '</a>';
+          } else {
+            pageButtons += '<a class="page-button btn" href="javascript:loadSRRequests(' + i + ',\''+ choiceSrRqstSttsNo +'\')">' + i + '</a>';
+          }
+        }
+        
+        // 이전 페이지 버튼을 표시
+        if (showPrev) {
+          pageButtons = '<a class="page-button btn" href="javascript:loadSRRequests(1,\''+ choiceSrRqstSttsNo +'\')">처음</a>' + prevButton + pageButtons;
+        } else {
+          pageButtons = '<a class="page-button btn" href="javascript:loadSRRequests(1,\''+ choiceSrRqstSttsNo +'\')">처음</a>' + pageButtons;
+        }
+        
+        // 다음 페이지 버튼을 표시
+        if (showNext) {
+          pageButtons += nextButton + '<a class="page-button btn" href="javascript:loadSRRequests(' + totalPageNo + ',\''+ choiceSrRqstSttsNo +'\')">맨끝</a>';
+        } else {
+          pageButtons += '<a class="page-button btn" href="javascript:loadSRRequests(' + totalPageNo + ',\''+ choiceSrRqstSttsNo +'\')">맨끝</a>';
+        }
+        
+        // 페이지 버튼 컨테이너 업데이트
+        $("#pagination-container").html(pageButtons);
+    },
+    error: function (error) {
+      console.error("총 행 수를 가져오는 중 오류가 발생했습니다.");
     }
   });
 }

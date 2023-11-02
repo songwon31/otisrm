@@ -13,14 +13,33 @@ a {
 	/*overflow: hidden;*/
 }
 
+.shadow {
+    box-shadow: 2px 28px rgba(58,59,69,.15);
+}
+
+.navbar-expand {
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+}
+
+.navbar {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+}
+
 nav {
     display: block;
     margin-bottom: 0px;
     background-color:#fafbfd; 
 }
+
 .nav-link{
 	color: #6a757b;	
 }
+
 div {
     display: block;
 }
@@ -58,8 +77,4 @@ div {
 	height:91.5rem;
 	padding: 2rem;
 	background-color: #edf2f8;
-}
-
-.shadow {
-    box-shadow: 2px 28px rgba(58,59,69,.15);
 }

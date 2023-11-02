@@ -4,95 +4,107 @@
 <script src="${pageContext.request.contextPath}/resources/javascript/home/customerHome.js"></script>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/home/customerHome.css" />
 <div id="customerHomeDiv" class="contentDiv shadow">
-   <input type="hidden" id="loginUsrNo" value="${usr.usrNo}">
-   <div class="titleDiv">
-      <div class="font-weight-bold d-flex tt-ct">
-         <i class="material-icons tt-ic">person</i>
-            <span>My Portal</span>
-      </div>
+   <div>
+	   <input type="hidden" id="loginUsrNo" value="${usr.usrNo}">
+	   <div class="titleDiv">
+	      <div class="font-weight-bold d-flex tt-ct">
+	         <i class="material-icons tt-ic">person</i>
+	            <span>My Portal</span>
+	      </div>
+	   </div>
    </div>
-   <div class="potalTop">
-   	  <div class="subcontentTitle">
-	   	  <div class="d-flex st-ct">
-	   	  	<i class="material-icons stt-ic">chevron_right</i>
-	   	  	<span class="pt-1">나의 할일</span>
-	   	  </div>
-   	  </div>
-   	  <div class="tableContainer w-70">
-   	  	<div class="filterTabWrap">
-   	  		<div class="d-flex">
-   	  			<div class="filterTab pt-2" style="background-color: #f9fafe; color: black;">전체</div>
-   	  			<div id="RQST" class="filterTab pt-2">요청<span id="rqst-count"></span></div>
-   	  			<div id="APRV_WAIT" class="filterTab pt-2">승인대기<span id="rqst-count"></span></div>
-   	  			<div id="APRV" class="filterTab pt-2">승인<span id="rqst-count"></span></div>
-   	  			<div id="RCPT_WAIT"  class="filterTab pt-2">접수대기<span id="rqst-count"></span></div>
-   	  			<div id="RCPT"  class="filterTab pt-2">접수<span id="rqst-count"></span></div>
-   	  			<div id="DEP_ING"  class="filterTab pt-2">개발중<span id="rqst-count"></span></div>
-   	  			<div id="TEST"  class="filterTab pt-2">테스트<span id="rqst-count"></span></div>
-   	  			<div id="CMPTN_RQST"  class="filterTab pt-2">완료요청<span id="rqst-count"></span></div>
-   	  			<div id="DEP_CMPTN"  class="filterTab pt-2">개발완료<span id="rqst-count"></span></div>
-   	  			<div id="requestAddBtnWrap" class="d-flex flex-row-reverse align-items-end">
-					<button id="requestAddBtn" data-toggle="modal" data-target="#addSrRqst" class="btn-1 d-inline-flex flex-row align-items-center justify-content-center mb-1" onclick="showSysByDeptNo('${usr.deptNo}')">
-						요청 등록
-					</button>
-				</div>
-   	  		</div>
-   	  	</div>
-   	  <table id="mainTable" style="width: 100%; text-align: center; height: 28rem;">
-		    <colgroup>
-		        <col width="45.04px" />
-		        <col width="118.99px" />
-		        <col width="221.32px" />
-		        <col width="144.64px" />
-		        <col width="67.56px" />
-		        <col width="69.64px" />
-		        <col width="67.56px" />
-		        <col width="90.08px" />
-		        <col width="45.04px" />
-		        <col width="67.7px" />
-		    </colgroup>
-		    <thead>
-		        <tr>
-		            <th scope="col"></th>
-		            <th scope="col">요청번호</th>
-		            <th scope="col">제목</th>
-		            <th scope="col">관련시스템</th>
-		            <th scope="col">등록자</th>
-		            <th scope="col">소속</th>
-		            <th scope="col">상태</th>
-		            <th scope="col">요청일</th>
-		            <th scope="col">중요</th>
-		            <th scope="col">상세보기</th>
-		        </tr>
-		    </thead>
-		    <tbody id="getSrReqstListByPageNo">      
-	             
-		    </tbody>
-		</table>
-		<!-- 페이징 -->
-		<div  id="pagination-container" class="paging d-flex justify-content-center">
-			<a class="btn" href="javascript:loadSRRequests(1)">처음</a>
-			<c:if test="${srRqstpager.groupNo>1}">
-				<a class="btn" href="javascript:loadSRRequests(${srRqstpager.startPageNo-1})">이전</a>
-			</c:if>
-			
-			<c:forEach var="i" begin="${srRqstpager.startPageNo}" end="${srRqstpager.endPageNo}">
-				<c:if test="${srRqstpager.pageNo != i}">
-					<a class="btn" href="javascript:loadSRRequests(${i})">${i}</a>
-				</c:if>
-				<c:if test="${srRqstpager.pageNo == i}">
-					<a class="btn" href="javascript:loadSRRequests(${i})">${i}</a>
-				</c:if>
-			</c:forEach>
-			
-			<c:if test="${srRqstpager.groupNo<srRqstpager.totalGroupNo}">
-				<a class="btn" href="javascript:loadSRRequests(${srRqstpager.endPageNo+1})">다음</a>
-			</c:if>
-			<a class="btn" href="javascript:loadSRRequests(${srRqstpager.totalPageNo})">맨끝</a>
-	    </div>	
-   	  </div>
-    </div>
-    <div class="potalBottom">
+   
+   
+   <div>
+	   <div class="d-flex">
+		   <div class="potalTop section shadow w-70">
+		   	  <div class="subcontentTitle">
+			   	  <div class="d-flex st-ct">
+			   	  	<i class="material-icons stt-ic">chevron_right</i>
+			   	  	<span class="pt-1">나의 할일</span>
+			   	  </div>
+		   	  </div>
+		   	  <div class="tableContainer">
+		   	  	<div class="filterTabWrap">
+		   	  		<div class="d-flex">
+		   	  			<div id="" class="filterTab pt-2" style="background-color: #edf2f8; color: black;">전체</div>
+		   	  			<div id="RQST" class="filterTab pt-2">요청<span id="rqst-count"></span></div>
+		   	  			<div id="APRV_WAIT" class="filterTab pt-2">승인대기<span id="rqst-count"></span></div>
+		   	  			<div id="APRV" class="filterTab pt-2">승인<span id="rqst-count"></span></div>
+		   	  			<div id="RCPT_WAIT"  class="filterTab pt-2">접수대기<span id="rqst-count"></span></div>
+		   	  			<div id="RCPT"  class="filterTab pt-2">접수<span id="rqst-count"></span></div>
+		   	  			<div id="DEP_ING"  class="filterTab pt-2">개발중<span id="rqst-count"></span></div>
+		   	  			<div id="TEST"  class="filterTab pt-2">테스트<span id="rqst-count"></span></div>
+		   	  			<div id="CMPTN_RQST"  class="filterTab pt-2">완료요청<span id="rqst-count"></span></div>
+		   	  			<div id="DEP_CMPTN"  class="filterTab pt-2">개발완료<span id="rqst-count"></span></div>
+		   	  			<div id="requestAddBtnWrap" class="d-flex flex-row-reverse align-items-end">
+							<button id="requestAddBtn" data-toggle="modal" data-target="#addSrRqst" class="btn-1 d-inline-flex flex-row align-items-center justify-content-center mb-1" onclick="showSysByDeptNo('${usr.deptNo}')">
+								요청 등록
+							</button>
+						</div>
+		   	  		</div>
+		   	  	</div>
+		   	  <table id="mainTable" style="width: 100%; text-align: center; height: 27rem;">
+				    <colgroup>
+				        <col width="45.04px" />
+				        <col width="118.99px" />
+				        <col width="221.32px" />
+				        <col width="144.64px" />
+				        <col width="67.56px" />
+				        <col width="69.64px" />
+				        <col width="67.56px" />
+				        <col width="90.08px" />
+				        <col width="45.04px" />
+				        <col width="67.7px" />
+				    </colgroup>
+				    <thead>
+				        <tr>
+				            <th scope="col"></th>
+				            <th scope="col">요청번호</th>
+				            <th scope="col">제목</th>
+				            <th scope="col">관련시스템</th>
+				            <th scope="col">등록자</th>
+				            <th scope="col">소속</th>
+				            <th scope="col">상태</th>
+				            <th scope="col">요청일</th>
+				            <th scope="col">중요</th>
+				            <th scope="col">상세보기</th>
+				        </tr>
+				    </thead>
+				    <tbody id="getSrReqstListByPageNo">      
+			             
+				    </tbody>
+				</table>
+				<!-- 페이징 -->
+				<div  id="pagination-container" class="paging d-flex justify-content-center">
+					<a class="btn" href="javascript:loadSRRequests(1)">처음</a>
+					<c:if test="${srRqstpager.groupNo>1}">
+						<a class="btn" href="javascript:loadSRRequests(${srRqstpager.startPageNo-1})">이전</a>
+					</c:if>
+					
+					<c:forEach var="i" begin="${srRqstpager.startPageNo}" end="${srRqstpager.endPageNo}">
+						<c:if test="${srRqstpager.pageNo != i}">
+							<a class="btn" href="javascript:loadSRRequests(${i})">${i}</a>
+						</c:if>
+						<c:if test="${srRqstpager.pageNo == i}">
+							<a class="btn" href="javascript:loadSRRequests(${i})">${i}</a>
+						</c:if>
+					</c:forEach>
+					
+					<c:if test="${srRqstpager.groupNo<srRqstpager.totalGroupNo}">
+						<a class="btn" href="javascript:loadSRRequests(${srRqstpager.endPageNo+1})">다음</a>
+					</c:if>
+					<a class="btn" href="javascript:loadSRRequests(${srRqstpager.totalPageNo})">맨끝</a>
+			    </div>	
+		   	  </div>
+		    </div>
+		    <div class="potalTop section shadow w-30">
+		   	</div>
+	   </div>
+   </div>
+   
+    
+    <div class="potalBottom section shadow">
    	  <div class="subcontentTitle">
 	   	  <div class="d-flex st-ct">
 	   	  	<i class="material-icons stt-ic">chevron_right</i>
@@ -283,7 +295,7 @@
 			          <label for="systemName" class="form-label modal-input">첨부파일</label>
 			        </div>
 			        <div style="width: 500px;">
-			        	 <input id="file" type="file" name="file">
+			        	 <input id="file" type="file" name="file" multiple>
 			        </div>
 			        <div>
 			        	<input id="importantChk" type="checkbox" onclick="isImportendChecked()"><span> 중요</span>

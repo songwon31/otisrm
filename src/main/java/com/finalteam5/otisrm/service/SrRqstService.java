@@ -3,7 +3,6 @@ package com.finalteam5.otisrm.service;
 import java.util.List;
 import java.util.Map;
 
-import com.finalteam5.otisrm.dto.Pager;
 import com.finalteam5.otisrm.dto.Sys;
 import com.finalteam5.otisrm.dto.srRequest.SrRqst;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstAtch;
@@ -28,7 +27,7 @@ public interface SrRqstService {
 	public List<SrRqst> getSrRqstListByPager(Map<String, Object> map);
 
 	//전체 sr요청 수
-	public int totalSrRqst();
+	public int totalSrRqst(String status);
 
 	//sr요청에 해당하는 상세 정보 불러오기
 	public SrRqst getSrRqstBySrRqstNo(String srRqstNo);

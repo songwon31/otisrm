@@ -39,7 +39,7 @@
    
    <body>
 	<div id="bodyDiv" class="shadow">
-	   	<nav id="header-bar">
+	   	<nav id="header-bar" class="shadow navbar-expand navbar-light">
 		    <div id="logo">		    	
 				<img id="logo-img" src="${pageContext.request.contextPath}/resources/images/logo2.png" alt=""/>
 				<span id="logo-gap"></span>	    
@@ -125,7 +125,7 @@
 		                <div class="dropdown-divider"></div>
 		                <form class="dropdown-item" action="${pageContext.request.contextPath}/logout">
 		                	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-		                	<button>
+		                	<button style="background-color: transparent; border: none;">
 		                		<i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
 		                    	Logout
 		                	</button>

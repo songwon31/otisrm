@@ -79,7 +79,7 @@
 	</select>
 	
 	<!-- 전체 sr요청 수(페이징을 위함) -->
-	<select id="countSrRqst" resultType="int">
+	<select id="countSrRqst" parameterType="String" resultType="int">
 		select count(*) from sr_rqst
 		<if test='status != null and status != ""'>
         	<where>

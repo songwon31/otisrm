@@ -32,7 +32,7 @@ public interface SrRqstDao {
 	public List<SrRqst> selectSrRqstListByPage(Map<String, Object> map);
 	
 	//전체 sr요청목록 불러오기: 요청 수(페이징 처리를 위함)
-	public int countSrRqst();
+	public int countSrRqst(String status);
 	
 	//sr요청에 해당하는 상세 정보 불러오기
 	public SrRqst selectSrRqstBySrRqstNo(String srRqstNo);

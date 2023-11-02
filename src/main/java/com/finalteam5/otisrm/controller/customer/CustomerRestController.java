@@ -1,17 +1,9 @@
 package com.finalteam5.otisrm.controller.customer;
 
-import java.io.OutputStream;
-import java.net.URLEncoder;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,10 +32,12 @@ public class CustomerRestController {
 	
 	//페이지 번호를 가져오기 위함
 	@GetMapping("getPageNo")
-	  public Map<String, Object> getSRRequests(@RequestParam(required = false, defaultValue = "1") int srRqstPageNo) {
+	  public Map<String, Object> getSRRequests(
+			  @RequestParam(required = false, defaultValue = "1") int srRqstPageNo,
+			  @RequestParam(name="status", required=false)String status) {
         Map<String, Object> response = new HashMap<>();
         
-        int totalRows = srRqstService.totalSrRqst();
+        int totalRows = srRqstService.totalSrRqst(status);
         Pager srRqstpager = new Pager(5, 5, totalRows, srRqstPageNo);
         Map<String, Object> map = new HashMap<>();
         map.put("startRowNo", srRqstpager.getStartRowNo());
@@ -79,7 +73,7 @@ public class CustomerRestController {
 		
 		//문자열을 정수로 변환
 		int intSrRqstPageNo = Integer.parseInt(srRqstPageNo);
-		int totalRows = srRqstService.totalSrRqst();
+		int totalRows = srRqstService.totalSrRqst(status);
 		Pager srRqstpager = new Pager(5, 5, totalRows, intSrRqstPageNo);
 		
 		map.put("startRowNo", srRqstpager.getStartRowNo());
@@ -88,6 +82,15 @@ public class CustomerRestController {
 		//페이지 별 요청 목록 불러오기
 		List<SrRqst> list = srRqstService.getSrRqstListByPager(map);
 		return list;
+	}
+	
+	//상태에 따른 sr요청 총 행수 불러오기
+	@GetMapping("getCountSRRequestsByStatus")
+	public int countSRRequestsByStatus(@RequestParam(name="status") String status) {
+	    // status에 따른 총 행 수를 가져오는 쿼리 실행
+	    int totalRows = srRqstService.totalSrRqst(status);
+	    
+	    return totalRows;
 	}
 	
 	//요청에 해당하는 상세정보 불러오기
@@ -99,34 +102,4 @@ public class CustomerRestController {
 		model.addAttribute("srRqstNo", srRqstNo);
 		return srRqst;
 	}
-	
-	/*//첨부파일 다운로드
-	@PostMapping(value="/filedownload", produces="application/json; charset=UTF-8")
-	@ResponseBody
-	public SrRqstAtch filedownload(SrRqst srRqst) throws Exception{
-		List<SrRqstAtch> list = srRqst.getSrRqstAtchList();
-		for(SrRqstAtch srRqstAtch: list) {
-			//받은 파일을 영구적으로 저장하기
-			//실제 서버에 저장되는 파일 이름(중복이 되면 안됌)
-			String saveFilename = new Date().getTime() + "-" + srRqstAtch.getSrRqstAtchNm();
-		}
-		log.info("title: " + fileUpload.getTitle());
-		log.info("desc: " + fileUpload.getDesc());
-		log.info("originalFilename: " + fileUpload.getAttach().getOriginalFilename());
-		log.info("contentType: " + fileUpload.getAttach().getContentType());
-		log.info("file size: " + fileUpload.getAttach().getSize());
-		
-		//받은 파일을 영구적으로 저장하기
-		//실제 서버에 저장되는 파일 이름(중복이 되면 안됌)
-		String saveFilename = new Date().getTime() + "-" + fileUpload.getAttach().getOriginalFilename();
-		String saveFilepath = "C:/OTI/uploadfiles/" + saveFilename;
-		File file = new File(saveFilepath);
-		fileUpload.getAttach().transferTo(file);
-		
-		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("result", "success");
-		jsonObject.put("saveFilename", saveFilename);
-		String json = jsonObject.toString();
-		return json;
-	}*/
 }

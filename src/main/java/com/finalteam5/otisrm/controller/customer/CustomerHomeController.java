@@ -17,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -41,7 +42,12 @@ public class CustomerHomeController {
 	private String fileUploadDir;
 
 	@GetMapping("home")
-	public String customerHome(Authentication authentication, String srRqstPageNo, Model model, HttpSession session) {
+	public String customerHome(
+			Authentication authentication, 
+			String srRqstPageNo, 
+			@RequestParam(name="status", required=false)String status,
+			Model model, 
+			HttpSession session) {
 		if (authentication != null && authentication.isAuthenticated()) {
 			//로그인한 회원의 정보
 			UsrDetails usrDetails = (UsrDetails) authentication.getPrincipal();
@@ -63,7 +69,7 @@ public class CustomerHomeController {
 		
 		//문자열을 정수로 변환
 		int intSrRqstPageNo = Integer.parseInt(srRqstPageNo);
-		int totalRows = srRqstService.totalSrRqst();
+		int totalRows = srRqstService.totalSrRqst(status);
 		Pager srRqstpager = new Pager(5, 5, totalRows, intSrRqstPageNo);
 		Map<String, Object>map = new HashMap<>();
 		map.put("startRowNo", srRqstpager.getStartRowNo());

@@ -56,8 +56,8 @@ public class SrRqstServiceImpl implements SrRqstService{
 	}
 	//전체 sr요청 수
 	@Override
-	public int totalSrRqst() {
-		int NumOfTotalSrRqst = srRqstDao.countSrRqst();
+	public int totalSrRqst(String status) {
+		int NumOfTotalSrRqst = srRqstDao.countSrRqst(status);
 		return NumOfTotalSrRqst;
 	}
 	//sr요청에 해당하는 상세 요청
