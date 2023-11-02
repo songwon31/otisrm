@@ -1,34 +1,18 @@
 $(init)
 
 function init() {
+	 console.log("실행")
 	 requestInsertDate();
 	 eventPreventSrRqstAtch();
 	 numOftotalRows();
 	 getTotalRows(choiceSrRqstSttsNo);
-	 console.log( $("#loginUsrNo").val());
 }
  
 var choiceSrRqstSttsNo = "";
+var status = "";
 var pageNo = 1;
 $(document).ready(function() {
-	//필터링 텝 선택 효과
-	$(".filterTab").click(function() {
-	    // 클릭된 요소의 스타일을 변경
-	    $(this).css({
-	    	"background-color": "#edf2f8",
-	        "color": "black"
-	    });
-	    $(".filterTab").not(this).css({
-	        "background-color": "",
-	        "color": ""
-	    });
-	    choiceSrRqstSttsNo = $(event.target).parent().attr("id");
-	    console.log(choiceSrRqstSttsNo);
-	    //필터링 된 상품 불러오기
-	    loadSRRequests(1, choiceSrRqstSttsNo);
-	    // 클릭되지 않은 다른 요소들의 스타일 초기화
-	});	
-  loadSRRequests(1, choiceSrRqstSttsNo); //페이지 로딩 시 초기 데이터 로드
+    loadSRRequests(1, choiceSrRqstSttsNo); //페이지 로딩 시 초기 데이터 로드
 });
 
 //timestamp 객체를 YYYY-MM-dd 형식의 문자열로 변환하는 함수
@@ -51,9 +35,9 @@ function formatDateToYYYYMMDD(timestamp) {
 //**요청목록 불러오기
 function loadSRRequests(pageNo, choiceSrRqstSttsNo) {
 	$.ajax({
-    url: "getSRRequestsByPageNo",
+    url: "getSRRequestsByPageNoOfMng",
     data: { 
-    	srRqstPageNo: pageNo,
+    	srRqstMngPageNo: pageNo,
     	status: choiceSrRqstSttsNo
     },
     dataType: "json",
@@ -63,6 +47,8 @@ function loadSRRequests(pageNo, choiceSrRqstSttsNo) {
       console.log(data);
       if(data<1){
 			 html += '<tr style="background-color: white;">';
+			 html += '	<td></td>';
+			 html += '	<td></td>';
 			 html += '	<td></td>';
 			 html += '	<td></td>';
 			 html += '	<td></td>';
@@ -83,23 +69,28 @@ function loadSRRequests(pageNo, choiceSrRqstSttsNo) {
     	  const formattedDate = formatDateToYYYYMMDD(item.srRqstRegDt);
     	  var indexOnPage = index + indexOffset + 1; // 페이지 내에서의 index 계산
     	  var count = 0;
-    	  if(item.srReqstrNo === $("#loginUsrNo").val()){    
-    		  console.log("앙")
-    		  html += '<tr class="data-tr" style="background-color: white;">';
-    		  html += '	<td>' + indexOnPage + '</td>';
-    		  html += '	<td>' + item.srRqstNo + '</td>';
-    		  html += '	<td class="truncate-text" style="max-width: 221.32px;">' + item.srTtl + '</td>';
-    		  html += '	<td class="truncate-text" style="max-width: 144.64px;">' + item.sysNm + '</td>';
-    		  html += '	<td class="truncate-text" style="max-width: 67.56px;">' + item.usrNm + '</td>';
-    		  html += '	<td class="truncate-text" style="max-width: 69.64px;">' + item.instNm + '</td>';
-    		  html += '	<td class="truncate-text" style="max-width: 67.56px;">' + item.srRqstSttsNm + '</td>';
-    		  html += '	<td>'+ formattedDate +'</td>'
-    		  html += '	<td>'+ item.srRqstEmrgYn +'</td>';
-    		  html += '	<td><button type="button" id="showSrRqstDetailBtn" class="btn-2" data-toggle="modal" data-target="#srRqstBySrNo" onclick="showSrRqstBySrRqstNo(\''+ item.srRqstNo +'\')">상세보기</button></td>';
-    		  html += '</tr>';
-    		  
-    		  count ++;
+    	  //승인여부
+    	  var aprvYn = "N";
+    	  if(item.srRqstSttsSeq > 1){
+    		  aprvYn = "Y";
     	  }
+		  console.log("앙");
+		  
+		  html += '<tr class="data-tr" style="background-color: white;">';
+		  html += '	<td>' + indexOnPage + '</td>';
+		  html += '	<td>' + item.srRqstNo + '</td>';
+		  html += '	<td class="truncate-text" style="max-width: 235.37px;">' + item.srTtl + '</td>';
+		  html += '	<td class="truncate-text" style="max-width: 144px;">' + item.sysNm + '</td>';
+		  html += '	<td class="truncate-text" style="max-width: 88.26px;">' + item.usrNm + '</td>';
+		  html += '	<td class="truncate-text" style="max-width: 88.26px;">' + item.instNm + '</td>';
+		  html += '	<td class="truncate-text" style="max-width: 88.26px;">' + item.deptNm + '</td>';
+		  html += '	<td class="truncate-text" style="max-width: 88.26px;">' + item.srRqstSttsNm + '</td>';
+		  html += '	<td>'+ formattedDate +'</td>'
+		  html += '	<td>'+ item.srRqstEmrgYn +'</td>';
+		  html += '	<td>'+ aprvYn +'</td>';
+		  html += '	<td><button type="button" id="showSrRqstDetailBtn" class="btn-2" data-toggle="modal" data-target="#srRqstBySrNo" onclick="showSrRqstBySrRqstNo(\''+ item.srRqstNo +'\')">상세보기</button></td>';
+		  html += '</tr>';
+    	  
       });
       html +='<tr class="empty-tr" style="height: 100%;">';
       html +='</tr>';
@@ -222,7 +213,7 @@ function updatePagination(pageNo, choiceSrRqstSttsNo) {
     success: function (totalRows) {
     	console.log("페이지: " + totalRows);
     	// totalRows를 기반으로 페이징을 업데이트
-        var totalPageNo = Math.ceil(totalRows / 5); // 페이지 수 계산 (5는 페이지당 항목 수)
+        var totalPageNo = Math.ceil(totalRows / 10); // 페이지 수 계산 (5는 페이지당 항목 수)
         
         // 현재 페이지 번호 업데이트
         var currentPageNo = pageNo;
@@ -330,7 +321,6 @@ function showSrRqstBySrRqstNo(choiceSrRqstNo){
         	            }
         	        }
         	        $("#showSrRqstAtch").html(html);
-        	        loading();
         	    } else {
         	        // srRqstAtchList가 객체지만 아무 항목도 없을 때
         	        $("#showSrRqstAtch").hide();
@@ -345,6 +335,7 @@ function showSrRqstBySrRqstNo(choiceSrRqstNo){
         	} else {
         	    $("#srRqst-importantChk").prop("checked", false);
         	}
+	    	loading();
         	
         },
         error: function() {
@@ -501,7 +492,7 @@ function modifySrRqst(srRqstNo) {
 //로딩 스피너 함수
 function loading() {
   LoadingWithMask();
-  setTimeout("closeLoadingWithMask()", 1000);
+  setTimeout("closeLoadingWithMask()", 800);
 }
 
 //스피너와 마스크 표시

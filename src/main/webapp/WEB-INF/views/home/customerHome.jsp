@@ -103,7 +103,7 @@
 				        </tr>
 				    </thead>
 				    <tbody id="getSrReqstListByPageNo">      
-			             
+			         <!-- Json 데이터 들어오는 곳 -->    
 				    </tbody>
 				</table>
 				<!-- 페이징 -->

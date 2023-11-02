@@ -18,8 +18,11 @@ public class SrRqst {
 	private Date srRqstMdfcnDt; 	//sr요청 최종수정일
 	private String srRqstSttsNo;	//상태번호
 	private String srRqstSttsNm;	//상태
+	private int srRqstSttsSeq;		//상태 시퀀스
 	private String sysNo;			//시스템번호
 	private String sysNm;			//시스템 이름
+	private String deptNo;			//업무부서번호
+	private String deptNm;			//업무부서
 	private String srRqstEmrgYn;	//중요여부
 	private String srRqstRvwRsn;	//검토사유
 	private String srRqstVldYn;		//sr요청 유효성(삭제여부)

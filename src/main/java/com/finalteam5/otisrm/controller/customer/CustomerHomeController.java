@@ -149,10 +149,9 @@ public class CustomerHomeController {
 	   OutputStream os = response.getOutputStream();
 	   os.write(srRqstAtch.getSrRqstAtchData());
 	   os.flush();
-	   os.close();
-	    
-	  
+	   os.close();    
 	}
+	
 	//고객사 홈 페이지에서 요청 수정하기
 	@PostMapping("modifySrRqst")
 	public String modifySrRqst(SrRqstSubmit srRqstSubmit) {

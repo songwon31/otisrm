@@ -46,17 +46,19 @@
 	
 	<!-- sr요청 불러오기 -->
 	<select id="selectSrRqstListByPage" parameterType="Map" resultType="SrRqst">
-		select rnum, sr_rqst_no, sr_ttl, sr_reqstr_no, sr_rqst_reg_dt, sr_rqst_mdfcn_dt, 
+		select rnum, sr_rqst_no, sr_ttl, sr_reqstr_no, sr_rqst_reg_dt, sr_rqst_mdfcn_dt, dept_no, dept_nm, sr_rqst_stts_seq,
 		sr_rqst_stts_no, sys_no, sr_rqst_emrg_yn, sr_rqst_rvw_rsn, sr_rqst_vld_yn, sys_nm, usr_nm, inst_nm, sr_rqst_stts_nm  
 		from (
-		    select rownum as rnum, sr_rqst_no, sr_ttl, sr_reqstr_no, sr_rqst_reg_dt, sr_rqst_mdfcn_dt, 
+		    select rownum as rnum, sr_rqst_no, sr_ttl, sr_reqstr_no, sr_rqst_reg_dt, sr_rqst_mdfcn_dt, dept_no, dept_nm, sr_rqst_stts_seq,
 		    sr_rqst_stts_no, sys_no, sr_rqst_emrg_yn, sr_rqst_rvw_rsn, sr_rqst_vld_yn, sys_nm, usr_nm, inst_nm, sr_rqst_stts_nm  
 		    from(
 		        select r.sr_rqst_no, r.sr_ttl, sr_reqstr_no, r.sr_rqst_reg_dt, r.sr_rqst_mdfcn_dt, r.sr_rqst_stts_no,
-		        r.sys_no, r.sr_rqst_emrg_yn, r.sr_rqst_rvw_rsn, r.sr_rqst_vld_yn, s.sys_nm, u.usr_nm, u.inst_no, i.inst_nm, q.sr_rqst_stts_nm 
+		        q.sr_rqst_stts_seq, r.sys_no, r.sr_rqst_emrg_yn, r.sr_rqst_rvw_rsn, r.sr_rqst_vld_yn, s.sys_nm, u.usr_nm, u.inst_no, i.inst_nm, q.sr_rqst_stts_nm,
+		        d.dept_no, d.dept_nm 
 		        from sr_rqst r
 		        join sys s on s.sys_no = r.sys_no 
 		        join usr u on u.usr_no = r.sr_reqstr_no
+		        join dept d on d.dept_no = u.dept_no 
 		        join inst i on i.inst_no = u.inst_no
 		        join sr_rqst_stts q on q.sr_rqst_stts_no = r.sr_rqst_stts_no
 		        <if test='status != null and status != ""'>
