@@ -228,7 +228,7 @@
 .btn-3:active {
 	background-color:#7c7c7c; 
 }
-/* 검정버튼 */
+/* 검정버튼 작은버전 */
 .btn-4 {
 	border: none;
 	font-size:1.6rem;
@@ -239,6 +239,19 @@
 	width: 8rem;
 }
 .btn-4:active {
+	background-color:black; 
+}
+/* 검정버튼 큰버전 */
+.btn-5 {
+	border: none;
+	font-size:1.6rem;
+	color:white;
+	background-color: #222E3C; 
+	border-radius: 0.5rem;
+	height: 3rem;
+	width: 12rem;
+}
+.btn-5:active {
 	background-color:black; 
 }
 /* Modal */

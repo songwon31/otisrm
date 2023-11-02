@@ -5,6 +5,7 @@ function init() {
 	 eventPreventSrRqstAtch();
 	 numOftotalRows();
 	 getTotalRows(choiceSrRqstSttsNo);
+	 console.log( $("#loginUsrNo").val());
 }
  
 var choiceSrRqstSttsNo = "";
@@ -81,18 +82,24 @@ function loadSRRequests(pageNo, choiceSrRqstSttsNo) {
     	  // item.srRqstRegDt를 YYYY-MM-dd 문자열로 변환
     	  const formattedDate = formatDateToYYYYMMDD(item.srRqstRegDt);
     	  var indexOnPage = index + indexOffset + 1; // 페이지 내에서의 index 계산
-    	  html += '<tr class="data-tr" style="background-color: white;">';
-    	  html += '	<td>' + indexOnPage + '</td>';
-    	  html += '	<td>' + item.srRqstNo + '</td>';
-    	  html += '	<td class="truncate-text" style="max-width: 221.32px;">' + item.srTtl + '</td>';
-    	  html += '	<td class="truncate-text" style="max-width: 144.64px;">' + item.sysNm + '</td>';
-    	  html += '	<td class="truncate-text" style="max-width: 67.56px;">' + item.usrNm + '</td>';
-    	  html += '	<td class="truncate-text" style="max-width: 69.64px;">' + item.instNm + '</td>';
-    	  html += '	<td class="truncate-text" style="max-width: 67.56px;">' + item.srRqstSttsNm + '</td>';
-    	  html += '	<td>'+ formattedDate +'</td>'
-    	  html += '	<td>'+ item.srRqstEmrgYn +'</td>';
-    	  html += '	<td><button type="button" id="showSrRqstDetailBtn" class="btn-2" data-toggle="modal" data-target="#srRqstBySrNo" onclick="showSrRqstBySrRqstNo(\''+ item.srRqstNo +'\')">상세보기</button></td>';
-    	  html += '</tr>';
+    	  var count = 0;
+    	  if(item.srReqstrNo === $("#loginUsrNo").val()){    
+    		  console.log("앙")
+    		  html += '<tr class="data-tr" style="background-color: white;">';
+    		  html += '	<td>' + indexOnPage + '</td>';
+    		  html += '	<td>' + item.srRqstNo + '</td>';
+    		  html += '	<td class="truncate-text" style="max-width: 221.32px;">' + item.srTtl + '</td>';
+    		  html += '	<td class="truncate-text" style="max-width: 144.64px;">' + item.sysNm + '</td>';
+    		  html += '	<td class="truncate-text" style="max-width: 67.56px;">' + item.usrNm + '</td>';
+    		  html += '	<td class="truncate-text" style="max-width: 69.64px;">' + item.instNm + '</td>';
+    		  html += '	<td class="truncate-text" style="max-width: 67.56px;">' + item.srRqstSttsNm + '</td>';
+    		  html += '	<td>'+ formattedDate +'</td>'
+    		  html += '	<td>'+ item.srRqstEmrgYn +'</td>';
+    		  html += '	<td><button type="button" id="showSrRqstDetailBtn" class="btn-2" data-toggle="modal" data-target="#srRqstBySrNo" onclick="showSrRqstBySrRqstNo(\''+ item.srRqstNo +'\')">상세보기</button></td>';
+    		  html += '</tr>';
+    		  
+    		  count ++;
+    	  }
       });
       html +='<tr class="empty-tr" style="height: 100%;">';
       html +='</tr>';
@@ -113,7 +120,6 @@ function loadSRRequests(pageNo, choiceSrRqstSttsNo) {
       //tr 요소에 대한 hover 이벤트 처리
       $('.data-tr').hover(
         function() {
-        	console.log("올림");
           // 마우스가 요소 위에 있을 때 배경색 변경
           $(this).css('background-color', '#f3f6fd');
         },
@@ -122,6 +128,7 @@ function loadSRRequests(pageNo, choiceSrRqstSttsNo) {
           $(this).css('background-color', 'white');
         }
       );
+      loading();
     },
     error: function(error) {
       console.error("데이터를 불러오는 중 오류가 발생했습니다.");
@@ -129,7 +136,7 @@ function loadSRRequests(pageNo, choiceSrRqstSttsNo) {
   });
 }
 
-//sr요청 상태 탭 별  행수 표시
+//**sr요청 상태 탭 별  행수 표시
 function numOftotalRows(){
 	//전체
 	getTotalRows("").then(function (totalRows) {
@@ -182,7 +189,8 @@ function numOftotalRows(){
 		$("#numOfDepCmptn").html("("+ totalRows + ")");
 	});
 }
-//총 행수 구하기
+
+//**총 행수 구하기
 function getTotalRows(choiceSrRqstSttsNo) {
   return new Promise(function (resolve, reject) {
     $.ajax({
@@ -202,7 +210,7 @@ function getTotalRows(choiceSrRqstSttsNo) {
   });
 }
 
-//페이징 업데이트 함수
+//**상태에 따른 페이징 업데이트 함수
 function updatePagination(pageNo, choiceSrRqstSttsNo) {
   $.ajax({
     url: "getCountSRRequestsByStatus",
@@ -265,7 +273,8 @@ function updatePagination(pageNo, choiceSrRqstSttsNo) {
 function bytesToKB(bytes) {
     return (bytes / 1024).toFixed(2); // 소수점 두 자리까지 표시
 }
-//요청에 해당하는 상세 정보 모달
+
+//**요청에 해당하는 상세 정보 가져오기 (모달)
 function showSrRqstBySrRqstNo(choiceSrRqstNo){
 	console.log("상세클릭");
 	$.ajax({
@@ -334,7 +343,8 @@ function showSrRqstBySrRqstNo(choiceSrRqstNo){
         	    submitSrRqst();
         	} else {
         	    $("#srRqst-importantChk").prop("checked", false);
-        	}     		
+        	}
+	    	loading();
         	
         },
         error: function() {
@@ -395,7 +405,7 @@ function requestInsertDate(){
 	document.getElementById('writeDate').value = todayFormatted;
 }
 
-//요청등록하기
+//**요청등록하기
 function submitSrRqst(){
 	var form = $("#writeSrRqst")[0];
 	var formData = new FormData(form); // 폼 엘리먼트를 선택하고, [0]을 사용하여 DOM 요소로 변환
@@ -487,3 +497,26 @@ function modifySrRqst(srRqstNo) {
     });
 }
 
+
+//로딩 스피너 함수
+function loading() {
+  LoadingWithMask();
+  setTimeout("closeLoadingWithMask()", 1000);
+}
+
+//스피너와 마스크 표시
+function LoadingWithMask() {
+  //로딩중 이미지 표시
+  $.LoadingOverlay("show", {
+  	background       : "rgba(0, 0, 0, 0.5)",
+  	image            : "https://upload.wikimedia.org/wikipedia/commons/f/fc/Herbert_Kickl.gif",
+  	maxSize          : 150,
+  	fontawesome      : "fa fa-pulse fa-fw",
+  	fontawesomeColor : "#FFFFFF",
+  });
+ 
+}
+//스피너와 마스크 종료
+function closeLoadingWithMask() {
+  $.LoadingOverlay("hide"); 
+}

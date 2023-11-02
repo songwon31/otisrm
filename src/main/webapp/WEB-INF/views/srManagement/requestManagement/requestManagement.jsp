@@ -115,7 +115,7 @@
 		style="height:65rem; background-color:white; border-radius:1rem; padding:2rem;">
 		<div class="d-flex">
 			<span class="mr-auto" style="height:3.5rem; font-size:2.2rem; font-weight:700; color:#222E3C;">SR개발목록</span>
-			<button id="excelDownloadBtn" onclick="location.href='#';">엑셀 다운로드</button>
+			<button class="btn-5" onclick="location.href='#';">엑셀 다운로드</button>
 		</div>
 		<div class="tableContainer">
 			<table id="mainTable" style="width: 100%; text-align: center; height: 27rem;">
