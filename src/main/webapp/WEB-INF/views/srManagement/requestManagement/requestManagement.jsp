@@ -14,6 +14,7 @@
 		</div>
 	</div>
 	<div class="contentTop shadow" >
+		<input type="hidden" id="loginUsr" value="${usr.usrNo}">
 		<form id="searchForm" method="get" action="">
 			<div class="d-flex" style="height:3rem;">
 				<!-- 조회기간 -->
@@ -33,8 +34,9 @@
 					<span class="filter-item">관련 시스템</span>
 				</div>
 				<div style="width: 9.59%;">
-					<select class="form-controll" style="width:100%;" id="selectSystem" name="selectSystem">
-						<option value="" selected>전체</option>
+					<select id="sysNo-select" name="sysNo" style="width:100%">
+						<option value="none" selected>전체</option>
+						<!-- json으로 데이터 들어오는 곳 -->
 					</select>
 				</div>
 				<div style="width: 3.5%;"></div>
@@ -44,21 +46,16 @@
 					<span style="font-size:1.6rem; font-weight:700;">진행상태</span>
 				</div>
 				<div style="width: 20.73%;">
-					<select style="width:109.13px;" id="selectProg" name="selectProg">
+					<select style="width:109.13px;" id="srRqstStts-select" name="status">
 						<option value="" selected>전체</option>
-				        <option>요청</option>
-				        <option>검토중</option>
-				        <option>접수</option>
-				        <option>개발중</option>
-				        <option>개발완료신청</option>
-				        <option>개발완료</option>
 				    </select>
 				</div>
 				<div style="width: 3.5%;"></div>
-				<!-- 담당 SR -->
+				<!-- 내 SR 요청건만 -->
 				<div style="width: 9.79%;" class="d-flex flex-row-reverse align-items-center">
 					<span style="font-size:1.6rem; margin-left: 0.5rem;">내 요청 건만</span>
-		        	<input type="checkbox" id="myDevCheck" name="myDevCheck" value="False">
+		        	<input type="checkbox" id="myCheck" name="myDevCheck" value="False">
+		        	<input type="hidden" id="usr" name="usr" value="">
 		        </div>
 			</div>
 			
@@ -70,9 +67,9 @@
 					<span style="font-size:1.6rem; font-weight:700;">등록자 소속</span>
 				</div>
 				<div style="width: 22.57%; display:flex; align-items:center;">
-						<input type="text" id="keywordContent" name="keywordContent" class="flex-grow-1"/>
-						<button style="margin-left: 1rem;" class="btn-4 d-inline-flex align-items-center justify-content-center" 
-							onclick="location.href='#';">
+						<input type="text" id="instNm" name="keywordContent" class="flex-grow-1" disabled/>
+						<input type="hidden" id="instNo" name="instNo" class="flex-grow-1" value=""/>
+						<button type="button" style="margin-left: 1rem;" data-toggle="modal" data-target="#filterOfInst" class="btn-4 d-inline-flex align-items-center justify-content-center" >
 							찾기
 						</button>
 				</div>
@@ -83,11 +80,9 @@
 					<span style="font-size:1.6rem; font-weight:700;">개발 부서</span>
 				</div>
 				<div style="width: 9.59%;">
-					<select id="selectDevDepartment" name="selectDevDepartment" style="width:100%">
-						<option value="" selected>전체</option>
-						<option>개발1팀</option>
-				        <option>개발2팀</option>
-				        <option>개발3팀</option>
+					<select id="deptNo-select" name="deptNo" style="width:100%">
+						<option value="none" selected>전체</option>
+						<!-- json으로 데이터 들어오는 곳 -->
 					</select>
 				</div>
 				<div style="width: 3.5%;"></div>
@@ -97,11 +92,14 @@
 					<span style="font-size:1.6rem; font-weight:700;">키워드</span>
 				</div>
 				<div style="width: 24.73%; display: flex;">
-					<select style="width:30%;" id="userStts" name="userStts">
+					<select style="width:30%;" id="userStts" name="searchTarget">
 						<option value="" selected>전체</option>
+						<option value="searchSrRqstNo" >요청 번호</option>
+						<option value="searchSrRqstNm" >제목</option>
 					</select>
 					<div style="width:1rem;" ></div>
-					<input type="text" id="keywordContent" name="keywordContent" class="flex-grow-1"/>
+					<input type="text" id="keyword" name="keyword" class="flex-grow-1"/>
+					<input type="hidden" id="srRqstMngPageNo" name="srRqstMngPageNo" class="flex-grow-1"/>
 				</div>
 				<div style="width: 3.5%;"></div>
 				<!-- 검색버튼 -->
@@ -379,6 +377,54 @@
  </div>
 </div>
 
-<!--  -->
+<!-- 등록자 소속 선택 모달 -->
+<div id="filterOfInst" class="modal" data-backdrop="static">
+	<div class="modal-dialog modal-dialog-centered modal-md" style="width:100rem;">
+		<div class="modal-content">
+			<div class="modal-header">
+				<div class="modal-title" style="font-size:2rem; font-weight:700;">등록자 소속 찾기</div>
+				<i class="material-icons close-icon" data-dismiss="modal" style="cursor: pointer;">close</i>
+			</div>
+			<div class="modal-body" style="margin:0px; padding:0px; font-size:1.5rem;">
+				<div style="display:none;"></div>
+				<div>
+					<div style="display: flex; flex-direction: column; justify-contents:center; margin:0 0 0 0.5rem;">
+						<span class="m-3" style="font-size:1.6rem; font-weight:700;">등록자 소속을 선택해 주세요.</span>
+						<div style="margin:0.5rem;">
+							<table id="getInsts" style="width: 100%; text-align: center; border-radius:5px;">
+								<colgroup>
+									<col width="20%"/>
+									<col width="40%"/>
+									<col width="40%"/>
+								</colgroup>
+								<thead style="background-color: #e9ecef;">
+									<tr style="height: 4.3rem; font-size: 1.5rem; font-weight: 700; border: 1.5px solid #e9ecef;">
+										<th scope="col"></th>
+										<th scope="col">소속 기관 코드</th>
+										<th scope="col">소속 기관</th>
+									</tr>
+								</thead>
+								<tbody id="instList">
+								<!-- json 데이터 받는 곳 -->	
+								</tbody>
+							</table>
+						</div>
+						<div id="setHrFindPicModalTablePagerDiv" class="m-2" style="height: 4.5rem;">
+							<span style="font-weight: bold;">선택한 등록자 소속기관: </span>
+							<span id="findInst"></span>
+						</div>
+						<div style="height:4rem; display: flex; flex-direction: row; align-items:center; justify-content:flex-end;">
+							<a onclick="choiceOfInstOkBtn()" data-dismiss="modal"
+								style="height: 3rem; width: 5rem; border-radius: 5px; background-color:#222e3c; color:white; font-weight:700; margin-right:0.5rem;
+								display: flex; flex-direction: row; justify-content: center; align-items: center;">확인</a>
+							<a href="#" data-dismiss="modal"
+								style="height: 3rem; width: 5rem; border-radius: 5px; background-color:red; color:white; font-weight:700; margin-right:0.5rem;
+								display: flex; flex-direction: row; justify-content: center; align-items: center; cursor: pointer;">닫기</a>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
    
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>

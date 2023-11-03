@@ -84,14 +84,6 @@ public class CustomerHomeController {
 	
 		return "/home/customerHome";
 	}
-	
-	//고객사 홈 페이지에서 요청등록 모달에 소속부서에 해당하는 관련시스템 목록불러오기
-	@GetMapping("getSysByDeptNo")
-	@ResponseBody
-	public List<Sys> getSysByDeptNo(String deptNo){
-		List<Sys> list = srRqstService.getSysByDeptNo(deptNo);
-		return list;
-	}
 
 	//고객사 홈 페이지에서 요청등록하기
 	@PostMapping("writeSrRqst")

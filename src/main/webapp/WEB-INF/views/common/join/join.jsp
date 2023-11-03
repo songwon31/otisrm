@@ -285,8 +285,9 @@
 										</sc-label>
 										<sc-spacer class="style-scope es-spuser-reg" aria-disabled="false"></sc-spacer>
 									</sc-toolbar>
-									<%-- <iframe src="${pageContext.request.contextPath}/joinDetail" style="border-width:1px; border-color:#bcbcbc; border-style:solid;width:100%; height:200px" class="style-scope es-spuser-reg">
-									</iframe> --%>
+									<div id="contentDiv" style="border: 1px solid #bcbcbc; width: 100%; height: 200px; overflow: auto;">
+									<!-- 개인정보 수집 동의 -->
+									</div>
 									<div class="vspace-5 style-scope es-spuser-reg"></div>
 								  <form id="join" name="join" action="join" onsubmit="checkValidation()" method="post">  
 									<sc-toolbar class="style-scope es-spuser-reg" role="toolbar" aria-disabled="false">

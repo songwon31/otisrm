@@ -216,8 +216,6 @@ function updatePagination(pageNo, choiceSrRqstSttsNo) {
     dataType: "json",
     method: "GET",
     success: function (totalRows) {
-    	console.log("페이지: " + totalRows);
-    	
     	// totalRows를 기반으로 페이징을 업데이트
         var totalPageNo = Math.ceil(totalRows / 5); // 페이지 수 계산 (5는 페이지당 항목 수)
         
@@ -485,6 +483,7 @@ function modifySrRqst(srRqstNo) {
             var currentURL = window.location.href;
             window.location.href = currentURL; // 원하는 URL로 변경
             loadSRRequests(1, choiceSrRqstSttsNo);
+            loading();
         },
         error: function (error) {
             // 요청 중 오류가 발생한 경우 실행할 코드

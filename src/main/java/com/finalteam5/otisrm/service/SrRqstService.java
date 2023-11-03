@@ -8,6 +8,7 @@ import com.finalteam5.otisrm.dto.srRequest.SrRqst;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstAtch;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstForReviewerHomeBoard;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstForReviewerModal;
+import com.finalteam5.otisrm.dto.srRequest.SrRqstStts;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstSubmit;
 
 public interface SrRqstService {	
@@ -41,6 +42,9 @@ public interface SrRqstService {
 	
 	//등록한 sr요청 수정하기
 	public void modifySrRqst(SrRqstSubmit srRqstSubmit);
+	
+	//sr요청 관리 검색창: sr요청 상태 불러오기
+	public List<SrRqstStts> getSrRqstStts();
     
 	
 	//작성자: 이현주

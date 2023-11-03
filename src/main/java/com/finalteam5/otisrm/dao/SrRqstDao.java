@@ -11,6 +11,7 @@ import com.finalteam5.otisrm.dto.srRequest.SrRqst;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstAtch;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstForReviewerHomeBoard;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstForReviewerModal;
+import com.finalteam5.otisrm.dto.srRequest.SrRqstStts;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstSubmit;
 
 @Mapper
@@ -47,6 +48,8 @@ public interface SrRqstDao {
 	//등록한 sr요청 수정하기
 	public void updateSrRqst(SrRqstSubmit srRqstSubmit);
 	
+	//sr요청 상태 불러오기(시퀀스 오름차순으로)
+	public List<SrRqstStts> selectSrRqstStts();
 	
 	//작성자: 이현주
 	//페이지별로 요청 불러오기(검토자 홈)

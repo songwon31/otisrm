@@ -12,6 +12,7 @@ import com.finalteam5.otisrm.dto.srRequest.SrRqst;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstAtch;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstForReviewerHomeBoard;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstForReviewerModal;
+import com.finalteam5.otisrm.dto.srRequest.SrRqstStts;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstSubmit;
 
 import lombok.extern.slf4j.Slf4j;
@@ -87,6 +88,12 @@ public class SrRqstServiceImpl implements SrRqstService{
 		srRqstDao.updateSrRqst(srRqstSubmit);
 	}
 	
+	@Override
+	public List<SrRqstStts> getSrRqstStts() {
+		List<SrRqstStts> list = srRqstDao.selectSrRqstStts();
+		return list;
+	}
+	
 	//작성자: 이현주 
 	//요청목록 불러오기(검토자 홈)
 	@Override
@@ -111,5 +118,6 @@ public class SrRqstServiceImpl implements SrRqstService{
 	public List<String> getTotalSysNm() {
 		return srRqstDao.selectTotalSysNm();
 	}
+	
 	
 }

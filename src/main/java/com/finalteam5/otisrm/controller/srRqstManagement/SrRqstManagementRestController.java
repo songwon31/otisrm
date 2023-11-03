@@ -15,9 +15,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.finalteam5.otisrm.dto.Pager;
+import com.finalteam5.otisrm.dto.Sys;
 import com.finalteam5.otisrm.dto.srRequest.SrRqst;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstAtch;
+import com.finalteam5.otisrm.dto.srRequest.SrRqstStts;
+import com.finalteam5.otisrm.dto.usr.Dept;
+import com.finalteam5.otisrm.dto.usr.Inst;
 import com.finalteam5.otisrm.service.SrRqstService;
+import com.finalteam5.otisrm.service.UsrService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -27,6 +32,8 @@ import lombok.extern.slf4j.Slf4j;
 public class SrRqstManagementRestController {
 	@Autowired
     private SrRqstService srRqstService;
+	@Autowired
+	private UsrService usrService;
 	
 	@Value("${file.upload.dir}")
 	private String fileUploadDir;
@@ -106,5 +113,33 @@ public class SrRqstManagementRestController {
 		srRqst.setSrRqstAtchList(list);
 		model.addAttribute("srRqstNo", srRqstNo);
 		return srRqst;
+	}
+	
+	//등록 소속기관 불러오기
+	@GetMapping("getInstListOfMng")
+	public List<Inst> getInstListForMng(){
+		List<Inst> list = usrService.getInstList();
+		return list;
+	}
+	
+	//등록 소속기관에 따른 개발 부서 불러오기
+	@GetMapping("getDeptListOfMng")
+	public List<Dept> getInstListForMng(String instNo){
+		List<Dept> list = usrService.getDeptListByInstNo(instNo);
+		return list;
+	}
+	
+	//개발 부서에 따른 관련 시스템 불러오기
+	@GetMapping("getSysByDeptNoOfMng")
+	public List<Sys> getSysByDeptNo(String deptNo){
+		List<Sys> list = srRqstService.getSysByDeptNo(deptNo);
+		return list;
+	}
+	
+	//요청 상태 불러오기
+	@GetMapping("getSrRqstSttsOfMng")
+	public List<SrRqstStts> getSrRqstStts() {
+		List<SrRqstStts> list = srRqstService.getSrRqstStts();
+		return list;
 	}
 }

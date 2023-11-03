@@ -21,6 +21,7 @@
 		<typeAlias alias="SrRqst" type="com.finalteam5.otisrm.dto.srRequest.SrRqst"/>
 		<typeAlias alias="SrRqstSubmit" type="com.finalteam5.otisrm.dto.srRequest.SrRqstSubmit"/>
 		<typeAlias alias="SrRqstAtch" type="com.finalteam5.otisrm.dto.srRequest.SrRqstAtch"/>
+		<typeAlias alias="SrRqstStts" type="com.finalteam5.otisrm.dto.srRequest.SrRqstStts"/>
 	</typeAliases>
 </configuration>
 

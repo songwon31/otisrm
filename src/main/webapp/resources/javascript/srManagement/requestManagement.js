@@ -3,9 +3,29 @@ $(init)
 function init() {
 	 console.log("실행")
 	 requestInsertDate();
-	 eventPreventSrRqstAtch();
-	 numOftotalRows();
-	 getTotalRows(choiceSrRqstSttsNo);
+	 eventPreventSrRqstAtch();				
+	 getTotalRows(choiceSrRqstSttsNo);	//상태에 따른 총 행수 구하기
+	 showInstList();					//소속기관 불러오기
+	 
+	
+	 var deptNo = "";
+	//개발 부서 select box 클릭 이벤트 처리(유효성검사)
+    $("#deptNo-select").click(function() {
+        var instNo = $("#instNo").val();
+        if (!instNo) {
+            // 등록자 소속이 선택되지 않았을 때 알림 메시지 표시
+            alert("등록자 소속을 먼저 선택해주세요.");
+        }else{
+        	deptNo = $("#deptNo-select option:selected").val()
+        }
+    });
+    $("#sysNo-select").click(function() {
+    	if (!deptNo || deptNo == "none") {
+    		// 등록자 소속이 선택되지 않았을 때 알림 메시지 표시
+    		alert("개발부서를 먼저 선택해주세요.");
+    	}
+    }); 
+    showSrRqstStts();
 }
  
 var choiceSrRqstSttsNo = "";
@@ -13,6 +33,10 @@ var status = "";
 var pageNo = 1;
 $(document).ready(function() {
     loadSRRequests(1, choiceSrRqstSttsNo); //페이지 로딩 시 초기 데이터 로드
+    var selectedSysNo = $("#sysNo-select").val();
+	$("#sysNo-select").val(selectedSysNo);	    
+   
+    
 });
 
 //timestamp 객체를 YYYY-MM-dd 형식의 문자열로 변환하는 함수
@@ -32,8 +56,137 @@ function formatDateToYYYYMMDD(timestamp) {
   return formattedDate;
 }
 
+//sr요청 검색창
+//1: 등록자 소속 찾기 모달에서 소속기관 불러오기
+function showInstList() {
+    $.ajax({
+        type: "GET",
+        url: "getInstListOfMng",
+        success: function (data) {
+        	console.log("시쟉");
+       		let html = "";
+       		data.forEach((item, index) => {
+            	html += '<tr id="'+ item.instNo +'" class="contents" style="background-color:white; height: 4.5rem; border: 1.5px solid #e9ecef; cursor:pointer;">';	
+            	html += '	<td style="cursor: pointer;" onclick="selectInst()">';
+            	html += '		<input type="radio" id="'+ item.instNo +'" name="instNm" value="'+ item.instNm +'" onclick="selectInst()">';
+            	html += '	</td>';
+            	html += '	<td>'+item.instNo+'</td>';
+            	html += '	<td>'+item.instNm+'</td>';
+            	html += '</tr>';
+       		});
+       	 // HTML 콘텐츠를 검색한 부서 데이터로 업데이트
+            $('#instList').html(html); 
+        },
+        error: function (error) {
+            console.error("오류 발생:", error);
+        }
+    });
+}
+
+//소속기관 저장 검색버튼 
+function selectInst() {
+    // 선택된 라디오 버튼의 ID 값을 가져오기
+    var selectedInstNo = $("input[name='instNm']:checked").attr("id");
+    var selectedInstNm = $("input[name='instNm']:checked").val();
+    $("#instNm").val(selectedInstNm);
+    $("#instNo").val(selectedInstNo);	//제출할 instNo
+    $("#findInst").html(selectedInstNm);	
+}
+
+//확인버튼 클릭이벤트 처리
+function choiceOfInstOkBtn(){
+	showDept(instNo);
+}
+
+//2: 소속기관에 해당하는 개발부서 불러오기
+var instNo = $("#instNo").val();
+function showDept(instNo) {
+    $.ajax({
+        type: "GET", // 또는 "GET", 요청 유형에 따라 선택
+        url: "getDeptListOfMng", // 서버 측 엔드포인트 URL로 변경
+        data: { instNo: instNo }, // 선택한 소속기관 ID를 서버로 전달
+        success: function (data) {
+        	console.log(data);
+        	html="";
+            // 서버 응답을 처리하여 개발부서 목록을 업데이트
+        	html += '<option value="none">전체</option>';
+      		data.forEach((item, index) => {	
+      			html += '<option onclick="' + showSys(item.deptNo) + '" value="'+item.deptNo+'">'+item.deptNm+'</option>';
+       		});
+       	 // HTML 콘텐츠를 검색한 부서 데이터로 업데이트
+         $('#deptNo-select').html(html);
+        },
+        error: function (error) {
+            console.error("오류 발생:", error);
+        }
+    });
+}
+
+//3: 개발부서번호에 해당하는 관련 시스템 불러오기
+function showSys(deptNo) {
+	console.log(deptNo);
+	$.ajax({
+		type: "GET", 
+		url: "getSysByDeptNoOfMng", 
+		data: {deptNo: deptNo}, 
+		success: function (data) {
+			// 서버 응답을 처리하여 개발부서 목록을 업데이트 
+			let html = "";
+			// 서버 응답을 처리하여 개발부서 목록을 업데이트
+        	html += '<option value="none">전체</option>';
+      		data.forEach((item, index) => {	
+      			html += '<option value="'+item.sysNo+'">'+item.sysNm+'</option>';
+       		});
+		   // HTML 콘텐츠를 검색한 부서 데이터로 업데이트
+           $("#sysNo-select").html(html); 
+       },
+		error: function (error) {
+			console.error("오류 발생:", error);
+		}
+	});
+}
+
+//4: 요청 상태 불러오기
+function showSrRqstStts() {
+	$.ajax({
+		type: "GET", 
+		url: "getSrRqstSttsOfMng", 
+		success: function (data) {
+			// 서버 응답을 처리하여 개발부서 목록을 업데이트 
+			let html = "";
+			// 서버 응답을 처리하여 개발부서 목록을 업데이트
+        	html += '<option value="">전체</option>';
+      		data.forEach((item, index) => {	
+      			html += '<option value="'+ item.srRqstSttsNo +'">'+item.srRqstSttsNm+'</option>';
+       		});
+		   // HTML 콘텐츠를 검색한 부서 데이터로 업데이트
+           $("#srRqstStts-select").html(html); 
+       },
+		error: function (error) {
+			console.error("오류 발생:", error);
+		}
+	});
+}
+
+//요청 상태
+choiceSrRqstSttsNo = "";
+var status = "";
+function dataOfloadSrRequestsForm(){
+	//페이지 세팅
+	$("#srRqstMngPageNo").val(pageNo);
+	
+	//내 요청 건만 체크
+	if($("#myCheck").prop("checked")){
+		$("#usr").val($("#loginUsr").val());
+	}else{
+		$("#usr").val("");
+	}
+}
 //**요청목록 불러오기
 function loadSRRequests(pageNo, choiceSrRqstSttsNo) {
+	
+	var form = $("#searchForm")[0];
+	var formData = new FormData(form); 
 	$.ajax({
     url: "getSRRequestsByPageNoOfMng",
     data: { 
@@ -102,11 +255,9 @@ function loadSRRequests(pageNo, choiceSrRqstSttsNo) {
       if(data.length<1){
     	  console.log($("pagination-container"));
     	  $(".btn").hide();
-    	  console.log("데이터 없움");
       }else{
     	  updatePagination(pageNo, choiceSrRqstSttsNo);
     	  $(".btn").show();
-    	  console.log("데이터 있움");
       }
       //tr 요소에 대한 hover 이벤트 처리
       $('.data-tr').hover(
@@ -312,7 +463,7 @@ function showSrRqstBySrRqstNo(choiceSrRqstNo){
         	                $("#showSrRqstAtch").show();
         	                console.log("같음");
         	                var size = bytesToKB(srRqstAtch.srRqstAtchSize);
-        	                html += '<a href="filedownload2?srRqstAtchNo='+ srRqstAtch.srRqstAtchNo +'" class="d-flex srRqstAtchWrap">';
+        	                html += '<a href="filedownloadOfMng?srRqstAtchNo='+ srRqstAtch.srRqstAtchNo +'" class="d-flex srRqstAtchWrap">';
         	                html += '    <div>';
         	                html += '    	<i class="material-icons atch-ic">download</i>';
         	                html += '    </div>';

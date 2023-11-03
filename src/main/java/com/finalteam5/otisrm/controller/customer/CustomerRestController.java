@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.finalteam5.otisrm.dto.Pager;
+import com.finalteam5.otisrm.dto.Sys;
 import com.finalteam5.otisrm.dto.srRequest.SrRqst;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstAtch;
 import com.finalteam5.otisrm.dto.usr.Usr;
@@ -133,5 +134,12 @@ public class CustomerRestController {
 		srRqst.setSrRqstAtchList(list);
 		model.addAttribute("srRqstNo", srRqstNo);
 		return srRqst;
+	}
+	
+	//고객사 홈 페이지에서 요청등록 모달에 소속부서에 해당하는 관련시스템 목록불러오기
+	@GetMapping("getSysByDeptNo")
+	public List<Sys> getSysByDeptNo(String deptNo){
+		List<Sys> list = srRqstService.getSysByDeptNo(deptNo);
+		return list;
 	}
 }

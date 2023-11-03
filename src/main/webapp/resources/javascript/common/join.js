@@ -45,6 +45,7 @@ $(document).ready(function(){
     	rrnIsValidation();
     });
     
+    $("#contentDiv").load("joinDetail");
 });
 
 
