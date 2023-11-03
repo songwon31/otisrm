@@ -1,16 +1,23 @@
 package com.finalteam5.otisrm.controller;
+import java.io.OutputStream;
+import java.net.URLEncoder;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.finalteam5.otisrm.dto.SrPrgrsOtpt;
 import com.finalteam5.otisrm.dto.SrTrnsfPlanForm;
 import com.finalteam5.otisrm.dto.sr.SrPrgrsForm;
 import com.finalteam5.otisrm.dto.sr.SrRequestDetailForDeveloperHome;
@@ -159,6 +166,63 @@ public class DeveloperHomeController {
 	@ResponseBody
 	public String updateSrTrnsfPrgrs(SrPrgrsForm srPrgrsForm) {
 		srService.updateSrTrnsfPrgrs(srPrgrsForm);
+		return "success";
+	}
+	
+	//산출물 등록
+	@PostMapping("/addSrPrgrsOtpt")
+	@ResponseBody
+	public String addSrPrgrsOtpt(Authentication authentication, SrPrgrsOtpt srPrgrsOtpt) {
+		UsrDetails usrDetails = (UsrDetails) authentication.getPrincipal();
+		Usr usr = usrDetails.getUsr();
+		srPrgrsOtpt.setUsrNo(usr.getUsrNo());
+		srService.addSrPrgrsOtpt(srPrgrsOtpt);
+		return "success";
+	}
+	
+	//산출물 목록 출력
+	@PostMapping("/getSrPrgrsOtpts")
+	@ResponseBody
+	public List<SrPrgrsOtpt> getSrPrgrsOtpts(String srPrgrsNo) {
+		return srService.getSrPrgrsOtpts(srPrgrsNo);
+	}
+	
+	//산출물 다운로드
+	@GetMapping("/srPrgrsOtptDownload")
+	public void filedownload(String srPrgrsOtptNo, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	    SrPrgrsOtpt srPrgrsOtpt = srService.getSrPrgrsOtptBySrPrgrsOtptNo(srPrgrsOtptNo);
+	    
+	    String fileOriginalName = srPrgrsOtpt.getSrPrgrsOtptFileNm();
+	    
+	    String mimeType = srPrgrsOtpt.getSrPrgrsOtptMimeType();
+	    response.setContentType(mimeType);
+	    
+	   //응답 헤드에 한글 이름의 파일명을 ISO-8859-1 문자셋으로 인코딩해서 추가
+	   String userAgent = request.getHeader("User-Agent");
+	   if(userAgent.contains("Trident")|| userAgent.contains("MSIE")) {
+		   //IE
+		   fileOriginalName = URLEncoder.encode(fileOriginalName,"UTF-8");
+	   }else {
+		   //Chrome, Edge, FireFox, Safari 
+		   fileOriginalName = new String(fileOriginalName.getBytes("UTF-8"),"ISO-8859-1");
+	   }
+	   //response.setHeader가 없으면 브라우저에 바로 보여줄 수 있으면 보여줌	
+	   // 바로 보여줄 수 없으면 파일이 다운로드됨
+	   response.setHeader("Content-Disposition", "attachment; fileName=\"" + fileOriginalName + "\"" );
+	   
+	   //응답 본문에 파일데이터 싣기
+	   OutputStream os = response.getOutputStream();
+	   os.write(srPrgrsOtpt.getSrPrgrsOtptDataByteArray());
+	   os.flush();
+	   os.close();
+	}
+	
+	@PostMapping("/deleteSelectedOtpt")
+	@ResponseBody
+	public String deleteSelectedOtpt(@RequestBody List<String> srPrgrsOtptNoList) {
+		log.info("" + srPrgrsOtptNoList);
+		srService.deleteSelectedOtptList(srPrgrsOtptNoList);
+		
 		return "success";
 	}
 }

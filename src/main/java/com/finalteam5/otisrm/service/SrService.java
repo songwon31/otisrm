@@ -3,6 +3,7 @@ package com.finalteam5.otisrm.service;
 import java.util.List;
 
 import com.finalteam5.otisrm.dto.Pager;
+import com.finalteam5.otisrm.dto.SrPrgrsOtpt;
 import com.finalteam5.otisrm.dto.SrTrnsfPlanForm;
 import com.finalteam5.otisrm.dto.sr.SrForDeveloperHomeBoard;
 import com.finalteam5.otisrm.dto.sr.SrPrgrsForm;
@@ -50,4 +51,16 @@ public interface SrService {
 	
 	//SR 이관 진행률 업데이트
 	public int updateSrTrnsfPrgrs(SrPrgrsForm srPrgrsForm);
+	
+	//산출물 업로드
+	public int addSrPrgrsOtpt(SrPrgrsOtpt srPrgrsOtpt);
+	
+	//산출물 목록 
+	public List<SrPrgrsOtpt> getSrPrgrsOtpts(String srPrgrsNo);
+	
+	//산출물 파일 다운로드
+	public SrPrgrsOtpt getSrPrgrsOtptBySrPrgrsOtptNo(String srPrgrsOtptNo);
+	
+	//산출물 삭제
+	public int deleteSelectedOtptList(List<String> srPrgrsOtptNoList);
 }
