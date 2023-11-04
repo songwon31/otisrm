@@ -137,11 +137,11 @@
 		  	</if>
 		    <!-- 요청 진행 상태 -->
 		    <if test="status != null and status != ''">
-		      	and sr_rqst_stts_no = #{status, jdbcType=VARCHAR}
+		      	and r.sr_rqst_stts_no = #{status, jdbcType=VARCHAR}
 		    </if>
 		    <!-- 나의 요청 건만 보기 -->
 		    <if test="usr != null and usr != ''">
-		      	and sr_reqstr_no = #{usr, jdbcType=VARCHAR}
+		      	and  sr_reqstr_no = #{usr, jdbcType=VARCHAR}
 		    </if>
 		  	
 		    <!-- 조회기간 -->
@@ -154,7 +154,7 @@
 		    
 		    <!-- 관련 시스템 -->
 		    <if test="sysNo != null and sysNo != ''">
-		  		and sys_no = #{sysNo, jdbcType=VARCHAR}
+		  		and r.sys_no = #{sysNo, jdbcType=VARCHAR}
 		  	</if>
 		    
 		    <!-- 키워드 검색 -->
@@ -166,6 +166,7 @@
 		       		REGEXP_REPLACE(LOWER(REPLACE(sr_ttl, ' ', '')), '[[:punct:]]', '') LIKE '%' || REGEXP_REPLACE(LOWER(REPLACE(#{keyword}, ' ', '')), '[[:punct:]]', '') || '%'
 		    	</if>
 		    </if>
+				    
 		    
 		  </where>
 		</if>

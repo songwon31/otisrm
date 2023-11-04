@@ -119,6 +119,7 @@
 		style="height:65rem; background-color:white; border-radius:1rem; padding:2rem;">
 		<div class="d-flex">
 			<span class="mr-auto" style="height:3.5rem; font-size:2.2rem; font-weight:700; color:#222E3C;">SR요청목록</span>
+			<button data-toggle="modal" data-target="#addSrRqst" class="btn-6 mr-2" style="background-color:#2c7be4;" onclick="location.href='#';">요청 등록하기</button>
 			<button class="btn-5" onclick="location.href='#';">엑셀 다운로드</button>
 		</div>
 		<div class="tableContainer">
@@ -173,8 +174,9 @@
         <h6 class="modal-title">SR 요청 등록</h6>
         <i class="material-icons close-icon" data-dismiss="modal" style="cursor: pointer;">close</i>
       </div>
+      <input type="hidden" id="loginUsrDeptNo" value="${usr.deptNo}">
       <div id="srRqstBySrRqstNoForm" class="modal-body">
-      	<form id="writeSrRqst" action="writeSrRqst" method="post" enctype="multipart/form-data">
+      	<form id="writeSrRqstOfMng" action="writeSrRqstOfMng" method="post" enctype="multipart/form-data">
       		<!-- SR요청정보 -->
       		<h6 class="modal-sub-title">SR요청등록</h6>
       		<div class="card p-3 mb-4">
@@ -261,7 +263,7 @@
       	</div>
       </div>
       <div class="modal-footer py-1">
-        <button class="btn-1">저장</button>
+        <button type="submit" class="btn-1">저장</button>
         <button type="button" class="btn-3" data-dismiss="modal">닫기</button>
       </div>
     </form>

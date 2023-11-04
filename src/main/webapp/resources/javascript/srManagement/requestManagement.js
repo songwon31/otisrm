@@ -4,8 +4,8 @@ function init() {
 	 console.log("실행")
 	 requestInsertDate();
 	 eventPreventSrRqstAtch();				
-	 getTotalRows(choiceSrRqstSttsNo);	//상태에 따른 총 행수 구하기
-	 showInstList();					//소속기관 불러오기
+	 showInstList();	
+	 showSysByDeptNo()//소속기관 불러오기
 	 
 	 //등록 소속 확인 후 소속기관에 해당하는 부서 가져오기
 	 $("#confirmButton").click(function () {
@@ -317,80 +317,6 @@ function loadSRRequests(pageNo, choiceSrRqstSttsNo) {
   });
 }
 
-//**sr요청 상태 탭 별  행수 표시
-function numOftotalRows(){
-	//전체
-	getTotalRows("").then(function (totalRows) {
-		  console.log(totalRows);
-		  $("#numOfAll").html("("+ totalRows + ")");
-		});
-	//요청
-	getTotalRows("RQST").then(function (totalRows) {
-		  console.log(totalRows);
-		  $("#numOfRqst").html("("+ totalRows + ")");
-		});
-	//승인대기 
-	getTotalRows("APRV_WAIT").then(function (totalRows) {
-		console.log(totalRows);
-		$("#numOfAprvWait").html("("+ totalRows + ")");
-	});
-	//승인
-	getTotalRows("APRV").then(function (totalRows) {
-		console.log(totalRows);
-		$("#numOfAprv").html("("+ totalRows + ")");
-	});
-	//접수대기
-	getTotalRows("RCPT_WAIT").then(function (totalRows) {
-		console.log(totalRows);
-		$("#numOfRcptWait").html("("+ totalRows + ")");
-	});
-	//접수
-	getTotalRows("RCPT").then(function (totalRows) {
-		console.log(totalRows);
-		$("#numOfRcpt").html("("+ totalRows + ")");
-	});
-	//개발중
-	getTotalRows("DEP_ING").then(function (totalRows) {
-		console.log(totalRows);
-		$("#numOfDepIng").html("("+ totalRows + ")");
-	});
-	//테스트
-	getTotalRows("TEST").then(function (totalRows) {
-		console.log(totalRows);
-		$("#numOfTest").html("("+ totalRows + ")");
-	});
-	//완료요청
-	getTotalRows("CMPTN_RQST").then(function (totalRows) {
-		console.log(totalRows);
-		$("#numOfCmptnRqst").html("("+ totalRows + ")");
-	});
-	//개발완료
-	getTotalRows("DEP_CMPTN").then(function (totalRows) {
-		console.log(totalRows);
-		$("#numOfDepCmptn").html("("+ totalRows + ")");
-	});
-}
-
-//**총 행수 구하기
-function getTotalRows(choiceSrRqstSttsNo) {
-  return new Promise(function (resolve, reject) {
-    $.ajax({
-      url: "getCountSRRequestsByStatus",
-      data: {
-        status: choiceSrRqstSttsNo
-      },
-      dataType: "json",
-      method: "GET",
-      success: function (totalRows) {
-        resolve(totalRows);
-      },
-      error: function (error) {
-        reject(error);
-      }
-    });
-  });
-}
-
 //**상태에 따른 페이징 업데이트 함수
 function updatePagination(pageNo, choiceSrRqstSttsNo) {
 	choiceSrRqstSttsNo = $("#srRqstStts-select option:selected").val();
@@ -574,11 +500,11 @@ function eventPreventSrRqstAtch(){
 }
 
 //부서번호에 해당하는 관련시스템 목록
-function showSysByDeptNo(myDeptNo) {
+function showSysByDeptNo() {
 	$.ajax({
 		type: "GET", 
-		url: "getSysByDeptNo", 
-		data: { deptNo: myDeptNo}, 
+		url: "getSysByDeptNoOfMng", 
+		data: { deptNo: $("#loginUsrDeptNo").val()}, 
 		success: function (data) {
 			// 서버 응답을 처리하여 개발부서 목록을 업데이트 
 			let html = "";
@@ -629,13 +555,13 @@ function parseDateStringToDateFormat(dateString) {
 }
 
 //**요청등록하기
-function submitSrRqst(){
-	var form = $("#writeSrRqst")[0];
+function submitSrRqstOfMng(){
+	var form = $("#writeSrRqstOfMng")[0];
 	var formData = new FormData(form); // 폼 엘리먼트를 선택하고, [0]을 사용하여 DOM 요소로 변환
 	console.log(form);
 	console.log(formData);
 	$.ajax({
-	    url: "writeSrRqst", // 요청을 보낼 URL
+	    url: "writeSrRqstOfMng", // 요청을 보낼 URL
 	    method: "POST",
 	    data: formData, // 폼 데이터를 전송
 	    success: function (data) {
@@ -644,7 +570,7 @@ function submitSrRqst(){
 	        // 성공적으로 요청이 완료된 경우 실행할 코드
 	        var currentURL = window.location.href;
 	        console.log(currentURL);
-	        window.location.href = "/home"; // 또는 다른 원하는 URL로 변경
+	        window.location.href = "/requestManagement"; // 또는 다른 원하는 URL로 변경
 	        
 	    },
 	    error: function (error) {

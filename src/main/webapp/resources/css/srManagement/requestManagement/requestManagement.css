@@ -254,6 +254,19 @@
 .btn-5:active {
 	background-color:black; 
 }
+/* 파랭 버튼 가장 큰 버전 */
+.btn-6 {
+	border: none;
+	font-size:1.6rem;
+	color:white;
+	background-color: #2c7be4; 
+	border-radius: 0.5rem;
+	height: 3rem;
+	width: 12rem;
+}
+.btn-6:active {
+	background-color:#4177bf; 
+}
 /* Modal */
 .modal-header {
 	background-color: #222e3c;

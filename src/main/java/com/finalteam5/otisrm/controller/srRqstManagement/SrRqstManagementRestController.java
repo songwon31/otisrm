@@ -77,14 +77,6 @@ public class SrRqstManagementRestController {
 			@RequestParam(name="searchTarget", required=false)String searchTarget, 
 			@RequestParam(name="keyword", required=false)String keyword, 
 			HttpSession session) {
-		//log.info("파라미터 확인 deptNo: " + deptNo);
-		log.info("파라미터 확인 status: " + status);
-		log.info("파라미터 확인 usr: " + usr);
-		log.info("파라미터 확인startDate: " + startDate);
-		log.info("파라미터 확인endDate: " + endDate);
-		log.info("파라미터 확인searchTarget: " + searchTarget);
-		log.info("파라미터 확인keyword: " + keyword);
-		log.info("--------------------------");
 		//파라미터로 받은 값 전달
 		Map<String, Object>map = new HashMap<>();
 		map.put("status", status);
