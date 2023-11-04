@@ -65,7 +65,7 @@
 		       	or instNo != null and instNo != '' or deptNo != null and deptNo != '' or startDate != null and startDate != '' or endDate != null and endDate != ''">
 				  <where>
 				  	<!-- 소속기관 -->
-				  	<if test="instNo != null and instNo != ''">
+				    <if test="instNo != null and instNo != ''">
 				  		and u.inst_no = #{instNo, jdbcType=VARCHAR}
 				  	</if>
 				  	<!-- 개발 부서 -->
@@ -74,19 +74,19 @@
 				  	</if>
 				    <!-- 요청 진행 상태 -->
 				    <if test="status != null and status != ''">
-				      and r.sr_rqst_stts_no = #{status, jdbcType=VARCHAR}
+				      	and r.sr_rqst_stts_no = #{status, jdbcType=VARCHAR}
 				    </if>
 				    <!-- 나의 요청 건만 보기 -->
 				    <if test="usr != null and usr != ''">
-				      AND  sr_reqstr_no = #{usr, jdbcType=VARCHAR}
+				      	and  sr_reqstr_no = #{usr, jdbcType=VARCHAR}
 				    </if>
 				  	
 				    <!-- 조회기간 -->
 			        <if test="startDate != null and startDate != ''">
-			            AND r.sr_rqst_reg_dt &gt;= TO_DATE(#{startDate, jdbcType=VARCHAR}, 'yy-MM-dd')
+			            and r.sr_rqst_reg_dt &gt;= TO_DATE(#{startDate, jdbcType=VARCHAR}, 'yy-MM-dd')
 			        </if>
 			        <if test="endDate != null and endDate != ''">
-			            AND r.sr_rqst_reg_dt &lt;= TO_DATE(#{endDate, jdbcType=VARCHAR}, 'yy-MM-dd')
+			            and r.sr_rqst_reg_dt &lt;= TO_DATE(#{endDate, jdbcType=VARCHAR}, 'yy-MM-dd')
 			        </if>
 				    
 				    <!-- 관련 시스템 -->
@@ -118,18 +118,55 @@
 	
 	<!-- 전체 sr요청 수(페이징을 위함) -->
 	<select id="countSrRqst" parameterType="Map" resultType="int">
-		select count(*) from sr_rqst
-		<if test="status != null and status != '' or usr != null and usr != ''">
+		select count(*) from sr_rqst r
+		join sys s on s.sys_no = r.sys_no 
+        join usr u on u.usr_no = r.sr_reqstr_no
+        join dept d on d.dept_no = u.dept_no 
+        join inst i on i.inst_no = u.inst_no
+        join sr_rqst_stts q on q.sr_rqst_stts_no = r.sr_rqst_stts_no
+	    <if test="status != null and status != '' or usr != null and usr != '' or keyword != null and keyword != '' or startDate != null or endDate != null
+	       	or instNo != null and instNo != '' or deptNo != null and deptNo != '' or startDate != null and startDate != '' or endDate != null and endDate != ''">
 		  <where>
+		  	<!-- 소속기관 -->
+		    <if test="instNo != null and instNo != ''">
+		  		and u.inst_no = #{instNo, jdbcType=VARCHAR}
+		  	</if>
+		  	<!-- 개발 부서 -->
+		  	<if test="deptNo != null and deptNo != ''">
+		  		and d.dept_no = #{deptNo, jdbcType=VARCHAR}
+		  	</if>
+		    <!-- 요청 진행 상태 -->
 		    <if test="status != null and status != ''">
-		       sr_rqst_stts_no = #{status, jdbcType=VARCHAR}
+		      	and sr_rqst_stts_no = #{status, jdbcType=VARCHAR}
 		    </if>
-		    <if test="status != null and status != '' and usr != null and usr != ''">
-		      AND
-		    </if>
+		    <!-- 나의 요청 건만 보기 -->
 		    <if test="usr != null and usr != ''">
-		      sr_reqstr_no = #{usr, jdbcType=VARCHAR}
+		      	and sr_reqstr_no = #{usr, jdbcType=VARCHAR}
 		    </if>
+		  	
+		    <!-- 조회기간 -->
+	        <if test="startDate != null and startDate != ''">
+	            and r.sr_rqst_reg_dt &gt;= TO_DATE(#{startDate, jdbcType=VARCHAR}, 'yy-MM-dd')
+	        </if>
+	        <if test="endDate != null and endDate != ''">
+	            and r.sr_rqst_reg_dt &lt;= TO_DATE(#{endDate, jdbcType=VARCHAR}, 'yy-MM-dd')
+	        </if>
+		    
+		    <!-- 관련 시스템 -->
+		    <if test="sysNo != null and sysNo != ''">
+		  		and sys_no = #{sysNo, jdbcType=VARCHAR}
+		  	</if>
+		    
+		    <!-- 키워드 검색 -->
+		    <if test="keyword != null and keyword != '' or searchTarget != null and searchTarget != ''">
+		    	<if test="searchTarget == 'searchSrRqstNo'">				    	
+		        	REGEXP_REPLACE(LOWER(REPLACE(sr_rqst_no, ' ', '')), '[[:punct:]]', '') LIKE '%' || REGEXP_REPLACE(LOWER(REPLACE(#{keyword}, ' ', '')), '[[:punct:]]', '') || '%'
+		    	</if>
+		    	<if test="searchTarget == 'searchSrRqstNm'">				    	
+		       		REGEXP_REPLACE(LOWER(REPLACE(sr_ttl, ' ', '')), '[[:punct:]]', '') LIKE '%' || REGEXP_REPLACE(LOWER(REPLACE(#{keyword}, ' ', '')), '[[:punct:]]', '') || '%'
+		    	</if>
+		    </if>
+		    
 		  </where>
 		</if>
 	</select>

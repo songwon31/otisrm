@@ -77,7 +77,6 @@ public class SrRqstManagementRestController {
 			@RequestParam(name="searchTarget", required=false)String searchTarget, 
 			@RequestParam(name="keyword", required=false)String keyword, 
 			HttpSession session) {
-		log.info("파라미터 확인 instNo: " + instNo);
 		//log.info("파라미터 확인 deptNo: " + deptNo);
 		log.info("파라미터 확인 status: " + status);
 		log.info("파라미터 확인 usr: " + usr);
@@ -86,10 +85,11 @@ public class SrRqstManagementRestController {
 		log.info("파라미터 확인searchTarget: " + searchTarget);
 		log.info("파라미터 확인keyword: " + keyword);
 		log.info("--------------------------");
-		//파라미터로 전달받은 값 전달
+		//파라미터로 받은 값 전달
 		Map<String, Object>map = new HashMap<>();
 		map.put("status", status);
 		map.put("instNo", instNo);
+		log.info("파라미터 확인 instNo: " + map.get("instNo"));
 		map.put("deptNo", deptNo);
 		map.put("usr", usr);
         map.put("startDate", startDate);
@@ -121,15 +121,35 @@ public class SrRqstManagementRestController {
 		
 		//페이지 별 요청 목록 불러오기
 		List<SrRqst> list = srRqstService.getSrRqstListByPager(map);
-		log.info("잘나와랏아라울앙: " + list.toString());
+	
 		return list;
 	}
 	
 	//상태에 따른 sr요청 총 행수 불러오기
 	@GetMapping("getCountSRRequestsByStatus")
-	public int countSRRequestsByStatus(@RequestParam(name="status") String status) {
-		 Map<String, Object> map = new HashMap<>();
-		 map.put("status", status);
+	public int countSRRequestsByStatus(
+			@RequestParam String srRqstMngPageNo, 
+			@RequestParam(name="instNo", required=false)String instNo, 
+			@RequestParam(name="deptNo", required=false)String deptNo, 
+			@RequestParam(name="status", required=false)String status, 
+			@RequestParam(name="usr", required=false)String usr, 
+			@RequestParam(name="startDate", required=false)String startDate, 
+			@RequestParam(name="endDate", required=false)String endDate, 
+			@RequestParam(name="sysNo", required=false)String sysNo, 
+			@RequestParam(name="searchTarget", required=false)String searchTarget, 
+			@RequestParam(name="keyword", required=false)String keyword
+			) {
+		//파라미터로 전달받은 값 전달
+		Map<String, Object> map = new HashMap<>();
+		map.put("status", status);
+		map.put("instNo", instNo);
+		map.put("deptNo", deptNo);
+		map.put("usr", usr);
+		map.put("startDate", startDate);
+		map.put("endDate", endDate);
+		map.put("sysNo", sysNo);
+		map.put("searchTarget", searchTarget);
+		map.put("keyword", keyword);
 		// status에 따른 총 행 수를 가져오는 쿼리 실행
 	    int totalRows = srRqstService.totalSrRqst(map);
 	    

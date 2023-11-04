@@ -88,6 +88,7 @@ function showInstList() {
 }
 
 //소속기관 저장 검색버튼 
+var selectedInstNo = "";
 function selectInst() {
     // 선택된 라디오 버튼의 ID 값을 가져오기
     var selectedInstNo = $("input[name='instNm']:checked").attr("id");
@@ -113,7 +114,7 @@ function showDept(instNo) {
         	console.log(data);
         	html="";
             // 서버 응답을 처리하여 개발부서 목록을 업데이트
-        	html += '<option value="none">전체</option>';
+        	html += '<option value="">전체</option>';
       		data.forEach((item, index) => {	
       			html += '<option value="'+item.deptNo+'">'+item.deptNm+'</option>';
        		});
@@ -392,10 +393,37 @@ function getTotalRows(choiceSrRqstSttsNo) {
 
 //**상태에 따른 페이징 업데이트 함수
 function updatePagination(pageNo, choiceSrRqstSttsNo) {
+	choiceSrRqstSttsNo = $("#srRqstStts-select option:selected").val();
+	//등록자 소속기관
+	var searchInstNo = $("input[name='instNm']:checked").attr("id");
+	//개발부서
+	var searchDeptNo = $("#deptNo-select option:selected").val();
+	//진행 상태
+	var searchStatus = choiceSrRqstSttsNo;
+	//내 요청건만 여부
+	var searchUsr = $("#usr").val();
+	//조회기간
+	var searchStartDate = $("#startDate").val();
+	var searchEndDate = $("#endDate").val();
+	//관련 시스템 
+	var searchSysNo = $("#sysNo-select option:selected").val();
+	//키워드 검색대상
+	var searchTarget = $("#searchTarget option:selected").val();
+	//키워드 
+	var searchKeyword = $("#keyword").val();
   $.ajax({
     url: "getCountSRRequestsByStatus",
     data: {
-      status: choiceSrRqstSttsNo
+    	srRqstMngPageNo: pageNo,
+    	instNo: searchInstNo,
+    	deptNo: searchDeptNo,
+    	status: choiceSrRqstSttsNo,
+    	usr: searchUsr,
+    	startDate: searchStartDate,
+    	endDate: searchEndDate,
+    	sysNo: searchSysNo,
+    	searchTarget: searchTarget,
+    	keyword: searchKeyword
     },
     dataType: "json",
     method: "GET",
@@ -554,7 +582,7 @@ function showSysByDeptNo(myDeptNo) {
 		success: function (data) {
 			// 서버 응답을 처리하여 개발부서 목록을 업데이트 
 			let html = "";
-			html += '<option value="none">--관련시스템--</option>'
+			html += '<option value="">--관련시스템--</option>'
       		data.forEach((item, index) => {	
            	html += '<option value="'+item.sysNo+'">'+item.sysNm+'</option>';
       		});
