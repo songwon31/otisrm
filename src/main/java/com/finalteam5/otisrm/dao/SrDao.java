@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Param;
 import com.finalteam5.otisrm.dto.Pager;
 import com.finalteam5.otisrm.dto.SrDmndClsf;
 import com.finalteam5.otisrm.dto.SrPrgrs;
+import com.finalteam5.otisrm.dto.SrPrgrsOtpt;
 import com.finalteam5.otisrm.dto.SrTaskClsf;
 import com.finalteam5.otisrm.dto.SrTrnsfPlan;
 import com.finalteam5.otisrm.dto.sr.SrForDeveloperHomeBoard;
@@ -91,4 +92,16 @@ public interface SrDao {
 	
 	public int updateSrPrgrs(SrPrgrs srPrgrs);
 	public int updateSrTrnsfStts(@Param("srNo") String srNo, @Param("srPrgrsSttsNo") String srPrgrsSttsNo);
+	
+	//산출물 업로드
+	public int insertSrPrgrsOtpt(SrPrgrsOtpt srPrgrsOtpt);
+	
+	//산출물 목록 출력
+	public List<SrPrgrsOtpt> selectSrPrgrsOtpt(String srPrgrsNo);
+	
+	//산출물 다운로드
+	public SrPrgrsOtpt selectSrPrgrsOtptBySrPrgrsOtptNo(String srPrgrsOtptNo);
+	
+	//산출물 삭제
+	public int deleteSrPrgrsOtpt(String srPrgrsOtptNo);
 }

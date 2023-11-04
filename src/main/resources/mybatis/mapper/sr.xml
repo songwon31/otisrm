@@ -474,4 +474,37 @@
 		SET sr_prgrs_stts_no = #{srPrgrsSttsNo}
 		WHERE sr_no = #{srNo}
 	</update>
+	
+	<!-- 산출물 업로드 -->
+	<insert id="insertSrPrgrsOtpt" parameterType="com.finalteam5.otisrm.dto.SrPrgrsOtpt">
+		INSERT INTO sr_prgrs_otpt(
+	        sr_prgrs_otpt_no, sr_prgrs_no, sr_prgrs_otpt_nm, sr_prgrs_otpt_mime_type, sr_prgrs_otpt_data,
+	        sr_prgrs_otpt_size, sr_prgrs_otpt_file_nm, sr_prgrs_otpt_reg_dt, usr_no
+	    ) values(
+	        #{srPrgrsOtptNo}, #{srPrgrsNo}, #{srPrgrsOtptNm}, #{srPrgrsOtptMimeType}, #{srPrgrsOtptDataByteArray},
+	        #{srPrgrsOtptSize}, #{srPrgrsOtptFileNm}, #{srPrgrsOtptRegDt}, #{usrNo}
+	    )
+	</insert>
+	
+	<!-- 산출물 목록 출력 -->
+	<select id="selectSrPrgrsOtpt" parameterType="String" resultType="com.finalteam5.otisrm.dto.SrPrgrsOtpt">
+		SELECT sr_prgrs_otpt_no, sr_prgrs_no, sr_prgrs_otpt_nm, sr_prgrs_otpt_mime_type,
+			sr_prgrs_otpt_size, sr_prgrs_otpt_file_nm, sr_prgrs_otpt_reg_dt, usr.usr_nm
+		FROM sr_prgrs_otpt
+		JOIN usr ON sr_prgrs_otpt.usr_no = usr.usr_no
+		WHERE sr_prgrs_no = #{srPrgrsNo}
+	</select>
+	
+	<!-- 산출물 다운로드 -->
+	<select id="selectSrPrgrsOtptBySrPrgrsOtptNo" parameterType="String" resultType="com.finalteam5.otisrm.dto.SrPrgrsOtpt">
+		SELECT sr_prgrs_otpt_no, sr_prgrs_no, sr_prgrs_otpt_nm, sr_prgrs_otpt_mime_type, sr_prgrs_otpt_data as sr_prgrs_otpt_data_byte_array,
+			sr_prgrs_otpt_size, sr_prgrs_otpt_file_nm, sr_prgrs_otpt_reg_dt
+		FROM sr_prgrs_otpt
+		WHERE sr_prgrs_otpt_no = #{srPrgrsOtptNo}
+	</select>
+	
+	<!-- 산출물 삭제 -->
+	<delete id="deleteSrPrgrsOtpt" parameterType="String">
+		DELETE FROM sr_prgrs_otpt WHERE sr_prgrs_otpt_no = #{srPrgrsOtptNo}
+	</delete>
 </mapper>

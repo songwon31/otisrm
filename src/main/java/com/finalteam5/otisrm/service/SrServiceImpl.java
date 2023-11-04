@@ -7,10 +7,12 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.finalteam5.otisrm.dao.SrDao;
 import com.finalteam5.otisrm.dto.Pager;
 import com.finalteam5.otisrm.dto.SrPrgrs;
+import com.finalteam5.otisrm.dto.SrPrgrsOtpt;
 import com.finalteam5.otisrm.dto.SrTrnsfPlan;
 import com.finalteam5.otisrm.dto.SrTrnsfPlanForm;
 import com.finalteam5.otisrm.dto.sr.SrForDeveloperHomeBoard;
@@ -481,6 +483,60 @@ public class SrServiceImpl implements SrService{
 			}
 		}
 		
+		return 1;
+	}
+	
+	//산출물 업로드
+	@Override
+	public int addSrPrgrsOtpt(SrPrgrsOtpt srPrgrsOtpt) {
+		MultipartFile file = srPrgrsOtpt.getSrPrgrsOtptData();
+		srPrgrsOtpt.setSrPrgrsOtptNo(srPrgrsOtpt.getSrPrgrsNo() + "_" + srPrgrsOtpt.getSrPrgrsOtptNm());
+		srPrgrsOtpt.setSrPrgrsOtptMimeType(file.getContentType());
+		try {
+			srPrgrsOtpt.setSrPrgrsOtptDataByteArray(srPrgrsOtpt.getSrPrgrsOtptData().getBytes());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		srPrgrsOtpt.setSrPrgrsOtptSize(file.getSize());
+		srPrgrsOtpt.setSrPrgrsOtptFileNm(file.getOriginalFilename());
+		srPrgrsOtpt.setSrPrgrsOtptRegDt(new Date());
+	
+		srDao.insertSrPrgrsOtpt(srPrgrsOtpt);
+		
+		return 1;
+	}
+	
+	//산출물 리스트 출력
+	@Override
+	public List<SrPrgrsOtpt> getSrPrgrsOtpts(String srPrgrsNo) {
+		return srDao.selectSrPrgrsOtpt(srPrgrsNo);
+	}
+	
+	//산출물 다운로드
+	@Override
+	public SrPrgrsOtpt getSrPrgrsOtptBySrPrgrsOtptNo(String srPrgrsOtptNo) {
+		SrPrgrsOtpt srPrgrsOtpt = srDao.selectSrPrgrsOtptBySrPrgrsOtptNo(srPrgrsOtptNo);
+		/*
+		try {
+			srPrgrsOtpt.setSrPrgrsOtptDataByteArray(srPrgrsOtpt.getSrPrgrsOtptData().getBytes());
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		*/
+		/*
+		log.info(""+srPrgrsOtpt.getSrPrgrsOtptData());
+		log.info(""+srPrgrsOtpt.getSrPrgrsOtptDataByteArray());
+		*/
+		return srPrgrsOtpt;
+	}
+	
+	//산출물 삭제
+	@Override
+	public int deleteSelectedOtptList(List<String> srPrgrsOtptNoList) {
+		for (String srPrgrsOtptNo : srPrgrsOtptNoList) {
+			srDao.deleteSrPrgrsOtpt(srPrgrsOtptNo);
+		}
 		return 1;
 	}
 }

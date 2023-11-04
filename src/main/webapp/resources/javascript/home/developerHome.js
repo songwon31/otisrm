@@ -400,7 +400,7 @@ function setSrDetail(srNo) {
 						if (srPrgrs.srPrgrs > 0) {
 							$('#srAnalysisPrgrs input').val(srPrgrs.srPrgrs);
 						}
-						let btnHtml = '<center><a href="javascript:void(0)" onclick=""';
+						let btnHtml = '<center><a data-toggle="modal" data-target="#manageSrOutputModal" href="javascript:void(0)" onclick="composeManageSrOutputModal(\'ANALYSIS\')"';
 						btnHtml += 'style="height: 3rem; width: 30%; border-radius: 5px; background-color:#2c7be4; color:white; font-weight:700;';
 						btnHtml += 'display: flex; flex-direction: row; justify-content: center; align-items: center;">관리</a></center>';
 						$('#srAnalysisOtptBtn').html(btnHtml);
@@ -415,7 +415,7 @@ function setSrDetail(srNo) {
 						if (srPrgrs.srPrgrs > 0) {
 							$('#srDesignPrgrs input').val(srPrgrs.srPrgrs);
 						}
-						let btnHtml = '<center><a href="javascript:void(0)" onclick=""';
+						let btnHtml = '<center><a data-toggle="modal" data-target="#manageSrOutputModal" href="javascript:void(0)" onclick="composeManageSrOutputModal(\'DESIGN\')"';
 						btnHtml += 'style="height: 3rem; width: 30%; border-radius: 5px; background-color:#2c7be4; color:white; font-weight:700;';
 						btnHtml += 'display: flex; flex-direction: row; justify-content: center; align-items: center;">관리</a></center>';
 						$('#srDesignOtptBtn').html(btnHtml);
@@ -430,7 +430,7 @@ function setSrDetail(srNo) {
 						if (srPrgrs.srPrgrs > 0) {
 							$('#srImplPrgrs input').val(srPrgrs.srPrgrs);
 						}
-						let btnHtml = '<center><a href="javascript:void(0)" onclick=""';
+						let btnHtml = '<center><a data-toggle="modal" data-target="#manageSrOutputModal" href="javascript:void(0)" onclick="composeManageSrOutputModal(\'IMPLEMENT\')"';
 						btnHtml += 'style="height: 3rem; width: 30%; border-radius: 5px; background-color:#2c7be4; color:white; font-weight:700;';
 						btnHtml += 'display: flex; flex-direction: row; justify-content: center; align-items: center;">관리</a></center>';
 						$('#srImplOtptBtn').html(btnHtml);
@@ -445,7 +445,7 @@ function setSrDetail(srNo) {
 						if (srPrgrs.srPrgrs > 0) {
 							$('#srTestPrgrs input').val(srPrgrs.srPrgrs);
 						}
-						let btnHtml = '<center><a href="javascript:void(0)" onclick=""';
+						let btnHtml = '<center><a data-toggle="modal" data-target="#manageSrOutputModal" href="javascript:void(0)" onclick="composeManageSrOutputModal(\'TEST\')"';
 						btnHtml += 'style="height: 3rem; width: 30%; border-radius: 5px; background-color:#2c7be4; color:white; font-weight:700;';
 						btnHtml += 'display: flex; flex-direction: row; justify-content: center; align-items: center;">관리</a></center>';
 						$('#srTestOtptBtn').html(btnHtml);
@@ -460,7 +460,7 @@ function setSrDetail(srNo) {
 						if (srPrgrs.srPrgrs > 0) {
 							$('#srApplyPrgrs input').val(srPrgrs.srPrgrs);
 						}
-						let btnHtml = '<center><a href="javascript:void(0)" onclick=""';
+						let btnHtml = '<center><a data-toggle="modal" data-target="#manageSrOutputModal" href="javascript:void(0)" onclick="composeManageSrOutputModal(\'APPLY_REQUEST\')"';
 						btnHtml += 'style="height: 3rem; width: 30%; border-radius: 5px; background-color:#2c7be4; color:white; font-weight:700;';
 						btnHtml += 'display: flex; flex-direction: row; justify-content: center; align-items: center;">관리</a></center>';
 						$('#srApplyOtptBtn').html(btnHtml);
@@ -502,6 +502,7 @@ function showSrPlanInfoEditModal() {
 		url: "/otisrm/getSrPlanModalCompose",
 		data: requestData,
 		success: function(data) {
+			console.log(data);
 			//SR계획정보 구성
 			/*
 			for (let i=0; i<data.dmndList.length; ++i) {
@@ -874,4 +875,148 @@ function updatePrgrs() {
 			setSrDetail(srNo);
 		}
 	});
+}
+
+function composeManageSrOutputModal(srPrgrsSttsNo) {
+	srNo = currentDetailSrNo;
+	let srPrgrsNo;
+	if (srPrgrsSttsNo == 'ANALYSIS') {
+		srPrgrsNo = srNo + '_analysis';
+		$('#manageSrOutputModalTableTitle').html('분석');
+	} else if (srPrgrsSttsNo == 'DESIGN') {
+		srPrgrsNo = srNo + '_design';
+		$('#manageSrOutputModalTableTitle').html('설계');
+	} else if (srPrgrsSttsNo == 'IMPLEMENT') {
+		srPrgrsNo = srNo + '_implement';
+		$('#manageSrOutputModalTableTitle').html('구현');
+	} else if (srPrgrsSttsNo == 'TEST') {
+		srPrgrsNo = srNo + '_test';
+		$('#manageSrOutputModalTableTitle').html('시험');
+	} else if (srPrgrsSttsNo == 'APPLY_REQUEST') {
+		srPrgrsNo = srNo + '_apply_request';
+		$('#manageSrOutputModalTableTitle').html('반영요청');
+	}
+	$('#outputSrPrgrsNo').val(srPrgrsNo);
+	
+	$.ajax({
+		url: "/otisrm/getSrPrgrsOtpts",
+		type: "POST",
+		data: {srPrgrsNo: srPrgrsNo},
+		success: function(data) {
+			$('#manageSrOutputModalTable tbody').html('');
+			for (let i=0; i<data.length; ++i) {
+				let otpt = data[i];
+				let html = '';
+				html += '<tr style="height: 4.5rem; font-size: 1.5rem; background-color:white;">';
+				html += '<td><div class="id" style="display:none;">' + otpt.srPrgrsOtptNo + '</div></td>';
+				html += '<td><input type="checkbox" class="checkbox"></td>';
+				html += '<td>' + otpt.srPrgrsOtptNm + '</td>';
+				html += '<td>' + otpt.srPrgrsOtptFileNm + '</td>';
+				html += '<td>' + (otpt.srPrgrsOtptSize / 1024).toFixed(2) + 'KB</td>'
+				html += '<td>' + otpt.usrNm + '</td>';
+				let regDt = new Date(otpt.srPrgrsOtptRegDt);
+				html += '<td>' + formatDate(regDt) + '</td>';
+				
+				$('#manageSrOutputModalTable tbody').append(html);
+			}
+			setFunctionOnManageSrOutputModalTableTr();
+		}
+	});
+	
+}
+
+function setFunctionOnManageSrOutputModalTableTr() {
+	$('#manageSrOutputModalTable td').on("click", function(e) {
+		if ($(this).find('input').length <= 0) {
+			let srPrgrsOtptNo = $(this).closest('tr').find(".id").html();
+			window.location.href = "/otisrm/srPrgrsOtptDownload?srPrgrsOtptNo=" + srPrgrsOtptNo;
+		}
+		
+		/*
+		$.ajax({
+			url: "/otisrm/srPrgrsOtptDownload",
+			type: "GET",
+			data: {srPrgrsOtptNo: srPrgrsOtptNo},
+			success: function(data) {
+				
+			}
+		});
+		*/
+    });
+}
+
+function addSrOutputFile() {
+	let outputName = $("#addSrOutputModalOutputNameInput").val();
+    let outputFile = $("#addSrOutputModalFileInput")[0].files[0];
+    let srPrgrsNo = $("#outputSrPrgrsNo").val();
+    
+    if (outputName && outputFile) {
+    	let formData = new FormData();
+        formData.append("srPrgrsNo", srPrgrsNo);
+        formData.append("srPrgrsOtptNm", outputName);
+        formData.append("srPrgrsOtptData", outputFile);
+        
+        $.ajax({
+            url: "/otisrm/addSrPrgrsOtpt",
+            type: "POST",
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function (response) {
+            	//모달 초기화
+            	$("#addSrOutputModalOutputNameInput").val('');
+            	$("#addSrOutputModalFileInput").val('');
+            	//외부 모달 로드
+            	if (srPrgrsNo.includes('analysis')) {
+            		composeManageSrOutputModal('ANALYSIS');
+            	} else if (srPrgrsNo.includes('design')) {
+            		composeManageSrOutputModal('DESIGN');
+            	} else if (srPrgrsNo.includes('implement')) {
+            		composeManageSrOutputModal('IMPLEMENT');
+            	} else if (srPrgrsNo.includes('test')) {
+            		composeManageSrOutputModal('TEST');
+            	} else if (srPrgrsNo.includes('apply_design')) {
+            		composeManageSrOutputModal('APPLY_REQUEST');
+            	}
+            }
+        });
+    } else {
+        alert("산출물명과 파일을 입력하세요.");
+    }
+}
+
+function deleteOutput() {
+	let srPrgrsOtptNoList = [];
+	// 테이블 내의 체크박스를 확인
+	$('#manageSrOutputModalTable td').each(function () {
+	    if ($(this).find('.checkbox').is(':checked')) {
+	        // 체크된 행의 데이터를 객체로 저장
+	    	srPrgrsOtptNoList.push($(this).closest('tr').find('.id').html());
+	    }
+	});
+	
+	let stts;
+	if (srPrgrsOtptNoList[0].includes('analysis')) {
+		stts = 'ANALYSIS';
+	} else if (srPrgrsOtptNoList[0].includes('design')) {
+		stts = 'DESIGN';
+	} else if (srPrgrsOtptNoList[0].includes('implement')) {
+		stts = 'IMPLEMENT';
+	} else if (srPrgrsOtptNoList[0].includes('test')) {
+		stts = 'TEST';
+	} else if (srPrgrsOtptNoList[0].includes('apply_design')) {
+		stts = 'APPLY_REQUEST';
+	}
+
+    // AJAX 요청을 통해 서버로 데이터 전송
+    $.ajax({
+        url: '/otisrm/deleteSelectedOtpt',
+        type: 'POST',
+        data: JSON.stringify(srPrgrsOtptNoList),
+        contentType: 'application/json',
+        success: function (data) {
+        	console.log(stts);
+        	composeManageSrOutputModal(stts);
+        }
+    });
 }
