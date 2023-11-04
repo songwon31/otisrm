@@ -7,7 +7,10 @@ function init() {
 	 getTotalRows(choiceSrRqstSttsNo);	//상태에 따른 총 행수 구하기
 	 showInstList();					//소속기관 불러오기
 	 
-	
+	 //등록 소속 확인 후 소속기관에 해당하는 부서 가져오기
+	 $("#confirmButton").click(function () {
+		 showDept();
+		});
 	 var deptNo = "";
 	//개발 부서 select box 클릭 이벤트 처리(유효성검사)
     $("#deptNo-select").click(function() {
@@ -27,6 +30,8 @@ function init() {
     		alert("개발부서를 먼저 선택해주세요.");
     	}
     }); 
+    
+  
     showSrRqstStts();
 }
  
@@ -98,18 +103,13 @@ function selectInst() {
     $("#findInst").html(selectedInstNm);	
 }
 
-//확인버튼 클릭이벤트 처리
-function choiceOfInstOkBtn(){
-	showDept(instNo);
-}
-
 //2: 소속기관에 해당하는 개발부서 불러오기
-var instNo = $("#instNo").val();
-function showDept(instNo) {
+var instNo = $("input[name='instNm']:checked").attr("id");
+function showDept() {
     $.ajax({
         type: "GET", // 또는 "GET", 요청 유형에 따라 선택
         url: "getDeptListOfMng", // 서버 측 엔드포인트 URL로 변경
-        data: { instNo: instNo }, // 선택한 소속기관 ID를 서버로 전달
+        data: {instNo: $("input[name='instNm']:checked").attr("id")}, // 선택한 소속기관 ID를 서버로 전달
         success: function (data) {
         	console.log(data);
         	html="";

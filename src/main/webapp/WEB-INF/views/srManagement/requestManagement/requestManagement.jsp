@@ -419,7 +419,7 @@
 							<span id="findInst"></span>
 						</div>
 						<div style="height:4rem; display: flex; flex-direction: row; align-items:center; justify-content:flex-end;">
-							<a onclick="choiceOfInstOkBtn()" data-dismiss="modal"
+							<a data-dismiss="modal" id="confirmButton"
 								style="height: 3rem; width: 5rem; border-radius: 5px; background-color:#222e3c; color:white; font-weight:700; margin-right:0.5rem;
 								display: flex; flex-direction: row; justify-content: center; align-items: center;">확인</a>
 							<a href="#" data-dismiss="modal"
