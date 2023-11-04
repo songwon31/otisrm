@@ -23,6 +23,9 @@
       <!-- loading-overlay를 사용하기 위한 라이브러리 -->
       <script src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.7/dist/loadingoverlay.min.js"></script>
       
+      <!-- 엑셀다운로드를 위한 라이브러리 -->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+      
       <!-- javascript 코드 -->
       <script src="${pageContext.request.contextPath}/resources/javascript/common/header.js"></script>
       

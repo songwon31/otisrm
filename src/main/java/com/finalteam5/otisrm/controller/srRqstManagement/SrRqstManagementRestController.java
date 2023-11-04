@@ -81,7 +81,6 @@ public class SrRqstManagementRestController {
 		Map<String, Object>map = new HashMap<>();
 		map.put("status", status);
 		map.put("instNo", instNo);
-		log.info("파라미터 확인 instNo: " + map.get("instNo"));
 		map.put("deptNo", deptNo);
 		map.put("usr", usr);
         map.put("startDate", startDate);
@@ -149,12 +148,12 @@ public class SrRqstManagementRestController {
 	}
 	
 	//요청에 해당하는 상세정보 불러오기
-	@GetMapping("getSrRqstBySrRqstNo")
+	@GetMapping("getSrRqstBySrRqstNoOfMng")
 	public SrRqst getSrRqstBySrRqstNo(String srRqstNo, Model model, HttpSession session) {
 		SrRqst srRqst = srRqstService.getSrRqstBySrRqstNo(srRqstNo);
 		List<SrRqstAtch> list = srRqstService.getSrRqstAtchBySrRqstNo(srRqstNo);
 		srRqst.setSrRqstAtchList(list);
-		model.addAttribute("srRqstNo", srRqstNo);
+		model.addAttribute("srRqstNoOfModiFy", srRqst.getSrRqstNo());
 		return srRqst;
 	}
 	

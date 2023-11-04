@@ -120,7 +120,7 @@
 		<div class="d-flex">
 			<span class="mr-auto" style="height:3.5rem; font-size:2.2rem; font-weight:700; color:#222E3C;">SR요청목록</span>
 			<button data-toggle="modal" data-target="#addSrRqst" class="btn-6 mr-2" style="background-color:#2c7be4;" onclick="location.href='#';">요청 등록하기</button>
-			<button class="btn-5" onclick="location.href='#';">엑셀 다운로드</button>
+			<button id="downloadExcelButton" class="btn-5" onclick="downloadExcel()">엑셀 다운로드</button>
 		</div>
 		<div class="tableContainer">
 			<table id="mainTable" style="width: 100%; text-align: center; height: 49.3rem;">
@@ -281,7 +281,7 @@
         <i class="material-icons close-icon" data-dismiss="modal" style="cursor: pointer;">close</i>
       </div>
       <div class="modal-body">
-      	<form id="modifySrRqst" action="modifySrRqst" method="post" enctype="multipart/form-data">
+      	<form id="modifySrRqstOfMng" action="modifySrRqstOfMng" method="post" enctype="multipart/form-data">
       		<!-- SR요청정보 -->
       		<h6 class="modal-sub-title">SR요청등록</h6>
       		<div class="card p-3 mb-4">
@@ -375,7 +375,7 @@
 		<input id="submitSrRqst-srPrps" type="hidden" class="form-control" name="srPrps">
 		<input id="submitSrRqst-srConts" type="hidden" class="form-control" name="srConts">
 		<input id="submit_Yn" type="hidden" name="srRqstEmrgYn">
-        <button id="saveButton" class="btn-1" type="button" onclick="modifySrRqst(${srRqstNo})">저장</button>
+        <button id="saveButton" class="btn-1" type="submit">저장</button>
         <button type="button" class="btn-3" data-dismiss="modal">닫기</button>
       </div>
     </form>

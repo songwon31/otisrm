@@ -194,6 +194,7 @@ function submitList(){
 	loadSRRequests(pageNo, choiceSrRqstSttsNo);
 }
 
+
 //**요청목록 불러오기
 function loadSRRequests(pageNo, choiceSrRqstSttsNo) {
 	choiceSrRqstSttsNo = $("#srRqstStts-select option:selected").val();
@@ -410,17 +411,17 @@ function bytesToKB(bytes) {
 
 //**요청에 해당하는 상세 정보 가져오기 (모달)
 function showSrRqstBySrRqstNo(choiceSrRqstNo){
-	console.log("상세클릭");
+	loading();
 	$.ajax({
 		type: "GET",
-        url: "getSrRqstBySrRqstNo",
+        url: "getSrRqstBySrRqstNoOfMng",
         data: {srRqstNo: choiceSrRqstNo},
         success: function(data) {
         	$("#showSrRqstAtch").hide();
         	var date = new Date(data.srRqstRegDt);
         	console.log(data);
         	//저장버튼(로그인한 회원의 요청만 저장버튼 활성화)
-        	var loggedInUsrNo= $("#loginUsrNo").val();// 로그인한 회원 번호 가져오기 
+        	var loggedInUsrNo= $("#loginUsr").val();// 로그인한 회원 번호 가져오기 
         	var saveButton = $("#saveButton");
         	console.log(loggedInUsrNo);
         	// 로그인한 사용자와 요청을 등록한 회원을 비교하여 버튼 활성화/비활성화
@@ -617,22 +618,17 @@ function modifySubmitData(){
 }
 
 //sr 요청 수정
-function modifySrRqst(srRqstNo) {
+function modifySrRqstOfMng(srRqstNo) {
 	modifySubmitData();
 	// 데이터 수집 및 가공
-    var data = {
-    	srRqstNo: $("#srRqst-srRqstNo").val(),
-        srTtl: $("#submitSrRqst-srTtl").val(),
-        srPrps: $("#submitSrRqst-srPrps").val(),
-        srConts: $("#submitSrRqst-srConts").val(),
-        srRqstEmrgYn: $("#submit_Yn").val()
-    };
+	var form = $("#modifySrRqstOfMng")[0];
+	var formData = new FormData(form);
     // Ajax 요청 보내기
     $.ajax({
         type: "POST",
-        url: "modifySrRqst",
-        data: data,
-        success: function (response) {
+        url: "modifySrRqstOfMng",
+        data: formData,
+        success: function (data) {
             // 성공적으로 요청이 완료된 경우 실행할 코드
             var currentURL = window.location.href;
             window.location.href = currentURL; // 원하는 URL로 변경
@@ -646,6 +642,88 @@ function modifySrRqst(srRqstNo) {
     });
 }
 
+/// 엑셀 다운로드
+function downloadExcel() {
+	choiceSrRqstSttsNo = $("#srRqstStts-select option:selected").val();
+	//등록자 소속기관
+	var searchInstNo = $("input[name='instNm']:checked").attr("id");
+	//개발부서
+	var searchDeptNo = $("#deptNo-select option:selected").val();
+	//진행 상태
+	var searchStatus = choiceSrRqstSttsNo;
+	//내 요청건만 여부
+	var searchUsr = $("#usr").val();
+	//조회기간
+	var searchStartDate = $("#startDate").val();
+	var searchEndDate = $("#endDate").val();
+	//관련 시스템 
+	var searchSysNo = $("#sysNo-select option:selected").val();
+	//키워드 검색대상
+	var searchTarget = $("#searchTarget option:selected").val();
+	//키워드 
+	var searchKeyword = $("#keyword").val();
+	//페이지 지정
+	$("#srRqstMngPageNo").val(pageNo);
+	
+	// 엑셀에 다운될 데이터
+	var data = [
+	    ["요청번호", "제목", "관련시스템", "등록자", "소속", "개발부서", "상태", "요청일", "승인요청", "중요"],
+	  ];
+	
+	$.ajax({
+	    url: "getSRRequestsByPageNoOfMng",
+	    data: {
+	      srRqstMngPageNo: parseInt(pageNo),
+	      instNo: searchInstNo,
+	      deptNo: searchDeptNo,
+	      status: choiceSrRqstSttsNo,
+	      usr: searchUsr,
+	      startDate: searchStartDate,
+	      endDate: searchEndDate,
+	      sysNo: searchSysNo,
+	      searchTarget: searchTarget,
+	      keyword: searchKeyword
+	    },
+	    dataType: "json",
+	    method: "POST",
+	    success: function (response) {
+	      response.forEach(function (item, index) {
+	        // 승인여부
+	        var aprvYn = "N";
+	        if (item.srRqstSttsSeq > 1) {
+	          aprvYn = "Y";
+	        }
+	        data.push([
+	          item.srRqstNo,
+	          item.srTtl,
+	          item.sysNm,
+	          item.usrNm,
+	          item.instNm,
+	          item.deptNm,
+	          item.srRqstSttsNm,
+	          item.srRqstRegDt,
+	          item.srRqstEmrgYn,
+	          aprvYn
+	        ]);
+	      });
+	
+	      // 워크북 생성
+	      var wb = XLSX.utils.book_new();
+	      var ws = XLSX.utils.aoa_to_sheet(data);
+	
+	      // 워크북에 워크시트 추가
+	      XLSX.utils.book_append_sheet(wb, ws, "SR요청목록");
+	
+	      // 엑셀 파일 생성 및 다운로드
+	      var today = new Date();
+	      var filename = "SR요청목록_" + today.getFullYear() + (today.getMonth() + 1) + today.getDate() + ".xlsx";
+	      XLSX.writeFile(wb, filename);
+	    },
+	    error: function (error) {
+	      console.log(error);
+	    }
+    });
+}
 
 //로딩 스피너 함수
 function loading() {
