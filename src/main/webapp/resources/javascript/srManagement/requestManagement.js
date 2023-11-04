@@ -137,7 +137,7 @@ function showSys(deptNo) {
 			// 서버 응답을 처리하여 개발부서 목록을 업데이트 
 			let html = "";
 			// 서버 응답을 처리하여 개발부서 목록을 업데이트
-        	html += '<option value="none">전체</option>';
+        	html += '<option value="">전체</option>';
       		data.forEach((item, index) => {	
       			html += '<option value="'+item.sysNo+'">'+item.sysNm+'</option>';
        		});
@@ -189,21 +189,48 @@ function dataOfloadSrRequestsForm(){
 }
 
 function submitList(){
+	dataOfloadSrRequestsForm();
 	loadSRRequests(pageNo, choiceSrRqstSttsNo);
 }
 
 //**요청목록 불러오기
 function loadSRRequests(pageNo, choiceSrRqstSttsNo) {
-	var form = $("#searchForm")[0];
-	var formData = new FormData(form); 
+	choiceSrRqstSttsNo = $("#srRqstStts-select option:selected").val();
+	//등록자 소속기관
+	var searchInstNo = $("input[name='instNm']:checked").attr("id");
+	//개발부서
+	var searchDeptNo = $("#deptNo-select option:selected").val();
+	//진행 상태
+	var searchStatus = choiceSrRqstSttsNo;
+	//내 요청건만 여부
+	var searchUsr = $("#usr").val();
+	//조회기간
+	var searchStartDate = $("#startDate").val();
+	var searchEndDate = $("#endDate").val();
+	//관련 시스템 
+	var searchSysNo = $("#sysNo-select option:selected").val();
+	//키워드 검색대상
+	var searchTarget = $("#searchTarget option:selected").val();
+	//키워드 
+	var searchKeyword = $("#keyword").val();
+	//페이지 지정
+	$("#srRqstMngPageNo").val(pageNo);
 	$.ajax({
     url: "getSRRequestsByPageNoOfMng",
     data: { 
-    	srRqstMngPageNo: pageNo,
-    	status: choiceSrRqstSttsNo
+    	srRqstMngPageNo: parseInt(pageNo),
+    	instNo: searchInstNo,
+    	deptNo: searchDeptNo,
+    	status: choiceSrRqstSttsNo,
+    	usr: searchUsr,
+    	startDate: searchStartDate,
+    	endDate: searchEndDate,
+    	sysNo: searchSysNo,
+    	searchTarget: searchTarget,
+    	keyword: searchKeyword
     },
     dataType: "json",
-    method: "GET",
+    method: "POST",
     success: function(data) {
       html="";
       console.log(data);
@@ -280,6 +307,8 @@ function loadSRRequests(pageNo, choiceSrRqstSttsNo) {
         }
       );
       loading();
+      // 성공적으로 요청이 완료된 경우 실행할 코드
+      var currentURL = window.location.href;
     },
     error: function(error) {
       console.error("데이터를 불러오는 중 오류가 발생했습니다.");
@@ -554,6 +583,21 @@ function requestInsertDate(){
 
 	// 해당 ID를 가진 input 요소에 오늘의 날짜를 설정
 	document.getElementById('writeDate').value = todayFormatted;
+}
+
+//YY-MM-dd 형식의 String 타입을 Date타입으로 변환
+function parseDateStringToDateFormat(dateString) {
+  // 날짜 문자열을 "-"로 분할
+  var parts = dateString.split("-");
+  
+  // 날짜 문자열을 Date 객체로 변환
+  var year = parseInt("20" + parts[0], 10);
+  var month = parseInt(parts[1], 10) - 1; // 월은 0부터 시작하므로 1을 빼줍니다.
+  var day = parseInt(parts[2], 10);
+  
+  var date = new Date(year, month, day);
+  
+  return date;
 }
 
 //**요청등록하기

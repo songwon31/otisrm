@@ -61,31 +61,49 @@
 		        join dept d on d.dept_no = u.dept_no 
 		        join inst i on i.inst_no = u.inst_no
 		        join sr_rqst_stts q on q.sr_rqst_stts_no = r.sr_rqst_stts_no
-		       <if test="status != null and status != '' or usr != null and usr != '' or keyword != null and keyword != '' or startDate != null or endDate != null">
+		       <if test="status != null and status != '' or usr != null and usr != '' or keyword != null and keyword != '' or startDate != null or endDate != null
+		       	or instNo != null and instNo != '' or deptNo != null and deptNo != '' or startDate != null and startDate != '' or endDate != null and endDate != ''">
 				  <where>
-				    <!-- 기존 조건 -->
+				  	<!-- 소속기관 -->
+				  	<if test="instNo != null and instNo != ''">
+				  		and u.inst_no = #{instNo, jdbcType=VARCHAR}
+				  	</if>
+				  	<!-- 개발 부서 -->
+				  	<if test="deptNo != null and deptNo != ''">
+				  		and d.dept_no = #{deptNo, jdbcType=VARCHAR}
+				  	</if>
+				    <!-- 요청 진행 상태 -->
 				    <if test="status != null and status != ''">
-				      AND r.sr_rqst_stts_no = #{status, jdbcType=VARCHAR}
+				      and r.sr_rqst_stts_no = #{status, jdbcType=VARCHAR}
 				    </if>
+				    <!-- 나의 요청 건만 보기 -->
 				    <if test="usr != null and usr != ''">
 				      AND  sr_reqstr_no = #{usr, jdbcType=VARCHAR}
 				    </if>
-				    <if test="keyword != null and keyword != ''">
-				      <if test="searchTarget == 'searchSrRqstNo'">
-				        AND REGEXP_REPLACE(LOWER(REPLACE(sr_rqst_no, ' ', '')), '[[:punct:]]', '') LIKE '%' || REGEXP_REPLACE(LOWER(REPLACE(#{keyword}, ' ', '')), '[[:punct:]]', '') || '%'
-				      </if>
-				      <if test="searchTarget == 'searchSrRqstNm'">
-				        AND REGEXP_REPLACE(LOWER(REPLACE(sr_rqst_nm, ' ', '')), '[[:punct:]]', '') LIKE '%' || REGEXP_REPLACE(LOWER(REPLACE(#{keyword}, ' ', '')), '[[:punct:]]', '') || '%'
-				      </if>
+				  	
+				    <!-- 조회기간 -->
+			        <if test="startDate != null and startDate != ''">
+			            AND r.sr_rqst_reg_dt &gt;= TO_DATE(#{startDate, jdbcType=VARCHAR}, 'yy-MM-dd')
+			        </if>
+			        <if test="endDate != null and endDate != ''">
+			            AND r.sr_rqst_reg_dt &lt;= TO_DATE(#{endDate, jdbcType=VARCHAR}, 'yy-MM-dd')
+			        </if>
+				    
+				    <!-- 관련 시스템 -->
+				    <if test="sysNo != null and sysNo != ''">
+				  		and r.sys_no = #{sysNo, jdbcType=VARCHAR}
+				  	</if>
+				    
+				    <!-- 키워드 검색 -->
+				    <if test="keyword != null and keyword != '' or searchTarget != null and searchTarget != ''">
+				    	<if test="searchTarget == 'searchSrRqstNo'">				    	
+				        	REGEXP_REPLACE(LOWER(REPLACE(sr_rqst_no, ' ', '')), '[[:punct:]]', '') LIKE '%' || REGEXP_REPLACE(LOWER(REPLACE(#{keyword}, ' ', '')), '[[:punct:]]', '') || '%'
+				    	</if>
+				    	<if test="searchTarget == 'searchSrRqstNm'">				    	
+				       		REGEXP_REPLACE(LOWER(REPLACE(sr_ttl, ' ', '')), '[[:punct:]]', '') LIKE '%' || REGEXP_REPLACE(LOWER(REPLACE(#{keyword}, ' ', '')), '[[:punct:]]', '') || '%'
+				    	</if>
 				    </if>
 				    
-				    <!-- 날짜 범위 조건 -->
-				    <if test="startDate != null">
-				      AND sr_rqst_reg_dt &gt;= #{startDate, jdbcType=Date}
-				    </if>
-				    <if test="endDate != null">
-				      AND sr_rqst_reg_dt &lt;= #{endDate, jdbcType=Date}
-				    </if>
 				  </where>
 				</if>
 			    order by sr_rqst_reg_dt desc

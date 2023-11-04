@@ -1,5 +1,8 @@
 package com.finalteam5.otisrm.controller.srRqstManagement;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -60,14 +64,40 @@ public class SrRqstManagementRestController {
         return response;
     }
 	
-	@GetMapping("getSRRequestsByPageNoOfMng")
+	@PostMapping("getSRRequestsByPageNoOfMng")
 	public List<SrRqst> getSRRequests(
 			@RequestParam String srRqstMngPageNo, 
+			@RequestParam(name="instNo", required=false)String instNo, 
+			@RequestParam(name="deptNo", required=false)String deptNo, 
 			@RequestParam(name="status", required=false)String status, 
+			@RequestParam(name="usr", required=false)String usr, 
+			@RequestParam(name="startDate", required=false)String startDate, 
+			@RequestParam(name="endDate", required=false)String endDate, 
+			@RequestParam(name="sysNo", required=false)String sysNo, 
+			@RequestParam(name="searchTarget", required=false)String searchTarget, 
+			@RequestParam(name="keyword", required=false)String keyword, 
 			HttpSession session) {
+		log.info("파라미터 확인 instNo: " + instNo);
+		//log.info("파라미터 확인 deptNo: " + deptNo);
+		log.info("파라미터 확인 status: " + status);
+		log.info("파라미터 확인 usr: " + usr);
+		log.info("파라미터 확인startDate: " + startDate);
+		log.info("파라미터 확인endDate: " + endDate);
+		log.info("파라미터 확인searchTarget: " + searchTarget);
+		log.info("파라미터 확인keyword: " + keyword);
+		log.info("--------------------------");
 		//파라미터로 전달받은 값 전달
 		Map<String, Object>map = new HashMap<>();
 		map.put("status", status);
+		map.put("instNo", instNo);
+		map.put("deptNo", deptNo);
+		map.put("usr", usr);
+        map.put("startDate", startDate);
+        map.put("endDate", endDate);
+        map.put("sysNo", sysNo);
+        map.put("searchTarget", searchTarget);
+        map.put("keyword", keyword);
+      
 		//SR요청 목록 페이징  
 		if(srRqstMngPageNo == null) {
 			 //세션에 저장되어 있는지 확인
@@ -91,6 +121,7 @@ public class SrRqstManagementRestController {
 		
 		//페이지 별 요청 목록 불러오기
 		List<SrRqst> list = srRqstService.getSrRqstListByPager(map);
+		log.info("잘나와랏아라울앙: " + list.toString());
 		return list;
 	}
 	

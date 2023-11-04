@@ -2,6 +2,7 @@ package com.finalteam5.otisrm.controller.srRqstManagement;
 import java.io.OutputStream;
 import java.net.URLEncoder;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,10 +14,13 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.finalteam5.otisrm.dto.Pager;
+import com.finalteam5.otisrm.dto.srRequest.SrRqst;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstAtch;
 import com.finalteam5.otisrm.dto.usr.Usr;
 import com.finalteam5.otisrm.security.UsrDetails;
@@ -53,6 +57,7 @@ public class SrRequestManagementController {
 		        	 srRqstMngPageNo =  (String) session.getAttribute("srRqstMngPageNo");
 		         }
 			}
+			log.info(srRqstMngPageNo);
 			//세션에 현재 sr요청 페이지번호 저장
 			session.setAttribute("srRqstMngPageNo", String.valueOf(srRqstMngPageNo));
 			
@@ -75,6 +80,7 @@ public class SrRequestManagementController {
 			return "redirect:/login";
 		}
 	}
+	
 
 	@GetMapping("/filedownloadOfMng")
 	public void filedownload(String srRqstAtchNo, HttpServletRequest request, HttpServletResponse response) throws Exception {

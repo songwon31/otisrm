@@ -15,31 +15,36 @@
 	</div>
 	<div class="contentTop shadow" >
 		<input type="hidden" id="loginUsr" value="${usr.usrNo}">
-		<form id="searchForm" method="get" action="getSRRequestsByPageNoOfMng">
+		<form id="searchForm" method="post" action="javascript:submitList()">
 			<div class="d-flex" style="height:3rem;">
-				<!-- 조회기간 -->
-				<div class="" style="width: 8.94%; display:flex; align-items:center;">
-					<svg class="svgicon"><rect/></svg>
-					<span class="filter-item">조회기간</span>
-				</div>
-				<div style="width: 22.57%; display:flex; align-items:center;">
-						<input style="width: 45%;" name="startDate" type="date">
-						<div style="width: 10%; margin: 0 1rem; font-size:1.6rem; display:flex; flex-direction:row; justify-content:center; align-items:center;">~</div>
-						<input style="width: 45%;" name="endDate" type="date">
-				</div>
-				<div style="width: 3.5%;"></div>
-				<!-- 관련 시스템 -->
+				
+				<!-- 등록자 소속 기관 -->
 				<div style="width: 8.94%; display:flex; align-items:center;">
 					<svg class="svgicon"><rect/></svg>
-					<span class="filter-item">관련 시스템</span>
+					<span style="font-size:1.6rem; font-weight:700;">등록자 소속</span>
+				</div>
+				<div style="width: 22.57%; display:flex; align-items:center;">
+						<input type="text" id="instNm" name="keywordContent" class="flex-grow-1" disabled/>
+						<input type="hidden" id="instNo" name="instNo" class="flex-grow-1" value=""/>
+						<button type="button" style="margin-left: 1rem;" data-toggle="modal" data-target="#filterOfInst" class="btn-4 d-inline-flex align-items-center justify-content-center" >
+							찾기
+						</button>
+				</div>
+				<div style="width: 3.5%;"></div>
+				 
+				<!-- 개발 부서 -->
+				<div style="width: 8.94%; display:flex; align-items:center;">
+					<svg class="svgicon"><rect/></svg>
+					<span style="font-size:1.6rem; font-weight:700;">개발 부서</span>
 				</div>
 				<div style="width: 9.59%;">
-					<select id="sysNo-select" name="sysNo" style="width:100%">
-						<option value="none" selected>전체</option>
+					<select id="deptNo-select" name="deptNo" style="width:100%">
+						<option value="" selected>전체</option>
 						<!-- json으로 데이터 들어오는 곳 -->
 					</select>
 				</div>
 				<div style="width: 3.5%;"></div>
+				
 				<!-- 진행 상태 -->
 				<div style="width: 8.94%; display:flex; align-items:center;">
 					<svg class="svgicon"><rect/></svg>
@@ -47,7 +52,7 @@
 				</div>
 				<div style="width: 20.73%;">
 					<select style="width:109.13px;" id="srRqstStts-select" name="status">
-						<option value="" selected>전체</option>
+						<option value="" >전체</option>
 				    </select>
 				</div>
 				<div style="width: 3.5%;"></div>
@@ -61,39 +66,40 @@
 			
 			<!-- LINE2 -->
 			<div class="d-flex" style="margin-top:1.2rem; height:3rem;">
-				<!-- 등록자 소속 -->
-				<div style="width: 8.94%; display:flex; align-items:center;">
+				
+				<!-- 조회기간 -->
+				<div class="" style="width: 8.94%; display:flex; align-items:center;">
 					<svg class="svgicon"><rect/></svg>
-					<span style="font-size:1.6rem; font-weight:700;">등록자 소속</span>
+					<span class="filter-item">조회기간</span>
 				</div>
 				<div style="width: 22.57%; display:flex; align-items:center;">
-						<input type="text" id="instNm" name="keywordContent" class="flex-grow-1" disabled/>
-						<input type="hidden" id="instNo" name="instNo" class="flex-grow-1" value=""/>
-						<button type="button" style="margin-left: 1rem;" data-toggle="modal" data-target="#filterOfInst" class="btn-4 d-inline-flex align-items-center justify-content-center" >
-							찾기
-						</button>
+						<input id="startDate" style="width: 45%;" name="startDate" type="date">
+						<div style="width: 10%; margin: 0 1rem; font-size:1.6rem; display:flex; flex-direction:row; justify-content:center; align-items:center;">~</div>
+						<input id="endDate" style="width: 45%;" name="endDate" type="date">
 				</div>
 				<div style="width: 3.5%;"></div>
-				<!-- 개발 부서 -->
+				
+				<!-- 관련 시스템 -->
 				<div style="width: 8.94%; display:flex; align-items:center;">
 					<svg class="svgicon"><rect/></svg>
-					<span style="font-size:1.6rem; font-weight:700;">개발 부서</span>
+					<span class="filter-item">관련 시스템</span>
 				</div>
 				<div style="width: 9.59%;">
-					<select id="deptNo-select" name="deptNo" style="width:100%">
-						<option value="none" selected>전체</option>
+					<select id="sysNo-select" name="sysNo" style="width:100%">
+						<option value="" selected>전체</option>
 						<!-- json으로 데이터 들어오는 곳 -->
 					</select>
 				</div>
 				<div style="width: 3.5%;"></div>
+				
 				<!-- 키워드 검색 -->
 				<div style="width: 8.94%; display:flex; align-items:center;">
 					<svg class="svgicon"><rect/></svg>
 					<span style="font-size:1.6rem; font-weight:700;">키워드</span>
 				</div>
 				<div style="width: 24.73%; display: flex;">
-					<select style="width:30%;" id="userStts" name="searchTarget">
-						<option value="" selected>전체</option>
+					<select style="width:30%;" id="searchTarget" name="searchTarget">
+						<option value="" selected>선택</option>
 						<option value="searchSrRqstNo" >요청 번호</option>
 						<option value="searchSrRqstNm" >제목</option>
 					</select>
