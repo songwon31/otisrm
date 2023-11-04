@@ -15,7 +15,7 @@
 	</div>
 	<div class="contentTop shadow" >
 		<input type="hidden" id="loginUsr" value="${usr.usrNo}">
-		<form id="searchForm" method="get" action="">
+		<form id="searchForm" method="get" action="getSRRequestsByPageNoOfMng">
 			<div class="d-flex" style="height:3rem;">
 				<!-- 조회기간 -->
 				<div class="" style="width: 8.94%; display:flex; align-items:center;">
@@ -103,8 +103,7 @@
 				</div>
 				<div style="width: 3.5%;"></div>
 				<!-- 검색버튼 -->
-				<button style="width: 5.79%;" class="btn-4 d-inline-flex flex-row-reverse align-items-center justify-content-center"  
-					onclick="location.href='#';">
+				<button type="submit" style="width: 5.79%;" class="btn-4 d-inline-flex flex-row-reverse align-items-center justify-content-center" >
 					검색
 				</button>
 			</div>

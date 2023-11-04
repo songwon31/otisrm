@@ -16,7 +16,9 @@ function init() {
             // 등록자 소속이 선택되지 않았을 때 알림 메시지 표시
             alert("등록자 소속을 먼저 선택해주세요.");
         }else{
-        	deptNo = $("#deptNo-select option:selected").val()
+        	deptNo = $("#deptNo-select option:selected").val();
+        	console.log("내가 선택한 부서: " + deptNo);
+        	showSys(deptNo);
         }
     });
     $("#sysNo-select").click(function() {
@@ -33,6 +35,8 @@ var status = "";
 var pageNo = 1;
 $(document).ready(function() {
     loadSRRequests(1, choiceSrRqstSttsNo); //페이지 로딩 시 초기 데이터 로드
+    
+    //선택한 시스템 번호 넣어주기
     var selectedSysNo = $("#sysNo-select").val();
 	$("#sysNo-select").val(selectedSysNo);	    
    
@@ -111,7 +115,7 @@ function showDept(instNo) {
             // 서버 응답을 처리하여 개발부서 목록을 업데이트
         	html += '<option value="none">전체</option>';
       		data.forEach((item, index) => {	
-      			html += '<option onclick="' + showSys(item.deptNo) + '" value="'+item.deptNo+'">'+item.deptNm+'</option>';
+      			html += '<option value="'+item.deptNo+'">'+item.deptNm+'</option>';
        		});
        	 // HTML 콘텐츠를 검색한 부서 데이터로 업데이트
          $('#deptNo-select').html(html);
@@ -139,6 +143,7 @@ function showSys(deptNo) {
        		});
 		   // HTML 콘텐츠를 검색한 부서 데이터로 업데이트
            $("#sysNo-select").html(html); 
+           console.log(deptNo + "부서에 해당하는 시스템 목록 불러오기 완료.");
        },
 		error: function (error) {
 			console.error("오류 발생:", error);
@@ -182,9 +187,13 @@ function dataOfloadSrRequestsForm(){
 		$("#usr").val("");
 	}
 }
+
+function submitList(){
+	loadSRRequests(pageNo, choiceSrRqstSttsNo);
+}
+
 //**요청목록 불러오기
 function loadSRRequests(pageNo, choiceSrRqstSttsNo) {
-	
 	var form = $("#searchForm")[0];
 	var formData = new FormData(form); 
 	$.ajax({
