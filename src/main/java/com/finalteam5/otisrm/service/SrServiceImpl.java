@@ -1,25 +1,32 @@
 package com.finalteam5.otisrm.service;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.finalteam5.otisrm.dao.SrDao;
 import com.finalteam5.otisrm.dto.Pager;
 import com.finalteam5.otisrm.dto.SrPrgrs;
 import com.finalteam5.otisrm.dto.SrPrgrsOtpt;
 import com.finalteam5.otisrm.dto.SrTrnsfPlan;
 import com.finalteam5.otisrm.dto.SrTrnsfPlanForm;
+import com.finalteam5.otisrm.dto.sr.ProgressManagementSearch;
+import com.finalteam5.otisrm.dto.sr.ProgressManagementSearchCompose;
 import com.finalteam5.otisrm.dto.sr.SrForDeveloperHomeBoard;
+import com.finalteam5.otisrm.dto.sr.SrForProgressManagementBoard;
 import com.finalteam5.otisrm.dto.sr.SrPrgrsForDeveloperHome;
 import com.finalteam5.otisrm.dto.sr.SrPrgrsForm;
 import com.finalteam5.otisrm.dto.sr.SrPrgrsPicForDeveloperHome;
 import com.finalteam5.otisrm.dto.sr.SrRequestDetailForDeveloperHome;
+import com.finalteam5.otisrm.dto.sr.SrTableConfigForProgressManagement;
 import com.finalteam5.otisrm.dto.sr.SrTableElementsForDeveloperHome;
 import com.finalteam5.otisrm.dto.sr.SrTrnsfFindPicModalCompose;
 import com.finalteam5.otisrm.dto.sr.SrTrnsfFindPicModalUsrInfo;
@@ -538,5 +545,67 @@ public class SrServiceImpl implements SrService{
 			srDao.deleteSrPrgrsOtpt(srPrgrsOtptNo);
 		}
 		return 1;
+	}
+	
+	//--------------------------------------------------------------------------------------------------
+	//SR진척관리 옵션 select구성
+	@Override
+	public ProgressManagementSearchCompose getProgressManagementSearchCompose() {
+		ProgressManagementSearchCompose progressManagementSearchCompose = new ProgressManagementSearchCompose();
+		progressManagementSearchCompose.setSysList(srDao.selectSysList());
+		progressManagementSearchCompose.setTaskList(srDao.selectTaskList());
+		progressManagementSearchCompose.setInstList(srDao.selectInstList());
+		progressManagementSearchCompose.setSrPrgrsSttsList(srDao.selectSrPrgrsSttsList());
+		return progressManagementSearchCompose;
+	}
+	
+	//deptSelect 구성
+	@Override
+	public List<Dept> getDeptListByInstNo(String instNo) {
+		return srDao.selectDeptListByInstNo(instNo);
+	}
+	
+	//mainTable 구성
+	@Override
+	public SrTableConfigForProgressManagement getProgressManagementMainTableConfig(String usrNo, String jsonData) {
+		log.info(""+jsonData);
+		try {
+			ObjectMapper objectMapper = new ObjectMapper();
+			ProgressManagementSearch progressManagementSearch = new ProgressManagementSearch();
+			Integer pageNo;
+        
+            // JSON 문자열을 Map으로 파싱
+            Map<String, Object> jsonMap = objectMapper.readValue(jsonData, Map.class);
+            String innerJson = (String) jsonMap.get("progressManagementSearch");
+            progressManagementSearch = objectMapper.readValue(innerJson, ProgressManagementSearch.class);
+            pageNo = (Integer) jsonMap.get("pageNo");
+            
+            // 결과 출력
+            log.info("ProgressManagementSearch: " + progressManagementSearch);
+            log.info("pageNo: " + pageNo);
+            
+       
+	        int totalSrForProgressManagementBoardNum = srDao.countSrForProgressManagementBoard(progressManagementSearch, usrNo);
+	        Pager pager = new Pager(10, 5, totalSrForProgressManagementBoardNum, pageNo);
+	        
+	        
+	        SrTableConfigForProgressManagement srTableConfigForProgressManagement = new SrTableConfigForProgressManagement();
+	        srTableConfigForProgressManagement.setSrList(srDao.selectSrForProgressManagementBoard(progressManagementSearch, usrNo, pager));
+	        srTableConfigForProgressManagement.setPager(pager);
+	        
+	        for (SrForProgressManagementBoard srForProgressManagementBoard : srTableConfigForProgressManagement.getSrList()) {
+	        	if (srForProgressManagementBoard.getSrPrgrsSttsNm().equals("요청") || srForProgressManagementBoard.getSrPrgrsSttsNm().equals("접수")) {
+	        		srForProgressManagementBoard.setSrRqustSttsNm(srForProgressManagementBoard.getSrPrgrsSttsNm());
+	        		srForProgressManagementBoard.setSrPrgrsSttsNm("");
+	        	} else {
+	        		srForProgressManagementBoard.setSrRqustSttsNm("접수");
+	        	}
+	        }
+	        
+			return srTableConfigForProgressManagement;
+		} catch (IOException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 }

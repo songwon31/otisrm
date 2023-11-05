@@ -4,7 +4,7 @@
 	box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
 }
 
-#userManagementDiv {
+#progressManagementDiv {
 	height: 88rem;
 	font-size: 1.5rem;
 	padding:2rem; 
@@ -14,13 +14,13 @@
 	flex-direction:column;
 }
 
-#userManagementTitleDiv, #userManagementSearchDiv, #userManagementBoardDiv {
+#progressManagementTitleDiv, #progressManagementSearchDiv, #progressManagementBoardDiv {
 	overflow-y: hidden;
 }
 
 /* Input, Select */
 #searchForm input[type="date"], #searchForm input[type="text"], #searchForm select {
-	font-size: 1.6rem;
+	font-size: 1.5rem;
 	padding:0 0.8rem;
 	border:1px solid #ADB5BD; 
 	border-radius:3px;
@@ -37,7 +37,7 @@
 }
 
 /* Button */
-#initBtn {
+#resetSearchBtn {
 	border: none;
 	font-size: 1.6rem;
 	color: white;
@@ -45,9 +45,10 @@
 	border-radius: 5px;
 	height: 3rem;
 	width: 8rem;
+	font-weight:700;
 }
 
-#initBtn:active {
+#resetSearchBtn:active {
 	background-color:#007bff;
 }
 
@@ -59,6 +60,7 @@
 	border-radius:5px;
 	height: 3rem;
 	width: 8rem;
+	font-weight:700;
 }
 
 #searchBtn:active {
@@ -67,7 +69,8 @@
 
 /* Table */
 #mainTable tbody tr {
-	border-bottom: 1px solid #e9ecef;
+	
+	border-bottom: 1px solid #f9fafe;
 }
 
 #mainTable tbody tr:hover {

@@ -9,15 +9,20 @@ import com.finalteam5.otisrm.dto.Pager;
 import com.finalteam5.otisrm.dto.SrDmndClsf;
 import com.finalteam5.otisrm.dto.SrPrgrs;
 import com.finalteam5.otisrm.dto.SrPrgrsOtpt;
+import com.finalteam5.otisrm.dto.SrPrgrsStts;
 import com.finalteam5.otisrm.dto.SrTaskClsf;
 import com.finalteam5.otisrm.dto.SrTrnsfPlan;
+import com.finalteam5.otisrm.dto.Sys;
+import com.finalteam5.otisrm.dto.sr.ProgressManagementSearch;
 import com.finalteam5.otisrm.dto.sr.SrForDeveloperHomeBoard;
+import com.finalteam5.otisrm.dto.sr.SrForProgressManagementBoard;
 import com.finalteam5.otisrm.dto.sr.SrPrgrsForDeveloperHome;
 import com.finalteam5.otisrm.dto.sr.SrRequestDetailForDeveloperHome;
 import com.finalteam5.otisrm.dto.sr.SrTrnsfFindPicModalUsrInfo;
 import com.finalteam5.otisrm.dto.sr.SrTrnsfInfoForDeveloperHome;
 import com.finalteam5.otisrm.dto.sr.SrTrnsfPlanModalCompose;
 import com.finalteam5.otisrm.dto.usr.Dept;
+import com.finalteam5.otisrm.dto.usr.Inst;
 import com.finalteam5.otisrm.dto.usr.Usr;
 
 @Mapper
@@ -104,4 +109,21 @@ public interface SrDao {
 	
 	//산출물 삭제
 	public int deleteSrPrgrsOtpt(String srPrgrsOtptNo);
+	
+	//--------------------------------------------------------------------------------------------------
+	//SR진척관리 옵션 select구성
+	public List<Sys> selectSysList();
+	/*public List<SrTaskClsf> selectTaskList();*/
+	public List<Inst> selectInstList();
+	public List<SrPrgrsStts> selectSrPrgrsSttsList();
+	public List<Dept> selectDeptListByInstNo(String instNo);
+	
+	//메인 테이블 구성
+	public int countSrForProgressManagementBoard(
+			@Param("progressManagementSearch") ProgressManagementSearch progressManagementSearch, 
+			@Param("usrNo") String usrNo);
+	public List<SrForProgressManagementBoard> selectSrForProgressManagementBoard(
+			@Param("progressManagementSearch") ProgressManagementSearch progressManagementSearch, 
+			@Param("usrNo") String usrNo,
+			@Param("pager") Pager pager);
 }

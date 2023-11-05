@@ -507,4 +507,375 @@
 	<delete id="deleteSrPrgrsOtpt" parameterType="String">
 		DELETE FROM sr_prgrs_otpt WHERE sr_prgrs_otpt_no = #{srPrgrsOtptNo}
 	</delete>
+	
+	<!-- SR진척관리 옵션 select구성 -->
+	<!-- Sys List -->
+	<select id="selectSysList" resultType="com.finalteam5.otisrm.dto.Sys">
+		SELECT sys_no, dept_no, sys_nm
+		FROM sys
+	</select>
+	
+	<!-- Task List(위에 있음) -->
+	<!-- 
+	<select id="selectTaskList" resultType="com.finalteam5.otisrm.dto.SrTaskClsf">
+		SELECT sr_task_no, sr_task_nm
+		FROM sr_task_clsf
+	</select>
+	 -->
+	
+	<!-- Inst List -->
+	<select id="selectInstList" resultType="com.finalteam5.otisrm.dto.usr.Inst">
+		SELECT inst_no, inst_nm, outsrc_yn
+		FROM inst
+	</select>
+	
+	<!-- srPrgrsSttsList List -->
+	<select id="selectSrPrgrsSttsList" resultType="com.finalteam5.otisrm.dto.SrPrgrsStts">
+		SELECT sr_prgrs_stts_no, sr_prgrs_stts_nm, sr_prgrs_stts_seq
+		FROM sr_prgrs_stts
+		ORDER BY sr_prgrs_stts_seq ASC
+	</select>
+	
+	<!-- Dept List -->
+	<select id="selectDeptListByInstNo" parameterType="String" resultType="com.finalteam5.otisrm.dto.usr.Dept">
+		SELECT dept_no, inst_no, dept_nm
+		FROM dept
+		WHERE inst_no = #{instNo}
+	</select>
+	
+	<!-- 메인 테이블 구성 -->
+	<select id="countSrForProgressManagementBoard" parameterType="map" resultType="int">
+		SELECT COUNT(*)
+		FROM(
+			SELECT DISTINCT 
+				sr.sr_no, sys.sys_nm, sr_task_clsf.sr_task_nm, reqstr.usr_nm as rqstrNm,
+				sr.sr_cmptn_prnmnt_dt, inst.inst_nm, sr_trnsf_plan.sr_trgt_cmptn_dt, sr_prgrs_stts.sr_prgrs_stts_nm
+			FROM sr
+			JOIN sr_rqst ON sr.sr_rqst_no = sr_rqst.sr_rqst_no
+			JOIN sr_trnsf_plan ON sr.sr_no = sr_trnsf_plan.sr_no
+			JOIN sys ON sr_rqst.sys_no = sys.sys_no
+			JOIN sr_task_clsf ON sr.sr_task_no = sr_task_clsf.sr_task_no
+			JOIN sr_prgrs_stts ON sr_trnsf_plan.sr_prgrs_stts_no = sr_prgrs_stts.sr_prgrs_stts_no
+			JOIN usr reqstr ON sr.pic_usr_no = reqstr.usr_no
+			JOIN usr pic ON sr_trnsf_plan.usr_no = pic.usr_no
+			JOIN inst ON sr.sr_trnsf_inst_no = inst.inst_no
+			JOIN dept ON sr_trnsf_plan.dept_no = dept.dept_no
+			<where>
+				<if test="progressManagementSearch.sysNo != null">
+					sr_rqst.sys_no = #{progressManagementSearch.sysNo}
+				</if>
+				<if test="progressManagementSearch.taskNo != null">
+					AND sr.sr_task_no = #{progressManagementSearch.taskNo}
+				</if>
+				<if test="progressManagementSearch.receiptNo != null">
+					<if test="progressManagementSearch.receiptNo == 'RQST'">
+						AND sr_prgrs_stts.sr_prgrs_stts_seq = 0
+					</if>
+					<if test="progressManagementSearch.receiptNo == 'RECEIPT'">
+						<![CDATA[
+						AND sr_prgrs_stts.sr_prgrs_stts_seq >= 1
+						]]>
+					</if>
+				</if>
+				<if test="progressManagementSearch.prgrsNo != null">
+					AND sr_trnsf_plan.sr_prgrs_stts_no = #{progressManagementSearch.prgrsNo}
+				</if>
+				<if test="progressManagementSearch.instNo != null">
+					AND sr.sr_trnsf_inst_no = #{progressManagementSearch.instNo}
+				</if>
+				<if test="progressManagementSearch.deptNo != null">
+					AND sr_trnsf_plan.dept_no = #{progressManagementSearch.deptNo}
+				</if>
+				<if test="progressManagementSearch.keywordContent != null">
+					<if test="progressManagementSearch.keywordCategory == 'srTitle'">
+						AND sr_rqst.sr_ttl like '%' || #{progressManagementSearch.keywordContent} || '%'
+					</if>
+					<if test="progressManagementSearch.keywordCategory == 'rqstr'">
+						AND reqstr.usr_nm like '%' || #{progressManagementSearch.keywordContent} || '%'
+					</if>
+					<if test="progressManagementSearch.keywordCategory == 'pic'">
+						AND pic.usr_nm like '%' || #{progressManagementSearch.keywordContent} || '%'
+					</if>
+				</if>
+				<if test="progressManagementSearch.mySrCheck != null">
+					AND (reqstr.usr_no = #{usrNo} OR pic.usr_no = #{usrNo})
+				</if>
+			</where>
+			
+			UNION
+			
+			SELECT DISTINCT 
+				sr.sr_no, sys.sys_nm, sr_task_clsf.sr_task_nm, reqstr.usr_nm as rqstrNm,
+				sr.sr_cmptn_prnmnt_dt, inst.inst_nm, sr_trnsf_plan.sr_trgt_cmptn_dt, sr_prgrs_stts.sr_prgrs_stts_nm
+			FROM sr
+			JOIN sr_rqst ON sr.sr_rqst_no = sr_rqst.sr_rqst_no
+			JOIN sr_trnsf_plan ON sr.sr_no = sr_trnsf_plan.sr_no
+			JOIN sys ON sr_rqst.sys_no = sys.sys_no
+			JOIN sr_task_clsf ON sr.sr_task_no = sr_task_clsf.sr_task_no
+			JOIN sr_prgrs_stts ON sr_trnsf_plan.sr_prgrs_stts_no = sr_prgrs_stts.sr_prgrs_stts_no
+			JOIN usr reqstr ON sr.pic_usr_no = reqstr.usr_no
+			JOIN usr pic ON sr_trnsf_plan.usr_no = pic.usr_no
+			JOIN sr_prgrs ON sr.sr_no = sr_prgrs.sr_no
+			JOIN inst ON sr.sr_trnsf_inst_no = inst.inst_no
+			JOIN dept ON sr_trnsf_plan.dept_no = dept.dept_no
+			<where>
+				<if test="progressManagementSearch.sysNo != null">
+					sr_rqst.sys_no = #{progressManagementSearch.sysNo}
+				</if>
+				<if test="progressManagementSearch.taskNo != null">
+					AND sr.sr_task_no = #{progressManagementSearch.taskNo}
+				</if>
+				<if test="progressManagementSearch.receiptNo != null">
+					<if test="progressManagementSearch.receiptNo == 'RQST'">
+						AND sr_prgrs_stts.sr_prgrs_stts_seq = 0
+					</if>
+					<if test="progressManagementSearch.receiptNo == 'RECEIPT'">
+						<![CDATA[
+						AND sr_prgrs_stts.sr_prgrs_stts_seq >= 1
+						]]>
+					</if>
+				</if>
+				<if test="progressManagementSearch.prgrsNo != null">
+					AND sr_trnsf_plan.sr_prgrs_stts_no = #{progressManagementSearch.prgrsNo}
+				</if>
+				<if test="progressManagementSearch.instNo != null">
+					AND sr.sr_trnsf_inst_no = #{progressManagementSearch.instNo}
+				</if>
+				<if test="progressManagementSearch.deptNo != null">
+					AND sr_trnsf_plan.dept_no = #{progressManagementSearch.deptNo}
+				</if>
+				<if test="progressManagementSearch.keywordContent != null">
+					<if test="progressManagementSearch.keywordCategory == 'srTitle'">
+						AND sr_rqst.sr_ttl like '%' || #{progressManagementSearch.keywordContent} || '%'
+					</if>
+					<if test="progressManagementSearch.keywordCategory == 'rqstr'">
+						AND reqstr.usr_nm like '%' || #{progressManagementSearch.keywordContent} || '%'
+					</if>
+					<if test="progressManagementSearch.keywordCategory == 'pic'">
+						AND pic.usr_nm like '%' || #{progressManagementSearch.keywordContent} || '%'
+					</if>
+				</if>
+				<if test="progressManagementSearch.mySrCheck != null">
+					AND (reqstr.usr_no = #{usrNo} OR pic.usr_no = #{usrNo} OR sr_prgrs.usr_no = #{usrNo})
+				</if>
+			</where>
+			
+			UNION
+	
+			SELECT DISTINCT 
+			    sr.sr_no, sys.sys_nm, sr_task_clsf.sr_task_nm, reqstr.usr_nm as rqstrNm,
+			    sr.sr_cmptn_prnmnt_dt, NULL as INST_NM, NULL AS SR_TRGT_CMPTN_DT, sr_prgrs_stts.sr_prgrs_stts_nm
+			FROM sr
+			JOIN sr_rqst ON sr.sr_rqst_no = sr_rqst.sr_rqst_no
+			JOIN sr_trnsf_plan ON sr.sr_no = sr_trnsf_plan.sr_no
+			JOIN sys ON sr_rqst.sys_no = sys.sys_no
+			JOIN sr_task_clsf ON sr.sr_task_no = sr_task_clsf.sr_task_no
+			JOIN sr_prgrs_stts ON sr_trnsf_plan.sr_prgrs_stts_no = sr_prgrs_stts.sr_prgrs_stts_no
+			JOIN usr reqstr ON sr.pic_usr_no = reqstr.usr_no
+			<where>
+				<if test="true">
+					sr_trnsf_plan.sr_prgrs_stts_no = 'RQST'
+				</if>
+				<if test="progressManagementSearch.sysNo != null">
+					AND sr_rqst.sys_no = #{progressManagementSearch.sysNo}
+				</if>
+				<if test="progressManagementSearch.taskNo != null">
+					AND sr.sr_task_no = #{progressManagementSearch.taskNo}
+				</if>
+				<if test="progressManagementSearch.receiptNo != null">
+					<if test="progressManagementSearch.receiptNo == 'RQST'">
+						AND sr_prgrs_stts.sr_prgrs_stts_seq = 0
+					</if>
+					<if test="progressManagementSearch.receiptNo == 'RECEIPT'">
+						<![CDATA[
+						AND sr_prgrs_stts.sr_prgrs_stts_seq >= 1
+						]]>
+					</if>
+				</if>
+				<if test="progressManagementSearch.keywordContent != null">
+					<if test="progressManagementSearch.keywordCategory == 'srTitle'">
+						AND sr_rqst.sr_ttl like '%' || #{progressManagementSearch.keywordContent} || '%'
+					</if>
+					<if test="progressManagementSearch.keywordCategory == 'rqstr'">
+						AND reqstr.usr_nm like '%' || #{progressManagementSearch.keywordContent} || '%'
+					</if>
+				</if>
+				<if test="progressManagementSearch.mySrCheck != null">
+					AND (reqstr.usr_no = #{usrNo})
+				</if>
+			</where>
+		)
+	</select>
+	
+	<select id="selectSrForProgressManagementBoard" parameterType="map" resultType="com.finalteam5.otisrm.dto.sr.SrForProgressManagementBoard">
+		SELECT rnum, sr_no, sys_nm, sr_task_nm, sr_ttl, rqstr_nm, 
+			   sr_cmptn_prnmnt_dt, inst_nm, sr_trgt_cmptn_dt, sr_prgrs_stts_nm
+		FROM(
+			SELECT rownum as rnum, sr_no, sys_nm, sr_task_nm, sr_ttl, rqstr_nm, 
+				   sr_cmptn_prnmnt_dt, inst_nm, sr_trgt_cmptn_dt, sr_prgrs_stts_nm
+			FROM (
+				SELECT DISTINCT 
+					sr.sr_no, sys.sys_nm, sr_task_clsf.sr_task_nm, sr_rqst.sr_ttl, reqstr.usr_nm as rqstr_nm,
+					sr.sr_cmptn_prnmnt_dt, inst.inst_nm, sr_trnsf_plan.sr_trgt_cmptn_dt, sr_prgrs_stts.sr_prgrs_stts_nm
+				FROM sr
+				JOIN sr_rqst ON sr.sr_rqst_no = sr_rqst.sr_rqst_no
+				JOIN sr_trnsf_plan ON sr.sr_no = sr_trnsf_plan.sr_no
+				JOIN sys ON sr_rqst.sys_no = sys.sys_no
+				JOIN sr_task_clsf ON sr.sr_task_no = sr_task_clsf.sr_task_no
+				JOIN sr_prgrs_stts ON sr_trnsf_plan.sr_prgrs_stts_no = sr_prgrs_stts.sr_prgrs_stts_no
+				JOIN usr reqstr ON sr.pic_usr_no = reqstr.usr_no
+				JOIN usr pic ON sr_trnsf_plan.usr_no = pic.usr_no
+				JOIN inst ON sr.sr_trnsf_inst_no = inst.inst_no
+				JOIN dept ON sr_trnsf_plan.dept_no = dept.dept_no
+				<where>
+					<if test="progressManagementSearch.sysNo != null">
+						sr_rqst.sys_no = #{progressManagementSearch.sysNo}
+					</if>
+					<if test="progressManagementSearch.taskNo != null">
+						AND sr.sr_task_no = #{progressManagementSearch.taskNo}
+					</if>
+					<if test="progressManagementSearch.receiptNo != null">
+						<if test="progressManagementSearch.receiptNo == 'RQST'">
+							AND sr_prgrs_stts.sr_prgrs_stts_seq = 0
+						</if>
+						<if test="progressManagementSearch.receiptNo == 'RECEIPT'">
+							<![CDATA[
+							AND sr_prgrs_stts.sr_prgrs_stts_seq >= 1
+							]]>
+						</if>
+					</if>
+					<if test="progressManagementSearch.prgrsNo != null">
+						AND sr_trnsf_plan.sr_prgrs_stts_no = #{progressManagementSearch.prgrsNo}
+					</if>
+					<if test="progressManagementSearch.instNo != null">
+						AND sr.sr_trnsf_inst_no = #{progressManagementSearch.instNo}
+					</if>
+					<if test="progressManagementSearch.deptNo != null">
+						AND sr_trnsf_plan.dept_no = #{progressManagementSearch.deptNo}
+					</if>
+					<if test="progressManagementSearch.keywordContent != null">
+						<if test="progressManagementSearch.keywordCategory == 'srTitle'">
+							AND sr_rqst.sr_ttl like '%' || #{progressManagementSearch.keywordContent} || '%'
+						</if>
+						<if test="progressManagementSearch.keywordCategory == 'rqstr'">
+							AND reqstr.usr_nm like '%' || #{progressManagementSearch.keywordContent} || '%'
+						</if>
+						<if test="progressManagementSearch.keywordCategory == 'pic'">
+							AND pic.usr_nm like '%' || #{progressManagementSearch.keywordContent} || '%'
+						</if>
+					</if>
+					<if test="progressManagementSearch.mySrCheck != null">
+						AND (reqstr.usr_no = #{usrNo} OR pic.usr_no = #{usrNo})
+					</if>
+				</where>
+				
+				UNION
+				
+				SELECT DISTINCT 
+					sr.sr_no, sys.sys_nm, sr_task_clsf.sr_task_nm, sr_rqst.sr_ttl, reqstr.usr_nm as rqstr_nm,
+					sr.sr_cmptn_prnmnt_dt, inst.inst_nm, sr_trnsf_plan.sr_trgt_cmptn_dt, sr_prgrs_stts.sr_prgrs_stts_nm
+				FROM sr
+				JOIN sr_rqst ON sr.sr_rqst_no = sr_rqst.sr_rqst_no
+				JOIN sr_trnsf_plan ON sr.sr_no = sr_trnsf_plan.sr_no
+				JOIN sys ON sr_rqst.sys_no = sys.sys_no
+				JOIN sr_task_clsf ON sr.sr_task_no = sr_task_clsf.sr_task_no
+				JOIN sr_prgrs_stts ON sr_trnsf_plan.sr_prgrs_stts_no = sr_prgrs_stts.sr_prgrs_stts_no
+				JOIN usr reqstr ON sr.pic_usr_no = reqstr.usr_no
+				JOIN usr pic ON sr_trnsf_plan.usr_no = pic.usr_no
+				JOIN sr_prgrs ON sr.sr_no = sr_prgrs.sr_no
+				JOIN inst ON sr.sr_trnsf_inst_no = inst.inst_no
+				JOIN dept ON sr_trnsf_plan.dept_no = dept.dept_no
+				<where>
+					<if test="progressManagementSearch.sysNo != null">
+						sr_rqst.sys_no = #{progressManagementSearch.sysNo}
+					</if>
+					<if test="progressManagementSearch.taskNo != null">
+						AND sr.sr_task_no = #{progressManagementSearch.taskNo}
+					</if>
+					<if test="progressManagementSearch.receiptNo != null">
+						<if test="progressManagementSearch.receiptNo == 'RQST'">
+							AND sr_prgrs_stts.sr_prgrs_stts_seq = 0
+						</if>
+						<if test="progressManagementSearch.receiptNo == 'RECEIPT'">
+							<![CDATA[
+							AND sr_prgrs_stts.sr_prgrs_stts_seq >= 1
+							]]>
+						</if>
+					</if>
+					<if test="progressManagementSearch.prgrsNo != null">
+						AND sr_trnsf_plan.sr_prgrs_stts_no = #{progressManagementSearch.prgrsNo}
+					</if>
+					<if test="progressManagementSearch.instNo != null">
+						AND sr.sr_trnsf_inst_no = #{progressManagementSearch.instNo}
+					</if>
+					<if test="progressManagementSearch.deptNo != null">
+						AND sr_trnsf_plan.dept_no = #{progressManagementSearch.deptNo}
+					</if>
+					<if test="progressManagementSearch.keywordContent != null">
+						<if test="progressManagementSearch.keywordCategory == 'srTitle'">
+							AND sr_rqst.sr_ttl like '%' || #{progressManagementSearch.keywordContent} || '%'
+						</if>
+						<if test="progressManagementSearch.keywordCategory == 'rqstr'">
+							AND reqstr.usr_nm like '%' || #{progressManagementSearch.keywordContent} || '%'
+						</if>
+						<if test="progressManagementSearch.keywordCategory == 'pic'">
+							AND pic.usr_nm like '%' || #{progressManagementSearch.keywordContent} || '%'
+						</if>
+					</if>
+					<if test="progressManagementSearch.mySrCheck != null">
+						AND (reqstr.usr_no = #{usrNo} OR pic.usr_no = #{usrNo} OR sr_prgrs.usr_no = #{usrNo})
+					</if>
+				</where>
+				
+				UNION
+		
+				SELECT DISTINCT 
+				    sr.sr_no, sys.sys_nm, sr_task_clsf.sr_task_nm, sr_rqst.sr_ttl, reqstr.usr_nm as rqstr_nm,
+				    sr.sr_cmptn_prnmnt_dt, NULL as inst_nm, NULL AS sr_trgt_cmptn_dt, sr_prgrs_stts.sr_prgrs_stts_nm
+				FROM sr
+				JOIN sr_rqst ON sr.sr_rqst_no = sr_rqst.sr_rqst_no
+				JOIN sr_trnsf_plan ON sr.sr_no = sr_trnsf_plan.sr_no
+				JOIN sys ON sr_rqst.sys_no = sys.sys_no
+				JOIN sr_task_clsf ON sr.sr_task_no = sr_task_clsf.sr_task_no
+				JOIN sr_prgrs_stts ON sr_trnsf_plan.sr_prgrs_stts_no = sr_prgrs_stts.sr_prgrs_stts_no
+				JOIN usr reqstr ON sr.pic_usr_no = reqstr.usr_no
+				<where>
+					<if test="true">
+						sr_trnsf_plan.sr_prgrs_stts_no = 'RQST'
+					</if>
+					<if test="progressManagementSearch.sysNo != null">
+						AND sr_rqst.sys_no = #{progressManagementSearch.sysNo}
+					</if>
+					<if test="progressManagementSearch.taskNo != null">
+						AND sr.sr_task_no = #{progressManagementSearch.taskNo}
+					</if>
+					<if test="progressManagementSearch.receiptNo != null">
+						<if test="progressManagementSearch.receiptNo == 'RQST'">
+							AND sr_prgrs_stts.sr_prgrs_stts_seq = 0
+						</if>
+						<if test="progressManagementSearch.receiptNo == 'RECEIPT'">
+							<![CDATA[
+							AND sr_prgrs_stts.sr_prgrs_stts_seq >= 1
+							]]>
+						</if>
+					</if>
+					<if test="progressManagementSearch.keywordContent != null">
+						<if test="progressManagementSearch.keywordCategory == 'srTitle'">
+							AND sr_rqst.sr_ttl like '%' || #{progressManagementSearch.keywordContent} || '%'
+						</if>
+						<if test="progressManagementSearch.keywordCategory == 'rqstr'">
+							AND reqstr.usr_nm like '%' || #{progressManagementSearch.keywordContent} || '%'
+						</if>
+					</if>
+					<if test="progressManagementSearch.mySrCheck != null">
+						AND reqstr.usr_no = #{usrNo}
+					</if>
+				</where>
+				)
+		<![CDATA[
+			WHERE rownum <= #{pager.endRowNo}
+		)
+		WHERE rnum >= #{pager.startRowNo}
+		]]>
+	</select>
 </mapper>

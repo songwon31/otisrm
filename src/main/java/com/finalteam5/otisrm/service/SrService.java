@@ -5,9 +5,11 @@ import java.util.List;
 import com.finalteam5.otisrm.dto.Pager;
 import com.finalteam5.otisrm.dto.SrPrgrsOtpt;
 import com.finalteam5.otisrm.dto.SrTrnsfPlanForm;
+import com.finalteam5.otisrm.dto.sr.ProgressManagementSearchCompose;
 import com.finalteam5.otisrm.dto.sr.SrForDeveloperHomeBoard;
 import com.finalteam5.otisrm.dto.sr.SrPrgrsForm;
 import com.finalteam5.otisrm.dto.sr.SrRequestDetailForDeveloperHome;
+import com.finalteam5.otisrm.dto.sr.SrTableConfigForProgressManagement;
 import com.finalteam5.otisrm.dto.sr.SrTableElementsForDeveloperHome;
 import com.finalteam5.otisrm.dto.sr.SrTrnsfFindPicModalCompose;
 import com.finalteam5.otisrm.dto.sr.SrTrnsfInfoForDeveloperHome;
@@ -63,4 +65,14 @@ public interface SrService {
 	
 	//산출물 삭제
 	public int deleteSelectedOtptList(List<String> srPrgrsOtptNoList);
+	
+	//--------------------------------------------------------------------------------------------------
+	//SR진척관리 옵션 select구성
+	public ProgressManagementSearchCompose getProgressManagementSearchCompose();
+	
+	//deptSelect 구성
+	public List<Dept> getDeptListByInstNo(String instNo);
+	
+	//mainTable 구성
+	public SrTableConfigForProgressManagement getProgressManagementMainTableConfig(String usrNo, String jsonData);
 }
