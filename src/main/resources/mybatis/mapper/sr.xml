@@ -664,7 +664,7 @@
 	
 			SELECT DISTINCT 
 			    sr.sr_no, sys.sys_nm, sr_task_clsf.sr_task_nm, reqstr.usr_nm as rqstrNm,
-			    sr.sr_cmptn_prnmnt_dt, NULL as INST_NM, NULL AS SR_TRGT_CMPTN_DT, sr_prgrs_stts.sr_prgrs_stts_nm
+			    sr.sr_cmptn_prnmnt_dt, inst.INST_NM, NULL AS SR_TRGT_CMPTN_DT, sr_prgrs_stts.sr_prgrs_stts_nm
 			FROM sr
 			JOIN sr_rqst ON sr.sr_rqst_no = sr_rqst.sr_rqst_no
 			JOIN sr_trnsf_plan ON sr.sr_no = sr_trnsf_plan.sr_no
@@ -672,6 +672,7 @@
 			JOIN sr_task_clsf ON sr.sr_task_no = sr_task_clsf.sr_task_no
 			JOIN sr_prgrs_stts ON sr_trnsf_plan.sr_prgrs_stts_no = sr_prgrs_stts.sr_prgrs_stts_no
 			JOIN usr reqstr ON sr.pic_usr_no = reqstr.usr_no
+			JOIN inst ON sr.sr_trnsf_inst_no = inst.inst_no
 			<where>
 				<if test="true">
 					sr_trnsf_plan.sr_prgrs_stts_no = 'RQST'
@@ -831,7 +832,7 @@
 		
 				SELECT DISTINCT 
 				    sr.sr_no, sys.sys_nm, sr_task_clsf.sr_task_nm, sr_rqst.sr_ttl, reqstr.usr_nm as rqstr_nm,
-				    sr.sr_cmptn_prnmnt_dt, NULL as inst_nm, NULL AS sr_trgt_cmptn_dt, sr_prgrs_stts.sr_prgrs_stts_nm
+				    sr.sr_cmptn_prnmnt_dt, inst.inst_nm, NULL AS sr_trgt_cmptn_dt, sr_prgrs_stts.sr_prgrs_stts_nm
 				FROM sr
 				JOIN sr_rqst ON sr.sr_rqst_no = sr_rqst.sr_rqst_no
 				JOIN sr_trnsf_plan ON sr.sr_no = sr_trnsf_plan.sr_no
@@ -839,6 +840,7 @@
 				JOIN sr_task_clsf ON sr.sr_task_no = sr_task_clsf.sr_task_no
 				JOIN sr_prgrs_stts ON sr_trnsf_plan.sr_prgrs_stts_no = sr_prgrs_stts.sr_prgrs_stts_no
 				JOIN usr reqstr ON sr.pic_usr_no = reqstr.usr_no
+				JOIN inst ON sr.sr_trnsf_inst_no = inst.inst_no
 				<where>
 					<if test="true">
 						sr_trnsf_plan.sr_prgrs_stts_no = 'RQST'

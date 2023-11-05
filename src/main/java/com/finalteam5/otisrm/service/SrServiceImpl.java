@@ -281,6 +281,8 @@ public class SrServiceImpl implements SrService{
 		pastSrPrgrsForm.setTestPrgrs(srDao.selectTestPrgrs(srPrgrsForm.getSrNo()));
 		pastSrPrgrsForm.setApplyRequestPrgrs(srDao.selectApplyRequestPrgrs(srPrgrsForm.getSrNo()));
 		
+		String srTrnsfPrgrs = "RECEIPT";
+		
 		log.info(""+pastSrPrgrsForm);
 		log.info(""+srPrgrsForm);
 		
@@ -306,7 +308,7 @@ public class SrServiceImpl implements SrService{
 					analysisSrPrgrs.setSrPrgrs(srPrgrsForm.getAnalysisPrgrs());
 					srDao.updateSrPrgrs(analysisSrPrgrs);
 				}
-				srDao.updateSrTrnsfStts(srPrgrsForm.getSrNo(), "ANALYSIS");
+				//srDao.updateSrTrnsfStts(srPrgrsForm.getSrNo(), "ANALYSIS");
 			//기본값이 존재했을 경우
 			} else if (0 < pastSrPrgrsForm.getAnalysisPrgrs() && pastSrPrgrsForm.getAnalysisPrgrs() < 10) {
 				//새로운 값이 기존값보다 클 경우
@@ -324,6 +326,8 @@ public class SrServiceImpl implements SrService{
 					}
 				}
 			}
+			//srTrnsfPlan 상태 갱신
+			srTrnsfPrgrs = "ANALYSIS";
 		}
 		
 		//Design
@@ -347,7 +351,7 @@ public class SrServiceImpl implements SrService{
 					designSrPrgrs.setSrPrgrs(srPrgrsForm.getDesignPrgrs());
 					srDao.updateSrPrgrs(designSrPrgrs);
 				}
-				srDao.updateSrTrnsfStts(srPrgrsForm.getSrNo(), "DESIGN");
+				
 			//기본값이 존재했을 경우
 			} else if (10 < pastSrPrgrsForm.getDesignPrgrs() && pastSrPrgrsForm.getDesignPrgrs() < 20) {
 				//새로운 값이 기존값보다 클 경우
@@ -365,6 +369,7 @@ public class SrServiceImpl implements SrService{
 					}
 				}
 			}
+			srTrnsfPrgrs = "DESIGN";
 		}
 			
 		//Implement
@@ -388,7 +393,7 @@ public class SrServiceImpl implements SrService{
 					implementSrPrgrs.setSrPrgrs(srPrgrsForm.getImplementPrgrs());
 					srDao.updateSrPrgrs(implementSrPrgrs);
 				}
-				srDao.updateSrTrnsfStts(srPrgrsForm.getSrNo(), "IMPLEMENT");
+				//srDao.updateSrTrnsfStts(srPrgrsForm.getSrNo(), "IMPLEMENT");
 			//기본값이 존재했을 경우
 			} else if (20 < pastSrPrgrsForm.getImplementPrgrs() && pastSrPrgrsForm.getImplementPrgrs() < 70) {
 				//새로운 값이 기존값보다 클 경우
@@ -406,6 +411,7 @@ public class SrServiceImpl implements SrService{
 					}
 				}
 			}
+			srTrnsfPrgrs = "IMPLEMENT";
 		}
 		
 		//Test
@@ -429,7 +435,7 @@ public class SrServiceImpl implements SrService{
 					testSrPrgrs.setSrPrgrs(srPrgrsForm.getTestPrgrs());
 					srDao.updateSrPrgrs(testSrPrgrs);
 				}
-				srDao.updateSrTrnsfStts(srPrgrsForm.getSrNo(), "TEST");
+				//srDao.updateSrTrnsfStts(srPrgrsForm.getSrNo(), "TEST");
 			//기본값이 존재했을 경우
 			} else if (70 < pastSrPrgrsForm.getTestPrgrs() && pastSrPrgrsForm.getTestPrgrs() < 90) {
 				//새로운 값이 기존값보다 클 경우
@@ -447,6 +453,7 @@ public class SrServiceImpl implements SrService{
 					}
 				}
 			}
+			srTrnsfPrgrs = "TEST";
 		}
 		
 		//Apply Request
@@ -470,7 +477,7 @@ public class SrServiceImpl implements SrService{
 					applyRequestSrPrgrs.setSrPrgrs(srPrgrsForm.getApplyRequestPrgrs());
 					srDao.updateSrPrgrs(applyRequestSrPrgrs);
 				}
-				srDao.updateSrTrnsfStts(srPrgrsForm.getSrNo(), "APPLY_REQUEST");
+				//srDao.updateSrTrnsfStts(srPrgrsForm.getSrNo(), "APPLY_REQUEST");
 			//기본값이 존재했을 경우
 			} else if (90 < pastSrPrgrsForm.getApplyRequestPrgrs() && pastSrPrgrsForm.getApplyRequestPrgrs() < 100) {
 				//새로운 값이 기존값보다 클 경우
@@ -488,7 +495,11 @@ public class SrServiceImpl implements SrService{
 					}
 				}
 			}
+			srTrnsfPrgrs = "APPLY_REQUEST";
 		}
+		
+		//srTrnsfPlan 상태 갱신
+		srDao.updateSrTrnsfStts(srPrgrsForm.getSrNo(), srTrnsfPrgrs);
 		
 		return 1;
 	}

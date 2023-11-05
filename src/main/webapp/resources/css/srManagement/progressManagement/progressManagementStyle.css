@@ -1,3 +1,12 @@
+a, a:hover {
+	text-decoration:none;
+	color: inherit;
+}
+
+input:focus, select:focus {
+	outline: none;
+}
+
 .shadow {
 	border: none;
 	border-radius: 5px;
@@ -63,6 +72,19 @@
 	font-weight:700;
 }
 
+.btn-2 {
+	height: 2.5rem;
+	width: 55px;
+	border: none;
+	font-size:1.2rem;
+	color: #f3ffff;
+	background-color:#2c7be4; 
+	border-radius:3px;
+}
+.btn-2:active {
+	background-color:#4177bf; 
+}
+
 #searchBtn:active {
 	background-color:#007bff; 
 }
@@ -84,4 +106,31 @@
 
 #mainTable thead th, #mainTable tbody tr {
 	text-align: center;
+}
+
+/* modal */
+.modal-header {
+	display:flex; 
+	align-items:center; 
+	background-color:#222e3c;
+	color:white;
+}
+
+#srRqstInfo > div {
+	border-top: 1px solid #f9fafe;
+}
+
+.filterTab {
+	height: 3rem;
+	border: 1.5px solid #edf2f8;
+	text-align: center;
+	background-color: #edf2f8;
+	font-weight: bold;
+	color: #5d6e7e;
+}
+
+.filterTabSelected {
+	background-color: #f9fafe; 
+	color: black;
+	border-bottom:none;
 }
