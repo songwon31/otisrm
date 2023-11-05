@@ -7,6 +7,7 @@ import com.finalteam5.otisrm.dto.Sys;
 import com.finalteam5.otisrm.dto.srRequest.SrRqst;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstAtch;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstForReviewerHomeBoard;
+import com.finalteam5.otisrm.dto.srRequest.SrRqstForReviewerHomeProgress;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstForReviewerModal;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstStts;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstSubmit;
@@ -56,6 +57,15 @@ public interface SrRqstService {
 	
 	//검토자 상세모달로 SR정보 가져오기
 	public SrRqstForReviewerModal getSrRqstForReviewerModal(String selectedSrRqstNo);
+	
+	//검토자 홈 진행현황으로 SR정보 가져오기
+	public SrRqstForReviewerHomeProgress getSrRqstForReviewerHomeProgress(String selectedSrRqstNo);
+	
+	//진행상태 업데이트
+	public void saveSrRqstStts(Map<String, String> params);
+	
+	//검토의견 업데이트
+	public void saveSrRqstRvwRsn(Map<String, String> params);
 	
 	//전체 시스템 이름 가져오기
 	public List<String> getTotalSysNm();

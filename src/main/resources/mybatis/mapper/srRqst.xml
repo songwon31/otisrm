@@ -205,6 +205,7 @@
 	<select id="selectSrRqstStts" resultType="SrRqstStts">
 		select * from sr_rqst_stts order by sr_rqst_stts_seq 
 	</select>
+
 	
 	<!-- 작성자: 이현주  -->
 	<!-- 검토자 홈 요청목록 불러오기 -->
@@ -230,10 +231,19 @@
 		]]>
 	</select>
 	
+	<!-- 상태별 요청수 가져오기 -->
+	<select id="countSrRqstBySttsNm" parameterType="String" resultType="int">
+		select count(*)
+		from sr_rqst r
+		join sr_rqst_stts rs on rs.sr_rqst_stts_no = r.sr_rqst_stts_no
+		where #{srRqstSttNm} = '전체' or rs.sr_rqst_stts_nm = #{srRqstSttNm}
+	</select>
+	
 	<!-- 검토자 상세모달로 SR정보 가져오기 -->
 	<select id="selectSrRqstForReviewerModal" parameterType="String" resultType="com.finalteam5.otisrm.dto.srRequest.SrRqstForReviewerModal">
 		select 
-		    r.sr_rqst_no as sr_rqst_no,
+		    r.sr_rqst_no,
+		    r.sr_rqst_stts_no,
 		    reqstr.usr_nm as sr_reqstr_nm,
 		    reqstr_inst.inst_nm as reqstr_inst_nm,
 		    r.sr_rqst_reg_dt,
@@ -259,13 +269,42 @@
 		where r.sr_rqst_no = #{selectedSrRqstNo}
 	</select>
 	
-	<!-- 상태별 요청수 가져오기 -->
-	<select id="countSrRqstBySttsNm" parameterType="String" resultType="int">
-		select count(*)
+	<!-- 검토자 홈 진행현황으로 SR정보 가져오기 -->
+	<select id="selectSrRqstForReviewerHomeProgress" parameterType="String" resultType="com.finalteam5.otisrm.dto.srRequest.SrRqstForReviewerHomeProgress">
+		select 
+		    r.sr_rqst_no,
+		    st.sr_rqst_stts_nm,
+		    reqstr.usr_nm as sr_reqstr_nm,
+		    r.sr_rqst_reg_dt,
+		    sr.sr_trnsf_yn,
+		    dept.dept_nm,
+		    trnsf_inst.inst_nm as sr_trnsf_inst_nm,
+		    sr.sr_cmptn_prnmnt_dt,
+		    r.sr_ttl,
+		    r.sr_conts,
+		    r.sr_rqst_rvw_rsn
 		from sr_rqst r
-		join sr_rqst_stts rs on rs.sr_rqst_stts_no = r.sr_rqst_stts_no
-		where #{srRqstSttNm} = '전체' or rs.sr_rqst_stts_nm = #{srRqstSttNm}
+		join sys on r.sys_no = sys.sys_no
+		join sr_rqst_stts st on r.sr_rqst_stts_no = st.sr_rqst_stts_no
+		join usr reqstr on r.sr_reqstr_no = reqstr.usr_no
+		left join sr on r.sr_rqst_no = sr.sr_rqst_no
+		left join inst trnsf_inst on trnsf_inst.inst_no = sr.sr_trnsf_inst_no
+		left join usr pic on pic.usr_no = sr.pic_usr_no
+		left join dept on dept.dept_no = pic.dept_no
+		where r.sr_rqst_no = #{selectedSrRqstNo}
 	</select>
+	
+	<!-- 진행상태 업데이트 -->
+	<update id="updateSrRqstStts" parameterType="map">
+		update sr_rqst set sr_rqst_stts_no = #{srRqstSttsNo}
+		where sr_rqst_no = #{selectedSrRqstNo}
+	</update>
+	
+	<!-- 검토의견 업데이트 -->
+	<update id="updateSrRqstRvwRsn" parameterType="map">
+		update sr_rqst set sr_rqst_rvw_rsn = #{srRqstRvwRsn}
+		where sr_rqst_no = #{selectedSrRqstNo}
+	</update>
 	
 	<!-- 전체 시스템명 가져오기 -->
 	<select id="selectTotalSysNm" resultType="String">

@@ -11,6 +11,7 @@ import com.finalteam5.otisrm.dto.Sys;
 import com.finalteam5.otisrm.dto.srRequest.SrRqst;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstAtch;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstForReviewerHomeBoard;
+import com.finalteam5.otisrm.dto.srRequest.SrRqstForReviewerHomeProgress;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstForReviewerModal;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstStts;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstSubmit;
@@ -101,16 +102,34 @@ public class SrRqstServiceImpl implements SrRqstService{
 		return srRqstDao.selectSrRqstForReviewerHomeBoardListByPage(params);
 	}
 	
+	//상태별 요청수
+	@Override
+	public int getCountSrRqstBySttsNm(String srRqstSttNm) {
+		return srRqstDao.countSrRqstBySttsNm(srRqstSttNm);
+	}
+	
 	//검토자 상세모달로 SR정보 가져오기
 	@Override
 	public SrRqstForReviewerModal getSrRqstForReviewerModal(String selectedSrRqstNo) {
 		return srRqstDao.selectSrRqstForReviewerModal(selectedSrRqstNo);
 	}
 	
-	//상태별 요청수
+	//검토자 홈 진행현황으로 SR정보 가져오기
 	@Override
-	public int getCountSrRqstBySttsNm(String srRqstSttNm) {
-		return srRqstDao.countSrRqstBySttsNm(srRqstSttNm);
+	public SrRqstForReviewerHomeProgress getSrRqstForReviewerHomeProgress(String selectedSrRqstNo) {
+		return srRqstDao.selectSrRqstForReviewerHomeProgress(selectedSrRqstNo);
+	}
+	
+	//진행상태 업데이트
+	@Override
+	public void saveSrRqstStts(Map<String, String> params) {
+		srRqstDao.updateSrRqstStts(params);
+	}
+	
+	//검토의견 업데이트
+	@Override
+	public void saveSrRqstRvwRsn(Map<String, String> params) {
+		srRqstDao.updateSrRqstRvwRsn(params);
 	}
 	
 	//전체 시스템 이름 가져오기
@@ -118,6 +137,4 @@ public class SrRqstServiceImpl implements SrRqstService{
 	public List<String> getTotalSysNm() {
 		return srRqstDao.selectTotalSysNm();
 	}
-	
-	
 }

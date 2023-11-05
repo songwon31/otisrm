@@ -8,6 +8,7 @@ import lombok.Data;
 public class SrRqstForReviewerModal {
 	//SR요청정보
 	private String srRqstNo;
+	private String srRqstSttsNo;
 	private String srReqstrNm;
 	private String reqstrInstNm;
 	private Date srRqstRegDt;
