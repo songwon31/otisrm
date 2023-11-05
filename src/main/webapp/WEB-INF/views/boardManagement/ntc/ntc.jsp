@@ -24,7 +24,9 @@
 				</div>
 				<div style="width: 20%;">
 					<select style="width:220px;" id="srRqstStts-select" name="status">
-						<option value="" >전체</option>
+						<option value="" >선택</option>
+						<option value="searchTtl" >제목</option>
+						<option value="searchUsrNo" >등록자</option>
 				    </select>
 				</div>
 				<div style="width: 7%;"></div>
@@ -49,7 +51,9 @@
 		style="height:70rem; background-color:white; border-radius:1rem; padding:2rem;">
 		<div class="d-flex">
 			<span class="mr-auto" style="height:3.5rem; font-size:2.2rem; font-weight:700; color:#222E3C;">공지사항</span>
-			<button data-toggle="modal" data-target="#addSrRqst" class="btn-6 mr-2" style="background-color:#2c7be4;" onclick="location.href='#';">공지 추가하기</button>
+			<c:if test="${showButton}">
+			    <button data-toggle="modal" data-target="#addSrRqst" class="btn-6 mr-2" style="background-color:#2c7be4;" onclick="location.href='#';">공지 추가하기</button>
+			</c:if>
 			<button id="downloadExcelButton" class="btn-5" onclick="downloadExcel()">엑셀 다운로드</button>
 		</div>
 		<div class="tableContainer">
@@ -185,14 +189,13 @@
   <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h6 class="modal-title">SR 요청 등록</h6>
+        <h6 class="modal-title">공지사항</h6>
         <i class="material-icons close-icon" data-dismiss="modal" style="cursor: pointer;">close</i>
       </div>
-      <input type="hidden" id="loginUsrDeptNo" value="${usr.deptNo}">
       <div id="srRqstBySrRqstNoForm" class="modal-body">
       	<form id="writeSrRqstOfMng" action="writeSrRqstOfMng" method="post" enctype="multipart/form-data">
       		<!-- SR요청정보 -->
-      		<h6 class="modal-sub-title">SR요청등록</h6>
+      		<h6 class="modal-sub-title">공지사항 등록</h6>
       		<div class="card p-3 mb-4">
 		      	<div>
 		        	<div class="d-flex">
@@ -200,72 +203,65 @@
 				          	<div class="w-30">			          	
 				            	<label for="writer" class="form-label">등록자</label>
 				          	</div>
-				 			<div class="w-45">
+				 			<div class="w-60">
 					            <input type="text" class="form-control" id="data-usrNm" value="${usr.usrNm}" disabled>
 				 			</div>
 				            <input type="hidden" id="srReqstrNo" name="srReqstrNo" value="${usr.usrNo}">
 				        </div>
-				        <div class="d-flex w-50">
-					        <div class="w-30">
-					          <label for="writerDepartment" class="form-label">소속</label>
-					        </div>
-					        <div class="w-45">
-					          <input type="text" class="form-control" id="writerDepartment" value="${usr.instNm}" disabled>
-					        </div>
-					    </div>
-					</div>
-				<div>
-		      	<div>
-		        	<div class="d-flex">
 				        <div class="d-flex w-50 pt-2">
 				          	<div class="w-30">			          	
 				            	<label for="writeDate" class="form-label">등록일</label>
 				          	</div>
-				 			<div class="w-45">
+				 			<div class="w-60">
 					            <input type="date" class="form-control" id="writeDate" disabled>
 				 			</div>
 				        </div>
-				        <div class="d-flex w-50">
-					        <div class="w-30">
-					          <label for="systemName" class="form-label">관련시스템</label>
-					        </div>
-					        <div class="w-45">
-					          <select class="form-control" id="sysNo" name="sysNo">
-					          	<option>--관련시스템--</option>
-					          </select>
-					        </div>
-					    </div>
 					</div>
+				<div>
+		      	<div>
+		        	<div class="d-flex">
+				        <div class="d-flex w-100">
+					        <div style="width: 113.9px;">
+					          <label for="systemName" class="form-label">공지 대상</label>
+					        </div>
+					        <div style="width: 550.41px;">
+						        <c:forEach items="${usrAuthrts}" var = "usrAuthrt">
+						          <div class="form-check-inline pt-2">
+								      <label class="form-check-label" for="${usrAuthrt.usrAuthrtNo}">
+								        <input type="checkbox" class="form-check-input" id="${usrAuthrt.usrAuthrtNo}" name="" value="${usrAuthrt.usrAuthrtNm}">
+								        <span style="font-size: 1.3rem;">${usrAuthrt.usrAuthrtNm}</span>
+								      </label>
+								  </div>
+						       </c:forEach>
+				          </div>
+					   </div>
+					</div>
+					<div class="d-flex w-100">
+				        <div style="width: 113.9px;"></div>
+				        <div class="text-danger" style="width: 550.41px; font-size: 1.2rem;">미 선택 시, 전 회원에게 공지가 노출됩니다.</div>
+				    </div>
 		        </div>
 		        <div class="d-flex w-100 pt-2">
 			        <div style="width: 113.9px;">
-			          <label for="systemName" class="form-label">SR제목</label>
+			          <label for="systemName" class="form-label">제목</label>
 			        </div>
-			        <div style="width: 550.41px;">
+			        <div style="width: 605px;">
 			          <input type="text" class="form-control" id="srTtl" name="srTtl">
 			        </div>
 			    </div>
 		        <div class="d-flex w-100 pt-2">
 			        <div style="width: 113.9px;">
-			          <label for="systemName" class="form-label">관련근거/목적</label>
+			          <label for="systemName" class="form-label">내용</label>
 			        </div>
-			        <div style="width: 550.41px;">
-			          <input type="text" class="form-control" id="srPrps" name="srPrps">
-			        </div>
-			    </div>
-		        <div class="d-flex w-100 pt-2">
-			        <div style="width: 113.9px;">
-			          <label for="systemName" class="form-label">SR 내용</label>
-			        </div>
-			        <div style="width: 550.41px;">
-			          <textarea class="form-control" id="srConts" name="srConts"></textarea>
+			        <div style="width: 605px;">
+			          <textarea class="form-control" id="srConts" name="srConts" style="height: 50rem;"></textarea>
 			        </div>
 			    </div>
 		        <div class="d-flex w-100 pt-2">
 			        <div style="width: 113.9px;">
 			          <label for="systemName" class="form-label modal-input">첨부파일</label>
 			        </div>
-			        <div style="width: 500px;">
+			        <div style="width: 560px;">
 			        	 <input id="file" type="file" name="file" multiple>
 			        </div>
 			        <div>

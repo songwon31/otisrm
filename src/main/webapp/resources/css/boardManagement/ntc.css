@@ -287,6 +287,9 @@
 	font-weight: 700;
 	padding-right: 1rem;
 }
+.form-check-label {
+	font-size: 1.4rem;
+}
 .modal-input{
 	height: 3rem;
 }
