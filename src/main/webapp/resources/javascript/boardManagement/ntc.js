@@ -39,13 +39,7 @@ var choiceSrRqstSttsNo = "";
 var status = "";
 var pageNo = 1;
 $(document).ready(function() {
-    loadSRRequests(1, choiceSrRqstSttsNo); //페이지 로딩 시 초기 데이터 로드
-    
-    //선택한 시스템 번호 넣어주기
-    var selectedSysNo = $("#sysNo-select").val();
-	$("#sysNo-select").val(selectedSysNo);	    
-   
-    
+	loadNtcs(pageNo); //페이지 로딩 시 초기 데이터 로드
 });
 
 //timestamp 객체를 YYYY-MM-dd 형식의 문자열로 변환하는 함수
@@ -69,18 +63,6 @@ function formatDateToYYYYMMDD(timestamp) {
 
 //요청 상태
 choiceSrRqstSttsNo = "";
-var status = "";
-function dataOfloadSrRequestsForm(){
-	//페이지 세팅
-	$("#srRqstMngPageNo").val(pageNo);
-	
-	//내 요청 건만 체크
-	if($("#myCheck").prop("checked")){
-		$("#usr").val($("#loginUsr").val());
-	}else{
-		$("#usr").val("");
-	}
-}
 
 function submitList(){
 	dataOfloadSrRequestsForm();
@@ -88,41 +70,16 @@ function submitList(){
 }
 
 
-//**요청목록 불러오기
-function loadSRRequests(pageNo, choiceSrRqstSttsNo) {
-	choiceSrRqstSttsNo = $("#srRqstStts-select option:selected").val();
-	//등록자 소속기관
-	var searchInstNo = $("input[name='instNm']:checked").attr("id");
-	//개발부서
-	var searchDeptNo = $("#deptNo-select option:selected").val();
-	//진행 상태
-	var searchStatus = choiceSrRqstSttsNo;
-	//내 요청건만 여부
-	var searchUsr = $("#usr").val();
-	//조회기간
-	var searchStartDate = $("#startDate").val();
-	var searchEndDate = $("#endDate").val();
-	//관련 시스템 
-	var searchSysNo = $("#sysNo-select option:selected").val();
-	//키워드 검색대상
-	var searchTarget = $("#searchTarget option:selected").val();
-	//키워드 
-	var searchKeyword = $("#keyword").val();
+//**공지사항 목록 불러오기
+function loadNtcs(pageNo) {
 	//페이지 지정
-	$("#srRqstMngPageNo").val(pageNo);
+	$("#ntcPageNo").val(pageNo);
 	$.ajax({
-    url: "getSRRequestsByPageNoOfMng",
+    url: "getNtcByPageNo",
     data: { 
-    	srRqstMngPageNo: parseInt(pageNo),
-    	instNo: searchInstNo,
-    	deptNo: searchDeptNo,
-    	status: choiceSrRqstSttsNo,
-    	usr: searchUsr,
-    	startDate: searchStartDate,
-    	endDate: searchEndDate,
-    	sysNo: searchSysNo,
-    	searchTarget: searchTarget,
-    	keyword: searchKeyword
+    	ntcPageNo: parseInt(pageNo),
+    	searchTarget: $("#searchTarget option:selected").val(),
+    	keyword: $("#keyword").val()
     },
     dataType: "json",
     method: "POST",
@@ -133,52 +90,34 @@ function loadSRRequests(pageNo, choiceSrRqstSttsNo) {
 			 html += '<tr style="background-color: white;">';
 			 html += '	<td></td>';
 			 html += '	<td></td>';
-			 html += '	<td></td>';
-			 html += '	<td></td>';
-			 html += '	<td></td>';
 			 html += '	<td style="width:190px;">';
 			 html += '		<p class="t2_nonMessage">해당 목록 결과가 없습니다.</p>';
 			 html += '	</td>';
 			 html += '	<td></td>';
 			 html += '	<td></td>';
 			 html += '	<td></td>';
-			 html += '	<td></td>';
-			 html += '	<td></td>';
-			 html += '	<td></td>';
 			 html += '</tr>';
 	  }
-      var indexOffset = (pageNo - 1) * 5; // 페이지 번호에 따라 index 오프셋 계산
+      var indexOffset = (pageNo - 1) * 12; // 페이지 번호에 따라 index 오프셋 계산
       data.forEach((item, index)=>{
     	  // item.srRqstRegDt를 YYYY-MM-dd 문자열로 변환
-    	  const formattedDate = formatDateToYYYYMMDD(item.srRqstRegDt);
+    	  const formattedDate = formatDateToYYYYMMDD(item.ntcWrtDt);
     	  var indexOnPage = index + indexOffset + 1; // 페이지 내에서의 index 계산
     	  var count = 0;
-    	  //승인여부
-    	  var aprvYn = "N";
-    	  if(item.srRqstSttsSeq > 1){
-    		  aprvYn = "Y";
-    	  }
-		  console.log("앙");
 		  
 		  html += '<tr class="data-tr" style="background-color: white;">';
 		  html += '	<td>' + indexOnPage + '</td>';
-		  html += '	<td>' + item.srRqstNo + '</td>';
-		  html += '	<td class="truncate-text" style="max-width: 235.37px;">' + item.srTtl + '</td>';
-		  html += '	<td class="truncate-text" style="max-width: 144px;">' + item.sysNm + '</td>';
-		  html += '	<td class="truncate-text" style="max-width: 88.26px;">' + item.usrNm + '</td>';
-		  html += '	<td class="truncate-text" style="max-width: 88.26px;">' + item.instNm + '</td>';
-		  html += '	<td class="truncate-text" style="max-width: 88.26px;">' + item.deptNm + '</td>';
-		  html += '	<td class="truncate-text" style="max-width: 88.26px;">' + item.srRqstSttsNm + '</td>';
+		  html += '	<td class="truncate-text">' + item.ntcTtl + '</td>';
+		  html += '	<td class="truncate-text">' + item.usrNm + '</td>';
 		  html += '	<td>'+ formattedDate +'</td>'
-		  html += '	<td>'+ item.srRqstEmrgYn +'</td>';
-		  html += '	<td>'+ aprvYn +'</td>';
-		  html += '	<td><button type="button" id="showSrRqstDetailBtn" class="btn-2" data-toggle="modal" data-target="#srRqstBySrNo" onclick="showSrRqstBySrRqstNo(\''+ item.srRqstNo +'\')">상세보기</button></td>';
+		  html += '	<td>'+ item.ntcInqCnt +'</td>';
+		  html += '	<td><button type="button" id="showSrRqstDetailBtn" class="btn-2" data-toggle="modal" data-target="#getNtcByNtcNo" onclick="showSrRqstBySrRqstNo(\''+ item.ntcNo +'\')">상세보기</button></td>';
 		  html += '</tr>';
     	  
       });
       html +='<tr class="empty-tr" style="height: 100%;">';
       html +='</tr>';
-      $("#getSrReqstListByPageNo").html(html);
+      $("#getNtcListByPageNo").html(html);
       
       //데이터가 없을 경우 페이징 숨기기
       var paginationContainer = document.getElementById("pagination-container");
@@ -212,45 +151,19 @@ function loadSRRequests(pageNo, choiceSrRqstSttsNo) {
 }
 
 //**상태에 따른 페이징 업데이트 함수
-function updatePagination(pageNo, choiceSrRqstSttsNo) {
-	choiceSrRqstSttsNo = $("#srRqstStts-select option:selected").val();
-	//등록자 소속기관
-	var searchInstNo = $("input[name='instNm']:checked").attr("id");
-	//개발부서
-	var searchDeptNo = $("#deptNo-select option:selected").val();
-	//진행 상태
-	var searchStatus = choiceSrRqstSttsNo;
-	//내 요청건만 여부
-	var searchUsr = $("#usr").val();
-	//조회기간
-	var searchStartDate = $("#startDate").val();
-	var searchEndDate = $("#endDate").val();
-	//관련 시스템 
-	var searchSysNo = $("#sysNo-select option:selected").val();
-	//키워드 검색대상
-	var searchTarget = $("#searchTarget option:selected").val();
-	//키워드 
-	var searchKeyword = $("#keyword").val();
+function updatePagination(pageNo) {
   $.ajax({
-    url: "getCountSRRequestsByStatus",
+    url: "getCountNtcBySearch",
     data: {
-    	srRqstMngPageNo: pageNo,
-    	instNo: searchInstNo,
-    	deptNo: searchDeptNo,
-    	status: choiceSrRqstSttsNo,
-    	usr: searchUsr,
-    	startDate: searchStartDate,
-    	endDate: searchEndDate,
-    	sysNo: searchSysNo,
-    	searchTarget: searchTarget,
-    	keyword: searchKeyword
+    	ntcPageNo: parseInt(pageNo),
+    	searchTarget: $("#searchTarget option:selected").val(),
+    	keyword: $("#keyword").val()
     },
     dataType: "json",
     method: "GET",
     success: function (totalRows) {
-    	console.log("페이지: " + totalRows);
     	// totalRows를 기반으로 페이징을 업데이트
-        var totalPageNo = Math.ceil(totalRows / 10); // 페이지 수 계산 (5는 페이지당 항목 수)
+        var totalPageNo = Math.ceil(totalRows / 1); // 페이지 수 계산 (5는 페이지당 항목 수)
         
         // 현재 페이지 번호 업데이트
         var currentPageNo = pageNo;
@@ -260,32 +173,32 @@ function updatePagination(pageNo, choiceSrRqstSttsNo) {
         var showNext = currentPageNo < totalPageNo;
         
         // 이전/다음 페이지 버튼 생성
-        var prevButton = '<a class="page-button btn" href="javascript:loadSRRequests(' + (currentPageNo - 1) + ',\''+ choiceSrRqstSttsNo +'\')">이전</a>';
-        var nextButton = '<a class="page-button btn" href="javascript:loadSRRequests(' + (currentPageNo + 1) + ',\''+ choiceSrRqstSttsNo +'\')">다음</a>';
+        var prevButton = '<a class="page-button btn" href="javascript:loadNtcs(' + (currentPageNo - 1) + ',\''+ choiceSrRqstSttsNo +'\')">이전</a>';
+        var nextButton = '<a class="page-button btn" href="javascript:loadNtcs(' + (currentPageNo + 1) + ',\''+ choiceSrRqstSttsNo +'\')">다음</a>';
         
         // 페이지 번호 버튼 생성
         var pageButtons = '';
         for (var i = 1; i <= totalPageNo; i++) {
           if (i === currentPageNo) {
             // 현재 페이지 번호는 활성화된 스타일을 적용
-            pageButtons += '<a class="page-button btn active" href="javascript:loadSRRequests(' + i + ',\''+ choiceSrRqstSttsNo +'\')">' + i + '</a>';
+            pageButtons += '<a class="page-button btn active" href="javascript:loadNtcs(' + i + ',\''+ choiceSrRqstSttsNo +'\')">' + i + '</a>';
           } else {
-            pageButtons += '<a class="page-button btn" href="javascript:loadSRRequests(' + i + ',\''+ choiceSrRqstSttsNo +'\')">' + i + '</a>';
+            pageButtons += '<a class="page-button btn" href="javascript:loadNtcs(' + i + ',\''+ choiceSrRqstSttsNo +'\')">' + i + '</a>';
           }
         }
         
         // 이전 페이지 버튼을 표시
         if (showPrev) {
-          pageButtons = '<a class="page-button btn" href="javascript:loadSRRequests(1,\''+ choiceSrRqstSttsNo +'\')">처음</a>' + prevButton + pageButtons;
+          pageButtons = '<a class="page-button btn" href="javascript:loadNtcs(1,\''+ choiceSrRqstSttsNo +'\')">처음</a>' + prevButton + pageButtons;
         } else {
-          pageButtons = '<a class="page-button btn" href="javascript:loadSRRequests(1,\''+ choiceSrRqstSttsNo +'\')">처음</a>' + pageButtons;
+          pageButtons = '<a class="page-button btn" href="javascript:loadNtcs(1,\''+ choiceSrRqstSttsNo +'\')">처음</a>' + pageButtons;
         }
         
         // 다음 페이지 버튼을 표시
         if (showNext) {
-          pageButtons += nextButton + '<a class="page-button btn" href="javascript:loadSRRequests(' + totalPageNo + ',\''+ choiceSrRqstSttsNo +'\')">맨끝</a>';
+          pageButtons += nextButton + '<a class="page-button btn" href="javascript:loadNtcs(' + totalPageNo + ',\''+ choiceSrRqstSttsNo +'\')">맨끝</a>';
         } else {
-          pageButtons += '<a class="page-button btn" href="javascript:loadSRRequests(' + totalPageNo + ',\''+ choiceSrRqstSttsNo +'\')">맨끝</a>';
+          pageButtons += '<a class="page-button btn" href="javascript:loadNtcs(' + totalPageNo + ',\''+ choiceSrRqstSttsNo +'\')">맨끝</a>';
         }
         
         // 페이지 버튼 컨테이너 업데이트
@@ -437,79 +350,44 @@ function modifySrRqstOfMng(srRqstNo) {
 
 /// 엑셀 다운로드
 function downloadExcel() {
-	choiceSrRqstSttsNo = $("#srRqstStts-select option:selected").val();
-	//등록자 소속기관
-	var searchInstNo = $("input[name='instNm']:checked").attr("id");
-	//개발부서
-	var searchDeptNo = $("#deptNo-select option:selected").val();
-	//진행 상태
-	var searchStatus = choiceSrRqstSttsNo;
-	//내 요청건만 여부
-	var searchUsr = $("#usr").val();
-	//조회기간
-	var searchStartDate = $("#startDate").val();
-	var searchEndDate = $("#endDate").val();
-	//관련 시스템 
-	var searchSysNo = $("#sysNo-select option:selected").val();
-	//키워드 검색대상
-	var searchTarget = $("#searchTarget option:selected").val();
-	//키워드 
-	var searchKeyword = $("#keyword").val();
-	//페이지 지정
-	$("#srRqstMngPageNo").val(pageNo);
-	
 	// 엑셀에 다운될 데이터
 	var data = [
-	    ["요청번호", "제목", "관련시스템", "등록자", "소속", "개발부서", "상태", "요청일", "승인요청", "중요"],
+	    ["번호", "제목", "등록자", "등록일", "조회수"],
 	  ];
+	//페이지 지정
+	$("#ntcPageNo").val(pageNo);
 	
 	$.ajax({
-	    url: "getSRRequestsByPageNoOfMng",
-	    data: {
-	      srRqstMngPageNo: parseInt(pageNo),
-	      instNo: searchInstNo,
-	      deptNo: searchDeptNo,
-	      status: choiceSrRqstSttsNo,
-	      usr: searchUsr,
-	      startDate: searchStartDate,
-	      endDate: searchEndDate,
-	      sysNo: searchSysNo,
-	      searchTarget: searchTarget,
-	      keyword: searchKeyword
+	    url: "getNtcByPageNo",
+	    data: { 
+	    	ntcPageNo: parseInt(pageNo),
+	    	searchTarget: $("#searchTarget option:selected").val(),
+	    	keyword: $("#keyword").val()
 	    },
 	    dataType: "json",
 	    method: "POST",
-	    success: function (response) {
-	      response.forEach(function (item, index) {
-	        // 승인여부
-	        var aprvYn = "N";
-	        if (item.srRqstSttsSeq > 1) {
-	          aprvYn = "Y";
-	        }
-	        data.push([
-	          item.srRqstNo,
-	          item.srTtl,
-	          item.sysNm,
-	          item.usrNm,
-	          item.instNm,
-	          item.deptNm,
-	          item.srRqstSttsNm,
-	          item.srRqstRegDt,
-	          item.srRqstEmrgYn,
-	          aprvYn
-	        ]);
-	      });
-	
+	    success: function(response) {
+ 
+	    	response.forEach((item, index)=>{       
+		        data.push([
+		          item.ntcNo,
+		          item.ntcTtl,
+		          item.usrNm,
+		          formatDateToYYYYMMDD(item.ntcWrtDt),
+		          item.ntcInqCnt
+		        ]);
+	       });
+
 	      // 워크북 생성
 	      var wb = XLSX.utils.book_new();
 	      var ws = XLSX.utils.aoa_to_sheet(data);
 	
 	      // 워크북에 워크시트 추가
-	      XLSX.utils.book_append_sheet(wb, ws, "SR요청목록");
+	      XLSX.utils.book_append_sheet(wb, ws, "SRM_공지사항");
 	
 	      // 엑셀 파일 생성 및 다운로드
 	      var today = new Date();
-	      var filename = "SR요청목록_" + today.getFullYear() + (today.getMonth() + 1) + today.getDate() + ".xlsx";
+	      var filename = "SRM_공지사항_" + today.getFullYear() + (today.getMonth() + 1) + today.getDate() + ".xlsx";
 	      XLSX.writeFile(wb, filename);
 	    },
 	    error: function (error) {

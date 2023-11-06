@@ -23,7 +23,7 @@
 					<span style="font-size:1.6rem; font-weight:700;">검색조건</span>
 				</div>
 				<div style="width: 20%;">
-					<select style="width:220px;" id="srRqstStts-select" name="status">
+					<select style="width:220px;" id="searchTarget" name="status">
 						<option value="" >선택</option>
 						<option value="searchTtl" >제목</option>
 						<option value="searchUsrNo" >등록자</option>
@@ -38,10 +38,10 @@
 				</div>
 				<div style="width: 3.5%;"></div>
 				<div style="width: 70%; display:flex; align-items:center;">
-						<input type="text" id="instNm" name="keywordContent" class="flex-grow-1"/>
-						<input type="hidden" id="instNo" name="instNo" class="flex-grow-1 " value=""/>
-						<button type="button" style="margin-left: 2rem;" data-toggle="modal" data-target="#filterOfInst" class="btn-4 d-inline-flex align-items-center justify-content-center" >
-							찾기
+						<input type="text" id="keyword" name="keyword" class="flex-grow-1"/>
+						<input type="hidden" id="ntcPageNo" name="ntcPageNo" class="flex-grow-1"/>
+						<button type="button" style="margin-left: 2rem;" class="btn-4 d-inline-flex align-items-center justify-content-center" >
+							검색
 						</button>
 				</div>
 			</div>
@@ -57,7 +57,7 @@
 			<button id="downloadExcelButton" class="btn-5" onclick="downloadExcel()">엑셀 다운로드</button>
 		</div>
 		<div class="tableContainer">
-			<table id="mainTable" style="width: 100%; text-align: center; height: 49.3rem;">
+			<table id="mainTable" style="width: 100%; text-align: center; height: 57.9rem;">
 				<colgroup>
 					<col width="10%" /> 
 				    <col width="30%" /> 
@@ -76,104 +76,9 @@
 						<th scope="col">상세보기</th>
 					</tr>
 				</thead>
-				<tbody id="getSrReqstListByPageNo">
+				<tbody id="getNtcListByPageNo">
 				 <!-- Json 데이터 들어오는 곳 --> 
-					<tr class="data-tr" style="background-color:white;">
-						<td>1</td>
-						<td>권한신청 프로세스 개선</td>
-						<td>최고관리자</td>
-						<td>23-11-05</td>
-						<td>1</td>
-						<td>0</td>
-					</tr>   	
-					<tr class="data-tr" style="background-color:white;">
-						<td>1</td>
-						<td>권한신청 프로세스 개선</td>
-						<td>최고관리자</td>
-						<td>23-11-05</td>
-						<td>1</td>
-						<td>0</td>
-					</tr>   	
-					<tr class="data-tr" style="background-color:white;">
-						<td>1</td>
-						<td>권한신청 프로세스 개선</td>
-						<td>최고관리자</td>
-						<td>23-11-05</td>
-						<td>1</td>
-						<td>0</td>
-					</tr>   	
-					<tr class="data-tr" style="background-color:white;">
-						<td>1</td>
-						<td>권한신청 프로세스 개선</td>
-						<td>최고관리자</td>
-						<td>23-11-05</td>
-						<td>1</td>
-						<td>0</td>
-					</tr>   	
-					<tr class="data-tr" style="background-color:white;">
-						<td>1</td>
-						<td>권한신청 프로세스 개선</td>
-						<td>최고관리자</td>
-						<td>23-11-05</td>
-						<td>1</td>
-						<td>0</td>
-					</tr>   	
-					<tr class="data-tr" style="background-color:white;">
-						<td>1</td>
-						<td>권한신청 프로세스 개선</td>
-						<td>최고관리자</td>
-						<td>23-11-05</td>
-						<td>1</td>
-						<td>0</td>
-					</tr>   	
-					<tr class="data-tr" style="background-color:white;">
-						<td>1</td>
-						<td>권한신청 프로세스 개선</td>
-						<td>최고관리자</td>
-						<td>23-11-05</td>
-						<td>1</td>
-						<td>0</td>
-					</tr>   	
-					<tr class="data-tr" style="background-color:white;">
-						<td>1</td>
-						<td>권한신청 프로세스 개선</td>
-						<td>최고관리자</td>
-						<td>23-11-05</td>
-						<td>1</td>
-						<td>0</td>
-					</tr>   	
-					<tr class="data-tr" style="background-color:white;">
-						<td>1</td>
-						<td>권한신청 프로세스 개선</td>
-						<td>최고관리자</td>
-						<td>23-11-05</td>
-						<td>1</td>
-						<td>0</td>
-					</tr>   	
-					<tr class="data-tr" style="background-color:white;">
-						<td>1</td>
-						<td>권한신청 프로세스 개선</td>
-						<td>최고관리자</td>
-						<td>23-11-05</td>
-						<td>1</td>
-						<td>0</td>
-					</tr>   	
-					<tr class="data-tr" style="background-color:white;">
-						<td>1</td>
-						<td>권한신청 프로세스 개선</td>
-						<td>최고관리자</td>
-						<td>23-11-05</td>
-						<td>1</td>
-						<td>0</td>
-					</tr>   		
-					<tr class="data-tr" style="background-color:white;">
-						<td>1</td>
-						<td>권한신청 프로세스 개선</td>
-						<td>최고관리자</td>
-						<td>23-11-05</td>
-						<td>1</td>
-						<td>0</td>
-					</tr>   		
+					
 				</tbody>
 			</table>
 			<!-- 페이징 -->
@@ -283,56 +188,98 @@
 </div>
 
 <!-- 요청목록에 해당하는 상세모달 -->
-
-
-<!-- 등록자 소속 선택 모달 -->
-<div id="filterOfInst" class="modal" data-backdrop="static">
-	<div class="modal-dialog modal-dialog-centered modal-md" style="width:100rem;">
-		<div class="modal-content">
-			<div class="modal-header">
-				<div class="modal-title" style="font-size:2rem; font-weight:700;">등록자 소속 찾기</div>
-				<i class="material-icons close-icon" data-dismiss="modal" style="cursor: pointer;">close</i>
-			</div>
-			<div class="modal-body" style="margin:0px; padding:0px; font-size:1.5rem;">
-				<div style="display:none;"></div>
-				<div>
-					<div style="display: flex; flex-direction: column; justify-contents:center; margin:0 0 0 0.5rem;">
-						<span class="m-3" style="font-size:1.6rem; font-weight:700;">등록자 소속을 선택해 주세요.</span>
-						<div style="margin:0.5rem;">
-							<table id="getInsts" style="width: 100%; text-align: center; border-radius:5px;">
-								<colgroup>
-									<col width="20%"/>
-									<col width="40%"/>
-									<col width="40%"/>
-								</colgroup>
-								<thead style="background-color: #e9ecef;">
-									<tr style="height: 4.3rem; font-size: 1.5rem; font-weight: 700; border: 1.5px solid #e9ecef;">
-										<th scope="col"></th>
-										<th scope="col">소속 기관 코드</th>
-										<th scope="col">소속 기관</th>
-									</tr>
-								</thead>
-								<tbody id="instList">
-								<!-- json 데이터 받는 곳 -->	
-								</tbody>
-							</table>
-						</div>
-						<div id="setHrFindPicModalTablePagerDiv" class="m-2" style="height: 4.5rem;">
-							<span style="font-weight: bold;">선택한 등록자 소속기관: </span>
-							<span id="findInst"></span>
-						</div>
-						<div style="height:4rem; display: flex; flex-direction: row; align-items:center; justify-content:flex-end;">
-							<a data-dismiss="modal" id="confirmButton"
-								style="height: 3rem; width: 5rem; border-radius: 5px; background-color:#222e3c; color:white; font-weight:700; margin-right:0.5rem;
-								display: flex; flex-direction: row; justify-content: center; align-items: center;">확인</a>
-							<a href="#" data-dismiss="modal"
-								style="height: 3rem; width: 5rem; border-radius: 5px; background-color:red; color:white; font-weight:700; margin-right:0.5rem;
-								display: flex; flex-direction: row; justify-content: center; align-items: center; cursor: pointer;">닫기</a>
-						</div>
+<div id="getNtcByNtcNo" class="modal" data-backdrop="static">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h6 class="modal-title">공지사항</h6>
+        <i class="material-icons close-icon" data-dismiss="modal" style="cursor: pointer;">close</i>
+      </div>
+      <div id="writeNtcForm" class="modal-body">
+      	<form id="modifyNtc" action="modifyNtc" method="post" enctype="multipart/form-data">
+      		<!-- SR요청정보 -->
+      		<h6 class="modal-sub-title">공지사항 상세내용</h6>
+      		<div class="card p-3 mb-4">
+		      	<div>
+		        	<div class="d-flex">
+				        <div class="d-flex w-50 pt-2">
+				          	<div class="w-30">			          	
+				            	<label for="writer" class="form-label">등록자</label>
+				          	</div>
+				 			<div class="w-60">
+					            <input type="text" class="form-control" id="writer" value="${usr.usrNm}" disabled>
+				 			</div>
+				            <input type="hidden" id="usrNo" name="usrNo" value="${usr.usrNo}">
+				        </div>
+				        <div class="d-flex w-50 pt-2">
+				          	<div class="w-30">			          	
+				            	<label for="writeDate" class="form-label">등록일</label>
+				          	</div>
+				 			<div class="w-60">
+					            <input type="date" class="form-control" id="writeDate" disabled>
+				 			</div>
+				        </div>
 					</div>
-				</div>
+				<div>
+		      	<div>
+		        	<div class="d-flex">
+				        <div class="d-flex w-100">
+					        <div style="width: 113.9px;">
+					          <label for="systemName" class="form-label">공지 대상</label>
+					        </div>
+					        <div style="width: 550.41px;">
+						        <c:forEach items="${usrAuthrts}" var ="usrAuthrt">
+						          <div class="form-check-inline pt-2">
+								      <label class="form-check-label" for="${usrAuthrt.usrAuthrtNo}">
+								        <input type="checkbox" class="form-check-input" id="${usrAuthrt.usrAuthrtNo}" value="${usrAuthrt.usrAuthrtNm}">
+								        <span style="font-size: 1.3rem;">${usrAuthrt.usrAuthrtNm}</span>
+								      </label>
+								  </div>
+						       </c:forEach>
+				          </div>
+					   </div>
+					</div>
+					<div class="d-flex w-100">
+				        <div style="width: 113.9px;"></div>
+				        <div class="text-danger" style="width: 550.41px; font-size: 1.2rem;">미 선택 시, 전 회원에게 공지가 노출됩니다.</div>
+				    </div>
+		        </div>
+		        <div class="d-flex w-100 pt-2">
+			        <div style="width: 113.9px;">
+			          <label for="ntcTtl" class="form-label">제목</label>
+			        </div>
+			        <div style="width: 605px;">
+			          <input type="text" class="form-control" id="ntcTtl" name="ntcTtl">
+			        </div>
+			    </div>
+		        <div class="d-flex w-100 pt-2">
+			        <div style="width: 113.9px;">
+			          <label for="ntcConts" class="form-label">내용</label>
+			        </div>
+			        <div style="width: 605px;">
+			          <textarea class="form-control" id="ntcConts" name="ntcConts" style="height: 50rem;"></textarea>
+			        </div>
+			    </div>
+		        <div class="d-flex w-100 pt-2">
+			        <div style="width: 113.9px;">
+			          <label for="file" class="form-label modal-input">첨부파일</label>
+			        </div>
+			        <div style="width: 560px;">
+			        	 <input id="file" type="file" name="file" multiple>
+			        </div>
+			        <div>
+			        	<input id="importantChk" type="checkbox" onclick="isImportendChecked2()"><span> 중요</span>
+			        </div>
+			        <input id="ntcEmrgYn" type="hidden" name="ntcEmrgYn" value="N">
+			    </div>
 			</div>
-
-
+      	</div>
+      </div>
+      <div class="modal-footer py-1">
+        <button type="submit" class="btn-1">저장</button>
+        <button type="button" class="btn-3" data-dismiss="modal">닫기</button>
+      </div>
+    </form>
+   </div>
    
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>

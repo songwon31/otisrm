@@ -1,9 +1,13 @@
 package com.finalteam5.otisrm.service;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.finalteam5.otisrm.dao.BoardDao;
+import com.finalteam5.otisrm.dto.ntc.Ntc;
 import com.finalteam5.otisrm.dto.ntc.NtcAtch;
 import com.finalteam5.otisrm.dto.ntc.NtcSubmit;
 
@@ -35,6 +39,19 @@ public class BoardServiceImpl implements BoardService{
 	public int uploadNtcAtch(NtcAtch ntcAtch) {
 		int numOfInsert = boardDao.insertNtcAtch(ntcAtch);
 		return numOfInsert;
+	}
+	
+	//공지사사항 목록 불러오기: 총 행수 구하기(페이징을 위함)
+	@Override
+	public int totalNumOfNct(Map<String, Object> map) {
+		int numOfTotalNct = boardDao.countNct(map);
+		return numOfTotalNct;
+	}
+
+	@Override
+	public List<Ntc> getNtcListByPage(Map<String, Object> map) {
+		List<Ntc> list = boardDao.selectNtcListByPage(map);
+		return list;
 	}
 
 	

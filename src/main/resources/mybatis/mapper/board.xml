@@ -27,4 +27,58 @@
 	        #{ntcAtchSize, jdbcType=NUMERIC}
 	    )
 	</insert>
+	
+	<!-- 공지사사항 목록 불러오기: 총 행수 구하기(페이징을 위함) -->
+	<select id="countNct" parameterType="Map" resultType="int">
+		select count(*) from ntc n
+        join usr u on u.usr_no = n.usr_no
+	    <if test="keyword != null and keyword != ''">
+		  <where>
+		    <!-- 키워드 검색 -->
+		    <if test="keyword != null and keyword != '' or searchTarget != null and searchTarget != ''">
+		    	<if test="searchTarget == 'searchUsrNm'">				    	
+		        	REGEXP_REPLACE(LOWER(REPLACE(usr_nm, ' ', '')), '[[:punct:]]', '') LIKE '%' || REGEXP_REPLACE(LOWER(REPLACE(#{keyword}, ' ', '')), '[[:punct:]]', '') || '%'
+		    	</if>
+		    	<if test="searchTarget == 'searchNctTtl'">				    	
+		       		REGEXP_REPLACE(LOWER(REPLACE(nct_ttl, ' ', '')), '[[:punct:]]', '') LIKE '%' || REGEXP_REPLACE(LOWER(REPLACE(#{keyword}, ' ', '')), '[[:punct:]]', '') || '%'
+		    	</if>
+		    </if>   
+		  </where>
+		</if>
+	</select>
+	
+	<!-- 공지사항 목록 불러오기 -->
+	<select id="selectNtcListByPage" parameterType="Map" resultType="Ntc">
+		select rnum, ntc_no, usr_no, ntc_ttl, ntc_conts, ntc_wrt_dt,
+		ntc_mdfcn_dt, ntc_inq_cnt, ntc_emrg_yn, usr_nm
+		from (
+		    select rownum as rnum, ntc_no, usr_no, ntc_ttl, ntc_conts, ntc_wrt_dt,
+			ntc_mdfcn_dt, ntc_inq_cnt, ntc_emrg_yn, usr_nm
+		    from(
+		        select n.ntc_no, n.usr_no, n.ntc_ttl, n.ntc_conts, n.ntc_wrt_dt,
+				n.ntc_mdfcn_dt, n.ntc_inq_cnt, ntc_emrg_yn,u.usr_nm
+				from ntc n
+				join usr u on u.usr_no = n.usr_no
+		       <if test="keyword != null and keyword != ''">
+				  <where>
+				    <!-- 키워드 검색 -->
+				    <if test="keyword != null and keyword != '' or searchTarget != null and searchTarget != ''">
+				    	<if test="searchTarget == 'searchUsrNm'">				    	
+				        	REGEXP_REPLACE(LOWER(REPLACE(usr_nm, ' ', '')), '[[:punct:]]', '') LIKE '%' || REGEXP_REPLACE(LOWER(REPLACE(#{keyword}, ' ', '')), '[[:punct:]]', '') || '%'
+				    	</if>
+				    	<if test="searchTarget == 'searchNctTtl'">				    	
+				       		REGEXP_REPLACE(LOWER(REPLACE(nct_ttl, ' ', '')), '[[:punct:]]', '') LIKE '%' || REGEXP_REPLACE(LOWER(REPLACE(#{keyword}, ' ', '')), '[[:punct:]]', '') || '%'
+				    	</if>
+				    </if>   
+				  </where>
+				</if>
+			    order by ntc_wrt_dt desc
+			   )
+		<![CDATA[
+				where rownum <= #{endRowNo}
+			 )
+			 where rnum >= #{startRowNo}
+		]]>
+	</select>	
+	
 </mapper>

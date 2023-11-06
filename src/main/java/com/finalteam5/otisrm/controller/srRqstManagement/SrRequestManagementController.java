@@ -59,7 +59,6 @@ public class SrRequestManagementController {
 		        	 srRqstMngPageNo =  (String) session.getAttribute("srRqstMngPageNo");
 		         }
 			}
-			log.info(srRqstMngPageNo);
 			//세션에 현재 sr요청 페이지번호 저장
 			session.setAttribute("srRqstMngPageNo", String.valueOf(srRqstMngPageNo));
 			
