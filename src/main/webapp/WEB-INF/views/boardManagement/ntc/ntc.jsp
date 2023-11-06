@@ -15,7 +15,7 @@
 	</div>
 	<div class="contentTop shadow" >
 		<input type="hidden" id="loginUsr" value="${usr.usrNo}">
-		<form id="searchForm" method="post" action="javascript:loadNtcs(${ntcPager.pageNo})">
+		<form id="searchForm" method="post" action="javascript:loadNtcs(${ntcPager.pageNo})" onsubmit="onsubmitOfSearchForm()">
 			<div class="d-flex" style="height:2rem;">
 				<!-- 검색 조건 -->
 				<div style="width: 15%; display:flex; align-items:center;">
@@ -40,7 +40,7 @@
 				<div style="width: 70%; display:flex; align-items:center;">
 						<input type="text" id="keyword" name="keyword" class="flex-grow-1"/>
 						<input type="hidden" id="ntcPageNo" name="ntcPageNo" class="flex-grow-1"/>
-						<button type="submit" style="margin-left: 2rem;" class="btn-4 d-inline-flex align-items-center justify-content-center" >
+						<button id="searchBtn" type="submit" style="margin-left: 2rem;" class="btn-4 d-inline-flex align-items-center justify-content-center" >
 							검색
 						</button>
 				</div>

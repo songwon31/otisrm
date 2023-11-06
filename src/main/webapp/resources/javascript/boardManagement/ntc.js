@@ -28,6 +28,13 @@ function formatDateToYYYYMMDD(timestamp) {
   return formattedDate;
 }
 
+function onsubmitOfSearchForm(){
+	if($("#searchTarget").val() === ""){
+		event.preventDefault();
+		alert("검색 조건을 선택해주세요.");
+	}
+}
+
 //**공지사항 목록 불러오기
 function loadNtcs(pageNo) {
 	//페이지 지정
