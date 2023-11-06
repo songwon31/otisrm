@@ -63,11 +63,11 @@
 				  <where>
 				    <!-- 키워드 검색 -->
 				    <if test="keyword != null and keyword != '' or searchTarget != null and searchTarget != ''">
-				    	<if test="searchTarget == 'searchUsrNm'">				    	
+				    	<if test="searchTarget == 'searchUsrNo'">				    	
 				        	REGEXP_REPLACE(LOWER(REPLACE(usr_nm, ' ', '')), '[[:punct:]]', '') LIKE '%' || REGEXP_REPLACE(LOWER(REPLACE(#{keyword}, ' ', '')), '[[:punct:]]', '') || '%'
 				    	</if>
-				    	<if test="searchTarget == 'searchNctTtl'">				    	
-				       		REGEXP_REPLACE(LOWER(REPLACE(nct_ttl, ' ', '')), '[[:punct:]]', '') LIKE '%' || REGEXP_REPLACE(LOWER(REPLACE(#{keyword}, ' ', '')), '[[:punct:]]', '') || '%'
+				    	<if test="searchTarget == 'searchNtcTtl'">				    	
+				       		REGEXP_REPLACE(LOWER(REPLACE(ntc_ttl, ' ', '')), '[[:punct:]]', '') LIKE '%' || REGEXP_REPLACE(LOWER(REPLACE(#{keyword}, ' ', '')), '[[:punct:]]', '') || '%'
 				    	</if>
 				    </if>   
 				  </where>

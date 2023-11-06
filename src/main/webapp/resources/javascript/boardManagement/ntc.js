@@ -273,7 +273,6 @@ function isImportendChecked(){
 
 //** 공지목록에 해당하는 공지 상세 가져오기(모달)
 function showNtcByNtcNo(choiceNtcNo){
-	loading();
 	$.ajax({
 		type: "GET",
         url: "getNtcByNtcNo",
@@ -339,7 +338,7 @@ function showNtcByNtcNo(choiceNtcNo){
         	} else {
         	    $("#ntc-importantChk").prop("checked", false);
         	}
-	    	loading();
+	    
         	
         },
         error: function() {
@@ -372,7 +371,7 @@ function isImportendChecked2(){
 
 //sr요청 수정 폼 제출 데이터 세팅
 function modifySubmitData(){
-	$("#submitSrRqst-srTtl").val($("#srRqst-srTtl").val());
+	$("#submitSrRqst-srTtl").val($("#ntc-ntcTtl").val());
 	$("#submitSrRqst-srPrps").val($("#srRqst-srPrps").val());
 	$("#submitSrRqst-srConts").val($("#srRqst-srConts").val());
 	var isChecked = $("#srRqst-importantChk").prop("checked");
@@ -384,27 +383,30 @@ function modifySubmitData(){
 }
 
 //sr 요청 수정
-function modifySrRqstOfMng(srRqstNo) {
+function modifyNtc(srRqstNo) {
 	modifySubmitData();
 	// 데이터 수집 및 가공
-	var form = $("#modifySrRqstOfMng")[0];
+	var form = $("#modifyNtc")[0];
 	var formData = new FormData(form);
     // Ajax 요청 보내기
     $.ajax({
         type: "POST",
-        url: "modifySrRqstOfMng",
+        url: "modifyNtc",
         data: formData,
         success: function (data) {
             // 성공적으로 요청이 완료된 경우 실행할 코드
             var currentURL = window.location.href;
             window.location.href = currentURL; // 원하는 URL로 변경
-            loadSRRequests(1, choiceSrRqstSttsNo);
+            loadNtcs(pageNo);
         },
         error: function (error) {
             // 요청 중 오류가 발생한 경우 실행할 코드
             console.error("오류 발생:", error);
             alert("수정 실패");
-        }
+        },
+        cache: false,        //파일이 포함되어 있으니, 브라우저 메모리에 저장하지 마라
+	    processData: false,  //title=xxx&desc=yyy& 씩으로 만들지 마라
+	    contentType: false,   //파트마다 Content-Type이 포함되기 때문에 따로 헤더에 Content-Type에 추가하지 마라(mutiple-> 파일마다 모두 다름)
     });
 }
 
@@ -459,7 +461,7 @@ function downloadExcel() {
 //로딩 스피너 함수
 function loading() {
   LoadingWithMask();
-  setTimeout("closeLoadingWithMask()", 800);
+  setTimeout("closeLoadingWithMask()", 500);
 }
 
 //스피너와 마스크 표시

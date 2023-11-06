@@ -15,23 +15,23 @@
 	</div>
 	<div class="contentTop shadow" >
 		<input type="hidden" id="loginUsr" value="${usr.usrNo}">
-		<form id="searchForm" method="post">
+		<form id="searchForm" method="post" action="javascript:loadNtcs(${ntcPager.pageNo})">
 			<div class="d-flex" style="height:2rem;">
-				<!-- 진행 상태 -->
+				<!-- 검색 조건 -->
 				<div style="width: 15%; display:flex; align-items:center;">
 					<svg class="svgicon"><rect/></svg>
 					<span style="font-size:1.6rem; font-weight:700;">검색조건</span>
 				</div>
 				<div style="width: 20%;">
-					<select style="width:220px;" id="searchTarget" name="status">
+					<select style="width:220px;" id="searchTarget" name="searchTarget">
 						<option value="" >선택</option>
-						<option value="searchTtl" >제목</option>
+						<option value="searchNtcTtl" >제목</option>
 						<option value="searchUsrNo" >등록자</option>
 				    </select>
 				</div>
 				<div style="width: 7%;"></div>
 				
-				<!-- 등록자 소속 기관 -->
+				<!-- 키워드 검색 -->
 				<div style="width: 15%; display:flex; align-items:center;">
 					<svg class="svgicon"><rect/></svg>
 					<span style="font-size:1.6rem; font-weight:700;">키워드 입력</span>
@@ -40,7 +40,7 @@
 				<div style="width: 70%; display:flex; align-items:center;">
 						<input type="text" id="keyword" name="keyword" class="flex-grow-1"/>
 						<input type="hidden" id="ntcPageNo" name="ntcPageNo" class="flex-grow-1"/>
-						<button type="button" style="margin-left: 2rem;" class="btn-4 d-inline-flex align-items-center justify-content-center" >
+						<button type="submit" style="margin-left: 2rem;" class="btn-4 d-inline-flex align-items-center justify-content-center" >
 							검색
 						</button>
 				</div>
@@ -235,9 +235,9 @@
 			</div>
       	</div>
       </div>
-	<div class="mr-3 pb-4 d-flex justify-content-end">
+	  <div class="mr-3 pb-4 d-flex justify-content-end">
        	<span style="font-size: 1.3rem;">조회수:</span> <span id="ntcInqCnt" class="ml-2" style="font-size: 1.3rem; font-weight: bold;">0</span>
-   	</div>
+   	  </div>
       <div class="modal-footer py-1">
         <button type="submit" class="btn-1">저장</button>
         <button type="button" class="btn-3" data-dismiss="modal" onclick="loadNtcs(${ntcPager.pageNo})" >닫기</button>
