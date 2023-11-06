@@ -52,7 +52,7 @@ function loadInqs(pageNo) {
       console.log(data);
       if (data < 1) {
         html += '<tr style="background-color: white;">';
-        html += '  <td colspan="5">';
+        html += '  <td colspan="6">';
         html += '    <p class="t2_nonMessage">해당 목록 결과가 없습니다.</p>';
         html += '  </td>';
         html += '</tr>';
@@ -110,9 +110,7 @@ function loadInqs(pageNo) {
     			  $(this).css('background-color', 'white');
     		  }
       );
-      loading();
-      // 성공적으로 요청이 완료된 경우 실행할 코드
-      var currentURL = window.location.href;
+
     },
     error: function(error) {
       console.error("데이터를 불러오는 중 오류가 발생했습니다.");
@@ -128,7 +126,7 @@ function updatePagination(pageNo) {
   $.ajax({
     url: "getCountInqBySearch",
     data: {
-    	ntcPageNo: parseInt(pageNo),
+    	inqPageNo: parseInt(pageNo),
     	searchTarget: $("#searchTarget option:selected").val(),
     	keyword: $("#keyword").val()
     },
@@ -404,7 +402,7 @@ function modifyNtc(srRqstNo) {
 function downloadExcel() {
 	// 엑셀에 다운될 데이터
 	var data = [
-	    ["번호", "제목", "등록자", "등록일", "조회수"],
+	    ["번호", "제목", "등록자", "등록일", "답변여부"],
 	  ];
 	//페이지 지정
 	$("#ntcPageNo").val(pageNo);

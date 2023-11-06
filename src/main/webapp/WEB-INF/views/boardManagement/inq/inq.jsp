@@ -50,7 +50,7 @@
 	<div id="requestManagementBoardDiv" class="shadow" 
 		style="height:70rem; background-color:white; border-radius:1rem; padding:2rem;">
 		<div class="d-flex">
-			<span class="mr-auto" style="height:3.5rem; font-size:2.2rem; font-weight:700; color:#222E3C;">공지사항</span>
+			<span class="mr-auto" style="height:3.5rem; font-size:2.2rem; font-weight:700; color:#222E3C;">문의사항</span>
 			<button data-toggle="modal" data-target="#addNtc" class="btn-6 mr-2" style="background-color:#2c7be4;" onclick="location.href='#';">문의 작성하기</button>
 			<button id="downloadExcelButton" class="btn-5" onclick="downloadExcel()">엑셀 다운로드</button>
 		</div>
