@@ -231,7 +231,7 @@
 						        <c:forEach items="${usrAuthrts}" var ="usrAuthrt">
 						          <div class="form-check-inline pt-2">
 								      <label class="form-check-label" for="${usrAuthrt.usrAuthrtNo}">
-								        <input type="checkbox" class="form-check-input" id="${usrAuthrt.usrAuthrtNo}" value="${usrAuthrt.usrAuthrtNm}">
+								        <input type="checkbox" class="showTarget form-check-input" id="${usrAuthrt.usrAuthrtNo}" value="${usrAuthrt.usrAuthrtNm}">
 								        <span style="font-size: 1.3rem;">${usrAuthrt.usrAuthrtNm}</span>
 								      </label>
 								  </div>

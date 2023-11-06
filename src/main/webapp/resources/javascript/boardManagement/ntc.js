@@ -86,35 +86,49 @@ function loadNtcs(pageNo) {
     success: function(data) {
       html="";
       console.log(data);
-      if(data<1){
-			 html += '<tr style="background-color: white;">';
-			 html += '	<td></td>';
-			 html += '	<td></td>';
-			 html += '	<td style="width:190px;">';
-			 html += '		<p class="t2_nonMessage">해당 목록 결과가 없습니다.</p>';
-			 html += '	</td>';
-			 html += '	<td></td>';
-			 html += '	<td></td>';
-			 html += '	<td></td>';
-			 html += '</tr>';
-	  }
-      var indexOffset = (pageNo - 1) * 12; // 페이지 번호에 따라 index 오프셋 계산
-      data.forEach((item, index)=>{
-    	  // item.srRqstRegDt를 YYYY-MM-dd 문자열로 변환
-    	  const formattedDate = formatDateToYYYYMMDD(item.ntcWrtDt);
-    	  var indexOnPage = index + indexOffset + 1; // 페이지 내에서의 index 계산
-    	  var count = 0;
-		  
-		  html += '<tr class="data-tr" style="background-color: white;">';
-		  html += '	<td>' + indexOnPage + '</td>';
-		  html += '	<td class="truncate-text">' + item.ntcTtl + '</td>';
-		  html += '	<td class="truncate-text">' + item.usrNm + '</td>';
-		  html += '	<td>'+ formattedDate +'</td>'
-		  html += '	<td>'+ item.ntcInqCnt +'</td>';
-		  html += '	<td><button type="button" id="showSrRqstDetailBtn" class="btn-2" data-toggle="modal" data-target="#getNtcByNtcNo" onclick="showSrRqstBySrRqstNo(\''+ item.ntcNo +'\')">상세보기</button></td>';
-		  html += '</tr>';
-    	  
-      });
+      // 중요한 행과 일반 행을 분리
+      var importantRows = data.filter(item => item.ntcEmrgYn === "Y");
+      var normalRows = data.filter(item => item.ntcEmrgYn !== "Y");
+
+      if (importantRows.length < 1 && normalRows.length < 1) {
+        // 중요한 행과 일반 행이 없을 경우 메시지 출력
+        html += '<tr style="background-color: white;">';
+        html += '  <td colspan="6">';
+        html += '    <p class="t2_nonMessage">해당 목록 결과가 없습니다.</p>';
+        html += '  </td>';
+        html += '</tr>';
+      } else {
+        // 중요한 행 표시
+        importantRows.forEach((item, index) => {
+          const formattedDate = formatDateToYYYYMMDD(item.ntcWrtDt);
+          var indexOnPage = index + 1;
+          var count = 0;
+
+          html += '<tr class="data-tr-imp" style="background-color: #fff6f9;">'; // 일반 행 스타일 적용
+          html += '  <td style="color: #d43e7d; font-weight: bold;">공지</td>';
+          html += '  <td class="truncate-text">' + item.ntcTtl + '</td>';
+          html += '  <td class="truncate-text">' + item.usrNm + '</td>';
+          html += '  <td>' + formattedDate + '</td>';
+          html += '  <td>' + item.ntcInqCnt + '</td>';
+          html += '  <td><button type="button" id="showSrRqstDetailBtn" class="btn-2" data-toggle="modal" data-target="#getNtcByNtcNo" onclick="showSrRqstBySrRqstNo(\'' + item.ntcNo + '\')">상세보기</button></td>';
+          html += '</tr>';
+        });
+
+        // 일반 행 표시
+        normalRows.forEach((item, index) => {
+          const formattedDate = formatDateToYYYYMMDD(item.ntcWrtDt);
+          var indexOnPage = index + 1; // 중요한 행 다음부터 인덱스 계산
+
+          html += '<tr class="data-tr" style="background-color: white;">'; // 일반 행 스타일 적용
+          html += '  <td>' + indexOnPage + '</td>';
+          html += '  <td class="truncate-text">' + item.ntcTtl + '</td>';
+          html += '  <td class="truncate-text">' + item.usrNm + '</td>';
+          html += '  <td>' + formattedDate + '</td>';
+          html += '  <td>' + item.ntcInqCnt + '</td>';
+          html += '  <td><button type="button" id="showSrRqstDetailBtn" class="btn-2" data-toggle="modal" data-target="#getNtcByNtcNo" onclick="showSrRqstBySrRqstNo(\'' + item.ntcNo + '\')">상세보기</button></td>';
+          html += '</tr>';
+        });
+      }
       html +='<tr class="empty-tr" style="height: 100%;">';
       html +='</tr>';
       $("#getNtcListByPageNo").html(html);
@@ -130,15 +144,26 @@ function loadNtcs(pageNo) {
     	  $(".btn").show();
       }
       //tr 요소에 대한 hover 이벤트 처리
-      $('.data-tr').hover(
+      $('.data-tr-imp').hover(
         function() {
           // 마우스가 요소 위에 있을 때 배경색 변경
-          $(this).css('background-color', '#f3f6fd');
+          $(this).css('background-color', '#fde8e7');
         },
         function() {
           // 마우스가 요소를 벗어날 때 배경색 원래대로 변경
-          $(this).css('background-color', 'white');
+          $(this).css('background-color', ' #fff6f9');
         }
+      );
+      //tr 요소에 대한 hover 이벤트 처리
+      $('.data-tr').hover(
+    		  function() {
+    			  // 마우스가 요소 위에 있을 때 배경색 변경
+    			  $(this).css('background-color', '#f3f6fd');
+    		  },
+    		  function() {
+    			  // 마우스가 요소를 벗어날 때 배경색 원래대로 변경
+    			  $(this).css('background-color', '');
+    		  }
       );
       loading();
       // 성공적으로 요청이 완료된 경우 실행할 코드
@@ -163,7 +188,7 @@ function updatePagination(pageNo) {
     method: "GET",
     success: function (totalRows) {
     	// totalRows를 기반으로 페이징을 업데이트
-        var totalPageNo = Math.ceil(totalRows / 1); // 페이지 수 계산 (5는 페이지당 항목 수)
+        var totalPageNo = Math.ceil(totalRows / 12); // 페이지 수 계산 (5는 페이지당 항목 수)
         
         // 현재 페이지 번호 업데이트
         var currentPageNo = pageNo;
