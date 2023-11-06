@@ -114,6 +114,7 @@ function mainTableSearchDivConfig() {
 
 //메인 테이블 구성
 function mainTableConfig(progressManagementSearch, pageNo) {
+	currentPageNo = pageNo;
 	let requestData = {
 		progressManagementSearch: JSON.stringify(progressManagementSearch),
 		pageNo: pageNo
@@ -864,7 +865,7 @@ function composeManageSrOutputModal(srPrgrsSttsNo) {
 				let html = '';
 				html += '<tr style="height: 4.5rem; font-size: 1.5rem; background-color:white;">';
 				html += '<td><div class="id" style="display:none;">' + otpt.srPrgrsOtptNo + '</div></td>';
-				html += '<td><input type="checkbox" class="checkbox"></td>';
+				html += '<td><input type="checkbox" class="checkbox" style="vertical-align: middle;"></td>';
 				html += '<td>' + otpt.srPrgrsOtptNm + '</td>';
 				html += '<td>' + otpt.srPrgrsOtptFileNm + '</td>';
 				html += '<td>' + (otpt.srPrgrsOtptSize / 1024).toFixed(2) + 'KB</td>'

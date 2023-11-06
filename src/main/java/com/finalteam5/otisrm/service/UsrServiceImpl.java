@@ -1,14 +1,21 @@
 package com.finalteam5.otisrm.service;
 
+import java.io.IOException;
 import java.util.Base64;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.finalteam5.otisrm.dao.UsrDao;
+import com.finalteam5.otisrm.dto.Pager;
+import com.finalteam5.otisrm.dto.sr.ProgressManagementSearch;
+import com.finalteam5.otisrm.dto.sr.SrForProgressManagementBoard;
+import com.finalteam5.otisrm.dto.sr.SrTableConfigForProgressManagement;
 import com.finalteam5.otisrm.dto.usr.Dept;
 import com.finalteam5.otisrm.dto.usr.Ibps;
 import com.finalteam5.otisrm.dto.usr.Inst;
@@ -16,7 +23,9 @@ import com.finalteam5.otisrm.dto.usr.Login;
 import com.finalteam5.otisrm.dto.usr.Role;
 import com.finalteam5.otisrm.dto.usr.Usr;
 import com.finalteam5.otisrm.dto.usr.UsrAuthrt;
-import com.finalteam5.otisrm.dto.usr.UsrManagementPageConfigure;
+import com.finalteam5.otisrm.dto.usr.UsrManagementSearch;
+import com.finalteam5.otisrm.dto.usr.UsrManagementSearchConfigure;
+import com.finalteam5.otisrm.dto.usr.UsrTableConfigForUsrManagement;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -136,18 +145,71 @@ public class UsrServiceImpl implements UsrService{
 	 * 사용자 관리 페이지 구성 데이터를 가져오는 메서드
 	 */
 	@Override
-	public UsrManagementPageConfigure getUsrManagementPageConfigureData() {
-		UsrManagementPageConfigure usrManagementPageConfigure = new UsrManagementPageConfigure();
+	public UsrManagementSearchConfigure getUsrManagementPageConfigureData() {
+		UsrManagementSearchConfigure usrManagementPageConfigure = new UsrManagementSearchConfigure();
 		
 		usrManagementPageConfigure.setUsrAuthrtList(usrDao.selectUsrAuthrtList());
 		usrManagementPageConfigure.setUsrSttsList(usrDao.selectUsrSttsList());
 		usrManagementPageConfigure.setInstList(usrDao.selectInstList());
-		usrManagementPageConfigure.setDeptList(usrDao.selectDeptListByInstNo(null));
 		
 		return usrManagementPageConfigure;
 	}
 	
+	@Override
+	public List<Dept> getDeptSelectConfig(String instNo) {
+		return usrDao.selectDeptListByInstNo(instNo);
+	}
 	
+	@Override
+	public UsrTableConfigForUsrManagement getUsrManagementMainTableConfig(String jsonData) {
+		try {
+			ObjectMapper objectMapper = new ObjectMapper();
+			UsrManagementSearch usrManagementSearch = new UsrManagementSearch();
+			Integer pageNo;
+        
+            // JSON 문자열을 Map으로 파싱
+            Map<String, Object> jsonMap = objectMapper.readValue(jsonData, Map.class);
+            String innerJson = (String) jsonMap.get("usrManagementSearch");
+            usrManagementSearch = objectMapper.readValue(innerJson, UsrManagementSearch.class);
+            pageNo = (Integer) jsonMap.get("pageNo");
+            
+            // 결과 출력
+            log.info("usrManagementSearch: " + usrManagementSearch);
+            log.info("pageNo: " + pageNo);
+            
+       
+            int totalUsrForUsrManagementBoardNum = usrDao.countUsrForUsrManagementBoard(usrManagementSearch);
+            log.info(""+totalUsrForUsrManagementBoardNum);
+	        Pager pager = new Pager(10, 5, totalUsrForUsrManagementBoardNum, pageNo);
+	        
+	        UsrTableConfigForUsrManagement usrTableConfigForUsrManagement = new UsrTableConfigForUsrManagement();
+	        usrTableConfigForUsrManagement.setUsrList(usrDao.selectUsrForUsrManagementBoard(usrManagementSearch, pager));
+	        usrTableConfigForUsrManagement.setPager(pager);
+	        log.info(""+usrTableConfigForUsrManagement);
+
+	        
+			return usrTableConfigForUsrManagement;
+		} catch (IOException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 	
+	//일괄 승인
+	@Override
+	public int batchApproval(List<String> usrNoList) {
+		for (String usrNo : usrNoList) {
+			usrDao.updateUsrSttsToNormal(usrNo);
+		}
+		return 1;
+	}
+	
+	@Override
+	public int batchWithdrawl(List<String> usrNoList) {
+		for (String usrNo : usrNoList) {
+			usrDao.updateUsrSttsToWithdrawl(usrNo);
+		}
+		return 1;
+	}
 
 }
