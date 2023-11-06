@@ -99,7 +99,7 @@ public class BoardController {
 	
 	@GetMapping("/filedownloadOfNtc")
 	public void filedownload(String ntcAtchNo, HttpServletRequest request, HttpServletResponse response) throws Exception {
-	    // 요청된 SrRqstAtchNo에 해당하는 SrRqstAtch 객체를 가져옴
+	    // ntcAtchNo에 해당하는 ntcAtch 객체를 가져옴
 	    NtcAtch ntcAtch = boardService.getNtcAtchByNtcAtchNo(ntcAtchNo);
 	    
 	    String fileOriginalName = ntcAtch.getNtcAtchNm();

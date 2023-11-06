@@ -366,9 +366,9 @@ function eventPreventSrRqstAtch(){
 		});
 	}
 }
-//sr요청 수정 폼에 체크여부
+//공지 수정  폼에 체크여부
 function isImportendChecked2(){
-	var isChecked = $("#srRqst-importantChk").prop("checked");
+	var isChecked = $("#ntc-importantChk").prop("checked");
 	if(isChecked === true){
 		$("#submit_Yn").val("Y");
 	}else{
@@ -389,7 +389,7 @@ function modifySubmitData(){
 	}
 }
 
-//sr 요청 수정
+//공지 수정
 function modifyNtc(srRqstNo) {
 	modifySubmitData();
 	// 데이터 수집 및 가공

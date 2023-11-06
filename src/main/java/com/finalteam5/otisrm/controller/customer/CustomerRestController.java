@@ -11,16 +11,20 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.finalteam5.otisrm.dto.Pager;
 import com.finalteam5.otisrm.dto.Sys;
+import com.finalteam5.otisrm.dto.ntc.Ntc;
+import com.finalteam5.otisrm.dto.ntc.NtcAtch;
 import com.finalteam5.otisrm.dto.srRequest.SrRqst;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstAtch;
 import com.finalteam5.otisrm.dto.usr.Usr;
 import com.finalteam5.otisrm.security.UsrDetails;
+import com.finalteam5.otisrm.service.BoardService;
 import com.finalteam5.otisrm.service.SrRqstService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -31,6 +35,9 @@ import lombok.extern.slf4j.Slf4j;
 public class CustomerRestController {
 	@Autowired
     private SrRqstService srRqstService;
+	@Autowired
+	private BoardService boardService;
+	
 	@Value("${file.upload.dir}")
 	private String fileUploadDir;
 	
@@ -141,5 +148,59 @@ public class CustomerRestController {
 	public List<Sys> getSysByDeptNo(String deptNo){
 		List<Sys> list = srRqstService.getSysByDeptNo(deptNo);
 		return list;
+	}
+	
+	//공지사항 목록 불러오기
+	@PostMapping("getNtcByPageNoForCustomerHome")
+	public List<Ntc> getSRRequests(
+			@RequestParam String ntcPageNo,
+			@RequestParam(name="searchTarget", required=false)String searchTarget, 
+			@RequestParam(name="keyword", required=false)String keyword, 
+			HttpSession session) {
+		//파라미터로 받은 값 전달
+		Map<String, Object>map = new HashMap<>();
+        map.put("searchTarget", searchTarget);
+        map.put("keyword", keyword);
+      
+		///SR요청 목록 페이징  
+        if(ntcPageNo == null) {
+			 //세션에 저장되어 있는지 확인
+	         if(session.getAttribute("ntcPageNo") == null || session.getAttribute("ntcPageNo") == "") {
+	        	 ntcPageNo = "1";  
+	         }else {
+	        	 ntcPageNo =  (String) session.getAttribute("ntcPageNo");
+	         }
+		}
+		//세션에 현재 sr요청 페이지번호 저장
+		session.setAttribute("ntcPageNo", String.valueOf(ntcPageNo));
+		
+		//문자열을 정수로 변환
+		int intNtcPageNo = Integer.parseInt(ntcPageNo);
+		int totalRows = boardService.totalNumOfNct(map);
+		Pager ntcPager = new Pager(5, 5, totalRows, intNtcPageNo);
+		
+		map.put("startRowNo", ntcPager.getStartRowNo());
+		map.put("endRowNo", ntcPager.getEndRowNo());
+		
+		//페이지 별 요청 목록 불러오기
+		List<Ntc> list = boardService.getNtcListByPage(map);
+	
+		return list;
+	}
+	
+	//요청에 해당하는 상세정보 불러오기
+	@GetMapping("getNtcByNtcNoForCustomerHome")
+	public Ntc getNtcByNtcNo(String ntcNo, Model model, HttpSession session) {
+		
+		Ntc ntc = boardService.getNtcByNtcNo(ntcNo);
+		List<NtcAtch> list = boardService.getNtcAtchByNtcNo(ntcNo);
+		ntc.setNtcAtchList(list);
+		int updateNtcInqCnt = ntc.getNtcInqCnt() + 1;
+		ntc.setNtcInqCnt(updateNtcInqCnt);
+		
+		//조회수 업데이트
+		boardService.addNtcInqCnt(ntc);
+		model.addAttribute("ntcOfModiFy", ntc.getNtcNo());
+		return ntc;
 	}
 }

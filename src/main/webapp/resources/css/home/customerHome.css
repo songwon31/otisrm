@@ -212,6 +212,14 @@
 .btn-4:active {
 	background-color:#7c7c7c; 
 }
+
+.plus_btn {
+    display: block;
+    width: 20px;
+    height: 20px;
+    background: url(https://www.cpsrm.com/resources/img/plus_btn.png) no-repeat center center;
+}
+
 /* Modal */
 .modal-header {
 	background-color: #222e3c;

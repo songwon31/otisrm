@@ -143,54 +143,38 @@
 	   	  </div>
    	  </div>
    	  <div class="d-flex st-ct">
-	   	  <div class="subcontentTitle  w-50 pt-1" style="padding-left: 19px;color: #5d6e7e;">
+	   	  <div class="subcontentTitle pt-1" style="width: 48%; padding-left: 19px;color: #5d6e7e;">
 	   	  	공지사항
+	   	  </div>
+	   	  <div>	   	  
+	   	  	<a href="${pageContext.request.contextPath}/boardManagement/ntc" alt="더보기" title="더보기" class="plus_btn"></a>
 	   	  </div>
 	   	  <div class="subcontentTitle  w-50 pt-1"  style="padding-left: 19px;color: #5d6e7e;">
 	   	  	문의게시판
 	   	  </div>
+	   	   <div>	   	  
+	   	  	<a href="${pageContext.request.contextPath}/boardManagement/inw" alt="더보기" title="더보기" class="plus_btn"></a>
+	   	  </div>
    	  </div>
    	  <div class="d-flex">
 	   	  <div class="tableContainer w-50 p-1">
-		   	  	 <table id="mainTable" style="width: 100%; text-align: center; height: 28rem;">
+		   	  	 <table id="mainTable" style="width: 100%; text-align: center; height: 27rem;">
 				    <colgroup>
-				        <col width="44.86px" />
-				        <col width="118.99px" />
-				        <col width="90px" />
-				    </colgroup>
+						<col width="10%" /> 
+					    <col width="30%" /> 
+					    <col width="15%" /> 
+					    <col width="15%" /> 
+					</colgroup>
 				    <thead>
 				        <tr>
 				            <th scope="col"></th>
 				            <th scope="col">제목</th>
-				            <th scope="col">작성일</th>
+				            <th scope="col">등록자</th>
+				            <th scope="col">등록일</th>
 				        </tr>
 				    </thead>
-				    <tbody id="getSrReqstListByPageNo">      
-			            <tr>
-			            	<td>1</td>
-			            	<td>권한신청 프로세스 개선</td>
-			            	<td>2023-10-30</td>
-			            </tr> 
-			            <tr>
-			            	<td>2</td>
-			            	<td>권한신청 프로세스 개선</td>
-			            	<td>2023-10-30</td>
-			            </tr> 
-			            <tr>
-			            	<td>3</td>
-			            	<td>권한신청 프로세스 개선</td>
-			            	<td>2023-10-30</td>
-			            </tr> 
-			            <tr>
-			            	<td>4</td>
-			            	<td>권한신청 프로세스 개선</td>
-			            	<td>2023-10-30</td>
-			            </tr> 
-			            <tr>
-			            	<td>5</td>
-			            	<td>권한신청 프로세스 개선</td>
-			            	<td>2023-10-30</td>
-			            </tr> 
+				    <tbody id="getNtcListByPageNo">      
+			            
 				    </tbody>
 			</table>
 	   	  </div>
@@ -239,6 +223,90 @@
 	   	  </div>
    	  </div>
    </div>
+</div>
+
+<!-- 공지목록에 해당하는 상세모달 -->
+<div id="getNtcByNtcNo" class="modal" data-backdrop="static">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h6 class="modal-title">공지사항</h6>
+        <i onclick="loadNtcs(1)" class="material-icons close-icon" data-dismiss="modal" style="cursor: pointer;">close</i>
+      </div>
+      <div id="writeNtcForm" class="modal-body">
+      	<form id="modifyNtc" action="modifyNtc" method="post" enctype="multipart/form-data">
+      		<!-- SR요청정보 -->
+      		<h6 class="modal-sub-title">상세내용</h6>
+      		<div class="card p-3 mb-4">
+		      	<div>
+		        	<div class="d-flex">
+				        <div class="d-flex w-50 pt-2">
+				          	<div class="w-30">			          	
+				            	<label for="writer" class="form-label">등록자</label>
+				          	</div>
+				 			<div class="w-60">
+					            <input type="text" class="form-control" id="ntc-usrNm" value="" disabled>
+					            <input type="hidden" class="form-control" id="ntc-usrNo" value="">
+				 			</div>
+				            <input type="hidden" id="loginUsr" name="usrNo" value="${usr.usrNo}">
+				        </div>
+				        <div class="d-flex w-50 pt-2">
+				          	<div class="w-30">			          	
+				            	<label for="writeDate" class="form-label">등록일</label>
+				          	</div>
+				 			<div class="w-60">
+					            <input type="text" class="form-control" id="ntc-ntcWrtDt" disabled>
+				 			</div>
+				        </div>
+					</div>
+				<div>
+		        <div class="d-flex w-100 pt-2">
+			        <div style="width: 113.9px;">
+			          <label for="ntcTtl" class="form-label">제목</label>
+			        </div>
+			        <div style="width: 605px;">
+			          <input type="text" class="form-control" id="ntc-ntcTtl" name="ntcTtl">
+			        </div>
+			    </div>
+		        <div class="d-flex w-100 pt-2">
+			        <div style="width: 113.9px;">
+			          <label for="ntcConts" class="form-label">내용</label>
+			        </div>
+			        <div style="width: 605px;">
+			          <textarea class="form-control" id="ntc-ntcConts" name="ntcConts" style="height: 50rem;"></textarea>
+			        </div>
+			    </div>
+		        <div class="d-flex w-100 pt-2">
+			        <div style="width: 113.9px;">
+			          <label for="file" class="form-label modal-input">첨부파일</label>
+			        </div>
+			        <div style="width: 560px;">
+			        	 <input id="file" type="file" name="file" multiple>
+			        </div>
+			        <div>
+			        	<input id="ntc-importantChk" class="pb-1" type="checkbox" onclick="isImportendChecked2()"><span class="mb-1"> 중요</span>
+			        </div>
+			        <input id="ntcEmrgYn" type="hidden" name="ntcEmrgYn" value="N">
+			    </div>
+			    <div class="d-flex w-100 pt-2">
+			    	<div style="width: 113.9px;"></div>
+			    	<div id="showNtcAtch">
+			    	</div>
+			    </div>
+			</div>
+      	</div>
+      </div>
+	  <div class="mr-3 pb-4 d-flex justify-content-end">
+       	<span style="font-size: 1.3rem;">조회수:</span> <span id="ntcInqCnt" class="ml-2" style="font-size: 1.3rem; font-weight: bold;">0</span>
+   	  </div>
+      <div class="modal-footer py-1">
+        <button type="submit" class="btn-1">저장</button>
+        <button type="button" class="btn-3" data-dismiss="modal" onclick="loadNtcs(1)" >닫기</button>
+      </div>
+    </form>
+   </div>
+  </div>
+ </div>
 </div>
    
 <!-- 요청등록 모달 -->
@@ -432,7 +500,7 @@
 			          <input type="file" id="file" name=file multiple>	
 			        </div>
 			        <div>
-			        	<input id="srRqst-importantChk" type="checkbox" onclick="isImportendChecked2()"><span> 중요</span>
+			        	<input id="ntc-importantChk" type="checkbox" onclick="isImportendChecked2()"><span> 중요</span>
 			        </div>
 			    </div>
 			    <div class="d-flex w-100 pt-2">
@@ -454,5 +522,5 @@
       </div>
     </form>
    </div>
- 
+
 <%@ include file="/WEB-INF/views/common/footer.jsp"%>

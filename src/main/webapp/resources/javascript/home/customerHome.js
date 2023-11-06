@@ -29,6 +29,7 @@ $(document).ready(function() {
 	    // 클릭되지 않은 다른 요소들의 스타일 초기화
 	});	
   loadSRRequests(1, choiceSrRqstSttsNo); //페이지 로딩 시 초기 데이터 로드
+  loadNtcs(1);
 });
 
 //timestamp 객체를 YYYY-MM-dd 형식의 문자열로 변환하는 함수
@@ -489,6 +490,180 @@ function modifySrRqst(srRqstNo) {
             // 요청 중 오류가 발생한 경우 실행할 코드
             console.error("오류 발생:", error);
             alert("수정 실패");
+        }
+    });
+}
+
+//**공지사항 목록 불러오기
+function loadNtcs(pageNo) {
+	//페이지 지정
+	$("#ntcPageNo").val(pageNo);
+	$.ajax({
+    url: "getNtcByPageNoForCustomerHome",
+    data: { 
+    	ntcPageNo: parseInt(pageNo),
+    	searchTarget: $("#searchTarget option:selected").val(),
+    	keyword: $("#keyword").val()
+    },
+    dataType: "json",
+    method: "POST",
+    success: function(data) {
+      html="";
+      console.log(data);
+      // 중요한 행과 일반 행을 분리
+      var importantRows = data.filter(item => item.ntcEmrgYn === "Y");
+      var normalRows = data.filter(item => item.ntcEmrgYn !== "Y");
+
+      if (importantRows.length < 1 && normalRows.length < 1) {
+        // 중요한 행과 일반 행이 없을 경우 메시지 출력
+        html += '<tr style="background-color: white; height: 4.5rem;"">';
+        html += '  <td colspan="5">';
+        html += '    <p class="t2_nonMessage">해당 목록 결과가 없습니다.</p>';
+        html += '  </td>';
+        html += '</tr>';
+      } else {
+        // 중요한 행 표시
+        importantRows.forEach((item, index) => {
+          const formattedDate = formatDateToYYYYMMDD(item.ntcWrtDt);
+          var indexOnPage = index + 1;
+          var count = 0;
+
+          html += '<tr data-toggle="modal" data-target="#getNtcByNtcNo" class="data-tr-imp" style="background-color: #fff6f9; height: 4.5rem;" onclick="showNtcByNtcNo(\'' + item.ntcNo + '\')">'; // 일반 행 스타일 적용
+          html += '  <td style="color: #d43e7d; font-weight: bold;">공지</td>';
+          html += '  <td class="truncate-text">' + item.ntcTtl + '</td>';
+          html += '  <td class="truncate-text">' + item.usrNm + '</td>';
+          html += '  <td>' + formattedDate + '</td>';
+          html += '</tr>';
+        });
+
+        // 일반 행 표시
+        normalRows.forEach((item, index) => {
+          const formattedDate = formatDateToYYYYMMDD(item.ntcWrtDt);
+          var indexOnPage = index + 1; //인덱스 계산
+
+          html += '<tr data-toggle="modal" data-target="#getNtcByNtcNo" class="data-tr" style="background-color:white; height: 4.5rem;" onclick="showNtcByNtcNo(\'' + item.ntcNo + '\')">'; // 일반 행 스타일 적용
+          html += '  <td>' + indexOnPage + '</td>';
+          html += '  <td class="truncate-text">' + item.ntcTtl + '</td>';
+          html += '  <td class="truncate-text">' + item.usrNm + '</td>';
+          html += '  <td>' + formattedDate + '</td>';
+          html += '</tr>';
+        });
+      }
+      html +='<tr class="empty-tr" style="height: 100%;">';
+      html +='</tr>';
+      $("#getNtcListByPageNo").html(html);
+      
+      if(data.length<1){
+    	  console.log($("pagination-container"));
+    	  $(".btn").hide();
+      }else{
+    	  updatePagination(pageNo);
+    	  $(".btn").show();
+      }
+      //중요 tr 요소에 대한 hover 이벤트 처리
+      $('.data-tr-imp').hover(
+        function() {
+          // 마우스가 요소 위에 있을 때 배경색 변경
+          $(this).css('background-color', '#fde8e7');
+        },
+        function() {
+          // 마우스가 요소를 벗어날 때 배경색 원래대로 변경
+          $(this).css('background-color', ' #fff6f9');
+        }
+      );
+      //tr 요소에 대한 hover 이벤트 처리
+      $('.data-tr').hover(
+    		  function() {
+    			  // 마우스가 요소 위에 있을 때 배경색 변경
+    			  $(this).css('background-color', '#f3f6fd');
+    		  },
+    		  function() {
+    			  // 마우스가 요소를 벗어날 때 배경색 원래대로 변경
+    			  $(this).css('background-color', 'white');
+    		  }
+      );
+      loading();
+      // 성공적으로 요청이 완료된 경우 실행할 코드
+      var currentURL = window.location.href;
+    },
+    error: function(error) {
+      console.error("데이터를 불러오는 중 오류가 발생했습니다.");
+    }
+  });
+}
+
+//** 공지목록에 해당하는 공지 상세 가져오기(모달)
+function showNtcByNtcNo(choiceNtcNo){
+	$.ajax({
+		type: "GET",
+        url: "getNtcByNtcNoForCustomerHome",
+        data: {ntcNo: choiceNtcNo},
+        success: function(data) {
+        	$("#showSrRqstAtch").hide();
+        	var date = new Date(data.ntcWrtDt);
+        	
+        	//저장버튼(로그인한 회원의 요청만 저장버튼 활성화)
+        	var loggedInUsrNo= $("#loginUsr").val();// 로그인한 회원 번호 가져오기 
+        	var saveButton = $("#saveButton");
+        	console.log(loggedInUsrNo);
+        	// 로그인한 사용자와 요청을 등록한 회원을 비교하여 버튼 활성화/비활성화
+        	if (data.srReqstrNo === loggedInUsrNo) {
+        		console.log("내요청");
+        		saveButton.prop("disabled", false); // 버튼을 활성화
+        		saveButton.css("opacity", 1); // 버튼을 완전 불투명으로 설정
+        	} else{
+        		console.log("내요청 아님");
+        		saveButton.prop("disabled", true); // 버튼을 비활성화
+        		saveButton.css("opacity", 0.5); // 버튼을 반투명으로 설정 (예시로 0.5 사용)
+        	}
+        	var formattedDate = $.datepicker.formatDate("yy-mm-dd", date);
+        	console.log(formattedDate);
+        	$("#ntc-usrNo").val(data.usrNo);
+        	$("#ntc-usrNm").val(data.usrNm);
+        	$("#ntc-ntcTtl").val(data.ntcTtl);
+        	$("#ntc-ntcConts").val(data.ntcConts);
+        	$("#ntc-ntcWrtDt").val(formattedDate);
+        	$("#ntcInqCnt").html(data.ntcInqCnt);
+        	//첨부파일
+        	if (data.ntcAtchList && typeof data.ntcAtchList === "object") {
+        	    // data.srRqstAtchList는 객체일 때
+        	    const keys = Object.keys(data.ntcAtchList);
+        	    if (keys.length !== 0) {
+        	        let html = "";
+        	        for (const key of keys) {
+        	            const ntcAtch = data.ntcAtchList[key];
+        	            console.log(ntcAtch);
+        	            if (ntcAtch && ntcAtch.ntcNo === data.ntcNo) {
+        	                $("#showNtcAtch").show();
+        	                console.log("같음");
+        	                var size = bytesToKB(ntcAtch.ntcAtchSize);
+        	                html += '<a href="filedownloadOfNtcForCustomerHome?ntcAtchNo='+ ntcAtch.ntcAtchNo +'" class="d-flex srRqstAtchWrap">';
+        	                html += '    <div>';
+        	                html += '    	<i class="material-icons atch-ic">download</i>';
+        	                html += '    </div>';
+        	                html += '    <div id="' + ntcAtch.ntcAtchNo + '" class="srRqstAtch p-1">' + ntcAtch.ntcAtchNm + ' (' + size + 'KB)</div>';
+        	                html += '</a>';
+        	            }
+        	        }
+        	        $("#showNtcAtch").html(html);
+        	    } else {
+        	        //ntcAtchList가 객체지만 아무 항목도 없을 때
+        	        $("#showNtcAtch").hide();
+        	    }
+        	} else {
+        	    // srRqstAtchList가 객체가 아닐 때
+        	    $("#showNtcAtch").hide();
+        	}
+        	if (data.ntcEmrgYn === "Y") {
+        	    $("#ntc-importantChk").prop("checked", true);
+        	} else {
+        	    $("#ntc-importantChk").prop("checked", false);
+        	}
+	    
+        	
+        },
+        error: function() {
+          console.log(error);
         }
     });
 }
