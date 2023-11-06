@@ -1,4 +1,4 @@
-package com.finalteam5.otisrm.controller;
+package com.finalteam5.otisrm.controller.board;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -6,11 +6,16 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.finalteam5.otisrm.dto.ntc.NtcAtch;
+import com.finalteam5.otisrm.dto.ntc.NtcSubmit;
 import com.finalteam5.otisrm.dto.usr.Usr;
 import com.finalteam5.otisrm.dto.usr.UsrAuthrt;
 import com.finalteam5.otisrm.security.UsrDetails;
+import com.finalteam5.otisrm.service.BoardService;
 import com.finalteam5.otisrm.service.UsrService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +26,8 @@ import lombok.extern.slf4j.Slf4j;
 public class boardController {
 	@Autowired
 	private UsrService usrService;
+	@Autowired
+	private BoardService boardService;
 	
 	@GetMapping("/ntc")
 	public String home(Authentication authentication, Model model) {
@@ -45,6 +52,36 @@ public class boardController {
 		} else {
 			return "redirect:/login";
 		}
-	}	
+	}
+	
+	//공지사항 등록하기
+	@PostMapping("writeNtc")
+	public String writeNtc(NtcSubmit ntcSubmit) throws Exception{
+		boardService.writeNtc(ntcSubmit);
+	    
+		//첨부파일이 있다면 첨부파일 업로드
+		MultipartFile[] files = ntcSubmit.getFile();
+		
+		for(MultipartFile file : files) {
+			NtcAtch ntcAtch = new NtcAtch();
+			if(!file.isEmpty()) {
+				//첨부파일을 업로드한 sr요청 번호 
+				String ntcPk = boardService.getAddNtcPk();
+				ntcAtch.setNtcNo(ntcPk);
+	    		//브라우저에서 선택한 파일 이름 설정
+				ntcAtch.setNtcAtchNm(file.getOriginalFilename());
+	    		//파일의 형식(MIME타입)을 설정
+				ntcAtch.setNtcAtchMimeType(file.getContentType());
+	    		//올린 파일 설정
+				ntcAtch.setNtcAtchData(file.getBytes());
+	    		//파일 크기 설정
+				ntcAtch.setNtcAtchSize(file.getSize());
+	    		
+	    		//업로드
+	    		boardService.uploadNtcAtch(ntcAtch);
+			}
+	    }
+	    return "redirect:/boardManagement/ntc";
+	}
 	
 }

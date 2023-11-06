@@ -86,9 +86,8 @@ public class SrRequestManagementController {
 	//sr 요청등록하기
 	@PostMapping("writeSrRqstOfMng")
 	public String writeSrRqstOfMng(SrRqstSubmit srRqstSubmit) throws Exception{
-		log.info("등록 실행: " + srRqstSubmit);
+		
 		srRqstService.writeSrRqst(srRqstSubmit);
-		log.info("등록 실행2");
 	    
 		//첨부파일이 있다면 첨부파일 업로드
 		MultipartFile[] files = srRqstSubmit.getFile();
@@ -149,9 +148,9 @@ public class SrRequestManagementController {
 	}
 	
 	//고객사 홈 페이지에서 요청 수정하기
-		@PostMapping("modifySrRqstOfMng")
-		public String modifySrRqst(SrRqstSubmit srRqstSubmit) {
-		    srRqstService.modifySrRqst(srRqstSubmit);
-		    return "redirect:/srManagement/requestManagement";
-		}
+	@PostMapping("modifySrRqstOfMng")
+	public String modifySrRqst(SrRqstSubmit srRqstSubmit) {
+	    srRqstService.modifySrRqst(srRqstSubmit);
+	    return "redirect:/srManagement/requestManagement";
+	}
 }
