@@ -9,7 +9,8 @@ import com.finalteam5.otisrm.dto.usr.Login;
 import com.finalteam5.otisrm.dto.usr.Role;
 import com.finalteam5.otisrm.dto.usr.Usr;
 import com.finalteam5.otisrm.dto.usr.UsrAuthrt;
-import com.finalteam5.otisrm.dto.usr.UsrManagementPageConfigure;
+import com.finalteam5.otisrm.dto.usr.UsrManagementSearchConfigure;
+import com.finalteam5.otisrm.dto.usr.UsrTableConfigForUsrManagement;
 
 public interface UsrService {
 	//회원가입
@@ -50,5 +51,11 @@ public interface UsrService {
 	 * @author 송원석
 	 * 사용자 관리 페이지 구성 데이터를 가져오는 메서드
 	 */
-	public UsrManagementPageConfigure getUsrManagementPageConfigureData();
+	public UsrManagementSearchConfigure getUsrManagementPageConfigureData();
+	public List<Dept> getDeptSelectConfig(String instNo);
+	public UsrTableConfigForUsrManagement getUsrManagementMainTableConfig(String jsonData);
+	
+	//사용자 상태 변경(승인 대기, 일반, 탈퇴)
+	public int batchApproval(List<String> usrNoList);
+	public int batchWithdrawl(List<String> usrNoList);
 }

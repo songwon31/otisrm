@@ -3,12 +3,10 @@ $(init)
 var selectedStts = "전체";
 
 function init() {
+	//테이블에 전체 SR목록 가져오기
 	loadReviewerHomeBoardList(1, selectedStts);
-	// 번쨰 SR진행현황 가져오기
-	setTimeout(function() {
-        var firstSrRqstNo = $("#reviewerHomeBoardList tr td:eq(1)").text();
-        showProgessInfo(firstSrRqstNo);
-    }, 100);
+	//첫번쨰 SR진행현황 가져오기
+	loadFirstSrToProgressInfo();
 	//미처리 검토 요청개수 가져오기
 	loadReviewerHomeCountBoard();
 }
@@ -43,19 +41,23 @@ function loadReviewerHomeCountBoard() {
 	});
 }
 
-//상태선택시 테이블 데이터 세팅
-function selectReviewStts(e) {
-	selectedStts = $(e).find("span:first").text();
-	loadReviewerHomeBoardList(1, selectedStts);
-	//첫번째 SR진행현황 가져오기
+function loadFirstSrToProgressInfo(){
 	setTimeout(function() {
         const firstSrRqstNo = $("#reviewerHomeBoardList tr td:eq(1)").text();
         if(firstSrRqstNo == "") {
-        	initProgressBox();
+        	initProgress();
         } else {
-        	showProgessInfo(firstSrRqstNo);
+        	loadProgressInfo(firstSrRqstNo);
         }
     }, 100);
+}
+
+function selectReviewStts(e) {
+	selectedStts = $(e).find("span:first").text();
+	loadReviewerHomeBoardList(1, selectedStts);
+	
+	//첫번째 SR진행현황 가져오기
+	loadFirstSrToProgressInfo();
 }
 
 function loadReviewerHomeBoardList(pageNo, selectedStts) {
@@ -76,7 +78,7 @@ function loadReviewerHomeBoardList(pageNo, selectedStts) {
 					const formattedSrCmptnPrnmntDt = formatDateToYYYYMMDD(item.srCmptnPrnmntDt);
 					const trIndex = (pageNo - 1) * 5 + index + 1;
 					
-					html += '<tr style="height: 4.5rem; font-size: 1.5rem; background-color: white;" onclick="showProgessInfo(\''+ item.srRqstNo +'\')">';
+					html += '<tr style="height: 4.5rem; font-size: 1.5rem; background-color: white;" onclick="loadProgressInfo(\''+ item.srRqstNo +'\')">';
 					html += '	<td>' + trIndex + '</td>';
 					html += '	<td>' + item.srRqstNo + '</td>';
 					html += '	<td class="text-align-left">' + item.srTtl + '</td>';
@@ -107,25 +109,25 @@ function loadReviewerHomeBoardList(pageNo, selectedStts) {
 			    var reviewerHomeBoardPager = data.pager;
 	
 			    //동적으로 페이징 컨트롤 생성
-			    pagingHtml += '<a class="btn" href="javascript:loadReviewerHomeBoardList(' + 1 + ', \'' + selectedStts + '\')">처음</a>';
+			    pagingHtml += '<a class="btn" onclick="loadFirstSrToProgressInfo()" href="javascript:loadReviewerHomeBoardList(' + 1 + ', \'' + selectedStts + '\')">처음</a>';
 			    //이전 페이지로 이동하는 링크 추가
 			    if (reviewerHomeBoardPager.groupNo > 1) {
-			        pagingHtml += '<a class="btn" href="javascript:loadReviewerHomeBoardList(' + (reviewerHomeBoardPager.startPageNo - 1) + ', \'' + selectedStts + '\')">이전</a>';
+			        pagingHtml += '<a class="btn" onclick="loadFirstSrToProgressInfo()" href="javascript:loadReviewerHomeBoardList(' + (reviewerHomeBoardPager.startPageNo - 1) + ', \'' + selectedStts + '\')">이전</a>';
 			    }
 			    //중간 페이지 번호 링크 추가
 			    for (var i = reviewerHomeBoardPager.startPageNo; i <= reviewerHomeBoardPager.endPageNo; i++) {
 			    	if (reviewerHomeBoardPager.pageNo != i) {
-			    		pagingHtml += '<a class="btn" href="javascript:loadReviewerHomeBoardList(' + i + ', \'' + selectedStts + '\')">' + i + '</a>';
+			    		pagingHtml += '<a class="btn" onclick="loadFirstSrToProgressInfo()" href="javascript:loadReviewerHomeBoardList(' + i + ', \'' + selectedStts + '\')">' + i + '</a>';
 			        } else {
-			        	pagingHtml += '<a class="btn" href="javascript:loadReviewerHomeBoardList(' + i + ', \'' + selectedStts + '\')">' + i + '</a>';
+			        	pagingHtml += '<a class="btn" onclick="loadFirstSrToProgressInfo()" href="javascript:loadReviewerHomeBoardList(' + i + ', \'' + selectedStts + '\')">' + i + '</a>';
 			        }
 			    }
 			    //다음 페이지로 이동하는 링크 추가
 			    if (reviewerHomeBoardPager.groupNo < reviewerHomeBoardPager.totalGroupNo) {
-			      pagingHtml += '<a class="btn" href="javascript:loadReviewerHomeBoardList(' + (reviewerHomeBoardPager.endPageNo + 1) + ', \'' + selectedStts + '\')">다음</a>';
+			      pagingHtml += '<a class="btn" onclick="loadFirstSrToProgressInfo()" href="javascript:loadReviewerHomeBoardList(' + (reviewerHomeBoardPager.endPageNo + 1) + ', \'' + selectedStts + '\')">다음</a>';
 			    }
 			    //맨끝 페이지로 이동하는 링크 추가
-			    pagingHtml += '<a class="btn" href="javascript:loadReviewerHomeBoardList(' + reviewerHomeBoardPager.totalPageNo + ', \'' + selectedStts + '\')">맨끝</a>';
+			    pagingHtml += '<a class="btn" onclick="loadFirstSrToProgressInfo()" href="javascript:loadReviewerHomeBoardList(' + reviewerHomeBoardPager.totalPageNo + ', \'' + selectedStts + '\')">맨끝</a>';
 			}
 			$("#reviewerHomeMainTablePaging").html(pagingHtml);
 		}
@@ -201,20 +203,28 @@ function showDetailModal(srRqstNo) {
 	});
 }
 
-function initProgressBox() {
+function initProgress() {
 	$("#progress_rqst_info").addClass('d-none');
 	$("#progress_dep_ing_info").addClass('d-none');
 	$("#progress_dep_cmptn_info").addClass('d-none');
+	
+	$(".inner-circle").css("background-color", "#3b82f6");
+	$(".inner-circle").removeClass('currentCircle');
+	
+	$("#progress_srNo").text("");
+	$("#progress_srTtl").text("");
+	$("#progress_srConts").val("");
+	$("#progress_srRqstRvwRsn").val("");
 }
 
-function showProgessInfo(srRqstNo) {
+function loadProgressInfo(srRqstNo) {
 	$.ajax({
 		type: "GET",
-		url: "/otisrm/getSrRqstForProgessInfo",
+		url: "/otisrm/getSrRqstForProgressInfo",
 		data: {selectedSrRqstNo: srRqstNo},
 		success: function(data) {
 			//초기화
-			initProgressBox();
+			initProgress();
 			
 			//요청 정보
 			const formattedSrRqstRegDt = formatDateToYYYYMMDD(data.srRqstRegDt);
@@ -224,7 +234,7 @@ function showProgessInfo(srRqstNo) {
 			$("#progress_srReqstrNm").text(data.srReqstrNm);
 			
 			//개발정보
-			const sttsNm = data.srRqstSttsNm;
+			var sttsNm = data.srRqstSttsNm;
 			if(sttsNm == "개발중" || sttsNm =="테스트" || sttsNm =="완료신청" || sttsNm == "개발완료") {
 				if(data.srTrnsfYn == "Y") {
 					//이관개발
@@ -248,6 +258,24 @@ function showProgessInfo(srRqstNo) {
 			$("#progress_srTtl").text(data.srTtl);
 			$("#progress_srConts").val(data.srConts);
 			$("#progress_srRqstRvwRsn").val(data.srRqstRvwRsn);
+			
+			//진행상태 color변경			
+			$(".progress-step").each(function() {
+				if(sttsNm =="승인재검토" || sttsNm =="승인반려") {
+					sttsNm ="승인대기";
+				}
+				
+				if(sttsNm =="접수재검토" || sttsNm =="접수반려") {
+					sttsNm = "접수대기";
+				}
+				
+				var progressStepStts = $(this).find(".progress-content p").text();
+				
+			    if (progressStepStts === sttsNm) {
+			    	$(this).find(".inner-circle").css("background-color", "#f63b3b");
+			    	$(this).find(".inner-circle").addClass('currentCircle');
+			    }
+			});
 		}
 	});
 }

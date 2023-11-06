@@ -91,5 +91,142 @@
     	join inst i on u.inst_no = i.inst_no
 		where usr_Id = #{usrId}		 
     </select>
+    
+    <!-- 사용자 관리 페이지 구성 -->
+    <select id="countUsrForUsrManagementBoard" parameterType="com.finalteam5.otisrm.dto.usr.UsrManagementSearch" resultType="int">
+    	SELECT COUNT(*)
+    	FROM (
+	    	SELECT usr.usr_no, usr.usr_nm, usr.usr_telno, usr.usr_eml, inst.inst_nm, dept.dept_nm, 
+	    		   role.role_nm, usr_authrt.usr_authrt_nm, usr_stts.usr_stts_nm, usr.usr_join_dt
+	    	FROM usr
+	    	JOIN inst ON usr.inst_no = inst.inst_no
+	    	JOIN dept ON usr.dept_no = dept.dept_no
+	    	JOIN role ON usr.role_no = role.role_no
+	    	JOIN usr_authrt ON usr.usr_authrt_no = usr_authrt.usr_authrt_no
+	    	JOIN usr_stts ON usr.usr_stts_no = usr_stts.usr_stts_no
+	    	<where>
+	    		<if test="usrAuthrt != null">
+					usr.usr_authrt_no = #{usrAuthrt}
+				</if>
+				<if test="usrStts != null">
+					AND usr.usr_stts_no = #{usrStts} 
+				</if>
+				<if test="keywordContent != null">
+					<if test="keywordCategory == 'usrNm'">
+						AND usr.usr_nm like '%' || #{keywordContent} || '%'
+					</if>
+					<if test="keywordCategory == 'usrTelno'">
+						AND usr.usr_telno like '%' || #{keywordContent} || '%'
+					</if>
+					<if test="keywordCategory == 'usrEml'">
+						AND usr.usr_eml like '%' || #{keywordContent} || '%'
+					</if>
+				</if>
+				<if test="usrInst != null">
+					AND usr.inst_no = #{usrInst}
+				</if>
+				<if test="usrDept != null">
+					AND usr.dept_no = #{usrDept}
+				</if>
+				<!-- 시작 날짜만 있는 경우 -->
+				<if test="joinDateStart != null and joinDateEnd == null">
+					<![CDATA[
+					AND usr.usr_join_dt >= #{joinDateStart}	
+					]]>
+				</if>
+				<!-- 시작 날짜와 끝 날짜 모두 있는 경우 -->
+				<if test="joinDateStart != null and joinDateEnd != null">
+					<![CDATA[
+					AND usr.usr_join_dt >= #{joinDateStart}	
+					AND usr.usr_join_dt <= #{joinDateEnd}
+					]]>
+				</if>
+				<!-- 끝 날짜만 있는 경우 -->
+				<if test="joinDateStart == null and joinDateEnd != null">
+					<![CDATA[
+					AND usr.usr_join_dt <= #{joinDateEnd}
+					]]>
+				</if>
+    	</where>
+    		)
+    </select>
+    
+    <select id="selectUsrForUsrManagementBoard" parameterType="map" resultType="com.finalteam5.otisrm.dto.usr.UsrForUsrManagementBoard">
+    	SELECT rnum, usr_no, usr_nm, usr_telno, usr_eml, inst_nm, dept_nm, 
+			   role_nm, usr_authrt_nm, usr_stts_nm, usr_join_dt
+		FROM(
+			SELECT rownum as rnum, usr_no, usr_nm, usr_telno, usr_eml, inst_nm, dept_nm, 
+				   role_nm, usr_authrt_nm, usr_stts_nm, usr_join_dt
+			FROM (
+		    	SELECT usr.usr_no, usr.usr_nm, usr.usr_telno, usr.usr_eml, inst.inst_nm, dept.dept_nm, 
+			    		   role.role_nm, usr_authrt.usr_authrt_nm, usr_stts.usr_stts_nm, usr.usr_join_dt
+			    	FROM usr
+			    	JOIN inst ON usr.inst_no = inst.inst_no
+			    	JOIN dept ON usr.dept_no = dept.dept_no
+			    	JOIN role ON usr.role_no = role.role_no
+			    	JOIN usr_authrt ON usr.usr_authrt_no = usr_authrt.usr_authrt_no
+			    	JOIN usr_stts ON usr.usr_stts_no = usr_stts.usr_stts_no
+			    	<where>
+			    		<if test="usrManagementSearch.usrAuthrt != null">
+							usr.usr_authrt_no = #{usrManagementSearch.usrAuthrt}
+						</if>
+						<if test="usrManagementSearch.usrStts != null">
+							AND usr.usr_stts_no = #{usrManagementSearch.usrStts} 
+						</if>
+						<if test="usrManagementSearch.keywordContent != null">
+							<if test="usrManagementSearch.keywordCategory == 'usrNm'">
+								AND usr.usr_nm like '%' || #{usrManagementSearch.keywordContent} || '%'
+							</if>
+							<if test="usrManagementSearch.keywordCategory == 'usrTelno'">
+								AND usr.usr_telno like '%' || #{usrManagementSearch.keywordContent} || '%'
+							</if>
+							<if test="usrManagementSearch.keywordCategory == 'usrEml'">
+								AND usr.usr_eml like '%' || #{usrManagementSearch.keywordContent} || '%'
+							</if>
+						</if>
+						<if test="usrManagementSearch.usrInst != null">
+							AND usr.inst_no = #{usrManagementSearch.usrInst}
+						</if>
+						<if test="usrManagementSearch.usrDept != null">
+							AND usr.dept_no = #{usrManagementSearch.usrDept}
+						</if>
+						<!-- 시작 날짜만 있는 경우 -->
+						<if test="usrManagementSearch.joinDateStart != null and usrManagementSearch.joinDateEnd == null">
+							<![CDATA[
+							AND usr.usr_join_dt >= #{usrManagementSearch.joinDateStart}	
+							]]>
+						</if>
+						<!-- 시작 날짜와 끝 날짜 모두 있는 경우 -->
+						<if test="usrManagementSearch.joinDateStart != null and usrManagementSearch.joinDateEnd != null">
+							<![CDATA[
+							AND usr.usr_join_dt >= #{usrManagementSearch.joinDateStart}	
+							AND usr.usr_join_dt <= #{usrManagementSearch.joinDateEnd}
+							]]>
+						</if>
+						<!-- 끝 날짜만 있는 경우 -->
+						<if test="usrManagementSearch.joinDateStart == null and usrManagementSearch.joinDateEnd != null">
+							<![CDATA[
+							AND usr.usr_join_dt <= #{usrManagementSearch.joinDateEnd}
+							]]>
+						</if>
+					</where>
+					)
+		<![CDATA[
+			WHERE rownum <= #{pager.endRowNo}
+			)
+		WHERE rnum >= #{pager.startRowNo}
+		]]>
+    </select>
 	
+	<update id="updateUsrSttsToNormal" parameterType="String">
+		UPDATE usr
+		SET usr_stts_no = 'NORMAL'
+		WHERE usr_no = #{usrNo}
+	</update>
+	
+	<update id="updateUsrSttsToWithdrawl" parameterType="String">
+		UPDATE usr
+		SET usr_stts_no = 'WITHDRAWL'
+		WHERE usr_no = #{usrNo}
+	</update>
 </mapper>

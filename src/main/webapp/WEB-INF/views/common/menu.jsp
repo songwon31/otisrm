@@ -76,16 +76,8 @@
 	<div style="height:3rem;"></div>
 	
 	<div style="display:flex; flex-direction:row; align-items:center;">
-		<svg class="svg-inline--fa fa-chart-pie fa-w-17" aria-hidden="true"
-			data-prefix="fas" data-icon="chart-pie" role="img"
-			xmlns="http://www.w3.org/2000/svg" viewBox="0 0 544 512"
-			data-fa-i2svg="" style="height: 3rem; width: 3rem;">
-		  	<path fill="currentColor"
-					d="M464 32H48C21.49 32 0 53.49 0 80v352c0 26.51 21.49 48 48 48h416c26.51 0 48-21.49 48-48V80c0-26.51-21.49-48-48-48zM224 
-		  			416H64v-96h160v96zm0-160H64v-96h160v96zm224 160H288v-96h160v96zm0-160H288v-96h160v96z">
-			</path>
-		</svg>
-		<div style="margin-left:1rem; font-weight:700;">시스템 관리</div>
+		<i class="material-icons top-icon" style="margin:0; padding:0;">settings</i>
+		<div style="margin-left:0.5rem; font-weight:700;">시스템 관리</div>
 	</div>
 	<div style="border:1px solid #ADB5BD; margin:1rem 0rem;"></div>
 	<ul style="list-style:none; padding:0; margin:0;">

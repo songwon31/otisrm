@@ -1,11 +1,9 @@
 package com.finalteam5.otisrm.dto.usr;
 
-import java.util.List;
-
 import lombok.Data;
 
 @Data
-public class UsrManagementSearchForm {
+public class UsrManagementSearch {
 	private String usrAuthrt;
 	private String usrStts;
 	private String keywordCategory;

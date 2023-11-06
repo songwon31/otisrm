@@ -101,9 +101,9 @@ public class ReviewerHomeController {
 		return data;
 	}
 	
-	@GetMapping("/getSrRqstForProgessInfo")
+	@GetMapping("/getSrRqstForProgressInfo")
 	@ResponseBody
-	public SrRqstForReviewerHomeProgress getSrRqstForProgessInfo(@RequestParam String selectedSrRqstNo) {
+	public SrRqstForReviewerHomeProgress getSrRqstForProgressInfo(@RequestParam String selectedSrRqstNo) {
 		//진행상태에 SR정보 표시
 		SrRqstForReviewerHomeProgress data = srRqstService.getSrRqstForReviewerHomeProgress(selectedSrRqstNo);
 		return data;

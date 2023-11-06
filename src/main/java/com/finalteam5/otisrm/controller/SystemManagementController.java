@@ -1,19 +1,22 @@
 package com.finalteam5.otisrm.controller;
-import javax.annotation.Resource;
-import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
+import java.util.List;
 
+import javax.annotation.Resource;
+
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.Errors;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.finalteam5.otisrm.dto.usr.UsrManagementPageConfigure;
-import com.finalteam5.otisrm.dto.usr.UsrManagementSearchForm;
+import com.finalteam5.otisrm.dto.usr.Dept;
+import com.finalteam5.otisrm.dto.usr.Usr;
+import com.finalteam5.otisrm.dto.usr.UsrManagementSearchConfigure;
+import com.finalteam5.otisrm.dto.usr.UsrTableConfigForUsrManagement;
+import com.finalteam5.otisrm.security.UsrDetails;
 import com.finalteam5.otisrm.service.UsrService;
-import com.finalteam5.otisrm.validator.UsrManagementSearchValidator;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -29,17 +32,50 @@ public class SystemManagementController {
 	@Resource
 	UsrService usrService;
 	
-	@InitBinder("usrManagementSearchForm")
-	public void UsrManagementSearchFormValidator(WebDataBinder binder) {
-		binder.setValidator(new UsrManagementSearchValidator());
-	}
-	
+	//사용자 관리 페이지
 	@RequestMapping("/usrManagement")
-	public String usrManagement(Model model, HttpSession session, @Valid UsrManagementSearchForm usrManagementSearchForm, Errors errors) {
-		UsrManagementPageConfigure usrManagementPageConfigure = usrService.getUsrManagementPageConfigureData();
-		model.addAttribute("usrManagementPageConfigure", usrManagementPageConfigure);
-		
-		return "/systemManagement/usrManagement/usrManagement";
+	public String usrManagement(Authentication authentication, Model model) {
+		if (authentication != null && authentication.isAuthenticated()) {
+			UsrDetails usrDetails = (UsrDetails) authentication.getPrincipal();
+			Usr usr = usrDetails.getUsr();
+			model.addAttribute("usr", usr);
+			return "/systemManagement/usrManagement/usrManagement";
+		} else {
+			return "/systemManagement/usrManagement/usrManagement";
+		}
 	}
 	
+	@PostMapping("/usrManagement/getUsrManagementSearchConfig")
+	@ResponseBody
+	public UsrManagementSearchConfigure getUsrManagementSearchConfig() {
+		return usrService.getUsrManagementPageConfigureData();
+	}
+	
+	@PostMapping("/usrManagement/getDeptSelectConfig")
+	@ResponseBody
+	public List<Dept> getDeptSelectConfig(String instNo) {
+		return usrService.getDeptSelectConfig(instNo);
+	}
+	
+	@PostMapping("/usrManagement/getUsrManagementMainTableConfig")
+	@ResponseBody
+	public UsrTableConfigForUsrManagement getUsrManagementMainTableConfig(@RequestBody String jsonData) {
+		UsrTableConfigForUsrManagement usrTableConfigForUsrManagement = usrService.getUsrManagementMainTableConfig(jsonData);
+		return usrTableConfigForUsrManagement;
+	}
+	
+	@PostMapping("/usrManagement/batchApproval")
+	@ResponseBody
+	public int batchApproval(@RequestBody List<String> usrNoList) {
+		return usrService.batchApproval(usrNoList);
+	}
+	
+	@PostMapping("/usrManagement/batchWithdrawl")
+	@ResponseBody
+	public int batchWithdrawl(@RequestBody List<String> usrNoList) {
+		log.info(""+usrNoList);
+		return usrService.batchWithdrawl(usrNoList);
+	}
+	
+	//기업 관리 페이지
 }
