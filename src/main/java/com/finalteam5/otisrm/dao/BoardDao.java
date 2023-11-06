@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.finalteam5.otisrm.dto.inq.Inq;
 import com.finalteam5.otisrm.dto.inq.InqAtch;
 import com.finalteam5.otisrm.dto.inq.InqSubmit;
 import com.finalteam5.otisrm.dto.ntc.Ntc;
@@ -54,4 +55,7 @@ public interface BoardDao {
 	
 	//문의게시판 목록 불러오기: 총 행수 구하기(페이징을 위함)
 	public int countInq(Map<String,Object> map);
+	
+	//공지사사항 목록 불러오기: 페이지에 해당하는 공지사항 목록 불러오기
+	public List<Inq> selectInqListByPage(Map<String, Object> map);
 }

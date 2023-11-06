@@ -2,13 +2,12 @@ $(init)
 
 function init() {
 	 console.log("실행")
-	 requestInsertDate();
-	 eventPreventSrRqstAtch();				
+	 requestInsertDate();		 			
 }
  
 var pageNo = 1;
 $(document).ready(function() {
-	//loadNtcs(pageNo); //페이지 로딩 시 초기 데이터 로드
+	loadInqs(pageNo);
 });
 
 //timestamp 객체를 YYYY-MM-dd 형식의 문자열로 변환하는 함수
@@ -35,14 +34,14 @@ function onsubmitOfSearchForm(){
 	}
 }
 
-//**공지사항 목록 불러오기
-function loadNtcs(pageNo) {
+//**문의 목록 불러오기
+function loadInqs(pageNo) {
 	//페이지 지정
 	$("#ntcPageNo").val(pageNo);
 	$.ajax({
-    url: "getNtcByPageNo",
+    url: "getInqByPageNo",
     data: { 
-    	ntcPageNo: parseInt(pageNo),
+    	inqPageNo: parseInt(pageNo),
     	searchTarget: $("#searchTarget option:selected").val(),
     	keyword: $("#keyword").val()
     },
@@ -51,52 +50,44 @@ function loadNtcs(pageNo) {
     success: function(data) {
       html="";
       console.log(data);
-      // 중요한 행과 일반 행을 분리
-      var importantRows = data.filter(item => item.ntcEmrgYn === "Y");
-      var normalRows = data.filter(item => item.ntcEmrgYn !== "Y");
-
-      if (importantRows.length < 1 && normalRows.length < 1) {
-        // 중요한 행과 일반 행이 없을 경우 메시지 출력
+      if (data < 1) {
         html += '<tr style="background-color: white;">';
-        html += '  <td colspan="6">';
+        html += '  <td colspan="5">';
         html += '    <p class="t2_nonMessage">해당 목록 결과가 없습니다.</p>';
         html += '  </td>';
         html += '</tr>';
       } else {
         // 중요한 행 표시
-        importantRows.forEach((item, index) => {
-          const formattedDate = formatDateToYYYYMMDD(item.ntcWrtDt);
-          var indexOnPage = index + 1;
-          var count = 0;
+        data.forEach((item, index) => {
+          const formattedDate = formatDateToYYYYMMDD(item.inqWrtDt);
+          var indexOnPage = (pageNo - 1) * 12 + 1;
 
-          html += '<tr class="data-tr-imp" style="background-color: #fff6f9;">'; // 일반 행 스타일 적용
-          html += '  <td style="color: #d43e7d; font-weight: bold;">공지</td>';
-          html += '  <td class="truncate-text">' + item.ntcTtl + '</td>';
+          html += '<tr onclick="toggleTr()" class="data-tr" style="background-color: white;">'; // 일반 행 스타일 적용
+          html += '  <td>'+ indexOnPage +'</td>';
+          html += '  <td class="truncate-text">' + item.inqTtl + '</td>';
           html += '  <td class="truncate-text">' + item.usrNm + '</td>';
           html += '  <td>' + formattedDate + '</td>';
-          html += '  <td>' + item.ntcInqCnt + '</td>';
-          html += '  <td><button type="button" id="showSrRqstDetailBtn" class="btn-2" data-toggle="modal" data-target="#getNtcByNtcNo" onclick="showNtcByNtcNo(\'' + item.ntcNo + '\')">상세보기</button></td>';
+          html += '  <td>' + item.inqAnsYn + '</td>';
+          html += '  <td><button type="button" id="showinqDetailBtn" class="btn-1" data-toggle="modal" data-target="#getNtcByNtcNo" onclick="showInqByNtcNo(\'' + item.inqNo + '\')">상세보기</button></td>';
           html += '</tr>';
-        });
-
-        // 일반 행 표시
-        normalRows.forEach((item, index) => {
-          const formattedDate = formatDateToYYYYMMDD(item.ntcWrtDt);
-          var indexOnPage = index + 1; //인덱스 계산
-
-          html += '<tr class="data-tr" style="background-color:white;">'; // 일반 행 스타일 적용
-          html += '  <td>' + indexOnPage + '</td>';
-          html += '  <td class="truncate-text">' + item.ntcTtl + '</td>';
-          html += '  <td class="truncate-text">' + item.usrNm + '</td>';
-          html += '  <td>' + formattedDate + '</td>';
-          html += '  <td>' + item.ntcInqCnt + '</td>';
-          html += '  <td><button type="button" id="showSrRqstDetailBtn" class="btn-2" data-toggle="modal" data-target="#getNtcByNtcNo" onclick="showNtcByNtcNo(\'' + item.ntcNo + '\')">상세보기</button></td>';
-          html += '</tr>';
+          if(item.inqAns === null){        	  
+        	  html += '<tr class="inqAnsTr hidden">';
+        	  html += '  <td colspan="6" style="background-color: #e9ecef;">';
+        	  html += '    <p class="t2_nonMessage">아직 해당 문의글에 대한 답변이 달리지 않았습니다.</p>';
+        	  html += '  </td>';
+        	  html += '</tr>';
+          }else{
+        	  html += '<tr class="inqAnsTr hidden">';
+        	  html += '  <td colspan="6" style="background-color: #e9ecef;">';
+        	  html += '    <p class="t2_nonMessage">' + item.inqAns + '</p>';
+        	  html += '  </td>';
+        	  html += '</tr>';
+          }
         });
       }
       html +='<tr class="empty-tr" style="height: 100%;">';
       html +='</tr>';
-      $("#getNtcListByPageNo").html(html);
+      $("#getInqListByPageNo").html(html);
       
       //데이터가 없을 경우 페이징 숨기기
       var paginationContainer = document.getElementById("pagination-container");
@@ -108,17 +99,6 @@ function loadNtcs(pageNo) {
     	  updatePagination(pageNo);
     	  $(".btn").show();
       }
-      //중요 tr 요소에 대한 hover 이벤트 처리
-      $('.data-tr-imp').hover(
-        function() {
-          // 마우스가 요소 위에 있을 때 배경색 변경
-          $(this).css('background-color', '#fde8e7');
-        },
-        function() {
-          // 마우스가 요소를 벗어날 때 배경색 원래대로 변경
-          $(this).css('background-color', ' #fff6f9');
-        }
-      );
       //tr 요소에 대한 hover 이벤트 처리
       $('.data-tr').hover(
     		  function() {
@@ -140,10 +120,13 @@ function loadNtcs(pageNo) {
   });
 }
 
+function toggleTr() {
+	  $(".inqAnsTr").toggleClass("hidden");
+}
 //**상태에 따른 페이징 업데이트 함수
 function updatePagination(pageNo) {
   $.ajax({
-    url: "getCountNtcBySearch",
+    url: "getCountInqBySearch",
     data: {
     	ntcPageNo: parseInt(pageNo),
     	searchTarget: $("#searchTarget option:selected").val(),
@@ -163,32 +146,32 @@ function updatePagination(pageNo) {
         var showNext = currentPageNo < totalPageNo;
         
         // 이전/다음 페이지 버튼 생성
-        var prevButton = '<a class="page-button btn" href="javascript:loadNtcs(' + (currentPageNo - 1) + ')">이전</a>';
-        var nextButton = '<a class="page-button btn" href="javascript:loadNtcs(' + (currentPageNo + 1) + ')">다음</a>';
+        var prevButton = '<a class="page-button btn" href="javascript:loadInqs(' + (currentPageNo - 1) + ')">이전</a>';
+        var nextButton = '<a class="page-button btn" href="javascript:loadInqs(' + (currentPageNo + 1) + ')">다음</a>';
         
         // 페이지 번호 버튼 생성
         var pageButtons = '';
         for (var i = 1; i <= totalPageNo; i++) {
           if (i === currentPageNo) {
             // 현재 페이지 번호는 활성화된 스타일을 적용
-            pageButtons += '<a class="page-button btn active" href="javascript:loadNtcs(' + i + ')">' + i + '</a>';
+            pageButtons += '<a class="page-button btn active" href="javascript:loadInqs(' + i + ')">' + i + '</a>';
           } else {
-            pageButtons += '<a class="page-button btn" href="javascript:loadNtcs(' + i + ')">' + i + '</a>';
+            pageButtons += '<a class="page-button btn" href="javascript:loadInqs(' + i + ')">' + i + '</a>';
           }
         }
         
         // 이전 페이지 버튼을 표시
         if (showPrev) {
-          pageButtons = '<a class="page-button btn" href="javascript:loadNtcs(1)">처음</a>' + prevButton + pageButtons;
+          pageButtons = '<a class="page-button btn" href="javascript:loadInqs(1)">처음</a>' + prevButton + pageButtons;
         } else {
-          pageButtons = '<a class="page-button btn" href="javascript:loadNtcs(1)">처음</a>' + pageButtons;
+          pageButtons = '<a class="page-button btn" href="javascript:loadInqs(1)">처음</a>' + pageButtons;
         }
         
         // 다음 페이지 버튼을 표시
         if (showNext) {
-          pageButtons += nextButton + '<a class="page-button btn" href="javascript:loadNtcs(' + totalPageNo + ')">맨끝</a>';
+          pageButtons += nextButton + '<a class="page-button btn" href="javascript:loadInqs(' + totalPageNo + ')">맨끝</a>';
         } else {
-          pageButtons += '<a class="page-button btn" href="javascript:loadNtcs(' + totalPageNo + ')">맨끝</a>';
+          pageButtons += '<a class="page-button btn" href="javascript:loadInqs(' + totalPageNo + ')">맨끝</a>';
         }
         
         // 페이지 버튼 컨테이너 업데이트

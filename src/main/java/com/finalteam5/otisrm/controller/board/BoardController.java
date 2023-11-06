@@ -183,11 +183,9 @@ public class BoardController {
 			if(inqPageNo == null) {
 				 //세션에 저장되어 있는지 확인
 		         if(session.getAttribute("inqPageNo") == null || session.getAttribute("inqPageNo") == "") {
-		        	 log.info("웅 나널 1지정");
 		        	 inqPageNo = "1";  
 		         }else {
 		        	 inqPageNo =  (String) session.getAttribute("inqPageNo");
-		        	 log.info("세션에 저장되어ㅣ있는 페이지: " + inqPageNo);
 		         }
 			}
 			//세션에 현재 sr요청 페이지번호 저장

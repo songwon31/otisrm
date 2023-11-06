@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.finalteam5.otisrm.dao.BoardDao;
+import com.finalteam5.otisrm.dto.inq.Inq;
 import com.finalteam5.otisrm.dto.inq.InqAtch;
 import com.finalteam5.otisrm.dto.inq.InqSubmit;
 import com.finalteam5.otisrm.dto.ntc.Ntc;
@@ -106,6 +107,13 @@ public class BoardServiceImpl implements BoardService{
 	public int totalNumOfInq(Map<String, Object> map) {
 		int numOfTotalInq = boardDao.countInq(map);
 		return numOfTotalInq;
+	}
+	
+	//문의게시판 목록 불러오기: 페이지에 해당하는 문의 목록 불러오기
+	@Override
+	public List<Inq> getInqListByPage(Map<String, Object> map) {
+		List<Inq> list = boardDao.selectInqListByPage(map);
+		return list;
 	}
 
 	

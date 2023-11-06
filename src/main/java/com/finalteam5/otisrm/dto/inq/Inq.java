@@ -9,6 +9,7 @@ import lombok.Data;
 public class Inq {
 	private String inqNo;		//문의 번호	
 	private String usrNo;		//등록자
+	private String usrNm;		//등록자 이름
 	private String inqTtl;		//문의 제목
 	private String inqConts;	//문의 내용
 	private Date inqWrtDt;		//문의 작성일

@@ -15,7 +15,7 @@
 	</div>
 	<div class="contentTop shadow" >
 		<input type="hidden" id="loginUsr" value="${usr.usrNo}">
-		<form id="searchForm" method="post" action="javascript:loadNtcs(${ntcPager.pageNo})" onsubmit="onsubmitOfSearchForm()">
+		<form id="searchForm" method="post" action="javascript:loadInqs(${inqPager.pageNo})" onsubmit="onsubmitOfSearchForm()">
 			<div class="d-flex" style="height:2rem;">
 				<!-- 검색 조건 -->
 				<div style="width: 15%; display:flex; align-items:center;">
@@ -25,7 +25,7 @@
 				<div style="width: 20%;">
 					<select style="width:220px;" id="searchTarget" name="searchTarget">
 						<option value="" >선택</option>
-						<option value="searchNtcTtl" >제목</option>
+						<option value="searchInqTtl" >제목</option>
 						<option value="searchUsrNo" >등록자</option>
 				    </select>
 				</div>
@@ -74,7 +74,7 @@
 						<th scope="col">상세보기</th>
 					</tr>
 				</thead>
-				<tbody id="getNtcListByPageNo">
+				<tbody id="getInqListByPageNo">
 				 <!-- Json 데이터 들어오는 곳 --> 
 					
 				</tbody>

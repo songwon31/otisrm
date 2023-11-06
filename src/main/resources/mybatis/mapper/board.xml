@@ -149,4 +149,39 @@
 		  </where>
 		</if>
 	</select>
+	
+	<!-- 공지사항 목록 불러오기 -->
+	<select id="selectInqListByPage" parameterType="Map" resultType="Inq">
+		select rnum, inq_no, usr_no, inq_ttl, inq_conts, inq_wrt_dt,
+		inq_mdfcn_dt, inq_prvt_yn, inq_ans, inq_ans_yn, usr_nm
+		from (
+		    select rownum as rnum, inq_no, usr_no, inq_ttl, inq_conts, inq_wrt_dt,
+			inq_mdfcn_dt, inq_prvt_yn, inq_ans, inq_ans_yn, usr_nm
+		    from(
+		       select i.inq_no,i.usr_no, i.inq_ttl, i.inq_conts, i.inq_wrt_dt, i.inq_mdfcn_dt, 
+			   i.inq_prvt_yn, i.inq_ans, i.inq_ans_yn, u.usr_nm
+			   from inq i
+			   join usr u on u.usr_no = i.usr_no
+		       <if test="keyword != null and keyword != ''">
+				  <where>
+				    <!-- 키워드 검색 -->
+				    <if test="keyword != null and keyword != '' or searchTarget != null and searchTarget != ''">
+				    	<if test="searchTarget == 'searchUsrNo'">				    	
+				        	REGEXP_REPLACE(LOWER(REPLACE(usr_nm, ' ', '')), '[[:punct:]]', '') LIKE '%' || REGEXP_REPLACE(LOWER(REPLACE(#{keyword}, ' ', '')), '[[:punct:]]', '') || '%'
+				    	</if>
+				    	<if test="searchTarget == 'searchInqTtl'">				    	
+				       		REGEXP_REPLACE(LOWER(REPLACE(inq_ttl, ' ', '')), '[[:punct:]]', '') LIKE '%' || REGEXP_REPLACE(LOWER(REPLACE(#{keyword}, ' ', '')), '[[:punct:]]', '') || '%'
+				    	</if>
+				    </if>   
+				  </where>
+				</if>
+			    order by inq_wrt_dt desc
+			   )
+		<![CDATA[
+				where rownum <= #{endRowNo}
+			 )
+			 where rnum >= #{startRowNo}
+		]]>
+	</select>
+	
 </mapper>
