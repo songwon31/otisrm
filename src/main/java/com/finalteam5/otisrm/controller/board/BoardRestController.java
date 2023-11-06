@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.finalteam5.otisrm.dto.Pager;
 import com.finalteam5.otisrm.dto.ntc.Ntc;
+import com.finalteam5.otisrm.dto.ntc.NtcAtch;
 import com.finalteam5.otisrm.dto.srRequest.SrRqst;
 import com.finalteam5.otisrm.service.BoardService;
 
@@ -79,5 +81,21 @@ public class BoardRestController {
 	    int totalRows = boardService.totalNumOfNct(map);
 	    
 	    return totalRows;
+	}
+	
+	//요청에 해당하는 상세정보 불러오기
+	@GetMapping("getNtcByNtcNo")
+	public Ntc getNtcByNtcNo(String ntcNo, Model model, HttpSession session) {
+		
+		Ntc ntc = boardService.getNtcByNtcNo(ntcNo);
+		List<NtcAtch> list = boardService.getNtcAtchByNtcNo(ntcNo);
+		ntc.setNtcAtchList(list);
+		int updateNtcInqCnt = ntc.getNtcInqCnt() + 1;
+		ntc.setNtcInqCnt(updateNtcInqCnt);
+		
+		//조회수 업데이트
+		boardService.addNtcInqCnt(ntc);
+		model.addAttribute("ntcOfModiFy", ntc.getNtcNo());
+		return ntc;
 	}
 }

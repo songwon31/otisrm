@@ -53,6 +53,30 @@ public class BoardServiceImpl implements BoardService{
 		List<Ntc> list = boardDao.selectNtcListByPage(map);
 		return list;
 	}
+    
+	//공지 목록에 해당하는 상세 정보 불러오기
+	@Override
+	public Ntc getNtcByNtcNo(String ntcNo) {
+		Ntc ntc = boardDao.selectNtcByNtcNo(ntcNo);
+		return ntc;
+	}
+	
+	//공지 상세정보에 해당하는 첨부파일 불러오기
+	@Override
+	public List<NtcAtch> getNtcAtchByNtcNo(String ntcNo) {
+		List<NtcAtch> list = boardDao.selectNtcAtchByNtcNo(ntcNo);
+		return list;
+	}
 
+	@Override
+	public NtcAtch getNtcAtchByNtcAtchNo(String ntcAtchNo) {
+		NtcAtch ntcAtch = boardDao.selectNtcAtchByNtcAtchNo(ntcAtchNo);
+		return ntcAtch;
+	}
+
+	@Override
+	public void addNtcInqCnt(Ntc ntc) {
+		boardDao.updateNtcInqCnt(ntc);
+	}
 	
 }

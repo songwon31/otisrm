@@ -8,6 +8,8 @@ import org.apache.ibatis.annotations.Mapper;
 import com.finalteam5.otisrm.dto.ntc.Ntc;
 import com.finalteam5.otisrm.dto.ntc.NtcAtch;
 import com.finalteam5.otisrm.dto.ntc.NtcSubmit;
+import com.finalteam5.otisrm.dto.srRequest.SrRqst;
+import com.finalteam5.otisrm.dto.srRequest.SrRqstAtch;
 
 @Mapper
 public interface BoardDao {
@@ -27,4 +29,16 @@ public interface BoardDao {
 	
 	//공지사사항 목록 불러오기: 페이지에 해당하는 공지사항 목록 불러오기
 	public List<Ntc> selectNtcListByPage(Map<String, Object> map);
+	
+	//공지 목록에 해당하는 상세 정보 불러오기
+	public Ntc selectNtcByNtcNo(String ntcNo);
+	
+	//공지 상세정보에 해당하는 첨부파일 불러오기
+	public List<NtcAtch> selectNtcAtchByNtcNo(String ntcNo); 
+		
+	//공지 첨부파일 번호에 해당하는 첨부파일 가져오기(파일 다운로드를 위함)
+	public NtcAtch selectNtcAtchByNtcAtchNo(String ntcAtchNo);
+	
+	//공지 조회수 업데이트(상세보기를 했을 경우 update)
+	public void updateNtcInqCnt(Ntc ntc);
 }

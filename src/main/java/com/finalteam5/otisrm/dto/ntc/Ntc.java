@@ -15,7 +15,7 @@ public class Ntc {
 	private Date ntcWrtDt;		//등록일
 	private Date ntcMdfcnDt;	//수정일	
 	private int ntcInqCnt;		//조회수		
-	private String ntcEmrgYn;		//중요여부(중요일 경우 상단 고정을 위함)	
+	private String ntcEmrgYn;	//중요여부(중요일 경우 상단 고정을 위함)	
 	
 	//첨부파일 
 	private List<NtcAtch> ntcAtchList;

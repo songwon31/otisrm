@@ -1,8 +1,12 @@
 package com.finalteam5.otisrm.controller.board;
+import java.io.OutputStream;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.finalteam5.otisrm.dto.Pager;
 import com.finalteam5.otisrm.dto.ntc.NtcAtch;
 import com.finalteam5.otisrm.dto.ntc.NtcSubmit;
+import com.finalteam5.otisrm.dto.srRequest.SrRqstAtch;
 import com.finalteam5.otisrm.dto.usr.Usr;
 import com.finalteam5.otisrm.dto.usr.UsrAuthrt;
 import com.finalteam5.otisrm.security.UsrDetails;
@@ -90,6 +95,37 @@ public class BoardController {
 		} else {
 			return "redirect:/login";
 		}
+	}
+	
+	@GetMapping("/filedownloadOfNtc")
+	public void filedownload(String ntcAtchNo, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	    // 요청된 SrRqstAtchNo에 해당하는 SrRqstAtch 객체를 가져옴
+	    NtcAtch ntcAtch = boardService.getNtcAtchByNtcAtchNo(ntcAtchNo);
+	    
+	    String fileOriginalName = ntcAtch.getNtcAtchNm();
+	    
+	    //응답 헤드에 Content-Type 추가
+	    String mimeType = ntcAtch.getNtcAtchMimeType();
+	    response.setContentType(mimeType);
+	    
+	   //응답 헤드에 한글 이름의 파일명을 ISO-8859-1 문자셋으로 인코딩해서 추가
+	   String userAgent = request.getHeader("User-Agent");
+	   if(userAgent.contains("Trident")|| userAgent.contains("MSIE")) {
+		   //IE
+		   fileOriginalName = URLEncoder.encode(fileOriginalName,"UTF-8");
+	   }else {
+		   //Chrome, Edge, FireFox, Safari 
+		   fileOriginalName = new String(fileOriginalName.getBytes("UTF-8"),"ISO-8859-1");
+	   }
+	   //response.setHeader가 없으면 브라우저에 바로 보여줄 수 있으면 보여줌	
+	   // 바로 보여줄 수 없으면 파일이 다운로드됨
+	   response.setHeader("Content-Disposition", "attachment; fileName=\"" + fileOriginalName + "\"" );
+	   
+	   //응답 본문에 파일데이터 싣기
+	   OutputStream os = response.getOutputStream();
+	   os.write(ntcAtch.getNtcAtchData());
+	   os.flush();
+	   os.close();    
 	}
 	
 	//공지사항 등록하기

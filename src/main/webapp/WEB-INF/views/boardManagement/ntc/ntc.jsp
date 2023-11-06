@@ -123,29 +123,6 @@
 				        </div>
 					</div>
 				<div>
-		      	<div>
-		        	<div class="d-flex">
-				        <div class="d-flex w-100">
-					        <div style="width: 113.9px;">
-					          <label for="systemName" class="form-label">공지 대상</label>
-					        </div>
-					        <div style="width: 550.41px;">
-						        <c:forEach items="${usrAuthrts}" var ="usrAuthrt">
-						          <div class="form-check-inline pt-2">
-								      <label class="form-check-label" for="${usrAuthrt.usrAuthrtNo}">
-								        <input type="checkbox" class="form-check-input" id="${usrAuthrt.usrAuthrtNo}" value="${usrAuthrt.usrAuthrtNm}">
-								        <span style="font-size: 1.3rem;">${usrAuthrt.usrAuthrtNm}</span>
-								      </label>
-								  </div>
-						       </c:forEach>
-				          </div>
-					   </div>
-					</div>
-					<div class="d-flex w-100">
-				        <div style="width: 113.9px;"></div>
-				        <div class="text-danger" style="width: 550.41px; font-size: 1.2rem;">미 선택 시, 전 회원에게 공지가 노출됩니다.</div>
-				    </div>
-		        </div>
 		        <div class="d-flex w-100 pt-2">
 			        <div style="width: 113.9px;">
 			          <label for="ntcTtl" class="form-label">제목</label>
@@ -179,7 +156,7 @@
       </div>
       <div class="modal-footer py-1">
         <button type="submit" class="btn-1">저장</button>
-        <button type="button" class="btn-3" data-dismiss="modal">닫기</button>
+        <button type="button" class="close btn-3" data-dismiss="modal">닫기</button>
       </div>
     </form>
    </div>
@@ -187,18 +164,18 @@
  </div>
 </div>
 
-<!-- 요청목록에 해당하는 상세모달 -->
+<!-- 공지목록에 해당하는 상세모달 -->
 <div id="getNtcByNtcNo" class="modal" data-backdrop="static">
   <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content">
       <div class="modal-header">
         <h6 class="modal-title">공지사항</h6>
-        <i class="material-icons close-icon" data-dismiss="modal" style="cursor: pointer;">close</i>
+        <i onclick="loadNtcs(${ntcPager.pageNo})" class="material-icons close-icon" data-dismiss="modal" style="cursor: pointer;">close</i>
       </div>
       <div id="writeNtcForm" class="modal-body">
       	<form id="modifyNtc" action="modifyNtc" method="post" enctype="multipart/form-data">
       		<!-- SR요청정보 -->
-      		<h6 class="modal-sub-title">공지사항 상세내용</h6>
+      		<h6 class="modal-sub-title">상세내용</h6>
       		<div class="card p-3 mb-4">
 		      	<div>
 		        	<div class="d-flex">
@@ -207,49 +184,27 @@
 				            	<label for="writer" class="form-label">등록자</label>
 				          	</div>
 				 			<div class="w-60">
-					            <input type="text" class="form-control" id="writer" value="${usr.usrNm}" disabled>
+					            <input type="text" class="form-control" id="ntc-usrNm" value="" disabled>
+					            <input type="hidden" class="form-control" id="ntc-usrNo" value="">
 				 			</div>
-				            <input type="hidden" id="usrNo" name="usrNo" value="${usr.usrNo}">
+				            <input type="hidden" id="loginUsr" name="usrNo" value="${usr.usrNo}">
 				        </div>
 				        <div class="d-flex w-50 pt-2">
 				          	<div class="w-30">			          	
 				            	<label for="writeDate" class="form-label">등록일</label>
 				          	</div>
 				 			<div class="w-60">
-					            <input type="date" class="form-control" id="writeDate" disabled>
+					            <input type="text" class="form-control" id="ntc-ntcWrtDt" disabled>
 				 			</div>
 				        </div>
 					</div>
 				<div>
-		      	<div>
-		        	<div class="d-flex">
-				        <div class="d-flex w-100">
-					        <div style="width: 113.9px;">
-					          <label for="systemName" class="form-label">공지 대상</label>
-					        </div>
-					        <div style="width: 550.41px;">
-						        <c:forEach items="${usrAuthrts}" var ="usrAuthrt">
-						          <div class="form-check-inline pt-2">
-								      <label class="form-check-label" for="${usrAuthrt.usrAuthrtNo}">
-								        <input type="checkbox" class="showTarget form-check-input" id="${usrAuthrt.usrAuthrtNo}" value="${usrAuthrt.usrAuthrtNm}">
-								        <span style="font-size: 1.3rem;">${usrAuthrt.usrAuthrtNm}</span>
-								      </label>
-								  </div>
-						       </c:forEach>
-				          </div>
-					   </div>
-					</div>
-					<div class="d-flex w-100">
-				        <div style="width: 113.9px;"></div>
-				        <div class="text-danger" style="width: 550.41px; font-size: 1.2rem;">미 선택 시, 전 회원에게 공지가 노출됩니다.</div>
-				    </div>
-		        </div>
 		        <div class="d-flex w-100 pt-2">
 			        <div style="width: 113.9px;">
 			          <label for="ntcTtl" class="form-label">제목</label>
 			        </div>
 			        <div style="width: 605px;">
-			          <input type="text" class="form-control" id="ntcTtl" name="ntcTtl">
+			          <input type="text" class="form-control" id="ntc-ntcTtl" name="ntcTtl">
 			        </div>
 			    </div>
 		        <div class="d-flex w-100 pt-2">
@@ -257,7 +212,7 @@
 			          <label for="ntcConts" class="form-label">내용</label>
 			        </div>
 			        <div style="width: 605px;">
-			          <textarea class="form-control" id="ntcConts" name="ntcConts" style="height: 50rem;"></textarea>
+			          <textarea class="form-control" id="ntc-ntcConts" name="ntcConts" style="height: 50rem;"></textarea>
 			        </div>
 			    </div>
 		        <div class="d-flex w-100 pt-2">
@@ -268,16 +223,24 @@
 			        	 <input id="file" type="file" name="file" multiple>
 			        </div>
 			        <div>
-			        	<input id="importantChk" type="checkbox" onclick="isImportendChecked2()"><span> 중요</span>
+			        	<input id="ntc-importantChk" class="pb-1" type="checkbox" onclick="isImportendChecked2()"><span class="mb-1"> 중요</span>
 			        </div>
 			        <input id="ntcEmrgYn" type="hidden" name="ntcEmrgYn" value="N">
+			    </div>
+			    <div class="d-flex w-100 pt-2">
+			    	<div style="width: 113.9px;"></div>
+			    	<div id="showNtcAtch">
+			    	</div>
 			    </div>
 			</div>
       	</div>
       </div>
+	<div class="mr-3 pb-4 d-flex justify-content-end">
+       	<span style="font-size: 1.3rem;">조회수:</span> <span id="ntcInqCnt" class="ml-2" style="font-size: 1.3rem; font-weight: bold;">0</span>
+   	</div>
       <div class="modal-footer py-1">
         <button type="submit" class="btn-1">저장</button>
-        <button type="button" class="btn-3" data-dismiss="modal">닫기</button>
+        <button type="button" class="btn-3" data-dismiss="modal" onclick="loadNtcs(${ntcPager.pageNo})" >닫기</button>
       </div>
     </form>
    </div>

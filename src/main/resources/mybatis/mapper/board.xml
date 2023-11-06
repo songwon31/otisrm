@@ -79,6 +79,30 @@
 			 )
 			 where rnum >= #{startRowNo}
 		]]>
-	</select>	
+	</select>
 	
+	<!-- 공지 상세내용 불러오기 -->	
+	<!-- 공지 상세 불러오기-->
+	<select id="selectNtcByNtcNo" parameterType="String" resultType="Ntc">
+		select n.*, u.usr_nm
+		from ntc n
+	    join usr u on u.usr_no = n.usr_no
+		where n.ntc_no=#{ntcNo}	
+	</select>
+	
+	<!-- 공지 상세에 해당하는 첨부파일 불러오기 -->
+	<select id="selectNtcAtchByNtcNo" parameterType="String" resultType="NtcAtch" >
+		select * from ntc_atch where ntc_no = #{ntcNo}
+	</select>
+	
+	<!-- 공지첨부파일 번호에 해당하는 첨부파일 불러오기 -->
+	<select id="selectNtcAtchByNtcAtchNo" parameterType="String" resultType="NtcAtch">
+		select * from ntc_atch where ntc_atch_no = #{ntcAtchNo}
+	</select>
+	
+	<!-- 공지 조회수 업데이트 -->
+	<update id="updateNtcInqCnt" parameterType="Ntc">
+		update ntc set ntc_inq_cnt = #{ntcInqCnt, jdbcType=INTEGER} 
+		where ntc_no = #{ntcNo, jdbcType=VARCHAR}
+	</update>
 </mapper>
