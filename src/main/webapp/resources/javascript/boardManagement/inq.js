@@ -405,12 +405,12 @@ function downloadExcel() {
 	    ["번호", "제목", "등록자", "등록일", "답변여부"],
 	  ];
 	//페이지 지정
-	$("#ntcPageNo").val(pageNo);
+	$("#inqPageNo").val(pageNo);
 	
 	$.ajax({
-	    url: "getNtcByPageNo",
+	    url: "getInqByPageNo",
 	    data: { 
-	    	ntcPageNo: parseInt(pageNo),
+	    	inqPageNo: parseInt(pageNo),
 	    	searchTarget: $("#searchTarget option:selected").val(),
 	    	keyword: $("#keyword").val()
 	    },
@@ -420,11 +420,11 @@ function downloadExcel() {
  
 	    	response.forEach((item, index)=>{       
 		        data.push([
-		          item.ntcNo,
-		          item.ntcTtl,
+		          item.inqNo,
+		          item.inqTtl,
 		          item.usrNm,
-		          formatDateToYYYYMMDD(item.ntcWrtDt),
-		          item.ntcInqCnt
+		          formatDateToYYYYMMDD(item.inqWrtDt),
+		          item.inqAnsYn
 		        ]);
 	       });
 
@@ -433,11 +433,11 @@ function downloadExcel() {
 	      var ws = XLSX.utils.aoa_to_sheet(data);
 	
 	      // 워크북에 워크시트 추가
-	      XLSX.utils.book_append_sheet(wb, ws, "SRM_공지사항");
+	      XLSX.utils.book_append_sheet(wb, ws, "SRM_문의목록");
 	
 	      // 엑셀 파일 생성 및 다운로드
 	      var today = new Date();
-	      var filename = "SRM_공지사항_" + today.getFullYear() + (today.getMonth() + 1) + today.getDate() + ".xlsx";
+	      var filename = "SRM_문의목록_" + today.getFullYear() + (today.getMonth() + 1) + today.getDate() + ".xlsx";
 	      XLSX.writeFile(wb, filename);
 	    },
 	    error: function (error) {
