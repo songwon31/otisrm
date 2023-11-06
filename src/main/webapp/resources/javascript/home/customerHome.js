@@ -484,7 +484,6 @@ function modifySrRqst(srRqstNo) {
             var currentURL = window.location.href;
             window.location.href = currentURL; // 원하는 URL로 변경
             loadSRRequests(1, choiceSrRqstSttsNo);
-            loading();
         },
         error: function (error) {
             // 요청 중 오류가 발생한 경우 실행할 코드
@@ -582,7 +581,6 @@ function loadNtcs(pageNo) {
     			  $(this).css('background-color', 'white');
     		  }
       );
-      loading();
       // 성공적으로 요청이 완료된 경우 실행할 코드
       var currentURL = window.location.href;
     },

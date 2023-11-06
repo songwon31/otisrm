@@ -70,7 +70,7 @@
 	<div style="border:1px solid #ADB5BD; margin:1rem 0rem;"></div>
 	<ul style="list-style:none; padding:0; margin:0;">
 		<li class="menu-item"><a href="${pageContext.request.contextPath}/boardManagement/ntc">공지사항</a></li>
-		<li class="menu-item"><a href="#">문의게시판</a></li>
+		<li class="menu-item"><a href="${pageContext.request.contextPath}/boardManagement/inq">문의게시판</a></li>
 	</ul>
 	
 	<div style="height:3rem;"></div>

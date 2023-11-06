@@ -25,6 +25,9 @@
 		<typeAlias alias="Ntc" type="com.finalteam5.otisrm.dto.ntc.Ntc"/>
 		<typeAlias alias="NtcAtch" type="com.finalteam5.otisrm.dto.ntc.NtcAtch"/>
 		<typeAlias alias="NtcSubmit" type="com.finalteam5.otisrm.dto.ntc.NtcSubmit"/>
+		<typeAlias alias="Inq" type="com.finalteam5.otisrm.dto.inq.Inq"/>
+		<typeAlias alias="InqAtch" type="com.finalteam5.otisrm.dto.inq.InqAtch"/>
+		<typeAlias alias="InqSubmit" type="com.finalteam5.otisrm.dto.inq.InqSubmit"/>
 	</typeAliases>
 </configuration>
 

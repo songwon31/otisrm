@@ -28,7 +28,7 @@
 	    )
 	</insert>
 	
-	<!-- 공지사사항 목록 불러오기: 총 행수 구하기(페이징을 위함) -->
+	<!-- 공지사항 목록 불러오기: 총 행수 구하기(페이징을 위함) -->
 	<select id="countNct" parameterType="Map" resultType="int">
 		select count(*) from ntc n
         join usr u on u.usr_no = n.usr_no
@@ -105,4 +105,48 @@
 		update ntc set ntc_inq_cnt = #{ntcInqCnt, jdbcType=INTEGER} 
 		where ntc_no = #{ntcNo, jdbcType=VARCHAR}
 	</update>
+	<!--============================================================================-->
+	<!-- 문의 작성하기 -->
+	<insert id="insertInq" parameterType="InqSubmit">
+		insert into inq (inq_no, usr_no, inq_ttl, inq_conts, inq_wrt_dt, inq_mdfcn_dt, inq_prvt_yn, inq_ans, inq_ans_yn)
+		values((select NVL(MAX(inq_no)+1,0)from inq), #{usrNo}, #{inqTtl}, #{inqConts}, sysdate, #{inqMdfcnDt, jdbcType=DATE}, #{inqPrvtYn}, #{inqAns, jdbcType=VARCHAR}, 'N')
+	</insert>
+	
+	<!-- 최근 삽입한 공지사항 PK 불러오기(첨부파일 등록을 위함) -->
+	<select id="selectAddInqPk" resultType="String">
+		select inq_no from (
+		  select * from inq order by inq_wrt_dt desc
+		) where rownum = 1
+	</select>
+	
+	<!-- 문의사항 첨부파일 업로드 -->
+	<insert id="insertInqAtch" parameterType="InqAtch">
+	     insert into inq_atch(
+	        inq_atch_no, inq_no, inq_atch_nm, inq_atch_mime_type,
+	        inq_atch_data, inq_atch_size
+	    ) values(
+	        (select NVL(MAX(inq_atch_no)+1,0)from inq_atch), #{inqNo, jdbcType=VARCHAR}, #{inqAtchNm, jdbcType=VARCHAR},
+	        #{inqAtchMimeType, jdbcType=VARCHAR}, #{inqAtchData, jdbcType=BLOB},
+	        #{inqAtchSize, jdbcType=NUMERIC}
+	    )
+	</insert>
+	
+	<!-- 문의게시판 목록 불러오기: 총 행수 구하기(페이징을 위함) -->
+	<select id="countInq" parameterType="Map" resultType="int">
+		select count(*) from inq i
+        join usr u on u.usr_no = i.usr_no
+	    <if test="keyword != null and keyword != ''">
+		  <where>
+		    <!-- 키워드 검색 -->
+		    <if test="keyword != null and keyword != '' or searchTarget != null and searchTarget != ''">
+		    	<if test="searchTarget == 'searchUsrNm'">				    	
+		        	REGEXP_REPLACE(LOWER(REPLACE(usr_nm, ' ', '')), '[[:punct:]]', '') LIKE '%' || REGEXP_REPLACE(LOWER(REPLACE(#{keyword}, ' ', '')), '[[:punct:]]', '') || '%'
+		    	</if>
+		    	<if test="searchTarget == 'searchInqTtl'">				    	
+		       		REGEXP_REPLACE(LOWER(REPLACE(inq_ttl, ' ', '')), '[[:punct:]]', '') LIKE '%' || REGEXP_REPLACE(LOWER(REPLACE(#{keyword}, ' ', '')), '[[:punct:]]', '') || '%'
+		    	</if>
+		    </if>   
+		  </where>
+		</if>
+	</select>
 </mapper>

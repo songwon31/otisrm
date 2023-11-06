@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.finalteam5.otisrm.dao.BoardDao;
+import com.finalteam5.otisrm.dto.inq.InqAtch;
+import com.finalteam5.otisrm.dto.inq.InqSubmit;
 import com.finalteam5.otisrm.dto.ntc.Ntc;
 import com.finalteam5.otisrm.dto.ntc.NtcAtch;
 import com.finalteam5.otisrm.dto.ntc.NtcSubmit;
@@ -67,16 +69,44 @@ public class BoardServiceImpl implements BoardService{
 		List<NtcAtch> list = boardDao.selectNtcAtchByNtcNo(ntcNo);
 		return list;
 	}
-
+	//첨부파일 번호에 해당하는 공지사항 첨부파일(파일 다운로드를 위함)
 	@Override
 	public NtcAtch getNtcAtchByNtcAtchNo(String ntcAtchNo) {
 		NtcAtch ntcAtch = boardDao.selectNtcAtchByNtcAtchNo(ntcAtchNo);
 		return ntcAtch;
 	}
-
+	
+    //공지사항 조회수 업데이트
 	@Override
 	public void addNtcInqCnt(Ntc ntc) {
 		boardDao.updateNtcInqCnt(ntc);
 	}
+    //=================================================================
+	//문의게시판 등록폼: 문의 등록하기
+	@Override
+	public int writeInq(InqSubmit inqSubmit) {
+		int numOfInsert = boardDao.insertInq(inqSubmit);
+		return numOfInsert;
+	}
+	
+	@Override
+	public String getAddInqPk() {
+		String inqPk = boardDao.selectAddInqPk();
+		return inqPk;
+	}
+	
+	@Override
+	public int uploadInqAtch(InqAtch inqAtch) {
+		int numOfInsert = boardDao.insertInqAtch(inqAtch);
+		return numOfInsert;
+	}
+	
+	//문의게시판 목록 불러오기: 총 행수 구하기(페이징을 위함)
+	@Override
+	public int totalNumOfInq(Map<String, Object> map) {
+		int numOfTotalInq = boardDao.countInq(map);
+		return numOfTotalInq;
+	}
+
 	
 }

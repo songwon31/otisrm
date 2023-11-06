@@ -20,9 +20,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.finalteam5.otisrm.dto.Pager;
+import com.finalteam5.otisrm.dto.inq.InqAtch;
+import com.finalteam5.otisrm.dto.inq.InqSubmit;
 import com.finalteam5.otisrm.dto.ntc.NtcAtch;
 import com.finalteam5.otisrm.dto.ntc.NtcSubmit;
-import com.finalteam5.otisrm.dto.srRequest.SrRqstAtch;
 import com.finalteam5.otisrm.dto.usr.Usr;
 import com.finalteam5.otisrm.dto.usr.UsrAuthrt;
 import com.finalteam5.otisrm.security.UsrDetails;
@@ -41,7 +42,7 @@ public class BoardController {
 	private BoardService boardService;
 	
 	@GetMapping("/ntc")
-	public String home(
+	public String ntc(
 			Authentication authentication, 
 			String ntcPageNo, 
 			@RequestParam(name="searchTarget", required=false)String searchTarget, 
@@ -71,7 +72,7 @@ public class BoardController {
 		         if(session.getAttribute("ntcPageNo") == null || session.getAttribute("ntcPageNo") == "") {
 		        	 ntcPageNo = "1";  
 		         }else {
-		        	 ntcPageNo =  (String) session.getAttribute("ntcPageNo");
+		        	 ntcPageNo = (String) session.getAttribute("ntcPageNo");
 		         }
 			}
 			//세션에 현재 sr요청 페이지번호 저장
@@ -156,6 +157,89 @@ public class BoardController {
 			}
 	    }
 	    return "redirect:/boardManagement/ntc";
+	}
+	
+	//======================================================================================
+	//문의게시판
+	@GetMapping("/inq")
+	public String inq(
+			Authentication authentication, 
+			String inqPageNo, 
+			@RequestParam(name="searchTarget", required=false)String searchTarget, 
+			@RequestParam(name="keyword", required=false)String keyword,
+			Model model, 
+			HttpSession session) {
+		if (authentication != null && authentication.isAuthenticated()) {
+			//로그인한 회원의 정보
+			UsrDetails usrDetails = (UsrDetails) authentication.getPrincipal();
+			Usr usr = usrDetails.getUsr();
+			model.addAttribute("usr", usr);
+	        
+	        //권한목록 담기(공개 대상 선택을 위함)
+	        List<UsrAuthrt> list =  usrService.getUsrAuthrtList();
+	        model.addAttribute("usrAuthrts", list);
+	        
+	       //SR요청 목록 페이징  
+			if(inqPageNo == null) {
+				 //세션에 저장되어 있는지 확인
+		         if(session.getAttribute("inqPageNo") == null || session.getAttribute("inqPageNo") == "") {
+		        	 log.info("웅 나널 1지정");
+		        	 inqPageNo = "1";  
+		         }else {
+		        	 inqPageNo =  (String) session.getAttribute("inqPageNo");
+		        	 log.info("세션에 저장되어ㅣ있는 페이지: " + inqPageNo);
+		         }
+			}
+			//세션에 현재 sr요청 페이지번호 저장
+			session.setAttribute("inqPageNo", String.valueOf(inqPageNo));
+			
+			//문자열을 정수로 변환
+			Map<String, Object>map = new HashMap<>();
+			int intinqPageNo = Integer.parseInt(inqPageNo);
+			//총 행수 구하기
+			map.put("searchTarget", searchTarget);
+			map.put("keyword", keyword);
+			int totalRows = boardService.totalNumOfInq(map);
+			
+			Pager inqPager = new Pager(12, 5, totalRows, intinqPageNo);
+			map.put("startRowNo", inqPager.getStartRowNo());
+			map.put("endRowNo", inqPager.getEndRowNo());
+
+			model.addAttribute("inqPager", inqPager);
+			
+			return "boardManagement/inq/inq";
+		} else {
+			return "redirect:/login";
+		}
+	}
+	
+	
+	//공지사항 등록하기
+	@PostMapping("writeInq")
+	public String writeInq(InqSubmit inqSubmit) throws Exception{
+		boardService.writeInq(inqSubmit);
+	    
+		//첨부파일이 있다면 첨부파일 업로드
+		MultipartFile[] files = inqSubmit.getFile();
+		
+		for(MultipartFile file : files) {
+			InqAtch inqAtch = new InqAtch();
+			if(!file.isEmpty()) {
+				//첨부파일을 업로드한 sr요청 번호 
+				String inqPk = boardService.getAddInqPk();
+				inqAtch.setInqNo(inqPk);
+	    		//브라우저에서 선택한 파일 이름 설정
+				inqAtch.setInqAtchNm(file.getOriginalFilename());
+	    		//파일의 형식(MIME타입)을 설정
+				inqAtch.setInqAtchMimeType(file.getContentType());
+	    		//올린 파일 설정
+				inqAtch.setInqAtchData(file.getBytes());
+	    		//파일 크기 설정
+				inqAtch.setInqAtchSize(file.getSize());
+	    		
+			}
+	    }
+	    return "redirect:/boardManagement/inq";
 	}
 	
 }
