@@ -35,6 +35,7 @@ function onsubmitOfSearchForm(){
 }
 
 //**문의 목록 불러오기
+var id = "";
 function loadInqs(pageNo) {
 	//페이지 지정
 	$("#ntcPageNo").val(pageNo);
@@ -49,6 +50,61 @@ function loadInqs(pageNo) {
     method: "POST",
     success: function(data) {
       html="";
+      //FAQ 표시
+      html += '<tr onclick="toggleTr(10000)" class="data-tr-faq" style="background-color: #f2f7fd;">'; // 일반 행 스타일 적용
+      html += '  <td class="text-primary" style="font-weight:bold;">FAQ</td>';
+      html += '  <td class="truncate-text">O1.[접속] 어떻게 접속하는지 모르겠어요.</td>';
+      html += '  <td class="truncate-text">최고관리자</td>';
+      html += '  <td>23-10-30</td>';
+      html += '  <td></td>';
+      html += '  <td><i class="material-icons">expand_more</i></td>';
+      html += '</tr>'; 
+      html += '<tr id="10000" class="inqAnsTr hidden">';
+	  html += '  <td colspan="6" style="background-color: #e9ecef;">';
+	  html += '    <p class="mt-2 t2_nonMessage">A. http://localhost:8080/otisrm/home 주소로 접속하시면 됩니다.</p>';
+	  html += '  </td>';
+	  html += '</tr>';
+	  
+	  html += '<tr onclick="toggleTr(1001)" class="data-tr-faq" style="background-color: #f2f7fd;">'; // 일반 행 스타일 적용
+	  html += '  <td class="text-primary" style="font-weight:bold;">FAQ</td>';
+	  html += '  <td class="truncate-text">Q2.[로그인] 로그인이 안되요</td>';
+	  html += '  <td class="truncate-text">최고관리자</td>';
+	  html += '  <td>23-10-30</td>';
+	  html += '  <td></td>';
+	  html += '  <td><i class="material-icons">expand_more</i></td>';
+	  html += '</tr>'; 
+	  html += '<tr id="1001" class="inqAnsTr hidden">';
+	  html += '  <td colspan="6" style="background-color: #e9ecef;">';
+	  html += '    <p class="mt-2 t2_nonMessage">';
+	  html += '    	A. 로그인이 되지 않는 경우는 업체를 등록하지 않은 경우이거나, ID 혹은 PW 입력이 틀린경우 입니다. 업체등록 또는 ID, PW 안내는 시스템 관리자에게 요청하시면 됩니다.</p>';
+	  html += '    </p>';
+	  html += '  </td>';
+	  html += '</tr>';
+	 
+	  html += '<tr onclick="toggleTr(1002)" class="data-tr-faq" style="background-color: #f2f7fd;">'; // 일반 행 스타일 적용
+	  html += '  <td class="text-primary" style="font-weight:bold;">FAQ</td>';
+	  html += '  <td class="truncate-text">Q.[데이터] 프로그램에서 조회가 안되요.</td>';
+	  html += '  <td class="truncate-text">최고관리자</td>';
+	  html += '  <td>23-10-30</td>';
+	  html += '  <td></td>';
+	  html += '  <td><i class="material-icons">expand_more</i></td>';
+	  html += '</tr>'; 
+	  html += '<tr id="1002" class="inqAnsTr hidden">';
+	  html += '  <td colspan="6" style="background-color: #e9ecef;">';
+	  html += '    <p class="mt-2 t2_nonMessage">';
+	  html += '    	A: A. 조회가 안되는 경우는 호환성보기 설정, 검색조건, 데이터 이상 세 가지 경우입니다.';
+	  html += '    </p>';
+	  html += '    <p class="mt-1 t2_nonMessage">';
+	  html += '    	 1. 먼저, 호환성 보기 설정에 otisrm.co.kr가 추가되어있는지 확인하세요.';
+	  html += '    </p>';
+	  html += '    <p class="mt-2 t2_nonMessage">';
+	  html += '    	2. 검색조건이 제대로 입력되어 있는지 확인하세요.(스타일품번, 날짜 등)';
+	  html += '    </p>';
+	  html += '    <p class="mt-2 t2_nonMessage">';
+	  html += '    	 3. 위 두가지 상황 확인 후에도 조회가 안될 시 데이터 확인이 필요합니다. 시스템 관리자에게 문의해주세요.';
+	  html += '    </p>';
+	  html += '  </td>';
+	  html += '</tr>';
       console.log(data);
       if (data < 1) {
         html += '<tr style="background-color: white;">';
@@ -57,31 +113,78 @@ function loadInqs(pageNo) {
         html += '  </td>';
         html += '</tr>';
       } else {
-        // 중요한 행 표시
-        data.forEach((item, index) => {
+	    data.forEach((item, index) => {
           const formattedDate = formatDateToYYYYMMDD(item.inqWrtDt);
           var indexOnPage = (pageNo - 1) * 12 + 1;
-
-          html += '<tr onclick="toggleTr()" class="data-tr" style="background-color: white;">'; // 일반 행 스타일 적용
-          html += '  <td>'+ indexOnPage +'</td>';
-          html += '  <td class="truncate-text">' + item.inqTtl + '</td>';
-          html += '  <td class="truncate-text">' + item.usrNm + '</td>';
-          html += '  <td>' + formattedDate + '</td>';
-          html += '  <td>' + item.inqAnsYn + '</td>';
-          html += '  <td><button type="button" id="showinqDetailBtn" class="btn-1" data-toggle="modal" data-target="#getNtcByNtcNo" onclick="showInqByNtcNo(\'' + item.inqNo + '\')">상세보기</button></td>';
-          html += '</tr>';
-          if(item.inqAns === null){        	  
-        	  html += '<tr class="inqAnsTr hidden">';
-        	  html += '  <td colspan="6" style="background-color: #e9ecef;">';
-        	  html += '    <p class="t2_nonMessage">아직 해당 문의글에 대한 답변이 달리지 않았습니다.</p>';
-        	  html += '  </td>';
-        	  html += '</tr>';
-          }else{
-        	  html += '<tr class="inqAnsTr hidden">';
-        	  html += '  <td colspan="6" style="background-color: #e9ecef;">';
-        	  html += '    <p class="t2_nonMessage">' + item.inqAns + '</p>';
-        	  html += '  </td>';
-        	  html += '</tr>';
+          id = item.inqNo
+          //비밀글 일때
+          if(item.inqPrvtYn == "Y"){
+        	  //로그인한 회원의 비밀글 일때
+        	  if(item.usrNo == $("#loginUsr").val()){        		  
+        		  html += '<tr onclick="toggleTr('+ item.inqNo +')" class="data-tr" style="background-color: white;">'; // 일반 행 스타일 적용
+        		  html += '  <td><i style="font-size: 2.0rem; color: #5d6e82;" class="material-icons">lock</i></td>';
+        		  html += '  <td class="truncate-text">' + item.inqTtl + '</td>';
+        		  html += '  <td class="truncate-text">' + item.usrNm + '</td>';
+        		  html += '  <td>' + formattedDate + '</td>';
+        		  html += '  <td>' + item.inqAnsYn + '</td>';
+        		  html += '  <td><button type="button" id="showinqDetailBtn" class="btn-1" data-toggle="modal" data-target="#getNtcByNtcNo" onclick="showInqByNtcNo(\'' + item.inqNo + '\')">상세보기</button></td>';
+        		  html += '</tr>';
+        		  html += '<tr id="'+ item.inqNo +'" class="inqAnsTr hidden">';
+        		  html += '  <td colspan="6" style="background-color: #e9ecef;">';
+        		  html += '    <p class="t2_nonMessage">아직 해당 문의글에 대한 답변이 달리지 않았습니다.</p>';
+        		  html += '  </td>';
+        		  html += '</tr>';
+        		  if(item.inqAns === null){        	  
+        			  html += '<tr id="'+ item.inqNo +'" class="inqAnsTr hidden">';
+        			  html += '  <td colspan="6" style="background-color: #e9ecef;">';
+        			  html += '    <p class="t2_nonMessage">아직 해당 문의글에 대한 답변이 달리지 않았습니다.</p>';
+        			  html += '  </td>';
+        			  html += '</tr>';
+        		  }else{
+        			  html += '<tr class="inqAnsTr hidden">';
+        			  html += '  <td colspan="6" style="background-color: #e9ecef;">';
+        			  html += '    <p class="t2_nonMessage">' + item.inqAns + '</p>';
+        			  html += '  </td>';
+        			  html += '</tr>';
+        		  }
+        	  //로그인한 회원의 비밀글이 아닐 때
+        	  }else if(item.usrNo !== $("#loginUsr").val()){
+        		  html += '<tr onclick="toggleTr('+ item.inqNo +')" class="data-tr" style="background-color: white;">'; // 일반 행 스타일 적용
+        		  html += '  <td><i class="material-icons">lock</i>'+ indexOnPage +'</td>';
+        		  html += '  <td class="truncate-text">' + item.inqTtl + '</td>';
+        		  html += '  <td class="truncate-text">' + item.usrNm + '</td>';
+        		  html += '  <td>' + formattedDate + '</td>';
+        		  html += '  <td>' + item.inqAnsYn + '</td>';
+        		  html += '  <td><button type="button" style="opacity: 0.5;" class="btn-1" disabled>상세보기</button></td>';
+        		  html += '</tr>';
+        	  }
+           }else if(item.inqPrvtYn == "N"){
+        		  html += '<tr onclick="toggleTr('+ item.inqNo +')" class="data-tr" style="background-color: white;">'; // 일반 행 스타일 적용
+                  html += '  <td>'+ indexOnPage +'</td>';
+                  html += '  <td class="truncate-text">' + item.inqTtl + '</td>';
+                  html += '  <td class="truncate-text">' + item.usrNm + '</td>';
+                  html += '  <td>' + formattedDate + '</td>';
+                  html += '  <td>' + item.inqAnsYn + '</td>';
+                  html += '  <td><button type="button" id="showinqDetailBtn" class="btn-1" data-toggle="modal" data-target="#getNtcByNtcNo" onclick="showInqByNtcNo(\'' + item.inqNo + '\')">상세보기</button></td>';
+                  html += '</tr>';
+                  html += '<tr id="'+ item.inqNo +'" class="inqAnsTr hidden">';
+            	  html += '  <td colspan="6" style="background-color: #e9ecef;">';
+            	  html += '    <p class="t2_nonMessage">아직 해당 문의글에 대한 답변이 달리지 않았습니다.</p>';
+            	  html += '  </td>';
+            	  html += '</tr>';
+                  if(item.inqAns === null){        	  
+                	  html += '<tr id="'+ item.inqNo +'" class="inqAnsTr hidden">';
+                	  html += '  <td colspan="6" style="background-color: #e9ecef;">';
+                	  html += '    <p class="t2_nonMessage">아직 해당 문의글에 대한 답변이 달리지 않았습니다.</p>';
+                	  html += '  </td>';
+                	  html += '</tr>';
+                  }else{
+                	  html += '<tr class="inqAnsTr hidden">';
+                	  html += '  <td colspan="6" style="background-color: #e9ecef;">';
+                	  html += '    <p class="t2_nonMessage">' + item.inqAns + '</p>';
+                	  html += '  </td>';
+                	  html += '</tr>'; 
+        	  }
           }
         });
       }
@@ -99,6 +202,17 @@ function loadInqs(pageNo) {
     	  updatePagination(pageNo);
     	  $(".btn").show();
       }
+      //tr 요소에 대한 hover 이벤트 처리
+      $('.data-tr-faq').hover(
+    		  function() {
+    			  // 마우스가 요소 위에 있을 때 배경색 변경
+    			  $(this).css('background-color', '#e1edf9');
+    		  },
+    		  function() {
+    			  // 마우스가 요소를 벗어날 때 배경색 원래대로 변경
+    			  $(this).css('background-color', '#f2f7fd');
+    		  }
+      );
       //tr 요소에 대한 hover 이벤트 처리
       $('.data-tr').hover(
     		  function() {
@@ -118,8 +232,8 @@ function loadInqs(pageNo) {
   });
 }
 
-function toggleTr() {
-	  $(".inqAnsTr").toggleClass("hidden");
+function toggleTr(id) {
+	  $("#"+id).toggleClass("hidden");
 }
 //**상태에 따른 페이징 업데이트 함수
 function updatePagination(pageNo) {
@@ -273,7 +387,7 @@ function showNtcByNtcNo(choiceNtcNo){
         	var loggedInUsrNo= $("#loginUsr").val();// 로그인한 회원 번호 가져오기 
         	var saveButton = $("#saveButton");
         	console.log(loggedInUsrNo);
-        	// 로그인한 사용자와 요청을 등록한 회원을 비교하여 버튼 활성화/비활성화
+        	// 로그인한 사용자와 문의을 등록한 회원을 비교하여 버튼 활성화/비활성화
         	if (data.srReqstrNo === loggedInUsrNo) {
         		console.log("내요청");
         		saveButton.prop("disabled", false); // 버튼을 활성화
