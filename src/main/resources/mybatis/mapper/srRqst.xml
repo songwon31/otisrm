@@ -97,10 +97,10 @@
 				    <!-- 키워드 검색 -->
 				    <if test="keyword != null and keyword != '' or searchTarget != null and searchTarget != ''">
 				    	<if test="searchTarget == 'searchSrRqstNo'">				    	
-				        	REGEXP_REPLACE(LOWER(REPLACE(sr_rqst_no, ' ', '')), '[[:punct:]]', '') LIKE '%' || REGEXP_REPLACE(LOWER(REPLACE(#{keyword}, ' ', '')), '[[:punct:]]', '') || '%'
+				        	and REGEXP_REPLACE(LOWER(REPLACE(sr_rqst_no, ' ', '')), '[[:punct:]]', '') LIKE '%' || REGEXP_REPLACE(LOWER(REPLACE(#{keyword}, ' ', '')), '[[:punct:]]', '') || '%'
 				    	</if>
 				    	<if test="searchTarget == 'searchSrRqstNm'">				    	
-				       		REGEXP_REPLACE(LOWER(REPLACE(sr_ttl, ' ', '')), '[[:punct:]]', '') LIKE '%' || REGEXP_REPLACE(LOWER(REPLACE(#{keyword}, ' ', '')), '[[:punct:]]', '') || '%'
+				       		and REGEXP_REPLACE(LOWER(REPLACE(sr_ttl, ' ', '')), '[[:punct:]]', '') LIKE '%' || REGEXP_REPLACE(LOWER(REPLACE(#{keyword}, ' ', '')), '[[:punct:]]', '') || '%'
 				    	</if>
 				    </if>
 				    
@@ -160,14 +160,12 @@
 		    <!-- 키워드 검색 -->
 		    <if test="keyword != null and keyword != '' or searchTarget != null and searchTarget != ''">
 		    	<if test="searchTarget == 'searchSrRqstNo'">				    	
-		        	REGEXP_REPLACE(LOWER(REPLACE(sr_rqst_no, ' ', '')), '[[:punct:]]', '') LIKE '%' || REGEXP_REPLACE(LOWER(REPLACE(#{keyword}, ' ', '')), '[[:punct:]]', '') || '%'
+		        	 and REGEXP_REPLACE(LOWER(REPLACE(sr_rqst_no, ' ', '')), '[[:punct:]]', '') LIKE '%' || REGEXP_REPLACE(LOWER(REPLACE(#{keyword}, ' ', '')), '[[:punct:]]', '') || '%'
 		    	</if>
 		    	<if test="searchTarget == 'searchSrRqstNm'">				    	
-		       		REGEXP_REPLACE(LOWER(REPLACE(sr_ttl, ' ', '')), '[[:punct:]]', '') LIKE '%' || REGEXP_REPLACE(LOWER(REPLACE(#{keyword}, ' ', '')), '[[:punct:]]', '') || '%'
+		       		and REGEXP_REPLACE(LOWER(REPLACE(sr_ttl, ' ', '')), '[[:punct:]]', '') LIKE '%' || REGEXP_REPLACE(LOWER(REPLACE(#{keyword}, ' ', '')), '[[:punct:]]', '') || '%'
 		    	</if>
-		    </if>
-				    
-		    
+		    </if>    
 		  </where>
 		</if>
 	</select>

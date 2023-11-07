@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.finalteam5.otisrm.dto.Pager;
 import com.finalteam5.otisrm.dto.Sys;
+import com.finalteam5.otisrm.dto.inq.Inq;
 import com.finalteam5.otisrm.dto.ntc.Ntc;
 import com.finalteam5.otisrm.dto.ntc.NtcAtch;
 import com.finalteam5.otisrm.dto.srRequest.SrRqst;
@@ -188,7 +189,7 @@ public class CustomerRestController {
 		return list;
 	}
 	
-	//요청에 해당하는 상세정보 불러오기
+	//공지에 해당하는 상세정보 불러오기
 	@GetMapping("getNtcByNtcNoForCustomerHome")
 	public Ntc getNtcByNtcNo(String ntcNo, Model model, HttpSession session) {
 		
@@ -203,4 +204,43 @@ public class CustomerRestController {
 		model.addAttribute("ntcOfModiFy", ntc.getNtcNo());
 		return ntc;
 	}
+	
+	//문의게시판 목록 불러오기: 페이지에 해당하는 문의 목록 불러오기
+	@PostMapping("getInqByPageNoForCustomer")
+	public List<Inq> getInqByPageNo(
+			@RequestParam String inqPageNo,
+			@RequestParam(name="searchTarget", required=false)String searchTarget, 
+			@RequestParam(name="keyword", required=false)String keyword, 
+			HttpSession session) {
+		//파라미터로 받은 값 전달
+		Map<String, Object>map = new HashMap<>();
+        map.put("searchTarget", searchTarget);
+        map.put("keyword", keyword);
+      
+		///문의 목록 페이징  
+        if(inqPageNo == null) {
+			 //세션에 저장되어 있는지 확인
+	         if(session.getAttribute("inqPageNo") == null || session.getAttribute("inqPageNo") == "") {
+	        	 inqPageNo = "1";  
+	         }else {
+	        	 inqPageNo =  (String) session.getAttribute("inqPageNo");
+	         }
+		}
+		//세션에 현재 sr요청 페이지번호 저장
+		session.setAttribute("inqPageNo", String.valueOf(inqPageNo));
+		
+		//문자열을 정수로 변환
+		int intInqPageNo = Integer.parseInt(inqPageNo);
+		int totalRows = boardService.totalNumOfNct(map);
+		Pager inqPager = new Pager(5, 5, totalRows, intInqPageNo);
+		
+		map.put("startRowNo", inqPager.getStartRowNo());
+		map.put("endRowNo", inqPager.getEndRowNo());
+		
+		//페이지 별 요청 목록 불러오기
+		List<Inq> list = boardService.getInqListByPage(map);
+	
+		return list;
+	}	
+	
 }

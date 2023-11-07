@@ -49,7 +49,7 @@ public class DeveloperHomeController {
 			model.addAttribute("usr", usr);
 			return "/home/developerHome";
 		} else {
-			return "/home/developerHome";
+			return "/home/login";
 		}
 	}
 	

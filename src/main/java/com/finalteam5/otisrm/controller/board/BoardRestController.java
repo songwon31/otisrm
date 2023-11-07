@@ -113,7 +113,7 @@ public class BoardRestController {
         map.put("searchTarget", searchTarget);
         map.put("keyword", keyword);
       
-		///SR요청 목록 페이징  
+		///문의 목록 페이징  
         if(inqPageNo == null) {
 			 //세션에 저장되어 있는지 확인
 	         if(session.getAttribute("inqPageNo") == null || session.getAttribute("inqPageNo") == "") {

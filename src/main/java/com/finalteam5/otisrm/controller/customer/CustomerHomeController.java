@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -45,7 +46,7 @@ public class CustomerHomeController {
 	@Value("${file.upload.dir}")
 	private String fileUploadDir;
 
-	@GetMapping("home")
+	@GetMapping("customerHome")
 	public String customerHome(
 			Authentication authentication, 
 			String srRqstPageNo, 
@@ -85,7 +86,6 @@ public class CustomerHomeController {
 			
 			model.addAttribute("srRqstpager", srRqstpager);
 		} 
-	
 		return "/home/customerHome";
 	}
 
@@ -122,7 +122,7 @@ public class CustomerHomeController {
 	    return "redirect:/home";
 	}
 	
-	@GetMapping("/filedownload2")
+	@GetMapping("filedownload2")
 	public void filedownload(String srRqstAtchNo, HttpServletRequest request, HttpServletResponse response) throws Exception {
 	    // 요청된 SrRqstAtchNo에 해당하는 SrRqstAtch 객체를 가져옴
 	    SrRqstAtch srRqstAtch = srRqstService.getSrRqstAtchBySrRqstAtchNo(srRqstAtchNo);

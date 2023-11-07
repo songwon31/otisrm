@@ -3,6 +3,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +18,7 @@ import com.finalteam5.otisrm.dto.usr.Inst;
 import com.finalteam5.otisrm.dto.usr.Role;
 import com.finalteam5.otisrm.dto.usr.Usr;
 import com.finalteam5.otisrm.dto.usr.UsrAuthrt;
+import com.finalteam5.otisrm.security.UsrDetails;
 import com.finalteam5.otisrm.service.UsrService;
 import com.finalteam5.otisrm.service.UsrService.JoinResult;
 
@@ -28,14 +30,28 @@ public class CommonController {
 
 	@Autowired
 	private UsrService usrService;
-
+	
 	@RequestMapping("/")
 	public String home(Authentication authentication) {
-		if (authentication != null && authentication.isAuthenticated()) {
-			return "redirect:/home";
-		} else {
-			return "redirect:/login";
-		}
+	    if (authentication != null && authentication.isAuthenticated()) {
+	    	//로그인한 회원의 정보
+			UsrDetails usrDetails = (UsrDetails) authentication.getPrincipal();
+			Usr usr = usrDetails.getUsr();
+            if (usr.getUsrAuthrtNo().equals("CUSTOMER")) {
+                return "redirect:/customerHome";
+            } else if (usr.getUsrAuthrtNo().equals("REVIEWER")) {
+                return "redirect:/reviewerHome";
+            } else if (usr.getUsrAuthrtNo().equals("DEVELOPER")) {
+                return "redirect:/developerHome";
+            } else if (usr.getUsrAuthrtNo().equals("PIC")) {
+                return "redirect:/picHome";
+            }else {	            	
+            	// 여기까지 도달하면 어떤 권한에도 해당하지 않는 경우
+            	return "redirect:/systemManagement/usrManagement";
+            }
+	    } else {
+	        return "redirect:/login";
+	    }
 	}
 	
 	//로그인 폼 불러오기

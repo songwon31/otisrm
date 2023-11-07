@@ -30,6 +30,7 @@ $(document).ready(function() {
 	});	
   loadSRRequests(1, choiceSrRqstSttsNo); //페이지 로딩 시 초기 데이터 로드
   loadNtcs(1);
+  loadInqs(1);
 });
 
 //timestamp 객체를 YYYY-MM-dd 형식의 문자열로 변환하는 함수
@@ -666,6 +667,184 @@ function showNtcByNtcNo(choiceNtcNo){
     });
 }
 
+//문의 목록 가져오기
+//**문의 목록 불러오기
+var id = "";
+function loadInqs(pageNo) {
+	//페이지 지정
+	$("#inqPageNo").val(pageNo);
+	$.ajax({
+    url: "getInqByPageNoForCustomer",
+    data: { 
+    	inqPageNo: 1,
+    	searchTarget: "",
+    	keyword: ""
+    },
+    dataType: "json",
+    method: "POST",
+    success: function(data) {
+      html="";
+      //FAQ 표시
+      html += '<tr onclick="toggleTr(10000)" class="data-tr-faq" style="background-color: #f2f7fd;">'; // 일반 행 스타일 적용
+      html += '  <td class="text-primary" style="font-weight:bold;">FAQ</td>';
+      html += '  <td class="truncate-text">O1.[접속] 어떻게 접속하는지 모르겠어요.</td>';
+      html += '  <td class="truncate-text">최고관리자</td>';
+      html += '  <td>23-10-30</td>';
+      html += '  <td><i class="material-icons">expand_more</i></td>';
+      html += '</tr>'; 
+      html += '<tr id="10000" class="inqAnsTr hidden">';
+	  html += '  <td colspan="5" style="background-color: #e9ecef;">';
+	  html += '    <p class="mt-2 t2_nonMessage">A. http://localhost:8080/otisrm/home 주소로 접속하시면 됩니다.</p>';
+	  html += '  </td>';
+	  html += '</tr>';
+	  
+	  html += '<tr onclick="toggleTr(1001)" class="data-tr-faq" style="background-color: #f2f7fd;">'; // 일반 행 스타일 적용
+	  html += '  <td class="text-primary" style="font-weight:bold;">FAQ</td>';
+	  html += '  <td class="truncate-text">Q2.[로그인] 로그인이 안되요</td>';
+	  html += '  <td class="truncate-text">최고관리자</td>';
+	  html += '  <td>23-10-30</td>';
+	  html += '  <td><i class="material-icons">expand_more</i></td>';
+	  html += '</tr>'; 
+	  html += '<tr id="1001" class="inqAnsTr hidden">';
+	  html += '  <td colspan="5" style="background-color: #e9ecef;">';
+	  html += '    <p class="mt-2 t2_nonMessage">';
+	  html += '    	A. 로그인이 되지 않는 경우는 업체를 등록하지 않은 경우이거나, ID 혹은 PW 입력이 틀린경우 입니다. 업체등록 또는 ID, PW 안내는 시스템 관리자에게 요청하시면 됩니다.</p>';
+	  html += '    </p>';
+	  html += '  </td>';
+	  html += '</tr>';
+	 
+	  html += '<tr onclick="toggleTr(1002)" class="data-tr-faq" style="background-color: #f2f7fd;">'; // 일반 행 스타일 적용
+	  html += '  <td class="text-primary" style="font-weight:bold;">FAQ</td>';
+	  html += '  <td class="truncate-text">Q.[데이터] 프로그램에서 조회가 안되요.</td>';
+	  html += '  <td class="truncate-text">최고관리자</td>';
+	  html += '  <td>23-10-30</td>';
+	  html += '  <td><i class="material-icons">expand_more</i></td>';
+	  html += '</tr>'; 
+	  html += '<tr id="1002" class="inqAnsTr hidden">';
+	  html += '  <td colspan="5" style="background-color: #e9ecef;">';
+	  html += '    <p class="mt-2 t2_nonMessage">';
+	  html += '    	A: A. 조회가 안되는 경우는 호환성보기 설정, 검색조건, 데이터 이상 세 가지 경우입니다.';
+	  html += '    </p>';
+	  html += '    <p class="mt-1 t2_nonMessage">';
+	  html += '    	 1. 먼저, 호환성 보기 설정에 otisrm.co.kr가 추가되어있는지 확인하세요.';
+	  html += '    </p>';
+	  html += '    <p class="mt-2 t2_nonMessage">';
+	  html += '    	2. 검색조건이 제대로 입력되어 있는지 확인하세요.(스타일품번, 날짜 등)';
+	  html += '    </p>';
+	  html += '    <p class="mt-2 t2_nonMessage">';
+	  html += '    	 3. 위 두가지 상황 확인 후에도 조회가 안될 시 데이터 확인이 필요합니다. 시스템 관리자에게 문의해주세요.';
+	  html += '    </p>';
+	  html += '  </td>';
+	  html += '</tr>';
+      console.log(data);
+      if (data < 1) {
+        html += '<tr style="background-color: white;">';
+        html += '  <td colspan="5">';
+        html += '    <p class="t2_nonMessage">해당 목록 결과가 없습니다.</p>';
+        html += '  </td>';
+        html += '</tr>';
+      } else {
+	    data.forEach((item, index) => {
+          const formattedDate = formatDateToYYYYMMDD(item.inqWrtDt);
+          var indexOnPage = (pageNo - 1) * 5 + 1;
+          id = item.inqNo
+          //비밀글 일때
+          if(item.usrNo === $("#loginUsr").val()){
+        	  //로그인한 회원의 비밀글 일때
+        	  if(item.inqPrvtYn == "Y"){        		  
+        		  html += '<tr onclick="toggleTr('+ item.inqNo +')" class="data-tr" style="background-color: white;">'; // 일반 행 스타일 적용
+        		  html += '  <td><i style="font-size: 2.0rem; color: #5d6e82;" class="material-icons">lock</i></td>';
+        		  html += '  <td class="truncate-text">' + item.inqTtl + '</td>';
+        		  html += '  <td class="truncate-text">' + item.usrNm + '</td>';
+        		  html += '  <td>' + formattedDate + '</td>';
+        		  html += '  <td><i class="material-icons">expand_more</i></td>';
+        		  html += '</tr>';
+        		  html += '<tr id="'+ item.inqNo +'" class="inqAnsTr hidden">';
+        		  html += '  <td colspan="5" style="background-color: #e9ecef;">';
+        		  html += '    <p class="t2_nonMessage">아직 해당 문의글에 대한 답변이 달리지 않았습니다.</p>';
+        		  html += '  </td>';
+        		  html += '</tr>';
+        		  if(item.inqAns === null){        	  
+        			  html += '<tr id="'+ item.inqNo +'" class="inqAnsTr hidden">';
+        			  html += '  <td colspan="5" style="background-color: #e9ecef;">';
+        			  html += '    <p class="t2_nonMessage">아직 해당 문의글에 대한 답변이 달리지 않았습니다.</p>';
+        			  html += '  </td>';
+        			  html += '</tr>';
+        		  }else{
+        			  html += '<tr class="inqAnsTr hidden">';
+        			  html += '  <td colspan="5" style="background-color: #e9ecef;">';
+        			  html += '    <p class="t2_nonMessage">' + item.inqAns + '</p>';
+        			  html += '  </td>';
+        			  html += '</tr>';
+        		  }
+        	  }else if(item.inqPrvtYn == "N"){
+        		  html += '<tr onclick="toggleTr('+ item.inqNo +')" class="data-tr" style="background-color: white;">'; // 일반 행 스타일 적용
+                  html += '  <td>'+ indexOnPage +'</td>';
+                  html += '  <td class="truncate-text">' + item.inqTtl + '</td>';
+                  html += '  <td class="truncate-text">' + item.usrNm + '</td>';
+                  html += '  <td>' + formattedDate + '</td>';
+                  html += '  <td><i class="material-icons">expand_more</i></td>';
+                  html += '</tr>';
+                  html += '<tr id="'+ item.inqNo +'" class="inqAnsTr hidden">';
+            	  html += '  <td colspan="5" style="background-color: #e9ecef;">';
+            	  html += '    <p class="t2_nonMessage">아직 해당 문의글에 대한 답변이 달리지 않았습니다.</p>';
+            	  html += '  </td>';
+            	  html += '</tr>';
+                  if(item.inqAns === null){        	  
+                	  html += '<tr id="'+ item.inqNo +'" class="inqAnsTr hidden">';
+                	  html += '  <td colspan="5" style="background-color: #e9ecef;">';
+                	  html += '    <p class="t2_nonMessage">아직 해당 문의글에 대한 답변이 달리지 않았습니다.</p>';
+                	  html += '  </td>';
+                	  html += '</tr>';
+                  }else{
+                	  html += '<tr class="inqAnsTr hidden">';
+                	  html += '  <td colspan="5" style="background-color: #e9ecef;">';
+                	  html += '    <p class="t2_nonMessage">' + item.inqAns + '</p>';
+                	  html += '  </td>';
+                	  html += '</tr>'; 
+        	  }
+           }
+          }
+        });
+      }
+      html +='<tr class="empty-tr" style="height: 100%;">';
+      html +='</tr>';
+      $("#getInqListByPageNo").html(html);
+      
+      //tr 요소에 대한 hover 이벤트 처리
+      $('.data-tr-faq').hover(
+    		  function() {
+    			  // 마우스가 요소 위에 있을 때 배경색 변경
+    			  $(this).css('background-color', '#e1edf9');
+    		  },
+    		  function() {
+    			  // 마우스가 요소를 벗어날 때 배경색 원래대로 변경
+    			  $(this).css('background-color', '#f2f7fd');
+    		  }
+      );
+      //tr 요소에 대한 hover 이벤트 처리
+      $('.data-tr').hover(
+    		  function() {
+    			  // 마우스가 요소 위에 있을 때 배경색 변경
+    			  $(this).css('background-color', '#f3f6fd');
+    		  },
+    		  function() {
+    			  // 마우스가 요소를 벗어날 때 배경색 원래대로 변경
+    			  $(this).css('background-color', 'white');
+    		  }
+      );
+
+    },
+    error: function(error) {
+      console.error("데이터를 불러오는 중 오류가 발생했습니다.");
+    }
+  });
+}
+
+//투글 효과함수
+function toggleTr(id) {
+	  $("#"+id).toggleClass("hidden");
+}
 
 //로딩 스피너 함수
 function loading() {

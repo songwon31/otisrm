@@ -3,6 +3,11 @@
    margin: 0;
 }
 
+.hidden{
+	display: none;
+}
+
+
 /* 그림자 효과 */
 .shadow {
    border: none;

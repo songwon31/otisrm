@@ -150,7 +150,7 @@ function loadInqs(pageNo) {
         	  //로그인한 회원의 비밀글이 아닐 때
         	  }else if(item.usrNo !== $("#loginUsr").val()){
         		  html += '<tr onclick="toggleTr('+ item.inqNo +')" class="data-tr" style="background-color: white;">'; // 일반 행 스타일 적용
-        		  html += '  <td><i class="material-icons">lock</i>'+ indexOnPage +'</td>';
+        		  html += '  <td><i style="font-size: 2.0rem; color: #5d6e82;" class="material-icons">lock</i></td>';
         		  html += '  <td class="truncate-text">' + item.inqTtl + '</td>';
         		  html += '  <td class="truncate-text">' + item.usrNm + '</td>';
         		  html += '  <td>' + formattedDate + '</td>';

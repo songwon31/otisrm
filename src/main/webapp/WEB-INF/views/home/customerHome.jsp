@@ -149,11 +149,11 @@
 	   	  <div>	   	  
 	   	  	<a href="${pageContext.request.contextPath}/boardManagement/ntc" alt="더보기" title="더보기" class="plus_btn"></a>
 	   	  </div>
-	   	  <div class="subcontentTitle  w-50 pt-1"  style="padding-left: 19px;color: #5d6e7e;">
+	   	  <div class="subcontentTitle pt-1"  style="width: 48%; padding-left: 19px;color: #5d6e7e;">
 	   	  	문의게시판
 	   	  </div>
 	   	   <div>	   	  
-	   	  	<a href="${pageContext.request.contextPath}/boardManagement/inw" alt="더보기" title="더보기" class="plus_btn"></a>
+	   	  	<a href="${pageContext.request.contextPath}/boardManagement/inq" alt="더보기" title="더보기" class="plus_btn"></a>
 	   	  </div>
    	  </div>
    	  <div class="d-flex">
@@ -181,43 +181,23 @@
 	   	  <div class="tableContainer w-50 p-1">
 		   	   <table id="mainTable" style="width: 100%; text-align: center; height: 28rem;">
 				    <colgroup>
-				        <col width="44.86px" />
-				        <col width="118.99px" />
-				        <col width="90px" />
+				        <col width="10%" /> 
+					    <col width="30%" /> 
+					    <col width="15%" /> 
+					    <col width="10%" /> 
+					    <col width="5%" /> 
 				    </colgroup>
 				    <thead>
 				        <tr>
 				            <th scope="col"></th>
 				            <th scope="col">제목</th>
-				            <th scope="col">작성일</th>
+				            <th scope="col">등록자</th>
+				            <th scope="col">등록일</th>
+				            <th scope="col"></th>
 				        </tr>
 				    </thead>
-				    <tbody id="getSrReqstListByPageNo">      
-			            <tr>
-			            	<td>1</td>
-			            	<td>권한신청 프로세스 개선</td>
-			            	<td>2023-10-30</td>
-			            </tr> 
-			            <tr>
-			            	<td>2</td>
-			            	<td>권한신청 프로세스 개선</td>
-			            	<td>2023-10-30</td>
-			            </tr> 
-			            <tr>
-			            	<td>3</td>
-			            	<td>권한신청 프로세스 개선</td>
-			            	<td>2023-10-30</td>
-			            </tr> 
-			            <tr>
-			            	<td>4</td>
-			            	<td>권한신청 프로세스 개선</td>
-			            	<td>2023-10-30</td>
-			            </tr> 
-			            <tr>
-			            	<td>5</td>
-			            	<td>권한신청 프로세스 개선</td>
-			            	<td>2023-10-30</td>
-			            </tr> 
+				    <tbody id="getInqListByPageNo">      
+			         <!-- 문의 목록 들오오는 곳 -->
 				    </tbody>
 			</table>
 	   	  </div>
