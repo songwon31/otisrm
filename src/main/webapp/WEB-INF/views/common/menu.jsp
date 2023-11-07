@@ -19,9 +19,24 @@
 		<div style="margin-left:1rem; font-weight:700;">My Portal</div>
 	</div>
 	<div style="border:1px solid #ADB5BD; margin:1rem 0rem;"></div>
-	<c:if test="${usr.usrNo != null && usr.usrAuthrtNo != 'SYS_MANAGER'}">
+	<c:if test="${usr.usrNo != null && usr.usrAuthrtNo == 'CUSTOMER'}">
 		<ul style="list-style:none; padding:0; margin:0;">
-			<li class="menu-item"><a href="${pageContext.request.contextPath}/home">나의 할일</a></li>
+			<li class="menu-item"><a href="${pageContext.request.contextPath}/customerHome">나의 할일</a></li>
+		</ul>
+	</c:if>
+	<c:if test="${usr.usrNo != null && usr.usrAuthrtNo == 'REVIEWER'}">
+		<ul style="list-style:none; padding:0; margin:0;">
+			<li class="menu-item"><a href="${pageContext.request.contextPath}/reviewerHome">나의 할일</a></li>
+		</ul>
+	</c:if>
+	<c:if test="${usr.usrNo != null && usr.usrAuthrtNo == 'DEVELOPER'}">
+		<ul style="list-style:none; padding:0; margin:0;">
+			<li class="menu-item"><a href="${pageContext.request.contextPath}/developerHome">나의 할일</a></li>
+		</ul>
+	</c:if>
+	<c:if test="${usr.usrNo != null && usr.usrAuthrtNo == 'PIC'}">
+		<ul style="list-style:none; padding:0; margin:0;">
+			<li class="menu-item"><a href="${pageContext.request.contextPath}/picHome">나의 할일</a></li>
 		</ul>
 	</c:if>
 	<c:if test="${usr.usrNo != null && usr.usrAuthrtNo == 'SYS_MANAGER'}">
