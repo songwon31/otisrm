@@ -121,14 +121,14 @@
 		                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
 		                    Profile
 		                </a>
-		                <a class="dropdown-item" href="#">
+		                <a class="dropdown-item" href="javascript:void(0)" data-toggle="modal" data-target="#identificationModal">
 		                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-		                    Settings
+							개인정보수정
 		                </a>
 		                <div class="dropdown-divider"></div>
 		                <form class="dropdown-item" action="${pageContext.request.contextPath}/logout">
 		                	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-		                	<button style="background-color: transparent; border: none;">
+		                	<button style="background-color: transparent; border: none; color:black;">
 		                		<i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
 		                    	Logout
 		                	</button>

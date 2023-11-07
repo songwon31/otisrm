@@ -3,7 +3,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +19,7 @@ import com.finalteam5.otisrm.dto.usr.Inst;
 import com.finalteam5.otisrm.dto.usr.Role;
 import com.finalteam5.otisrm.dto.usr.Usr;
 import com.finalteam5.otisrm.dto.usr.UsrAuthrt;
+import com.finalteam5.otisrm.dto.usr.UsrEditConfigure;
 import com.finalteam5.otisrm.security.UsrDetails;
 import com.finalteam5.otisrm.service.UsrService;
 import com.finalteam5.otisrm.service.UsrService.JoinResult;
@@ -174,5 +176,108 @@ public class CommonController {
 		return "header/alerts";
 	}
 	
+	//개인정보수정 모달
+	@RequestMapping("/checkPassword")
+	@ResponseBody
+	public boolean checkPassword(Authentication authentication, String password) {
+		//로그인한 회원의 정보
+		UsrDetails usrDetails = (UsrDetails) authentication.getPrincipal();
+		Usr usr = usrDetails.getUsr();
+
+		PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+		if(passwordEncoder.matches(password, usr.getUsrPswd())) {
+			return true;
+		}else {
+			return false;
+		}
+	}
 	
+	@RequestMapping("/getEditPersonalInfoConfig")
+	@ResponseBody
+	public UsrEditConfigure getEditPersonalInfoConfig(Authentication authentication) {
+		UsrDetails usrDetails = (UsrDetails) authentication.getPrincipal();
+		Usr usr = usrDetails.getUsr();
+		return usrService.getUsrEditConfigure(usr.getUsrNo());
+	}
+	
+	//아이디 수정
+	@RequestMapping("/editUsrId")
+	@ResponseBody
+	public int editUsrId(Authentication authentication, String newUsrId) {
+		UsrDetails usrDetails = (UsrDetails) authentication.getPrincipal();
+		Usr usr = usrDetails.getUsr();
+		return usrService.editUsrId(usr.getUsrNo(), newUsrId);
+	}
+	
+	//비밀번호 수정
+	@RequestMapping("/editUsrPassword")
+	@ResponseBody
+	public int editUsrPassword(Authentication authentication, String newUsrPassword) {
+		UsrDetails usrDetails = (UsrDetails) authentication.getPrincipal();
+		Usr usr = usrDetails.getUsr();
+		return usrService.editUsrPassword(usr.getUsrNo(), newUsrPassword);
+	}
+	
+	//비밀번호 수정
+	@RequestMapping("/editUsrNm")
+	@ResponseBody
+	public int editUsrNm(Authentication authentication, String newUsrNm) {
+		UsrDetails usrDetails = (UsrDetails) authentication.getPrincipal();
+		Usr usr = usrDetails.getUsr();
+		return usrService.editUsrNm(usr.getUsrNo(), newUsrNm);
+	}
+	
+	//이메일 수정
+	@RequestMapping("/editUsrEml")
+	@ResponseBody
+	public int editUsrEml(Authentication authentication, String newUsrEml) {
+		UsrDetails usrDetails = (UsrDetails) authentication.getPrincipal();
+		Usr usr = usrDetails.getUsr();
+		return usrService.editUsrEml(usr.getUsrNo(), newUsrEml);
+	}
+	
+	//전화번호 수정
+	@RequestMapping("/editUsrTelno")
+	@ResponseBody
+	public int editUsrTelno(Authentication authentication, String newUsrTelno) {
+		UsrDetails usrDetails = (UsrDetails) authentication.getPrincipal();
+		Usr usr = usrDetails.getUsr();
+		return usrService.editUsrTelno(usr.getUsrNo(), newUsrTelno);
+	}
+	
+	//부서 수정
+	@RequestMapping("/editUsrDept")
+	@ResponseBody
+	public int editUsrDept(Authentication authentication, String newDeptNo) {
+		UsrDetails usrDetails = (UsrDetails) authentication.getPrincipal();
+		Usr usr = usrDetails.getUsr();
+		return usrService.editUsrDept(usr.getUsrNo(), newDeptNo);
+	}
+	
+	//직책 수정
+	@RequestMapping("/editUsrRole")
+	@ResponseBody
+	public int editUsrRole(Authentication authentication, String newRoleNo) {
+		UsrDetails usrDetails = (UsrDetails) authentication.getPrincipal();
+		Usr usr = usrDetails.getUsr();
+		return usrService.editUsrRole(usr.getUsrNo(), newRoleNo);
+	}
+	
+	//직위 수정
+	@RequestMapping("/editUsrIbps")
+	@ResponseBody
+	public int editUsrIbps(Authentication authentication, String newIbpsNo) {
+		UsrDetails usrDetails = (UsrDetails) authentication.getPrincipal();
+		Usr usr = usrDetails.getUsr();
+		return usrService.editUsrIbps(usr.getUsrNo(), newIbpsNo);
+	}
+	
+	//회원 탈퇴
+	@RequestMapping("/usrWhdwl")
+	@ResponseBody
+	public int usrWhdwl(Authentication authentication) {
+		UsrDetails usrDetails = (UsrDetails) authentication.getPrincipal();
+		Usr usr = usrDetails.getUsr();
+		return usrService.usrWhdwl(usr.getUsrNo());
+	}
 }

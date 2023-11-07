@@ -9,6 +9,7 @@ import com.finalteam5.otisrm.dto.usr.Login;
 import com.finalteam5.otisrm.dto.usr.Role;
 import com.finalteam5.otisrm.dto.usr.Usr;
 import com.finalteam5.otisrm.dto.usr.UsrAuthrt;
+import com.finalteam5.otisrm.dto.usr.UsrEditConfigure;
 import com.finalteam5.otisrm.dto.usr.UsrManagementModalConfigure;
 import com.finalteam5.otisrm.dto.usr.UsrManagementSearchConfigure;
 import com.finalteam5.otisrm.dto.usr.UsrTableConfigForUsrManagement;
@@ -62,4 +63,34 @@ public interface UsrService {
 	
 	//사용자 상세 모달 구성
 	public UsrManagementModalConfigure getUsrDetailModalConfig(String usrNo);
+	
+	//개인정보수정 모달 구성
+	public UsrEditConfigure getUsrEditConfigure(String usrNo);
+	
+	//아이디 수정
+	public int editUsrId(String usrNo, String newUsrId);
+	
+	//비밀번호 수정
+	public int editUsrPassword(String usrNo, String newUsrPassword);
+	
+	//이름 수정
+	public int editUsrNm(String usrNo, String newUsrNm);
+	
+	//이메일 수정
+	public int editUsrEml(String usrNo, String newUsrEml);
+	
+	//전화번호 수정
+	public int editUsrTelno(String usrNo, String newUsrTelno);
+	
+	//부서 수정
+	public int editUsrDept(String usrNo, String newDeptNo);
+	
+	//직책 수정
+	public int editUsrRole(String usrNo, String newRoleNo);
+	
+	//직위 수정
+	public int editUsrIbps(String usrNo, String newIbpsNo);
+	
+	//회원 탈퇴
+	public int usrWhdwl(String usrNo);
 }

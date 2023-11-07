@@ -20,6 +20,7 @@ import com.finalteam5.otisrm.dto.usr.Login;
 import com.finalteam5.otisrm.dto.usr.Role;
 import com.finalteam5.otisrm.dto.usr.Usr;
 import com.finalteam5.otisrm.dto.usr.UsrAuthrt;
+import com.finalteam5.otisrm.dto.usr.UsrEditConfigure;
 import com.finalteam5.otisrm.dto.usr.UsrManagementModalConfigure;
 import com.finalteam5.otisrm.dto.usr.UsrManagementSearch;
 import com.finalteam5.otisrm.dto.usr.UsrManagementSearchConfigure;
@@ -225,6 +226,84 @@ public class UsrServiceImpl implements UsrService{
 		UsrManagementModalConfigure usrManagementModalConfigure = usrDao.selectUsrInfoByUsrNo(usrNo);
 		usrManagementModalConfigure.setSrInfo(usrDao.selectSrInfoByUsrNo(usrNo));
 		return usrManagementModalConfigure;
+	}
+	
+	//개인정보수정 모달 구성
+	@Override
+	public UsrEditConfigure getUsrEditConfigure(String usrNo) {
+		UsrEditConfigure usrEditConfigure = usrDao.selectUsrEditConfigureByUsrNo(usrNo);
+		String instNo = usrDao.selectInstNoByUsrNo(usrNo);
+		usrEditConfigure.setDeptList(usrDao.selectDeptListByInstNo(instNo));
+		usrEditConfigure.setRoleList(usrDao.selectRoleListByInstNo(instNo));
+		usrEditConfigure.setIbpsList(usrDao.selectIbpsListByInstNo(instNo));
+		log.info(""+usrEditConfigure.getDeptList());
+		log.info(""+usrEditConfigure.getRoleList());
+		log.info(""+usrEditConfigure.getIbpsList());
+		return usrEditConfigure;
+	}
+	
+	//아이디 수정
+	@Override
+	public int editUsrId(String usrNo, String newUsrId) {
+		return usrDao.updateUsrId(usrNo, newUsrId);
+	}
+	
+	//비밀번호 수정
+	@Override
+	public int editUsrPassword(String usrNo, String newUsrPassword) {
+		PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+		String encodedNewUsrPassword = passwordEncoder.encode(newUsrPassword);
+		return usrDao.updateUsrPassword(usrNo, encodedNewUsrPassword);
+	}
+	
+	//이름 수정
+	@Override
+	public int editUsrNm(String usrNo, String newUsrNm) {
+		return usrDao.updateUsrNm(usrNo, newUsrNm);
+	}
+	
+	//이메일 수정
+	@Override
+	public int editUsrEml(String usrNo, String newUsrEml) {
+		return usrDao.updateUsrEml(usrNo, newUsrEml);
+	}
+	
+	//전화번호 수정
+	@Override
+	public int editUsrTelno(String usrNo, String newUsrTelno) {
+		return usrDao.updateUsrTelno(usrNo, newUsrTelno);
+	}
+	
+	//부서 수정
+	@Override
+	public int editUsrDept(String usrNo, String newDeptNo) {
+		if (usrDao.selectSrInfoByUsrNo(usrNo).size() > 0) {
+			return 0;
+		} else {
+			return usrDao.updateUsrDept(usrNo, newDeptNo);
+		}
+	}
+	
+	//직책 수정
+	@Override
+	public int editUsrRole(String usrNo, String newRoleNo) {
+		return usrDao.updateUsrRole(usrNo, newRoleNo);
+	}
+	
+	//직위 수정
+	@Override
+	public int editUsrIbps(String usrNo, String newIbpsNo) {
+		return usrDao.updateUsrIbps(usrNo, newIbpsNo);
+	}
+	
+	//회원 탈퇴
+	@Override
+	public int usrWhdwl(String usrNo) {
+		if (usrDao.selectSrInfoByUsrNo(usrNo).size() > 0) {
+			return 0;
+		} else {
+			return usrDao.updateUsrSttsToWhdwl(usrNo);
+		}
 	}
 
 }

@@ -266,4 +266,80 @@
 			WHERE srp.usr_no = #{usrNo}
 		)
 	</select>
+	
+	<!-- 개인정보수정 모달 구성 -->
+	<select id="selectUsrEditConfigureByUsrNo" parameterType="String" resultType="com.finalteam5.otisrm.dto.usr.UsrEditConfigure">
+		SELECT usr_id, usr_nm, usr_eml, usr_eml, usr_telno, dept_no, role_no, ibps_no
+		FROM usr
+		WHERE usr.usr_no = #{usrNo}
+	</select>
+	
+	<select id="selectInstNoByUsrNo" parameterType="String" resultType="String">
+		SELECT inst_no
+		FROM usr
+		WHERE usr.usr_no = #{usrNo}
+	</select>
+	
+	<!-- 아이디 수정 -->
+	<update id="updateUsrId" parameterType="map">
+		UPDATE usr
+		SET usr_id = #{usrId}
+		WHERE usr_no = #{usrNo}
+	</update>
+	
+	<!-- 비밀번호 수정 -->
+	<update id="updateUsrPassword" parameterType="map">
+		UPDATE usr
+		SET usr_pswd = #{usrPassword}
+		WHERE usr_no = #{usrNo}
+	</update>
+	
+	<!-- 이름 수정 -->
+	<update id="updateUsrNm" parameterType="map">
+		UPDATE usr
+		SET usr_nm = #{usrNm}
+		WHERE usr_no = #{usrNo}
+	</update>
+	
+	<!-- 이메일 수정 -->
+	<update id="updateUsrEml" parameterType="map">
+		UPDATE usr
+		SET usr_eml = #{usrEml}
+		WHERE usr_no = #{usrNo}
+	</update>
+	
+	<!-- 전화번호 수정 -->
+	<update id="updateUsrTelno" parameterType="map">
+		UPDATE usr
+		SET usr_telno = #{usrTelno}
+		WHERE usr_no = #{usrNo}
+	</update>
+	
+	<!-- 부서 수정 -->
+	<update id="updateUsrDept" parameterType="map">
+		UPDATE usr
+		SET dept_no = #{deptNo}
+		WHERE usr_no = #{usrNo}
+	</update>
+	
+	<!-- 직책 수정 -->
+	<update id="updateUsrRole" parameterType="map">
+		UPDATE usr
+		SET role_no = #{roleNo}
+		WHERE usr_no = #{usrNo}
+	</update>
+	
+	<!-- 직위 수정 -->
+	<update id="updateUsrIbps" parameterType="map">
+		UPDATE usr
+		SET ibps_no = #{ibpsNo}
+		WHERE usr_no = #{usrNo}
+	</update>
+	
+	<!-- 회원 탈퇴 -->
+	<update id="updateUsrSttsToWhdwl" parameterType="String">
+		UPDATE usr
+		SET usr_stts_no = 'WITHDRAWL'
+		WHERE usr_no = #{usrNo}
+	</update>
 </mapper>

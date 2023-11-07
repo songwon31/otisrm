@@ -14,6 +14,7 @@ import com.finalteam5.otisrm.dto.usr.Login;
 import com.finalteam5.otisrm.dto.usr.Role;
 import com.finalteam5.otisrm.dto.usr.Usr;
 import com.finalteam5.otisrm.dto.usr.UsrAuthrt;
+import com.finalteam5.otisrm.dto.usr.UsrEditConfigure;
 import com.finalteam5.otisrm.dto.usr.UsrForUsrManagementBoard;
 import com.finalteam5.otisrm.dto.usr.UsrManagementModalConfigure;
 import com.finalteam5.otisrm.dto.usr.UsrManagementSearch;
@@ -49,4 +50,27 @@ public interface UsrDao {
 	//사용자 모달 구성
 	public UsrManagementModalConfigure selectUsrInfoByUsrNo(String usrNo);
 	public List<SrNoAndTtl> selectSrInfoByUsrNo(String usrNo);
+	
+	//개인정보 수정 모달 구성
+	public UsrEditConfigure selectUsrEditConfigureByUsrNo(String usrNo);
+	public String selectInstNoByUsrNo(String usrNo);
+	
+	//아이디 수정
+	public int updateUsrId(@Param("usrNo") String usrNo, @Param("usrId") String usrId);
+	//비밀번호 수정
+	public int updateUsrPassword(@Param("usrNo") String usrNo, @Param("usrPassword") String usrPassword);
+	//이름 수정
+	public int updateUsrNm(@Param("usrNo") String usrNo, @Param("usrNm") String usrNm);
+	//이메일 수정
+	public int updateUsrEml(@Param("usrNo") String usrNo, @Param("usrEml") String usrEml);
+	//전화번호 수정
+	public int updateUsrTelno(@Param("usrNo") String usrNo, @Param("usrTelno") String usrTelno);
+	//부서 수정
+	public int updateUsrDept(@Param("usrNo") String usrNo, @Param("deptNo") String deptNo);
+	//직책 수정
+	public int updateUsrRole(@Param("usrNo") String usrNo, @Param("roleNo") String roleNo);
+	//직위 수정
+	public int updateUsrIbps(@Param("usrNo") String usrNo, @Param("ibpsNo") String ibpsNo);
+	//회원 탈퇴
+	public int updateUsrSttsToWhdwl(String usrNo);
 }
