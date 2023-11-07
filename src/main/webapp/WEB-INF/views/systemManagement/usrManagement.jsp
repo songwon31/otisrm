@@ -155,9 +155,9 @@
 			<table id="mainTable" style="width:100%;">
 				<colgroup>
 					<col width="3%"/>
+					<col width="5%"/>
 					<col width="7%"/>
-					<col width="7%"/>
-					<col width="15%"/>
+					<col width="10%"/>
 					<col width="15%"/>
 					<col width="7%"/>
 					<col width="10%"/>
@@ -165,6 +165,7 @@
 					<col width="10%"/>
 					<col width="10%"/>
 					<col width="6%"/>
+					<col width="7%"/>
 				</colgroup>
 				<thead>
 					<tr style="height:5rem; font-size:1.6rem; font-weight:700;">
@@ -179,6 +180,7 @@
 						<th scope="col">권한</th>
 						<th scope="col">가입일</th>
 						<th scope="col">상태</th>
+						<th scope="col">상세정보</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -191,4 +193,85 @@
 		</div>
 	</div>
 </div>
+
+<!-- 사용자 상세 정보 -->
+<div id="usrDetailModal" class="modal" data-backdrop="static">
+	<div class="modal-dialog modal-dialog-centered modal-lg">
+		<div id="usrDetailModalContent" class="modal-content">
+			<div class="modal-header" style="background-color:#222E3C; color:white; display:flex;">
+				<div class="modal-title" style="font-size:2rem; font-weight:700;">사용자 상세정보</div>
+				<i class="material-icons close-icon" data-dismiss="modal" style="cursor: pointer;">close</i>
+			</div>
+			<div class="modal-body" style="margin:0px; padding:0px; font-size:1.5rem;">
+				<div id="srRqstInfo">
+					<div style="height:4rem; display:flex; flex-direction:row;">
+						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#f9fafe; font-weight:700;">번호</div>
+						<div id="modalUsrNo" style="height:4rem; width:35%; padding-left:0.5rem; display:flex; align-items:center;"></div>
+						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#f9fafe; font-weight:700;">이름</div>
+						<div id="modalUsrNm" style="height:4rem; width:35%; padding-left:0.5rem; display:flex; align-items:center;"></div>
+					</div>
+					<div style="height:4rem; display:flex; flex-direction:row;">
+						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#f9fafe; font-weight:700;">주민등록번호</div>
+						<div id="modalUsrRrno" style="height:4rem; width:85%; padding-left:0.5rem; display:flex; align-items:center;"></div>
+					</div>
+					<div style="height:4rem; display:flex; flex-direction:row;">
+						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#f9fafe; font-weight:700;">전화번호</div>
+						<div id="modalUsrTelno" style="height:4rem; width:35%; padding-left:0.5rem; display:flex; align-items:center;"></div>
+						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#f9fafe; font-weight:700;">이메일</div>
+						<div id="modalUsrEml" style="height:4rem; width:35%; padding-left:0.5rem; display:flex; align-items:center;"></div>
+					</div>
+					<div style="height:4rem; display:flex; flex-direction:row;">
+						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#f9fafe; font-weight:700;">소속</div>
+						<div id="modalInstNm" style="height:4rem; width:35%; padding-left:0.5rem; display:flex; align-items:center;"></div>
+						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#f9fafe; font-weight:700;">부서</div>
+						<div id="modalDeptNm" style="height:4rem; width:35%; padding-left:0.5rem; display:flex; align-items:center;"></div>
+					</div>
+					<div style="height:4rem; display:flex; flex-direction:row;">
+						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#f9fafe; font-weight:700;">직위</div>
+						<div id="modalIbpsNm" style="height:4rem; width:35%; padding-left:0.5rem; display:flex; align-items:center;"></div>
+						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#f9fafe; font-weight:700;">직책</div>
+						<div id="modalRoleNm" style="height:4rem; width:35%; padding-left:0.5rem; display:flex; align-items:center;"></div>
+					</div>
+					<div style="height:4rem; display:flex; flex-direction:row;">
+						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#f9fafe; font-weight:700;">권한</div>
+						<div id="modalUsrAuthrtNm" style="height:4rem; width:35%; padding-left:0.5rem; display:flex; align-items:center;"></div>
+						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#f9fafe; font-weight:700;">상태</div>
+						<div id="modalUsrSttsNm" style="height:4rem; width:35%; padding-left:0.5rem; display:flex; align-items:center;"></div>
+					</div>
+					<div style="height:4rem; display:flex; flex-direction:row;">
+						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#f9fafe; font-weight:700;">가입일</div>
+						<div id="modalUsrJoinDt" style="height:4rem; width:35%; padding-left:0.5rem; display:flex; align-items:center;"></div>
+						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#f9fafe; font-weight:700;">탈퇴일</div>
+						<div id="modalUsrWhdwlDt" style="height:4rem; width:35%; padding-left:0.5rem; display:flex; align-items:center;"></div>
+					</div>
+					<div style="height:11rem; display:flex; flex-direction:row;">
+						<div style="height:11rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#f9fafe; font-weight:700;">담당중인 SR</div>
+						<div id="srList" style="height:11rem; width:85%; padding-left:0.5rem; display:flex; flex-direction: column; overflow:auto">
+							
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- 사용자 상세 정보 -->
+<div id="alertModal" class="modal" data-backdrop="static">
+	<div class="modal-dialog modal-dialog-centered modal-sm">
+		<div class="modal-content">
+			<div class="modal-header" style="background-color:red; color:white; display:flex;">
+				<div class="modal-title" style="font-size:2rem; font-weight:700;">경고</div>
+				<i class="material-icons close-icon" data-dismiss="modal" style="cursor: pointer;">close</i>
+			</div>
+			<div class="modal-body" style="margin:0px; padding:0px; font-size:1.5rem;">
+				<div id="alertContent" style="height:11rem; font-size:1.7rem; fnt-weight:700; display:flex; justify-content:center; align-items:center; white-space: pre-wrap;">
+					
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
 <%@ include file="/WEB-INF/views/common/footer.jsp"%>

@@ -1,4 +1,4 @@
-	$(init);
+$(init);
 
 //메인 테이블 검색 옵션
 var currentUsrManagementSearch = {
@@ -16,8 +16,10 @@ var currentPageNo = 1;
 var currentDetailUsrNo;
 
 function init() {
+	/*
 	mainTableSearchDivConfig();
 	mainTableConfig(currentUsrManagementSearch, currentPageNo);
+	*/
 }
 
 $(document).ready(function() {
@@ -155,15 +157,10 @@ function mainTableConfig(usrManagementSearch, pageNo) {
 				mainTableHtml += '<td> <button data-toggle="modal" data-target="#requestDetailModal" class="btn-2 detail-button" onclick="showRequestDetailModal(\'' + sr.srNo + '\')">요청상세</button> </td>';
 				mainTableHtml += '<td> <button data-toggle="modal" data-target="#srProgressModal" class="btn-2 detail-button" onclick="showSrProgressModal(\'' + sr.srNo + '\')">진척관리</button> </td>';
 				*/
-				
-				mainTableHtml += '<td><button type="button" id="showSrRqstDetailBtn" class="btn-2" data-toggle="modal" style="border:none; border-radius:5px; background-color:#2c7be4; color:white; font-weight:700;"';
-				mainTableHtml += 'data-target="#usrDetailModal" onclick="usrDetailModalConfig(\''+ usr.usrNo +'\')">상세정보</button></td>';
-				
 				//jsp에 삽입
 				$('#mainTable tbody').append(mainTableHtml);
 			}
 			
-			 $("#batchCheck").prop("checked", false);
 			//일괄 체크 구현
 			$("#batchCheck").on("change", function() {
 		        if ($(this).prop("checked")) {
@@ -305,47 +302,58 @@ function batchWithdrawal() {
         data: JSON.stringify(usrNoList),
         contentType: 'application/json',
         success: function (data) {
-        	if (data == 0) {
-        		$('#alertContent').html("진행중인 SR건이 있을 경우\n    탈퇴처리할 수 없습니다!");
-        		$("#alertModal").modal("show");
-        	}
         	mainTableConfig(currentUsrManagementSearch, currentPageNo);
         }
     });
 }
 
-function usrDetailModalConfig(usrNo) {
+/*
+//상세 보기 모달
+function showRequestDetailModal(srNo) {
+	// 서버로 보낼 데이터 객체 생성
+    let requestData = {
+        srNo: srNo
+    };
+    
 	$.ajax({
-        url: '/otisrm/systemManagement/usrManagement/getUsrDetailModalConfig',
-        type: 'POST',	
-        data: {usrNo: usrNo},
-        success: function (data) {
-        	console.log(data);
-        	
-        	$('#modalUsrNo').html(data.usrNo);
-        	$('#modalUsrNm').html(data.usrNm);
-        	$('#modalUsrRrno').html(data.usrRrno);
-        	$('#modalUsrTelno').html(data.usrTelno);
-        	$('#modalUsrEml').html(data.usrEml);
-        	$('#modalInstNm').html(data.instNm);
-        	$('#modalDeptNm').html(data.deptNm);
-        	$('#modalIbpsNm').html(data.ibpsNm);
-        	$('#modalRoleNm').html(data.roleNm);
-        	$('#modalUsrAuthrtNm').html(data.usrAuthrtNm);
-        	$('#modalUsrSttsNm').html(data.usrSttsNm);
-        	let joinDt = new Date(data.usrJoinDt);
-        	$('#modalUsrJoinDt').html(formatDate(joinDt));
-        	if (data.usrWhdwlDt != null && data.usrWhdwlDt != '') {
-        		let whdwlDt = new Date(data.usrWhdwlDt);
-        		$('#modalUsrWhdwlDt').html(formatDate(whdwlDt));
-        	} else {
-        		$('#modalUsrWhdwlDt').html('');
-        	}
-        	$('#srList').html('');
-        	for (let i=0; i<data.srInfo.length; ++i) {
-        		let html = '<div style="white-space: pre-wrap;">' + data.srInfo[i].srNo + '\t' + data.srInfo[i].srTtl + '</div>'
-        		$('#srList').append(html);
-        	}
+		type: "POST", 
+		url: "/otisrm/getSrDetailInfo", 
+		data: requestData, 
+		success: function (data) {
+			$('#modal_sr_no').html(data.srNo);
+			$('#modal_sr_rqst_no').html(data.srRqstNo);
+			$('#modal_sys_nm').html(data.sysNm);
+			$('#modal_sr_task_nm').html(data.srTaskNm);
+			$('#modal_sr_ttl').html(data.srTtl);
+			$('#modal_sr_prps').html(data.srPrps);
+			$('#modal_dept_nm').html(data.deptNm);
+			$('#modal_pic_nm').html(data.usrNm);
+			let regDt = new Date(data.srRqstRegDt);
+			let cmptnPrnmntDt = new Date(data.srCmptnPrnmntDt);
+			let trnsfDt = new Date(data.srTrnsfDt);
+			$('#modal_sr_rqst_reg_dt').html(formatDate(regDt));
+			$('#modal_sr_cmptn_prnmnt_dt').html(formatDate(cmptnPrnmntDt));
+			$('#modal_inst_nm').html(data.instNm);
+			$('#modal_sr_trnsf_dt').html(formatDateTime(trnsfDt));
+			$('#modal_sr_conts').html(data.srConts);
+			$('#modal_sr_dvl_conts').html(data.srDvlConts);
+        },
+		error: function (error) {
+			console.error("오류 발생:", error);
+		}
+	});
+	
+	$("#modal_sr_conts_btn").on("click", function() {
+        if ($(this).is(":checked")) {
+        	modal_sr_conts_btn_checked();
+        }
+    });
+	
+	$("#modal_sr_dvl_conts_btn").on("click", function() {
+        if ($(this).is(":checked")) {
+        	modal_sr_dvl_conts_btn_checked();
         }
     });
 }
+
+*/

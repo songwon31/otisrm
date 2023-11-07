@@ -229,4 +229,41 @@
 		SET usr_stts_no = 'WITHDRAWL'
 		WHERE usr_no = #{usrNo}
 	</update>
+	
+	<!-- 사용자 상세 모달 구성 -->
+	<select id="selectUsrInfoByUsrNo" parameterType="String" resultType="com.finalteam5.otisrm.dto.usr.UsrManagementModalConfigure">
+		SELECT	usr.usr_no, usr.usr_id, usr.usr_nm, usr.usr_rrno || '******' as usr_rrno, usr.usr_telno, usr.usr_eml,
+				inst.inst_nm, dept.dept_nm, ibps.ibps_nm, role.role_nm, usr_authrt.usr_authrt_nm, usr_stts.usr_stts_nm,
+				usr.usr_join_dt, usr.usr_whdwl_dt
+		FROM usr
+		JOIN inst ON usr.inst_no = inst.inst_no
+		JOIN dept ON usr.dept_no = dept.dept_no
+		JOIN ibps ON usr.ibps_no = ibps.ibps_no
+		JOIN role ON usr.role_no = role.role_no
+		JOIN usr_authrt ON usr.usr_authrt_no = usr_authrt.usr_authrt_no
+		JOIN usr_stts ON usr.usr_stts_no = usr_stts.usr_stts_no
+		WHERE usr.usr_no = #{usrNo}
+	</select>
+	
+	<select id="selectSrInfoByUsrNo" parameterType="String" resultType="com.finalteam5.otisrm.dto.sr.SrNoAndTtl">
+		SELECT DISTINCT sr_no, sr_ttl
+		FROM (
+			SELECT sr.sr_no, sr_rqst.sr_ttl
+			FROM sr
+			JOIN sr_rqst ON sr.sr_rqst_no = sr_rqst.sr_rqst_no
+			WHERE sr.pic_usr_no = #{usrNo}
+			UNION
+			SELECT sr.sr_no, sr_rqst.sr_ttl
+			FROM sr
+			JOIN sr_rqst ON sr.sr_rqst_no = sr_rqst.sr_rqst_no
+			JOIN sr_trnsf_plan srt ON sr.sr_no = srt.sr_no
+			WHERE srt.usr_no = #{usrNo}
+			UNION
+			SELECT sr.sr_no, sr_rqst.sr_ttl
+			FROM sr
+			JOIN sr_rqst ON sr.sr_rqst_no = sr_rqst.sr_rqst_no
+			JOIN sr_prgrs srp ON sr.sr_no = srp.sr_no
+			WHERE srp.usr_no = #{usrNo}
+		)
+	</select>
 </mapper>
