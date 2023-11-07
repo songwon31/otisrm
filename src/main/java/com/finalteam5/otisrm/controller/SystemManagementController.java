@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.finalteam5.otisrm.dto.usr.Dept;
 import com.finalteam5.otisrm.dto.usr.Usr;
+import com.finalteam5.otisrm.dto.usr.UsrManagementModalConfigure;
 import com.finalteam5.otisrm.dto.usr.UsrManagementSearchConfigure;
 import com.finalteam5.otisrm.dto.usr.UsrTableConfigForUsrManagement;
 import com.finalteam5.otisrm.security.UsrDetails;
@@ -39,9 +40,9 @@ public class SystemManagementController {
 			UsrDetails usrDetails = (UsrDetails) authentication.getPrincipal();
 			Usr usr = usrDetails.getUsr();
 			model.addAttribute("usr", usr);
-			return "/systemManagement/usrManagement/usrManagement";
+			return "/systemManagement/usrManagement";
 		} else {
-			return "/systemManagement/usrManagement/usrManagement";
+			return "/systemManagement/usrManagement";
 		}
 	}
 	
@@ -73,9 +74,25 @@ public class SystemManagementController {
 	@PostMapping("/usrManagement/batchWithdrawl")
 	@ResponseBody
 	public int batchWithdrawl(@RequestBody List<String> usrNoList) {
-		log.info(""+usrNoList);
 		return usrService.batchWithdrawl(usrNoList);
 	}
 	
+	@PostMapping("/usrManagement/getUsrDetailModalConfig")
+	@ResponseBody
+	public UsrManagementModalConfigure getUsrDetailModalConfig(String usrNo) {
+		return usrService.getUsrDetailModalConfig(usrNo);
+	}
+	
 	//기업 관리 페이지
+	@RequestMapping("/instManagement")
+	public String instManagement(Authentication authentication, Model model) {
+		if (authentication != null && authentication.isAuthenticated()) {
+			UsrDetails usrDetails = (UsrDetails) authentication.getPrincipal();
+			Usr usr = usrDetails.getUsr();
+			model.addAttribute("usr", usr);
+			return "/systemManagement/instManagement";
+		} else {
+			return "/systemManagement/usrManagement";
+		}
+	}
 }

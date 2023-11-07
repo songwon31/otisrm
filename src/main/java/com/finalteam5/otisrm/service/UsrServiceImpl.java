@@ -13,9 +13,6 @@ import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.finalteam5.otisrm.dao.UsrDao;
 import com.finalteam5.otisrm.dto.Pager;
-import com.finalteam5.otisrm.dto.sr.ProgressManagementSearch;
-import com.finalteam5.otisrm.dto.sr.SrForProgressManagementBoard;
-import com.finalteam5.otisrm.dto.sr.SrTableConfigForProgressManagement;
 import com.finalteam5.otisrm.dto.usr.Dept;
 import com.finalteam5.otisrm.dto.usr.Ibps;
 import com.finalteam5.otisrm.dto.usr.Inst;
@@ -23,6 +20,7 @@ import com.finalteam5.otisrm.dto.usr.Login;
 import com.finalteam5.otisrm.dto.usr.Role;
 import com.finalteam5.otisrm.dto.usr.Usr;
 import com.finalteam5.otisrm.dto.usr.UsrAuthrt;
+import com.finalteam5.otisrm.dto.usr.UsrManagementModalConfigure;
 import com.finalteam5.otisrm.dto.usr.UsrManagementSearch;
 import com.finalteam5.otisrm.dto.usr.UsrManagementSearchConfigure;
 import com.finalteam5.otisrm.dto.usr.UsrTableConfigForUsrManagement;
@@ -206,10 +204,27 @@ public class UsrServiceImpl implements UsrService{
 	
 	@Override
 	public int batchWithdrawl(List<String> usrNoList) {
+		int usrNoListLength = usrNoList.size();
+		int result = 0;
 		for (String usrNo : usrNoList) {
-			usrDao.updateUsrSttsToWithdrawl(usrNo);
+			if (usrDao.selectSrInfoByUsrNo(usrNo).size() == 0) {
+				usrDao.updateUsrSttsToWithdrawl(usrNo);
+				result++;
+			}
 		}
-		return 1;
+		if (usrNoListLength == result) {
+			return 1;
+		} else {
+			return 0;
+		}
+	}
+	
+	//사용자 상세 정보 모달 구성
+	@Override
+	public UsrManagementModalConfigure getUsrDetailModalConfig(String usrNo) {
+		UsrManagementModalConfigure usrManagementModalConfigure = usrDao.selectUsrInfoByUsrNo(usrNo);
+		usrManagementModalConfigure.setSrInfo(usrDao.selectSrInfoByUsrNo(usrNo));
+		return usrManagementModalConfigure;
 	}
 
 }

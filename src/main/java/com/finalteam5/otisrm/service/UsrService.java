@@ -9,6 +9,7 @@ import com.finalteam5.otisrm.dto.usr.Login;
 import com.finalteam5.otisrm.dto.usr.Role;
 import com.finalteam5.otisrm.dto.usr.Usr;
 import com.finalteam5.otisrm.dto.usr.UsrAuthrt;
+import com.finalteam5.otisrm.dto.usr.UsrManagementModalConfigure;
 import com.finalteam5.otisrm.dto.usr.UsrManagementSearchConfigure;
 import com.finalteam5.otisrm.dto.usr.UsrTableConfigForUsrManagement;
 
@@ -58,4 +59,7 @@ public interface UsrService {
 	//사용자 상태 변경(승인 대기, 일반, 탈퇴)
 	public int batchApproval(List<String> usrNoList);
 	public int batchWithdrawl(List<String> usrNoList);
+	
+	//사용자 상세 모달 구성
+	public UsrManagementModalConfigure getUsrDetailModalConfig(String usrNo);
 }

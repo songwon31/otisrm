@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import com.finalteam5.otisrm.dto.Pager;
-import com.finalteam5.otisrm.dto.sr.ProgressManagementSearch;
+import com.finalteam5.otisrm.dto.sr.SrNoAndTtl;
 import com.finalteam5.otisrm.dto.usr.Dept;
 import com.finalteam5.otisrm.dto.usr.Ibps;
 import com.finalteam5.otisrm.dto.usr.Inst;
@@ -15,6 +15,7 @@ import com.finalteam5.otisrm.dto.usr.Role;
 import com.finalteam5.otisrm.dto.usr.Usr;
 import com.finalteam5.otisrm.dto.usr.UsrAuthrt;
 import com.finalteam5.otisrm.dto.usr.UsrForUsrManagementBoard;
+import com.finalteam5.otisrm.dto.usr.UsrManagementModalConfigure;
 import com.finalteam5.otisrm.dto.usr.UsrManagementSearch;
 import com.finalteam5.otisrm.dto.usr.UsrStts;
 
@@ -45,4 +46,7 @@ public interface UsrDao {
 	public int updateUsrSttsToNormal(String usrNo);
 	//사용자 탈퇴
 	public int updateUsrSttsToWithdrawl(String usrNo);
+	//사용자 모달 구성
+	public UsrManagementModalConfigure selectUsrInfoByUsrNo(String usrNo);
+	public List<SrNoAndTtl> selectSrInfoByUsrNo(String usrNo);
 }
