@@ -138,6 +138,12 @@ public class UsrServiceImpl implements UsrService{
 		return loginUsr;
 	}
 	
+	@Override
+	public String getDeptNmByDeptNo(String deptNo) {
+		String deptNm = usrDao.selectDeptNmByDeptNo(deptNo);
+		return deptNm;
+	}
+	
 	
 	/**
 	 * @author 송원석
@@ -315,5 +321,6 @@ public class UsrServiceImpl implements UsrService{
 			return usrDao.updateUsrAuthrt(usrNo, newUsrAuthrtNo);
 		}
 	}
+	
 
 }

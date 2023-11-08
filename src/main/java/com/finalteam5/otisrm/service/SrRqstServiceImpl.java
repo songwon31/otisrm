@@ -95,6 +95,11 @@ public class SrRqstServiceImpl implements SrRqstService{
 		return list;
 	}
 	
+	@Override
+	public void removeSrRqst(String srRqstNo) {
+		srRqstDao.deleteSrRqst(srRqstNo);
+	}
+	
 	//작성자: 이현주 
 	//요청목록 불러오기(검토자 홈)
 	@Override
@@ -137,4 +142,5 @@ public class SrRqstServiceImpl implements SrRqstService{
 	public List<String> getTotalSysNm() {
 		return srRqstDao.selectTotalSysNm();
 	}
+	
 }

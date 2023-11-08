@@ -61,6 +61,12 @@
 		join usr_authrt a on u.usr_authrt_no = a.usr_authrt_no
 		where usr_Id = #{usrId}		 
     </select>
+    
+    <!-- 회원번호에 해당하는 업무부서 불러오기 -->
+    <select id="selectDeptNmByDeptNo"  parameterType="String" resultType="String">
+    	select dept_nm from dept where dept_no=#{deptNo} 
+    </select>
+    
     <!--
       	로그인 틀린 횟수 업데이트
 	<update id="updateLgnFailCnt" parameterType="String">

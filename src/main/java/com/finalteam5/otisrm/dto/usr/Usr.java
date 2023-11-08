@@ -17,6 +17,7 @@ public class Usr implements Serializable{
 	private String instNo;			//기관번호
 	private String instNm;			//기관이름
 	private String deptNo;			//부서번호
+	private String deptNm;			//부서이름
 	private String roleNo;			//역할번호
 	private String ibpsNo;			//직위번호
 	private String usrAuthrtNo;		//사용자권한번호

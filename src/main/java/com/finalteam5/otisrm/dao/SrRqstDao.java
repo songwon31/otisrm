@@ -5,7 +5,6 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.finalteam5.otisrm.dto.Pager;
 import com.finalteam5.otisrm.dto.Sys;
 import com.finalteam5.otisrm.dto.srRequest.SrRqst;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstAtch;
@@ -51,6 +50,12 @@ public interface SrRqstDao {
 	
 	//sr요청 상태 불러오기(시퀀스 오름차순으로)
 	public List<SrRqstStts> selectSrRqstStts();
+	
+	//sr요청 삭제하기
+	public void deleteSrRqst(String srRqstNo);
+	
+	//담당자홈: sr요청번호에 해당하는 sr불러오기
+	//public List<Sr> selectSrBySrRqstNo(String srRqstNo);
 	
 	//작성자: 이현주
 	//페이지별로 요청 불러오기(검토자 홈)

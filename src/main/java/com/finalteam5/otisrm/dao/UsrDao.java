@@ -38,6 +38,9 @@ public interface UsrDao {
 	//Spring Security 로그인
 	public Usr selectUsrDetailsByUsrId(String usrId);
 	
+	//로그인 한 회원에 해당하는 업무부서 이름
+	public String selectDeptNmByDeptNo(String deptNo);
+	
 	//usrManagement 페이지 구성
 	public int countUsrForUsrManagementBoard(UsrManagementSearch usrManagementSearch);
 	public List<UsrForUsrManagementBoard> selectUsrForUsrManagementBoard(

@@ -48,6 +48,9 @@ public interface UsrService {
 	
 	//로그인한 회원정보 불러오기
 	public Usr getUsrDetailByUsrId(String usrId);
+	
+	//로그인 한 회원에 해당하는 업무부서이름
+	public String getDeptNmByDeptNo(String deptNo);
 
 	/**
 	 * @author 송원석

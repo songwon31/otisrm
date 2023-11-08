@@ -20,7 +20,7 @@
 	       null, #{srTtl, jdbcType=VARCHAR}, #{srPrps, jdbcType=VARCHAR}, 
 	       #{srReqstrNo , jdbcType=VARCHAR}, #{srConts, jdbcType=VARCHAR},
 	       sysdate, #{srRqstMdfcnDt, jdbcType=DATE}, 'RQST', #{sysNo, jdbcType=VARCHAR}, 
-	       #{srRqstEmrgYn, jdbcType=VARCHAR}, #{srRqstRvwRsn, jdbcType=VARCHAR}, 'N'
+	       #{srRqstEmrgYn, jdbcType=VARCHAR}, #{srRqstRvwRsn, jdbcType=VARCHAR}, 'Y'
     	)
 	</insert>
 	
@@ -103,7 +103,7 @@
 				       		and REGEXP_REPLACE(LOWER(REPLACE(sr_ttl, ' ', '')), '[[:punct:]]', '') LIKE '%' || REGEXP_REPLACE(LOWER(REPLACE(#{keyword}, ' ', '')), '[[:punct:]]', '') || '%'
 				    	</if>
 				    </if>
-				    
+				    and sr_rqst_vld_yn = 'Y' 
 				  </where>
 				</if>
 			    order by sr_rqst_reg_dt desc
@@ -165,7 +165,8 @@
 		    	<if test="searchTarget == 'searchSrRqstNm'">				    	
 		       		and REGEXP_REPLACE(LOWER(REPLACE(sr_ttl, ' ', '')), '[[:punct:]]', '') LIKE '%' || REGEXP_REPLACE(LOWER(REPLACE(#{keyword}, ' ', '')), '[[:punct:]]', '') || '%'
 		    	</if>
-		    </if>    
+		    </if> 
+		    and sr_rqst_vld_yn = 'Y'   
 		  </where>
 		</if>
 	</select>
@@ -203,7 +204,16 @@
 	<select id="selectSrRqstStts" resultType="SrRqstStts">
 		select * from sr_rqst_stts order by sr_rqst_stts_seq 
 	</select>
-
+	
+	<!-- sr요청 삭제하기 -->
+	<update id="deleteSrRqst" parameterType="String">
+		update sr_rqst set sr_rqst_vld_yn='N' 
+		where sr_rqst_stts_no = 'RQST' 
+		and sr_rqst_no= #{srRqstNo, jdbcType=VARCHAR}
+	</update>
+	
+	
+	<!-- 담당자홈: sr요청번호에 해당하는 sr불러오기 -->
 	
 	<!-- 작성자: 이현주  -->
 	<!-- 검토자 홈 요청목록 불러오기 -->

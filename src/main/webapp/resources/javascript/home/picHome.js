@@ -5,6 +5,7 @@ function init() {
 	 eventPreventSrRqstAtch();
 	 numOftotalRows();
 	 getTotalRows(choiceSrRqstSttsNo);
+	 showSrRqstStts();			 
 	 console.log( $("#loginUsrNo").val());
 }
  
@@ -29,8 +30,6 @@ $(document).ready(function() {
 	    // 클릭되지 않은 다른 요소들의 스타일 초기화
 	});	
   loadSRRequests(1, choiceSrRqstSttsNo); //페이지 로딩 시 초기 데이터 로드
-  loadNtcs(1);
-  loadInqs(1);
 });
 
 //timestamp 객체를 YYYY-MM-dd 형식의 문자열로 변환하는 함수
@@ -79,30 +78,30 @@ function loadSRRequests(pageNo, choiceSrRqstSttsNo) {
 			 html += '	<td></td>';
 			 html += '</tr>';
 	  }
-      var indexOffset = (pageNo - 1) * 5; // 페이지 번호에 따라 index 오프셋 계산
       data.forEach((item, index)=>{
-    	  // item.srRqstRegDt를 YYYY-MM-dd 문자열로 변환
-    	  const formattedDate = formatDateToYYYYMMDD(item.srRqstRegDt);
-    	  var indexOnPage = index + indexOffset + 1; // 페이지 내에서의 index 계산
-
-		  html += '<tr class="data-tr" style="background-color: white;">';
-		  html += '	<td>' + indexOnPage + '</td>';
-		  html += '	<td>' + item.srRqstNo + '</td>';
-		  html += '	<td class="truncate-text" style="max-width: 221.32px;">' + item.srTtl + '</td>';
-		  html += '	<td class="truncate-text" style="max-width: 144.64px;">' + item.sysNm + '</td>';
-		  html += '	<td class="truncate-text" style="max-width: 67.56px;">' + item.usrNm + '</td>';
-		  html += '	<td class="truncate-text" style="max-width: 69.64px;">' + item.instNm + '</td>';
-		  html += '	<td class="truncate-text" style="max-width: 67.56px;">' + item.srRqstSttsNm + '</td>';
-		  html += '	<td>'+ formattedDate +'</td>'
-		  html += '	<td>'+ item.srRqstEmrgYn +'</td>';
-		  html += '	<td><button type="button" id="showSrRqstDetailBtn" class="btn-2" data-toggle="modal" data-target="#srRqstBySrNo" onclick="showSrRqstBySrRqstNo(\''+ item.srRqstNo +'\')">상세보기</button></td>';
-		  html += '</tr>';
-    	  
+    	  if(item.srRqstVldYn =="Y"){    		  
+    		  var indexOffset = (pageNo - 1) * 5; // 페이지 번호에 따라 index 오프셋 계산
+    		  // item.srRqstRegDt를 YYYY-MM-dd 문자열로 변환
+    		  const formattedDate = formatDateToYYYYMMDD(item.srRqstRegDt);
+    		  var indexOnPage = index + indexOffset + 1; // 페이지 내에서의 index 계산
+    		  html += '<tr class="data-tr" style="background-color: white;">';
+    		  html += '	<td>' + indexOnPage + '</td>';
+    		  html += '	<td>' + item.srRqstNo + '</td>';
+    		  html += '	<td class="truncate-text" style="max-width: 221.32px;">' + item.srTtl + '</td>';
+    		  html += '	<td class="truncate-text" style="max-width: 144.64px;">' + item.sysNm + '</td>';
+    		  html += '	<td class="truncate-text" style="max-width: 67.56px;">' + item.usrNm + '</td>';
+    		  html += '	<td class="truncate-text" style="max-width: 69.64px;">' + item.instNm + '</td>';
+    		  html += '	<td class="truncate-text" style="max-width: 67.56px;">' + item.srRqstSttsNm + '</td>';
+    		  html += '	<td>'+ formattedDate +'</td>'
+    		  html += '	<td>'+ item.srRqstEmrgYn +'</td>';
+    		  html += '	<td><button type="button" id="showSrRqstDetailBtn" class="btn-2" data-toggle="modal" data-target="#srRqstBySrNo" onclick="showSrRqstBySrRqstNo(\''+ item.srRqstNo +'\')">상세보기</button></td>';
+    		  html += '</tr>';
+    	  }
       });
       html +='<tr class="empty-tr" style="height: 100%;">';
       html +='</tr>';
       $("#getSrReqstListByPageNo").html(html);
-      console.log("행수");
+    
       //데이터가 없을 경우 페이징 숨기기
       var paginationContainer = document.getElementById("pagination-container");
   
@@ -126,7 +125,6 @@ function loadSRRequests(pageNo, choiceSrRqstSttsNo) {
           $(this).css('background-color', 'white');
         }
       );
-      loading();
     },
     error: function(error) {
       console.error("데이터를 불러오는 중 오류가 발생했습니다.");
@@ -192,7 +190,7 @@ function numOftotalRows(){
 function getTotalRows(choiceSrRqstSttsNo) {
   return new Promise(function (resolve, reject) {
     $.ajax({
-      url: "getCountSRRequestsByStatus",
+      url: "getCountSRRequestsByStatusForPicHome",
       data: {
         status: choiceSrRqstSttsNo
       },
@@ -211,7 +209,7 @@ function getTotalRows(choiceSrRqstSttsNo) {
 //**상태에 따른 페이징 업데이트 함수
 function updatePagination(pageNo, choiceSrRqstSttsNo) {
   $.ajax({
-    url: "getCountSRRequestsByStatus",
+    url: "getCountSRRequestsByStatusForPicHome",
     data: {
       status: choiceSrRqstSttsNo
     },
@@ -271,12 +269,34 @@ function bytesToKB(bytes) {
     return (bytes / 1024).toFixed(2); // 소수점 두 자리까지 표시
 }
 
+//요청 상태 불러오기
+function showSrRqstStts() {
+	$.ajax({
+		type: "GET", 
+		url: "getSrRqstSttsForPicHome", 
+		success: function (data) {
+			// 서버 응답을 처리하여 개발부서 목록을 업데이트 
+			let html = "";
+			// 서버 응답을 처리하여 개발부서 목록을 업데이트
+        	html += '<option value="">전체</option>';
+      		data.forEach((item, index) => {	
+      			html += '<option id="'+ item.srRqstSttsSeq +'" value="'+ item.srRqstSttsNo +'">'+item.srRqstSttsNm+'</option>';
+       		});
+		   // HTML 콘텐츠를 검색한 부서 데이터로 업데이트
+           $("#srRqstStts-select").html(html); 
+       },
+		error: function (error) {
+			console.error("오류 발생:", error);
+		}
+	});
+}
+
 //**요청에 해당하는 상세 정보 가져오기 (모달)
 function showSrRqstBySrRqstNo(choiceSrRqstNo){
-	console.log("상세클릭");
+	//sr요청 상세
 	$.ajax({
 		type: "GET",
-        url: "getSrRqstBySrRqstNo",
+        url: "getSrRqstBySrRqstNoForPicHome",
         data: {srRqstNo: choiceSrRqstNo},
         success: function(data) {
         	$("#showSrRqstAtch").hide();
@@ -305,6 +325,15 @@ function showSrRqstBySrRqstNo(choiceSrRqstNo){
         	$("#srRqst-srPrps").val(data.srPrps);
         	$("#srRqst-srConts").val(data.srConts);
         	$("#srRqst-srRqstRegDt").val(formattedDate);
+        	//요청 상태
+        	$("#srRqstStts-select").val(data.srRqstSttsNo);
+        	
+        	//요청상태가 승인대기 이상일 때 삭제 불가능(버튼 속성 변경)
+        	if(data.srRqstSttsNo !== "RQST"){
+        		$("#deleteButton").prop("disabled", true);
+        		$("#deleteButton").css("opacity", 0.5); 
+        	}
+        	
         	//첨부파일
         	if (data.srRqstAtchList && typeof data.srRqstAtchList === "object") {
         	    // data.srRqstAtchList는 객체일 때
@@ -316,9 +345,8 @@ function showSrRqstBySrRqstNo(choiceSrRqstNo){
         	            console.log(srRqstAtch);
         	            if (srRqstAtch && srRqstAtch.srRqstNo === data.srRqstNo) {
         	                $("#showSrRqstAtch").show();
-        	                console.log("같음");
         	                var size = bytesToKB(srRqstAtch.srRqstAtchSize);
-        	                html += '<a href="filedownload2?srRqstAtchNo='+ srRqstAtch.srRqstAtchNo +'" class="d-flex srRqstAtchWrap">';
+        	                html += '<a href="filedownloadForPicHome?srRqstAtchNo='+ srRqstAtch.srRqstAtchNo +'" class="d-flex srRqstAtchWrap">';
         	                html += '    <div>';
         	                html += '    	<i class="material-icons atch-ic">download</i>';
         	                html += '    </div>';
@@ -327,14 +355,14 @@ function showSrRqstBySrRqstNo(choiceSrRqstNo){
         	            }
         	        }
         	        $("#showSrRqstAtch").html(html);
-        	        loading();
+        	 
         	    } else {
         	        // srRqstAtchList가 객체지만 아무 항목도 없을 때
-        	        $("#showSrRqstAtch").hide();
+        	        $("#showSrRqstAtch").html("첨부파일이 존재하지 않습니다.");
         	    }
         	} else {
         	    // srRqstAtchList가 객체가 아닐 때
-        	    $("#showSrRqstAtch").hide();
+        		  $("#showSrRqstAtch").html("첨부파일이 존재하지 않습니다.");
         	}
         	if (data.srRqstEmrgYn === "Y") {
         	    $("#srRqst-importantChk").prop("checked", true);
@@ -366,7 +394,7 @@ function eventPreventSrRqstAtch(){
 function showSysByDeptNo(myDeptNo) {
 	$.ajax({
 		type: "GET", 
-		url: "getSysByDeptNo", 
+		url: "getSysByDeptNoForPicHome", 
 		data: { deptNo: myDeptNo}, 
 		success: function (data) {
 			// 서버 응답을 처리하여 개발부서 목록을 업데이트 
@@ -409,7 +437,7 @@ function submitSrRqst(){
 	console.log(form);
 	console.log(formData);
 	$.ajax({
-	    url: "writeSrRqst", // 요청을 보낼 URL
+	    url: "writeSrRqstForPicHome", // 요청을 보낼 URL
 	    method: "POST",
 	    data: formData, // 폼 데이터를 전송
 	    success: function (data) {
@@ -478,7 +506,7 @@ function modifySrRqst(srRqstNo) {
     // Ajax 요청 보내기
     $.ajax({
         type: "POST",
-        url: "modifySrRqst",
+        url: "modifySrRqstForPicHome",
         data: data,
         success: function (response) {
             // 성공적으로 요청이 완료된 경우 실행할 코드
@@ -492,5 +520,27 @@ function modifySrRqst(srRqstNo) {
             alert("수정 실패");
         }
     });
+}
+
+
+//sr 요청 삭제
+function removeSrRqst() {
+	// Ajax 요청 보내기
+	$.ajax({
+		type: "POST",
+		url: "removeSrRqstForPicHome",
+		data: {srRqstNo: $("#srRqst-srRqstNo").val()},
+		success: function (data) {
+			// 성공적으로 요청이 완료된 경우 실행할 코드
+			var currentURL = window.location.href;
+			window.location.href = currentURL; // 원하는 URL로 변경
+			loadSRRequests(1, choiceSrRqstSttsNo);
+		},
+		error: function (error) {
+			// 요청 중 오류가 발생한 경우 실행할 코드
+			console.error("오류 발생:", error);
+			alert("수정 실패");
+		}
+	});
 }
 

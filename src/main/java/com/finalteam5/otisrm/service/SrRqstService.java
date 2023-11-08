@@ -47,6 +47,8 @@ public interface SrRqstService {
 	//sr요청 관리 검색창: sr요청 상태 불러오기
 	public List<SrRqstStts> getSrRqstStts();
     
+	//sr요청 삭제하기
+	public void removeSrRqst(String srRqstNo);
 	
 	//작성자: 이현주
 	//요청목록불러오기(검토자 홈)
