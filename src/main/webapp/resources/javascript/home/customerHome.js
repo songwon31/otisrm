@@ -499,7 +499,7 @@ function modifySrRqst(srRqstNo) {
     });
 }
 
-//sr 요청 삭제
+//**sr 요청 삭제
 function removeSrRqst() {
 	// Ajax 요청 보내기
 	$.ajax({

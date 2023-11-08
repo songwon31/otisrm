@@ -340,6 +340,7 @@
 			        </div>
 			        <div style="width: 550.41px;">
 			          <input id="srRqst-srTtl" type="text" class="form-control">
+			          <input id="srRqst-srRqstNo" type="hidden" class="form-control" value="">
 			        </div>
 			    </div>
 		        <div class="d-flex w-100 pt-2">
@@ -400,7 +401,7 @@
 		
 		      <!-- Modal footer -->
 		      <div class="modal-footer">
-		        <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="removeSrRqst()">확인</button>
+		        <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="removeSrRqstOfMng()">확인</button>
 		        <button type="button" class="btn" style="background-color: #de483a; color: white;" data-dismiss="modal">취소</button>
 		      </div>
 			</div>
