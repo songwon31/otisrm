@@ -72,6 +72,7 @@ function usrIdDuplicationCheck() {
 		$('#modalUsrId').val('');
 		$('#warningContent').html("새 아이디를 입력하세요.");
 		$("#warningModal").modal("show");
+		$('#modalUsrIdCondition').css('display', 'flex');
 	} else {
 		let pattern = /^[a-z]+[a-z0-9]{4,19}$/g;
 		let result = pattern.test(newUsrId);
@@ -86,10 +87,12 @@ function usrIdDuplicationCheck() {
 						personalEditUsrIdDuplicationCheck = true;
 						$('#alertContent').html("사용 가능한 아이디입니다.");
 						$("#alertModal").modal("show");
+						$('#modalUsrIdCondition').css('display', 'none');
 					}else{
 						$('#modalUsrId').val('');
 						$('#warningContent').html("이미 존재하는 아이디입니다.");
 						$("#warningModal").modal("show");
+						$('#modalUsrIdCondition').css('display', 'flex');
 					}
 		       },
 				error: function (error) {
@@ -100,6 +103,7 @@ function usrIdDuplicationCheck() {
 			$('#modalUsrId').val('');
 			$('#warningContent').html("형식에 맞지 않는 아이디입니다.");
 			$("#warningModal").modal("show");
+			$('#modalUsrIdCondition').css('display', 'flex');
 		}
 	}
 }
@@ -110,6 +114,7 @@ function editUsrId() {
 		$('#modalUsrId').val('');
 		$('#warningContent').html("새 아이디를 입력하세요.");
 		$("#warningModal").modal("show");
+		$('#modalUsrIdCondition').css('display', 'flex');
 	} else {
 		let pattern = /^[a-z]+[a-z0-9]{4,19}$/g;
 		let result = pattern.test(newUsrId);
@@ -118,6 +123,7 @@ function editUsrId() {
 				$('#modalUsrId').val('');
 				$('#warningContent').html("중복 검사를 진행해주세요.");
 				$("#warningModal").modal("show");
+				$('#modalUsrIdCondition').css('display', 'flex');
 			} else {
 				//아이디 변경
 				$.ajax({
@@ -128,6 +134,7 @@ function editUsrId() {
 						if (data == 1) {
 							$('#alertContent').html("아이디가 변경되었습니다.");
 							$("#alertModal").modal("show");
+							$('#modalUsrIdCondition').css('display', 'none');
 						} else {
 							console.log("something wrong");
 						}
@@ -138,6 +145,7 @@ function editUsrId() {
 			$('#modalUsrId').val('');
 			$('#warningContent').html("형식에 맞지 않는 아이디입니다.");
 			$("#warningModal").modal("show");
+			$('#modalUsrIdCondition').css('display', 'flex');
 		}
 	}
 	
@@ -159,6 +167,7 @@ function editUsrPassword() {
 					$('#modalNewUsrPassword2').val('');
 					$('#warningContent').html("새 비밀번호가 일치하지 않습니다!");
 	        		$("#warningModal").modal("show");
+	        		$('#modalUsrPasswordCondition').css('display', 'flex');
 				} else {
 					let pattern = /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).{8,20}$/;
 		    		let result = pattern.test(newUsrPassword1);
@@ -175,6 +184,7 @@ function editUsrPassword() {
 									$('#modalNewUsrPassword2').val('');
 									$('#alertContent').html("비밀번호가 변경되었습니다.");
 									$("#alertModal").modal("show");
+									$('#modalUsrPasswordCondition').css('display', 'none');
 								} else {
 									console.log("something wrong");
 								}
@@ -186,6 +196,7 @@ function editUsrPassword() {
 						$('#modalNewUsrPassword2').val('');
 						$('#warningContent').html("형식에 맞지 않는 비밀번호입니다.");
 		        		$("#warningModal").modal("show");
+		        		$('#modalUsrPasswordCondition').css('display', 'flex');
 		    		}
 				}
 			} else {	
@@ -194,6 +205,7 @@ function editUsrPassword() {
 				$('#modalNewUsrPassword2').val('');
 				$('#warningContent').html("기존 비밀번호가 일치하지 않습니다.");
         		$("#warningModal").modal("show");
+        		$('#modalUsrPasswordCondition').css('display', 'flex');
 			}
 		}
 	});
@@ -205,6 +217,7 @@ function editUsrNm() {
 		$('#modalUsrNm').val('');
 		$('#warningContent').html("새 이름을 입력하세요.");
 		$("#warningModal").modal("show");
+		$('#modalUsrNmCondition').css('display', 'flex');
 	} else {
 		let pattern =/^[가-힣]{2,20}|[a-zA-Z]{2,20}\s[a-zA-Z]{2,20}$/;
 		let result = pattern.test(newUsrNm);
@@ -218,6 +231,7 @@ function editUsrNm() {
 					if (data == 1) {
 						$('#alertContent').html("이름이 변경되었습니다.");
 						$("#alertModal").modal("show");
+						$('#modalUsrNmCondition').css('display', 'none');
 					} else {
 						console.log("something wrong");
 					}
@@ -227,6 +241,7 @@ function editUsrNm() {
 			$('#modalUsrNm').val('');
 			$('#warningContent').html("형식에 맞지 않는 이름입니다.");
 			$("#warningModal").modal("show");
+			$('#modalUsrNmCondition').css('display', 'flex');
 		}
 	}
 }
@@ -237,6 +252,7 @@ function editUsrEml() {
 		$('#modalUsrEml').val('');
 		$('#warningContent').html("새 이메일을 입력하세요.");
 		$("#warningModal").modal("show");
+		$('#modalUsrEmlCondition').css('display', 'flex');
 	} else {
 		let pattern = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
 		let result = pattern.test(newEml);
@@ -244,6 +260,7 @@ function editUsrEml() {
 			$('#modalUsrEml').val('');
 			$('#warningContent').html("형식에 맞지 않는 이메일입니다.");
 			$("#warningModal").modal("show");
+			$('#modalUsrEmlCondition').css('display', 'flex');
 		} else {
 			//이메일 변경
 			$.ajax({
@@ -254,6 +271,7 @@ function editUsrEml() {
 					if (data == 1) {
 						$('#alertContent').html("이메일이 변경되었습니다.");
 						$("#alertModal").modal("show");
+						$('#modalUsrEmlCondition').css('display', 'none');
 					} else {
 						console.log("something wrong");
 					}
@@ -270,6 +288,7 @@ function editUsrTelno() {
 		$('#modalUsrTelno').val('');
 		$('#warningContent').html("새 전화번호를 입력하세요.");
 		$("#warningModal").modal("show");
+		$('#modalUsrTelnoCondition').css('display', 'flex');
 	} else {
 		let pattern = /^(01[016789]{1})-?[0-9]{3,4}-?[0-9]{4}$/;
 		let result = pattern.test(newUsrTelno);
@@ -282,6 +301,7 @@ function editUsrTelno() {
 					if (data == 1) {
 						$('#alertContent').html("전화번호가 변경되었습니다.");
 						$("#alertModal").modal("show");
+						$('#modalUsrTelnoCondition').css('display', 'none');
 					} else {
 						console.log("something wrong");
 					}
@@ -291,6 +311,7 @@ function editUsrTelno() {
 			$('#modalUsrTelno').val('');
 			$('#warningContent').html("형식에 맞지 않는 전화번호입니다.");
 			$("#warningModal").modal("show");
+			$('#modalUsrTelnoCondition').css('display', 'flex');
 		}
 	}
 }
@@ -306,9 +327,11 @@ function editUsrDept() {
 			if (data > 0) {
 				$('#alertContent').html("부서가 변경되었습니다.");
 				$("#alertModal").modal("show");
+				$('#modalUsrDeptCondition').css('display', 'none');
 			} else {
 				$('#warningContent').html("진행중인 SR건이 존재하여 부서를 변경할 수 없습니다.");
 				$("#warningModal").modal("show");
+				$('#modalUsrDeptCondition').css('display', 'flex');
 			}
         }
 	});

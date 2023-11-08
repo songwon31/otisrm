@@ -234,7 +234,19 @@
 					</div>
 					<div style="height:4rem; display:flex; flex-direction:row;">
 						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#f9fafe; font-weight:700;">권한</div>
-						<div id="modalUsrAuthrtNm" style="height:4rem; width:35%; padding-left:0.5rem; display:flex; align-items:center;"></div>
+						<div style="height:4rem; width:35%; padding-left:0.5rem; display:flex; align-items:center;">
+						 	<select id="modalUsrAuthrt" name="modalUsrAuthrtNm" style="width:60%; padding:3px;">
+								<option value="CUSTOMER">고객사</option>
+								<option value="PIC">담당자</option>
+								<option value="DEVELOPER">개발자</option>
+								<option value="REVIEWER">검토자</option>
+								<option value="SYS_MANAGER">시스템 관리자</option>
+							</select>
+							<button type="button" onclick="editUsrAuthrt()"
+									style="height:3rem; border:none; border-radius:5px; background-color: #2c7be4; color:white; font-weight:700; margin-left:1rem;">
+								저장
+							</button>
+						</div>
 						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#f9fafe; font-weight:700;">상태</div>
 						<div id="modalUsrSttsNm" style="height:4rem; width:35%; padding-left:0.5rem; display:flex; align-items:center;"></div>
 					</div>
@@ -256,8 +268,7 @@
 	</div>
 </div>
 
-<!-- 사용자 상세 정보 -->
-<div id="alertModal" class="modal" data-backdrop="static">
+<div id="wraningModal" class="modal" data-backdrop="static">
 	<div class="modal-dialog modal-dialog-centered modal-sm">
 		<div class="modal-content">
 			<div class="modal-header" style="background-color:red; color:white; display:flex;">
@@ -265,7 +276,23 @@
 				<i class="material-icons close-icon" data-dismiss="modal" style="cursor: pointer;">close</i>
 			</div>
 			<div class="modal-body" style="margin:0px; padding:0px; font-size:1.5rem;">
-				<div id="alertContent" style="height:11rem; font-size:1.7rem; fnt-weight:700; display:flex; justify-content:center; align-items:center; white-space: pre-wrap;">
+				<div id="wraningModalContent" style="height:11rem; font-size:1.7rem; fnt-weight:700; display:flex; justify-content:center; align-items:center; white-space: pre-wrap;">
+					
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="alertModal" class="modal" data-backdrop="static">
+	<div class="modal-dialog modal-dialog-centered modal-sm">
+		<div class="modal-content">
+			<div class="modal-header" style="background-color:#2c7be4; color:white; display:flex;">
+				<div class="modal-title" style="font-size:2rem; font-weight:700;">경고</div>
+				<i class="material-icons close-icon" data-dismiss="modal" style="cursor: pointer;">close</i>
+			</div>
+			<div class="modal-body" style="margin:0px; padding:0px; font-size:1.5rem;">
+				<div id="alertModalContent" style="height:11rem; font-size:1.7rem; fnt-weight:700; display:flex; justify-content:center; align-items:center; white-space: pre-wrap;">
 					
 				</div>
 			</div>

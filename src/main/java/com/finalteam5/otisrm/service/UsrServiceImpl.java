@@ -305,5 +305,15 @@ public class UsrServiceImpl implements UsrService{
 			return usrDao.updateUsrSttsToWhdwl(usrNo);
 		}
 	}
+	
+	//권한 수정
+	@Override
+	public int editUsrAuthrt(String usrNo, String newUsrAuthrtNo) {
+		if (usrDao.selectSrInfoByUsrNo(usrNo).size() > 0) {
+			return 0;
+		} else {
+			return usrDao.updateUsrAuthrt(usrNo, newUsrAuthrtNo);
+		}
+	}
 
 }

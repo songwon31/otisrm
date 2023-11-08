@@ -73,4 +73,6 @@ public interface UsrDao {
 	public int updateUsrIbps(@Param("usrNo") String usrNo, @Param("ibpsNo") String ibpsNo);
 	//회원 탈퇴
 	public int updateUsrSttsToWhdwl(String usrNo);
+	//권한 수정
+	public int updateUsrAuthrt(@Param("usrNo") String usrNo, @Param("authrtNo") String authrtNo);
 }

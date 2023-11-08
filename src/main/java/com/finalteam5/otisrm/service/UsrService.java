@@ -93,4 +93,7 @@ public interface UsrService {
 	
 	//회원 탈퇴
 	public int usrWhdwl(String usrNo);
+	
+	//권한 수정
+	public int editUsrAuthrt(String usrNo, String newUsrAuthrtNo);
 }

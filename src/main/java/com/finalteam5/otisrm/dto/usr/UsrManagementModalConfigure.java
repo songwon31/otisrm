@@ -18,6 +18,7 @@ public class UsrManagementModalConfigure {
 	private String deptNm;
 	private String ibpsNm;
 	private String roleNm;
+	private String usrAuthrtNo;
 	private String usrAuthrtNm;
 	private String usrSttsNm;
 	private Date usrJoinDt;

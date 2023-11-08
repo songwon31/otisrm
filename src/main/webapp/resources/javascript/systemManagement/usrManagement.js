@@ -306,8 +306,8 @@ function batchWithdrawal() {
         contentType: 'application/json',
         success: function (data) {
         	if (data == 0) {
-        		$('#alertContent').html("진행중인 SR건이 있을 경우\n    탈퇴처리할 수 없습니다!");
-        		$("#alertModal").modal("show");
+        		$('#wraningModalContent').html("진행중인 SR건이 있을 경우\n    탈퇴처리할 수 없습니다!");
+        		$("#wraningModal").modal("show");
         	}
         	mainTableConfig(currentUsrManagementSearch, currentPageNo);
         }
@@ -320,8 +320,6 @@ function usrDetailModalConfig(usrNo) {
         type: 'POST',	
         data: {usrNo: usrNo},
         success: function (data) {
-        	console.log(data);
-        	
         	$('#modalUsrNo').html(data.usrNo);
         	$('#modalUsrNm').html(data.usrNm);
         	$('#modalUsrRrno').html(data.usrRrno);
@@ -331,7 +329,8 @@ function usrDetailModalConfig(usrNo) {
         	$('#modalDeptNm').html(data.deptNm);
         	$('#modalIbpsNm').html(data.ibpsNm);
         	$('#modalRoleNm').html(data.roleNm);
-        	$('#modalUsrAuthrtNm').html(data.usrAuthrtNm);
+        	console.log(data.usrAuthrtNo);
+        	$('#modalUsrAuthrt').val(data.usrAuthrtNo);
         	$('#modalUsrSttsNm').html(data.usrSttsNm);
         	let joinDt = new Date(data.usrJoinDt);
         	$('#modalUsrJoinDt').html(formatDate(joinDt));
@@ -345,6 +344,30 @@ function usrDetailModalConfig(usrNo) {
         	for (let i=0; i<data.srInfo.length; ++i) {
         		let html = '<div style="white-space: pre-wrap;">' + data.srInfo[i].srNo + '\t' + data.srInfo[i].srTtl + '</div>'
         		$('#srList').append(html);
+        	}
+        }
+    });
+}
+
+function editUsrAuthrt() {
+	let usrNo = $('#modalUsrNo').html();
+	let newUsrAuthrtNo = $('#modalUsrAuthrt').val();
+	$.ajax({
+        url: '/otisrm/systemManagement/usrManagement/editUsrAuthrt',
+        type: 'POST',	
+        data: {
+        	usrNo: usrNo,
+        	newUsrAuthrtNo: newUsrAuthrtNo
+        },
+        success: function (data) {
+        	if (data > 0) {
+        		$('#alertModalContent').html("권한이 변경되었습니다.");
+        		$("#alertModal").modal("show");
+        		mainTableConfig(currentUsrManagementSearch, currentPageNo);
+        		usrDetailModalConfig(usrNo);
+        	} else {
+        		$('#wraningModalContent').html("진행중인 SR건이 있을 경우\n 권한을 변경할 수 없습니다");
+        		$("#wraningModal").modal("show");
         	}
         }
     });

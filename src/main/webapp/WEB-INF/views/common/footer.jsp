@@ -53,30 +53,38 @@
 			<div class="modal-body" style="margin:0px; padding:0px; font-size:1.5rem;">
 				<div id="editPersonalInfoMiddleDiv" style="display:flex; flex-direction:column; align-items:center;">
 					<div style="width:100%; display: flex; flex-direction: row;">
-						<div style="height: 4rem; width: 20%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #f9fafe; font-weight:700;">
+						<div style="width: 20%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #f9fafe; font-weight:700;">
 							<svg style="width:0.5rem; height:0.5rem; margin: 0rem 0.5rem;"><rect width="0.5rem" height="0.5rem" fill="#222E3C" /></svg>
 							<span style="font-size:1.6rem; font-weight:700;">아이디</span>
 						</div>
-						<div style="height: 4rem; width: 30%; padding-left: 0.5rem; display: flex; align-items: center;">
-							<input id="modalUsrId" type="text" value="" style="width:100%; height:3rem; margin:0 0 0 0.5rem;">
+						<div style="width:80%; display: flex; flex-direction:column; justify-content: center;">
+							<div style="width:100%; display: flex; align-items: center;">
+								<div style="height: 4rem; width: 30%; padding-left: 0.5rem; display: flex; align-items: center;">
+									<input id="modalUsrId" type="text" value="" style="width:100%; height:3rem; margin:0 0 0 0.5rem;">
+								</div>
+								<div style="height: 4rem; padding-left: 0.5rem; display: flex; align-items: center;">
+									<button type="button" id="modalUsrIdDuplicationCheckButton" onclick="usrIdDuplicationCheck()" style=" background-color:gray;">
+										중복검사
+									</button>
+								</div>
+								<div id="srPlanInfoDmnd" style="height: 4rem; padding-left: 0.5rem; display: flex; align-items: center;">
+									<button type="button" id="modalUsrIdEditButton" onclick="editUsrId()">
+										아이디 변경
+									</button>
+								</div>
+							</div>
+							<div id="modalUsrIdCondition" style="height: 4rem; width:100%; padding-left: 0.5rem; display: none; align-items: center; color:red;">
+								주의사항
+							</div>
 						</div>
-						<div style="height: 4rem; padding-left: 0.5rem; display: flex; align-items: center;">
-							<button type="button" id="modalUsrIdDuplicationCheckButton" onclick="usrIdDuplicationCheck()" style=" background-color:gray;">
-								중복검사
-							</button>
-						</div>
-						<div id="srPlanInfoDmnd" style="height: 4rem; padding-left: 0.5rem; display: flex; align-items: center;">
-							<button type="button" id="modalUsrIdEditButton" onclick="editUsrId()">
-								아이디 변경
-							</button>
-						</div>
+						
 					</div>
-					<div style="height: 16rem; width:100%; display: flex; flex-direction: row;">
-						<div style="height: 16rem; width: 20%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #f9fafe; font-weight:700;">
+					<div style="width:100%; display: flex; flex-direction: row;">
+						<div style="width: 20%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #f9fafe; font-weight:700;">
 							<svg style="width:0.5rem; height:0.5rem; margin: 0rem 0.5rem;"><rect width="0.5rem" height="0.5rem" fill="#222E3C" /></svg>
 							<span style="font-size:1.6rem; font-weight:700;">비밀번호</span>
 						</div>
-						<div style="height:16rem; width:80%; display: flex; flex-direction: column; justify-content:center;">
+						<div style="width:80%; display: flex; flex-direction: column; justify-content:center;">
 							<div style="height: 4rem; width: 100%; font-weight:700; padding-left: 0.5rem; display: flex; align-items: center;">
 								<div style="height: 4rem; width: 25%; font-weight:700; padding-left: 0.5rem; display: flex; align-items: center;">현재 비밀번호</div>
 								<div style="height: 4rem; width: 40%; padding-left: 0.5rem; display: flex; align-items: center;">
@@ -100,94 +108,139 @@
 									비밀번호 변경
 								</button>
 							</div>
+							<div id="modalUsrPasswordCondition" style="height: 4rem; width: 100%; padding-left: 0.5rem; display: none; align-items: center; color:red;">
+								주의사항
+							</div>
 						</div>
 					</div>
 					<div style="width:100%; display: flex; flex-direction: row;">
-						<div style="height: 4rem; width: 20%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #f9fafe; font-weight:700;">
+						<div style="width: 20%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #f9fafe; font-weight:700;">
 							<svg style="width:0.5rem; height:0.5rem; margin: 0rem 0.5rem;"><rect width="0.5rem" height="0.5rem" fill="#222E3C" /></svg>
 							<span style="font-size:1.6rem; font-weight:700;">이름</span>
 						</div>
-						<div style="height: 4rem; width: 30%; padding-left: 0.5rem; display: flex; align-items: center;">
-							<input id="modalUsrNm" type="text" value="" style="width:100%; height:3rem; margin:0 0 0 0.5rem;">
-						</div>
-						<div style="flex-grow:1; height: 4rem; padding-left: 1rem; display: flex; align-items: center;">
-							<button type="button" id="modalUsrNmEditButton" onclick="editUsrNm()" style="width:35%;">
-								이름 변경
-							</button>
+						<div style="width:80%; display: flex; flex-direction:column; justify-content: center;">
+							<div style="width:100%; display:flex; align-items:center;">
+								<div style="height: 4rem; width: 30%; padding-left: 0.5rem; display: flex; align-items: center;">
+									<input id="modalUsrNm" type="text" value="" style="width:100%; height:3rem; margin:0 0 0 0.5rem;">
+								</div>
+								<div style="flex-grow:1; height: 4rem; padding-left: 1rem; display: flex; align-items: center;">
+									<button type="button" id="modalUsrNmEditButton" onclick="editUsrNm()" style="width:35%;">
+										이름 변경
+									</button>
+								</div>
+							</div>
+							<div id="modalUsrNmCondition" style="height: 4rem; width:100%; padding-left: 0.5rem; display: none; align-items: center; color:red;">
+								주의사항
+							</div>
 						</div>
 					</div>
 					<div style="width:100%; display: flex; flex-direction: row;">
-						<div style="height: 4rem; width: 20%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #f9fafe; font-weight:700;">
+						<div style="width: 20%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #f9fafe; font-weight:700;">
 							<svg style="width:0.5rem; height:0.5rem; margin: 0rem 0.5rem;"><rect width="0.5rem" height="0.5rem" fill="#222E3C" /></svg>
 							<span style="font-size:1.6rem; font-weight:700;">이메일</span>
 						</div>
-						<div style="height: 4rem; width: 30%; padding-left: 0.5rem; display: flex; align-items: center;">
-							<input id="modalUsrEml" type="text" value="" style="width:100%; height:3rem; margin:0 0 0 0.5rem;">
-						</div>
-						<div style="flex-grow:1; height: 4rem; padding-left: 1rem; display: flex; align-items: center;">
-							<button type="button" id="modalUsrEmlEditButton" onclick="editUsrEml()" style="width:35%;">
-								이메일 변경
-							</button>
+						<div style="width:80%; display: flex; flex-direction:column; justify-content: center;">
+							<div style="width:100%; display:flex; align-items:center;">
+								<div style="height: 4rem; width: 30%; padding-left: 0.5rem; display: flex; align-items: center;">
+									<input id="modalUsrEml" type="text" value="" style="width:100%; height:3rem; margin:0 0 0 0.5rem;">
+								</div>
+								<div style="flex-grow:1; height: 4rem; padding-left: 1rem; display: flex; align-items: center;">
+									<button type="button" id="modalUsrEmlEditButton" onclick="editUsrEml()" style="width:35%;">
+										이메일 변경
+									</button>
+								</div>
+							</div>
+							<div id="modalUsrEmlCondition" style="height: 4rem; width:100%; padding-left: 0.5rem; display: none; align-items: center; color:red;">
+								주의사항
+							</div>
 						</div>
 					</div>
 					<div style="width:100%; display: flex; flex-direction: row;">
-						<div style="height: 4rem; width: 20%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #f9fafe; font-weight:700;">
+						<div style="width: 20%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #f9fafe; font-weight:700;">
 							<svg style="width:0.5rem; height:0.5rem; margin: 0rem 0.5rem;"><rect width="0.5rem" height="0.5rem" fill="#222E3C" /></svg>
 							<span style="font-size:1.6rem; font-weight:700;">전화번호</span>
 						</div>
-						<div style="height: 4rem; width: 30%; padding-left: 0.5rem; display: flex; align-items: center;">
-							<input id="modalUsrTelno" type="text" value="" style="width:100%; height:3rem; margin:0 0 0 0.5rem;">
-						</div>
-						<div style="flex-grow:1; height: 4rem; padding-left: 1rem; display: flex; align-items: center;">
-							<button type="button" id="modalUsrTelnoEditButton" onclick="editUsrTelno()" style="width:35%;">
-								전화번호 변경
-							</button>
+						<div style="width:80%; display: flex; flex-direction:column; justify-content: center;">
+							<div style="width:100%; display:flex; align-items:center;">
+								<div style="height: 4rem; width: 30%; padding-left: 0.5rem; display: flex; align-items: center;">
+									<input id="modalUsrTelno" type="text" value="" style="width:100%; height:3rem; margin:0 0 0 0.5rem;">
+								</div>
+								<div style="flex-grow:1; height: 4rem; padding-left: 1rem; display: flex; align-items: center;">
+									<button type="button" id="modalUsrTelnoEditButton" onclick="editUsrTelno()" style="width:35%;">
+										전화번호 변경
+									</button>
+								</div>
+							</div>
+							<div id="modalUsrTelnoCondition" style="height: 4rem; width:100%; padding-left: 0.5rem; display: none; align-items: center; color:red;">
+								주의사항
+							</div>
 						</div>
 					</div>
 					<div style="width:100%; display: flex; flex-direction: row;">
-						<div style="height: 4rem; width: 20%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #f9fafe; font-weight:700;">
+						<div style="width: 20%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #f9fafe; font-weight:700;">
 							<svg style="width:0.5rem; height:0.5rem; margin: 0rem 0.5rem;"><rect width="0.5rem" height="0.5rem" fill="#222E3C" /></svg>
 							<span style="font-size:1.6rem; font-weight:700;">부서</span>
 						</div>
-						<div style="height: 4rem; width: 30%; padding-left: 0.5rem; display: flex; align-items: center;">
-							<select id="modalUsrDept" name="modalUsrDept" style="width:100%; margin-left:0.5rem; padding:1px;">
-							</select>
-						</div>
-						<div style="flex-grow:1; height: 4rem; padding-left: 1rem; display: flex; align-items: center;">
-							<button type="button" id="modalUsrDeptEditButton" onclick="editUsrDept()" style="width:35%;">
-								부서 변경
-							</button>
+						<div style="width:80%; display: flex; flex-direction:column; justify-content: center;">
+							<div style="width:100%; display:flex; align-items:center;">
+								<div style="height: 4rem; width: 30%; padding-left: 0.5rem; display: flex; align-items: center;">
+									<select id="modalUsrDept" name="modalUsrDept" style="width:100%; margin-left:0.5rem; padding:1px;">
+									</select>
+								</div>
+								<div style="flex-grow:1; height: 4rem; padding-left: 1rem; display: flex; align-items: center;">
+									<button type="button" id="modalUsrDeptEditButton" onclick="editUsrDept()" style="width:35%;">
+										부서 변경
+									</button>
+								</div>
+							</div>
+							<div id="modalUsrDeptCondition" style="height: 4rem; width:100%; padding-left: 0.5rem; display: none; align-items: center; color:red;">
+								주의사항
+							</div>
 						</div>
 					</div>
 					<div style="width:100%; display: flex; flex-direction: row;">
-						<div style="height: 4rem; width: 20%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #f9fafe; font-weight:700;">
+						<div style="width: 20%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #f9fafe; font-weight:700;">
 							<svg style="width:0.5rem; height:0.5rem; margin: 0rem 0.5rem;"><rect width="0.5rem" height="0.5rem" fill="#222E3C" /></svg>
 							<span style="font-size:1.6rem; font-weight:700;">직책</span>
 						</div>
-						<div style="height: 4rem; width: 30%; padding-left: 0.5rem; display: flex; align-items: center;">
-							<select id="modalUsrRole" name="modalUsrRole" style="width:100%; margin-left:0.5rem; padding:1px;">
-							</select>
-						</div>
-						<div style="flex-grow:1; height: 4rem; padding-left: 1rem; display: flex; align-items: center;">
-							<button type="button" id="modalUsrRoleEditButton" onclick="editUsrRole()" style="width:35%;">
-								직책 변경
-							</button>
+						<div style="width:80%; display: flex; flex-direction:column; justify-content: center;">
+							<div style="width:100%; display:flex; align-items:center;">
+								<div style="height: 4rem; width: 30%; padding-left: 0.5rem; display: flex; align-items: center;">
+									<select id="modalUsrRole" name="modalUsrRole" style="width:100%; margin-left:0.5rem; padding:1px;">
+									</select>
+								</div>
+								<div style="flex-grow:1; height: 4rem; padding-left: 1rem; display: flex; align-items: center;">
+									<button type="button" id="modalUsrRoleEditButton" onclick="editUsrRole()" style="width:35%;">
+										직책 변경
+									</button>
+								</div>
+							</div>
+							<div id="modalUsrRoleCondition" style="height: 4rem; width:100%; padding-left: 0.5rem; display: none; align-items: center; color:red;">
+								주의사항
+							</div>
 						</div>
 					</div>
 					
 					<div style="width:100%; display: flex; flex-direction: row;">
-						<div style="height: 4rem; width: 20%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #f9fafe; font-weight:700;">
+						<div style="width: 20%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #f9fafe; font-weight:700;">
 							<svg style="width:0.5rem; height:0.5rem; margin: 0rem 0.5rem;"><rect width="0.5rem" height="0.5rem" fill="#222E3C" /></svg>
 							<span style="font-size:1.6rem; font-weight:700;">직위</span>
 						</div>
-						<div style="height: 4rem; width: 30%; padding-left: 0.5rem; display: flex; align-items: center;">
-							<select id="modalUsrIbps" name="modalUsrIbps" style="width:100%; margin-left:0.5rem; padding:1px;">
-							</select>
-						</div>
-						<div style="flex-grow:1; height: 4rem; padding-left: 1rem; display: flex; align-items: center;">
-							<button type="button" id="modalUsrIbpsEditButton" onclick="editUsrIbps()" style="width:35%;">
-								직위 변경
-							</button>
+						<div style="width:80%; display: flex; flex-direction:column; justify-content: center;">
+							<div style="width:100%; display:flex; align-items:center;">
+								<div style="height: 4rem; width: 30%; padding-left: 0.5rem; display: flex; align-items: center;">
+									<select id="modalUsrIbps" name="modalUsrIbps" style="width:100%; margin-left:0.5rem; padding:1px;">
+									</select>
+								</div>
+								<div style="flex-grow:1; height: 4rem; padding-left: 1rem; display: flex; align-items: center;">
+									<button type="button" id="modalUsrIbpsEditButton" onclick="editUsrIbps()" style="width:35%;">
+										직위 변경
+									</button>
+								</div>
+							</div>
+							<div id="modalUsrIbpsCondition" style="height: 4rem; width:100%; padding-left: 0.5rem; display: none; align-items: center; color:red;">
+								주의사항
+							</div>
 						</div>
 					</div>
 					<div style="width:100%; display: flex; flex-direction: row;">

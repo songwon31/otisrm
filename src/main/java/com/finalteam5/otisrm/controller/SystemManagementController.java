@@ -83,6 +83,13 @@ public class SystemManagementController {
 		return usrService.getUsrDetailModalConfig(usrNo);
 	}
 	
+	//권한 수정
+	@RequestMapping("/usrManagement/editUsrAuthrt")
+	@ResponseBody
+	public int editUsrAuthrt(String usrNo, String newUsrAuthrtNo) {
+		return usrService.editUsrAuthrt(usrNo, newUsrAuthrtNo);
+	}
+	
 	//기업 관리 페이지
 	@RequestMapping("/instManagement")
 	public String instManagement(Authentication authentication, Model model) {
