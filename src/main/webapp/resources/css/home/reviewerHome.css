@@ -178,9 +178,9 @@ a, a:hover {
 	font-size: 1.5rem;
 }
 
-#detailmodal {
+#detailmodal, #alertModal {
 	font-size: 1.5rem;
-	border-radius: 1rem;
+	border-radius: 3px;
 }
 
 .w-label {
@@ -195,6 +195,13 @@ a, a:hover {
 	background-color: #222e3c;
 	color: white;
 	font-weight: 700;
+}
+
+.modal-header-red {
+	background-color: #e42c2c;
+	color: white;
+	font-weight: 700;
+	padding: 1rem;
 }
 
 .modal-sub-title {

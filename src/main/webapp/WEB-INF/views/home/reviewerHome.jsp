@@ -85,18 +85,19 @@
 				      <div class="modal-header">
 				        <span class="modal-title">SR 상세</span>
 				        <input id="detailmodal_srRqstNo" hidden>
-				        <i class="material-icons close-icon" data-dismiss="modal">close</i>
+				        <i class="material-icons close-icon" data-dismiss="modal" onclick="initDetailModal()">close</i>
 				      </div>
 				      <div class="modal-body">
 				      		<!-- SR요청정보 -->
 				      		<div class="d-flex mb-2">
 				      			<span class="modal-sub-title mr-auto">SR요청정보</span>
 				      			<select id="approveResult" name="requestResult" class="mr-2" disabled>
+							        <option id="initApproveResult" value="" selected>선택</option>
 							        <option value="APRV_REEXAM">승인재검토</option>
 							        <option value="APRV_RETURN">승인반려</option>
 							        <option value="APRV">승인</option>
 							    </select>
-				      			<button id="approveResultBtn" type="button" class="btn-3" onclick="saveApproveResult()" disabled>처리</button>
+				      			<button id="approveResultBtn" type="button" class="btn-3" onclick="saveApproveResult(this)" disabled>처리</button>
 				      		</div>
 				      		<div class="card p-2 mb-2">
 						      	<div class="row mx-0 mt-0 mb-2">
@@ -143,11 +144,12 @@
 				      		<div class="d-flex mb-2">
 				      			<span class="modal-sub-title mr-auto">SR개발정보</span>
 			      				<select id="receptionResult" name="receptionResult" class="mr-2" disabled>
+							        <option id="initReceptionResult" value="" selected>선택</option>
 							        <option value="RCPT_REEXAM">접수재검토</option>
 							        <option value="RCPT_RETURN">접수반려</option>
 							        <option value="RCPT">접수승인</option>
 							    </select>
-				      			<button id="receptionResultBtn" type="button" class="btn-3" onclick="saveReceptionResult()" disabled>처리</button>
+				      			<button id="receptionResultBtn" type="button" class="btn-3" onclick="saveReceptionResult(this)" disabled>처리</button>
 				      		</div>
 				      		<div class="card p-2">
 					      		<div class="row mx-0 mt-0 mb-2">
@@ -207,6 +209,23 @@
 				  </div>
 				</div>
 				
+				<!-- 알림 모달  -->
+				<div id="alertModal" class="modal" data-backdrop="static">
+					<div class="modal-dialog modal-dialog-centered modal-sm">
+						<div class="modal-content">
+							<div class="modal-header-red d-flex">
+								<div class="modal-title mr-auto">알림</div>
+								<i class="material-icons close-icon ml-auto" data-dismiss="modal" style="cursor: pointer;">close</i>
+							</div>
+							<div class="modal-body">
+								<div id="alertModalContent" style="height:11rem; font-weight: 700; display: flex; justify-content: center; align-items: center;">
+									변경할 상태를 선택해주십시오.
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+								
 			</div>
 		</div>
 		<div style="width: 30%; padding-left: 0.5rem;" class="">
@@ -325,7 +344,7 @@
 					<div class="progress-step">
 						<div class="progress-content">
 							<div class="inner-circle"></div>
-							<p class="mt-3 mb-5">완료신청</p>
+							<p class="mt-3 mb-5">완료요청</p>
 						</div>
 					</div>
 					<div class="progress-step">
@@ -347,15 +366,15 @@
 	       		</div>
 	       		<div class="d-flex mb-3">
 		       		<span class="badgeitem w-label d-flex justify-content-center mr-auto">SR 제목</span>
-		       		<span id="progress_srTtl" class="d-flex w-content">SRM 시스템 개발 요청</span>
+		       		<span id="progress_srTtl" class="d-flex w-content"></span>
 	       		</div>
 	       		<div class="d-flex mb-3">
 		       		<span class="badgeitem w-label d-flex justify-content-center mr-auto">SR 내용</span>
-		       		<textarea id="progress_srConts" class="d-flex w-content" rows="3" cols="50" disabled>SRM 시스템 개발 요청 내용입니다.</textarea>
+		       		<textarea id="progress_srConts" class="d-flex w-content" rows="3" cols="50" disabled></textarea>
 	       		</div>
 	       		<div class="d-flex">
 		       		<span class="badgeitem w-label d-flex justify-content-center mr-auto">검토의견</span>
-		       		<textarea id="progress_srRqstRvwRsn" class="d-flex w-content" rows="3" cols="50" disabled>SRM 시스템 개발 요청 내용입니다.</textarea>
+		       		<textarea id="progress_srRqstRvwRsn" class="d-flex w-content" rows="3" cols="50" disabled></textarea>
 	       		</div>
 	       </div>
        </div>

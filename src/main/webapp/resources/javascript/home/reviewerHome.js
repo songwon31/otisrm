@@ -134,6 +134,26 @@ function loadReviewerHomeBoardList(pageNo, selectedStts) {
 	});
 }
 
+function initDetailModal() {
+	$("#approveResult").attr("disabled","disabled");
+	$("#approveResultBtn").attr('disabled');
+	$("#approveResultBtn").removeClass('btn-1');
+	$("#approveResultBtn").addClass('btn-3');
+	$("#detailmodal_srRqstRvwRsn").removeAttr('disabled');
+	$("#initApproveResult").prop('selected', true);
+	$("#detailmodal_srRqstRvwRsn").attr("disabled","disabled");
+	
+	$("#receptionResult").attr("disabled","disabled");
+	$("#receptionResultBtn").attr('disabled');
+	$("#initReceptionResult").prop('selected', true);
+	$("#receptionResultBtn").removeClass('btn-1');
+	$("#receptionResultBtn").addClass('btn-3');
+	
+	$("#completionResultBtn").attr('disabled');
+	$("#completionResultBtn").removeClass('btn-complete');
+	$("#completionResultBtn").addClass('btn-complete-disabled');
+}
+
 function showDetailModal(srRqstNo) {
 	$.ajax({
 		type: "GET",
@@ -148,11 +168,9 @@ function showDetailModal(srRqstNo) {
 			
  			//진행상태에 따른 select, button 활성화
 			var sttsNo = data.srRqstSttsNo;
-			
 			if(sttsNo == "RQST") {
-				$("option[value='APRV_REEXAM']").prop('selected', true);
+				//변화없음
 			} else if(sttsNo == "APRV_WAIT" || sttsNo == "APRV_REEXAM") {
-				$("option[value='APRV_REEXAM']").prop('selected', true);
 				$("#approveResult").removeAttr('disabled');
 				$("#approveResultBtn").removeAttr('disabled');
 				$("#approveResultBtn").removeClass('btn-3');
@@ -167,15 +185,12 @@ function showDetailModal(srRqstNo) {
 			if(sttsNo == "RCPT" || sttsNo == "DEP_ING" || sttsNo == "TEST" || sttsNo == "CMPTN_RQST" || sttsNo == "DEP_CMPTN") {
 				$("option[value='RCPT']").prop('selected', true);
 			} else if(sttsNo == "RCPT_WAIT" || sttsNo == "RCPT_REEXAM") {
-				$("option[value='RCPT_REEXAM']").prop('selected', true);
 				$("#receptionResult").removeAttr('disabled');
 				$("#receptionResultBtn").removeAttr('disabled');
 				$("#receptionResultBtn").removeClass('btn-3');
 				$("#receptionResultBtn").addClass('btn-1');
 			} else if(sttsNo == "RCPT_RETURN") {
 				$("option[value='RCPT_RETURN']").prop('selected', true);
-			} else {
-				$("option[value='RCPT_REEXAM']").prop('selected', true);
 			}
 			
 			if(sttsNo == "CMPTN_RQST") {
@@ -183,7 +198,7 @@ function showDetailModal(srRqstNo) {
 				$("#completionResultBtn").removeClass('btn-complete-disabled');
 				$("#completionResultBtn").addClass('btn-complete');
 			}
-			
+
 			//SR요청정보 불러오기
 			$("#detailmodal_srReqstrNm").val(data.srReqstrNm);
         	$("#detailmodal_reqstrInstNm").val(data.reqstrInstNm);
@@ -243,7 +258,7 @@ function loadProgressInfo(srRqstNo) {
 			
 			//개발정보
 			var sttsNm = data.srRqstSttsNm;
-			if(sttsNm == "개발중" || sttsNm =="테스트" || sttsNm =="완료신청" || sttsNm == "개발완료") {
+			if(sttsNm == "개발중" || sttsNm =="테스트" || sttsNm =="완료요청" || sttsNm == "개발완료") {
 				if(data.srTrnsfYn == "Y") {
 					//이관개발
 					$("#progress_dep_ing_info").removeClass('d-none');
@@ -288,10 +303,15 @@ function loadProgressInfo(srRqstNo) {
 	});
 }
 
-function saveApproveResult() {
+function saveApproveResult(e) {
 	var srRqstNo = $("#detailmodal_srRqstNo").val();
 	var approveResult = $("#approveResult").val();
 	var srRqstRvwRsn = $("#detailmodal_srRqstRvwRsn").val();
+	
+	if(approveResult == ""){
+		$('#alertModal').modal('show');
+		e.preventDefault();
+	}
 	
 	$.ajax({
 		type: "POST",
@@ -303,9 +323,14 @@ function saveApproveResult() {
 	});
 }
 
-function saveReceptionResult() {
+function saveReceptionResult(e) {
 	var srRqstNo = $("#detailmodal_srRqstNo").val();
 	var receptionResult = $("#receptionResult").val();
+	
+	if(receptionResult == ""){
+		$('#alertModal').modal('show');
+		e.preventDefault();
+	}
 	
 	$.ajax({
 		type: "POST",
