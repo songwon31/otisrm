@@ -384,10 +384,12 @@
 		    r.sr_conts,
 		    r.sr_rqst_rvw_rsn,
 		    pic.usr_nm as sr_pic_usr_nm,
-		    dept.dept_nm,
 		    sr.sr_trnsf_yn,
 		    trnsf_inst.inst_nm as sr_trnsf_inst_nm,
+		    stc.sr_task_nm,
 		    sr.sr_req_bgt,
+		    sdc.sr_dmnd_nm,
+		    sr.sr_pri,	
 		    sr.sr_cmptn_prnmnt_dt,
 		    sr.sr_dvl_conts
 		from sr_rqst r
@@ -397,7 +399,9 @@
 		left join sr on r.sr_rqst_no = sr.sr_rqst_no
 		left join usr pic on pic.usr_no = sr.pic_usr_no 
 		left join inst trnsf_inst on trnsf_inst.inst_no = sr.sr_trnsf_inst_no
-		left join dept on dept.dept_no = pic.dept_no
+		left join sr_task_clsf stc on stc.sr_task_no = sr.sr_task_no
+		left join sr_trnsf_plan stp on stp.sr_no = sr.sr_no
+		left join sr_dmnd_clsf sdc on sdc.sr_dmnd_no = stp.sr_dmnd_no
 		where r.sr_rqst_no = #{selectedSrRqstNo}
 	</select>
 	

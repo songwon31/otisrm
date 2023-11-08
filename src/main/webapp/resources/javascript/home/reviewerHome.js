@@ -178,7 +178,13 @@ function showDetailModal(srRqstNo) {
 				$("option[value='RCPT_REEXAM']").prop('selected', true);
 			}
 			
-			//SR요청정보
+			if(sttsNo == "CMPTN_RQST") {
+				$("#completionResultBtn").removeAttr('disabled');
+				$("#completionResultBtn").removeClass('btn-complete-disabled');
+				$("#completionResultBtn").addClass('btn-complete');
+			}
+			
+			//SR요청정보 불러오기
 			$("#detailmodal_srReqstrNm").val(data.srReqstrNm);
         	$("#detailmodal_reqstrInstNm").val(data.reqstrInstNm);
         	$("#detailmodal_srRqstRegDt").val(formattedSrRqstRegDt);
@@ -186,17 +192,19 @@ function showDetailModal(srRqstNo) {
         	$("#detailmodal_srTtl").val(data.srTtl);
         	$("#detailmodal_srConts").val(data.srConts);
         	$("#detailmodal_srRqstRvwRsn").val(data.srRqstRvwRsn);
-			
-			//SR개발정보
+        	
+			//SR개발정보 불러오기
         	$("#detailmodal_srPicUsrNm").val(data.srPicUsrNm);
-        	$("#detailmodal_deptNm").val(data.deptNm);
         	$("#detailmodal_srTrnsfYn").val(data.srTrnsfYn);
         	$("#detailmodal_srTrnsfInstNm").val(data.srTrnsfInstNm);
+        	$("#detailmodal_srTaskNm").val(data.srTaskNm);
         	if(data.srReqBgt == 0) {
         		$("#detailmodal_srReqBgt").val("");
         	} else {
         		$("#detailmodal_srReqBgt").val(data.srReqBgt);
         	}
+        	$("#detailmodal_srDmndNm").val(data.srDmndNm);
+        	$("#detailmodal_srPri").val(data.srPri);
         	$("#detailmodal_srCmptnPrnmntDt").val(formattedSrCmptnPrnmntDt);
         	$("#detailmodal_srDvlConts").val(data.srDvlConts);
 		}
@@ -303,6 +311,19 @@ function saveReceptionResult() {
 		type: "POST",
 		url: "/otisrm/saveReceptionResult",
 		data: {selectedSrRqstNo: srRqstNo, srRqstSttsNo: receptionResult},
+		success: function(data) {
+			loadReviewerHomeCountBoard();
+		}
+	});
+}
+
+function saveCompletionResult() {
+	var srRqstNo = $("#detailmodal_srRqstNo").val();
+	
+	$.ajax({
+		type: "POST",
+		url: "/otisrm/saveCompletionResult",
+		data: {selectedSrRqstNo: srRqstNo},
 		success: function(data) {
 			loadReviewerHomeCountBoard();
 		}

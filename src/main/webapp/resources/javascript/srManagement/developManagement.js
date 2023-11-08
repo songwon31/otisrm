@@ -139,21 +139,21 @@ function loadDevelopManagementList(pageNo) {
 	});
 }
 
-/*
-function showDetailModal(srRqstNo) {
+
+/*function showDetailModal(srRqstNo) {
 	$.ajax({
 		type: "GET",
 		url: "/otisrm/getSrRqstForReviewerModal",
 		data: {selectedSrRqstNo: srRqstNo},
 		success: function(data) {
-			const formattedSrRqstRegDt = formatDateToYYYYMMDD(data.srRqstRegDt);
-			const formattedSrCmptnPrnmntDt = formatDateToYYYYMMDD(data.srCmptnPrnmntDt);
-			
+			var formattedSrRqstRegDt = formatDateToYYYYMMDD(data.srRqstRegDt);
+        	var formattedSrCmptnPrnmntDt = formatDateToYYYYMMDD(data.srCmptnPrnmntDt);
+        	
 			//SR번호
 			$("#detailmodal_srRqstNo").val(data.srRqstNo);
 			
  			//진행상태에 따른 select, button 활성화
-			const sttsNo = data.srRqstSttsNo;
+			var sttsNo = data.srRqstSttsNo;
 			
 			if(sttsNo == "RQST") {
 				$("option[value='APRV_REEXAM']").prop('selected', true);
@@ -184,7 +184,7 @@ function showDetailModal(srRqstNo) {
 				$("option[value='RCPT_REEXAM']").prop('selected', true);
 			}
 			
-			//SR요청정보
+			//SR요청정보 불러오기
 			$("#detailmodal_srReqstrNm").val(data.srReqstrNm);
         	$("#detailmodal_reqstrInstNm").val(data.reqstrInstNm);
         	$("#detailmodal_srRqstRegDt").val(formattedSrRqstRegDt);
@@ -192,23 +192,27 @@ function showDetailModal(srRqstNo) {
         	$("#detailmodal_srTtl").val(data.srTtl);
         	$("#detailmodal_srConts").val(data.srConts);
         	$("#detailmodal_srRqstRvwRsn").val(data.srRqstRvwRsn);
-			
-			//SR개발정보
+        	
+			//SR개발정보 불러오기
         	$("#detailmodal_srPicUsrNm").val(data.srPicUsrNm);
-        	$("#detailmodal_deptNm").val(data.deptNm);
         	$("#detailmodal_srTrnsfYn").val(data.srTrnsfYn);
         	$("#detailmodal_srTrnsfInstNm").val(data.srTrnsfInstNm);
+        	$("#detailmodal_srTaskNm").val(data.srTaskNm);
         	if(data.srReqBgt == 0) {
         		$("#detailmodal_srReqBgt").val("");
         	} else {
         		$("#detailmodal_srReqBgt").val(data.srReqBgt);
         	}
+        	$("#detailmodal_srDmndNm").val(data.srDmndNm);
+        	$("#detailmodal_srPri").val(data.srPri);
         	$("#detailmodal_srCmptnPrnmntDt").val(formattedSrCmptnPrnmntDt);
         	$("#detailmodal_srDvlConts").val(data.srDvlConts);
 		}
 	});
-}
+}*/
 
+
+/*
 function saveApproveResult() {
 	const srRqstNo = $("#detailmodal_srRqstNo").val();
 	const approveResult = $("#approveResult").val();

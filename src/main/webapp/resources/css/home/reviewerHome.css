@@ -121,8 +121,32 @@ a, a:hover {
    width: 7rem;
 }
 
-.btn-3:active {
+/* .btn-3:active {
    background-color:#7c7c7c; 
+} */
+
+.btn-complete {
+   border: none;
+   font-size:1.3rem;
+   color: white;
+   background-color:#e42c2c; 
+   border-radius:3px;
+   height: 2.8rem;
+   width: 12rem;
+}
+
+.btn-complete:active {
+   background-color:#7d0000;
+}
+
+.btn-complete-disabled {
+   border: none;
+   font-size:1.3rem;
+   color: white;
+   background-color:#949494; 
+   border-radius:3px;
+   height: 2.8rem;
+   width: 12rem;
 }
 
 .close-icon:hover {

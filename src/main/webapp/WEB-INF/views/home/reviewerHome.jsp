@@ -156,18 +156,18 @@
 						            <input id="detailmodal_srPicUsrNm" type="text" class="form-control form-control-sm col-7" disabled>
 						          </div>
 						          <div class="col-sm row">
-						            <label for="detailmodal_deptNm" class="col-form-label col-5">개발부서</label>
-						            <input id="detailmodal_deptNm" type="text" class="form-control form-control-sm col-7" disabled>
+						            <label for="detailmodal_srTrnsfYn" class="col-form-label col-5">이관여부</label>
+						            <input id="detailmodal_srTrnsfYn" type="text" class="form-control form-control-sm col-7" disabled>
 						          </div>
 								</div>
 								<div class="row mx-0 mt-0 mb-2">
 						          <div class="col-sm row">
-						            <label for="detailmodal_srTrnsfYn" class="col-form-label col-5 pl-0">이관여부</label>
-						            <input id="detailmodal_srTrnsfYn" type="text" class="form-control form-control-sm col-7" disabled>
+						            <label for="detailmodal_srTrnsfInstNm" class="col-form-label col-5 pl-0">이관기관</label>
+						            <input id="detailmodal_srTrnsfInstNm" type="text" class="form-control form-control-sm col-7" disabled>
 						          </div>
 						          <div class="col-sm row">
-						            <label for="detailmodal_srTrnsfInstNm" class="col-form-label col-5">이관기관</label>
-						            <input id="detailmodal_srTrnsfInstNm" type="text" class="form-control form-control-sm col-7" disabled>
+						            <label for="detailmodal_srTaskNm" class="col-form-label col-5">업무구분</label>
+						            <input id="detailmodal_srTaskNm" type="text" class="form-control form-control-sm col-7" disabled>
 						          </div>
 								</div>
 								<div class="row mx-0 mt-0 mb-2">
@@ -176,22 +176,32 @@
 						            <input id="detailmodal_srReqBgt" type="text" class="form-control form-control-sm col-7" disabled>
 						          </div>
 						          <div class="col-sm row">
-						            <label for="detailmodal_srCmptnPrnmntDt" class="col-form-label col-5">완료예정일</label>
-						            <input id="detailmodal_srCmptnPrnmntDt" type="date" class="form-control form-control-sm col-7" disabled>
+						            <label for="detailmodal_srDmndNm" class="col-form-label col-5">요청구분</label>
+						            <input id="detailmodal_srDmndNm" type="text" class="form-control form-control-sm col-7" disabled>
 						          </div>
 								</div>
+								<div class="row mx-0 mt-0 mb-2">
+									<div class="col-sm row">
+						            	<label for="detailmodal_srPri" class="col-form-label col-5 pl-0">우선순위</label>
+						            	<input id="detailmodal_srPri" type="text" class="form-control form-control-sm col-7" disabled>
+						          	</div>
+						          	<div class="col-sm row">
+						            	<label for="detailmodal_srCmptnPrnmntDt" class="col-form-label col-5">완료예정일</label>
+						            	<input id="detailmodal_srCmptnPrnmntDt" type="date" class="form-control form-control-sm col-7" disabled>
+						          	</div>
+								</div>
 					      		<div class="d-flex mb-2 w-100">
-						            <label for="detailmodal_srDvlConts" class="w-label col-form-label pl-0">개발내용</label>
-						            <textarea id="detailmodal_srDvlConts" class="w-content form-control form-control-sm" rows="3" cols="50" disabled></textarea>
-						          </div>
-						          <div class="d-flex mb-2 w-100">
-						            <label for="detailmodal_srAtchData" class="w-label col-form-label pl-0">첨부파일</label>
+					            	<label for="detailmodal_srDvlConts" class="w-label col-form-label pl-0">개발내용</label>
+					            	<textarea id="detailmodal_srDvlConts" class="w-content form-control form-control-sm" rows="3" cols="50" disabled></textarea>
+					          	</div>
+					          	<div class="d-flex mb-2 w-100">
+					            	<label for="detailmodal_srAtchData" class="w-label col-form-label pl-0">첨부파일</label>
 									<input id="detailmodal_srAtchData" type="file" id="srFile" class="w-content form-control-file form-control-sm px-0" disabled>
-						          </div>
+					          	</div>
 							</div>
 				      </div>
 				      <div class="modal-footer py-1">
-				        <button type="button" class="btn-3" data-dismiss="modal">닫기</button>
+				        <button id="completionResultBtn" type="button" class="btn-complete-disabled" onclick="saveCompletionResult()" disabled>개발완료 처리</button>
 				      </div>
 				    </div>
 				  </div>
