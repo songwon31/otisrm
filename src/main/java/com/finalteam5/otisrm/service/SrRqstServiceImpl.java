@@ -10,6 +10,7 @@ import com.finalteam5.otisrm.dao.SrRqstDao;
 import com.finalteam5.otisrm.dto.Sys;
 import com.finalteam5.otisrm.dto.srRequest.SrRqst;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstAtch;
+import com.finalteam5.otisrm.dto.srRequest.SrRqstForDevelopManagement;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstForReviewerHomeBoard;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstForReviewerHomeProgress;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstForReviewerModal;
@@ -137,4 +138,17 @@ public class SrRqstServiceImpl implements SrRqstService{
 	public List<String> getTotalSysNm() {
 		return srRqstDao.selectTotalSysNm();
 	}
+	
+	//개발관리 진행상태 승인이상 요청수 가져오기
+	@Override
+	public int getCountSrRqstForDevelopManagement(Map<String, String> params) {
+		return srRqstDao.countSrRqstForDevelopManagement(params);
+	}
+	
+	//개발관리 목록 가져오기
+	@Override
+	public List<SrRqstForDevelopManagement> getSrRqstForDevelopManagementByPage(Map<String, Object> params) {
+		return srRqstDao.selectSrRqstForDevelopManagementByPage(params);
+	}
+
 }

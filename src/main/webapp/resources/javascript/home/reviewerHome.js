@@ -43,7 +43,7 @@ function loadReviewerHomeCountBoard() {
 
 function loadFirstSrToProgressInfo(){
 	setTimeout(function() {
-        const firstSrRqstNo = $("#reviewerHomeBoardList tr td:eq(1)").text();
+        var firstSrRqstNo = $("#reviewerHomeBoardList tr td:eq(1)").text();
         if(firstSrRqstNo == "") {
         	initProgress();
         } else {
@@ -74,9 +74,9 @@ function loadReviewerHomeBoardList(pageNo, selectedStts) {
 			} else if(data.list.length != 0) {
 				//tr 생성
 				data.list.forEach((item, index)=>{
-					const formattedSrRqstRegDt = formatDateToYYYYMMDD(item.srRqstRegDt);
-					const formattedSrCmptnPrnmntDt = formatDateToYYYYMMDD(item.srCmptnPrnmntDt);
-					const trIndex = (pageNo - 1) * 5 + index + 1;
+					var formattedSrRqstRegDt = formatDateToYYYYMMDD(item.srRqstRegDt);
+					var formattedSrCmptnPrnmntDt = formatDateToYYYYMMDD(item.srCmptnPrnmntDt);
+					var trIndex = (pageNo - 1) * 5 + index + 1;
 					
 					html += '<tr style="height: 4.5rem; font-size: 1.5rem; background-color: white;" onclick="loadProgressInfo(\''+ item.srRqstNo +'\')">';
 					html += '	<td>' + trIndex + '</td>';
@@ -140,14 +140,14 @@ function showDetailModal(srRqstNo) {
 		url: "/otisrm/getSrRqstForReviewerModal",
 		data: {selectedSrRqstNo: srRqstNo},
 		success: function(data) {
-			const formattedSrRqstRegDt = formatDateToYYYYMMDD(data.srRqstRegDt);
-			const formattedSrCmptnPrnmntDt = formatDateToYYYYMMDD(data.srCmptnPrnmntDt);
+			var formattedSrRqstRegDt = formatDateToYYYYMMDD(data.srRqstRegDt);
+			var formattedSrCmptnPrnmntDt = formatDateToYYYYMMDD(data.srCmptnPrnmntDt);
 			
 			//SR번호
 			$("#detailmodal_srRqstNo").val(data.srRqstNo);
 			
  			//진행상태에 따른 select, button 활성화
-			const sttsNo = data.srRqstSttsNo;
+			var sttsNo = data.srRqstSttsNo;
 			
 			if(sttsNo == "RQST") {
 				$("option[value='APRV_REEXAM']").prop('selected', true);
@@ -227,8 +227,8 @@ function loadProgressInfo(srRqstNo) {
 			initProgress();
 			
 			//요청 정보
-			const formattedSrRqstRegDt = formatDateToYYYYMMDD(data.srRqstRegDt);
-			const formattedSrCmptnPrnmntDt = formatDateToYYYYMMDD(data.srCmptnPrnmntDt);
+			var formattedSrRqstRegDt = formatDateToYYYYMMDD(data.srRqstRegDt);
+			var formattedSrCmptnPrnmntDt = formatDateToYYYYMMDD(data.srCmptnPrnmntDt);
 			$("#progress_rqst_info").removeClass('d-none');
 			$("#progress_srRqstRegDt").text(formattedSrRqstRegDt);
 			$("#progress_srReqstrNm").text(data.srReqstrNm);
@@ -281,9 +281,9 @@ function loadProgressInfo(srRqstNo) {
 }
 
 function saveApproveResult() {
-	const srRqstNo = $("#detailmodal_srRqstNo").val();
-	const approveResult = $("#approveResult").val();
-	const srRqstRvwRsn = $("#detailmodal_srRqstRvwRsn").val();
+	var srRqstNo = $("#detailmodal_srRqstNo").val();
+	var approveResult = $("#approveResult").val();
+	var srRqstRvwRsn = $("#detailmodal_srRqstRvwRsn").val();
 	
 	$.ajax({
 		type: "POST",
@@ -296,8 +296,8 @@ function saveApproveResult() {
 }
 
 function saveReceptionResult() {
-	const srRqstNo = $("#detailmodal_srRqstNo").val();
-	const receptionResult = $("#receptionResult").val();
+	var srRqstNo = $("#detailmodal_srRqstNo").val();
+	var receptionResult = $("#receptionResult").val();
 	
 	$.ajax({
 		type: "POST",
