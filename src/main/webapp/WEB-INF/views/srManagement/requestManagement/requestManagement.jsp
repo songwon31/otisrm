@@ -283,7 +283,15 @@
       <div class="modal-body">
       	<form id="modifySrRqstOfMng" action="modifySrRqstOfMng" method="post" enctype="multipart/form-data">
       		<!-- SR요청정보 -->
-      		<h6 class="modal-sub-title">SR요청등록</h6>
+      		<div class="d-flex">      		
+	      		<div>      		
+	      			<h6 class="modal-sub-title">SR요청 정보</h6>
+	      		</div>
+	      		<div class="mb-2" style="margin-left: 540px;">      		
+		      		<button id="deleteButton" class="btn-7" type="button" data-toggle="modal" data-target="#srRqstdeleteModal">삭제</button>
+		      		<button id="saveButton" class="btn-1" type="button" onclick="modifySrRqst()">저장</button>
+	      		</div>
+      		</div>
       		<div class="card p-3 mb-4">
 		      	<div>
 		        	<div class="d-flex">
@@ -369,20 +377,35 @@
 			</div>
       	</div>
       </div>
-      <div class="modal-footer py-1">
-      	<input id="srRqst-srRqstNo" type="hidden" name="srReqstrNo">
-      	<input id="submitSrRqst-srTtl" type="hidden" class="form-control" name="srTtl">
-		<input id="submitSrRqst-srPrps" type="hidden" class="form-control" name="srPrps">
-		<input id="submitSrRqst-srConts" type="hidden" class="form-control" name="srConts">
-		<input id="submit_Yn" type="hidden" name="srRqstEmrgYn">
-        <button id="saveButton" class="btn-1" type="submit">저장</button>
-        <button type="button" class="btn-3" data-dismiss="modal">닫기</button>
-      </div>
     </form>
    </div>
   </div>
  </div>
 </div>
+
+ <!-- 요청 삭제 모달 -->  
+	<div class="modal" id="srRqstdeleteModal">
+	  <div class="modal-dialog">
+		  <div class="modal-content">
+		      <!-- Modal Header -->
+		      <div class="modal-header"  style="background-color: white;">
+		        <h6 class="modal-title"  style="color: black;">sr요청 삭제</h6>
+		        <button type="button" class="close" data-dismiss="modal">&times;</button>
+		      </div>
+		
+		      <!-- Modal body -->
+		      <div class="modal-body" style="font-size: 1.3rem;">
+		        	해당 sr요청을 정말로 삭제하겠습니까 ?
+		      </div>
+		
+		      <!-- Modal footer -->
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="removeSrRqst()">확인</button>
+		        <button type="button" class="btn" style="background-color: #de483a; color: white;" data-dismiss="modal">취소</button>
+		      </div>
+			</div>
+		</div>
+	</div>
 
 <!-- 등록자 소속 선택 모달 -->
 <div id="filterOfInst" class="modal" data-backdrop="static">

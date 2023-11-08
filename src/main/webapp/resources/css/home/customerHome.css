@@ -218,6 +218,21 @@
 	background-color:#7c7c7c; 
 }
 
+/* 빨간 버튼 */
+.btn-5 {
+	border: none;
+	font-size:1.3rem;
+	color: #f3ffff;
+	background-color:#de483a; 
+	border-radius:3px;
+	height: 2.8rem;
+	width: 76px;
+}
+
+.btn-5:active {
+	background-color:#c53d31; 
+}
+
 .plus_btn {
     display: block;
     width: 20px;

@@ -126,7 +126,6 @@ function loadSRRequests(pageNo, choiceSrRqstSttsNo) {
           $(this).css('background-color', 'white');
         }
       );
-      loading();
     },
     error: function(error) {
       console.error("데이터를 불러오는 중 오류가 발생했습니다.");
@@ -305,6 +304,13 @@ function showSrRqstBySrRqstNo(choiceSrRqstNo){
         	$("#srRqst-srPrps").val(data.srPrps);
         	$("#srRqst-srConts").val(data.srConts);
         	$("#srRqst-srRqstRegDt").val(formattedDate);
+        	
+        	//요청상태가 승인대기 이상일 때 삭제 불가능(버튼 속성 변경)
+        	if(data.srRqstSttsNo !== "RQST"){
+        		$("#deleteButton").prop("disabled", true);
+        		$("#deleteButton").css("opacity", 0.5); 
+        	}
+        	
         	//첨부파일
         	if (data.srRqstAtchList && typeof data.srRqstAtchList === "object") {
         	    // data.srRqstAtchList는 객체일 때
@@ -327,14 +333,13 @@ function showSrRqstBySrRqstNo(choiceSrRqstNo){
         	            }
         	        }
         	        $("#showSrRqstAtch").html(html);
-        	        loading();
         	    } else {
         	        // srRqstAtchList가 객체지만 아무 항목도 없을 때
-        	        $("#showSrRqstAtch").hide();
+        	        $("#showSrRqstAtch").html("첨부파일이 존재하지 않습니다.");
         	    }
         	} else {
         	    // srRqstAtchList가 객체가 아닐 때
-        	    $("#showSrRqstAtch").hide();
+        	    $("#showSrRqstAtch").html("첨부파일이 존재하지 않습니다.");
         	}
         	if (data.srRqstEmrgYn === "Y") {
         	    $("#srRqst-importantChk").prop("checked", true);
@@ -492,6 +497,27 @@ function modifySrRqst(srRqstNo) {
             alert("수정 실패");
         }
     });
+}
+
+//sr 요청 삭제
+function removeSrRqst() {
+	// Ajax 요청 보내기
+	$.ajax({
+		type: "POST",
+		url: "removeSrRqstForCustomerHome",
+		data: {srRqstNo: $("#srRqst-srRqstNo").val()},
+		success: function (data) {
+			// 성공적으로 요청이 완료된 경우 실행할 코드
+			var currentURL = window.location.href;
+			window.location.href = currentURL; // 원하는 URL로 변경
+			loadSRRequests(1, choiceSrRqstSttsNo);
+		},
+		error: function (error) {
+			// 요청 중 오류가 발생한 경우 실행할 코드
+			console.error("오류 발생:", error);
+			alert("수정 실패");
+		}
+	});
 }
 
 //**공지사항 목록 불러오기
@@ -846,25 +872,3 @@ function toggleTr(id) {
 	  $("#"+id).toggleClass("hidden");
 }
 
-//로딩 스피너 함수
-function loading() {
-  LoadingWithMask();
-  setTimeout("closeLoadingWithMask()", 1000);
-}
-
-//스피너와 마스크 표시
-function LoadingWithMask() {
-  //로딩중 이미지 표시
-  $.LoadingOverlay("show", {
-  	background       : "rgba(0, 0, 0, 0.5)",
-  	image            : "https://upload.wikimedia.org/wikipedia/commons/f/fc/Herbert_Kickl.gif",
-  	maxSize          : 150,
-  	fontawesome      : "fa fa-pulse fa-fw",
-  	fontawesomeColor : "#FFFFFF",
-  });
- 
-}
-//스피너와 마스크 종료
-function closeLoadingWithMask() {
-  $.LoadingOverlay("hide"); 
-}

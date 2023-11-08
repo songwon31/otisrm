@@ -267,6 +267,21 @@
 .btn-6:active {
 	background-color:#4177bf; 
 }
+
+/* 빨간 버튼 */
+.btn-7 {
+	border: none;
+	font-size:1.3rem;
+	color: #f3ffff;
+	background-color:#de483a; 
+	border-radius:3px;
+	height: 2.8rem;
+	width: 76px;
+}
+
+.btn-7:active {
+	background-color:#c53d31; 
+}
 /* Modal */
 .modal-header {
 	background-color: #222e3c;

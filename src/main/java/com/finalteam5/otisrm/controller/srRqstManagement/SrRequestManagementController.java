@@ -146,10 +146,18 @@ public class SrRequestManagementController {
 	   os.close();    
 	}
 	
-	//고객사 홈 페이지에서 요청 수정하기
+	//요청관리에서 요청 수정하기
 	@PostMapping("modifySrRqstOfMng")
 	public String modifySrRqst(SrRqstSubmit srRqstSubmit) {
 	    srRqstService.modifySrRqst(srRqstSubmit);
 	    return "redirect:/srManagement/requestManagement";
+	}
+	
+	//요청관리에서 요청 삭제하기
+	@PostMapping("removeSrRqstOfMng")
+	public String removeSrRqst(String srRqstNo) {
+		log.info("삭제: " + srRqstNo);
+		srRqstService.removeSrRqst(srRqstNo);
+		return "redirect:/customerHome";
 	}
 }
