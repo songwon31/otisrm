@@ -164,7 +164,7 @@ public class PicHomeRestController {
 	@GetMapping("getSrBySrRqstNoForPicHome")
 	public Sr getSrBySrRqstNo(String srRqstNo, Model model, HttpSession session) {
 		Sr sr = srRqstService.getSrBySrRqstNo(srRqstNo);
-		if(sr.toString() != null) {			
+		if(sr != null) {			
 			List<SrAtch> list = srRqstService.getSrAtchBySrNo(sr.getSrNo());		
 			sr.setSrAtchList(list);
 			model.addAttribute("srRqstNo", srRqstNo);

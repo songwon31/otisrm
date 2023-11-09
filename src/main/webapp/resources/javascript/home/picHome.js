@@ -424,7 +424,6 @@ function showSrRqstBySrRqstNo(choiceSrRqstNo){
         	        let html = "";
         	        for (const key of keys) {
         	            const srRqstAtch = data.srRqstAtchList[key];
-        	            console.log(srRqstAtch);
         	            if (srRqstAtch && srRqstAtch.srRqstNo === data.srRqstNo) {
         	                $("#showSrRqstAtch").show();
         	                var size = bytesToKB(srRqstAtch.srRqstAtchSize);
@@ -453,17 +452,18 @@ function showSrRqstBySrRqstNo(choiceSrRqstNo){
         	    $("#srRqst-importantChk").prop("checked", false);
         	}
         	
+        	showSrBySrRqstNo(choiceSrRqstNo);
         },
         error: function() {
           console.log(error);
         }
     });
 	
-	 showSrBySrRqstNo(choiceSrRqstNo);
 }
 
 //**요청에 해당하는 sr상세내용 가져오기;
 function showSrBySrRqstNo(choiceSrRqstNo){
+	clearFormFields();
 	console.log("데이터 앙 !!실행함");
 	//sr요청 상세
 	$.ajax({
@@ -471,7 +471,7 @@ function showSrBySrRqstNo(choiceSrRqstNo){
 		url: "getSrBySrRqstNoForPicHome",
 		data: {srRqstNo: choiceSrRqstNo},
 		success: function(data) {
-			if(data != 0){
+			if(data != 0 || data != null){
 				console.log("데이터 앙 !!");
 				//sr번호 지정
 				$("#srNo").val(data.srNo);
@@ -481,18 +481,20 @@ function showSrBySrRqstNo(choiceSrRqstNo){
 				
 				//저장버튼(로그인한 회원의 요청만 저장버튼 활성화)
 				var loggedInUsrNo= $("#loginUsrNo").val();// 로그인한 회원 번호 가져오기 
-				var saveButton = $("#saveButton2");
+				var saveButton2 = $("#saveButton2");
 				
 			    // 로그인한 사용자와 요청을 등록한 회원을 비교하여 버튼 활성화/비활성화
-				if (data.picUsrNo === loggedInUsrNo) {
+				console.log("슨서: " + data.srRqstSttsNo);
+				if (data.srRqstSttsNo === 'APRV') {
 					console.log("내sr");
-					saveButton.prop("disabled", false); // 버튼을 활성화
-					saveButton.css("opacity", 1); // 버튼을 완전 불투명으로 설정
+					saveButton2.prop("disabled", false); // 버튼을 활성화
+					saveButton2.css("opacity", 1); // 버튼을 완전 불투명으로 설정
 				} else{
-					console.log("내요청 아님");
-					saveButton.prop("disabled", true); // 버튼을 비활성화
-					saveButton.css("opacity", 0.5); // 버튼을 반투명으로 설정 (예시로 0.5 사용)
+					console.log("내담당 아님");
+					saveButton2.prop("disabled", true); // 버튼을 비활성화
+					saveButton2.css("opacity", 0.5); // 버튼을 반투명으로 설정 (예시로 0.5 사용)
 				}
+				
 				var formattedDate = $.datepicker.formatDate("yy-mm-dd", date);
 				//이관여부
 				$('input[name="srTrnsfYn"][value="'+ data.srTrnsfYn +'"]').prop('checked', true);
@@ -554,8 +556,23 @@ function showSrBySrRqstNo(choiceSrRqstNo){
 	});
 }
 
-
-
+//폼 초기화
+function clearFormFields() {
+    // 각 필드를 초기화
+    $("#srNo").val("");
+    $("#srRqst-inst").val("");
+    $("#srTrnsfYn_Y").prop("checked", false);
+    $("#srTrnsfYn_N").prop("checked", false);
+    $("#trnsf-inst").val("");
+    $("#trnsf-srReqBgt").val("");
+    $("#srReqBgt").val("");
+    $("#trnsf-srDmndClsf").val("");
+    $("#srTaskNo").val("");
+    $("#srPri").val("");
+    $("#srCmptnPrnmntDt").val("");
+    $("#srDvlConts").val("");
+    $("#showSrAtch").html(""); // 첨부파일 영역 비우기
+}
 
 //a태그 클릭시 폼 제출 막기
 function eventPreventSrRqstAtch(){
