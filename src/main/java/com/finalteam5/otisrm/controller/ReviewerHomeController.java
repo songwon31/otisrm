@@ -55,7 +55,7 @@ public class ReviewerHomeController {
 	public Map<String, Integer> getReviewerHomeCountBoard() {
 		int aprvWaitCount = srRqstService.getCountSrRqstBySttsNm("승인대기");
 		int rcptWaitCount = srRqstService.getCountSrRqstBySttsNm("접수대기");
-		int cmptnRqstCount = srRqstService.getCountSrRqstBySttsNm("완료신청");
+		int cmptnRqstCount = srRqstService.getCountSrRqstBySttsNm("완료요청");
 		
 		Map<String, Integer> data = new HashMap<>();
 		data.put("aprvWaitCount", aprvWaitCount);
@@ -134,6 +134,16 @@ public class ReviewerHomeController {
 		Map<String, String> sttsParams = new HashMap<>();
 		sttsParams.put("selectedSrRqstNo", selectedSrRqstNo);
 		sttsParams.put("srRqstSttsNo", srRqstSttsNo);
+		srRqstService.saveSrRqstStts(sttsParams);
+	}
+	
+	@PostMapping("/saveCompletionResult")
+	@ResponseBody
+	public void saveCompletionResult(@RequestParam String selectedSrRqstNo) {
+		//개발 완료 처리
+		Map<String, String> sttsParams = new HashMap<>();
+		sttsParams.put("selectedSrRqstNo", selectedSrRqstNo);
+		sttsParams.put("srRqstSttsNo", "DEP_CMPTN");
 		srRqstService.saveSrRqstStts(sttsParams);
 	}
 

@@ -19,10 +19,12 @@ public class SrRqstForReviewerModal {
 	
 	//SR개발정보
 	private String srPicUsrNm;
-	private String deptNm;
 	private String srTrnsfYn;
 	private String srTrnsfInstNm;
+	private String srTaskNm;
 	private int srReqBgt;
+	private String srDmndNm;
+	private String srPri;
 	private Date srCmptnPrnmntDt;
 	private String srDvlConts;
 }
