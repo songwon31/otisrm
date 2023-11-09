@@ -7,7 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.finalteam5.otisrm.dao.SrRqstDao;
+import com.finalteam5.otisrm.dto.SrDmndClsf;
+import com.finalteam5.otisrm.dto.SrTaskClsf;
 import com.finalteam5.otisrm.dto.Sys;
+import com.finalteam5.otisrm.dto.sr.srForPicHome.Sr;
+import com.finalteam5.otisrm.dto.sr.srForPicHome.SrAtch;
 import com.finalteam5.otisrm.dto.srRequest.SrRqst;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstAtch;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstForReviewerHomeBoard;
@@ -15,6 +19,7 @@ import com.finalteam5.otisrm.dto.srRequest.SrRqstForReviewerHomeProgress;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstForReviewerModal;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstStts;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstSubmit;
+import com.finalteam5.otisrm.dto.usr.Inst;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -89,15 +94,60 @@ public class SrRqstServiceImpl implements SrRqstService{
 		srRqstDao.updateSrRqst(srRqstSubmit);
 	}
 	
+	//sr요청 상태 목록 불러오기
 	@Override
 	public List<SrRqstStts> getSrRqstStts() {
 		List<SrRqstStts> list = srRqstDao.selectSrRqstStts();
 		return list;
 	}
 	
+	//sr요청 삭제
 	@Override
 	public void removeSrRqst(String srRqstNo) {
 		srRqstDao.deleteSrRqst(srRqstNo);
+	}
+	
+	//담당자홈=====================================================================
+	//담당자 폼 sr개발정보: 이관기관 가져오기
+	@Override
+	public List<Inst> getInstByOutsrcY() {
+		List<Inst> list = srRqstDao.selectInstByOutsrcY();
+		return list;
+	}
+	
+	//담당자 폼 sr개발정보: sr요청구분 가져오기
+	@Override
+	public List<SrDmndClsf> getSrDmndClsf() {
+		List<SrDmndClsf> list = srRqstDao.selectSrDmndClsf();
+		return list;
+	}
+	
+	//담당자 폼 sr개발정보: sr업무구분 가져오기
+	@Override
+	public List<SrTaskClsf> getSrTaskClsf() {
+		List <SrTaskClsf> list = srRqstDao.selectSrTaskClsf();
+		return list;
+	}
+	
+	//srRqstNo에 해당하는 sr 상세 내용 가져오기
+	@Override
+	public Sr getSrBySrRqstNo(String SrRqstNo) {
+		Sr sr = srRqstDao.selectSrBySrRqstNo(SrRqstNo);
+		return sr;
+	}
+	
+	//sr 상세정보에 해당하는 첨부파일 불러오기
+	@Override
+	public List<SrAtch> getSrAtchBySrNo(String srNo) {
+		List<SrAtch> list = srRqstDao.selectSrAtchBySrNo(srNo);
+		return list;
+	}
+	
+	//sr첨부파일 번호에 해당하는 첨부파일 가져오기(파일 다운로드를 위함)
+	@Override
+	public SrAtch getSrAtchBySrAtchNo(String srAtchNo) {
+		SrAtch srAtch = srRqstDao.selectSrAtchBySrAtchNo(srAtchNo);
+		return srAtch;
 	}
 	
 	//작성자: 이현주 
@@ -142,5 +192,8 @@ public class SrRqstServiceImpl implements SrRqstService{
 	public List<String> getTotalSysNm() {
 		return srRqstDao.selectTotalSysNm();
 	}
+
+
+
 	
 }

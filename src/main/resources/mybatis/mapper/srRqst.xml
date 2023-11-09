@@ -52,18 +52,24 @@
 		    select rownum as rnum, sr_rqst_no, sr_ttl, sr_reqstr_no, sr_rqst_reg_dt, sr_rqst_mdfcn_dt, dept_no, dept_nm, sr_rqst_stts_seq,
 		    sr_rqst_stts_no, sys_no, sr_rqst_emrg_yn, sr_rqst_rvw_rsn, sr_rqst_vld_yn, sys_nm, usr_nm, inst_nm, sr_rqst_stts_nm  
 		    from(
-		        select r.sr_rqst_no, r.sr_ttl, sr_reqstr_no, r.sr_rqst_reg_dt, r.sr_rqst_mdfcn_dt, r.sr_rqst_stts_no,
-		        q.sr_rqst_stts_seq, r.sys_no, r.sr_rqst_emrg_yn, r.sr_rqst_rvw_rsn, r.sr_rqst_vld_yn, s.sys_nm, u.usr_nm, u.inst_no, i.inst_nm, q.sr_rqst_stts_nm,
-		        d.dept_no, d.dept_nm 
-		        from sr_rqst r
-		        join sys s on s.sys_no = r.sys_no 
-		        join usr u on u.usr_no = r.sr_reqstr_no
-		        join dept d on d.dept_no = u.dept_no 
-		        join inst i on i.inst_no = u.inst_no
-		        join sr_rqst_stts q on q.sr_rqst_stts_no = r.sr_rqst_stts_no
+		        select r.sr_rqst_no, r.sr_ttl, r.sr_reqstr_no, r.sr_rqst_reg_dt, r.sr_rqst_mdfcn_dt, r.sr_rqst_stts_no,
+				q.sr_rqst_stts_seq, r.sys_no, r.sr_rqst_emrg_yn, r.sr_rqst_rvw_rsn, r.sr_rqst_vld_yn, s.sys_nm, u.usr_nm, u.inst_no, i.inst_nm, q.sr_rqst_stts_nm,
+				d.dept_no, d.dept_nm 
+				from sr_rqst r
+				join sys s on s.sys_no = r.sys_no 
+				join usr u on u.usr_no = r.sr_reqstr_no
+				join dept d on d.dept_no = u.dept_no 
+				join inst i on i.inst_no = u.inst_no
+				join sr_rqst_stts q on q.sr_rqst_stts_no = r.sr_rqst_stts_no
 		       <if test="status != null and status != '' or usr != null and usr != '' or keyword != null and keyword != '' or startDate != null or endDate != null
-		       	or instNo != null and instNo != '' or deptNo != null and deptNo != '' or startDate != null and startDate != '' or endDate != null and endDate != ''">
+		       	or instNo != null and instNo != '' or deptNo != null and deptNo != '' or startDate != null and startDate != '' or endDate != null and endDate != '' or pic != null and pic != ''">
 				  <where>
+				  	<!-- 담당자 홈일 경우 자신이 요청한 sr요청과 다른 사람의 sr 요청일 경우 승인 상태 불러오기 -->
+				    <!-- <if test="pic != null and pic != ''">
+		 				or (r.sr_reqstr_no = #{pic, jdbcType=VARCHAR})
+    					or (r.sr_reqstr_no != #{pic, jdbcType=VARCHAR} and r.sr_rqst_stts_no = 'APRV')
+				    </if> -->
+				     
 				  	<!-- 소속기관 -->
 				    <if test="instNo != null and instNo != ''">
 				  		and u.inst_no = #{instNo, jdbcType=VARCHAR}
@@ -78,7 +84,7 @@
 				    </if>
 				    <!-- 나의 요청 건만 보기 -->
 				    <if test="usr != null and usr != ''">
-				      	and  sr_reqstr_no = #{usr, jdbcType=VARCHAR}
+				      	and r.sr_reqstr_no = #{usr, jdbcType=VARCHAR}
 				    </if>
 				  	
 				    <!-- 조회기간 -->
@@ -103,6 +109,7 @@
 				       		and REGEXP_REPLACE(LOWER(REPLACE(sr_ttl, ' ', '')), '[[:punct:]]', '') LIKE '%' || REGEXP_REPLACE(LOWER(REPLACE(#{keyword}, ' ', '')), '[[:punct:]]', '') || '%'
 				    	</if>
 				    </if>
+				    
 				    and sr_rqst_vld_yn = 'Y' 
 				  </where>
 				</if>
@@ -125,8 +132,12 @@
         join inst i on i.inst_no = u.inst_no
         join sr_rqst_stts q on q.sr_rqst_stts_no = r.sr_rqst_stts_no
 	    <if test="status != null and status != '' or usr != null and usr != '' or keyword != null and keyword != '' or startDate != null or endDate != null
-	       	or instNo != null and instNo != '' or deptNo != null and deptNo != '' or startDate != null and startDate != '' or endDate != null and endDate != ''">
+	       	or instNo != null and instNo != '' or deptNo != null and deptNo != '' or startDate != null and startDate != '' or endDate != null and endDate != '' or pic != null and pic != ''">
 		  <where>
+		  	<!-- <if test="pic != null and pic != ''">
+ 				or (r.sr_reqstr_no = #{pic, jdbcType=VARCHAR})
+  				or (r.sr_reqstr_no != #{pic, jdbcType=VARCHAR} and r.sr_rqst_stts_no = 'APRV')
+		    </if> -->
 		  	<!-- 소속기관 -->
 		    <if test="instNo != null and instNo != ''">
 		  		and u.inst_no = #{instNo, jdbcType=VARCHAR}
@@ -141,7 +152,7 @@
 		    </if>
 		    <!-- 나의 요청 건만 보기 -->
 		    <if test="usr != null and usr != ''">
-		      	and  sr_reqstr_no = #{usr, jdbcType=VARCHAR}
+		      	and  r.sr_reqstr_no = #{usr, jdbcType=VARCHAR}
 		    </if>
 		  	
 		    <!-- 조회기간 -->
@@ -165,7 +176,8 @@
 		    	<if test="searchTarget == 'searchSrRqstNm'">				    	
 		       		and REGEXP_REPLACE(LOWER(REPLACE(sr_ttl, ' ', '')), '[[:punct:]]', '') LIKE '%' || REGEXP_REPLACE(LOWER(REPLACE(#{keyword}, ' ', '')), '[[:punct:]]', '') || '%'
 		    	</if>
-		    </if> 
+		    </if>
+				     
 		    and sr_rqst_vld_yn = 'Y'   
 		  </where>
 		</if>
@@ -179,7 +191,7 @@
 		join usr u on u.usr_no = r.sr_reqstr_no
 		join inst i on i.inst_no = u.inst_no
 		join sr_rqst_stts q on q.sr_rqst_stts_no = r.sr_rqst_stts_no	
-		where r.sr_rqst_no=#{srRqstNo}	
+		where r.sr_rqst_no=#{srRqstNo, jdbcType=VARCHAR}	
 	</select>
 	
 	<!-- sr요청 상세에 해당하는 첨부파일 불러오기 -->
@@ -212,8 +224,41 @@
 		and sr_rqst_no= #{srRqstNo, jdbcType=VARCHAR}
 	</update>
 	
+	<!-- 담당자홈: 담당자 폼 sr개발정보- 이관기관 가져오기  -->
+	<select id="selectInstByOutsrcY" resultType="Inst">
+		select * from inst where outsrc_yn = 'Y'
+	</select>
 	
-	<!-- 담당자홈: sr요청번호에 해당하는 sr불러오기 -->
+	<!-- 담당자홈: 담당자 폼 sr개발정보- sr요청구분 가져오기  -->
+	<select id="selectSrDmndClsf" resultType="SrDmndClsf">
+		select * from sr_dmnd_clsf
+	</select>
+	
+	<!-- 담당자홈: 담당자 폼 sr개발정보- sr업무구분 가져오기     -->
+	<select id="selectSrTaskClsf" resultType="SrTaskClsf">
+		select * from sr_task_clsf
+	</select>
+	
+	<!-- 담당자홈: srRqstNo에 해당하는 sr 상세 내용 가져오기 -->
+	<select id="selectSrBySrRqstNo" parameterType="String" resultType="Sr">
+		select sr.*, r.sr_rqst_stts_no,s.sr_rqst_stts_nm, s.sr_rqst_stts_seq, d.sr_dmnd_no
+		from sr 
+		join sr_rqst r on r.sr_rqst_no = sr.sr_rqst_no 
+		join sr_rqst_stts s on s.sr_rqst_stts_no = r.sr_rqst_stts_no
+		join sr_trnsf_plan t on t.sr_no = sr.sr_no
+		join sr_dmnd_clsf d on d.sr_dmnd_no = t.sr_dmnd_no
+		where sr.sr_rqst_no= #{srRqstNo, jdbcType=VARCHAR}
+	</select>
+	
+	<!-- sr 상세에 해당하는 첨부파일 불러오기 -->
+	<select id="selectSrAtchBySrNo" parameterType="String" resultType="SrAtch" >
+		select * from sr_atch where sr_no = #{srNo}
+	</select>
+	
+	<!-- sr 첨부파일 번호에 해당하는 첨부파일 불러오기 -->
+	<select id="selectSrAtchBySrAtchNo" parameterType="String" resultType="SrAtch">
+		select * from sr_atch where sr_atch_no = #{srAtchNo}
+	</select>
 	
 	<!-- 작성자: 이현주  -->
 	<!-- 검토자 홈 요청목록 불러오기 -->

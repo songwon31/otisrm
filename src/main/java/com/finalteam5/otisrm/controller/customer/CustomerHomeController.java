@@ -194,7 +194,6 @@ public class CustomerHomeController {
 	//담당자 홈 페이지에서 요청 삭제하기
 	@PostMapping("removeSrRqstForCustomerHome")
 	public String removeSrRqst(String srRqstNo) {
-		log.info("삭제: " + srRqstNo);
 		srRqstService.removeSrRqst(srRqstNo);
 		return "redirect:/customerHome";
 	}

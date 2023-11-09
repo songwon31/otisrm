@@ -3,10 +3,10 @@ $(init)
 function init() {
 	 requestInsertDate();
 	 eventPreventSrRqstAtch();
-	 numOftotalRows();
 	 getTotalRows(choiceSrRqstSttsNo);
 	 showSrRqstStts();			 
 	 console.log( $("#loginUsrNo").val());
+	 numOftotalRows();
 }
  
 var choiceSrRqstSttsNo = "";
@@ -27,10 +27,38 @@ $(document).ready(function() {
 	    console.log(choiceSrRqstSttsNo);
 	    //필터링 된 상품 불러오기
 	    loadSRRequests(1, choiceSrRqstSttsNo);
-	    // 클릭되지 않은 다른 요소들의 스타일 초기화
 	});	
   loadSRRequests(1, choiceSrRqstSttsNo); //페이지 로딩 시 초기 데이터 로드
+  
+  //라디오 버튼 변경 이벤트 리스너 추가
+  $("#srTrnsf-info").hide();
+  document.querySelectorAll('input[name="srTrnsfYn"]').forEach(function(radio) {
+      radio.addEventListener('change', function() {
+          if (radio.value === 'Y') {
+              // "이관신청" 라디오 버튼을 선택했을 때
+              // srTnsfYn_Y 클래스를 가진 요소들을 활성화
+              document.querySelectorAll('.srTrnsfYn_Y').forEach(function(element) {
+                  element.disabled = false;
+              });
+              $("#srTrnsf-info").show();
+          } else {
+              // "자체개발" 라디오 버튼을 선택했을 때
+              // srTnsfYn_Y 클래스를 가진 요소들을 비활성화
+              document.querySelectorAll('.srTrnsfYn_Y').forEach(function(element) {
+                  element.disabled = true;
+              });
+              $("#srTrnsf-info").hide();
+          }
+      });
+  });
+
 });
+
+//요청 삭제모달 닫기 이벤트
+function cancelBtnForDeleteModal(){
+	 $('#srRqstdeleteModal').modal('hide');
+}
+
 
 //timestamp 객체를 YYYY-MM-dd 형식의 문자열로 변환하는 함수
 function formatDateToYYYYMMDD(timestamp) {
@@ -52,7 +80,7 @@ function formatDateToYYYYMMDD(timestamp) {
 //**요청목록 불러오기
 function loadSRRequests(pageNo, choiceSrRqstSttsNo) {
 	$.ajax({
-    url: "getSRRequestsByPageNo",
+    url: "getSRRequestsByPageNoForPicHome",
     data: { 
     	srRqstPageNo: pageNo,
     	status: choiceSrRqstSttsNo
@@ -78,25 +106,23 @@ function loadSRRequests(pageNo, choiceSrRqstSttsNo) {
 			 html += '	<td></td>';
 			 html += '</tr>';
 	  }
-      data.forEach((item, index)=>{
-    	  if(item.srRqstVldYn =="Y"){    		  
-    		  var indexOffset = (pageNo - 1) * 5; // 페이지 번호에 따라 index 오프셋 계산
-    		  // item.srRqstRegDt를 YYYY-MM-dd 문자열로 변환
-    		  const formattedDate = formatDateToYYYYMMDD(item.srRqstRegDt);
-    		  var indexOnPage = index + indexOffset + 1; // 페이지 내에서의 index 계산
-    		  html += '<tr class="data-tr" style="background-color: white;">';
-    		  html += '	<td>' + indexOnPage + '</td>';
-    		  html += '	<td>' + item.srRqstNo + '</td>';
-    		  html += '	<td class="truncate-text" style="max-width: 221.32px;">' + item.srTtl + '</td>';
-    		  html += '	<td class="truncate-text" style="max-width: 144.64px;">' + item.sysNm + '</td>';
-    		  html += '	<td class="truncate-text" style="max-width: 67.56px;">' + item.usrNm + '</td>';
-    		  html += '	<td class="truncate-text" style="max-width: 69.64px;">' + item.instNm + '</td>';
-    		  html += '	<td class="truncate-text" style="max-width: 67.56px;">' + item.srRqstSttsNm + '</td>';
-    		  html += '	<td>'+ formattedDate +'</td>'
-    		  html += '	<td>'+ item.srRqstEmrgYn +'</td>';
-    		  html += '	<td><button type="button" id="showSrRqstDetailBtn" class="btn-2" data-toggle="modal" data-target="#srRqstBySrNo" onclick="showSrRqstBySrRqstNo(\''+ item.srRqstNo +'\')">상세보기</button></td>';
-    		  html += '</tr>';
-    	  }
+      data.forEach((item, index)=>{ 	  	  
+		  var indexOffset = (pageNo - 1) * 5; // 페이지 번호에 따라 index 오프셋 계산
+		  // item.srRqstRegDt를 YYYY-MM-dd 문자열로 변환
+		  const formattedDate = formatDateToYYYYMMDD(item.srRqstRegDt);
+		  var indexOnPage = index + indexOffset + 1; // 페이지 내에서의 index 계산
+		  html += '<tr class="data-tr" style="background-color: white;">';
+		  html += '	<td>' + indexOnPage + '</td>';
+		  html += '	<td>' + item.srRqstNo + '</td>';
+		  html += '	<td class="truncate-text" style="max-width: 221.32px;">' + item.srTtl + '</td>';
+		  html += '	<td class="truncate-text" style="max-width: 144.64px;">' + item.sysNm + '</td>';
+		  html += '	<td class="truncate-text" style="max-width: 67.56px;">' + item.usrNm + '</td>';
+		  html += '	<td class="truncate-text" style="max-width: 69.64px;">' + item.instNm + '</td>';
+		  html += '	<td class="truncate-text" style="max-width: 67.56px;">' + item.srRqstSttsNm + '</td>';
+		  html += '	<td>'+ formattedDate +'</td>'
+		  html += '	<td>'+ item.srRqstEmrgYn +'</td>';
+		  html += '	<td><button type="button" id="showSrRqstDetailBtn" class="btn-2" data-toggle="modal" data-target="#srRqstBySrNo" onclick="showSrRqstBySrRqstNo(\''+ item.srRqstNo +'\')">상세보기</button></td>';
+		  html += '</tr>';
       });
       html +='<tr class="empty-tr" style="height: 100%;">';
       html +='</tr>';
@@ -182,6 +208,7 @@ function numOftotalRows(){
 	//개발완료
 	getTotalRows("DEP_CMPTN").then(function (totalRows) {
 		console.log(totalRows);
+		console.log(choiceSrRqstSttsNo);
 		$("#numOfDepCmptn").html("("+ totalRows + ")");
 	});
 }
@@ -264,6 +291,10 @@ function updatePagination(pageNo, choiceSrRqstSttsNo) {
   });
 }
 
+function onsubmit(){
+	 event.preventDefault();
+}
+
 //Byte를 KB로 변환
 function bytesToKB(bytes) {
     return (bytes / 1024).toFixed(2); // 소수점 두 자리까지 표시
@@ -278,12 +309,34 @@ function showSrRqstStts() {
 			// 서버 응답을 처리하여 개발부서 목록을 업데이트 
 			let html = "";
 			// 서버 응답을 처리하여 개발부서 목록을 업데이트
-        	html += '<option value="">전체</option>';
+        	html += '<option value="">선택</option>';
       		data.forEach((item, index) => {	
       			html += '<option id="'+ item.srRqstSttsSeq +'" value="'+ item.srRqstSttsNo +'">'+item.srRqstSttsNm+'</option>';
        		});
 		   // HTML 콘텐츠를 검색한 부서 데이터로 업데이트
-           $("#srRqstStts-select").html(html); 
+           $("#srRqstStts-select").html(html);
+           // "srRqstStts-select" select 요소에서 seq가 0 이상인 모든 option을 숨기기
+           $("#srRqstStts-select option[id]").filter(function() {
+               return parseInt($(this).attr("id")) >= 4;
+           }).css("display", "none");
+           
+           $("#srRqstStts-select2").html(html);
+           
+           //접수대기-> 접수요청으로 상태 변경
+           $("#srRqstStts-select2 option[value='RCPT_WAIT']").text("접수요청");
+           
+           //승인재검토, 승인반려,승인 & 접수재검토, 접수반려, 접수 상태 숨기기
+           $("#srRqstStts-select2 option[value='RQST']").prop("selected", true).css("display", "none");
+           $("#srRqstStts-select2 option[value='APRV_WAIT']").prop("selected", true).css("display", "none");
+           $("#srRqstStts-select2 option[value='APRV_REEXAM']").prop("selected", true).css("display", "none");
+           $("#srRqstStts-select2 option[value='APRV_RETURN']").prop("selected", true).css("display", "none");
+           $("#srRqstStts-select2 option[value='APRV']").prop("selected", true).css("display", "none");
+           $("#srRqstStts-select2 option[value='RCPT_REEXAM']").prop("selected", true).css("display", "none");
+           $("#srRqstStts-select2 option[value='RCPT_RETURN']").prop("selected", true).css("display", "none");
+           $("#srRqstStts-select2 option[value='RCPT']").prop("selected", true).css("display", "none");
+           $("#srRqstStts-select2 option[value='DEP_CMPTN']").prop("selected", true).css("display", "none");
+           $("#srRqstStts-select2 option[value='']").prop("selected", true);
+           
        },
 		error: function (error) {
 			console.error("오류 발생:", error);
@@ -299,7 +352,6 @@ function showSrRqstBySrRqstNo(choiceSrRqstNo){
         url: "getSrRqstBySrRqstNoForPicHome",
         data: {srRqstNo: choiceSrRqstNo},
         success: function(data) {
-        	$("#showSrRqstAtch").hide();
         	var date = new Date(data.srRqstRegDt);
         	console.log(data);
         	//저장버튼(로그인한 회원의 요청만 저장버튼 활성화)
@@ -325,13 +377,43 @@ function showSrRqstBySrRqstNo(choiceSrRqstNo){
         	$("#srRqst-srPrps").val(data.srPrps);
         	$("#srRqst-srConts").val(data.srConts);
         	$("#srRqst-srRqstRegDt").val(formattedDate);
-        	//요청 상태
-        	$("#srRqstStts-select").val(data.srRqstSttsNo);
         	
-        	//요청상태가 승인대기 이상일 때 삭제 불가능(버튼 속성 변경)
+        	//검토 사유
+        	if(data.srRqstRvwRsn !== null || data.srRqstRvwRsn !==""){
+        		console.log("검토있음: " + data.srRqstRvwRsn);
+        		$("#srRqst-review").val(data.srRqstRvwRsn);
+        	}
+        	
+        	//요청 상태
+        	if(data.srRqstSttsNo === "RQST"){
+        		 $("#srRqstStts-select").val(data.srRqstSttsNo);
+        		 //승인대기->승인요청으로변경 
+                 $("#srRqstStts-select option[value='APRV_WAIT']").text("승인요청");
+        		 $("#srRqstStts-select option[id]").filter(function() {
+                     return parseInt($(this).attr("id")) >= 2;
+                 }).css("display", "none");
+        	}else if(data.srRqstSttsNo === "APRV_WAIT"){        		
+        		$("#srRqstStts-select").val(data.srRqstSttsNo);
+        		$("#srRqstStts-select").prop("disabled", true);
+        	}else if(data.srRqstSttsNo === "APRV_REEXAM" || data.srRqstSttsNo === "APRV_RETURN"){
+        		$("#srRqstStts-select").val(data.srRqstSttsNo);
+        		$("#srRqstStts-select").prop("disabled", true);
+        	}else{
+        		$("#srRqstStts-select").val("APRV");
+        		$("#srRqstStts-select").prop("disabled", true);
+        	}
+        	
+        	//요청상태가 요청 이상일 때 수정 및 삭제 불가능(버튼 속성 변경)
         	if(data.srRqstSttsNo !== "RQST"){
         		$("#deleteButton").prop("disabled", true);
-        		$("#deleteButton").css("opacity", 0.5); 
+        		$("#deleteButton").css("opacity", 0.5);
+        		$(".srRqstModify").prop("disabled", true);
+        		saveButton.prop("disabled", true); // 버튼을 비활성화
+        		saveButton.css("opacity", 0.5); // 버튼을 반투명으로 설정 (예시로 0.5 사용)
+        	}else{
+        		$("#deleteButton").prop("disabled", false);
+        		$("#deleteButton").css("opacity", 1);
+        		$(".srRqstModify").prop("disabled", false);
         	}
         	
         	//첨부파일
@@ -376,7 +458,105 @@ function showSrRqstBySrRqstNo(choiceSrRqstNo){
           console.log(error);
         }
     });
+	
+	 showSrBySrRqstNo(choiceSrRqstNo);
 }
+
+//**요청에 해당하는 sr상세내용 가져오기;
+function showSrBySrRqstNo(choiceSrRqstNo){
+	console.log("데이터 앙 !!실행함");
+	//sr요청 상세
+	$.ajax({
+		type: "GET",
+		url: "getSrBySrRqstNoForPicHome",
+		data: {srRqstNo: choiceSrRqstNo},
+		success: function(data) {
+			if(data != 0){
+				console.log("데이터 앙 !!");
+				//sr번호 지정
+				$("#srNo").val(data.srNo);
+				
+				var date = new Date(data.srCmptnPrnmntDt);
+				console.log(data);
+				
+				//저장버튼(로그인한 회원의 요청만 저장버튼 활성화)
+				var loggedInUsrNo= $("#loginUsrNo").val();// 로그인한 회원 번호 가져오기 
+				var saveButton = $("#saveButton2");
+				
+			    // 로그인한 사용자와 요청을 등록한 회원을 비교하여 버튼 활성화/비활성화
+				if (data.picUsrNo === loggedInUsrNo) {
+					console.log("내sr");
+					saveButton.prop("disabled", false); // 버튼을 활성화
+					saveButton.css("opacity", 1); // 버튼을 완전 불투명으로 설정
+				} else{
+					console.log("내요청 아님");
+					saveButton.prop("disabled", true); // 버튼을 비활성화
+					saveButton.css("opacity", 0.5); // 버튼을 반투명으로 설정 (예시로 0.5 사용)
+				}
+				var formattedDate = $.datepicker.formatDate("yy-mm-dd", date);
+				//이관여부
+				$('input[name="srTrnsfYn"][value="'+ data.srTrnsfYn +'"]').prop('checked', true);
+				//이관되었을때
+				if(data.srTrnsfYn === "Y"){					
+					//이관 기간 선택
+					$("#trnsf-inst").val(data.srTrnsfInstNo);
+					//소요예산
+					$("#trnsf-srReqBgt").val(data.srReqBgt.toLocaleString('ko-KR'));//,붙인 금액
+					$("#srReqBgt").val(data.srReqBgt);//, 안붙인 금액
+					//요청 구분
+					$("#trnsf-srDmndClsf").val(data.srDmndNo);
+				}
+				//업무 구분
+				$("#srTaskNo").val(data.srTaskNo);
+				//우선순위
+				$("#srPri").val(data.srPri);
+				//완료예정일
+				$("#srCmptnPrnmntDt").val(formattedDate);
+				//sr 개발내용
+				$("#srDvlConts").val(data.srDvlConts);
+				
+				//첨부파일
+				if (data.srAtchList && typeof data.srAtchList === "object") {
+					// data.srRqstAtchList는 객체일 때
+					const keys = Object.keys(data.srAtchList);
+					if (keys.length !== 0) {
+						let html = "";
+						for (const key of keys) {
+							const srAtch = data.srAtchList[key];
+							console.log(srAtch);
+							if (srAtch && srAtch.srNo === data.srNo) {
+								$("#showSrAtch").show();
+								var size = bytesToKB(srAtch.srAtchSize);
+								html += '<a href="filedownloadSrAtchForPicHome?srAtchNo='+ srAtch.srAtchNo +'" class="d-flex srRqstAtchWrap">';
+								html += '    <div>';
+								html += '    	<i class="material-icons atch-ic">download</i>';
+								html += '    </div>';
+								html += '    <div id="' + srAtch.srAtchNo + '" class="srAtch p-1">' + srAtch.srAtchNm + ' (' + size + 'KB)</div>';
+								html += '</a>';
+							}
+						}
+						$("#showSrAtch").html(html);
+						
+					} else {
+						// srRqstAtchList가 객체지만 아무 항목도 없을 때
+						$("#showSrAtch").html("첨부파일이 존재하지 않습니다.");
+					}
+				} else {
+					// srRqstAtchList가 객체가 아닐 때
+					$("#showSrAtch").html("첨부파일이 존재하지 않습니다.");
+				}
+			}
+			
+		},
+		error: function() {
+			console.log(error);
+		}
+	});
+}
+
+
+
+
 //a태그 클릭시 폼 제출 막기
 function eventPreventSrRqstAtch(){
 	// 해당 클래스를 가진 모든 요소를 찾기

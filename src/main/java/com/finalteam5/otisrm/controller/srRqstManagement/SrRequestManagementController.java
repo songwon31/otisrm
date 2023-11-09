@@ -156,7 +156,6 @@ public class SrRequestManagementController {
 	//요청관리에서 요청 삭제하기
 	@PostMapping("removeSrRqstOfMng")
 	public String removeSrRqst(String srRqstNo) {
-		log.info("삭제: " + srRqstNo);
 		srRqstService.removeSrRqst(srRqstNo);
 		return "redirect:/customerHome";
 	}

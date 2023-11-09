@@ -1,17 +1,16 @@
 package com.finalteam5.otisrm.dto.sr.srForPicHome;
 
 import java.util.Date;
-import java.util.List;
 
-import com.finalteam5.otisrm.dto.SrDmndClsf;
+import org.springframework.web.multipart.MultipartFile;
 
 import lombok.Data;
 
 @Data
-public class Sr {
+public class SrSubmit {
 	private String srNo;			//sr 번호
 	private String srRqstNo;		//sr 요청 번호
-	private String picUsrNo;		//sr 담당자 번호
+	private String srPic;			//sr 담당자 번호
 	private Date srCmptnPrnmntDt;	//완료 예정일
 	private int srReqBgt;			//sr 소요예산(이관할 경우)
 	private String srPri;			//우선 순위(상,중,하)
@@ -24,15 +23,8 @@ public class Sr {
 	private String srTaskNm;		//업무이름
 	private String srTrnsfInstNo;	//이관 기관번호
 	private Date srTrnsfDt;			//이관 날짜
+	//첨부파일
+	private MultipartFile[] file;
 	
-	//sr요청 상태
-	private String srRqstSttsNo;	//sr요청 상태번호
-	private String srRqstSttsNm;	//sr요청 상태
-	private int srRqstSttsSeq;		//sr요청 상태 시퀀스
-	
-	//sr이관 요청 구분
-	private String srDmndNo;		//이관된 sr요청 구분 번호
-
-	//첨부파일 
-	private List<SrAtch> srAtchList;
 } 
+

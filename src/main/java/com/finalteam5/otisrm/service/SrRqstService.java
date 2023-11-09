@@ -3,7 +3,11 @@ package com.finalteam5.otisrm.service;
 import java.util.List;
 import java.util.Map;
 
+import com.finalteam5.otisrm.dto.SrDmndClsf;
+import com.finalteam5.otisrm.dto.SrTaskClsf;
 import com.finalteam5.otisrm.dto.Sys;
+import com.finalteam5.otisrm.dto.sr.srForPicHome.Sr;
+import com.finalteam5.otisrm.dto.sr.srForPicHome.SrAtch;
 import com.finalteam5.otisrm.dto.srRequest.SrRqst;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstAtch;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstForReviewerHomeBoard;
@@ -11,6 +15,7 @@ import com.finalteam5.otisrm.dto.srRequest.SrRqstForReviewerHomeProgress;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstForReviewerModal;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstStts;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstSubmit;
+import com.finalteam5.otisrm.dto.usr.Inst;
 
 public interface SrRqstService {	
 	//작성자: 성유진
@@ -49,6 +54,24 @@ public interface SrRqstService {
     
 	//sr요청 삭제하기
 	public void removeSrRqst(String srRqstNo);
+	//담당자홈=====================================================================
+	//담당자 폼 sr개발정보: 이관기관 가져오기
+	public List<Inst> getInstByOutsrcY();
+	
+	//담당자 폼 sr개발정보: sr요청구분 가져오기
+    public List<SrDmndClsf> getSrDmndClsf();
+	
+	//담당자 폼 sr개발정보- sr업무구분 가져오기
+	public List<SrTaskClsf> getSrTaskClsf();
+	
+	//srRqstNo에 해당하는 sr 상세 내용 가져오기
+	public Sr getSrBySrRqstNo(String SrRqstNo);
+	
+	//sr 상세정보에 해당하는 첨부파일 불러오기
+	public List<SrAtch> getSrAtchBySrNo(String srNo);
+	
+	//sr첨부파일 번호에 해당하는 첨부파일 가져오기(파일 다운로드를 위함)
+	public SrAtch getSrAtchBySrAtchNo(String srAtchNo);
 	
 	//작성자: 이현주
 	//요청목록불러오기(검토자 홈)

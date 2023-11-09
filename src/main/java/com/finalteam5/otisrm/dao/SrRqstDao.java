@@ -5,7 +5,11 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.finalteam5.otisrm.dto.SrDmndClsf;
+import com.finalteam5.otisrm.dto.SrTaskClsf;
 import com.finalteam5.otisrm.dto.Sys;
+import com.finalteam5.otisrm.dto.sr.srForPicHome.Sr;
+import com.finalteam5.otisrm.dto.sr.srForPicHome.SrAtch;
 import com.finalteam5.otisrm.dto.srRequest.SrRqst;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstAtch;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstForReviewerHomeBoard;
@@ -13,6 +17,7 @@ import com.finalteam5.otisrm.dto.srRequest.SrRqstForReviewerHomeProgress;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstForReviewerModal;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstStts;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstSubmit;
+import com.finalteam5.otisrm.dto.usr.Inst;
 
 @Mapper
 public interface SrRqstDao {
@@ -54,7 +59,26 @@ public interface SrRqstDao {
 	//sr요청 삭제하기
 	public void deleteSrRqst(String srRqstNo);
 	
-	//담당자홈: sr요청번호에 해당하는 sr불러오기
+	//담당자홈=====================================================================
+	
+	//담당자 폼 sr개발정보: 이관기관 가져오기
+	public List<Inst> selectInstByOutsrcY();
+	
+	//담당자 폼 sr개발정보: sr요청구분 가져오기
+	public List<SrDmndClsf> selectSrDmndClsf();
+	
+	//담당자 폼 sr개발정보: sr업무구분 가져오기   
+	public List<SrTaskClsf> selectSrTaskClsf();
+	
+	//srRqstNo에 해당하는 sr 상세 내용 가져오기
+	public Sr selectSrBySrRqstNo(String SrRqstNo);
+	
+	//sr 상세에 해당하는 첨부파일 불러오기 
+	public List<SrAtch> selectSrAtchBySrNo(String srNo);
+	
+	//sr 첨부파일 번호에 해당하는 첨부파일 불러오기
+	public SrAtch selectSrAtchBySrAtchNo(String srAtchNo);
+	
 	//public List<Sr> selectSrBySrRqstNo(String srRqstNo);
 	
 	//작성자: 이현주

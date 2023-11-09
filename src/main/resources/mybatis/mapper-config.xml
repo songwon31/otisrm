@@ -28,6 +28,11 @@
 		<typeAlias alias="Inq" type="com.finalteam5.otisrm.dto.inq.Inq"/>
 		<typeAlias alias="InqAtch" type="com.finalteam5.otisrm.dto.inq.InqAtch"/>
 		<typeAlias alias="InqSubmit" type="com.finalteam5.otisrm.dto.inq.InqSubmit"/>
+		<typeAlias alias="SrTaskClsf" type="com.finalteam5.otisrm.dto.SrTaskClsf"/>
+		<typeAlias alias="SrDmndClsf" type="com.finalteam5.otisrm.dto.SrDmndClsf"/>
+		<typeAlias alias="Sr" type="com.finalteam5.otisrm.dto.sr.srForPicHome.Sr"/>
+		<typeAlias alias="SrAtch" type="com.finalteam5.otisrm.dto.sr.srForPicHome.SrAtch"/>
+		<typeAlias alias="SrSubmit" type="com.finalteam5.otisrm.dto.sr.srForPicHome.SrSubmit"/>
 	</typeAliases>
 </configuration>
 

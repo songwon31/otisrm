@@ -3,7 +3,7 @@
 <%@ include file="/WEB-INF/views/common/header.jsp"%>
 <script src="${pageContext.request.contextPath}/resources/javascript/home/picHome.js"></script>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/home/picHome.css" />
-<div id="customerHomeDiv" class="contentDiv shadow">
+<div id="picHomeDiv" class="contentDiv shadow">
    <div>
 	   <input type="hidden" id="loginUsrNo" value="${usr.usrNo}">
 	   <div class="titleDiv">
@@ -107,7 +107,7 @@
 				    </tbody>
 				</table>
 				<!-- 페이징 -->
-				<div  id="pagination-container" class="paging d-flex justify-content-center">
+				<div id="pagination-container" class="paging d-flex justify-content-center">
 					<!-- 비동기로 페이징 들어오는 곳 -->	
 			    </div>	
 		   	  </div>
@@ -144,7 +144,7 @@
         <i class="material-icons close-icon" data-dismiss="modal" style="cursor: pointer;">close</i>
       </div>
       <div id="srRqstBySrRqstNoForm" class="modal-body">
-      	<form id="writeSrRqst" action="writeSrRqst" method="post" enctype="multipart/form-data">
+      	<form id="writeSrRqst" action="writeSrRqst" method="post" onsubmit="onsubmit()" enctype="multipart/form-data">
       		<!-- SR요청정보 -->
       		<h6 class="modal-sub-title">SR요청등록</h6>
       		<div class="card p-3 mb-4">
@@ -231,7 +231,7 @@
    		</div>
       </div>
       <div class="modal-footer py-1">
-        <button class="btn-1">저장</button>
+        <button type="submit" class="btn-1">저장</button>
         <button type="button" class="btn-3" data-dismiss="modal">닫기</button>
       </div>
     </form>
@@ -256,7 +256,7 @@
 	      			<h6 class="modal-sub-title">SR요청 정보</h6>
 	      		</div>
 	      		<div class="mr-2 mb-2" style="margin-left: 420px;">
-	      			<select class="form-control" style="width:109.13px;" id="srRqstStts-select" name="status" disabled>
+	      			<select class="form-control" style="width:109.13px;" id="srRqstStts-select" name="status">
 						<option value="" >전체</option>
 				    </select>	      		
 				</div>
@@ -312,7 +312,7 @@
 			          <label for="srRqst-srTtl" class="form-label" >SR제목</label>
 			        </div>
 			        <div style="width: 550.41px;">
-			          <input id="srRqst-srTtl" type="text" class="form-control">
+			          <input id="srRqst-srTtl" type="text" class="srRqstModify form-control">
 			          <input id="srRqst-srRqstNo" type="hidden" class="form-control">
 			        </div>
 			    </div>
@@ -321,7 +321,7 @@
 			          <label for="srRqst-srPrps" class="form-label">관련근거/목적</label>
 			        </div>
 			        <div style="width: 550.41px;">
-			          <input id="srRqst-srPrps" type="text" class="form-control">
+			          <input id="srRqst-srPrps" type="text" class="srRqstModify form-control">
 			        </div>
 			    </div>
 		        <div class="d-flex w-100 pt-2">
@@ -329,18 +329,18 @@
 			          <label for="systemName" class="form-label">SR 내용</label>
 			        </div>
 			        <div style="width: 550.41px;">
-			          <textarea id="srRqst-srConts" class="form-control" id="srContent" disabled></textarea>
+			          <textarea id="srRqst-srConts" class="srRqstModify form-control" id="srContent" style="height: 12rem;"></textarea>
 			        </div>
 			    </div>
 		        <div class="d-flex w-100 pt-2">
 			        <div style="width: 113.9px;">
-			          <label for="systemName" class="form-label modal-input" >첨부파일</label>
+			          <label for="systemName" class="srRqstModify form-label modal-input" >첨부파일</label>
 			        </div>
 			        <div style="width: 500px;">
 			          <input type="file" id="file" name="file" disabled multiple>	
 			        </div>
 			        <div>
-			        	<input id="srRqst-importantChk" type="checkbox" onclick="isImportendChecked2()"><span> 중요</span>
+			        	<input id="srRqst-importantChk" class="srRqstModify" type="checkbox" onclick="isImportendChecked2()"><span> 중요</span>
 			        </div>
 			    </div>
 			    <div class="d-flex w-100 pt-2">
@@ -359,127 +359,173 @@
 	          <label for="systemName" class="form-label">검토의견</label>
 	        </div>
 	        <div style="width: 550.41px;">
-	          <textarea id="srRqst-review" class="form-control" id="srRqstRvwRsn" disabled></textarea>
+	          <textarea id="srRqst-review" class="form-control" disabled></textarea>
 	        </div>
 	    </div>
     </div>
-    <form>
-      <!-- SR개발 정보  -->
-      <h6 class="modal-sub-title">SR개발 정보</h6>
-  	  <div class="card p-3 mb-4">
-	      <div>
-	       	<div class="d-flex">
-		        <div class="d-flex w-50 pt-2">
-		          	<div class="w-30">			          	
-		            	<label for="srPic" class="form-label">개발담당자</label>
-		          	</div>
-		 			<div class="w-45">
-			            <input id="sr-srPic" type="text" class="form-control" id="srPic" value="${usr.usrNm}" disabled>
-		 			</div>
-		        </div>
-		        <div class="d-flex w-50">
-			        <div class="w-30">
-			          <label for="writerDepartment" class="form-label">개발부서</label>
-			        </div>
-			        <div class="w-45">
-			          <input id="srRqst-inst" type="text" class="form-control" id="writerDepartment" value="${usr.deptNm}" disabled>
-			        </div>
-			    </div>
+
+    <!-- SR개발 정보  -->
+    <form id="aa" action="#" method="post">    
+	    <div class="d-flex">      		
+	    	<div>      		
+	    		<h6 class="modal-sub-title">SR개발 정보</h6>
+	    	</div>
+	     	<div class="mr-2 mb-2" style="margin-left: 496px;">
+	     		<select class="form-control" style="width:109.13px;" id="srRqstStts-select2" name="srRqstSttsNo">
+					<option value="" >전체</option>
+			    </select>	      		
 			</div>
-			<div>
-		      	<div>
-		        	<div class="d-flex">
-				        <div class="d-flex w-50 pt-2">
-				          	<div class="w-30">			          	
-				            	<label for="srPic" class="form-label">업무구분</label>
-				          	</div>
-				 			<div class="w-45">
-					            <input id="sr-srPic" type="text" class="form-control" id="srPic" disabled>
-				 			</div>
+	    	<div>      		
+	     		<button id="saveButton2" type="button" class="btn-1" data-dismiss="modal">저장</button>
+	    	</div>
+	     </div>
+	  	 <div class="card p-3 mb-4">
+		      <div>
+		       	<div class="d-flex">
+			        <div class="d-flex w-50 pt-2">
+			          	<div class="w-30">			          	
+			            	<label for="srPic" class="form-label">개발담당자</label>
+			          	</div>
+			 			<div class="w-45">
+				            <input type="text" class="form-control" id="picUsrNo" value="${usr.usrNm}" disabled>
+				            <input id="srNo" type="hidden" class="form-control"  value="" >
+			 			</div>
+			        </div>
+			        <div class="d-flex w-50">
+				        <div class="w-30">
+				          <label for="writerDepartment" class="form-label">개발부서</label>
 				        </div>
-				        <div class="d-flex w-50">
-					        <div class="w-30">
-					          <label for="writerDepartment" class="form-label">우선순위</label>
-					        </div>
-					        <div class="w-45">
-					          <input id="srRqst-inst" type="text" class="form-control" id="writerDepartment" disabled>
-					        </div>
-					    </div>
-					</div>
-					<div>
-				      <div>
+				        <div class="w-45">
+				          <input id="srRqst-inst" type="text" class="form-control" value="${usr.deptNm}" disabled>
+				        </div>
+				    </div>
+				</div>
+				<div class="d-flex w-100 pt-2">
+				    <div style="width: 113.9px;">
+				        <label for="srTrnsfYn" class="form-label">이관여부</label>
+				    </div>
+				    <div class="d-flex" style="width: 550.41px;">
+				        <div>				        
+					        <input id="srTrnsfYn_Y" type="radio" name="srTrnsfYn" value="Y">
+					        <label for="srTrnsfYn_Y">이관신청</label>
+				        </div>
+						<div class="ml-2">						
+					        <input id="srTrnsfYn_N" type="radio" name="srTrnsfYn" value="N">
+					        <label for="srTrnsfYn_N">자체개발</label>
+						</div>
+				    	<div id="srTrnsf-info" class="text-danger ml-2 pt-2" style="font-size:10px;">(이관 신청을 할 경우 이관기관, 소요예산, 요청구분은 필수적으로 작성해주세요.)</div>
+				    </div>
+				</div>
+				<div>
+			      	<div>
 			        	<div class="d-flex">
 					        <div class="d-flex w-50 pt-2">
 					          	<div class="w-30">			          	
-					            	<label for="writeDate" class="form-label">이관여부</label>
+					            	<label for="srPic" class="form-label">이관기관</label>
 					          	</div>
 					 			<div class="w-45">
-						            <input type="text" class="form-control" value="" id="srTrnsfYn" disabled>
+							            <select id="trnsf-inst" class="srTrnsfYn_Y form-control" name="srTrnsfInstNo">
+							 				<option value="" >--이관기관 선택--</option>
+							 				<c:forEach items="${instByOutsrcYList}" var="inst">					 				
+												<option id="${inst.instNm}" value="${inst.instNo}" >${inst.instNm}</option>
+							 				</c:forEach>
+									    </select>	
 					 			</div>
 					        </div>
 					        <div class="d-flex w-50">
-	
 						        <div class="w-30">
-						          <label for="systemName" class="form-label">이관기관</label>
+						          <label for="writerDepartment" class="form-label">소요예산</label>
 						        </div>
 						        <div class="w-45">
-						          <input id="srRqst-sysNm" type="text" class="form-control" id="writerDepartment" disabled>
+						          <input id="trnsf-srReqBgt" type="text" class="srTrnsfYn_Y form-control">
+						          <input id="srReqBgt" value="" type="hidden" class="form-control" name="srReqBgt">
 						        </div>
 						    </div>
 						</div>
-				       </div>
-		       		   <div>
+						<div>
+					      <div>
 				        	<div class="d-flex">
 						        <div class="d-flex w-50 pt-2">
 						          	<div class="w-30">			          	
-						            	<label for="writeDate" class="form-label">소요예산</label>
+						            	<label for="writeDate" class="form-label">요청구분</label>
 						          	</div>
 						 			<div class="w-45">
-							            <input type="text" class="form-control" value="" id="srReqBgt" disabled>
+							            <select class="srTrnsfYn_Y form-control" id="trnsf-srDmndClsf" name="srDmndNo">
+											<option value="" >--요청구분 선택--</option>
+											<c:forEach items="${srDmndClsfList}" var="srDmndClsf">					 				
+												<option id="${srDmndClsf.srDmndNm}" value="${srDmndClsf.srDmndNo}" >${srDmndClsf.srDmndNm}</option>
+							 				</c:forEach>
+								    	</select>
 						 			</div>
 						        </div>
 						        <div class="d-flex w-50">
 		
 							        <div class="w-30">
-							          <label for="systemName" class="form-label">완료예정일</label>
+							          <label for="systemName" class="form-label">업무구분</label>
 							        </div>
 							        <div class="w-45">
-							          <input id="srRqst-sysNm" type="date" class="form-control" id="srCmptnPrnmntDt" disabled>
+							        	<select class="form-control" id="srTaskNo" name="srTaskNo">
+											<option value="" >--업무구분 선택--</option>
+											<c:forEach items="${srTaskClsfList}" var="srTaskClsf">					 				
+												<option id="${srTaskClsf.srTaskNm}" value="${srTaskClsf.srTaskNo}" >${srTaskClsf.srTaskNm}</option>
+							 				</c:forEach>
+								    	</select>
 							        </div>
 							    </div>
 							</div>
+					       </div>
+			       		   <div>
+					        	<div class="d-flex">
+							        <div class="d-flex w-50 pt-2">
+							          	<div class="w-30">			          	
+							            	<label for="writeDate" class="form-label">우선순위</label>
+							          	</div>
+							 			<div class="w-45">
+								            <select class="form-control" id="srPri" name="srPri">
+												<option value="" >--우선순위 선택--</option>
+												<option value="상" >상</option>
+												<option value="중" >중</option>
+												<option value="하" >하</option>
+								    		</select>
+							 			</div>
+							        </div>
+							        <div class="d-flex w-50">
+								        <div class="w-30">
+								          <label for="systemName" class="form-label">완료예정일</label>
+								        </div>
+								        <div class="w-45">
+								          <input id="srCmptnPrnmntDt" type="date" class="form-control" name="srCmptnPrnmntDt" >
+								        </div>
+								    </div>
+								</div>
+					        </div>
+					        <div class="d-flex w-100 pt-2">
+						        <div style="width: 113.9px;">
+						          <label for="systemName" class="form-label">개발내용</label>
+						        </div>
+						        <div style="width: 550.41px;">
+						          <textarea id="srDvlConts" class="form-control"  style="height: 12rem;" name="srDvlConts"></textarea>
+						        </div>
+						    </div>
+					        <div class="d-flex w-100 pt-2">
+						        <div style="width: 113.9px;">
+						          <label for="systemName" class="form-label modal-input">첨부파일</label>
+						        </div>
+						        <div style="width: 500px;">
+						          <input type="file" id="file" name=file multiple>	
+						        </div>
+						    </div>
+						    <div class="d-flex w-100 pt-2">
+						    	<div style="width: 113.9px;"></div>
+						    	<div id="showSrAtch">
+						    	</div>
+						    </div>
 				        </div>
-				        <div class="d-flex w-100 pt-2">
-					        <div style="width: 113.9px;">
-					          <label for="systemName" class="form-label">개발내용</label>
-					        </div>
-					        <div style="width: 550.41px;">
-					          <textarea id="srRqst-srConts" class="form-control" id="srContent"></textarea>
-					        </div>
-					    </div>
-				        <div class="d-flex w-100 pt-2">
-					        <div style="width: 113.9px;">
-					          <label for="systemName" class="form-label modal-input">첨부파일</label>
-					        </div>
-					        <div style="width: 500px;">
-					          <input type="file" id="file" name=file multiple>	
-					        </div>
-					    </div>
-					    <div class="d-flex w-100 pt-2">
-					    	<div style="width: 113.9px;"></div>
-					    	<div id="showSrRqstAtch">
-					    	</div>
-					    </div>
-			        </div>
-	   			</div>
-	  		</div>
-	        <div class="modal-footer py-1">7
-		        <button id="saveButton" class="btn-1" type="button" >저장</button>
-		        <button type="button" class="btn-3" data-dismiss="modal">닫기</button>
-	        </div>
-    	</div>
-  	</div>
- </form>
+		   			</div>
+		  		</div>
+	    	</div>
+	  	</div>
+    </form>
 </div>
 
 <!-- 요청 삭제 모달 -->  
@@ -489,7 +535,7 @@
 	      <!-- Modal Header -->
 	      <div class="modal-header"  style="background-color: white;">
 	        <h6 class="modal-title"  style="color: black;">sr요청 삭제</h6>
-	        <button type="button" class="close" data-dismiss="modal">&times;</button>
+	        <button type="button" class="close" onclick="cancelBtnForDeleteModal()">&times;</button>
 	      </div>
 	
 	      <!-- Modal body -->
@@ -500,7 +546,7 @@
 	      <!-- Modal footer -->
 	      <div class="modal-footer">
 	        <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="removeSrRqst()">확인</button>
-	        <button type="button" class="btn" style="background-color: #de483a; color: white;" data-dismiss="modal">취소</button>
+	        <button type="button" class="btn" style="background-color: #de483a; color: white;" onclick="cancelBtnForDeleteModal()">취소</button>
 	      </div>
 		</div>
 	</div>

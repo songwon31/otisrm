@@ -11,16 +11,14 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.finalteam5.otisrm.dto.Pager;
 import com.finalteam5.otisrm.dto.Sys;
-import com.finalteam5.otisrm.dto.inq.Inq;
-import com.finalteam5.otisrm.dto.ntc.Ntc;
-import com.finalteam5.otisrm.dto.ntc.NtcAtch;
+import com.finalteam5.otisrm.dto.sr.srForPicHome.Sr;
+import com.finalteam5.otisrm.dto.sr.srForPicHome.SrAtch;
 import com.finalteam5.otisrm.dto.srRequest.SrRqst;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstAtch;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstStts;
@@ -37,8 +35,6 @@ import lombok.extern.slf4j.Slf4j;
 public class PicHomeRestController {
 	@Autowired
     private SrRqstService srRqstService;
-	@Autowired
-	private BoardService boardService;
 	
 	@Value("${file.upload.dir}")
 	private String fileUploadDir;
@@ -58,7 +54,8 @@ public class PicHomeRestController {
 			//로그인한 회원의 정보
 			UsrDetails usrDetails = (UsrDetails) authentication.getPrincipal();
 			Usr usr = usrDetails.getUsr();
-			map.put("usr", usr.getUsrNo());
+			//map.put("usr", usr.getUsrNo());
+			map.put("pic", usr.getUsrNo());
         }
         map.put("status", status);
         
@@ -88,7 +85,8 @@ public class PicHomeRestController {
 			//로그인한 회원의 정보
 			UsrDetails usrDetails = (UsrDetails) authentication.getPrincipal();
 			Usr usr = usrDetails.getUsr();
-			map.put("usr", usr.getUsrNo());
+			//map.put("usr", usr.getUsrNo());
+			map.put("pic", usr.getUsrNo());
 		} 
 		//SR요청 목록 페이징  
 		if(srRqstPageNo == null) {
@@ -127,7 +125,8 @@ public class PicHomeRestController {
 			//로그인한 회원의 정보
 			UsrDetails usrDetails = (UsrDetails) authentication.getPrincipal();
 			Usr usr = usrDetails.getUsr();
-			map.put("usr", usr.getUsrNo());
+			//map.put("usr", usr.getUsrNo());
+			map.put("pic", usr.getUsrNo());
 		} 
 		// status에 따른 총 행 수를 가져오는 쿼리 실행
 	    int totalRows = srRqstService.totalSrRqst(map);
@@ -135,7 +134,7 @@ public class PicHomeRestController {
 	    return totalRows;
 	}
 	
-	//요청에 해당하는 상세정보 불러오기
+	//sr요청에 해당하는 상세정보 불러오기
 	@GetMapping("getSrRqstBySrRqstNoForPicHome")
 	public SrRqst getSrRqstBySrRqstNo(String srRqstNo, Model model, HttpSession session) {
 		SrRqst srRqst = srRqstService.getSrRqstBySrRqstNo(srRqstNo);
@@ -144,6 +143,7 @@ public class PicHomeRestController {
 		model.addAttribute("srRqstNo", srRqstNo);
 		return srRqst;
 	}
+	
 	
 	//담당자 홈 페이지에서 요청등록 모달에 소속부서에 해당하는 관련시스템 목록불러오기
 	@GetMapping("getSysByDeptNoForPicHome")
@@ -160,4 +160,16 @@ public class PicHomeRestController {
 		return list;
 	}
 	
+	//sr에 해당하는 상세정보 불러오기
+	@GetMapping("getSrBySrRqstNoForPicHome")
+	public Sr getSrBySrRqstNo(String srRqstNo, Model model, HttpSession session) {
+		Sr sr = srRqstService.getSrBySrRqstNo(srRqstNo);
+		if(sr.toString() != null) {			
+			List<SrAtch> list = srRqstService.getSrAtchBySrNo(sr.getSrNo());		
+			sr.setSrAtchList(list);
+			model.addAttribute("srRqstNo", srRqstNo);
+			model.addAttribute("srNo", sr.getSrNo());
+		}
+		return sr;
+	}
 }

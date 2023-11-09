@@ -262,7 +262,7 @@ function loadSRRequests(pageNo, choiceSrRqstSttsNo) {
     	  var count = 0;
     	  //승인여부
     	  var aprvYn = "N";
-    	  if(item.srRqstSttsSeq > 1){
+    	  if(item.srRqstSttsSeq > 0){
     		  aprvYn = "Y";
     	  }
 		  console.log("앙");
