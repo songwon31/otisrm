@@ -629,9 +629,9 @@
 			JOIN sr_prgrs_stts ON sr_trnsf_plan.sr_prgrs_stts_no = sr_prgrs_stts.sr_prgrs_stts_no
 			JOIN usr reqstr ON sr.pic_usr_no = reqstr.usr_no
 			JOIN usr pic ON sr_trnsf_plan.usr_no = pic.usr_no
-			JOIN sr_prgrs ON sr.sr_no = sr_prgrs.sr_no
 			JOIN inst ON sr.sr_trnsf_inst_no = inst.inst_no
 			JOIN dept ON sr_trnsf_plan.dept_no = dept.dept_no
+			LEFT JOIN sr_trnsf_hr srth ON sr.sr_no = srth.sr_no
 			<where>
 				<if test="progressManagementSearch.sysNo != null">
 					sr_rqst.sys_no = #{progressManagementSearch.sysNo}
@@ -670,7 +670,7 @@
 					</if>
 				</if>
 				<if test="progressManagementSearch.mySrCheck != null">
-					AND (reqstr.usr_no = #{usrNo} OR pic.usr_no = #{usrNo} OR sr_prgrs.usr_no = #{usrNo})
+					AND (reqstr.usr_no = #{usrNo} OR pic.usr_no = #{usrNo} OR srth.usr_no = #{usrNo})
 				</if>
 			</where>
 			
@@ -797,9 +797,9 @@
 				JOIN sr_prgrs_stts ON sr_trnsf_plan.sr_prgrs_stts_no = sr_prgrs_stts.sr_prgrs_stts_no
 				JOIN usr reqstr ON sr.pic_usr_no = reqstr.usr_no
 				JOIN usr pic ON sr_trnsf_plan.usr_no = pic.usr_no
-				JOIN sr_prgrs ON sr.sr_no = sr_prgrs.sr_no
 				JOIN inst ON sr.sr_trnsf_inst_no = inst.inst_no
 				JOIN dept ON sr_trnsf_plan.dept_no = dept.dept_no
+				LEFT JOIN sr_trnsf_hr srth ON sr.sr_no = srth.sr_no
 				<where>
 					<if test="progressManagementSearch.sysNo != null">
 						sr_rqst.sys_no = #{progressManagementSearch.sysNo}
@@ -838,7 +838,7 @@
 						</if>
 					</if>
 					<if test="progressManagementSearch.mySrCheck != null">
-						AND (reqstr.usr_no = #{usrNo} OR pic.usr_no = #{usrNo} OR sr_prgrs.usr_no = #{usrNo})
+						AND (reqstr.usr_no = #{usrNo} OR pic.usr_no = #{usrNo} OR srth.usr_no = #{usrNo})
 					</if>
 				</where>
 				

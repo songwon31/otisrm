@@ -1140,8 +1140,10 @@ function srPerformanceRegistrationModalConfig() {
         			html += '<tr style="height: 4.5rem; font-size: 1.5rem; background-color:white;">';
         			html += '<td style="display:none">' + hrData.usrNo + '</td>';
         			html += '<td>' + hrData.srNo + '</td>';
-        			html += '<td>' + hrData.srTrgtBgngDt + '</td>';
-        			html += '<td>' + hrData.srTrgtCmptnDt + '</td>';
+        			let srTrgtBgngDt = new Date(hrData.srTrgtBgngDt);
+        			html += '<td>' + formatDate(srTrgtBgngDt) + '</td>';
+        			let srTrgtCmptnDt = new Date(hrData.srTrgtCmptnDt);
+        			html += '<td>' + formatDate(srTrgtCmptnDt) + '</td>';
         			html += '<td>' + hrData.planCapacity + '</td>';
         			html += '<td>' + hrData.performanceCapacity + '</td>';
         			html += '<td><input type="text" value="' + hrData.lastRegCapacity + '" style="width:50%; text-align: center;"></div></td>';
