@@ -5,7 +5,7 @@ import java.util.Date;
 import lombok.Data;
 
 @Data
-public class SrRqstForDevelopManagement {
+public class SrRqstForSearchList {
 	private String srRqstNo;
 	private String srTtl;
 	private String sysNm;
@@ -15,5 +15,6 @@ public class SrRqstForDevelopManagement {
 	private Date srCmptnPrnmntDt;
 	private String srRqstSttsNm;
 	private String srRqstEmrgYn;
+	private String srRqstRvwRsn;
 	private String srTrnsfYn;
 }

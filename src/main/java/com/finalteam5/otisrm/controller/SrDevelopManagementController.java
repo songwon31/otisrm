@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.finalteam5.otisrm.dto.Pager;
-import com.finalteam5.otisrm.dto.srRequest.SrRqstForDevelopManagement;
+import com.finalteam5.otisrm.dto.srRequest.SrRqstForSearchList;
 import com.finalteam5.otisrm.dto.usr.Dept;
 import com.finalteam5.otisrm.dto.usr.Inst;
 import com.finalteam5.otisrm.dto.usr.Usr;
@@ -113,7 +113,7 @@ public class SrDevelopManagementController {
 		paramsForPaging.put("endRowNo", developManagementPager.getEndRowNo());	
 		
 		//페이지 별 요청 목록 가져오기
-		List<SrRqstForDevelopManagement> list = srRqstService.getSrRqstForDevelopManagementByPage(paramsForPaging);
+		List<SrRqstForSearchList> list = srRqstService.getSrRqstForDevelopManagementByPage(paramsForPaging);
 		
 		data.put("list", list);
 		data.put("pager", developManagementPager);

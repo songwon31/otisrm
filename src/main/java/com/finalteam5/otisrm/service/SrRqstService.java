@@ -7,7 +7,7 @@ import java.util.Map;
 import com.finalteam5.otisrm.dto.Sys;
 import com.finalteam5.otisrm.dto.srRequest.SrRqst;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstAtch;
-import com.finalteam5.otisrm.dto.srRequest.SrRqstForDevelopManagement;
+import com.finalteam5.otisrm.dto.srRequest.SrRqstForSearchList;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstForReviewerHomeBoard;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstForReviewerHomeProgress;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstForReviewerModal;
@@ -72,10 +72,15 @@ public interface SrRqstService {
 	//전체 시스템 이름 가져오기
 	public List<String> getTotalSysNm();
 	
-	//개발관리 진행상태 승인이상 요청수 가져오기
+	//개발관리(진행상태 승인이상) 요청수 가져오기
 	public int getCountSrRqstForDevelopManagement(Map<String, String> params);
 	
-	//개발관리 목록 가져오기
-		public List<SrRqstForDevelopManagement> getSrRqstForDevelopManagementByPage(Map<String, Object> params);
+	//개발관리(진행상태 승인이상) 목록 가져오기
+	public List<SrRqstForSearchList> getSrRqstForDevelopManagementByPage(Map<String, Object> params);
 
+	//검토관리 요청수 가져오기
+	public int getCountSrRqstForReviewManagement(Map<String, String> params);
+		
+	//검토관리 목록 가져오기
+	public List<SrRqstForSearchList> getSrRqstForReviewpManagementByPage(Map<String, Object> params);
 }

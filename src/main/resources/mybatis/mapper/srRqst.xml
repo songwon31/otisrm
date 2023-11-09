@@ -248,6 +248,144 @@
         left join sr on sr.sr_rqst_no = r.sr_rqst_no
         left join usr pic on pic.usr_no = sr.pic_usr_no
 		left join dept on dept.dept_no = pic.dept_no
+		<where>
+			st.sr_rqst_stts_seq >= 4
+			
+			<if test="status != null and status != '' or usr != null and usr != '' or keyword != null and keyword != '' or startDate != null or endDate != null
+		       	or instNo != null and instNo != '' or deptNo != null and deptNo != '' or startDate != null and startDate != '' or endDate != null and endDate != ''
+		       	or sysNm != null and sysNm != '' and sysNm != '전체'">
+			  	<!-- 조회기간 -->
+		        <if test="startDate != null and startDate != ''">
+		            and r.sr_rqst_reg_dt &gt;= TO_DATE(#{startDate, jdbcType=VARCHAR}, 'yy-MM-dd')
+		        </if>
+		        <if test="endDate != null and endDate != ''">
+		            and sr.sr_cmptn_prnmnt_dt &lt;= TO_DATE(#{endDate, jdbcType=VARCHAR}, 'yy-MM-dd')
+		        </if>
+		        
+		        <!-- 관련 시스템 -->
+			    <if test="sysNm != null and sysNm != '' and sysNm != '전체'">
+			  		and s.sys_nm = #{sysNm, jdbcType=VARCHAR}
+			  	</if>
+			  	
+		        <!-- 요청 진행 상태 -->
+			    <if test="status != null and status != ''">
+			      	and r.sr_rqst_stts_no = #{status, jdbcType=VARCHAR}
+			    </if>
+			    
+			    <!-- 나의 담당 건만 보기 -->
+			    <if test="usr != null and usr != ''">
+			      	and sr.pic_usr_no = #{usr, jdbcType=VARCHAR}
+			    </if>
+			    
+			  	<!-- 등록자 소속 -->
+			    <if test="instNo != null and instNo != ''">
+			  		and u.inst_no = #{instNo, jdbcType=VARCHAR}
+			  	</if>
+			  	
+			  	<!-- 개발 부서 -->
+			  	<if test="deptNo != null and deptNo != ''">
+			  		and pic.dept_no = #{deptNo, jdbcType=VARCHAR}
+			  	</if>
+			    
+			    <!-- 키워드 검색 -->
+			    <if test="keyword != null and keyword != '' or searchTarget != null and searchTarget != ''">
+			    	<if test="searchTarget == 'searchSrRqstNo'">				    	
+			        	and REGEXP_REPLACE(LOWER(REPLACE(r.sr_rqst_no, ' ', '')), '[[:punct:]]', '') LIKE '%' || REGEXP_REPLACE(LOWER(REPLACE(#{keyword}, ' ', '')), '[[:punct:]]', '') || '%'
+			    	</if>
+			    	<if test="searchTarget == 'searchSrRqstNm'">				    	
+			       		and REGEXP_REPLACE(LOWER(REPLACE(r.sr_ttl, ' ', '')), '[[:punct:]]', '') LIKE '%' || REGEXP_REPLACE(LOWER(REPLACE(#{keyword}, ' ', '')), '[[:punct:]]', '') || '%'
+			    	</if>
+			    </if>
+			</if>
+		</where>
+	</select>	
+	
+	<!-- 개발관리 목록 가져오기 -->
+	<select id="selectSrRqstForDevelopManagementByPage" parameterType="Map" resultType="com.finalteam5.otisrm.dto.srRequest.SrRqstForSearchList">
+		select rnum, sr_rqst_no, sr_ttl, sys_nm, usr_nm, inst_nm, sr_rqst_reg_dt, sr_cmptn_prnmnt_dt, sr_rqst_stts_nm, sr_rqst_emrg_yn, sr_rqst_rvw_rsn, sr_trnsf_yn
+		from (
+		    select rownum as rnum, sr_rqst_no, sr_ttl, sys_nm, usr_nm, inst_nm, sr_rqst_reg_dt, sr_cmptn_prnmnt_dt, sr_rqst_stts_nm, sr_rqst_emrg_yn, sr_rqst_rvw_rsn, sr_trnsf_yn
+		    from(
+		        select
+					r.sr_rqst_no, r.sr_ttl, s.sys_nm, u.usr_nm, i.inst_nm, r.sr_rqst_reg_dt, sr.sr_cmptn_prnmnt_dt, st.sr_rqst_stts_nm, r.sr_rqst_emrg_yn, r.sr_rqst_rvw_rsn, sr.sr_trnsf_yn
+				from sr_rqst r
+				join sys s on s.sys_no = r.sys_no
+		        join usr u on u.usr_no = r.sr_reqstr_no
+		        join inst i on i.inst_no = u.inst_no
+		        join sr_rqst_stts st on st.sr_rqst_stts_no = r.sr_rqst_stts_no
+		        left join sr on sr.sr_rqst_no = r.sr_rqst_no
+		        left join usr pic on pic.usr_no = sr.pic_usr_no
+				left join dept on dept.dept_no = pic.dept_no
+			   <where>
+					st.sr_rqst_stts_seq >= 4
+					
+					<if test="status != null and status != '' or usr != null and usr != '' or keyword != null and keyword != '' or startDate != null or endDate != null
+				       	or instNo != null and instNo != '' or deptNo != null and deptNo != '' or startDate != null and startDate != '' or endDate != null and endDate != ''
+				       	or sysNm != null and sysNm != '' and sysNm != '전체'">
+					  	<!-- 조회기간 -->
+				        <if test="startDate != null and startDate != ''">
+				            and r.sr_rqst_reg_dt &gt;= TO_DATE(#{startDate, jdbcType=VARCHAR}, 'yy-MM-dd')
+				        </if>
+				        <if test="endDate != null and endDate != ''">
+				            and sr.sr_cmptn_prnmnt_dt &lt;= TO_DATE(#{endDate, jdbcType=VARCHAR}, 'yy-MM-dd')
+				        </if>
+				        
+				        <!-- 관련 시스템 -->
+					    <if test="sysNm != null and sysNm != '' and sysNm != '전체'">
+					  		and s.sys_nm = #{sysNm, jdbcType=VARCHAR}
+					  	</if>
+					  	
+				        <!-- 요청 진행 상태 -->
+					    <if test="status != null and status != ''">
+					      	and r.sr_rqst_stts_no = #{status, jdbcType=VARCHAR}
+					    </if>
+					    
+					    <!-- 나의 담당 건만 보기 -->
+					    <if test="usr != null and usr != ''">
+					      	and sr.pic_usr_no = #{usr, jdbcType=VARCHAR}
+					    </if>
+					    
+					  	<!-- 등록자 소속 -->
+					    <if test="instNo != null and instNo != ''">
+					  		and u.inst_no = #{instNo, jdbcType=VARCHAR}
+					  	</if>
+					  	
+					  	<!-- 개발 부서 -->
+					  	<if test="deptNo != null and deptNo != ''">
+					  		and pic.dept_no = #{deptNo, jdbcType=VARCHAR}
+					  	</if>
+					    
+					    <!-- 키워드 검색 -->
+					    <if test="keyword != null and keyword != '' or searchTarget != null and searchTarget != ''">
+					    	<if test="searchTarget == 'searchSrRqstNo'">				    	
+					        	and REGEXP_REPLACE(LOWER(REPLACE(r.sr_rqst_no, ' ', '')), '[[:punct:]]', '') LIKE '%' || REGEXP_REPLACE(LOWER(REPLACE(#{keyword}, ' ', '')), '[[:punct:]]', '') || '%'
+					    	</if>
+					    	<if test="searchTarget == 'searchSrRqstNm'">				    	
+					       		and REGEXP_REPLACE(LOWER(REPLACE(r.sr_ttl, ' ', '')), '[[:punct:]]', '') LIKE '%' || REGEXP_REPLACE(LOWER(REPLACE(#{keyword}, ' ', '')), '[[:punct:]]', '') || '%'
+					    	</if>
+					    </if>
+					</if>
+				</where>
+				order by sr_rqst_no desc
+		<![CDATA[
+		        )
+			where rownum <= #{endRowNo}
+		)
+		where rnum >= #{startRowNo}	
+		]]>
+	</select>
+	
+	<!-- 검토관리 검색 조건별 SR개수 가져오기 -->
+	<select id="countSrRqstForReviewManagement" parameterType="Map" resultType="int">
+		select count(*)
+		from sr_rqst r
+		join sys s on s.sys_no = r.sys_no
+        join usr u on u.usr_no = r.sr_reqstr_no
+        join inst i on i.inst_no = u.inst_no
+        join sr_rqst_stts st on st.sr_rqst_stts_no = r.sr_rqst_stts_no
+        left join sr on sr.sr_rqst_no = r.sr_rqst_no
+        left join usr pic on pic.usr_no = sr.pic_usr_no
+		left join dept on dept.dept_no = pic.dept_no
 	    <if test="status != null and status != '' or usr != null and usr != '' or keyword != null and keyword != '' or startDate != null or endDate != null
 	       	or instNo != null and instNo != '' or deptNo != null and deptNo != '' or startDate != null and startDate != '' or endDate != null and endDate != ''
 	       	or sysNm != null and sysNm != '' and sysNm != '전체'">
@@ -269,12 +407,7 @@
 		    <if test="status != null and status != ''">
 		      	and r.sr_rqst_stts_no = #{status, jdbcType=VARCHAR}
 		    </if>
-		    
-		    <!-- 나의 담당 건만 보기 -->
-		    <if test="usr != null and usr != ''">
-		      	and sr.pic_usr_no = #{usr, jdbcType=VARCHAR}
-		    </if>
-		    
+
 		  	<!-- 등록자 소속 -->
 		    <if test="instNo != null and instNo != ''">
 		  		and u.inst_no = #{instNo, jdbcType=VARCHAR}
@@ -296,16 +429,16 @@
 		    </if>
 		  </where>
 		</if>
-	</select>	
+	</select>
 	
-	<!-- 개발관리 목록 가져오기 -->
-	<select id="selectSrRqstForDevelopManagementByPage" parameterType="Map" resultType="com.finalteam5.otisrm.dto.srRequest.SrRqstForDevelopManagement">
-		select rnum, sr_rqst_no, sr_ttl, sys_nm, usr_nm, inst_nm, sr_rqst_reg_dt, sr_cmptn_prnmnt_dt, sr_rqst_stts_nm, sr_rqst_emrg_yn, sr_trnsf_yn
+	<!-- 검토관리 목록 가져오기 -->
+	<select id="selectSrRqstForReviewManagementByPage" parameterType="Map" resultType="com.finalteam5.otisrm.dto.srRequest.SrRqstForSearchList">
+		select rnum, sr_rqst_no, sr_ttl, sys_nm, usr_nm, inst_nm, sr_rqst_reg_dt, sr_cmptn_prnmnt_dt, sr_rqst_stts_nm, sr_rqst_emrg_yn, sr_rqst_rvw_rsn, sr_trnsf_yn
 		from (
-		    select rownum as rnum, sr_rqst_no, sr_ttl, sys_nm, usr_nm, inst_nm, sr_rqst_reg_dt, sr_cmptn_prnmnt_dt, sr_rqst_stts_nm, sr_rqst_emrg_yn, sr_trnsf_yn
+		    select rownum as rnum, sr_rqst_no, sr_ttl, sys_nm, usr_nm, inst_nm, sr_rqst_reg_dt, sr_cmptn_prnmnt_dt, sr_rqst_stts_nm, sr_rqst_emrg_yn, sr_rqst_rvw_rsn, sr_trnsf_yn
 		    from(
 		        select
-					r.sr_rqst_no, r.sr_ttl, s.sys_nm, u.usr_nm, i.inst_nm, r.sr_rqst_reg_dt, sr.sr_cmptn_prnmnt_dt, st.sr_rqst_stts_nm, r.sr_rqst_emrg_yn, sr.sr_trnsf_yn
+					r.sr_rqst_no, r.sr_ttl, s.sys_nm, u.usr_nm, i.inst_nm, r.sr_rqst_reg_dt, sr.sr_cmptn_prnmnt_dt, st.sr_rqst_stts_nm, r.sr_rqst_emrg_yn, r.sr_rqst_rvw_rsn, sr.sr_trnsf_yn
 				from sr_rqst r
 				join sys s on s.sys_no = r.sys_no
 		        join usr u on u.usr_no = r.sr_reqstr_no
