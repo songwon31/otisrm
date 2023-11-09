@@ -17,7 +17,7 @@
    
    <div>
 	   <div class="d-flex">
-		   <div class="potalTop section shadow w-70">
+		   <div class="potalTop section shadow w-100">
 		   	  <div class="subcontentTitle">
 			   	  <div class="d-flex st-ct">
 			   	  	<i class="material-icons stt-ic">chevron_right</i>
@@ -40,6 +40,14 @@
 			   	  			<div>승인대기</div>
 			   	  			<div id="numOfAprvWait" class="pb-1"></div>
 		   	  			</div>
+		   	  			<div id="APRV_REEXAM" class="filterTab d-flex justify-content-center align-items-center">
+			   	  			<div>승인재검토</div>
+			   	  			<div id="numOfAprvReexam" class="pb-1"></div>
+		   	  			</div>
+		   	  			<div id="APRV_RETURN" class="filterTab d-flex justify-content-center align-items-center">
+			   	  			<div>승인반려</div>
+			   	  			<div id="numOfAprvReturn" class="pb-1"></div>
+		   	  			</div>
 		   	  			<div id="APRV" class="filterTab d-flex justify-content-center align-items-center">
 		   	  				<div>승인</div>
 		   	  				<div id="numOfAprv" class="pb-1"></div>
@@ -47,6 +55,14 @@
 		   	  			<div id="RCPT_WAIT" class="filterTab d-flex justify-content-center align-items-center">
 		   	  				<div>접수대기</div>
 		   	  				<div id="numOfRcptWait" class="pb-1"></div>
+		   	  			</div>
+		   	  			<div id="RCPT_REEXAM" class="filterTab d-flex justify-content-center align-items-center">
+		   	  				<div>접수재검토</div>
+		   	  				<div id="numOfRcptReexam" class="pb-1"></div>
+		   	  			</div>
+		   	  			<div id="RCPT_RETURN" class="filterTab d-flex justify-content-center align-items-center">
+		   	  				<div>접수반려</div>
+		   	  				<div id="numOfRcptReturn" class="pb-1"></div>
 		   	  			</div>
 		   	  			<div id="RCPT"  class="filterTab d-flex justify-content-center align-items-center">
 			   	  			<div>접수</div>
@@ -112,8 +128,6 @@
 			    </div>	
 		   	  </div>
 		    </div>
-		    <div class="potalTop section shadow w-30">
-		   	</div>
 	   </div>
    </div>
    
@@ -262,7 +276,7 @@
 				</div>
 	      		<div>      		
 		      		<button id="deleteButton" class="btn-5" type="button" data-toggle="modal" data-target="#srRqstdeleteModal">삭제</button>
-		      		<button id="saveButton" type="button" onclick="modifySrRqst()" class="btn-1" data-dismiss="modal">저장</button>
+		      		<button id="saveButton" type="button" onclick="modifySrRqst()" class="btn-1">저장</button>
 	      		</div>
       		</div>
       		<div class="card p-3 mb-4">
@@ -313,7 +327,7 @@
 			          <label for="srRqst-srTtl" class="form-label" >SR제목</label>
 			        </div>
 			        <div style="width: 550.41px;">
-			          <input id="srRqst-srTtl" type="text" class="srRqstModify form-control">
+			          <input id="srRqst-srTtl" type="text" class="modifyPossible form-control">
 			        </div>
 			    </div>
 		        <div class="d-flex w-100 pt-2">
@@ -321,7 +335,7 @@
 			          <label for="srRqst-srPrps" class="form-label">관련근거/목적</label>
 			        </div>
 			        <div style="width: 550.41px;">
-			          <input id="srRqst-srPrps" type="text" class="srRqstModify form-control">
+			          <input id="srRqst-srPrps" type="text" class="modifyPossible form-control">
 			        </div>
 			    </div>
 		        <div class="d-flex w-100 pt-2">
@@ -329,7 +343,7 @@
 			          <label for="systemName" class="form-label">SR 내용</label>
 			        </div>
 			        <div style="width: 550.41px;">
-			          <textarea id="srRqst-srConts" class="srRqstModify form-control" id="srContent" style="height: 12rem;"></textarea>
+			          <textarea id="srRqst-srConts" class="modifyPossible form-control" id="srContent" style="height: 12rem;"></textarea>
 			        </div>
 			    </div>
 		        <div class="d-flex w-100 pt-2">
@@ -533,9 +547,8 @@
   <div class="modal-dialog">
 	  <div class="modal-content">
 	      <!-- Modal Header -->
-	      <div class="modal-header"  style="background-color: white;">
-	        <h6 class="modal-title"  style="color: black;">sr요청 삭제</h6>
-	        <button type="button" class="close" onclick="cancelBtnForDeleteModal()">&times;</button>
+	      <div class="modal-header" style="background-color: #de483a;">
+	        <h6 class="modal-title">sr요청 삭제</h6>
 	      </div>
 	
 	      <!-- Modal body -->
@@ -552,8 +565,28 @@
 	</div>
 </div>
 
-
-
+<!-- 요청 수정 모달 -->  
+<div class="modal" id="srRqstModyfyModal">
+  <div class="modal-dialog">
+	  <div class="modal-content">
+	      <!-- Modal Header -->
+	      <div class="modal-header" style="background-color: #2c7be4;">
+	        <h6 class="modal-title">sr요청 수정</h6>
+	      </div>
+	
+	      <!-- Modal body -->
+	      <div class="modal-body">
+	        	해당 sr요청을 다음과 같이 변경하시겠습니까 ?
+	      </div>
+	
+	      <!-- Modal footer -->
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="confirmSrRqstModify()" >확인</button>
+	        <button type="button" class="btn" style="background-color: #de483a; color: white;" onclick="cancelBtnForModifyModal2()">취소</button>
+	      </div>
+		</div>
+	</div>
+</div>
 
 
 <%@ include file="/WEB-INF/views/common/footer.jsp"%>

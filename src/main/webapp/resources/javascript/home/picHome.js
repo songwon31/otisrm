@@ -175,6 +175,16 @@ function numOftotalRows(){
 		console.log(totalRows);
 		$("#numOfAprvWait").html("("+ totalRows + ")");
 	});
+	//승인재검토
+	getTotalRows("APRV_REEXAM").then(function (totalRows) {
+		console.log(totalRows);
+		$("#numOfAprvReexam").html("("+ totalRows + ")");
+	});
+	//승인반려
+	getTotalRows("APRV_RETURN").then(function (totalRows) {
+		console.log(totalRows);
+		$("#numOfAprvReturn").html("("+ totalRows + ")");
+	});
 	//승인
 	getTotalRows("APRV").then(function (totalRows) {
 		console.log(totalRows);
@@ -184,6 +194,16 @@ function numOftotalRows(){
 	getTotalRows("RCPT_WAIT").then(function (totalRows) {
 		console.log(totalRows);
 		$("#numOfRcptWait").html("("+ totalRows + ")");
+	});
+	//접수재검토
+	getTotalRows("RCPT_REEXAM").then(function (totalRows) {
+		console.log(totalRows);
+		$("#numOfRcptReexam").html("("+ totalRows + ")");
+	});
+	//접수반려
+	getTotalRows("RCPT_RETURN").then(function (totalRows) {
+		console.log(totalRows);
+		$("#numOfRcptReturn").html("("+ totalRows + ")");
 	});
 	//접수
 	getTotalRows("RCPT").then(function (totalRows) {
@@ -317,7 +337,7 @@ function showSrRqstStts() {
            $("#srRqstStts-select").html(html);
            // "srRqstStts-select" select 요소에서 seq가 0 이상인 모든 option을 숨기기
            $("#srRqstStts-select option[id]").filter(function() {
-               return parseInt($(this).attr("id")) >= 5;
+               return parseInt($(this).attr("id")) >= 4;
            }).css("display", "none");
            
            $("#srRqstStts-select2").html(html);
@@ -375,39 +395,70 @@ function showSrRqstBySrRqstNo(choiceSrRqstNo){
         		$("#srRqst-review").val(data.srRqstRvwRsn);
         	}
         	
-        	//요청 상태
+        	//상태에 따라 변경한 조건 초기화
+        	$("#srRqstStts-select option").css("display", "inline");
+        	$("#saveButton").prop("disabled", false);
+    		$("#saveButton").css("opacity", 1);
+        	
+        	//요청 상태(상태: 요청, 승인요청)
         	if(data.srRqstSttsNo === "RQST"){
+        		 $("#srRqstStts-select").prop("disabled", false);
         		 $("#srRqstStts-select").val(data.srRqstSttsNo);
         		 //승인대기->승인요청으로변경 
                  $("#srRqstStts-select option[value='APRV_WAIT']").text("승인요청");
         		 $("#srRqstStts-select option[id]").filter(function() {
                      return parseInt($(this).attr("id")) >= 2;
                  }).css("display", "none");
-        	}else if(data.srRqstSttsNo === "APRV_WAIT"){        		
+           
+            //승인 대기 상태 (상태: 승인요청, 승인/ 담당자는 승인 상태로 변경 가능해야함)
+        	}else if(data.srRqstSttsNo === "APRV_WAIT"){
+        		//현재 상태 표시
+        		$("#srRqstStts-select").prop("disabled", false);
+        		$("#srRqstStts-select option[value='APRV_WAIT']").text("승인대기");
         		$("#srRqstStts-select").val(data.srRqstSttsNo);
-	    		$("#srRqstStts-select option[id]").filter(function() {
-	                return parseInt($(this).attr("id")) >= 5;
-	            }).css("display", "none");
-        		//$("#srRqstStts-select").prop("disabled", true);
-        	}else if(data.srRqstSttsNo === "APRV_REEXAM" || data.srRqstSttsNo === "APRV_RETURN"){
+        		//승인으로 변경 가능하도록 승인 속성을 추가
+        		$("#srRqstStts-select option[id='0']").css("display", "none");
+        		$("#srRqstStts-select option[id]").filter(function() {
+                    return parseInt($(this).attr("id")) >= 2;
+                }).css("display", "none");
+        		$("#srRqstStts-select option[id='4']").css("display", "inline");
+        	//승인 재검토(수정 후 승인 재요청이 가능해야 함)
+        	}else if(data.srRqstSttsNo === "APRV_REEXAM"){
+        		//현재 상태 표시
+        		$("#srRqstStts-select").prop("disabled", false);
         		$("#srRqstStts-select").val(data.srRqstSttsNo);
-        		//$("#srRqstStts-select").prop("disabled", true);
+        		$("#srRqstStts-select option[value='APRV_WAIT']").text("승인 재요청");
+        		//나머지 속성은 안보이도록 숨김
+        		$("#srRqstStts-select option[id]").filter(function() {
+                    return parseInt($(this).attr("id")) >= 2;
+                }).css("display", "none");
+        	//승인반려(수정 불가능, 해당 변려건 삭제 가능)
+        	}else if(data.srRqstSttsNo === "APRV_RETURN"){
+        		//현재 상태 표시
+        		$("#srRqstStts-select").val(data.srRqstSttsNo);
+        		$("#srRqstStts-select").prop("disabled", true);
+        		//수정 불가능
+        		$("#saveButton").prop("disabled", true);
+        		$("#saveButton").css("opacity", 0.5);
+        		$(".modifyPossible").prop("disabled", true);
+        	//승인 상태(수정 불가능)
         	}else{
         		$("#srRqstStts-select").val("APRV");
-        		//$("#srRqstStts-select").prop("disabled", true);
+        		$("#srRqstStts-select").prop("disabled", true);
+        		//수정 불가능
+        		$("#saveButton").prop("disabled", true);
+        		$("#saveButton").css("opacity", 0.5);
+        		$(".modifyPossible").prop("disabled", true);
         	}
         	
-        	//요청상태가 요청 이상일 때 수정 및 삭제 불가능(버튼 속성 변경)
-        	if(data.srRqstSttsNo !== "RQST"){
-        		$("#deleteButton").prop("disabled", true);
-        		$("#deleteButton").css("opacity", 0.5);
-        		//$(".srRqstModify").prop("disabled", true);
-        		//saveButton.prop("disabled", true); // 버튼을 비활성화
-        		//saveButton.css("opacity", 0.5); // 버튼을 반투명으로 설정 (예시로 0.5 사용)
-        	}else{
+        	//요청상태가 요청 또는 반려일때 삭제가능(버튼 속성 변경)
+        	if(data.srRqstSttsNo == "RQST" || data.srRqstSttsNo == "APRV_RETURN" ||data.srRqstSttsNo == "RCPT_RETURN"){
         		$("#deleteButton").prop("disabled", false);
         		$("#deleteButton").css("opacity", 1);
-        		$(".srRqstModify").prop("disabled", false);
+        		$(".srRqstModify").prop("disabled", false);	
+        	}else{
+        		$("#deleteButton").prop("disabled", true);
+        		$("#deleteButton").css("opacity", 0.5);
         	}
         	
         	//첨부파일
@@ -421,8 +472,8 @@ function showSrRqstBySrRqstNo(choiceSrRqstNo){
         	            if (srRqstAtch && srRqstAtch.srRqstNo === data.srRqstNo) {
         	                $("#showSrRqstAtch").show();
         	                var size = bytesToKB(srRqstAtch.srRqstAtchSize);
-        	                html += '<a href="filedownloadForPicHome?srRqstAtchNo='+ srRqstAtch.srRqstAtchNo +'" class="d-flex srRqstAtchWrap">';
-        	                html += '    <div>';
+        	                html += '<a href="filedownloadForPicHome?srRqstAtchNo='+ srRqstAtch.srRqstAtchNo +'" class="d-flex srRqstAtchWrap" style="font-size:1.3rem;">';
+        	                html += '    <div class="pt-2">';
         	                html += '    	<i class="material-icons atch-ic">download</i>';
         	                html += '    </div>';
         	                html += '    <div id="' + srRqstAtch.srRqstAtchNo + '" class="srRqstAtch p-1">' + srRqstAtch.srRqstAtchNm + ' (' + size + 'KB)</div>';
@@ -458,7 +509,6 @@ function showSrRqstBySrRqstNo(choiceSrRqstNo){
 //**요청에 해당하는 sr상세내용 가져오기;
 function showSrBySrRqstNo(choiceSrRqstNo){
 	clearFormFields();
-	console.log("데이터 앙 !!실행함");
 	//sr요청 상세
 	$.ajax({
 		type: "GET",
@@ -523,11 +573,11 @@ function showSrBySrRqstNo(choiceSrRqstNo){
 							if (srAtch && srAtch.srNo === data.srNo) {
 								$("#showSrAtch").show();
 								var size = bytesToKB(srAtch.srAtchSize);
-								html += '<a href="filedownloadSrAtchForPicHome?srAtchNo='+ srAtch.srAtchNo +'" class="d-flex srRqstAtchWrap">';
+								html += '<a href="filedownloadSrAtchForPicHome?srAtchNo='+ srAtch.srAtchNo +'" class="d-flex srRqstAtchWrap" style="font-size: 1.0rem;">';
 								html += '    <div>';
 								html += '    	<i class="material-icons atch-ic">download</i>';
 								html += '    </div>';
-								html += '    <div id="' + srAtch.srAtchNo + '" class="srAtch p-1">' + srAtch.srAtchNm + ' (' + size + 'KB)</div>';
+								html += '    <div id="' + srAtch.srAtchNo + '" class="srAtch p-1 mb-2">' + srAtch.srAtchNm + ' (' + size + 'KB)</div>';
 								html += '</a>';
 							}
 						}
@@ -682,32 +732,47 @@ function modifySubmitData(){
 }
 
 //sr 요청 수정
+//"저장" 버튼 클릭 시 요청 수정 모달 표시
 function modifySrRqst() {
-	console.log("수정!");
-	var form = $("#modifySrRqstForPicHome")[0];
-	var formData = new FormData(form);
+    // 수정 모달 표시
+    $('#srRqstModyfyModal').modal('show');
+}
+
+// 요청 수정 모달에서 확인 버튼 클릭 시 SR 요청 수정 수행
+function confirmSrRqstModify() {
+    var form = $("#modifySrRqstForPicHome")[0];
+    var formData = new FormData(form);
+
     // Ajax 요청 보내기
     $.ajax({
         type: "POST",
         url: "modifySrRqstForPicHome",
         data: formData,
         success: function (data) {
-            // 성공적으로 요청이 완료된 경우 실행할 코드
+            // 수정 작업이 성공적으로 완료되면 여기에 원하는 작업을 수행할 수 있습니다.
             var currentURL = window.location.href;
             window.location.href = currentURL; // 원하는 URL로 변경
+            showSrRqstBySrRqstNo(choiceSrRqstNo);
             loadSRRequests(1, choiceSrRqstSttsNo);
+            $('#srRqstModyfyModal').modal('hide'); // 모달 숨기기
         },
         error: function (error) {
             // 요청 중 오류가 발생한 경우 실행할 코드
             console.error("오류 발생:", error);
             alert("수정 실패");
+            $('#srRqstModyfyModal').modal('hide'); // 모달 숨기기
         },
-        cache: false,        
-        processData: false,  
-        contentType: false,   
+        cache: false,
+        processData: false,
+        contentType: false,
     });
 }
 
+// "요청 수정 모달"에서 취소 버튼 클릭 시 모달 닫기
+function cancelBtnForModifyModal2() {
+	console.log("모달 닫기!");
+    $('#srRqstModyfyModal').modal('hide');
+}
 
 //sr 요청 삭제
 function removeSrRqst() {
