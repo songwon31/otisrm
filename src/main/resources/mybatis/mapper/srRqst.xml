@@ -179,8 +179,8 @@
 		    </if>
 				     
 		    and sr_rqst_vld_yn = 'Y'   
-		  </where>
-		</if>
+		</where>
+	  </if>
 	</select>
 
 	<!-- sr요청 상세 불러오기-->
