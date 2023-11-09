@@ -779,27 +779,28 @@ public class SrServiceImpl implements SrService{
 				int lastRegCapacity = jsonObject.getInt("lastRegCapacity");
 				SrTrnsfHr originalSrTrnsfHr = srDao.getSrTrnsfHrBySrNoAndUsrNo(srTrnsfHr.getSrNo(), srTrnsfHr.getUsrNo());
 				
-				Calendar calendar = Calendar.getInstance();
-				calendar.setTime(originalSrTrnsfHr.getLastRegDt());
-				LocalDate date1 = LocalDate.of(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DAY_OF_MONTH));
-				LocalDate date2 = LocalDate.now();
-				
-				//최초 등록
 				if (originalSrTrnsfHr.getLastRegDt() == null) {
 					originalSrTrnsfHr.setLastRegDt(new Date());
 					originalSrTrnsfHr.setLastRegCapacity(lastRegCapacity);
 					originalSrTrnsfHr.setPerformanceCapacity(originalSrTrnsfHr.getPerformanceCapacity() + lastRegCapacity);
-				//오늘 최초 등록
-				} else if (date1.compareTo(date2) != 0) {
-					originalSrTrnsfHr.setLastRegDt(new Date());
-					originalSrTrnsfHr.setLastRegCapacity(lastRegCapacity);
-					originalSrTrnsfHr.setPerformanceCapacity(originalSrTrnsfHr.getPerformanceCapacity() + lastRegCapacity);
-				//오늘 등록한적이 있음
-				} else if (date1.compareTo(date2) == 0) {
-					//기존에 등록한 값만큼 실적공수에서 뺌
-					originalSrTrnsfHr.setPerformanceCapacity(originalSrTrnsfHr.getPerformanceCapacity() - originalSrTrnsfHr.getLastRegCapacity());
-					originalSrTrnsfHr.setLastRegCapacity(lastRegCapacity);
-					originalSrTrnsfHr.setPerformanceCapacity(originalSrTrnsfHr.getPerformanceCapacity() + lastRegCapacity);
+				} else {
+					Calendar calendar = Calendar.getInstance();
+					calendar.setTime(originalSrTrnsfHr.getLastRegDt());
+					LocalDate date1 = LocalDate.of(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DAY_OF_MONTH));
+					LocalDate date2 = LocalDate.now();
+							
+					//오늘 최초 등록
+					if (date1.compareTo(date2) != 0) {
+						originalSrTrnsfHr.setLastRegDt(new Date());
+						originalSrTrnsfHr.setLastRegCapacity(lastRegCapacity);
+						originalSrTrnsfHr.setPerformanceCapacity(originalSrTrnsfHr.getPerformanceCapacity() + lastRegCapacity);
+					//오늘 등록한적이 있음
+					} else if (date1.compareTo(date2) == 0) {
+						//기존에 등록한 값만큼 실적공수에서 뺌
+						originalSrTrnsfHr.setPerformanceCapacity(originalSrTrnsfHr.getPerformanceCapacity() - originalSrTrnsfHr.getLastRegCapacity());
+						originalSrTrnsfHr.setLastRegCapacity(lastRegCapacity);
+						originalSrTrnsfHr.setPerformanceCapacity(originalSrTrnsfHr.getPerformanceCapacity() + lastRegCapacity);
+					}
 				}
 				
 				srDao.updateSrTrnsfHr(originalSrTrnsfHr);

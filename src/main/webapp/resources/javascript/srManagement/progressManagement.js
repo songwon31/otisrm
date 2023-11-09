@@ -119,7 +119,6 @@ function mainTableConfig(progressManagementSearch, pageNo) {
 		progressManagementSearch: JSON.stringify(progressManagementSearch),
 		pageNo: pageNo
 	}
-	console.log(JSON.stringify(requestData));
 	$.ajax({
 		type: "POST",
 		url: "/otisrm/srManagement/getProgressManagementMainTableConfig",
@@ -355,7 +354,7 @@ function showSrProgressModal(srNo) {
 		url: "/otisrm/getSrTransferInfo",
 		data: requestData,
 		success: function(data) {
-
+			currentDetailSrNo = srNo;
 			//SR계획정보 구성
 			$('#srPlanModalDmndInput').val(data.srDmndNm);
 			$('#srPlanModalTaskInput').val(data.srTaskNm);
@@ -373,28 +372,33 @@ function showSrProgressModal(srNo) {
 				let cmptnDt = new Date(data.srTrgtCmptnDt);
 				$('#srPlanModalTrgtCmptnDt').val(formatDate(cmptnDt));
 			}
+			$('#srPlanInfoTotalCapacity').html(data.totalCapacity);
 			$('#srPlanModalTrnsfNote').html(data.srTrnsfNote);
 			
 			//SR자원정보 구성
 			$('#srHrInfo tbody').html('');	//html 초기화
-			if (data.srPrgrsHrList != null) {
-				for (let i=0; i<data.srPrgrsHrList.length; ++i) {
-					let srPrgrsPic = data.srPrgrsHrList[i];
-					let srPrgrsPicInfoHtml = '';
-					srPrgrsPicInfoHtml += '<tr style="height:4rem; font-size:1.6rem; background-color:white;">';
-					srPrgrsPicInfoHtml += '<td>ㅁ</td>';
-					srPrgrsPicInfoHtml += '<td>' + srPrgrsPic.usrNm + '</td>';
-					srPrgrsPicInfoHtml += '<td>' + srPrgrsPic.roleNm + '</td>';
-					srPrgrsPicInfoHtml += '<td>';
-					for (let j=0; j<srPrgrsPic.sttsList.length; ++j) {
-						srPrgrsPicInfoHtml += srPrgrsPic.sttsList[j];
-						if (j < srPrgrsPic.sttsList.length-1) {
-							srPrgrsPicInfoHtml += ' ';
-						}
+			if (data.srTrnsfHrList != null) {
+				for (let i=0; i<data.srTrnsfHrList.length; ++i) {
+					let srTrnsfHr = data.srTrnsfHrList[i];
+					let srTrnsfHrHtml = '';
+					srTrnsfHrHtml += '<tr style="height:4rem; font-size:1.6rem; background-color:white;">';
+					srTrnsfHrHtml += '<td><input type="checkbox" class="checkbox"></td>';
+					srTrnsfHrHtml += '<td class="srNo" style="display:none">' + srTrnsfHr.srNo + '</td>';
+					srTrnsfHrHtml += '<td class="usrNo" style="display:none">' + srTrnsfHr.usrNo + '</td>';
+					srTrnsfHrHtml += '<td>' + srTrnsfHr.usrNm + '</td>';
+					srTrnsfHrHtml += '<td>' + srTrnsfHr.roleNm + '</td>';
+					if (srTrnsfHr.planCapacity != '' && srTrnsfHr.planCapacity != null) {
+						srTrnsfHrHtml += '<td><input type="text" value="' + srTrnsfHr.planCapacity + '" style="width:50%; text-align: center;"></div></td>';
+					} else {
+						srTrnsfHrHtml += '<td><input type="text" value="" style="width:50%; text-align: center;"></div></td>';
 					}
-					srPrgrsPicInfoHtml += '</td>';
-					srPrgrsPicInfoHtml += '</tr>';
-					$('#srHrInfo tbody').append(srPrgrsPicInfoHtml);
+					if (srTrnsfHr.performanceCapacity != '' && srTrnsfHr.performanceCapacity != null) {
+						srTrnsfHrHtml += '<td><input type="text" value="' + srTrnsfHr.performanceCapacity + '" style="width:50%; text-align: center;"></div></td>';
+					} else {
+						srTrnsfHrHtml += '<td><input type="text" value="" style="width:50%; text-align: center;"></div></td>';
+					}
+					srTrnsfHrHtml += '</tr>';
+					$('#srHrInfo tbody').append(srTrnsfHrHtml);
 				}
 			}
 			
@@ -648,6 +652,7 @@ function showSetHrModal() {
 		url: "/otisrm/showSetHrModal",
 		data: requestData,
 		success: function(data) {
+			console.log(data);
 			$('#setHrModalDeptInput').val(data.deptNm);
 			$('#setHrModalAnalysisPicInput').val(data.analysisPicNm);
 			$('#setHrModalDesignPicInput').val(data.designPicNm);
@@ -661,7 +666,7 @@ function showSetHrModal() {
 
 //HR담당자 검색 모달 구성
 function composeSetHrFindPicModal(e) {
-	let deptNm = $('#setHrModalDeptInput').val();
+	let deptNm = $('#srPlanModalDeptInput').val();
 	$('#setHrFindPicModalDeptInput').val(deptNm);
 	
 	let td = $(e).closest('td');
@@ -678,6 +683,7 @@ function composeSetHrFindPicModalTable(pageNo) {
 	
 	//데이터 준비
 	let deptNm = $('#setHrFindPicModalDeptInput').val();
+	console.log(deptNm);
 	
 	$.ajax({
 		type: "POST",
@@ -712,7 +718,7 @@ function composeSetHrFindPicModalTable(pageNo) {
 						findPicTableHtml += '<td>' + usr.roleNm + '</td>';
 						findPicTableHtml += '<td>' + usr.ibpsNm + '</td>';
 						findPicTableHtml += '<td>' + usr.usrNm + '</td>';
-						findPicTableHtml += '<td> <button class="btn-2 detail-button" data-dismiss="modal" onclick="setHrModalPic(\'' + usr.usrNm + '\')">선택</button> </td>';
+						findPicTableHtml += '<td> <button class="btn-2 detail-button" data-dismiss="modal" onclick="addHr(\'' + usr.usrNo + '\')">선택</button> </td>';
 						//jsp에 삽입
 						$('#setHrFindPicModalTable tbody').append(findPicTableHtml);
 					}
@@ -771,10 +777,104 @@ function composeSetHrFindPicModalTable(pageNo) {
 	});	
 }
 
-function setHrModalPic(usrNm) {
-	let inputId = '#' + $('#setHrFindPicModalCallerInputId').html();
-	$(inputId).val(usrNm);
+function addHr(usrNo) {
+	console.log(usrNo);
+	console.log	
+	$.ajax({
+		type: "POST",
+		url: "/otisrm/addHr",
+		data: {srNo: currentDetailSrNo,
+			   usrNo: usrNo},
+		success: function(data) {
+			showSrProgressModal(currentDetailSrNo);
+		}
+	});
 }
+
+function saveHrInfo() {
+	let dataRows = []; // 데이터를 저장할 배열
+
+    // 테이블 내의 각 행 순회
+    $("#srHrInfo tr").each(function (idx) {
+    	if (idx != 0) {
+    	
+	        let rowData = {};
+	
+	        // 현재 행 내의 각 <td> 요소 순회
+	        $(this).find("td").each(function (index) {
+	        	if (index != 0) {
+	        		let key;
+		        	if (index == 1) {
+		        		key = 'srNo';
+		        	} else if (index == 2) {
+		        		key = 'usrNo';
+		        	} else if (index == 3) {
+		        		key = 'usrNm';
+		        	} else if (index == 4) {
+		        		key = 'roleNm';
+		        	} else if (index == 5) {
+		        		key = 'planCapacity';
+		        	} else if (index == 6) {
+		        		key = 'performanceCapacity';
+		        	}
+		        	let value;
+		        	if (index == 1 || index == 2 || index == 3 || index == 4) {
+		        		value = $(this).html();
+		        	} else {
+		        		value = $(this).find('input').val();
+		        	}
+		            rowData[key] = value;
+	        	}
+	        	
+	        });
+	
+	        // rowData를 dataRows 배열에 추가
+	        dataRows.push(rowData);
+    	}
+    });
+    console.log(dataRows);
+
+    let jsonData = JSON.stringify(dataRows);
+
+    // AJAX 요청
+    $.ajax({
+        url: "/otisrm/saveHrInfo",
+        method: "POST",
+        data: jsonData,
+        contentType: "application/json; charset=utf-8",
+        success: function (response) {
+        	showSrProgressModal(currentDetailSrNo);
+        }
+    });
+}
+
+function deleteHrInfo() {
+	let dataList = [];
+	// 테이블 내의 체크박스를 확인
+	$('#srHrInfo td').each(function () {
+	    if ($(this).find('.checkbox').is(':checked')) {
+	    	let rowData = {};
+	        // 체크된 행의 데이터를 객체로 저장
+	    	rowData['srNo'] = $(this).closest('tr').find('.srNo').html();
+	    	rowData['usrNo'] = $(this).closest('tr').find('.usrNo').html();
+	    	dataList.push(rowData);
+	    }
+	});
+	
+	let jsonData = JSON.stringify(dataList);
+
+    // AJAX 요청
+    $.ajax({
+        url: "/otisrm/deleteHrInfo",
+        method: "POST",
+        data: jsonData,
+        contentType: "application/json; charset=utf-8",
+        success: function (response) {
+        	showSrProgressModal(currentDetailSrNo);
+        }
+    });
+}
+
 
 function updateSrPrgrs() {
 	let srNo = currentDetailSrNo;

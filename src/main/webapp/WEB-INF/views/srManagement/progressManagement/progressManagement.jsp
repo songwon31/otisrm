@@ -330,18 +330,25 @@
 							<a class="srProgressBtn srPlanBtn" data-toggle="modal" data-target="#srPlanInfoEditModal" onclick="editSrTrnsfPlan()" href="javascript:void(0)" 
 								style="pointer-events: none; height: 2.8rem; width: 5rem; background-color:#2c7be4; color:white; font-weight:700;
 									   border-radius: 5px; display: flex; flex-direction: row; justify-content: center; align-items: center;">저장</a>
-									   
+							<!-- 		   
 							<a class="srProgressBtn srHrBtn" data-toggle="modal" data-target="#setHrModal" onclick="showSetHrModal()" href="javascript:void(0)" 
 								style="pointer-events: none; height: 2.8rem; width: 5rem; background-color:#2c7be4; color:white; font-weight:700;
 									   border-radius: 5px; display: none; flex-direction: row; justify-content: center; align-items: center;">수정</a>
-							
+							 -->
+							<a class="srProgressBtn srHrBtn" data-toggle="modal" data-target="#setHrFindPicModal" onclick="composeSetHrFindPicModal()" href="javascript:void(0)" 
+								style="pointer-events: none; height: 2.5rem; width: 5rem; border: 1px solid gray; border-radius: 5px; display: none; flex-direction: row; justify-content: center; align-items: center;">추가</a>
+							<a class="srProgressBtn srHrBtn" onclick="deleteHrInfo()" href="javascript:void(0)" 
+								style="pointer-events: none; height: 2.5rem; width: 5rem; border: 1px solid gray; border-radius: 5px; display: none; flex-direction: row; justify-content: center; align-items: center;">삭제</a>
+							<a class="srProgressBtn srHrBtn" onclick="saveHrInfo()" href="javascript:void(0)" 
+								style="pointer-events: none; height: 2.5rem; width: 5rem; border: 1px solid gray; border-radius: 5px; display: none; flex-direction: row; justify-content: center; align-items: center;">저장</a>
+									
 							<a class="srProgressBtn srPrgrsBtn" href="javascript:void(0)" onclick="updatePrgrs()"
 								style="pointer-events: none; height: 2.8rem; width: 5rem; background-color:#2c7be4; color:white; font-weight:700;
 									   border-radius: 5px; display: none; flex-direction: row; justify-content: center; align-items: center;">저장</a>
 						</div>
 					</div>
 					<!-- SR계획정보(수정) div -->
-					<div id="srPlanInfo" class="bottomSubDiv" style="height:27rem;">
+					<div id="srPlanInfo" class="bottomSubDiv" style="height:31rem;">
 						<div style="height: 4rem; display: flex; flex-direction: row;">
 							<div style="height: 4rem; width: 15%; font-weight:700; padding-left: 0.5rem; display: flex; align-items: center; background-color: #f9fafe;">요청구분</div>
 							<div style="height: 4rem; width: 35%; display: flex; align-items: center;">
@@ -376,6 +383,12 @@
 								<input id="srPlanModalTrgtCmptnDt" type="date" style="width:80%; height:3rem; margin:0rem 0.5rem;">
 							</div>
 						</div>
+						<div style="height: 4rem; display: flex; flex-direction: row;">
+							<div style="height: 4rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #f9fafe; font-weight:700;">총 계획공수(M/D)</div>
+							<div id="srPlanInfoTotalCapacity" style="height: 4rem; width: 85%; padding-left: 0.5rem; display: flex; align-items: center;">
+								
+							</div>
+						</div>
 						<div style="height: 15rem; display: flex; flex-direction: row;">
 							<div style="height: 15rem; width: 15%; font-weight:700; padding-left: 0.5rem; display: flex; align-items: center; background-color: #f9fafe; border-radius: 0px 0px 0px 10px;">검토내용</div>
 								<textarea id="srPlanModalTrnsfNote" style="width:85%; resize:none; margin:0.5rem;">
@@ -384,31 +397,33 @@
 					</div>
 					<!-- SR자원정보 -->
 					<div id="srHrInfo" class="bottomSubDiv" style="display: none;">
-						<div style="height: 27rem; background-color: #f9fafe; border-radius: 10px;">
+						<div style="height: 31rem; background-color: #f9fafe; border-radius: 10px;">
 							<table style="width: 100%; text-align: center;">
 								<colgroup>
-									<col width="5%" >
-									<col width="15%"/>
-									<col width="15%"/>
-									<col width="65%"/>
+									<col width="4%"/>
+									<col width="24%"/>
+									<col width="24%"/>
+									<col width="24%"/>
+									<col width="24%"/>
 								</colgroup>
 								<thead style="background-color: #f9fafe;">
 									<tr style="height: 4rem; font-size: 1.6rem; font-weight: 700;">
-										<th scope="col">ㅁ</th>
+										<th scope="col"></th>
 										<th scope="col">담당자명</th>
 										<th scope="col">역할</th>
-										<th scope="col">담당 작업</th>
+										<th scope="col">계획공수(M/D)</th>
+										<th scope="col">실적공수(M/D)</th>
 									</tr>
 								</thead>
 								<tbody>
-			
+		
 								</tbody>
 							</table>
 						</div>
 					</div>
 					<!-- SR진척률 -->
 					<div id="srProgressInfo" class="bottomSubDiv" style="display: none;">
-						<div style="height: 27rem; background-color: #f9fafe; border-radius: 10px;">
+						<div style="height: 31rem; background-color: #f9fafe; border-radius: 10px;">
 							<table id="prgrsTable" style="width: 100%; text-align: center;">
 								<colgroup>
 									<col width="20%" />
