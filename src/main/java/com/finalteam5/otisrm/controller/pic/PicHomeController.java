@@ -165,14 +165,14 @@ public class PicHomeController {
 	@PostMapping("modifySrRqstForPicHome")
 	public String modifySrRqst(SrRqstSubmit srRqstSubmit) {
 	    srRqstService.modifySrRqst(srRqstSubmit);
-	    return "redirect:/customerHome";
+	    return "redirect:/picHome";
 	}
 	
 	//담당자 홈 페이지에서 요청 삭제하기
 	@PostMapping("removeSrRqstForPicHome")
 	public String removeSrRqst(String srRqstNo) {
 		srRqstService.removeSrRqst(srRqstNo);
-		return "redirect:/customerHome";
+		return "redirect:/picHome";
 	}
 	
 	

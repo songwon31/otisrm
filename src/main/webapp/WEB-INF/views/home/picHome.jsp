@@ -249,20 +249,20 @@
         <i class="material-icons close-icon" data-dismiss="modal" style="cursor: pointer;">close</i>
       </div>
       <div class="modal-body">
-      	<form id="modifySrRqst" action="modifySrRqst" method="post" enctype="multipart/form-data">
+      	<form id="modifySrRqstForPicHome" action="modifySrRqstForPicHome" method="post" enctype="multipart/form-data">
       		<!-- SR요청정보 -->
       		<div class="d-flex">      		
 	      		<div>      		
 	      			<h6 class="modal-sub-title">SR요청 정보</h6>
 	      		</div>
 	      		<div class="mr-2 mb-2" style="margin-left: 420px;">
-	      			<select class="form-control" style="width:109.13px;" id="srRqstStts-select" name="status">
-						<option value="" >전체</option>
+	      			<select class="form-control" style="width:109.13px;" id="srRqstStts-select" name="srRqstSttsNo">
+						<option value="" >선택</option>
 				    </select>	      		
 				</div>
 	      		<div>      		
 		      		<button id="deleteButton" class="btn-5" type="button" data-toggle="modal" data-target="#srRqstdeleteModal">삭제</button>
-		      		<button id="saveButton" type="button" class="btn-1" data-dismiss="modal">저장</button>
+		      		<button id="saveButton" type="button" onclick="modifySrRqst()" class="btn-1" data-dismiss="modal">저장</button>
 	      		</div>
       		</div>
       		<div class="card p-3 mb-4">
@@ -274,6 +274,7 @@
 				          	</div>
 				 			<div class="w-45">
 					            <input id="srRqst-UsrNm" type="text" class="form-control" id="writer" disabled>
+					            <input id="srRqst-srRqstNo" type="hidden" class="form-control" name="srRqstNo">
 				 			</div>
 				        </div>
 				        <div class="d-flex w-50">
@@ -313,7 +314,6 @@
 			        </div>
 			        <div style="width: 550.41px;">
 			          <input id="srRqst-srTtl" type="text" class="srRqstModify form-control">
-			          <input id="srRqst-srRqstNo" type="hidden" class="form-control">
 			        </div>
 			    </div>
 		        <div class="d-flex w-100 pt-2">

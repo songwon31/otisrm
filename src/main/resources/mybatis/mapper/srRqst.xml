@@ -206,10 +206,15 @@
 	
 	<!-- 등록한 sr요청 수정 -->
 	<update id="updateSrRqst" parameterType="SrRqstSubmit">
-		update sr_rqst set sr_ttl=#{srTtl, jdbcType=VARCHAR}, sr_prps=#{srPrps, jdbcType=VARCHAR}, sr_rqst_emrg_yn=#{srRqstEmrgYn, jdbcType=VARCHAR},
-		sr_conts= #{srConts, jdbcType=VARCHAR}, sr_rqst_mdfcn_dt = sysdate
-		where sr_rqst_stts_no = 'RQST' 
-		and sr_rqst_no= #{srRqstNo, jdbcType=VARCHAR}
+		update sr_rqst
+		set
+		  sr_ttl = COALESCE(#{srTtl, jdbcType=VARCHAR}, sr_ttl),
+		  sr_prps = COALESCE(#{srPrps, jdbcType=VARCHAR}, sr_prps),
+		  sr_rqst_emrg_yn = COALESCE(#{srRqstEmrgYn, jdbcType=VARCHAR}, sr_rqst_emrg_yn),
+		  sr_conts = COALESCE(#{srConts, jdbcType=VARCHAR}, sr_conts),
+		  sr_rqst_stts_no = COALESCE(#{srRqstSttsNo, jdbcType=VARCHAR}, sr_rqst_stts_no),
+		  sr_rqst_mdfcn_dt = sysdate
+		where sr_rqst_no = #{srRqstNo, jdbcType=VARCHAR}
 	</update>
 	
 	<!--sr요청 관리 검색창: sr요청 상태 불러오기 -->

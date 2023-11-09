@@ -317,7 +317,7 @@ function showSrRqstStts() {
            $("#srRqstStts-select").html(html);
            // "srRqstStts-select" select 요소에서 seq가 0 이상인 모든 option을 숨기기
            $("#srRqstStts-select option[id]").filter(function() {
-               return parseInt($(this).attr("id")) >= 4;
+               return parseInt($(this).attr("id")) >= 5;
            }).css("display", "none");
            
            $("#srRqstStts-select2").html(html);
@@ -358,16 +358,7 @@ function showSrRqstBySrRqstNo(choiceSrRqstNo){
         	var loggedInUsrNo= $("#loginUsrNo").val();// 로그인한 회원 번호 가져오기 
         	var saveButton = $("#saveButton");
         	console.log(loggedInUsrNo);
-        	// 로그인한 사용자와 요청을 등록한 회원을 비교하여 버튼 활성화/비활성화
-        	if (data.srReqstrNo === loggedInUsrNo) {
-        		console.log("내요청");
-        		saveButton.prop("disabled", false); // 버튼을 활성화
-        		saveButton.css("opacity", 1); // 버튼을 완전 불투명으로 설정
-        	} else{
-        		console.log("내요청 아님");
-        		saveButton.prop("disabled", true); // 버튼을 비활성화
-        		saveButton.css("opacity", 0.5); // 버튼을 반투명으로 설정 (예시로 0.5 사용)
-        	}
+        	
         	var formattedDate = $.datepicker.formatDate("yy-mm-dd", date);
         	$("#srRqst-srRqstNo").val(data.srRqstNo);
         	$("#srRqst-UsrNm").val(data.usrNm);
@@ -394,22 +385,25 @@ function showSrRqstBySrRqstNo(choiceSrRqstNo){
                  }).css("display", "none");
         	}else if(data.srRqstSttsNo === "APRV_WAIT"){        		
         		$("#srRqstStts-select").val(data.srRqstSttsNo);
-        		$("#srRqstStts-select").prop("disabled", true);
+	    		$("#srRqstStts-select option[id]").filter(function() {
+	                return parseInt($(this).attr("id")) >= 5;
+	            }).css("display", "none");
+        		//$("#srRqstStts-select").prop("disabled", true);
         	}else if(data.srRqstSttsNo === "APRV_REEXAM" || data.srRqstSttsNo === "APRV_RETURN"){
         		$("#srRqstStts-select").val(data.srRqstSttsNo);
-        		$("#srRqstStts-select").prop("disabled", true);
+        		//$("#srRqstStts-select").prop("disabled", true);
         	}else{
         		$("#srRqstStts-select").val("APRV");
-        		$("#srRqstStts-select").prop("disabled", true);
+        		//$("#srRqstStts-select").prop("disabled", true);
         	}
         	
         	//요청상태가 요청 이상일 때 수정 및 삭제 불가능(버튼 속성 변경)
         	if(data.srRqstSttsNo !== "RQST"){
         		$("#deleteButton").prop("disabled", true);
         		$("#deleteButton").css("opacity", 0.5);
-        		$(".srRqstModify").prop("disabled", true);
-        		saveButton.prop("disabled", true); // 버튼을 비활성화
-        		saveButton.css("opacity", 0.5); // 버튼을 반투명으로 설정 (예시로 0.5 사용)
+        		//$(".srRqstModify").prop("disabled", true);
+        		//saveButton.prop("disabled", true); // 버튼을 비활성화
+        		//saveButton.css("opacity", 0.5); // 버튼을 반투명으로 설정 (예시로 0.5 사용)
         	}else{
         		$("#deleteButton").prop("disabled", false);
         		$("#deleteButton").css("opacity", 1);
@@ -485,7 +479,7 @@ function showSrBySrRqstNo(choiceSrRqstNo){
 				
 			    // 로그인한 사용자와 요청을 등록한 회원을 비교하여 버튼 활성화/비활성화
 				console.log("슨서: " + data.srRqstSttsNo);
-				if (data.srRqstSttsNo === 'APRV') {
+				/*if (data.srRqstSttsNo === 'APRV') {
 					console.log("내sr");
 					saveButton2.prop("disabled", false); // 버튼을 활성화
 					saveButton2.css("opacity", 1); // 버튼을 완전 불투명으로 설정
@@ -493,7 +487,7 @@ function showSrBySrRqstNo(choiceSrRqstNo){
 					console.log("내담당 아님");
 					saveButton2.prop("disabled", true); // 버튼을 비활성화
 					saveButton2.css("opacity", 0.5); // 버튼을 반투명으로 설정 (예시로 0.5 사용)
-				}
+				}*/
 				
 				var formattedDate = $.datepicker.formatDate("yy-mm-dd", date);
 				//이관여부
@@ -631,8 +625,6 @@ function requestInsertDate(){
 function submitSrRqst(){
 	var form = $("#writeSrRqst")[0];
 	var formData = new FormData(form); // 폼 엘리먼트를 선택하고, [0]을 사용하여 DOM 요소로 변환
-	console.log(form);
-	console.log(formData);
 	$.ajax({
 	    url: "writeSrRqstForPicHome", // 요청을 보낼 URL
 	    method: "POST",
@@ -648,7 +640,7 @@ function submitSrRqst(){
 	    },
 	    error: function (error) {
 	        // 요청 중 오류가 발생한 경우 실행할 코드
-	        console.error("으어아으우어");
+	        console.error("작성 실패");
 	    },
 	    cache: false,        //파일이 포함되어 있으니, 브라우저 메모리에 저장하지 마라
 	    processData: false,  //title=xxx&desc=yyy& 씩으로 만들지 마라
@@ -690,22 +682,16 @@ function modifySubmitData(){
 }
 
 //sr 요청 수정
-function modifySrRqst(srRqstNo) {
-	modifySubmitData();
-	// 데이터 수집 및 가공
-    var data = {
-    	srRqstNo: $("#srRqst-srRqstNo").val(),
-        srTtl: $("#submitSrRqst-srTtl").val(),
-        srPrps: $("#submitSrRqst-srPrps").val(),
-        srConts: $("#submitSrRqst-srConts").val(),
-        srRqstEmrgYn: $("#submit_Yn").val()
-    };
+function modifySrRqst() {
+	console.log("수정!");
+	var form = $("#modifySrRqstForPicHome")[0];
+	var formData = new FormData(form);
     // Ajax 요청 보내기
     $.ajax({
         type: "POST",
         url: "modifySrRqstForPicHome",
-        data: data,
-        success: function (response) {
+        data: formData,
+        success: function (data) {
             // 성공적으로 요청이 완료된 경우 실행할 코드
             var currentURL = window.location.href;
             window.location.href = currentURL; // 원하는 URL로 변경
@@ -715,7 +701,10 @@ function modifySrRqst(srRqstNo) {
             // 요청 중 오류가 발생한 경우 실행할 코드
             console.error("오류 발생:", error);
             alert("수정 실패");
-        }
+        },
+        cache: false,        
+        processData: false,  
+        contentType: false,   
     });
 }
 
