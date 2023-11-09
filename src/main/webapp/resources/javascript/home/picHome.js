@@ -795,3 +795,33 @@ function removeSrRqst() {
 	});
 }
 
+function srRqstSttsUpdate() {
+	$("#update-srRqstNo").val($("#srRqst-srRqstNo").val());
+	
+	var form = $("#srRqstSttsUpdate")[0];
+    var formData = new FormData(form);
+    // Ajax 요청 보내기
+    $.ajax({
+        type: "POST",
+        url: "modifySrRqstForPicHome",
+        data: formData,
+        success: function (data) {
+        	console.log($("#srRqst-srRqstNo").val());
+            // 수정 작업이 성공적으로 완료되면 여기에 원하는 작업을 수행할 수 있습니다.
+            var currentURL = window.location.href;
+            window.location.href = currentURL; // 원하는 URL로 변경
+            //showSrRqstBySrRqstNo(choiceSrRqstNo);
+            //loadSRRequests(1, choiceSrRqstSttsNo);
+            alert("수정 완료");
+        },
+        error: function (error) {
+            // 요청 중 오류가 발생한 경우 실행할 코드
+            console.error("오류 발생:", error);
+            alert("수정 실패");
+            $('#srRqstModyfyModal').modal('hide'); // 모달 숨기기
+        },
+        cache: false,
+        processData: false,
+        contentType: false,
+    });
+}

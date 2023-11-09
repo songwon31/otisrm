@@ -272,7 +272,7 @@
 	      		<div class="mr-2 mb-2" style="margin-left: 420px;">
 	      			<select class="form-control" style="width:109.13px;" id="srRqstStts-select" name="srRqstSttsNo">
 						<option value="" >선택</option>
-				    </select>	      		
+				    </select>   		
 				</div>
 	      		<div>      		
 		      		<button id="deleteButton" class="btn-5" type="button" data-toggle="modal" data-target="#srRqstdeleteModal">삭제</button>
@@ -327,7 +327,7 @@
 			          <label for="srRqst-srTtl" class="form-label" >SR제목</label>
 			        </div>
 			        <div style="width: 550.41px;">
-			          <input id="srRqst-srTtl" type="text" class="modifyPossible form-control">
+			          <input id="srRqst-srTtl" type="text" class="modifyPossible form-control" name="srTtl">
 			        </div>
 			    </div>
 		        <div class="d-flex w-100 pt-2">
@@ -335,7 +335,7 @@
 			          <label for="srRqst-srPrps" class="form-label">관련근거/목적</label>
 			        </div>
 			        <div style="width: 550.41px;">
-			          <input id="srRqst-srPrps" type="text" class="modifyPossible form-control">
+			          <input id="srRqst-srPrps" type="text" class="modifyPossible form-control" name="srPrps">
 			        </div>
 			    </div>
 		        <div class="d-flex w-100 pt-2">
@@ -343,7 +343,7 @@
 			          <label for="systemName" class="form-label">SR 내용</label>
 			        </div>
 			        <div style="width: 550.41px;">
-			          <textarea id="srRqst-srConts" class="modifyPossible form-control" id="srContent" style="height: 12rem;"></textarea>
+			          <textarea id="srRqst-srConts" class="modifyPossible form-control" id="srContent" style="height: 12rem;" name=""></textarea>
 			        </div>
 			    </div>
 		        <div class="d-flex w-100 pt-2">
@@ -379,7 +379,7 @@
     </div>
 
     <!-- SR개발 정보  -->
-    <form id="aa" action="#" method="post">    
+    <form id="srRqstSttsUpdate" action="modifySrRqstForPicHome" method="post">    
 	    <div class="d-flex">      		
 	    	<div>      		
 	    		<h6 class="modal-sub-title">SR개발 정보</h6>
@@ -387,12 +387,14 @@
 	     	<div class="mr-2 mb-2" style="margin-left: 496px;">
 	     		<select class="form-control" style="width:109.13px;" id="srRqstStts-select2" name="srRqstSttsNo">
 					<option value="" >전체</option>
-			    </select>	      		
+			    </select>	
+			    <input type="hidden" id="update-srRqstNo" name="srRqstNo">	         		
 			</div>
 	    	<div>      		
-	     		<button id="saveButton2" type="button" class="btn-1" data-dismiss="modal">저장</button>
+	     		<button id="saveButton2" type="button" class="btn-1" onclick="srRqstSttsUpdate()" data-dismiss="modal">저장</button>
 	    	</div>
 	     </div>
+	 </form>
 	  	 <div class="card p-3 mb-4">
 		      <div>
 		       	<div class="d-flex">
@@ -539,7 +541,6 @@
 		  		</div>
 	    	</div>
 	  	</div>
-    </form>
 </div>
 
 <!-- 요청 삭제 모달 -->  
