@@ -15,11 +15,12 @@ public class SrTrnsfPlanModalCompose {
 	//sr값
 	private String srTaskNm;
 	
-	//기존값(존재할 경우0
+	//기존값(존재할 경우0)
 	private String srDmndNm;
 	private String deptNm;
 	private String usrNm;
 	private Date srTrgtBgngDt;
 	private Date srTrgtCmptnDt;
+	private Integer totalCapacity;
 	private String srTrnsfNote;
 }
