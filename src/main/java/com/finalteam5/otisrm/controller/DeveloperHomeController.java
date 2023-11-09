@@ -23,6 +23,7 @@ import com.finalteam5.otisrm.dto.sr.SrPrgrsForm;
 import com.finalteam5.otisrm.dto.sr.SrRequestDetailForDeveloperHome;
 import com.finalteam5.otisrm.dto.sr.SrTableElementsForDeveloperHome;
 import com.finalteam5.otisrm.dto.sr.SrTrnsfFindPicModalCompose;
+import com.finalteam5.otisrm.dto.sr.SrTrnsfHr;
 import com.finalteam5.otisrm.dto.sr.SrTrnsfInfoForDeveloperHome;
 import com.finalteam5.otisrm.dto.sr.SrTrnsfPlanModalCompose;
 import com.finalteam5.otisrm.dto.sr.SrTrnsfPrgrsPic;
@@ -76,7 +77,7 @@ public class DeveloperHomeController {
 			UsrDetails usrDetails = (UsrDetails) authentication.getPrincipal();
 			Usr usr = usrDetails.getUsr();
 			
-			return srService.getSrTableElementsForDeveloperHome(usr.getUsrId(), filterType, page);
+			return srService.getSrTableElementsForDeveloperHome(usr.getUsrNo(), filterType, page);
 		} else {
 			return null;
 		}
@@ -116,7 +117,30 @@ public class DeveloperHomeController {
 		if (usrNm.equals("")) {
 			usrNm = null;
 		}
-		return srService.getSrTrnsfFindPicModalCompose(usr.getUsrId(), deptNo, usrNm, pageNo);
+		return srService.getSrTrnsfFindPicModalCompose(usr.getUsrNo(), deptNo, usrNm, pageNo);
+	}
+	
+	@PostMapping("/addHr")
+	@ResponseBody
+	public int addHr(String srNo, String usrNo) {
+		return srService.addHr(srNo, usrNo);
+	}
+	//공수 저장
+	@PostMapping("/saveHrInfo")
+	@ResponseBody
+	public int saveHrInfo(@RequestBody String jsonData) {
+		log.info(jsonData);
+		srService.saveHrInfo(jsonData);
+		return 0;
+	}
+	
+	//자원 삭제
+	@PostMapping("/deleteHrInfo")
+	@ResponseBody
+	public int deleteHrInfo(@RequestBody String jsonData) {
+		log.info(jsonData);
+		srService.deleteHrInfo(jsonData);
+		return 0;
 	}
 	
 	@PostMapping("/editSrTrnsfPlan")
@@ -224,6 +248,23 @@ public class DeveloperHomeController {
 		srService.deleteSelectedOtptList(srPrgrsOtptNoList);
 		
 		return "success";
+	}
+	
+	//SR실적등록 모달 구성
+	@PostMapping("/getUsrCapacity")
+	@ResponseBody
+	public List<SrTrnsfHr> getUsrCapacity(Authentication authentication) {
+		UsrDetails usrDetails = (UsrDetails) authentication.getPrincipal();
+		Usr usr = usrDetails.getUsr();
+		return srService.getSrTrnsfHrListByUsrNo(usr.getUsrNo());
+	}
+	
+	//당일 SR실적등록
+	@PostMapping("/registerHrInfo")
+	@ResponseBody
+	public int registerHrInfo(@RequestBody String jsonData) {
+		log.info(jsonData);
+		return srService.registerHrInfo(jsonData);
 	}
 }
 

@@ -15,51 +15,36 @@
 	
 	
 	<select id="selectSrListForDeveloperHomeBoardByUsrIdAndStts" parameterType="map" resultType="com.finalteam5.otisrm.dto.sr.SrForDeveloperHomeBoard">
-		SELECT sr.sr_no, sys.sys_nm, srtk.sr_task_nm, srr.sr_ttl, u2.usr_nm, sr.sr_cmptn_prnmnt_dt, srt.sr_trgt_cmptn_dt, srp.sr_prgrs_stts_nm
-		FROM usr u1
-		JOIN sr_trnsf_plan srt ON u1.usr_no = srt.usr_no
-		JOIN sr ON srt.sr_no = sr.sr_no
-		JOIN usr u2 ON sr.pic_usr_no = u2.usr_no
+		SELECT sr.sr_no, sys.sys_nm, srtc.sr_task_nm, srr.sr_ttl, pic.usr_nm, sr.sr_cmptn_prnmnt_dt, srtp.sr_trgt_cmptn_dt, srps.sr_prgrs_stts_nm
+		FROM sr
 		JOIN sr_rqst srr ON sr.sr_rqst_no = srr.sr_rqst_no
+		JOIN sr_trnsf_plan srtp ON sr.sr_no = srtp.sr_no
+		JOIN usr pic ON sr.pic_usr_no = pic.usr_no
+		JOIN usr pl ON srtp.usr_no = pl.usr_no
 		JOIN sys ON srr.sys_no = sys.sys_no
-		JOIN sr_task_clsf srtk ON sr.sr_task_no = srtk.sr_task_no
-		JOIN sr_prgrs_stts srp ON srt.sr_prgrs_stts_no = srp.sr_prgrs_stts_no
-		<if test='srPrgrsSttsNo == null'>
-			WHERE u1.usr_id = #{usrId}
-		</if>
+		JOIN sr_task_clsf srtc ON sr.sr_task_no = srtc.sr_task_no
+		JOIN sr_prgrs_stts srps ON srtp.sr_prgrs_stts_no = srps.sr_prgrs_stts_no
+		LEFT JOIN sr_trnsf_hr srth ON sr.sr_no = srth.sr_no
+		LEFT JOIN usr dvl ON srth.usr_no = dvl.usr_no
+		WHERE (pl.usr_no = #{usrNo} OR dvl.usr_no = #{usrNo})
 		<if test='srPrgrsSttsNo != null'>
-			WHERE u1.usr_id = #{usrId} AND srt.sr_prgrs_stts_no = #{srPrgrsSttsNo}
+			AND srtp.sr_prgrs_stts_no = #{srPrgrsSttsNo}
 		</if>
-		UNION
-		SELECT sr.sr_no, sys.sys_nm, srtk.sr_task_nm, srr.sr_ttl, u2.usr_nm, sr.sr_cmptn_prnmnt_dt, srt.sr_trgt_cmptn_dt, srp.sr_prgrs_stts_nm
-		FROM usr u1
-		JOIN sr_trnsf_plan srt ON u1.usr_no = srt.usr_no
-		JOIN sr ON srt.sr_no = sr.sr_no
-		JOIN usr u2 ON sr.pic_usr_no = u2.usr_no
-		JOIN sr_rqst srr ON sr.sr_rqst_no = srr.sr_rqst_no
-		JOIN sys ON srr.sys_no = sys.sys_no
-		JOIN sr_task_clsf srtk ON sr.sr_task_no = srtk.sr_task_no
-		JOIN sr_prgrs_stts srp ON srt.sr_prgrs_stts_no = srp.sr_prgrs_stts_no
-		JOIN sr_prgrs srpr ON srt.sr_no = srpr.sr_no
-		JOIN usr u3 ON srpr.usr_no = u3.usr_no
-		<if test='srPrgrsSttsNo == null'>
-			WHERE u3.usr_id = #{usrId} AND srt.sr_prgrs_stts_no = srpr.sr_prgrs_stts_no
-		</if>
-		<if test='srPrgrsSttsNo != null'>
-			WHERE u3.usr_id = #{usrId} AND srt.sr_prgrs_stts_no = srpr.sr_prgrs_stts_no AND srt.sr_prgrs_stts_no = #{srPrgrsSttsNo}
-		</if>
-		<if test='srPrgrsSttsNo == null || srPrgrsSttsNo.equals("RQST")'>
+			AND srr.sr_rqst_stts_no != 'DEP_CMPTN'
+		<if test='srPrgrsSttsNo == null || srPrgrsSttsNo == "RQST"'>
 			UNION
-			SELECT sr.sr_no, sys.sys_nm, srtk.sr_task_nm, srr.sr_ttl, u2.usr_nm, sr.sr_cmptn_prnmnt_dt, srt.sr_trgt_cmptn_dt, srp.sr_prgrs_stts_nm
-			FROM usr u1
-			JOIN sr_trnsf_plan srt ON u1.inst_no = srt.inst_no
-			JOIN sr ON srt.sr_no = sr.sr_no
-			JOIN usr u2 ON sr.pic_usr_no = u2.usr_no
+			SELECT sr.sr_no, sys.sys_nm, srtc.sr_task_nm, srr.sr_ttl, pic.usr_nm, sr.sr_cmptn_prnmnt_dt, srtp.sr_trgt_cmptn_dt, srps.sr_prgrs_stts_nm
+			FROM sr
 			JOIN sr_rqst srr ON sr.sr_rqst_no = srr.sr_rqst_no
+			JOIN sr_trnsf_plan srtp ON sr.sr_no = srtp.sr_no
+			JOIN usr pic ON sr.pic_usr_no = pic.usr_no
 			JOIN sys ON srr.sys_no = sys.sys_no
-			JOIN sr_task_clsf srtk ON sr.sr_task_no = srtk.sr_task_no
-			JOIN sr_prgrs_stts srp ON srt.sr_prgrs_stts_no = srp.sr_prgrs_stts_no
-			WHERE u1.usr_id = #{usrId} AND srt.sr_prgrs_stts_no = 'RQST'
+			JOIN sr_task_clsf srtc ON sr.sr_task_no = srtc.sr_task_no
+			JOIN sr_prgrs_stts srps ON srtp.sr_prgrs_stts_no = srps.sr_prgrs_stts_no
+			LEFT JOIN sr_trnsf_hr srth ON sr.sr_no = srth.sr_no
+			LEFT JOIN usr dvl ON srth.usr_no = dvl.usr_no
+			WHERE srtp.sr_prgrs_stts_no = 'RQST'
+				AND srr.sr_rqst_stts_no != 'DEP_CMPTN'
 		</if>
 		ORDER BY sr_no
 	</select>
@@ -69,51 +54,36 @@
 		FROM(
 			SELECT rownum as rnum, sr_no, sys_nm, sr_task_nm, sr_ttl, usr_nm, sr_cmptn_prnmnt_dt, sr_trgt_cmptn_dt, sr_prgrs_stts_nm
 			FROM (	
-				SELECT sr.sr_no, sys.sys_nm, srtk.sr_task_nm, srr.sr_ttl, u2.usr_nm, sr.sr_cmptn_prnmnt_dt, srt.sr_trgt_cmptn_dt, srp.sr_prgrs_stts_nm
-				FROM usr u1
-				JOIN sr_trnsf_plan srt ON u1.usr_no = srt.usr_no
-				JOIN sr ON srt.sr_no = sr.sr_no
-				JOIN usr u2 ON sr.pic_usr_no = u2.usr_no
+				SELECT sr.sr_no, sys.sys_nm, srtc.sr_task_nm, srr.sr_ttl, pic.usr_nm, sr.sr_cmptn_prnmnt_dt, srtp.sr_trgt_cmptn_dt, srps.sr_prgrs_stts_nm
+				FROM sr
 				JOIN sr_rqst srr ON sr.sr_rqst_no = srr.sr_rqst_no
+				JOIN sr_trnsf_plan srtp ON sr.sr_no = srtp.sr_no
+				JOIN usr pic ON sr.pic_usr_no = pic.usr_no
+				JOIN usr pl ON srtp.usr_no = pl.usr_no
 				JOIN sys ON srr.sys_no = sys.sys_no
-				JOIN sr_task_clsf srtk ON sr.sr_task_no = srtk.sr_task_no
-				JOIN sr_prgrs_stts srp ON srt.sr_prgrs_stts_no = srp.sr_prgrs_stts_no
-				<if test='srPrgrsSttsNo == null'>
-					WHERE u1.usr_id = #{usrId}
-				</if>
+				JOIN sr_task_clsf srtc ON sr.sr_task_no = srtc.sr_task_no
+				JOIN sr_prgrs_stts srps ON srtp.sr_prgrs_stts_no = srps.sr_prgrs_stts_no
+				LEFT JOIN sr_trnsf_hr srth ON sr.sr_no = srth.sr_no
+				LEFT JOIN usr dvl ON srth.usr_no = dvl.usr_no
+				WHERE (pl.usr_no = #{usrNo} OR dvl.usr_no = #{usrNo})
 				<if test='srPrgrsSttsNo != null'>
-					WHERE u1.usr_id = #{usrId} AND srt.sr_prgrs_stts_no = #{srPrgrsSttsNo}
+					AND srtp.sr_prgrs_stts_no = #{srPrgrsSttsNo}
 				</if>
-				UNION
-				SELECT sr.sr_no, sys.sys_nm, srtk.sr_task_nm, srr.sr_ttl, u2.usr_nm, sr.sr_cmptn_prnmnt_dt, srt.sr_trgt_cmptn_dt, srp.sr_prgrs_stts_nm
-				FROM usr u1
-				JOIN sr_trnsf_plan srt ON u1.usr_no = srt.usr_no
-				JOIN sr ON srt.sr_no = sr.sr_no
-				JOIN usr u2 ON sr.pic_usr_no = u2.usr_no
-				JOIN sr_rqst srr ON sr.sr_rqst_no = srr.sr_rqst_no
-				JOIN sys ON srr.sys_no = sys.sys_no
-				JOIN sr_task_clsf srtk ON sr.sr_task_no = srtk.sr_task_no
-				JOIN sr_prgrs_stts srp ON srt.sr_prgrs_stts_no = srp.sr_prgrs_stts_no
-				JOIN sr_prgrs srpr ON srt.sr_no = srpr.sr_no
-				JOIN usr u3 ON srpr.usr_no = u3.usr_no
-				<if test='srPrgrsSttsNo == null'>
-					WHERE u3.usr_id = #{usrId} AND srt.sr_prgrs_stts_no = srpr.sr_prgrs_stts_no
-				</if>
-				<if test='srPrgrsSttsNo != null'>
-					WHERE u3.usr_id = #{usrId} AND srt.sr_prgrs_stts_no = srpr.sr_prgrs_stts_no AND srt.sr_prgrs_stts_no = #{srPrgrsSttsNo}
-				</if>
-				<if test='srPrgrsSttsNo == null || srPrgrsSttsNo.equals("RQST")'>
+					AND srr.sr_rqst_stts_no != 'DEP_CMPTN'
+				<if test='srPrgrsSttsNo == null || srPrgrsSttsNo == "RQST"'>
 					UNION
-					SELECT sr.sr_no, sys.sys_nm, srtk.sr_task_nm, srr.sr_ttl, u2.usr_nm, sr.sr_cmptn_prnmnt_dt, srt.sr_trgt_cmptn_dt, srp.sr_prgrs_stts_nm
-					FROM usr u1
-					JOIN sr_trnsf_plan srt ON u1.inst_no = srt.inst_no
-					JOIN sr ON srt.sr_no = sr.sr_no
-					JOIN usr u2 ON sr.pic_usr_no = u2.usr_no
+					SELECT sr.sr_no, sys.sys_nm, srtc.sr_task_nm, srr.sr_ttl, pic.usr_nm, sr.sr_cmptn_prnmnt_dt, srtp.sr_trgt_cmptn_dt, srps.sr_prgrs_stts_nm
+					FROM sr
 					JOIN sr_rqst srr ON sr.sr_rqst_no = srr.sr_rqst_no
+					JOIN sr_trnsf_plan srtp ON sr.sr_no = srtp.sr_no
+					JOIN usr pic ON sr.pic_usr_no = pic.usr_no
 					JOIN sys ON srr.sys_no = sys.sys_no
-					JOIN sr_task_clsf srtk ON sr.sr_task_no = srtk.sr_task_no
-					JOIN sr_prgrs_stts srp ON srt.sr_prgrs_stts_no = srp.sr_prgrs_stts_no
-					WHERE u1.usr_id = #{usrId} AND srt.sr_prgrs_stts_no = 'RQST'
+					JOIN sr_task_clsf srtc ON sr.sr_task_no = srtc.sr_task_no
+					JOIN sr_prgrs_stts srps ON srtp.sr_prgrs_stts_no = srps.sr_prgrs_stts_no
+					LEFT JOIN sr_trnsf_hr srth ON sr.sr_no = srth.sr_no
+					LEFT JOIN usr dvl ON srth.usr_no = dvl.usr_no
+					WHERE srtp.sr_prgrs_stts_no = 'RQST'
+						AND srr.sr_rqst_stts_no != 'DEP_CMPTN'
 				</if>
 				ORDER BY sr_no
 			)
@@ -125,40 +95,32 @@
 	</select>
 	
 	<select id="selectSrForDeveloperHomeBoardListByUsrId" parameterType="String" resultType="com.finalteam5.otisrm.dto.sr.SrForDeveloperHomeBoard">
-		SELECT sr.sr_no, sys.sys_nm, srtk.sr_task_nm, srr.sr_ttl, u2.usr_nm, sr.sr_cmptn_prnmnt_dt, srt.sr_trgt_cmptn_dt, srp.sr_prgrs_stts_nm
-		FROM usr u1
-		JOIN sr_trnsf_plan srt ON u1.usr_no = srt.usr_no
-		JOIN sr ON srt.sr_no = sr.sr_no
-		JOIN usr u2 ON sr.pic_usr_no = u2.usr_no
+		SELECT sr.sr_no, sys.sys_nm, srtc.sr_task_nm, srr.sr_ttl, pic.usr_nm, sr.sr_cmptn_prnmnt_dt, srtp.sr_trgt_cmptn_dt, srps.sr_prgrs_stts_nm
+		FROM sr
 		JOIN sr_rqst srr ON sr.sr_rqst_no = srr.sr_rqst_no
+		JOIN sr_trnsf_plan srtp ON sr.sr_no = srtp.sr_no
+		JOIN usr pic ON sr.pic_usr_no = pic.usr_no
+		JOIN usr pl ON srtp.usr_no = pl.usr_no
 		JOIN sys ON srr.sys_no = sys.sys_no
-		JOIN sr_task_clsf srtk ON sr.sr_task_no = srtk.sr_task_no
-		JOIN sr_prgrs_stts srp ON srt.sr_prgrs_stts_no = srp.sr_prgrs_stts_no
-		WHERE u1.usr_id = #{usrId}
+		JOIN sr_task_clsf srtc ON sr.sr_task_no = srtc.sr_task_no
+		JOIN sr_prgrs_stts srps ON srtp.sr_prgrs_stts_no = srps.sr_prgrs_stts_no
+		LEFT JOIN sr_trnsf_hr srth ON sr.sr_no = srth.sr_no
+		LEFT JOIN usr dvl ON srth.usr_no = dvl.usr_no
+		WHERE (pl.usr_no = #{usrNo} OR dvl.usr_no = #{usrNo})
+			AND srr.sr_rqst_stts_no != 'DEP_CMPTN'
 		UNION
-		SELECT sr.sr_no, sys.sys_nm, srtk.sr_task_nm, srr.sr_ttl, u2.usr_nm, sr.sr_cmptn_prnmnt_dt, srt.sr_trgt_cmptn_dt, srp.sr_prgrs_stts_nm
-		FROM usr u1
-		JOIN sr_trnsf_plan srt ON u1.usr_no = srt.usr_no
-		JOIN sr ON srt.sr_no = sr.sr_no
-		JOIN usr u2 ON sr.pic_usr_no = u2.usr_no
+		SELECT sr.sr_no, sys.sys_nm, srtc.sr_task_nm, srr.sr_ttl, pic.usr_nm, sr.sr_cmptn_prnmnt_dt, srtp.sr_trgt_cmptn_dt, srps.sr_prgrs_stts_nm
+		FROM sr
 		JOIN sr_rqst srr ON sr.sr_rqst_no = srr.sr_rqst_no
+		JOIN sr_trnsf_plan srtp ON sr.sr_no = srtp.sr_no
+		JOIN usr pic ON sr.pic_usr_no = pic.usr_no
 		JOIN sys ON srr.sys_no = sys.sys_no
-		JOIN sr_task_clsf srtk ON sr.sr_task_no = srtk.sr_task_no
-		JOIN sr_prgrs_stts srp ON srt.sr_prgrs_stts_no = srp.sr_prgrs_stts_no
-		JOIN sr_prgrs srpr ON srt.sr_no = srpr.sr_no
-		JOIN usr u3 ON srpr.usr_no = u3.usr_no
-		WHERE u3.usr_id = #{usrId} AND srt.sr_prgrs_stts_no = srpr.sr_prgrs_stts_no
-		UNION
-		SELECT sr.sr_no, sys.sys_nm, srtk.sr_task_nm, srr.sr_ttl, u2.usr_nm, sr.sr_cmptn_prnmnt_dt, srt.sr_trgt_cmptn_dt, srp.sr_prgrs_stts_nm
-		FROM usr u1
-		JOIN sr_trnsf_plan srt ON u1.inst_no = srt.inst_no
-		JOIN sr ON srt.sr_no = sr.sr_no
-		JOIN usr u2 ON sr.pic_usr_no = u2.usr_no
-		JOIN sr_rqst srr ON sr.sr_rqst_no = srr.sr_rqst_no
-		JOIN sys ON srr.sys_no = sys.sys_no
-		JOIN sr_task_clsf srtk ON sr.sr_task_no = srtk.sr_task_no
-		JOIN sr_prgrs_stts srp ON srt.sr_prgrs_stts_no = srp.sr_prgrs_stts_no
-		WHERE u1.usr_id = #{usrId} AND srt.sr_prgrs_stts_no = 'RQST'
+		JOIN sr_task_clsf srtc ON sr.sr_task_no = srtc.sr_task_no
+		JOIN sr_prgrs_stts srps ON srtp.sr_prgrs_stts_no = srps.sr_prgrs_stts_no
+		LEFT JOIN sr_trnsf_hr srth ON sr.sr_no = srth.sr_no
+		LEFT JOIN usr dvl ON srth.usr_no = dvl.usr_no
+		WHERE srtp.sr_prgrs_stts_no = 'RQST'
+			AND srr.sr_rqst_stts_no != 'DEP_CMPTN'
 		ORDER BY sr_no
 	</select>
 	
@@ -172,7 +134,7 @@
 	</select>
 	
 	<select id="selectSrTrnsfInfoForDeveloperHomeBySrNo" parameterType="String" resultType="com.finalteam5.otisrm.dto.sr.SrTrnsfInfoForDeveloperHome">
-		SELECT srd.sr_dmnd_nm, srk.sr_task_nm, inst.inst_nm, dept.dept_nm, usr.usr_nm, srt.sr_trgt_bgng_dt, srt.sr_trgt_cmptn_dt, srt.sr_trnsf_note
+		SELECT srd.sr_dmnd_nm, srk.sr_task_nm, inst.inst_nm, dept.dept_nm, usr.usr_nm, srt.sr_trgt_bgng_dt, srt.sr_trgt_cmptn_dt, srt.sr_trnsf_note, srt.total_capacity
 		FROM sr_trnsf_plan srt
 		JOIN sr ON srt.sr_no = sr.sr_no
 		JOIN usr ON srt.usr_no = usr.usr_no
@@ -184,13 +146,19 @@
 	</select>
 	
 	<select id="selectSrPrgrsForDeveloperHomeList" parameterType="String" resultType="com.finalteam5.otisrm.dto.sr.SrPrgrsForDeveloperHome">
-		SELECT srps.sr_prgrs_stts_nm, srp.sr_prgrs_bgng_dt, srp.sr_prgrs_cmptn_dt, srp.sr_prgrs, usr.usr_no, usr.usr_nm, role.role_nm
+		SELECT srps.sr_prgrs_stts_nm, srp.sr_prgrs_bgng_dt, srp.sr_prgrs_cmptn_dt, srp.sr_prgrs
 		FROM sr_prgrs srp
 		JOIN sr_prgrs_stts srps ON srp.sr_prgrs_stts_no = srps.sr_prgrs_stts_no
-		JOIN usr ON srp.usr_no = usr.usr_no
-		JOIN role ON usr.role_no = role.role_no
 		WHERE srp.sr_no = #{srNo}
 		ORDER BY srps.sr_prgrs_stts_seq asc
+	</select>
+	
+	<select id="selectSrTrnsfHrList" parameterType="String" resultType="com.finalteam5.otisrm.dto.sr.SrTrnsfHr">
+		SELECT srth.sr_trnsf_hr_no, srth.sr_no, srth.usr_no, usr.usr_nm, role.role_nm, srth.plan_capacity, srth.performance_capacity
+		FROM sr_trnsf_hr srth
+		JOIN usr ON srth.usr_no = usr.usr_no
+		JOIN role ON usr.role_no = role.role_no
+		WHERE srth.sr_no = #{srNo}
 	</select>
 	
 	<select id="selectSrRequestDetailForDeveloperHome" parameterType="String" resultType="com.finalteam5.otisrm.dto.sr.SrRequestDetailForDeveloperHome">
@@ -233,7 +201,7 @@
 	
 	<!-- SR계획정보 모달 구성 -->
 	<select id="getCurrentSrTrnsfPlanInfo" parameterType="String" resultType="com.finalteam5.otisrm.dto.sr.SrTrnsfPlanModalCompose">
-		SELECT srd.sr_dmnd_nm, srtk.sr_task_nm, dept.dept_nm, usr.usr_nm, srt.sr_trgt_bgng_dt, srt.sr_trgt_cmptn_dt, srt.sr_trnsf_note
+		SELECT srd.sr_dmnd_nm, srtk.sr_task_nm, dept.dept_nm, usr.usr_nm, srt.sr_trgt_bgng_dt, srt.sr_trgt_cmptn_dt, srt.sr_trnsf_note, srt.total_capacity
 		FROM sr_trnsf_plan srt
         JOIN sr ON srt.sr_no = sr.sr_no
 		JOIN sr_dmnd_clsf srd ON srt.sr_dmnd_no = srd.sr_dmnd_no
@@ -261,25 +229,25 @@
 		JOIN dept ON usr2.dept_no = dept.dept_no
 		JOIN role ON usr2.role_no = role.role_no
 		JOIN ibps ON usr2.ibps_no = ibps.ibps_no
-		WHERE usr.usr_id = #{usrId}
+		WHERE usr.usr_no = #{usrNo}
 		<if test='deptNo != null'>AND dept.dept_no = #{deptNo}</if>
 		<if test='usrNm != null'>AND usr2.usr_nm = #{usrNm}</if>
 		ORDER BY role.role_seq desc
 	</select>
 	
 	<select id="selectSrTrnsfFindPicModalCompose" parameterType="map" resultType="com.finalteam5.otisrm.dto.sr.SrTrnsfFindPicModalUsrInfo">
-		SELECT rnum, dept_nm, role_nm, ibps_nm, usr_nm
+		SELECT rnum, dept_nm, role_nm, ibps_nm, usr_nm, usr_no
 		FROM(
-			SELECT rownum as rnum, dept_nm, role_nm, ibps_nm, usr_nm
+			SELECT rownum as rnum, dept_nm, role_nm, ibps_nm, usr_nm, usr_no
 			FROM (
-				SELECT dept.dept_nm, role.role_nm, ibps.ibps_nm, usr2.usr_nm
+				SELECT dept.dept_nm, role.role_nm, ibps.ibps_nm, usr2.usr_nm, usr2.usr_no
 				FROM usr
 				JOIN inst ON usr.inst_no = inst.inst_no
 				JOIN usr usr2 ON inst.inst_no = usr2.inst_no
 				JOIN dept ON usr2.dept_no = dept.dept_no
 				JOIN role ON usr2.role_no = role.role_no
 				JOIN ibps ON usr2.ibps_no = ibps.ibps_no
-				WHERE usr.usr_id = #{usrId}
+				WHERE usr.usr_no = #{usrNo}
 				<if test='deptNo != null'>AND dept.dept_no = #{deptNo}</if>
 				<if test='usrNm != null'>AND usr2.usr_nm = #{usrNm}</if>
 				ORDER BY role.role_seq desc
@@ -290,6 +258,33 @@
 		WHERE rnum >= #{pager.startRowNo}
 		]]>
 	</select>
+	
+	<!-- HR 추가 -->
+	<select id="checkHr" parameterType="map">
+		SELECT COUNT(*)
+		FROM sr_trnsf_hr
+		WHERE sr_no = #{srNo} AND usr_no = #{usrNo}
+	</select>
+	<insert id="insertHr" parameterType="map">
+		INSERT INTO sr_trnsf_hr (sr_trnsf_hr_no, sr_no, usr_no)
+		VALUES(#{srNo}||#{usrNo}, #{srNo}, #{usrNo})
+	</insert>
+	
+	<!-- 공수 저장 -->
+	<update id="updateSrTrnsfHr" parameterType="com.finalteam5.otisrm.dto.sr.SrTrnsfHr">
+		UPDATE sr_trnsf_hr
+		SET plan_capacity = #{planCapacity},
+			performance_capacity = #{performanceCapacity},
+			last_reg_dt = #{lastRegDt, jdbcType=DATE},
+			last_reg_capacity = #{lastRegCapacity, jdbcType=DECIMAL}
+		WHERE sr_no = #{srNo} and usr_no = #{usrNo}
+	</update>
+	
+	<!-- 자원 삭제 -->
+	<delete id="deleteSrTrnsfHr" parameterType="com.finalteam5.otisrm.dto.sr.SrTrnsfHr">
+		DELETE FROM sr_trnsf_hr
+		WHERE sr_no = #{srNo} and usr_no = #{usrNo}
+	</delete>
 	
 	<!-- sr이관 계획 수정 -->
 	<select id="selectDeptNoByDeptNmAndSrNo" parameterType="map" resultType="String">
@@ -311,7 +306,9 @@
 			usr_no = #{usrNo},
 			sr_trgt_bgng_dt = #{srTrgtBgngDt},
 			sr_trgt_cmptn_dt = #{srTrgtCmptnDt},
-			sr_trnsf_note = #{srTrnsfNote, jdbcType=VARCHAR}
+			sr_trnsf_note = #{srTrnsfNote, jdbcType=VARCHAR},
+			total_capacity = #{totalCapacity},
+			total_business_dt = #{totalBusinessDt}
 		WHERE sr_no = #{srNo}
 	</update>
 	
@@ -507,6 +504,23 @@
 	<delete id="deleteSrPrgrsOtpt" parameterType="String">
 		DELETE FROM sr_prgrs_otpt WHERE sr_prgrs_otpt_no = #{srPrgrsOtptNo}
 	</delete>
+	
+	<!-- SR공수 등록 -->
+	<select id="selectSrTrnsfHrListByUsrNo" parameterType="String" resultType="com.finalteam5.otisrm.dto.sr.SrTrnsfHr">
+		SELECT srth.sr_no, srth.usr_no, srtp.sr_trgt_bgng_dt, srtp.sr_trgt_cmptn_dt, srth.plan_capacity, srth.performance_capacity,
+				srth.last_reg_dt, srth.last_reg_capacity
+		FROM sr_trnsf_hr srth
+		JOIN sr_trnsf_plan srtp ON srth.sr_no = srtp.sr_no
+		WHERE srth.usr_no = #{usrNo}
+	</select>
+	
+	<!-- 금일 SR공수 등록 -->
+	<select id="getSrTrnsfHrBySrNoAndUsrNo" parameterType="map" resultType="com.finalteam5.otisrm.dto.sr.SrTrnsfHr">
+		SELECT sr_trnsf_hr_no, sr_no, usr_no, plan_capacity, performance_capacity, last_reg_dt, last_reg_capacity
+		FROM sr_trnsf_hr
+		WHERE sr_no = #{srNo} and usr_no = #{usrNo}
+	</select>
+	
 	
 	<!-- SR진척관리 옵션 select구성 -->
 	<!-- Sys List -->

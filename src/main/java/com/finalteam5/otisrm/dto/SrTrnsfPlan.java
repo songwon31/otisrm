@@ -15,4 +15,6 @@ public class SrTrnsfPlan {
 	private String instNo;
 	private String srTrnsfNote;
 	private String srPrgrsSttsNo;
+	private Integer totalCapacity;
+	private Integer totalBusinessDt;
 }

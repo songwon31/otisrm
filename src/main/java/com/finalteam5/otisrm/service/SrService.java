@@ -12,6 +12,7 @@ import com.finalteam5.otisrm.dto.sr.SrRequestDetailForDeveloperHome;
 import com.finalteam5.otisrm.dto.sr.SrTableConfigForProgressManagement;
 import com.finalteam5.otisrm.dto.sr.SrTableElementsForDeveloperHome;
 import com.finalteam5.otisrm.dto.sr.SrTrnsfFindPicModalCompose;
+import com.finalteam5.otisrm.dto.sr.SrTrnsfHr;
 import com.finalteam5.otisrm.dto.sr.SrTrnsfInfoForDeveloperHome;
 import com.finalteam5.otisrm.dto.sr.SrTrnsfPlanModalCompose;
 import com.finalteam5.otisrm.dto.sr.SrTrnsfPrgrsPic;
@@ -29,7 +30,9 @@ public interface SrService {
 	
 	public SrTrnsfInfoForDeveloperHome getSrTrnsfInfoForDeveloperHome(String srNo);
 	public SrRequestDetailForDeveloperHome getSrRequestDetailForDeveloperHome(String srNo);
-	public SrTableElementsForDeveloperHome getSrTableElementsForDeveloperHome(String usrId, String srPrgrsSttsNo, int page);
+	
+	//개발자 홈 메인 테이블 구성
+	public SrTableElementsForDeveloperHome getSrTableElementsForDeveloperHome(String usrNo, String srPrgrsSttsNo, int page);
 	
 	//SR계획정보 모달 구성
 	public SrTrnsfPlanModalCompose getSrTrnsfPlanModalComposeBySrNoAndUsrId(String usrId, String srNo);
@@ -37,7 +40,11 @@ public interface SrService {
 	//담당자 선택 모달
 	public List<Dept> getDeptListByUsrId(String usrId);
 	//담당자 선택 모달 테이블 구성
-	public SrTrnsfFindPicModalCompose getSrTrnsfFindPicModalCompose(String usrId, String deptNo, String usrNm, int pageNo);
+	public SrTrnsfFindPicModalCompose getSrTrnsfFindPicModalCompose(String usrNo, String deptNo, String usrNm, int pageNo);
+	//공수 저장
+	public int saveHrInfo(String jsonData);
+	//HR 삭제
+	public int deleteHrInfo(String jsonData);
 	
 	//sr이관 계획 정보 수정
 	public int editSrTrnsfPlan(SrTrnsfPlanForm srTrnsfPlanForm);
@@ -50,6 +57,8 @@ public interface SrService {
 	
 	//HR PIC 업데이트
 	public int updateSrPrgrs(SrTrnsfPrgrsPic srTrnsfPrgrsPic);
+	
+	public int addHr(String srNo, String usrNo);
 	
 	//SR 이관 진행률 업데이트
 	public int updateSrTrnsfPrgrs(SrPrgrsForm srPrgrsForm);
@@ -75,4 +84,10 @@ public interface SrService {
 	
 	//mainTable 구성
 	public SrTableConfigForProgressManagement getProgressManagementMainTableConfig(String usrNo, String jsonData);
+	
+	//SR진척등록
+	public List<SrTrnsfHr> getSrTrnsfHrListByUsrNo(String usrNo);
+	
+	//SR금일 진척 등록
+	public int registerHrInfo(String jsonData);
 }

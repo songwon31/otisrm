@@ -6,33 +6,10 @@ var currentDetailSrNo;
 var currentBottomTabFilter;
 
 function init() {
-	//테이블 행 선택 시 하단 작업창에 데이터 세팅
-	$('#mainTable tr').click(function() {
-		//행 element 탐색
-		let row = $(this).closest('tr');
-		
-		//해당 행의 데이터를 추출
-		let srNo = row.find('td:eq(0)').text();
-
-	    setSrDetail(srNo);
-		
-	});
-	
-	$("#modal_sr_conts_btn").on("click", function() {
-        if ($(this).is(":checked")) {
-        	modal_sr_conts_btn_checked();
-        }
-    });
-	
-	$("#modal_sr_dvl_conts_btn").on("click", function() {
-        if ($(this).is(":checked")) {
-        	modal_sr_dvl_conts_btn_checked();
-        }
-    });
+	refactorMainTable('TOTAL', 1);
 }
 
 $(document).ready(function() {
-	refactorMainTable('TOTAL', 1);
 	/*
 	//메인 테이블 재구성
 	if (sessionStorage.getItem('developerHomeMainTableFilter') !== null) {
@@ -210,6 +187,21 @@ function refactorMainTable(filterType, page) {
 				$('#mainTable tbody').append(srTrHtml);
 			}
 			
+			//테이블 행 선택 시 하단 작업창에 데이터 세팅
+			$('#mainTable tr').click(function() {
+				//행 element 탐색
+				let row = $(this).closest('tr');
+				
+				console.log(row);
+				//해당 행의 데이터를 추출
+				let srNo = row.find('td:eq(0)').text();
+
+			    setSrDetail(srNo);
+				
+			});
+			
+			
+			
 			
 			//페이징 파트 구성
 			let pagerHtml = '';
@@ -260,7 +252,7 @@ function refactorMainTable(filterType, page) {
 			sessionStorage.setItem('developerHomeMainTableFilter', mainTableFilter);
 			sessionStorage.setItem('developerHomeCurrentPageNo', currentPageNo);
 			
-			init();
+			
 		}
 	});
 	
@@ -320,6 +312,18 @@ function showRequestDetail(srNo) {
 			$('#modal_sr_trnsf_dt').html(formatDateTime(trnsfDt));
 			$('#modal_sr_conts').html(data.srConts);
 			$('#modal_sr_dvl_conts').html(data.srDvlConts);
+			
+			$("#modal_sr_conts_btn").on("click", function() {
+		        if ($(this).is(":checked")) {
+		        	modal_sr_conts_btn_checked();
+		        }
+		    });
+			
+			$("#modal_sr_dvl_conts_btn").on("click", function() {
+		        if ($(this).is(":checked")) {
+		        	modal_sr_dvl_conts_btn_checked();
+		        }
+		    });
         },
 		error: function (error) {
 			console.error("오류 발생:", error);
@@ -356,28 +360,33 @@ function setSrDetail(srNo) {
 				let cmptnDt = new Date(data.srTrgtCmptnDt);
 				$('#srPlanInfoCmptnDt').html(formatDate(cmptnDt));
 			}
+			$('#srPlanInfoTotalCapacity').html(data.totalCapacity);
 			$('#srPlanInfoNote').html(data.srTrnsfNote);
 			
 			//SR자원정보 구성
 			$('#srHrInfo tbody').html('');	//html 초기화
-			if (data.srPrgrsHrList != null) {
-				for (let i=0; i<data.srPrgrsHrList.length; ++i) {
-					let srPrgrsPic = data.srPrgrsHrList[i];
-					let srPrgrsPicInfoHtml = '';
-					srPrgrsPicInfoHtml += '<tr style="height:4rem; font-size:1.6rem; background-color:white;">';
-					srPrgrsPicInfoHtml += '<td>ㅁ</td>';
-					srPrgrsPicInfoHtml += '<td>' + srPrgrsPic.usrNm + '</td>';
-					srPrgrsPicInfoHtml += '<td>' + srPrgrsPic.roleNm + '</td>';
-					srPrgrsPicInfoHtml += '<td>';
-					for (let j=0; j<srPrgrsPic.sttsList.length; ++j) {
-						srPrgrsPicInfoHtml += srPrgrsPic.sttsList[j];
-						if (j < srPrgrsPic.sttsList.length-1) {
-							srPrgrsPicInfoHtml += ' ';
-						}
+			if (data.srTrnsfHrList != null) {
+				for (let i=0; i<data.srTrnsfHrList.length; ++i) {
+					let srTrnsfHr = data.srTrnsfHrList[i];
+					let srTrnsfHrHtml = '';
+					srTrnsfHrHtml += '<tr style="height:4rem; font-size:1.6rem; background-color:white;">';
+					srTrnsfHrHtml += '<td><input type="checkbox" class="checkbox"></td>';
+					srTrnsfHrHtml += '<td class="srNo" style="display:none">' + srTrnsfHr.srNo + '</td>';
+					srTrnsfHrHtml += '<td class="usrNo" style="display:none">' + srTrnsfHr.usrNo + '</td>';
+					srTrnsfHrHtml += '<td>' + srTrnsfHr.usrNm + '</td>';
+					srTrnsfHrHtml += '<td>' + srTrnsfHr.roleNm + '</td>';
+					if (srTrnsfHr.planCapacity != '' && srTrnsfHr.planCapacity != null) {
+						srTrnsfHrHtml += '<td><input type="text" value="' + srTrnsfHr.planCapacity + '" style="width:50%; text-align: center;"></div></td>';
+					} else {
+						srTrnsfHrHtml += '<td><input type="text" value="" style="width:50%; text-align: center;"></div></td>';
 					}
-					srPrgrsPicInfoHtml += '</td>';
-					srPrgrsPicInfoHtml += '</tr>';
-					$('#srHrInfo tbody').append(srPrgrsPicInfoHtml);
+					if (srTrnsfHr.performanceCapacity != '' && srTrnsfHr.performanceCapacity != null) {
+						srTrnsfHrHtml += '<td><input type="text" value="' + srTrnsfHr.performanceCapacity + '" style="width:50%; text-align: center;"></div></td>';
+					} else {
+						srTrnsfHrHtml += '<td><input type="text" value="" style="width:50%; text-align: center;"></div></td>';
+					}
+					srTrnsfHrHtml += '</tr>';
+					$('#srHrInfo tbody').append(srTrnsfHrHtml);
 				}
 			}
 			
@@ -522,6 +531,7 @@ function showSrPlanInfoEditModal() {
 			$('#srPlanModalTaskInput').val(data.srTaskNm);
 			$('#srPlanModalDeptInput').val(data.deptNm);
 			$('#srPlanModalPicInput').val(data.usrNm);
+			$('#srPlanModalTotalCapacity').val(data.totalCapacity)
 			if (data.srTrgtBgngDt == null) {
 				$('#srPlanModalTrgtBgngDt').val('');
 			} else {
@@ -657,6 +667,8 @@ function editSrTrnsfPlan() {
 	let srTrgtBgngDt = $('#srPlanModalTrgtBgngDt').val();
 	let srTrgtCmptnDt = $('#srPlanModalTrgtCmptnDt').val();
 	let srTrnsfNote = $('#srPlanModalTrnsfNote').val();
+	let srDmndNo = $('#srPlanModalDmndInput').val();
+	console.log(srDmndNo);
 	
 	let requestData = {
 		srNo: srNo,
@@ -664,7 +676,8 @@ function editSrTrnsfPlan() {
         usrNm: usrNm,
         srTrgtBgngDt: srTrgtBgngDt,
         srTrgtCmptnDt: srTrgtCmptnDt,
-        srTrnsfNote: srTrnsfNote
+        srTrnsfNote: srTrnsfNote,
+        srDmndNo: srDmndNo
     };
 	
 	$.ajax({
@@ -705,16 +718,17 @@ function showSetHrModal() {
 
 
 //HR담당자 검색 모달 구성
-function composeSetHrFindPicModal(e) {
-	let deptNm = $('#setHrModalDeptInput').val();
+function composeSetHrFindPicModal() {
+	let deptNm = $('#srPlanInfoDept').html();
+	console.log(deptNm);
 	$('#setHrFindPicModalDeptInput').val(deptNm);
-	
+	/*
 	let td = $(e).closest('td');
 	let inputId = td.find('input').attr('id');
 	
 	$('#setHrFindPicModalCallerInputId').html(inputId);
 	console.log(inputId);
-	
+	*/
 	composeSetHrFindPicModalTable(1);
 }
 
@@ -757,7 +771,7 @@ function composeSetHrFindPicModalTable(pageNo) {
 						findPicTableHtml += '<td>' + usr.roleNm + '</td>';
 						findPicTableHtml += '<td>' + usr.ibpsNm + '</td>';
 						findPicTableHtml += '<td>' + usr.usrNm + '</td>';
-						findPicTableHtml += '<td> <button class="btn-2 detail-button" data-dismiss="modal" onclick="setHrModalPic(\'' + usr.usrNm + '\')">선택</button> </td>';
+						findPicTableHtml += '<td> <button class="btn-2 detail-button" data-dismiss="modal" onclick="addHr(\'' + usr.usrNo + '\')">선택</button> </td>';
 						//jsp에 삽입
 						$('#setHrFindPicModalTable tbody').append(findPicTableHtml);
 					}
@@ -816,9 +830,101 @@ function composeSetHrFindPicModalTable(pageNo) {
 	});	
 }
 
-function setHrModalPic(usrNm) {
-	let inputId = '#' + $('#setHrFindPicModalCallerInputId').html();
-	$(inputId).val(usrNm);
+function addHr(usrNo) {
+	console.log(usrNo);
+	$.ajax({
+		type: "POST",
+		url: "/otisrm/addHr",
+		data: {srNo: currentDetailSrNo,
+			   usrNo: usrNo},
+		success: function(data) {
+			setSrDetail(currentDetailSrNo);
+		}
+	});
+}
+
+function saveHrInfo() {
+	let dataRows = []; // 데이터를 저장할 배열
+
+    // 테이블 내의 각 행 순회
+    $("#srHrInfo tr").each(function (idx) {
+    	if (idx != 0) {
+    	
+	        let rowData = {};
+	
+	        // 현재 행 내의 각 <td> 요소 순회
+	        $(this).find("td").each(function (index) {
+	        	if (index != 0) {
+	        		let key;
+		        	if (index == 1) {
+		        		key = 'srNo';
+		        	} else if (index == 2) {
+		        		key = 'usrNo';
+		        	} else if (index == 3) {
+		        		key = 'usrNm';
+		        	} else if (index == 4) {
+		        		key = 'roleNm';
+		        	} else if (index == 5) {
+		        		key = 'planCapacity';
+		        	} else if (index == 6) {
+		        		key = 'performanceCapacity';
+		        	}
+		        	let value;
+		        	if (index == 1 || index == 2 || index == 3 || index == 4) {
+		        		value = $(this).html();
+		        	} else {
+		        		value = $(this).find('input').val();
+		        	}
+		            rowData[key] = value;
+	        	}
+	        	
+	        });
+	
+	        // rowData를 dataRows 배열에 추가
+	        dataRows.push(rowData);
+    	}
+    });
+    console.log(dataRows);
+
+    let jsonData = JSON.stringify(dataRows);
+
+    // AJAX 요청
+    $.ajax({
+        url: "/otisrm/saveHrInfo",
+        method: "POST",
+        data: jsonData,
+        contentType: "application/json; charset=utf-8",
+        success: function (response) {
+        	setSrDetail(currentDetailSrNo);
+        }
+    });
+}
+
+function deleteHrInfo() {
+	let dataList = [];
+	// 테이블 내의 체크박스를 확인
+	$('#srHrInfo td').each(function () {
+	    if ($(this).find('.checkbox').is(':checked')) {
+	    	let rowData = {};
+	        // 체크된 행의 데이터를 객체로 저장
+	    	rowData['srNo'] = $(this).closest('tr').find('.srNo').html();
+	    	rowData['usrNo'] = $(this).closest('tr').find('.usrNo').html();
+	    	dataList.push(rowData);
+	    }
+	});
+	
+	let jsonData = JSON.stringify(dataList);
+
+    // AJAX 요청
+    $.ajax({
+        url: "/otisrm/deleteHrInfo",
+        method: "POST",
+        data: jsonData,
+        contentType: "application/json; charset=utf-8",
+        success: function (response) {
+        	setSrDetail(currentDetailSrNo);
+        }
+    });
 }
 
 function updateSrPrgrs() {
@@ -1017,6 +1123,75 @@ function deleteOutput() {
         success: function (data) {
         	console.log(stts);
         	composeManageSrOutputModal(stts);
+        }
+    });
+}
+
+function srPerformanceRegistrationModalConfig() {
+	 $.ajax({
+        url: '/otisrm/getUsrCapacity',
+        type: 'POST',
+        success: function (data) {
+        	$('#srPerformanceRegistrationModalTable tbody').html('');
+        	if (data != null) {
+        		for (let i=0; i<data.length; ++i) {
+        			let hrData = data[i];
+        			let html = '';
+        			html += '<tr style="height: 4.5rem; font-size: 1.5rem; background-color:white;">';
+        			html += '<td style="display:none">' + hrData.usrNo + '</td>';
+        			html += '<td>' + hrData.srNo + '</td>';
+        			html += '<td>' + hrData.srTrgtBgngDt + '</td>';
+        			html += '<td>' + hrData.srTrgtCmptnDt + '</td>';
+        			html += '<td>' + hrData.planCapacity + '</td>';
+        			html += '<td>' + hrData.performanceCapacity + '</td>';
+        			html += '<td><input type="text" value="' + hrData.lastRegCapacity + '" style="width:50%; text-align: center;"></div></td>';
+        			html += '</tr>';
+        				
+    				$('#srPerformanceRegistrationModalTable tbody').append(html);
+        		}
+        	}
+        	
+        }
+    });
+}
+
+function registerCapacity() {
+	let dataRows = []; // 데이터를 저장할 배열
+
+    // 테이블 내의 각 행 순회
+    $("#srPerformanceRegistrationModalTable tr").each(function (idx) {
+    	if (idx != 0) {
+    	
+	        let rowData = {};
+	
+	        // 현재 행 내의 각 <td> 요소 순회
+	        $(this).find("td").each(function (index) {
+	        	if (index == 0) {
+	        		rowData['usrNo'] = $(this).html();
+	        	} else if (index == 1) {
+	        		rowData['srNo'] = $(this).html();
+	        	} else if (index == 6) {
+	        		rowData['lastRegCapacity'] = $(this).find('input').val();
+	        	}
+	        });
+	        dataRows.push(rowData);
+    	}
+    });
+    console.log(dataRows);
+
+    let jsonData = JSON.stringify(dataRows);
+
+    // AJAX 요청
+    $.ajax({
+        url: "/otisrm/registerHrInfo",
+        method: "POST",
+        data: jsonData,
+        contentType: "application/json; charset=utf-8",
+        success: function (response) {
+        	srPerformanceRegistrationModalConfig();
+        	if (currentDetailSrNo != null) {
+        		setSrDetail(currentDetailSrNo);
+        	}
         }
     });
 }

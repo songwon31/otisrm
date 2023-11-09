@@ -16,4 +16,5 @@ public class SrTrnsfFindPicModalUsrInfo {
 	private String roleNm;
 	private String ibpsNm;
 	private String usrNm;
+	private String usrNo;
 }

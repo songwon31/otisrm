@@ -10,7 +10,4 @@ public class SrPrgrsForDeveloperHome {
 	private Date srPrgrsBgngDt;		//진척 시작일
 	private Date srPrgrsCmptnDt;	//진척 완료일
 	private int srPrgrs;			//진척률(%)
-	private String usrNo;
-	private String usrNm;
-	private String roleNm;
 }

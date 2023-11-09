@@ -86,7 +86,12 @@
 					<span>반영요청(</span>
 					<span id="applyNum"></span> 
 					<span>)</span>
-				</a> 
+				</a>
+				<div style="flex-grow:1;"></div>
+				<button type="button" data-toggle="modal" data-target="#srPerformanceRegistrationModal" onclick="srPerformanceRegistrationModalConfig()"
+						class="btn-2" style="display:flex; align-items:center; justify-content:center;">
+					실적 등록
+				</button>
 				<!-- 
 				<a href="javascript:void(0)" onclick="selectMainTableFilter(this)"
 					class="mainTableSelectElement filterTab" style="width: 12%;"> 
@@ -101,7 +106,7 @@
 					<span>)</span>
 				</a>
 				 -->
-				<div style="flex-grow: 1; border-bottom: 1.5px solid #edf2f8;"></div>
+				<!-- <div style="flex-grow: 1; border-bottom: 1.5px solid #edf2f8;"></div> -->
 			</div>
 			<div style="height:27rem; background-color:#f9fafe;">
 				<table id="mainTable" style="width: 100%; text-align: center;">
@@ -172,8 +177,12 @@
 				<div id="srProgressBtnDiv" style="display:flex; line-height:3rem; justify-content:flex-end; align-items:center; width:40%; border-bottom: 1.5px solid #edf2f8;">
 					<a class="srProgressBtn srPlanBtn" data-toggle="modal" data-target="#srPlanInfoEditModal" onclick="showSrPlanInfoEditModal()" href="javascript:void(0)" 
 						style="pointer-events: none; height: 2.5rem; width: 5rem; border: 1px solid gray; border-radius: 5px; display: flex; flex-direction: row; justify-content: center; align-items: center;">수정</a> 
-					<a class="srProgressBtn srHrBtn" data-toggle="modal" data-target="#setHrModal" onclick="showSetHrModal()" href="javascript:void(0)" 
-						style="pointer-events: none; height: 2.5rem; width: 5rem; border: 1px solid gray; border-radius: 5px; display: none; flex-direction: row; justify-content: center; align-items: center;">수정</a> 
+					<a class="srProgressBtn srHrBtn" data-toggle="modal" data-target="#setHrFindPicModal" onclick="composeSetHrFindPicModal()" href="javascript:void(0)" 
+						style="pointer-events: none; height: 2.5rem; width: 5rem; border: 1px solid gray; border-radius: 5px; display: none; flex-direction: row; justify-content: center; align-items: center;">추가</a>
+					<a class="srProgressBtn srHrBtn" onclick="deleteHrInfo()" href="javascript:void(0)" 
+						style="pointer-events: none; height: 2.5rem; width: 5rem; border: 1px solid gray; border-radius: 5px; display: none; flex-direction: row; justify-content: center; align-items: center;">삭제</a>
+					<a class="srProgressBtn srHrBtn" onclick="saveHrInfo()" href="javascript:void(0)" 
+						style="pointer-events: none; height: 2.5rem; width: 5rem; border: 1px solid gray; border-radius: 5px; display: none; flex-direction: row; justify-content: center; align-items: center;">저장</a>  
 					<a class="srProgressBtn srPrgrsBtn" href="javascript:void(0)" onclick="updatePrgrs()"
 						style="pointer-events: none; height: 2.5rem; width: 5rem; border: 1px solid gray; border-radius: 5px; display: none; flex-direction: row; justify-content: center; align-items: center;">저장</a> 
 				</div>
@@ -210,11 +219,17 @@
 					
 					</div>
 				</div>
-				<div style="height: 19rem; display: flex; flex-direction: row;">
-					<div style="height: 19rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #f9fafe; border-radius: 0px 0px 0px 10px; font-weight:700;">참고사항</div>
-					<div style="height: 19rem; width: 85%; padding-left: 0.5rem; display: flex; flex-direction: column;">
-						<div style="height: 19rem; display: flex; flex-direction: row; align-items: center;">
-							<div id="srPlanInfoNote" style="height: 18rem; width: 100%; padding: 0.3rem; overflow-y: auto; white-space: pre-line;">
+				<div style="height: 4rem; display: flex; flex-direction: row;">
+					<div style="height: 4rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #f9fafe; font-weight:700;">총 계획공수(M/D)</div>
+					<div id="srPlanInfoTotalCapacity" style="height: 4rem; width: 85%; padding-left: 0.5rem; display: flex; align-items: center;">
+						
+					</div>
+				</div>
+				<div style="height: 15rem; display: flex; flex-direction: row;">
+					<div style="height: 15rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #f9fafe; border-radius: 0px 0px 0px 10px; font-weight:700;">참고사항</div>
+					<div style="height: 15rem; width: 85%; padding-left: 0.5rem; display: flex; flex-direction: column;">
+						<div style="height: 15rem; display: flex; flex-direction: row; align-items: center;">
+							<div id="srPlanInfoNote" style="height: 15rem; width: 100%; padding: 0.5rem; overflow-y: auto; white-space: pre-line;">
 
 							</div>
 						</div>
@@ -226,17 +241,19 @@
 				<div style="height: 31rem; background-color: #f9fafe; border-radius: 10px;">
 					<table style="width: 100%; text-align: center;">
 						<colgroup>
-							<col width="5%" >
-							<col width="15%"/>
-							<col width="15%"/>
-							<col width="65%"/>
+							<col width="4%"/>
+							<col width="24%"/>
+							<col width="24%"/>
+							<col width="24%"/>
+							<col width="24%"/>
 						</colgroup>
 						<thead style="background-color: #f9fafe;">
 							<tr style="height: 4rem; font-size: 1.6rem; font-weight: 700;">
-								<th scope="col">ㅁ</th>
+								<th scope="col"></th>
 								<th scope="col">담당자명</th>
 								<th scope="col">역할</th>
-								<th scope="col">담당 작업</th>
+								<th scope="col">계획공수(M/D)</th>
+								<th scope="col">실적공수(M/D)</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -441,8 +458,14 @@
 							<input id="srPlanModalTrgtCmptnDt" type="date" style="width:80%; height:3rem; margin:0rem 0.5rem;">
 						</div>
 					</div>
-					<div style="height: 15rem; display: flex; flex-direction: row;">
-						<div style="height: 15rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #f9fafe; border-radius: 0px 0px 0px 10px;">검토내용</div>
+					<div style="height: 4rem; display: flex; flex-direction: row;">
+						<div style="height: 4rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #f9fafe;">총 계획공수(M/D)</div>
+						<div style="height: 4rem; width: 35%; display: flex; align-items: center;">
+							<input id="srPlanModalTotalCapacity" type="text" disabled style="width:80%; height:3rem; margin:0rem 0.5rem;">
+						</div>
+					</div>
+					<div style="height: 11rem; display: flex; flex-direction: row;">
+						<div style="height: 11rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #f9fafe; border-radius: 0px 0px 0px 10px;">검토내용</div>
 							<textarea id="srPlanModalTrnsfNote" style="width:85%; resize:none; margin:0.5rem;">
 							</textarea>
 						</div>
@@ -809,6 +832,48 @@
 							display: flex; flex-direction: row; justify-content: center; align-items: center; cursor: pointer;">닫기</a>
 					</div>
 				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- SR실적 관리 모달 -->
+<div id="srPerformanceRegistrationModal" class="modal" data-backdrop="static">
+	<div class="modal-dialog modal-dialog-centered modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<div class="modal-title" style="font-size:2rem; font-weight:700;">SR실적등록</div>
+				<i class="material-icons close-icon" data-dismiss="modal" style="cursor: pointer;">close</i>
+			</div>
+			<div class="modal-body" style="margin:0px; padding:2rem; font-size:1.5rem;">
+				<div style="display:flex; align-items:center;">
+					<span>*투입실적은 1일(8시간) 합계 1.0으로 입력 바랍니다. (단, 연장 근무시 2.0 이내 초과 입력 가능)</span>
+					<span style="flex-grow:1;"></span>
+					<button class="btn-2" onclick="registerCapacity()" style="display:flex; align-items:center; justify-content:center;">저장</button>
+				</div>
+				<table id="srPerformanceRegistrationModalTable" style="width: 100%; text-align: center; border-radius:5px;">
+					<colgroup>
+						<col width="25%"/>
+						<col width="15%"/>
+						<col width="15%"/>
+						<col width="15%"/>
+						<col width="15"/>
+						<col width="15%"/>
+					</colgroup>
+					<thead>
+						<tr style="height: 4.3rem; font-size: 1.5rem; font-weight: 700;">
+							<th scope="col">SR번호</th>
+							<th scope="col">목표시작일</th>
+							<th scope="col">목표종료일</th>
+							<th scope="col">계획공수</th>
+							<th scope="col">실적공수</th>
+							<th scope="col">금일 실적 입력</th>
+						</tr>
+					</thead>
+					<tbody>
+						
+					</tbody>
+				</table>
 			</div>
 		</div>
 	</div>

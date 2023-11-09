@@ -1,15 +1,34 @@
 package com.finalteam5.otisrm.service;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.StringReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.finalteam5.otisrm.dao.SrDao;
@@ -24,12 +43,12 @@ import com.finalteam5.otisrm.dto.sr.SrForDeveloperHomeBoard;
 import com.finalteam5.otisrm.dto.sr.SrForProgressManagementBoard;
 import com.finalteam5.otisrm.dto.sr.SrPrgrsForDeveloperHome;
 import com.finalteam5.otisrm.dto.sr.SrPrgrsForm;
-import com.finalteam5.otisrm.dto.sr.SrPrgrsPicForDeveloperHome;
 import com.finalteam5.otisrm.dto.sr.SrRequestDetailForDeveloperHome;
 import com.finalteam5.otisrm.dto.sr.SrTableConfigForProgressManagement;
 import com.finalteam5.otisrm.dto.sr.SrTableElementsForDeveloperHome;
 import com.finalteam5.otisrm.dto.sr.SrTrnsfFindPicModalCompose;
 import com.finalteam5.otisrm.dto.sr.SrTrnsfFindPicModalUsrInfo;
+import com.finalteam5.otisrm.dto.sr.SrTrnsfHr;
 import com.finalteam5.otisrm.dto.sr.SrTrnsfInfoForDeveloperHome;
 import com.finalteam5.otisrm.dto.sr.SrTrnsfPlanModalCompose;
 import com.finalteam5.otisrm.dto.sr.SrTrnsfPrgrsPic;
@@ -70,30 +89,8 @@ public class SrServiceImpl implements SrService{
 			SrTrnsfInfoForDeveloperHome srTrnsfInfoForDeveloperHome = srDao.selectSrTrnsfInfoForDeveloperHomeBySrNo(srNo);
 			List<SrPrgrsForDeveloperHome> srPrgrsList = srDao.selectSrPrgrsForDeveloperHomeList(srNo);
 			srTrnsfInfoForDeveloperHome.setSrPrgrsList(srPrgrsList);
-			List<SrPrgrsPicForDeveloperHome> srPrgrsHrList = new ArrayList<SrPrgrsPicForDeveloperHome>();
-			for (SrPrgrsForDeveloperHome srPrgrsForDeveloperHome : srPrgrsList) {
-				String currentUsrNo = srPrgrsForDeveloperHome.getUsrNo();
-				boolean isUsrExist = false;
-				for (SrPrgrsPicForDeveloperHome srPrgrsPicForDeveloperHome : srPrgrsHrList) {
-					//이미 등록된 사용자일 경우 담당 작업 추가
-					if (currentUsrNo.equals(srPrgrsPicForDeveloperHome.getUsrNo())) {
-						srPrgrsPicForDeveloperHome.getSttsList().add(srPrgrsForDeveloperHome.getSrPrgrsSttsNm());
-						isUsrExist = true;
-					}
-				}
-				//처음 등록되는 사용자일 경우 SrPrgrsPicForDeveloperHome 객체 생성하여 추가
-				if (isUsrExist == false) {
-					SrPrgrsPicForDeveloperHome srPrgrsPicForDeveloperHome = new SrPrgrsPicForDeveloperHome();
-					srPrgrsPicForDeveloperHome.setUsrNo(srPrgrsForDeveloperHome.getUsrNo());
-					srPrgrsPicForDeveloperHome.setUsrNm(srPrgrsForDeveloperHome.getUsrNm());
-					srPrgrsPicForDeveloperHome.setRoleNm(srPrgrsForDeveloperHome.getRoleNm());
-					List<String> sttsList = new ArrayList<String>();
-					sttsList.add(srPrgrsForDeveloperHome.getSrPrgrsSttsNm());
-					srPrgrsPicForDeveloperHome.setSttsList(sttsList);
-					srPrgrsHrList.add(srPrgrsPicForDeveloperHome);
-				}
-			}
-			srTrnsfInfoForDeveloperHome.setSrPrgrsHrList(srPrgrsHrList);
+			List<SrTrnsfHr> srTrnsfHrList = srDao.selectSrTrnsfHrList(srNo);
+			srTrnsfInfoForDeveloperHome.setSrTrnsfHrList(srTrnsfHrList);
 			
 			return srTrnsfInfoForDeveloperHome;
 		}
@@ -105,7 +102,7 @@ public class SrServiceImpl implements SrService{
 	}
 	
 	@Override
-	public SrTableElementsForDeveloperHome getSrTableElementsForDeveloperHome(String usrId, String srPrgrsSttsNo, int page) {
+	public SrTableElementsForDeveloperHome getSrTableElementsForDeveloperHome(String usrNo, String srPrgrsSttsNo, int page) {
 		SrTableElementsForDeveloperHome srTableElementsForDeveloperHome = new SrTableElementsForDeveloperHome();
 		srTableElementsForDeveloperHome.setTableFilter(srPrgrsSttsNo);
 		
@@ -113,13 +110,13 @@ public class SrServiceImpl implements SrService{
 			srPrgrsSttsNo = null;
 		}
 		
-		List<SrForDeveloperHomeBoard> totalFilteredSrList = srDao.selectSrListForDeveloperHomeBoardByUsrIdAndStts(usrId, srPrgrsSttsNo);
+		List<SrForDeveloperHomeBoard> totalFilteredSrList = srDao.selectSrListForDeveloperHomeBoardByUsrIdAndStts(usrNo, srPrgrsSttsNo);
 		Pager pager = new Pager(5, 5, totalFilteredSrList.size(), page);
 		srTableElementsForDeveloperHome.setPager(pager);
-		List<SrForDeveloperHomeBoard> srList = srDao.selectSrListForDeveloperHomeBoardByUsrIdAndSttsAndPager(usrId, srPrgrsSttsNo, pager);
+		List<SrForDeveloperHomeBoard> srList = srDao.selectSrListForDeveloperHomeBoardByUsrIdAndSttsAndPager(usrNo, srPrgrsSttsNo, pager);
 		srTableElementsForDeveloperHome.setSrList(srList);
 		
-		List<SrForDeveloperHomeBoard> totalSrList = srDao.selectSrForDeveloperHomeBoardListByUsrId(usrId);
+		List<SrForDeveloperHomeBoard> totalSrList = srDao.selectSrForDeveloperHomeBoardListByUsrId(usrNo);
 		
 		int totalNum = totalSrList.size();
 		int requestNum = 0;
@@ -181,16 +178,17 @@ public class SrServiceImpl implements SrService{
 	
 	//담당자 선택 모달 구성
 	@Override
-	public SrTrnsfFindPicModalCompose getSrTrnsfFindPicModalCompose(String usrId, String deptNo, String usrNm, int pageNo) {
+	public SrTrnsfFindPicModalCompose getSrTrnsfFindPicModalCompose(String usrNo, String deptNo, String usrNm, int pageNo) {
 		SrTrnsfFindPicModalCompose srTrnsfFindPicModalCompose = new SrTrnsfFindPicModalCompose();
-		int totalUsrNum = srDao.countSrTrnsfFindPicModalCompose(usrId, deptNo, usrNm);
+		int totalUsrNum = srDao.countSrTrnsfFindPicModalCompose(usrNo, deptNo, usrNm);
 		Pager pager = new Pager(5, 5, totalUsrNum, pageNo);
-		List<SrTrnsfFindPicModalUsrInfo> usrList = srDao.selectSrTrnsfFindPicModalCompose(usrId, deptNo, usrNm, pager);
+		List<SrTrnsfFindPicModalUsrInfo> usrList = srDao.selectSrTrnsfFindPicModalCompose(usrNo, deptNo, usrNm, pager);
 		srTrnsfFindPicModalCompose.setPager(pager);
 		srTrnsfFindPicModalCompose.setUsrList(usrList);
 		return srTrnsfFindPicModalCompose;
 	}
 	
+	//---------------------------------------------------------------------------------------------------------------
 	//sr이관 계획 정보 수정
 	@Override
 	public int editSrTrnsfPlan(SrTrnsfPlanForm srTrnsfPlanForm) {
@@ -226,10 +224,146 @@ public class SrServiceImpl implements SrService{
       			srDao.updateSttsToReceipt(srTrnsfPlanForm.getSrNo());
       		}
       	}
+      	
+      	//공수 계산
+      	List<Date> holidayList = new ArrayList<>();
+      	Date startDate = srTrnsfPlan.getSrTrgtBgngDt(); //시작일
+        Date endDate = srTrnsfPlan.getSrTrgtCmptnDt();	//마감일
         
+        //시작달 ~ 끝달 공휴일 계산
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(startDate);
+        calendar.set(Calendar.DAY_OF_MONTH, 1);
+        while (calendar.getTime().compareTo(endDate) <= 0) {
+        	String currentYear = Integer.toString(calendar.get(Calendar.YEAR));
+        	String currentMonth = Integer.toString(calendar.get(Calendar.MONTH) + 1);
+            
+            try {
+          		StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/B090041/openapi/service/SpcdeInfoService/getRestDeInfo"); /*URL*/
+                urlBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") + "=dPpQQRqNlLErLNLuIH6W%2BghYtwJoEUgbN%2Fmm%2F5h7V%2BLJrpEdhwa7yGFrBsuIyXsaMxpw6GXxFTSTkQYQpaT2Nw%3D%3D"); /*Service Key*/
+                urlBuilder.append("&" + URLEncoder.encode("solYear","UTF-8") + "=" + URLEncoder.encode(currentYear, "UTF-8")); /*연*/
+                urlBuilder.append("&" + URLEncoder.encode("solMonth","UTF-8") + "=" + URLEncoder.encode(currentMonth, "UTF-8")); /*월*/
+                URL url = new URL(urlBuilder.toString());
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("GET");
+                conn.setRequestProperty("Content-type", "application/json");
+                System.out.println("Response code: " + conn.getResponseCode());
+                BufferedReader rd;
+                if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
+                    rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                } else {
+                    rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+                }
+                StringBuilder sb = new StringBuilder();
+                String line;
+                while ((line = rd.readLine()) != null) {
+                    sb.append(line);
+                }
+                rd.close();
+                conn.disconnect();
+                
+                holidayList.addAll(extractLocdateDates(sb.toString()));
+          	} catch(Exception e) {
+          		e.printStackTrace();
+          	}
+  
+            calendar.add(Calendar.MONTH, 1); // 다음 월로 이동
+        }
+        
+        int totalCapacity = (int) calculateBusinessDays(startDate, endDate, holidayList);
+        srTrnsfPlan.setTotalBusinessDt(totalCapacity);
+        // 시드 값을 설정하여 다양한 랜덤 값을 생성
+        long seed = System.currentTimeMillis();
+        Random random = new Random(seed);
+
+        if (srTrnsfPlanForm.getSrDmndNo().equals("버그수정")) {
+        	totalCapacity = (int)(totalCapacity * (1 + random.nextDouble()));
+        } else {
+        	totalCapacity = (int)(totalCapacity * (2 + random.nextDouble()));
+        }
+        log.info("" + totalCapacity);
+        srTrnsfPlan.setTotalCapacity(totalCapacity);
+
 		return srDao.updateSrTrnsfPlan(srTrnsfPlan);
 	}
 	
+	// 주말과 공휴일을 제외한 평일(비즈니스 데이) 계산
+    private int calculateBusinessDays(Date startDate, Date endDate, List<Date> holidayList) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(startDate);
+        int businessDays = 0;
+
+        while (calendar.getTime().compareTo(endDate) <= 0) {
+            int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+
+            // 주말 (토요일 또는 일요일)인 경우 제외
+            if (dayOfWeek == Calendar.SATURDAY || dayOfWeek == Calendar.SUNDAY) {
+            	calendar.add(Calendar.DAY_OF_MONTH, 1);
+                continue;
+            }
+            
+            boolean isHoliday = false;
+            for (Date holiday : holidayList) {
+            	if (holiday.compareTo(calendar.getTime()) == 0) {
+            		isHoliday = true;
+            	}
+            }
+            if (isHoliday) {
+            	calendar.add(Calendar.DAY_OF_MONTH, 1);
+            	continue;
+            }
+
+            businessDays++;
+            calendar.add(Calendar.DAY_OF_MONTH, 1);
+        }
+
+        return businessDays;
+    }
+	
+	// XML 데이터에서 <locdate> 정보 추출하여 Date 객체로 반환
+    private List<Date> extractLocdateDates(String xmlData) {
+        List<Date> locdateList = new ArrayList<>();
+        try {
+            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+            Document doc = dBuilder.parse(new InputSource(new StringReader(xmlData)));
+
+            doc.getDocumentElement().normalize();
+
+            NodeList itemList = doc.getElementsByTagName("item");
+            for (int i = 0; i < itemList.getLength(); i++) {
+                Node itemNode = itemList.item(i);
+                if (itemNode.getNodeType() == Node.ELEMENT_NODE) {
+                    Element itemElement = (Element) itemNode;
+                    String locdateStr = itemElement.getElementsByTagName("locdate").item(0).getTextContent();
+                    Date locdate = getDate(locdateStr);
+                    locdateList.add(locdate);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return locdateList;
+    }
+	
+	// 날짜 문자열을 Date 객체로 변환하는 유틸리티 메서드
+    private Date getDate(String dateStr) {
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+            return dateFormat.parse(dateStr);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    // 주말(토요일 또는 일요일) 여부를 확인
+    private boolean isWeekend(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+        return (dayOfWeek == Calendar.SATURDAY || dayOfWeek == Calendar.SUNDAY);
+    }
+	//---------------------------------------------------------------------------------------------------------------
 	//sr HR 선택 모달 구성
 	@Override
 	public SrTrnsfSetHrModalCompose getSrTrnsfSetHrModalCompose(String srNo) {
@@ -504,6 +638,59 @@ public class SrServiceImpl implements SrService{
 		return 1;
 	}
 	
+	//HR 추가
+	@Override
+	public int addHr(String srNo, String usrNo) {
+		if (srDao.checkHr(srNo, usrNo) > 0) {
+			return 0;
+		} else {
+			srDao.insertHr(srNo, usrNo);
+			return 1;
+		}
+	}
+	
+	//공수 저장
+	@Override
+	public int saveHrInfo(String jsonData) {
+		try {
+			JSONArray jsonArray = new JSONArray(jsonData);
+			for (int i=0; i<jsonArray.length(); ++i) {
+				JSONObject jsonObject = jsonArray.getJSONObject(i);
+				SrTrnsfHr srTrnsfHr = new SrTrnsfHr();
+				srTrnsfHr.setSrNo(jsonObject.getString("srNo"));
+				srTrnsfHr.setUsrNo(jsonObject.getString("usrNo"));
+				srTrnsfHr.setPlanCapacity(jsonObject.getInt("planCapacity"));
+				srTrnsfHr.setPerformanceCapacity(jsonObject.getInt("performanceCapacity"));
+				srDao.updateSrTrnsfHr(srTrnsfHr);
+			}
+	        
+			return 1;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return 0;
+		}
+	}
+	
+	//HR 삭제
+	@Override
+	public int deleteHrInfo(String jsonData) {
+		try {
+			JSONArray jsonArray = new JSONArray(jsonData);
+			for (int i=0; i<jsonArray.length(); ++i) {
+				JSONObject jsonObject = jsonArray.getJSONObject(i);
+				SrTrnsfHr srTrnsfHr = new SrTrnsfHr();
+				srTrnsfHr.setSrNo(jsonObject.getString("srNo"));
+				srTrnsfHr.setUsrNo(jsonObject.getString("usrNo"));
+				srDao.deleteSrTrnsfHr(srTrnsfHr);
+			}
+	        
+			return 1;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return 0;
+		}
+	}
+	
 	//산출물 업로드
 	@Override
 	public int addSrPrgrsOtpt(SrPrgrsOtpt srPrgrsOtpt) {
@@ -557,6 +744,75 @@ public class SrServiceImpl implements SrService{
 		}
 		return 1;
 	}
+	
+	//SR진척등록
+	@Override
+	public List<SrTrnsfHr> getSrTrnsfHrListByUsrNo(String usrNo) {
+		List<SrTrnsfHr> srTrnsfHrList = srDao.selectSrTrnsfHrListByUsrNo(usrNo);
+		for (SrTrnsfHr srTrnsfHr : srTrnsfHrList) {
+			if (srTrnsfHr.getLastRegDt() != null) {
+				Calendar calendar = Calendar.getInstance();
+				calendar.setTime(srTrnsfHr.getLastRegDt());
+				LocalDate date1 = LocalDate.of(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DAY_OF_MONTH));
+				LocalDate date2 = LocalDate.now();
+				if (date1.compareTo(date2) != 0) {
+					srTrnsfHr.setLastRegCapacity(0);
+				}
+			} else {
+				srTrnsfHr.setLastRegCapacity(0);
+			}
+		}
+		return srTrnsfHrList;
+	}
+	
+	//SR 금일 진척 등록
+	@Override
+	public int registerHrInfo(String jsonData) {
+		try {
+			log.info(jsonData);
+			JSONArray jsonArray = new JSONArray(jsonData);
+			for (int i=0; i<jsonArray.length(); ++i) {
+				JSONObject jsonObject = jsonArray.getJSONObject(i);
+				SrTrnsfHr srTrnsfHr = new SrTrnsfHr();
+				srTrnsfHr.setSrNo(jsonObject.getString("srNo"));
+				srTrnsfHr.setUsrNo(jsonObject.getString("usrNo"));
+				int lastRegCapacity = jsonObject.getInt("lastRegCapacity");
+				SrTrnsfHr originalSrTrnsfHr = srDao.getSrTrnsfHrBySrNoAndUsrNo(srTrnsfHr.getSrNo(), srTrnsfHr.getUsrNo());
+				
+				Calendar calendar = Calendar.getInstance();
+				calendar.setTime(originalSrTrnsfHr.getLastRegDt());
+				LocalDate date1 = LocalDate.of(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DAY_OF_MONTH));
+				LocalDate date2 = LocalDate.now();
+				
+				//최초 등록
+				if (originalSrTrnsfHr.getLastRegDt() == null) {
+					originalSrTrnsfHr.setLastRegDt(new Date());
+					originalSrTrnsfHr.setLastRegCapacity(lastRegCapacity);
+					originalSrTrnsfHr.setPerformanceCapacity(originalSrTrnsfHr.getPerformanceCapacity() + lastRegCapacity);
+				//오늘 최초 등록
+				} else if (date1.compareTo(date2) != 0) {
+					originalSrTrnsfHr.setLastRegDt(new Date());
+					originalSrTrnsfHr.setLastRegCapacity(lastRegCapacity);
+					originalSrTrnsfHr.setPerformanceCapacity(originalSrTrnsfHr.getPerformanceCapacity() + lastRegCapacity);
+				//오늘 등록한적이 있음
+				} else if (date1.compareTo(date2) == 0) {
+					//기존에 등록한 값만큼 실적공수에서 뺌
+					originalSrTrnsfHr.setPerformanceCapacity(originalSrTrnsfHr.getPerformanceCapacity() - originalSrTrnsfHr.getLastRegCapacity());
+					originalSrTrnsfHr.setLastRegCapacity(lastRegCapacity);
+					originalSrTrnsfHr.setPerformanceCapacity(originalSrTrnsfHr.getPerformanceCapacity() + lastRegCapacity);
+				}
+				
+				srDao.updateSrTrnsfHr(originalSrTrnsfHr);
+			}
+	        
+			return 1;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return 0;
+		}
+	}
+	
+	
 	
 	//--------------------------------------------------------------------------------------------------
 	//SR진척관리 옵션 select구성
@@ -619,4 +875,6 @@ public class SrServiceImpl implements SrService{
 			return null;
 		}
 	}
+	
+	
 }

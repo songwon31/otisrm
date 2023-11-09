@@ -19,6 +19,7 @@ import com.finalteam5.otisrm.dto.sr.SrForProgressManagementBoard;
 import com.finalteam5.otisrm.dto.sr.SrPrgrsForDeveloperHome;
 import com.finalteam5.otisrm.dto.sr.SrRequestDetailForDeveloperHome;
 import com.finalteam5.otisrm.dto.sr.SrTrnsfFindPicModalUsrInfo;
+import com.finalteam5.otisrm.dto.sr.SrTrnsfHr;
 import com.finalteam5.otisrm.dto.sr.SrTrnsfInfoForDeveloperHome;
 import com.finalteam5.otisrm.dto.sr.SrTrnsfPlanModalCompose;
 import com.finalteam5.otisrm.dto.usr.Dept;
@@ -30,20 +31,21 @@ public interface SrDao {
 	public int countSr();
 	
 	public int countTotalTransferedSrNumByUsrId(String usrId);
-	public List<SrForDeveloperHomeBoard> selectSrForDeveloperHomeBoardListByUsrId(String usrId);
+	public List<SrForDeveloperHomeBoard> selectSrForDeveloperHomeBoardListByUsrId(String usrNo);
 	public List<SrForDeveloperHomeBoard> selectSrForDeveloperHomeBoardListByUsrIdAndPager(
 			@Param("usrId") String usrId, @Param("pager") Pager pager);
 	public SrTrnsfInfoForDeveloperHome selectSrTrnsfInfoForDeveloperHomeBySrNo(String srNo);
 	public SrTrnsfInfoForDeveloperHome selectSrTrnsfInfoForDeveloperHomeBySrNoRqst(String srNo);
 	public List<SrPrgrsForDeveloperHome> selectSrPrgrsForDeveloperHomeList(String srNo);
+	public List<SrTrnsfHr> selectSrTrnsfHrList(String srNo);
 	public SrRequestDetailForDeveloperHome selectSrRequestDetailForDeveloperHome(String srNo);
 	
 	public String checkStatusBySrNo(String srNo);
 	
 	public List<SrForDeveloperHomeBoard> selectSrListForDeveloperHomeBoardByUsrIdAndStts(
-			@Param("usrId") String usrId, @Param("srPrgrsSttsNo") String srPrgrsSttsNo);
+			@Param("usrNo") String usrId, @Param("srPrgrsSttsNo") String srPrgrsSttsNo);
 	public List<SrForDeveloperHomeBoard> selectSrListForDeveloperHomeBoardByUsrIdAndSttsAndPager(
-			@Param("usrId") String usrId, @Param("srPrgrsSttsNo") String srPrgrsSttsNo, @Param("pager") Pager pager);
+			@Param("usrNo") String usrId, @Param("srPrgrsSttsNo") String srPrgrsSttsNo, @Param("pager") Pager pager);
 	
 	public List<SrTaskClsf> selectTaskList();
 	public List<Dept> selectDeptListByUsrId(String usrId);
@@ -56,9 +58,19 @@ public interface SrDao {
 	
 	//담당자 선택 모달 구성
 	public int countSrTrnsfFindPicModalCompose(
-			@Param("usrId") String usrId, @Param("deptNo") String deptNo, @Param("usrNm") String usrNm);
+			@Param("usrNo") String usrNo, @Param("deptNo") String deptNo, @Param("usrNm") String usrNm);
 	public List<SrTrnsfFindPicModalUsrInfo> selectSrTrnsfFindPicModalCompose(
-			@Param("usrId") String usrId, @Param("deptNo") String deptNo, @Param("usrNm") String usrNm, @Param("pager") Pager pager);
+			@Param("usrNo") String usrNo, @Param("deptNo") String deptNo, @Param("usrNm") String usrNm, @Param("pager") Pager pager);
+	
+	//HR 추가
+	public int checkHr(@Param("srNo") String srNo, @Param("usrNo") String usrNo);
+	public int insertHr(@Param("srNo") String srNo, @Param("usrNo") String usrNo);
+	
+	//공수 저장
+	public int updateSrTrnsfHr(SrTrnsfHr srTrnsfHr);
+	
+	//자원 삭제
+	public int deleteSrTrnsfHr(SrTrnsfHr srTrnsfHr);
 	
 	//sr 이관 계획 수정
 	public String selectDeptNoByDeptNmAndSrNo(@Param("deptNm") String deptNm, @Param("srNo") String srNo);
@@ -110,6 +122,12 @@ public interface SrDao {
 	//산출물 삭제
 	public int deleteSrPrgrsOtpt(String srPrgrsOtptNo);
 	
+	//SR진척 등록
+	public List<SrTrnsfHr> selectSrTrnsfHrListByUsrNo(String usrNo);
+	
+	//금일 SR진척등록
+	public SrTrnsfHr getSrTrnsfHrBySrNoAndUsrNo(@Param("srNo") String srNo, @Param("usrNo") String usrNo);
+	
 	//--------------------------------------------------------------------------------------------------
 	//SR진척관리 옵션 select구성
 	public List<Sys> selectSysList();
@@ -126,4 +144,5 @@ public interface SrDao {
 			@Param("progressManagementSearch") ProgressManagementSearch progressManagementSearch, 
 			@Param("usrNo") String usrNo,
 			@Param("pager") Pager pager);
+
 }

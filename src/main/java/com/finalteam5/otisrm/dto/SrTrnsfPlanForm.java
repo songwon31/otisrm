@@ -12,4 +12,7 @@ public class SrTrnsfPlanForm {
 	private String srTrgtBgngDt;
 	private String srTrgtCmptnDt;
 	private String srTrnsfNote;
+	private String srDmndNo;
+	private Integer totalCapacity;
+	private Integer totalBusinessDt;
 }
