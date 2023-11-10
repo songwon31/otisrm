@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.finalteam5.otisrm.dto.Pager;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstForSearchList;
+import com.finalteam5.otisrm.dto.srRequest.SrRqstStts;
 import com.finalteam5.otisrm.dto.usr.Dept;
 import com.finalteam5.otisrm.dto.usr.Inst;
 import com.finalteam5.otisrm.dto.usr.Usr;
@@ -57,6 +58,10 @@ public class SrReviewManagementController {
 			//기관목록 가져오기(외부업체 제외)
 			List<Inst> NoOutsrcInstList = instService.getNoOutsrcInstList();
 			model.addAttribute("NoOutsrcInstList", NoOutsrcInstList);
+			
+			//전체 상태 가져오기
+			List<SrRqstStts> sttsList = srRqstService.getSrRqstStts();
+			model.addAttribute("sttsList", sttsList);
 			
 			return "/srManagement/reviewManagement/reviewManagement";
 		}else {

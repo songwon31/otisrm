@@ -71,9 +71,11 @@ function loadReviewerHomeBoardList(pageNo, selectedStts) {
 			if(data.list.length == 0) {
 				$("#reviewerHomeBoardList").html("<tr><td colspan='10' style='height: 22.5rem;'>해당 목록 결과가 없습니다.</td></tr>");
 				$("#reviewerHomeMainTablePaging").html("");
+				var lastIndex = 0;
 			} else if(data.list.length != 0) {
 				//tr 생성
 				data.list.forEach((item, index)=>{
+					lastIndex = index;
 					var formattedSrRqstRegDt = formatDateToYYYYMMDD(item.srRqstRegDt);
 					var formattedSrCmptnPrnmntDt = formatDateToYYYYMMDD(item.srCmptnPrnmntDt);
 					var trIndex = (pageNo - 1) * 5 + index + 1;
@@ -81,10 +83,10 @@ function loadReviewerHomeBoardList(pageNo, selectedStts) {
 					html += '<tr style="height: 4.5rem; font-size: 1.5rem; background-color: white;" onclick="loadProgressInfo(\''+ item.srRqstNo +'\')">';
 					html += '	<td>' + trIndex + '</td>';
 					html += '	<td>' + item.srRqstNo + '</td>';
-					html += '	<td class="text-align-left">' + item.srTtl + '</td>';
-					html += '	<td>' + item.sysNm + '</td>';
+					html += '	<td class="text-align-left" style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">' + item.srTtl + '</td>';
+					html += '	<td style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">' + item.sysNm + '</td>';
 					html += '	<td>' + item.usrNm + '</td>';
-					html += '	<td>' + item.instNm + '</td>';
+					html += '	<td style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">' + item.instNm + '</td>';
 					html += '	<td>' + item.srRqstSttsNm + '</td>';
 					html += '	<td>' + formattedSrRqstRegDt + '</td>';
 					html += '	<td>' + formattedSrCmptnPrnmntDt + '</td>';
@@ -92,6 +94,12 @@ function loadReviewerHomeBoardList(pageNo, selectedStts) {
 					html += '</tr>';
 				});
 				$("#reviewerHomeBoardList").html(html);
+				
+				if(lastIndex < 4) {
+					html += '<tr style="height:100%;">';
+					html += '</tr>';
+					$("#reviewerHomeBoardList").html(html);
+				}
 				
 				//hover 효과 동적으로 추가
 				$('tbody tr').hover(
@@ -271,7 +279,6 @@ function loadProgressInfo(srRqstNo) {
 				}
 				
 				//완료정보
-				console.log(formattedSrCmptnPrnmntDt);
 				$("#progress_dep_cmptn_info").removeClass('d-none');
 				$("#progress_srCmptnPrnmntDt").text(formattedSrCmptnPrnmntDt);
 			}

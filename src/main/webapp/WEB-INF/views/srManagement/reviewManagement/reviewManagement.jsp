@@ -49,16 +49,9 @@
 			<div style="width: 24.73%;">
 				<select style="width:30%;" id="selectProgress" name="selectProgress">
 					<option class="initOption" value="" selected>전체</option>
-			        <option value="RQST">요청</option>
-			        <option value="APRV">승인</option>
-					<option value="RCPT_WAIT">접수대기</option>
-					<option value="RCPT_REEXAM">접수재검토</option>
-					<option value="RCPT_RETURN">접수반려</option>
-					<option value="RCPT">접수</option>
-					<option value="DEP_ING">개발중</option>
-					<option value="TEST">테스트</option>
-					<option value="CMPTN_RQST">완료요청</option>
-					<option value="DEP_CMPTN">개발완료</option>
+			        <c:forEach var="i" items="${sttsList}" varStatus="status">	
+						<option  value="${i.srRqstSttsNo}">${i.srRqstSttsNm}</option>
+					</c:forEach>
 				</select>
 			</div>
 			<div style="width: 3.5%;"></div>
@@ -126,7 +119,7 @@
 			<button id="excelDownloadBtn" onclick="location.href='#';">엑셀 다운로드</button>
 		</div>
 		<div style="height:51.7rem; margin:0.75rem 0rem; background-color: #f9fafe;">
-			<table id="reviewManagementMainTable" style="width: 100%;">
+			<table id="reviewManagementMainTable" style="width: 100%; table-layout: fixed;">
 				<colgroup>
 					<col width="4%" />
 					<col width="10%" />
@@ -142,7 +135,7 @@
 					<col width="6%" />
 					<col width="6%" />
 				</colgroup>
-				<thead style="background-color: #e9ecef;">
+				<thead>
 					<tr style="height: 4.7rem; font-size: 1.5rem; font-weight: 700;">
 						<th scope="col"></th>
 						<th scope="col">요청번호</th>
@@ -159,7 +152,7 @@
 						<th scope="col">상세보기</th>
 					</tr>
 				</thead>
-				<tbody id="reviewManagementList"></tbody>
+				<tbody id="reviewManagementList" style="height: 47rem;"></tbody>
 			</table>
 		</div>
 		<div id="reviewManagementListPaging" style="height:3.5rem;" class="d-flex flex-row justify-content-center align-items-center"></div>
@@ -215,7 +208,7 @@
 			            <textarea id="detailmodal_srConts" class="w-content form-control form-control-sm" rows="3" cols="50" disabled></textarea>
 			          </div>
 			          <div class="d-flex mb-2 w-100">
-			            <label for="detailmodal_srRqstAtchData" class="w-label col-form-label pl-0">첨부파일</label>
+			            <label for="detailmodal_srRqstAtchData" class="w-label col-form-label">첨부파일</label>
 						<input id="detailmodal_srRqstAtchData" type="file" class="w-content form-control-file form-control-sm px-0" disabled>
 			          </div>
 					</div>
@@ -233,7 +226,7 @@
 					        <option id="initReceptionResult" value="" selected>선택</option>
 					        <option class="optionReceptionResult" value="RCPT_REEXAM">접수재검토</option>
 					        <option class="optionReceptionResult" value="RCPT_RETURN">접수반려</option>
-					        <option class="optionReceptionResult" value="RCPT">접수승인</option>
+					        <option class="optionReceptionResult" value="RCPT">접수</option>
 					    </select>
 		      			<button id="receptionResultBtn" type="button" class="btn-3" onclick="saveReceptionResult(this)" disabled>처리</button>
 		      		</div>
@@ -283,7 +276,7 @@
 			            	<textarea id="detailmodal_srDvlConts" class="w-content form-control form-control-sm" rows="3" cols="50" disabled></textarea>
 			          	</div>
 			          	<div class="d-flex mb-2 w-100">
-			            	<label for="detailmodal_srAtchData" class="w-label col-form-label pl-0">첨부파일</label>
+			            	<label for="detailmodal_srAtchData" class="w-label col-form-label">첨부파일</label>
 							<input id="detailmodal_srAtchData" type="file" id="srFile" class="w-content form-control-file form-control-sm px-0" disabled>
 			          	</div>
 					</div>

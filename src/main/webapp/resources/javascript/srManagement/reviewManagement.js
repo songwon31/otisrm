@@ -80,7 +80,9 @@ function loadReviewManagementList(pageNo) {
 				$("#reviewManagementList").html("<tr><td colspan='12' style='height: 47rem;'>해당 목록 결과가 없습니다.</td></tr>");
 				$("#reviewManagementListListPaging").html("");
 			} else if(data.list.length != 0) {
+				var lastIndex = 0;
 				data.list.forEach((item, index)=>{
+					lastIndex = index;
 					var formattedSrRqstRegDt = formatDateToYYYYMMDD(item.srRqstRegDt);
 					var formattedSrCmptnPrnmntDt = formatDateToYYYYMMDD(item.srCmptnPrnmntDt);
 					var trIndex = (pageNo - 1) * 10 + index + 1;
@@ -99,10 +101,10 @@ function loadReviewManagementList(pageNo) {
 					html += '<tr style="height: 4.7rem; font-size: 1.5rem;">';
 					html += '	<td>' + trIndex + '</td>';
 					html += '	<td>' + item.srRqstNo + '</td>';
-					html += '	<td class="text-align-left">' + item.srTtl + '</td>';
-					html += '	<td>' + item.sysNm + '</td>';
+					html += '	<td class="text-align-left" style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">' + item.srTtl + '</td>';
+					html += '	<td style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">' + item.sysNm + '</td>';
 					html += '	<td>' + item.usrNm + '</td>';
-					html += '	<td>' + item.instNm + '</td>';
+					html += '	<td style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">' + item.instNm + '</td>';
 					html += '	<td>' + formattedSrRqstRegDt + '</td>';
 					html += '	<td>' + formattedSrCmptnPrnmntDt + '</td>';
 					html += '	<td>' + item.srRqstSttsNm + '</td>';
@@ -114,6 +116,12 @@ function loadReviewManagementList(pageNo) {
 					html += '</tr>';
 				});
 				$("#reviewManagementList").html(html);
+				
+				if(lastIndex < 9) {
+					html += '<tr style="height:100%;">';
+					html += '</tr>';
+					$("#reviewManagementList").html(html);
+				}
 				
 				//hover 효과 동적으로 추가
 				$('tbody tr').hover(
@@ -188,7 +196,7 @@ function showDetailModal(srRqstNo) {
 			//SR번호
 			$("#detailmodal_srRqstNo").val(data.srRqstNo);
 			
- 			///진행상태에 따른 select, button 활성화
+			//진행상태에 따른 select, button 활성화
 			var sttsNo = data.srRqstSttsNo;
 			if(sttsNo == "RQST") {
 				//변화없음
@@ -199,20 +207,20 @@ function showDetailModal(srRqstNo) {
 				$("#approveResultBtn").addClass('btn-1');
 				$("#detailmodal_srRqstRvwRsn").removeAttr('disabled');
 			} else if(sttsNo == "APRV_RETURN") {
-				$(".optionApproveResult option[value='APRV_RETURN']").prop('selected', true);
+				$("option[value='APRV_RETURN']").prop('selected', true);
 			} else {
-				$(".optionApproveResult option[value='APRV']").prop('selected', true);
+				$("option[value='APRV']").prop('selected', true);
 			}
 			
 			if(sttsNo == "RCPT" || sttsNo == "DEP_ING" || sttsNo == "TEST" || sttsNo == "CMPTN_RQST" || sttsNo == "DEP_CMPTN") {
-				$(".optionReceptionResult option[value='RCPT']").prop('selected', true);
+				$("option[value='RCPT']").prop('selected', true);
 			} else if(sttsNo == "RCPT_WAIT" || sttsNo == "RCPT_REEXAM") {
 				$("#receptionResult").removeAttr('disabled');
 				$("#receptionResultBtn").removeAttr('disabled');
 				$("#receptionResultBtn").removeClass('btn-3');
 				$("#receptionResultBtn").addClass('btn-1');
 			} else if(sttsNo == "RCPT_RETURN") {
-				$(".optionReceptionResult option[value='RCPT_RETURN']").prop('selected', true);
+				$("option[value='RCPT_RETURN']").prop('selected', true);
 			}
 			
 			if(sttsNo == "CMPTN_RQST") {

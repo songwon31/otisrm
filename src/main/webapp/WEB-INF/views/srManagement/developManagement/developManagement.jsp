@@ -141,7 +141,7 @@
 					<col width="6.5%" />
 					<col width="6.5%" />
 				</colgroup>
-				<thead style="background-color: #e9ecef;">
+				<thead>
 					<tr style="height: 4.7rem; font-size: 1.5rem; font-weight: 700;">
 						<th scope="col"></th>
 						<th scope="col">요청번호</th>
@@ -157,7 +157,7 @@
 						<th scope="col">상세보기</th>
 					</tr>
 				</thead>
-				<tbody id="developmentManagementList"></tbody>
+				<tbody id="developmentManagementList" style="height: 47rem;"></tbody>
 			</table>
 		</div>
 		<div id="developmentManagementListPaging" style="height:3.5rem;" class="d-flex flex-row justify-content-center align-items-center"></div>

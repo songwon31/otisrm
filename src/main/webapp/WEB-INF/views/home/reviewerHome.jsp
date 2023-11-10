@@ -44,7 +44,7 @@
 			<div id="reviewerHomeBoardDiv" class="shadow" style="height:36.5rem; background-color:white; border-radius:1rem; padding:1rem;">
 				<div class="reviewerHomeSecondTitle">검토 목록</div>
 				<div style="height: 27rem;  background-color: #f9fafe;">
-					<table id="reviewerHomeMainTable" style="width: 100%;">
+					<table id="reviewerHomeMainTable" style="width: 100%; table-layout: fixed;">
 						<colgroup>
 							<col width="5%" />
 							<col width="12.5%" />
@@ -71,8 +71,7 @@
 								<th scope="col">상세보기</th>
 							</tr>
 						</thead>
-						<!-- tbody height: 22.5rem; -->
-						<tbody id="reviewerHomeBoardList"></tbody>
+						<tbody id="reviewerHomeBoardList" style="height: 22.5rem;"></tbody>
 					</table>
 				</div>
 				<div id="reviewerHomeMainTablePaging" style="height: 4rem; padding: 0.5rem 0;" class="d-flex flex-row justify-content-center align-items-center">
@@ -129,7 +128,7 @@
 					            <textarea id="detailmodal_srConts" class="w-content form-control form-control-sm" rows="3" cols="50" disabled></textarea>
 					          </div>
 					          <div class="d-flex mb-2 w-100">
-					            <label for="detailmodal_srRqstAtchData" class="w-label col-form-label pl-0">첨부파일</label>
+					            <label for="detailmodal_srRqstAtchData" class="w-label col-form-label">첨부파일</label>
 								<input id="detailmodal_srRqstAtchData" type="file" class="w-content form-control-file form-control-sm px-0" disabled>
 					          </div>
 							</div>
@@ -197,7 +196,7 @@
 					            	<textarea id="detailmodal_srDvlConts" class="w-content form-control form-control-sm" rows="3" cols="50" disabled></textarea>
 					          	</div>
 					          	<div class="d-flex mb-2 w-100">
-					            	<label for="detailmodal_srAtchData" class="w-label col-form-label pl-0">첨부파일</label>
+					            	<label for="detailmodal_srAtchData" class="w-label col-form-label">첨부파일</label>
 									<input id="detailmodal_srAtchData" type="file" id="srFile" class="w-content form-control-file form-control-sm px-0" disabled>
 					          	</div>
 							</div>

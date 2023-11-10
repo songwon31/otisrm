@@ -69,10 +69,13 @@ function loadDevelopManagementList(pageNo) {
 	    	var html = "";
 			var pagingHtml = "";
 			if(data.list.length == 0) {
+				//listlength가 10개 아니면 tr추가해서 height 100%, border
 				$("#developmentManagementList").html("<tr><td colspan='12' style='height: 47rem;'>해당 목록 결과가 없습니다.</td></tr>");
 				$("#developmentManagementListPaging").html("");
 			} else if(data.list.length != 0) {
+				var lastIndex = 0;
 				data.list.forEach((item, index)=>{
+					lastIndex = index;
 					var formattedSrRqstRegDt = formatDateToYYYYMMDD(item.srRqstRegDt);
 					var formattedSrCmptnPrnmntDt = formatDateToYYYYMMDD(item.srCmptnPrnmntDt);
 					var trIndex = (pageNo - 1) * 10 + index + 1;
@@ -84,10 +87,10 @@ function loadDevelopManagementList(pageNo) {
 					html += '<tr style="height: 4.7rem; font-size: 1.5rem;">';
 					html += '	<td>' + trIndex + '</td>';
 					html += '	<td>' + item.srRqstNo + '</td>';
-					html += '	<td class="text-align-left">' + item.srTtl + '</td>';
-					html += '	<td>' + item.sysNm + '</td>';
+					html += '	<td class="text-align-left" style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">' + item.srTtl + '</td>';
+					html += '	<td style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">' + item.sysNm + '</td>';
 					html += '	<td>' + item.usrNm + '</td>';
-					html += '	<td>' + item.instNm + '</td>';
+					html += '	<td style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">' + item.instNm + '</td>';
 					html += '	<td>' + formattedSrRqstRegDt + '</td>';
 					html += '	<td>' + formattedSrCmptnPrnmntDt + '</td>';
 					html += '	<td>' + item.srRqstSttsNm + '</td>';
@@ -97,6 +100,12 @@ function loadDevelopManagementList(pageNo) {
 					html += '</tr>';
 				});
 				$("#developmentManagementList").html(html);
+				
+				if(lastIndex < 9) {
+					html += '<tr style="height:100%;">';
+					html += '</tr>';
+					$("#developmentManagementList").html(html);
+				}
 				
 				//hover 효과 동적으로 추가
 				$('tbody tr').hover(

@@ -165,10 +165,6 @@ a, a:hover {
 }
 
 /* Table */
-#reviewManagementMainTable tbody tr {
-	border-bottom: 1px solid #e9ecef;
-}
-
 .text-align-left {
 	text-align: left;
 }
@@ -178,10 +174,13 @@ a, a:hover {
 }
 
 #reviewManagementMainTable thead {
-	border-bottom: 1.5px solid #edf2f8;
-	border-left: none;
-	border-right: none;
-	background-color: #f9fafe;
+	border: 1.5px solid #e9ecef;
+	background-color: #edf2f8;
+}
+
+#reviewManagementMainTable tbody tr {
+	border: 1.5px solid #e9ecef;
+	background-color: white;
 }
 
 /* Modal */
