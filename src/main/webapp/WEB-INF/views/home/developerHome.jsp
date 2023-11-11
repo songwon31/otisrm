@@ -328,7 +328,131 @@
 				</div>
 			</div>
 		</div>
-		<div id="teamInfoDiv"></div>
+		<div id="srProgressGraphDiv">
+			<div>
+				<div class="font-weight-bold d-flex" style="font-size: 2rem; height: 3rem; vertical-align: center; margin-bottom: 0.5rem;">
+					<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem;">chevron_right</i>
+					<span>SR진척률</span>
+				</div>
+				<div style="height: 34rem; background-color: #f9fafe; border-radius:0px 0px 10px 10px; padding:0.5rem 0rem;">
+					<div style="height: 7rem; background-color:white; padding:0rem 1rem; display:flex; flex-direction:column; justify-content:center;">
+						<div style="height: 3rem; display:flex; font-size: 1.5rem; font-weight:700; align-items:center;">
+							<span>전체 진척률</span>
+						</div>
+						<div style="height: 0.5rem;"></div>
+						<div style="height: 2rem; display:flex; align-items:center; outline:1px solid #495057; border-radius:10px; position:relative; overflow:hidden;">
+							<!-- <div style="height: 1.8rem; width:20%; border-radius:10px; background-color:#00FF00; position:absolute;"></div> -->
+							<div id="totalProgressGraph" style="height: 2rem; width:0%; border-radius:10px; background-color:#BEDFFF; position:absolute;"></div>
+							<div id="totalProgressGraphText" style="height: 2rem; width:100%; font-weight:700; display:flex; justify-content:center; align-items:center; position:absolute;">
+								0%
+							</div>
+						</div>
+						
+					</div>
+					<div style="height: 0.5rem;"></div>
+					<div style="height: 25.5rem; background-color:white; padding:0rem 1rem;">
+						<div style="height: 3rem; display:flex; font-size: 1.5rem; font-weight:700; align-items:center;">
+							<span>단계별 진척률</span>
+						</div>
+						<div style="height: 4rem; display:flex; font-size: 1.5rem; font-weight:700; align-items:center;">
+							<div style="height:4em; width:20%; display:flex; align-items:center;">
+								<svg style="width:0.5rem; height:0.5rem; margin: 0rem 0.5rem;"><rect width="0.5rem" height="0.5rem" fill="#222E3C" /></svg>
+								<span>분석</span>
+							</div>
+							<div style="height:4rem; width:80%; display:flex; align-items:center;">
+								<div style="height:4rem; width:10%; display:flex; align-items:center;">
+									<!-- <div style="height: 1.5rem; width:100%; background-color:#D1180B;"></div> -->
+									<div id="analysisProgressGraph" style="height: 1.5rem; width:0%; background-color:#1E90FF;"></div>
+								</div>
+								<div style="height:4rem; width:10%; display:flex; align-items:center;"></div>
+								<div style="height:4rem; width:50%; display:flex; align-items:center;"></div>
+								<div style="height:4rem; width:20%; display:flex; align-items:center;"></div>
+								<div style="height:4rem; width:10%; display:flex; align-items:center;"></div>
+							</div>
+						</div>
+						<div style="height: 4rem; display:flex; font-size: 1.5rem; font-weight:700; align-items:center;">
+							<div style="height:4rem; width:20%; display:flex; align-items:center;">
+								<svg style="width:0.5rem; height:0.5rem; margin: 0rem 0.5rem;"><rect width="0.5rem" height="0.5rem" fill="#222E3C" /></svg>
+								<span>설계</span>
+							</div>
+							<div style="height:4rem; width:80%; display:flex; align-items:center;">
+								<div style="height:4rem; width:10%; display:flex; align-items:center;"></div>
+								<div style="height:4rem; width:10%; display:flex; align-items:center;">
+									<!-- <div style="height: 1.5rem; width:100%; background-color:#FF7F00;"></div> -->
+									<div id="designProgressGraph" style="height: 1.5rem; width:0%; background-color:#1E90FF;"></div>
+								</div>
+								<div style="height:4rem; width:50%; display:flex; align-items:center;"></div>
+								<div style="height:4rem; width:20%; display:flex; align-items:center;"></div>
+								<div style="height:4rem; width:10%; display:flex; align-items:center;"></div>
+							</div>
+						</div>
+						<div style="height: 4rem; display:flex; font-size: 1.5rem; font-weight:700; align-items:center;">
+							<div style="height:4rem; width:20%; display:flex; align-items:center;">
+								<svg style="width:0.5rem; height:0.5rem; margin: 0rem 0.5rem;"><rect width="0.5rem" height="0.5rem" fill="#222E3C" /></svg>
+								<span>구현</span>
+							</div>
+							<div style="height:4rem; width:80%; display:flex; align-items:center;">
+								<div style="height:4rem; width:10%; display:flex; align-items:center;"></div>
+								<div style="height:4rem; width:10%; display:flex; align-items:center;"></div>
+								<div style="height:4rem; width:50%; display:flex; align-items:center;">
+									<!-- <div style="height: 1.5rem; width:100%; background-color:#3CB371;"></div> -->
+									<div id="implementProgressGraph" style="height: 1.5rem; width:0%; background-color:#1E90FF;"></div>
+								</div>
+								<div style="height:4rem; width:20%; display:flex; align-items:center;"></div>
+								<div style="height:4rem; width:10%; display:flex; align-items:center;"></div>
+							</div>
+						</div>
+						<div style="height: 4rem; display:flex; font-size: 1.5rem; font-weight:700; align-items:center;">
+							<div style="height:4rem; width:20%; display:flex; align-items:center;">
+								<svg style="width:0.5rem; height:0.5rem; margin: 0rem 0.5rem;"><rect width="0.5rem" height="0.5rem" fill="#222E3C" /></svg>
+								<span>시험</span>
+							</div>
+							<div style="height:4rem; width:80%; display:flex; align-items:center;">
+								<div style="height:4rem; width:10%; display:flex; align-items:center;"></div>
+								<div style="height:4rem; width:10%; display:flex; align-items:center;"></div>
+								<div style="height:4rem; width:50%; display:flex; align-items:center;"></div>
+								<div style="height:4rem; width:20%; display:flex; align-items:center;">
+									<!-- <div style="height: 1.5rem; width:100%; background-color:#000080;"></div> -->
+									<div id="testProgressGraph" style="height: 1.5rem; width:0%; background-color:#1E90FF;"></div>
+								</div>
+								<div style="height:4rem; width:10%; display:flex; align-items:center;"></div>
+							</div>
+						</div>
+						<div style="height: 4rem; display:flex; font-size: 1.5rem; font-weight:700; align-items:center;">
+							<div style="height:4rem; width:20%; display:flex; align-items:center;">
+								<svg style="width:0.5rem; height:0.5rem; margin: 0rem 0.5rem;"><rect width="0.5rem" height="0.5rem" fill="#222E3C" /></svg>
+								<span>반영요청</span>
+							</div>
+							<div style="height:4rem; width:80%; display:flex; align-items:center;">
+								<div style="height:4rem; width:10%; display:flex; align-items:center;"></div>
+								<div style="height:4rem; width:10%; display:flex; align-items:center;"></div>
+								<div style="height:4rem; width:50%; display:flex; align-items:center;"></div>
+								<div style="height:4rem; width:20%; display:flex; align-items:center;"></div>
+								<div style="height:4rem; width:10%; display:flex; align-items:center;">
+									<div id="applyRequestProgressGraph" style="height: 1.5rem; width:0%; background-color:#1E90FF;"></div>
+								</div>
+							</div>
+						</div>
+						<div style="height: 2.5rem; font-size: 1.5rem; font-weight:700; display:flex; align-items:center;">
+							<div style="height:2.5rem; width:20%;"></div>
+							<div style="height:2.5rem; width:80%; display:flex; align-items:center; border-top:1px solid #495057; color:#495057;">
+								<div>0</div>
+								<div style="flex-grow:1;"></div>
+								<div>20</div>
+								<div style="flex-grow:1;"></div>
+								<div>40</div>
+								<div style="flex-grow:1;"></div>
+								<div>60</div>
+								<div style="flex-grow:1;"></div>
+								<div>80</div>
+								<div style="flex-grow:1;"></div>
+								<div>100</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 </div>
 

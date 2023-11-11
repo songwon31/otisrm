@@ -124,7 +124,7 @@ input:focus, select:focus {
 	flex-direction:row;
 }
 
-#teamInfoDiv {
+#srProgressGraphDiv {
 	width:30%;
 	border: 1px solid gray;
 	border-radius: 10px;

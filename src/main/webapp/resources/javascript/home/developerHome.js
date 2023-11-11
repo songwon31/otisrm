@@ -332,6 +332,15 @@ function showRequestDetail(srNo) {
 }
 
 function setSrDetail(srNo) {
+	//그래프 초기화
+	$('#totalProgressGraph').css('width', '0%');
+	$('#totalProgressGraphText').html('0%');
+	$('#analysisProgressGraph').css('width', '0%');
+	$('#designProgressGraph').css('width', '0%');
+	$('#implementProgressGraph').css('width', '0%');
+	$('#testProgressGraph').css('width', '0%');
+	$('#applyRequestProgressGraph').css('width', '0%');
+	
 	let requestData = {
         srNo: srNo
     };
@@ -408,11 +417,16 @@ function setSrDetail(srNo) {
 						$('#srAnalysisPrgrs').html('<input value="" style="width:40%; height:3rem; margin:0rem 1rem; text-align: center;">');
 						if (srPrgrs.srPrgrs > 0) {
 							$('#srAnalysisPrgrs input').val(srPrgrs.srPrgrs);
+							
+							//그래프 재구성
+							$('#totalProgressGraph').css('width', srPrgrs.srPrgrs + '%');
+							$('#totalProgressGraphText').html(srPrgrs.srPrgrs + '%');
+							$('#analysisProgressGraph').css('width', (srPrgrs.srPrgrs * 10) + '%');
 						}
 						let btnHtml = '<center><a data-toggle="modal" data-target="#manageSrOutputModal" href="javascript:void(0)" onclick="composeManageSrOutputModal(\'ANALYSIS\')"';
 						btnHtml += 'style="height: 3rem; width: 30%; border-radius: 5px; background-color:#2c7be4; color:white; font-weight:700;';
 						btnHtml += 'display: flex; flex-direction: row; justify-content: center; align-items: center;">관리</a></center>';
-						$('#srAnalysisOtptBtn').html(btnHtml);
+						$('#srAnalysisOtptBtn').html(btnHtml);	 
 					} else if (srPrgrs.srPrgrsSttsNm == '설계') {
 						if (srPrgrs.srPrgrsBgngDt != null) {
 							$('#srDesignBgngDt').html(formatDate(bgngDt));
@@ -423,6 +437,11 @@ function setSrDetail(srNo) {
 						$('#srDesignPrgrs').html('<input value="" style="width:40%; height:3rem; margin:0rem 1rem; text-align: center;">');
 						if (srPrgrs.srPrgrs > 0) {
 							$('#srDesignPrgrs input').val(srPrgrs.srPrgrs);
+							
+							//그래프 재구성
+							$('#totalProgressGraph').css('width', srPrgrs.srPrgrs + '%');
+							$('#totalProgressGraphText').html(srPrgrs.srPrgrs + '%');
+							$('#designProgressGraph').css('width', ((srPrgrs.srPrgrs - 10) * 10) + '%');
 						}
 						let btnHtml = '<center><a data-toggle="modal" data-target="#manageSrOutputModal" href="javascript:void(0)" onclick="composeManageSrOutputModal(\'DESIGN\')"';
 						btnHtml += 'style="height: 3rem; width: 30%; border-radius: 5px; background-color:#2c7be4; color:white; font-weight:700;';
@@ -438,6 +457,11 @@ function setSrDetail(srNo) {
 						$('#srImplPrgrs').html('<input value="" style="width:40%; height:3rem; margin:0rem 1rem; text-align: center;">');
 						if (srPrgrs.srPrgrs > 0) {
 							$('#srImplPrgrs input').val(srPrgrs.srPrgrs);
+							
+							//그래프 재구성
+							$('#totalProgressGraph').css('width', srPrgrs.srPrgrs + '%');
+							$('#totalProgressGraphText').html(srPrgrs.srPrgrs + '%');
+							$('#implementProgressGraph').css('width', ((srPrgrs.srPrgrs - 20) * 2) + '%');
 						}
 						let btnHtml = '<center><a data-toggle="modal" data-target="#manageSrOutputModal" href="javascript:void(0)" onclick="composeManageSrOutputModal(\'IMPLEMENT\')"';
 						btnHtml += 'style="height: 3rem; width: 30%; border-radius: 5px; background-color:#2c7be4; color:white; font-weight:700;';
@@ -453,6 +477,11 @@ function setSrDetail(srNo) {
 						$('#srTestPrgrs').html('<input value="" style="width:40%; height:3rem; margin:0rem 1rem; text-align: center;">');
 						if (srPrgrs.srPrgrs > 0) {
 							$('#srTestPrgrs input').val(srPrgrs.srPrgrs);
+							
+							//그래프 재구성
+							$('#totalProgressGraph').css('width', srPrgrs.srPrgrs + '%');
+							$('#totalProgressGraphText').html(srPrgrs.srPrgrs + '%');
+							$('#testProgressGraph').css('width', ((srPrgrs.srPrgrs - 70) * 5) + '%');
 						}
 						let btnHtml = '<center><a data-toggle="modal" data-target="#manageSrOutputModal" href="javascript:void(0)" onclick="composeManageSrOutputModal(\'TEST\')"';
 						btnHtml += 'style="height: 3rem; width: 30%; border-radius: 5px; background-color:#2c7be4; color:white; font-weight:700;';
@@ -468,6 +497,11 @@ function setSrDetail(srNo) {
 						$('#srApplyPrgrs').html('<input value="" style="width:40%; height:3rem; margin:0rem 1rem; text-align: center;">');
 						if (srPrgrs.srPrgrs > 0) {
 							$('#srApplyPrgrs input').val(srPrgrs.srPrgrs);
+							
+							//그래프 재구성
+							$('#totalProgressGraph').css('width', srPrgrs.srPrgrs + '%');
+							$('#totalProgressGraphText').html(srPrgrs.srPrgrs + '%');
+							$('#applyRequestProgressGraph').css('width', ((srPrgrs.srPrgrs - 90) * 10) + '%');
 						}
 						let btnHtml = '<center><a data-toggle="modal" data-target="#manageSrOutputModal" href="javascript:void(0)" onclick="composeManageSrOutputModal(\'APPLY_REQUEST\')"';
 						btnHtml += 'style="height: 3rem; width: 30%; border-radius: 5px; background-color:#2c7be4; color:white; font-weight:700;';
