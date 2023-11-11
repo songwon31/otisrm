@@ -373,7 +373,7 @@ function showSrRqstBySrRqstNo(choiceSrRqstNo){
         data: {srRqstNo: choiceSrRqstNo},
         success: function(data) {
         	var date = new Date(data.srRqstRegDt);
-        	console.log(data);
+        	$("#srWriteOrModifyBtn").text("SR정보 등록");
         	//저장버튼(로그인한 회원의 요청만 저장버튼 활성화)
         	var loggedInUsrNo= $("#loginUsrNo").val();// 로그인한 회원 번호 가져오기 
         	var saveButton = $("#saveButton");
@@ -497,6 +497,7 @@ function showSrRqstBySrRqstNo(choiceSrRqstNo){
         	    $("#srRqst-importantChk").prop("checked", false);
         	}
         	
+        	//sr요청 번호에 해당하는 sr 상세 내용
         	showSrBySrRqstNo(choiceSrRqstNo);
         },
         error: function() {
@@ -515,8 +516,9 @@ function showSrBySrRqstNo(choiceSrRqstNo){
 		url: "getSrBySrRqstNoForPicHome",
 		data: {srRqstNo: choiceSrRqstNo},
 		success: function(data) {
-			if(data != 0 || data != null){
+			if(data != 0){
 				console.log("데이터 앙 !!");
+				$("#srWriteOrModifyBtn").text("SR정보 수정");
 				//sr번호 지정
 				$("#srNo").val(data.srNo);
 				
@@ -529,23 +531,14 @@ function showSrBySrRqstNo(choiceSrRqstNo){
 				
 			    // 로그인한 사용자와 요청을 등록한 회원을 비교하여 버튼 활성화/비활성화
 				console.log("슨서: " + data.srRqstSttsNo);
-				/*if (data.srRqstSttsNo === 'APRV') {
-					console.log("내sr");
-					saveButton2.prop("disabled", false); // 버튼을 활성화
-					saveButton2.css("opacity", 1); // 버튼을 완전 불투명으로 설정
-				} else{
-					console.log("내담당 아님");
-					saveButton2.prop("disabled", true); // 버튼을 비활성화
-					saveButton2.css("opacity", 0.5); // 버튼을 반투명으로 설정 (예시로 0.5 사용)
-				}*/
-				
+	
 				var formattedDate = $.datepicker.formatDate("yy-mm-dd", date);
 				//이관여부
 				$('input[name="srTrnsfYn"][value="'+ data.srTrnsfYn +'"]').prop('checked', true);
 				//이관되었을때
 				if(data.srTrnsfYn === "Y"){					
 					//이관 기간 선택
-					$("#trnsf-inst").val(data.srTrnsfInstNo);
+					$("#trnsf-srinst").val(data.srTrnsfInstNo);
 					//소요예산
 					$("#trnsf-srReqBgt").val(data.srReqBgt.toLocaleString('ko-KR'));//,붙인 금액
 					$("#srReqBgt").val(data.srReqBgt);//, 안붙인 금액
@@ -795,6 +788,7 @@ function removeSrRqst() {
 	});
 }
 
+//sr요청 수정
 function srRqstSttsUpdate() {
 	$("#update-srRqstNo").val($("#srRqst-srRqstNo").val());
 	
@@ -813,6 +807,7 @@ function srRqstSttsUpdate() {
             //showSrRqstBySrRqstNo(choiceSrRqstNo);
             //loadSRRequests(1, choiceSrRqstSttsNo);
             alert("수정 완료");
+            
         },
         error: function (error) {
             // 요청 중 오류가 발생한 경우 실행할 코드
@@ -825,3 +820,117 @@ function srRqstSttsUpdate() {
         contentType: false,
     });
 }
+
+
+//sr수정 모달 띄우기
+function showSrModifyModal() {
+    $('#srModyfyModal').modal('show');
+}
+
+function cancelBtnForModifyModal3(){
+	 $('#srModyfyModal').modal('hide');
+}
+
+//**SR 등록 또는 수정 수행
+function writeOrModifySrForPicHome(choiceSrRqstNo) {
+	// 소요예산에 콤마를 함께 입력했을 경우 콤마 제거
+    var formattedNumber = $("#trnsf-srReqBgt").val();
+    const originalNumber = parseFloat(formattedNumber.replace(/,/g, ''));  // 문자열에서 ',' 제거하고 숫자로 변환
+    $("#trnsf-srReqBgt").val(originalNumber);
+	
+    console.log("실행한댱 후후");
+	//formData세팅
+	choiceSrRqstNo = $("#srRqst-srRqstNo").val();
+    $("#sr-srRqstNo").val(choiceSrRqstNo);
+	var form = $("#writeOrModifySrForPicHome")[0];
+    var formData = new FormData(form);
+   
+    // srRqstNo에  해당하는 sr이 있는지 확인
+    $.ajax({
+        type: "GET",
+        url: "checkIfSrInformationPresent",  // 수정: POST에서 GET으로 변경
+        data: { srRqstNo: choiceSrRqstNo },
+        success: function (countSr) {
+            if (countSr > 0) {
+                // SR 정보가 이미 있는 경우 수정 모달 띄우기
+            	showSrModifyModal();
+                console.log("sr있음");
+            } else {
+                // SR 정보가 없는 경우 등록 또는 수정 수행
+            	proceedWriteOrModifySrForPicHome(formData);
+                console.log("sr없으");
+            }
+        },
+        error: function (error) {
+            console.error("오류 발생:", error);
+            alert("확인 실패");
+        },
+        cache: false,
+    });
+}
+
+//SR 등록 또는 수정 수행 함수
+function proceedWriteOrModifySrForPicHome(formData) {
+    $.ajax({
+        type: "POST",
+        url: "writeOrModifySrForPicHome",
+        data: formData,
+        success: function (data) {
+            // 수정 작업이 성공적으로 완료되면 여기에 원하는 작업을 수행할 수 있습니다.
+            var currentURL = window.location.href;
+            window.location.href = currentURL; // 원하는 URL로 변경
+            showSrRqstBySrRqstNo(choiceSrRqstNo);
+            loadSRRequests(1, choiceSrRqstSttsNo);
+            $('#srRqstModyfyModal').modal('hide'); // 모달 숨기기
+        },
+        error: function (error) {
+            // 요청 중 오류가 발생한 경우 실행할 코드
+            console.error("오류 발생:", error);
+            alert("수정 실패");
+            $('#srRqstModyfyModal').modal('hide'); // 모달 숨기기
+        },
+        cache: false,
+        processData: false,
+        contentType: false,
+    });
+}
+
+/*// SR 등록 또는 수정 수행
+function writeOrModifySrForPicHome() {
+	choiceSrRqstNo = $("#srRqst-srRqstNo").val();
+	console.log("등록 또는 삭제 실행!")
+	console.log(choiceSrRqstNo);
+	$("sr-srRqstNo").val(choiceSrRqstNo);
+	
+    var form = $("#writeOrModifySrForPicHome")[0];
+    var formData = new FormData(form);
+    
+    //소요예산에 콤마를 함께 입력했을 경우 콤마 제거
+    var formattedNumber =  $("#trnsf-srReqBgt").val();
+    const originalNumber = parseFloat(formattedNumber.replace(/,/g, ''));  // 문자열에서 ',' 제거하고 숫자로 변환
+    $("#trnsf-srReqBgt").val(originalNumber);
+   
+    // Ajax 요청 보내기
+    $.ajax({
+        type: "POST",
+        url: "writeOrModifySrForPicHome",
+        data: formData,
+        success: function (data) {
+            // 수정 작업이 성공적으로 완료되면 여기에 원하는 작업을 수행할 수 있습니다.
+            var currentURL = window.location.href;
+            window.location.href = currentURL; // 원하는 URL로 변경
+            showSrBySrRqstNo(choiceSrRqstNo);
+            loadSRRequests(1, choiceSrRqstSttsNo);
+        },
+        error: function (error) {
+            // 요청 중 오류가 발생한 경우 실행할 코드
+            console.error("오류 발생:", error);
+            alert("수정 실패");
+          
+        },
+        cache: false,
+        processData: false,
+        contentType: false,
+    });
+}
+*/

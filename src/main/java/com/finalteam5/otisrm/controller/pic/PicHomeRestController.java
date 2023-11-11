@@ -172,4 +172,11 @@ public class PicHomeRestController {
 		}
 		return sr;
 	}
+	
+	//sr요청번호에 해당하는 sr개발정보가 있는지 여부 확인
+	@GetMapping("checkIfSrInformationPresent")
+	public int checkIfSrInformationPresent(String srRqstNo) {
+		int countSrBySrRqstNo = srRqstService.checkIfSrInformationPresent(srRqstNo);
+		return countSrBySrRqstNo;
+	}
 }

@@ -18,7 +18,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.finalteam5.otisrm.dto.SrDmndClsf;
 import com.finalteam5.otisrm.dto.SrTaskClsf;
+import com.finalteam5.otisrm.dto.SrTrnsfPlan;
 import com.finalteam5.otisrm.dto.sr.srForPicHome.SrAtch;
+import com.finalteam5.otisrm.dto.sr.srForPicHome.SrSubmit;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstAtch;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstSubmit;
 import com.finalteam5.otisrm.dto.usr.Inst;
@@ -96,9 +98,10 @@ public class PicHomeController {
 			}
 	    }
 	
-	    return "redirect:/customerHome";
+	    return "redirect:/picHome";
 	}
 	
+	//sr요청 첨부파일 다운로드
 	@GetMapping("filedownloadForPicHome")
 	public void filedownloadSrRqstAtch(String srRqstAtchNo, HttpServletRequest request, HttpServletResponse response) throws Exception {
 	    // 요청된 SrRqstAtchNo에 해당하는 SrRqstAtch 객체를 가져옴
@@ -130,6 +133,7 @@ public class PicHomeController {
 	   os.close();    
 	}
 	
+	//sr 첨부파일 다운로드
 	@GetMapping("filedownloadSrAtchForPicHome")
 	public void filedownloadSrAtch(String srAtchNo, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		// 요청된 SrRqstAtchNo에 해당하는 SrRqstAtch 객체를 가져옴
@@ -161,19 +165,67 @@ public class PicHomeController {
 		os.close();    
 	}
 	
-	//담당자 홈 페이지에서 요청 수정하기
+	//담당자 홈 페이지에서 sr 요청 수정하기
 	@PostMapping("modifySrRqstForPicHome")
 	public String modifySrRqst(SrRqstSubmit srRqstSubmit) {
 	    srRqstService.modifySrRqst(srRqstSubmit);
 	    return "redirect:/picHome";
 	}
 	
-	//담당자 홈 페이지에서 요청 삭제하기
+	//담당자 홈 페이지에서 sr 요청 삭제하기
 	@PostMapping("removeSrRqstForPicHome")
 	public String removeSrRqst(String srRqstNo) {
 		srRqstService.removeSrRqst(srRqstNo);
 		return "redirect:/picHome";
 	}
 	
+	//sr 개발계획 등록 또는 수정 하기
+	@PostMapping("writeOrModifySrForPicHome")
+	public String writeSr(SrSubmit srSubmit) throws Exception{
+		//srRqstNo에 해당하는 sr정보가 있는지 확인
+		int countOfSr = srRqstService.checkIfSrInformationPresent(srSubmit.getSrRqstNo());
+		log.info("과연: " + srSubmit.toString());
+		//sr정보가 없을 경우 insert(등록)
+		if(countOfSr == 0) {	
+			srRqstService.writeSr(srSubmit);
+			
+			//첨부파일이 있다면 첨부파일 업로드
+			MultipartFile[] files = srSubmit.getFile();
+			//첨부파일을 업로드한 sr 번호 
+			String srPk = srRqstService.getAddSrPk();
+			
+			for(MultipartFile file : files) {
+				SrAtch srAtch = new SrAtch();
+				if(!file.isEmpty()) {
+					srAtch.setSrNo(srPk);
+					//브라우저에서 선택한 파일 이름 설정
+					srAtch.setSrAtchNm(file.getOriginalFilename());
+					//파일의 형식(MIME타입)을 설정
+					srAtch.setSrAtchMimeType(file.getContentType());
+					//올린 파일 설정
+					srAtch.setSrAtchData(file.getBytes());
+					//파일 크기 설정
+					srAtch.setSrAtchSize(file.getSize());
+					
+					//업로드
+					srRqstService.uploadSrAtch(srAtch);
+				}
+			}
+			
+			//이관된 sr일 경우 sr이관 계획도 등록
+			if(srSubmit.getSrTrnsfYn().equals("Y")) {
+				SrTrnsfPlan srTrnsfPlan = new SrTrnsfPlan();
+				srTrnsfPlan.setSrNo(srPk);
+				srTrnsfPlan.setInstNo(srSubmit.getSrTrnsfInstNo());
+				srTrnsfPlan.setSrDmndNo(srSubmit.getSrDmndNo());
+				//sr 이관계획 등록
+				srRqstService.writeSrTrnsfPlan(srTrnsfPlan);
+			}
+		//해당 sr정보가 있을 경우 update(수정)
+		}else {
+			 srRqstService.modifySr(srSubmit);
+		}	
+	    return "redirect:/picHome";
+	}
 	
 }

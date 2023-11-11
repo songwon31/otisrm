@@ -6,9 +6,11 @@ import java.util.Map;
 
 import com.finalteam5.otisrm.dto.SrDmndClsf;
 import com.finalteam5.otisrm.dto.SrTaskClsf;
+import com.finalteam5.otisrm.dto.SrTrnsfPlan;
 import com.finalteam5.otisrm.dto.Sys;
 import com.finalteam5.otisrm.dto.sr.srForPicHome.Sr;
 import com.finalteam5.otisrm.dto.sr.srForPicHome.SrAtch;
+import com.finalteam5.otisrm.dto.sr.srForPicHome.SrSubmit;
 import com.finalteam5.otisrm.dto.srRequest.SrRqst;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstAtch;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstForSearchList;
@@ -75,7 +77,28 @@ public interface SrRqstService {
 	//sr첨부파일 번호에 해당하는 첨부파일 가져오기(파일 다운로드를 위함)
 	public SrAtch getSrAtchBySrAtchNo(String srAtchNo);
 	
-	//작성자: 이현주
+	//sr 정보 입력하기
+	public int writeSr (SrSubmit srSubmit);
+	
+	//최근 삽입한 sr pk 불러오기(첨부파일 등록을 위함)
+	public String getAddSrPk();
+	
+	//sr 등록 첨부파일 업로드	
+	public int uploadSrAtch(SrAtch srAtch);
+	
+	//최근 삽입한 이관된 sr pk불러오기(이관된 sr계획 정보 등록을 위함)
+	public String getAddSrPkByTrnsf();
+	
+	//최근 삽입한 이관된 sr에 해당하는 sr이관계획 등록
+	public int writeSrTrnsfPlan(SrTrnsfPlan srTrnsfPlan);
+	
+	//sr 개발정보 수정하기
+	public void modifySr(SrSubmit srSubmit);
+	
+	//해당 sr요청에 대한 sr정보가 있는지 확인
+	public int checkIfSrInformationPresent(String srRqstNo);
+	
+	//작성자: 이현주=================================================================
 	//요청목록불러오기(검토자 홈)
 	public List<SrRqstForReviewerHomeBoard> getSrRqstForReviewerHomeBoardListByPage(Map<String, Object> params);
 	

@@ -9,9 +9,11 @@ import org.springframework.stereotype.Service;
 import com.finalteam5.otisrm.dao.SrRqstDao;
 import com.finalteam5.otisrm.dto.SrDmndClsf;
 import com.finalteam5.otisrm.dto.SrTaskClsf;
+import com.finalteam5.otisrm.dto.SrTrnsfPlan;
 import com.finalteam5.otisrm.dto.Sys;
 import com.finalteam5.otisrm.dto.sr.srForPicHome.Sr;
 import com.finalteam5.otisrm.dto.sr.srForPicHome.SrAtch;
+import com.finalteam5.otisrm.dto.sr.srForPicHome.SrSubmit;
 import com.finalteam5.otisrm.dto.srRequest.SrRqst;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstAtch;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstForSearchList;
@@ -151,7 +153,55 @@ public class SrRqstServiceImpl implements SrRqstService{
 		return srAtch;
 	}
 	
-	//작성자: 이현주 
+	//sr 정보 입력하기
+	@Override
+	public int writeSr(SrSubmit srSubmit) {
+		int numOfInsert = srRqstDao.insertSr(srSubmit);
+		return numOfInsert;
+	}
+	
+	//최근 삽입한 sr pk 불러오기(첨부파일 등록을 위함)
+	@Override
+	public String getAddSrPk() {
+		String pk = srRqstDao.selectAddSrPk();
+		return pk;
+	}
+	
+	//sr 등록 첨부파일 업로드	
+	@Override
+	public int uploadSrAtch(SrAtch srAtch) {
+		int numOfInsert = srRqstDao.insertSrAtch(srAtch);
+		return numOfInsert;
+	}
+	
+	//최근 삽입한 이관된 sr pk불러오기(이관된 sr계획 정보 등록을 위함)
+	@Override
+	public String getAddSrPkByTrnsf() {
+		String pk = srRqstDao.selectAddSrPkByTrnsf();
+		return pk;
+	}
+	
+	//최근 삽입한 이관된 sr에 해당하는 sr이관계획 등록
+	@Override
+	public int writeSrTrnsfPlan(SrTrnsfPlan srTrnsfPlan) {
+		int numOfInsert = srRqstDao.insertSrTrnsfPlan(srTrnsfPlan);
+		return numOfInsert;
+	}
+	
+	//sr 개발정보 수정하기
+	@Override
+	public void modifySr(SrSubmit srSubmit) {
+		srRqstDao.updateSr(srSubmit);
+	}
+	
+	//해당 sr요청에 대한 sr정보가 있는지 확인
+	@Override
+	public int checkIfSrInformationPresent(String srRqstNo) {
+		int numOfSrBySrRqstNo = srRqstDao.countSrInformationPresent(srRqstNo);
+		return numOfSrBySrRqstNo;
+	}
+	
+	//작성자: 이현주 =================================================================== 
 	//요청목록 불러오기(검토자 홈)
 	@Override
 	public List<SrRqstForReviewerHomeBoard> getSrRqstForReviewerHomeBoardListByPage(Map<String, Object> params) {
@@ -216,5 +266,5 @@ public class SrRqstServiceImpl implements SrRqstService{
 	public List<SrRqstForSearchList> getSrRqstForReviewpManagementByPage(Map<String, Object> params) {
 		return srRqstDao.selectSrRqstForReviewManagementByPage(params);
 	}
-
+	
 }

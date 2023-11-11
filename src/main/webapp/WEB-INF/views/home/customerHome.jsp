@@ -44,26 +44,6 @@
 		   	  				<div>승인</div>
 		   	  				<div id="numOfAprv" class="pb-1"></div>
 		   	  			</div>
-		   	  			<div id="RCPT_WAIT" class="filterTab d-flex justify-content-center align-items-center">
-		   	  				<div>접수대기</div>
-		   	  				<div id="numOfRcptWait" class="pb-1"></div>
-		   	  			</div>
-		   	  			<div id="RCPT"  class="filterTab d-flex justify-content-center align-items-center">
-			   	  			<div>접수</div>
-			   	  			<div id="numOfRcpt" class="pb-1"></div>
-		   	  			</div>
-		   	  			<div id="DEP_ING"  class="filterTab d-flex justify-content-center align-items-center">
-		   	  				<div>개발중</div>
-		   	  				<div id="numOfDepIng" class="pb-1"></div>
-		   	  			</div>
-		   	  			<div id="TEST" class="filterTab d-flex justify-content-center align-items-center">
-			   	  			<div>테스트</div>
-			   	  			<div id="numOfTest" class="pb-1"></div>
-		   	  			</div>
-		   	  			<div id="CMPTN_RQST" class="filterTab d-flex justify-content-center align-items-center">
-			   	  			<div>완료요청</div>
-			   	  			<div id="numOfCmptnRqst"class="pb-1"></div>
-		   	  			</div>
 		   	  			<div id="DEP_CMPTN" class="filterTab d-flex justify-content-center align-items-center">
 			   	  			<div>개발완료</div>
 			   	  			<div id="numOfDepCmptn" class="m-1"></div>

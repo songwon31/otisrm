@@ -22,6 +22,11 @@
 			   	  <div class="d-flex st-ct">
 			   	  	<i class="material-icons stt-ic">chevron_right</i>
 			   	  	<span class="pt-1">나의 할일</span>
+			   	  	<div id="requestAddBtnWrap">
+						<button id="requestAddBtn" data-toggle="modal" data-target="#addSrRqst" class="btn-1 d-inline-flex flex-row align-items-center justify-content-center mb-1" style="margin-left: 1180px;" onclick="showSysByDeptNo('${usr.deptNo}')">
+							요청 등록
+						</button>
+					</div>
 			   	  </div>
 		   	  </div>
 		   	  <div class="tableContainer">
@@ -84,11 +89,7 @@
 			   	  			<div>개발완료</div>
 			   	  			<div id="numOfDepCmptn" class="m-1"></div>
 		   	  			</div>
-		   	  			<div id="requestAddBtnWrap" class="d-flex flex-row-reverse align-items-end">
-							<button id="requestAddBtn" data-toggle="modal" data-target="#addSrRqst" class="btn-1 d-inline-flex flex-row align-items-center justify-content-center mb-1" onclick="showSysByDeptNo('${usr.deptNo}')">
-								요청 등록
-							</button>
-						</div>
+		   	  			
 		   	  		</div>
 		   	  	</div>
 		   	  <table id="mainTable" style="width: 100%; text-align: center; height: 27rem;">
@@ -343,7 +344,7 @@
 			          <label for="systemName" class="form-label">SR 내용</label>
 			        </div>
 			        <div style="width: 550.41px;">
-			          <textarea id="srRqst-srConts" class="modifyPossible form-control" id="srContent" style="height: 12rem;" name=""></textarea>
+			          <textarea id="srRqst-srConts" rows="3" class="modifyPossible form-control" id="srContent" name="srContent"></textarea>
 			        </div>
 			    </div>
 		        <div class="d-flex w-100 pt-2">
@@ -373,12 +374,12 @@
 	          <label for="systemName" class="form-label">검토의견</label>
 	        </div>
 	        <div style="width: 550.41px;">
-	          <textarea id="srRqst-review" class="form-control" disabled></textarea>
+	          <textarea id="srRqst-review" rows="3" class="form-control" disabled></textarea>
 	        </div>
 	    </div>
     </div>
 
-    <!-- SR개발 정보  -->
+    <!-- SR 상태 변경  -->
     <form id="srRqstSttsUpdate" action="modifySrRqstForPicHome" method="post">    
 	    <div class="d-flex">      		
 	    	<div>      		
@@ -395,6 +396,9 @@
 	    	</div>
 	     </div>
 	 </form>
+	 
+	 <!-- SR 개발정보 -->
+	 <form id="writeOrModifySrForPicHome" action="writeOrModifySrForPicHome" method="post" enctype="multipart/form-data">
 	  	 <div class="card p-3 mb-4">
 		      <div>
 		       	<div class="d-flex">
@@ -403,8 +407,10 @@
 			            	<label for="srPic" class="form-label">개발담당자</label>
 			          	</div>
 			 			<div class="w-45">
-				            <input type="text" class="form-control" id="picUsrNo" value="${usr.usrNm}" disabled>
-				            <input id="srNo" type="hidden" class="form-control"  value="" >
+				            <input type="text" class="form-control" value="${usr.usrNm}" disabled>
+				            <input type="hidden" class="form-control" id="picUsrNo" name="picUsrNo" value="${usr.usrNo}" >
+				            <input id="sr-srRqstNo" type="hidden" class="form-control" name="srRqstNo">
+				            <input id="srNo" type="hidden" class="form-control" name="srNo">
 			 			</div>
 			        </div>
 			        <div class="d-flex w-50">
@@ -440,12 +446,12 @@
 					            	<label for="srPic" class="form-label">이관기관</label>
 					          	</div>
 					 			<div class="w-45">
-							            <select id="trnsf-inst" class="srTrnsfYn_Y form-control" name="srTrnsfInstNo">
-							 				<option value="" >--이관기관 선택--</option>
-							 				<c:forEach items="${instByOutsrcYList}" var="inst">					 				
-												<option id="${inst.instNm}" value="${inst.instNo}" >${inst.instNm}</option>
-							 				</c:forEach>
-									    </select>	
+						            <select id="trnsf-srinst" class="srTrnsfYn_Y form-control" name="srTrnsfInstNo">
+						 				<option value="" >--이관기관 선택--</option>
+						 				<c:forEach items="${instByOutsrcYList}" var="inst">					 				
+											<option id="${inst.instNm}" value="${inst.instNo}" >${inst.instNm}</option>
+						 				</c:forEach>
+								    </select>	
 					 			</div>
 					        </div>
 					        <div class="d-flex w-50">
@@ -453,8 +459,7 @@
 						          <label for="writerDepartment" class="form-label">소요예산</label>
 						        </div>
 						        <div class="w-45">
-						          <input id="trnsf-srReqBgt" type="text" class="srTrnsfYn_Y form-control">
-						          <input id="srReqBgt" value="" type="hidden" class="form-control" name="srReqBgt">
+						          <input id="trnsf-srReqBgt" type="text" class="srTrnsfYn_Y form-control" name="srReqBgt">
 						        </div>
 						    </div>
 						</div>
@@ -520,7 +525,7 @@
 						          <label for="systemName" class="form-label">개발내용</label>
 						        </div>
 						        <div style="width: 550.41px;">
-						          <textarea id="srDvlConts" class="form-control"  style="height: 12rem;" name="srDvlConts"></textarea>
+						          <textarea id="srDvlConts" class="form-control" rows="3" name="srDvlConts"></textarea>
 						        </div>
 						    </div>
 					        <div class="d-flex w-100 pt-2">
@@ -541,6 +546,11 @@
 		  		</div>
 	    	</div>
 	  	</div>
+	  	 <div class="modal-footer py-1">
+        <button id="srWriteOrModifyBtn" type="button" onclick="writeOrModifySrForPicHome()" class="btn-1">SR정보 등록</button>
+        <button type="button" class="btn-3" data-dismiss="modal">닫기</button>
+      </div>
+	 </form>
 </div>
 
 <!-- 요청 삭제 모달 -->  
@@ -584,6 +594,29 @@
 	      <div class="modal-footer">
 	        <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="confirmSrRqstModify()" >확인</button>
 	        <button type="button" class="btn" style="background-color: #de483a; color: white;" onclick="cancelBtnForModifyModal2()">취소</button>
+	      </div>
+		</div>
+	</div>
+</div>
+
+<!-- sr 수정 모달 -->  
+<div class="modal" id="srModyfyModal">
+  <div class="modal-dialog">
+	  <div class="modal-content">
+	      <!-- Modal Header -->
+	      <div class="modal-header" style="background-color: #2c7be4;">
+	        <h6 class="modal-title">sr개발 정보 수정</h6>
+	      </div>
+	
+	      <!-- Modal body -->
+	      <div class="modal-body">
+	        	해당 sr개발 정보를 다음과 같이 변경하시겠습니까 ?
+	      </div>
+	
+	      <!-- Modal footer -->
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="proceedWriteOrModifySrForPicHome()" >확인</button>
+	        <button type="button" class="btn" style="background-color: #de483a; color: white;" onclick="cancelBtnForModifyModal3()">취소</button>
 	      </div>
 		</div>
 	</div>

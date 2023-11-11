@@ -7,15 +7,17 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.finalteam5.otisrm.dto.SrDmndClsf;
 import com.finalteam5.otisrm.dto.SrTaskClsf;
+import com.finalteam5.otisrm.dto.SrTrnsfPlan;
 import com.finalteam5.otisrm.dto.Sys;
 import com.finalteam5.otisrm.dto.sr.srForPicHome.Sr;
 import com.finalteam5.otisrm.dto.sr.srForPicHome.SrAtch;
+import com.finalteam5.otisrm.dto.sr.srForPicHome.SrSubmit;
 import com.finalteam5.otisrm.dto.srRequest.SrRqst;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstAtch;
-import com.finalteam5.otisrm.dto.srRequest.SrRqstForSearchList;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstForReviewerHomeBoard;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstForReviewerHomeProgress;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstForReviewerModal;
+import com.finalteam5.otisrm.dto.srRequest.SrRqstForSearchList;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstStts;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstSubmit;
 import com.finalteam5.otisrm.dto.usr.Inst;
@@ -80,9 +82,28 @@ public interface SrRqstDao {
 	//sr 첨부파일 번호에 해당하는 첨부파일 불러오기
 	public SrAtch selectSrAtchBySrAtchNo(String srAtchNo);
 	
-	//public List<Sr> selectSrBySrRqstNo(String srRqstNo);
+	//sr 정보 입력하기
+	public int insertSr (SrSubmit srSubmit);
 	
-	//작성자: 이현주
+	//최근 삽입한 sr pk 불러오기(첨부파일 등록을 위함)
+	public String selectAddSrPk();
+	
+	//sr 등록 첨부파일 업로드	
+	public int insertSrAtch(SrAtch srAtch);
+	
+	//최근 삽입한 이관된 sr pk불러오기(이관된 sr계획 정보 등록을 위함)
+	public String selectAddSrPkByTrnsf();
+	
+	//최근 삽입한 이관된 sr에 해당하는 sr이관계획 등록
+	public int insertSrTrnsfPlan(SrTrnsfPlan srTrnsfPlan);
+	
+	//sr 개발정보 수정하기
+	public void updateSr(SrSubmit srSubmit);
+	
+	//해당 sr요청에 대한 sr정보가 있는지 확인
+	public int countSrInformationPresent(String srRqstNo);
+	
+	//작성자: 이현주 ====================================================================
 	//페이지별로 요청 불러오기(검토자 홈)
 	public List<SrRqstForReviewerHomeBoard> selectSrRqstForReviewerHomeBoardListByPage(Map<String, Object> params);
 	

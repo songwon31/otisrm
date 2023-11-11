@@ -255,14 +255,84 @@
 		where sr.sr_rqst_no= #{srRqstNo, jdbcType=VARCHAR}
 	</select>
 	
-	<!-- sr 상세에 해당하는 첨부파일 불러오기 -->
+	<!--  담당자홈: sr 상세에 해당하는 첨부파일 불러오기 -->
 	<select id="selectSrAtchBySrNo" parameterType="String" resultType="SrAtch" >
 		select * from sr_atch where sr_no = #{srNo}
 	</select>
 	
-	<!-- sr 첨부파일 번호에 해당하는 첨부파일 불러오기 -->
+	<!--  담당자홈: sr 첨부파일 번호에 해당하는 첨부파일 불러오기 -->
 	<select id="selectSrAtchBySrAtchNo" parameterType="String" resultType="SrAtch">
 		select * from sr_atch where sr_atch_no = #{srAtchNo}
+	</select>
+	
+	<!--  담당자홈: sr개발 정보 입력하기 -->
+	<!-- PK는 트리거를 사용해서 null로 지정할  경우 자동으로 정해진 포멧으로 삽입됨 -->
+	<insert id="insertSr" parameterType="SrSubmit">
+		insert into sr (
+		    sr_no, sr_rqst_no, pic_usr_no, sr_cmptn_prnmnt_dt, 
+		    sr_req_bgt, sr_trnsf_inst_no, sr_pri, sr_dvl_conts, sr_trnsf_yn,
+		    sr_reg_dt, sr_mdfcn_dt, sr_vld_yn, sr_task_no
+		) values (
+		    null, #{srRqstNo, jdbcType=VARCHAR}, #{picUsrNo, jdbcType=VARCHAR},
+		    TO_DATE(#{srCmptnPrnmntDt, jdbcType=VARCHAR}, 'yy-MM-dd'), #{srReqBgt},  
+		    #{srTrnsfInstNo, jdbcType=VARCHAR}, #{srPri, jdbcType=VARCHAR}, #{srDvlConts, jdbcType=VARCHAR},
+		    #{srTrnsfYn, jdbcType=VARCHAR}, sysdate, sysdate, 'Y', #{srTaskNo, jdbcType=VARCHAR}
+		)
+	</insert>
+	
+	<!-- 최근 삽입한 sr 불러오기(첨부파일 등록을 위함) -->
+	<select id="selectAddSrPk" resultType="String">
+		select sr_no from (
+		  select * from sr order by sr_reg_dt desc
+		) where rownum = 1
+	</select>
+	
+	<!-- sr 등록 첨부파일 업로드 -->
+	<!-- PK는 트리거를 사용해서 null로 지정할  경우 자동으로 정해진 포멧으로 삽입됨 -->
+	<insert id="insertSrAtch" parameterType="SrAtch">
+	    insert into sr_atch(
+	        sr_atch_no, sr_no, sr_atch_nm, sr_atch_mime_type,
+	        sr_atch_data, sr_atch_size
+	    ) values(
+	        null, #{srNo, jdbcType=VARCHAR}, #{srAtchNm, jdbcType=VARCHAR},
+	        #{srAtchMimeType, jdbcType=VARCHAR}, #{srAtchData, jdbcType=BLOB},
+	        #{srAtchSize, jdbcType=NUMERIC}
+	    )
+	</insert>
+	
+	<!-- 최근 삽입한 sr중 이관된 경우 불러오기(첨부파일 등록을 위함) -->
+	<select id="selectAddSrPkByTrnsf" resultType="String">
+		select sr_no from (
+	      select * from sr where sr_trnsf_yn = 'Y' order by sr_reg_dt desc
+	    ) where rownum = 1
+	</select>
+	
+	<!-- 이관된 sr일 경우 sr이관 계획 등록하기 -->
+	<insert id="insertSrTrnsfPlan" parameterType="SrTrnsfPlan">
+	    insert into sr_trnsf_plan(
+	        sr_no, inst_no, sr_dmnd_no
+	    ) values(
+	        #{srNo, jdbcType=VARCHAR}, #{instNo, jdbcType=VARCHAR}, #{srDmndNo, jdbcType=VARCHAR}
+	    )
+	</insert>
+	
+	<!-- sr 개발계획 수정 -->
+	<update id="updateSr" parameterType="SrSubmit">
+		update sr
+	    set
+	        sr_cmptn_prnmnt_dt = COALESCE(TO_DATE(#{srCmptnPrnmntDt, jdbcType=VARCHAR}, 'yy-MM-dd'), sr_cmptn_prnmnt_dt),
+	        sr_req_bgt = COALESCE(#{srReqBgt, jdbcType=NUMERIC}, sr_req_bgt),
+	        sr_pri = COALESCE(#{srPri, jdbcType=VARCHAR}, sr_pri),
+	        sr_dvl_conts = COALESCE(#{srDvlConts, jdbcType=VARCHAR}, sr_dvl_conts),
+	        sr_task_no = COALESCE(#{srTaskNo, jdbcType=VARCHAR}, sr_task_no),
+	        sr_mdfcn_dt = sysdate
+	    where sr_rqst_no = #{srRqstNo, jdbcType=VARCHAR}
+	</update>
+	
+	<!-- 해당 sr 요청에 대한 sr 정보가 있는지 확인하는 쿼리 -->
+	<select id="countSrInformationPresent" parameterType="String" resultType="int">
+	    select count(*) from sr
+	    where sr_rqst_no = #{srRqstNo, jdbcType=VARCHAR}
 	</select>
 	
 	<!-- 작성자: 이현주  -->
