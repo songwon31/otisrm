@@ -1,6 +1,8 @@
 package com.finalteam5.otisrm.controller;
 import java.io.OutputStream;
 import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -19,6 +21,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.finalteam5.otisrm.dto.SrPrgrsOtpt;
 import com.finalteam5.otisrm.dto.SrTrnsfPlanForm;
+import com.finalteam5.otisrm.dto.sr.DatesForScheduleChangeRequest;
+import com.finalteam5.otisrm.dto.sr.ManageChangeScheduleRequestModalConfig;
 import com.finalteam5.otisrm.dto.sr.SrPrgrsForm;
 import com.finalteam5.otisrm.dto.sr.SrRequestDetailForDeveloperHome;
 import com.finalteam5.otisrm.dto.sr.SrTableElementsForDeveloperHome;
@@ -263,8 +267,53 @@ public class DeveloperHomeController {
 	@PostMapping("/registerHrInfo")
 	@ResponseBody
 	public int registerHrInfo(@RequestBody String jsonData) {
-		log.info(jsonData);
 		return srService.registerHrInfo(jsonData);
+	}
+	
+	//SR일정변경요청 모달 구성(현재 완료요청일)
+	@PostMapping("/getSrCmptnPrnmntDt")
+	@ResponseBody
+	public DatesForScheduleChangeRequest getSrTrgtCmptnDt(String srNo) {
+		return srService.getSrCmptnPrnmntDtBySrNo(srNo);
+	}
+	
+	//SR일정변경요청
+	@PostMapping("/requestSrScheduleChange")
+	@ResponseBody
+	public String requestSrScheduleChange(String srNo, String srSchdlChgRqstDt) {
+		log.info("" + srNo + " " + srSchdlChgRqstDt);
+		if (srSchdlChgRqstDt == null) {
+			return "fail";
+		} else {
+	        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+	        try {
+	            Date date = dateFormat.parse(srSchdlChgRqstDt);
+	            srService.requestSrScheduleChange(srNo, date);
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+			return "success";
+		}
+		
+	}
+	
+	//일정변경요청 내역 리스트
+	@PostMapping("/getManageChangeScheduleRequestModalConfig")
+	@ResponseBody
+	public List<ManageChangeScheduleRequestModalConfig> getManageChangeScheduleRequestModalConfig() {
+		return srService.getManageChangeScheduleRequestModalConfig();
+	}
+	
+	//일정변경요청 결과 확인
+	@PostMapping("/srScheduleChangeRequestResultCheck")
+	@ResponseBody
+	public String srScheduleChangeRequestResultCheck(String srNo) {
+		if (srService.srScheduleChangeRequestResultCheck(srNo) == 1) {
+			return "success";
+		} else {
+			return "fail";
+		}
+		
 	}
 }
 

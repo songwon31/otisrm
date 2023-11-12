@@ -1231,3 +1231,114 @@ function registerCapacity() {
         }
     });
 }
+
+function changeScheduleRequestModalConfig() {
+	console.log(currentDetailSrNo);
+	$.ajax({
+        url: "/otisrm/getSrCmptnPrnmntDt",
+        method: "POST",
+        data: {srNo: currentDetailSrNo},
+        success: function (data) {
+        	if (data.srSchdlChgRqstDt == null || data.srSchdlChgRqstDt == '') {
+        		data.srSchdlChgRqstDt = data.srCmptnPrnmntDt;
+        	}
+        	let currentCmptnPrnmntDt = new Date(data.srCmptnPrnmntDt);
+        	let requestSrTrgtCmptnDt = new Date(data.srSchdlChgRqstDt);
+        	$('#currentSrCmptnPrnmntDt').val(formatDate(currentCmptnPrnmntDt));
+        	$('#requestSrTrgtCmptnDt').val(formatDate(requestSrTrgtCmptnDt));
+        }
+    });
+}
+
+function srScheduleChangeRequest() {
+	let requestSrTrgtCmptnDt = $('#requestSrTrgtCmptnDt').val();
+	$.ajax({
+        url: "/otisrm/requestSrScheduleChange",
+        method: "POST",
+        data: {
+        	srNo: currentDetailSrNo,
+        	srSchdlChgRqstDt: requestSrTrgtCmptnDt
+        },
+        success: function (data) {
+        	if (data == "success") {
+        		$('#alertContent').html("일정 변경이 신청되었습니다.");
+    			$("#alertModal").modal("show");
+        	} else {
+        		$('#warningContent').html("신청이 실패했습니다.");
+    			$("#warningModal").modal("show");
+        	}
+        	
+        }
+    });
+}
+
+function manageChangeScheduleRequestModalConfig() {
+	$('#manageChangeScheduleRequestModalTable tbody').html('');
+	$.ajax({
+        url: "/otisrm/getManageChangeScheduleRequestModalConfig",
+        method: "POST",
+        success: function (data) {
+        	for (let i=0; i<data.length; ++i) {
+        		let config = data[i];
+    			let html = '';
+    			html += '<tr style="height: 4.5rem; font-size: 1.5rem; background-color:white;">';
+    			html += '<td>' + config.srNo + '</td>';
+    			let srCmptnPrnmntDt = new Date(config.srCmptnPrnmntDt);
+    			html += '<td><input type="date" value="' + formatDate(srCmptnPrnmntDt) + '" disabled></td>';
+    			let srSchdlChgRqstDt = new Date(config.srSchdlChgRqstDt);
+    			html += '<td><input class="chgRqstDt" type="date" value="' + formatDate(srSchdlChgRqstDt) + '"></td>';
+    			html += '<td>' + config.status + '</td>';
+    			html += '<td> <button onclick="srScheduleChangeRequestModal(\'' + config.srNo + '\')">요청수정/재신청</button> </td>';
+    			if (config.srSchdlChgRqstAprvYn == null || config.srSchdlChgRqstAprvYn == '') {
+    				html += '<td></td>'
+    			} else {
+    				html += '<td> <button onclick="srScheduleChangeRequestResultCheck(\'' + config.srNo + '\')">확인</button> </td>';
+    			}
+    			html += '</tr>';
+    			
+				$('#manageChangeScheduleRequestModalTable tbody').append(html);
+        	}
+        }
+    });
+}
+
+function srScheduleChangeRequestModal(srNo) {
+	let requestSrTrgtCmptnDt = $(event.target).closest('tr').find('.chgRqstDt').val();
+	
+	$.ajax({
+        url: "/otisrm/requestSrScheduleChange",
+        method: "POST",
+        data: {
+        	srNo: srNo,
+        	srSchdlChgRqstDt: requestSrTrgtCmptnDt
+        },
+        success: function (data) {
+        	if (data == "success") {
+        		$('#alertContent').html("일정 변경이 신청되었습니다.");
+    			$("#alertModal").modal("show");
+        	} else {
+        		$('#warningContent').html("신청이 실패했습니다.");
+    			$("#warningModal").modal("show");
+        	}
+        	manageChangeScheduleRequestModalConfig();
+        }
+    });
+}
+
+function srScheduleChangeRequestResultCheck(srNo) {
+	$.ajax({
+        url: "/otisrm/srScheduleChangeRequestResultCheck",
+        method: "POST",
+        data: { srNo: srNo },
+        success: function (data) {
+        	if (data == "success") {
+        		
+        	} else {
+        		
+        	}
+        	manageChangeScheduleRequestModalConfig();
+        }
+    });
+}
+
+

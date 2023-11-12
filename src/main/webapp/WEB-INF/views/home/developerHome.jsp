@@ -88,8 +88,12 @@
 					<span>)</span>
 				</a>
 				<div style="flex-grow:1;"></div>
+				<button type="button" data-toggle="modal" data-target="#manageChangeScheduleRequestModal" onclick="manageChangeScheduleRequestModalConfig()"
+						style="height:2.5rem; display:flex; align-items:center; justify-content:center;">
+					일정변경요청 내역 관리
+				</button>
 				<button type="button" data-toggle="modal" data-target="#srPerformanceRegistrationModal" onclick="srPerformanceRegistrationModalConfig()"
-						class="btn-2" style="display:flex; align-items:center; justify-content:center;">
+						class="btn-2" style="display:flex; align-items:center; justify-content:center; margin-left:0.5rem;">
 					실적 등록
 				</button>
 				<!-- 
@@ -146,11 +150,13 @@
 	</div>
 	<div id="userManagementBottomDiv">
 		<div id="srProgressDiv">
-			<div>
+			<div style="height:3rem; display:flex; align-items:center;">
 				<div class="font-weight-bold d-flex" style="font-size: 2rem; height: 3rem; vertical-align: center; margin-bottom: 0.5rem;">
 					<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem;">chevron_right</i>
 					<span>SR요청 처리 정보</span>
 				</div>
+				<div style="flex-grow:1;"></div>
+				<button data-toggle="modal" data-target="#changeScheduleRequestModal" onclick="changeScheduleRequestModalConfig()" style="display:flex; align-items:center; justify-content:center;">일정변경요청/수정</button>
 			</div>
 			<div style="display:flex;">
 				<div id="srProgressChoiceDiv" style="width:60%;">
@@ -998,6 +1004,116 @@
 						
 					</tbody>
 				</table>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- 일정변경요청 모달 -->
+<div id="changeScheduleRequestModal" class="modal" data-backdrop="static">
+	<div class="modal-dialog modal-dialog-centered modal-md">
+		<div class="modal-content">
+			<div class="modal-header">
+				<div class="modal-title" style="font-size:2rem; font-weight:700;">SR일정 변경 요청</div>
+				<i class="material-icons close-icon" data-dismiss="modal" style="cursor: pointer;">close</i>
+			</div>
+			<div class="modal-body" style="margin:0px; padding:0px; font-size:1.5rem; display:flex; align-items:center;">
+				<div style="height: 4rem; width:100%; display: flex; align-items:center; flex-direction: row; margin:1rem;">
+					<div style="flex-grow:1; display:flex; align-items:center;">
+						<svg style="width:0.5rem; height:0.5rem; margin: 0rem 0.5rem;"><rect width="0.5rem" height="0.5rem" fill="#222E3C" /></svg>
+						<span>현재 완료요청일</span>
+						<input id="currentSrCmptnPrnmntDt" type="date" disabled style="flex-grow:1; margin:0rem 1rem;">
+					</div>
+					<div style="width:5%"></div>
+					<div style="flex-grow:1; display:flex; align-items:center;">
+						<svg style="width:0.5rem; height:0.5rem; margin: 0rem 0.5rem;"><rect width="0.5rem" height="0.5rem" fill="#222E3C" /></svg>
+						<span>변경요청일</span>
+						<input id="requestSrTrgtCmptnDt" type="date" style="flex-grow:1; margin:0rem 1rem;">
+					</div>
+					<div style="width:5%"></div>
+					<div style="display:flex; align-items:center; justify-content:flex-end;">
+						<button type="button"  data-dismiss="modal" onclick="srScheduleChangeRequest()"
+								class="btn-2" style="display:flex; align-items:center; justify-content:center;">
+							변경 요청
+						</button>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- 일정변경요청 내역 관리 모달 -->
+<div id="manageChangeScheduleRequestModal" class="modal" data-backdrop="static">
+	<div class="modal-dialog modal-dialog-centered modal-lg" style="width:100rem;">
+		<div class="modal-content">
+			<div class="modal-header">
+				<div class="modal-title" style="font-size:2rem; font-weight:700;">일정변경요청 내역 관리</div>
+				<i class="material-icons close-icon" data-dismiss="modal" style="cursor: pointer;">close</i>
+			</div>
+			<div class="modal-body" style="margin:0px; padding:0px; font-size:1.5rem;">
+				<div id="srPlanInfoFindPic">
+					<div style="height:31rem; background-color:#f9fafe; margin:0.5rem; overflow-y:auto;">
+						<table id="manageChangeScheduleRequestModalTable" style="width: 100%; text-align: center; border-radius:5px;">
+							<colgroup>
+								<col width="20%"/>
+								<col width="20%"/>
+								<col width="20%"/>
+								<col width="10%"/>
+								<col width="20%"/>
+								<col width="10%"/>
+							</colgroup>
+							<thead>
+								<tr style="height: 4.3rem; font-size: 1.5rem; font-weight: 700;">
+									<th scope="col">SR번호</th>
+									<th scope="col">현재 완료예정일</th>
+									<th scope="col">요청된 완료예정일</th>
+									<th scope="col">상태</th>
+									<th scope="col">요청수정</th>
+									<th scope="col">확인</th>
+								</tr>
+							</thead>
+							<tbody>
+
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- 알림 모달 -->
+<div id="alertModal" class="modal" data-backdrop="static">
+	<div class="modal-dialog modal-dialog-centered modal-sm">
+		<div class="modal-content">
+			<div class="modal-header" style="background-color:#2c7be4; color:white; display:flex;">
+				<div class="modal-title" style="font-size:2rem; font-weight:700;">경고</div>
+				<i class="material-icons close-icon" data-dismiss="modal" style="cursor: pointer;">close</i>
+			</div>
+			<div class="modal-body" style="margin:0px; padding:0px; font-size:1.5rem;">
+				<div id="alertContent" style="height:11rem; font-size:1.7rem; font-weight:700; display:flex; justify-content:center; align-items:center; white-space: pre-wrap;">
+					
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- 경고 모달 -->
+<div id="warningModal" class="modal" data-backdrop="static">
+	<div class="modal-dialog modal-dialog-centered modal-sm">
+		<div class="modal-content">
+			<div class="modal-header" style="background-color:red; color:white; display:flex;">
+				<div class="modal-title" style="font-size:2rem; font-weight:700;">경고</div>
+				<i class="material-icons close-icon" data-dismiss="modal" style="cursor: pointer;">close</i>
+			</div>
+			<div class="modal-body" style="margin:0px; padding:0px; font-size:1.5rem;">
+				<div id="warningContent" style="height:11rem; font-size:1.7rem; font-weight:700; display:flex; justify-content:center; align-items:center; white-space: pre-wrap;">
+					
+				</div>
 			</div>
 		</div>
 	</div>

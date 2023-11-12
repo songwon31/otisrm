@@ -1,10 +1,13 @@
 package com.finalteam5.otisrm.service;
 
+import java.util.Date;
 import java.util.List;
 
 import com.finalteam5.otisrm.dto.Pager;
 import com.finalteam5.otisrm.dto.SrPrgrsOtpt;
 import com.finalteam5.otisrm.dto.SrTrnsfPlanForm;
+import com.finalteam5.otisrm.dto.sr.DatesForScheduleChangeRequest;
+import com.finalteam5.otisrm.dto.sr.ManageChangeScheduleRequestModalConfig;
 import com.finalteam5.otisrm.dto.sr.ProgressManagementSearchCompose;
 import com.finalteam5.otisrm.dto.sr.SrForDeveloperHomeBoard;
 import com.finalteam5.otisrm.dto.sr.SrPrgrsForm;
@@ -90,4 +93,16 @@ public interface SrService {
 	
 	//SR금일 진척 등록
 	public int registerHrInfo(String jsonData);
+	
+	//현재 완료 요청일
+	public DatesForScheduleChangeRequest getSrCmptnPrnmntDtBySrNo(String srNo);
+	
+	//일정 변경 요청
+	public int requestSrScheduleChange(String srNo, Date srSchdlChgRqstDt);
+	
+	//일정 변경 요청 내역 관리
+	public List<ManageChangeScheduleRequestModalConfig> getManageChangeScheduleRequestModalConfig();
+	
+	//일정변경요청 결과 확인
+	public int srScheduleChangeRequestResultCheck(String srNo);
 }

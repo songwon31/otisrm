@@ -894,4 +894,35 @@
 		WHERE rnum >= #{pager.startRowNo}
 		]]>
 	</select>
+	
+	<select id="selectSrCmptnPrnmntDtBySrNo" parameterType="String" resultType="com.finalteam5.otisrm.dto.sr.DatesForScheduleChangeRequest">
+		SELECT sr_cmptn_prnmnt_dt, sr_schdl_chg_rqst_dt
+		FROM sr
+		WHERE sr_no = #{srNo}
+	</select>
+	
+	<!-- sr일정변경요청 -->
+	<update id="updateSrSchdlChgRqst" parameterType="map">
+		UPDATE sr
+		SET sr_schdl_chg_rqst_yn = 'Y',
+			sr_schdl_chg_rqst_dt = #{srSchdlChgRqstDt}
+		WHERE sr_no = #{srNo}
+	</update>
+	
+	<!-- 일정변경요청 내역 관리 -->
+	<select id="selectManageChangeScheduleRequestModalConfigList" resultType="com.finalteam5.otisrm.dto.sr.ManageChangeScheduleRequestModalConfig">
+		SELECT sr_no, sr_cmptn_prnmnt_dt, sr_schdl_chg_rqst_dt, sr_schdl_chg_rqst_aprv_yn
+		FROM sr
+		WHERE sr_schdl_chg_rqst_yn = 'Y'
+	</select>
+	
+	<!-- 일정변경요청 결과 확인 -->
+	<update id="updateSrScheduleChangeRequestResultCheck" parameterType="String">
+		UPDATE sr
+		SET sr_schdl_chg_rqst_yn = 'N',
+			sr_schdl_chg_rqst_dt = null,
+			sr_schdl_chg_rqst_aprv_yn = null
+		WHERE sr_no = #{srNo}
+	</update>
+	
 </mapper>

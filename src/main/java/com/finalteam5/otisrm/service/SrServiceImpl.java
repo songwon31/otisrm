@@ -14,7 +14,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -37,6 +36,8 @@ import com.finalteam5.otisrm.dto.SrPrgrs;
 import com.finalteam5.otisrm.dto.SrPrgrsOtpt;
 import com.finalteam5.otisrm.dto.SrTrnsfPlan;
 import com.finalteam5.otisrm.dto.SrTrnsfPlanForm;
+import com.finalteam5.otisrm.dto.sr.DatesForScheduleChangeRequest;
+import com.finalteam5.otisrm.dto.sr.ManageChangeScheduleRequestModalConfig;
 import com.finalteam5.otisrm.dto.sr.ProgressManagementSearch;
 import com.finalteam5.otisrm.dto.sr.ProgressManagementSearchCompose;
 import com.finalteam5.otisrm.dto.sr.SrForDeveloperHomeBoard;
@@ -272,6 +273,7 @@ public class SrServiceImpl implements SrService{
         
         int totalCapacity = (int) calculateBusinessDays(startDate, endDate, holidayList);
         srTrnsfPlan.setTotalBusinessDt(totalCapacity);
+        /*
         // 시드 값을 설정하여 다양한 랜덤 값을 생성
         long seed = System.currentTimeMillis();
         Random random = new Random(seed);
@@ -282,6 +284,13 @@ public class SrServiceImpl implements SrService{
         	totalCapacity = (int)(totalCapacity * (2 + random.nextDouble()));
         }
         log.info("" + totalCapacity);
+        */
+        
+        if (srTrnsfPlanForm.getSrDmndNo().equals("버그수정")) {
+        	totalCapacity = (int)(totalCapacity * 1.5);
+        } else {
+        	totalCapacity = (int)(totalCapacity * 2);
+        }
         srTrnsfPlan.setTotalCapacity(totalCapacity);
 
 		return srDao.updateSrTrnsfPlan(srTrnsfPlan);
@@ -877,5 +886,42 @@ public class SrServiceImpl implements SrService{
 		}
 	}
 	
+	
+	//현재 완료 요청일 
+	@Override
+	public DatesForScheduleChangeRequest getSrCmptnPrnmntDtBySrNo(String srNo) {
+		return srDao.selectSrCmptnPrnmntDtBySrNo(srNo);
+	}
+	
+	//일정변경요청
+	@Override
+	public int requestSrScheduleChange(String srNo, Date srSchdlChgRqstDt) {
+		srDao.updateSrSchdlChgRqst(srNo, srSchdlChgRqstDt);
+		return 1;
+	}
+	
+	//일정변경요청 내역 관리
+	@Override
+	public List<ManageChangeScheduleRequestModalConfig> getManageChangeScheduleRequestModalConfig() {
+		List<ManageChangeScheduleRequestModalConfig> configList = srDao.selectManageChangeScheduleRequestModalConfigList();
+		for (ManageChangeScheduleRequestModalConfig config : configList) {
+			if (config.getSrSchdlChgRqstAprvYn() == null) {
+				config.setStatus("요청");
+			} else {
+				if (config.getSrSchdlChgRqstAprvYn().equals("Y")) {
+					config.setStatus("승인");
+				} else if (config.getSrSchdlChgRqstAprvYn().equals("N")) {
+					config.setStatus("반려");
+				}
+			}
+		}
+		return configList;
+	}
+	
+	//일정변경요청 결과 확인
+	@Override
+	public int srScheduleChangeRequestResultCheck(String srNo) {
+		return srDao.updateSrScheduleChangeRequestResultCheck(srNo);
+	}
 	
 }

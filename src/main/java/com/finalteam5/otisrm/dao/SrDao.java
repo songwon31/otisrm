@@ -1,5 +1,6 @@
 package com.finalteam5.otisrm.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
@@ -13,6 +14,8 @@ import com.finalteam5.otisrm.dto.SrPrgrsStts;
 import com.finalteam5.otisrm.dto.SrTaskClsf;
 import com.finalteam5.otisrm.dto.SrTrnsfPlan;
 import com.finalteam5.otisrm.dto.Sys;
+import com.finalteam5.otisrm.dto.sr.DatesForScheduleChangeRequest;
+import com.finalteam5.otisrm.dto.sr.ManageChangeScheduleRequestModalConfig;
 import com.finalteam5.otisrm.dto.sr.ProgressManagementSearch;
 import com.finalteam5.otisrm.dto.sr.SrForDeveloperHomeBoard;
 import com.finalteam5.otisrm.dto.sr.SrForProgressManagementBoard;
@@ -145,4 +148,17 @@ public interface SrDao {
 			@Param("usrNo") String usrNo,
 			@Param("pager") Pager pager);
 
+	//현재 완료 요청일
+	public DatesForScheduleChangeRequest selectSrCmptnPrnmntDtBySrNo(String srNo);
+	
+	//일정 변경 요청
+	public int updateSrSchdlChgRqst(
+			@Param("srNo") String srNo, 
+			@Param("srSchdlChgRqstDt") Date srSchdlChgRqstDt);
+	
+	//일정변경요청 내역 관리
+	public List<ManageChangeScheduleRequestModalConfig> selectManageChangeScheduleRequestModalConfigList();
+	
+	//일정변경요청 결과 확인
+	public int updateSrScheduleChangeRequestResultCheck(String srNo);
 }

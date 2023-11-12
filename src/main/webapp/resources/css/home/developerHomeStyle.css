@@ -41,7 +41,6 @@ input:focus, select:focus {
 	padding: 1rem;
 	border: 1px solid gray;
 	border-radius: 10px;
-	margin-right:0.5rem;
 }
 
 #statusChoiceBtnDiv {

@@ -99,7 +99,7 @@ public class SystemManagementController {
 			model.addAttribute("usr", usr);
 			return "/systemManagement/instManagement";
 		} else {
-			return "/systemManagement/usrManagement";
+			return "/systemManagement/instManagement";
 		}
 	}
 }
