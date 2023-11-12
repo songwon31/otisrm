@@ -387,7 +387,7 @@
 	    	</div>
 	     	<div class="mr-2 mb-2" style="margin-left: 496px;">
 	     		<select class="form-control" style="width:109.13px;" id="srRqstStts-select2" name="srRqstSttsNo">
-					<option value="" >전체</option>
+					<option value="" >선택</option>
 			    </select>	
 			    <input type="hidden" id="update-srRqstNo" name="srRqstNo">	         		
 			</div>
@@ -428,11 +428,11 @@
 				    </div>
 				    <div class="d-flex" style="width: 550.41px;">
 				        <div>				        
-					        <input id="srTrnsfYn_Y" type="radio" name="srTrnsfYn" value="Y">
+					        <input id="srTrnsfYn_Y" class="srInput" type="radio" name="srTrnsfYn" value="Y">
 					        <label for="srTrnsfYn_Y">이관신청</label>
 				        </div>
 						<div class="ml-2">						
-					        <input id="srTrnsfYn_N" type="radio" name="srTrnsfYn" value="N">
+					        <input id="srTrnsfYn_N" class="srInput" type="radio" name="srTrnsfYn" value="N">
 					        <label for="srTrnsfYn_N">자체개발</label>
 						</div>
 				    	<div id="srTrnsf-info" class="text-danger ml-2 pt-2" style="font-size:10px;">(이관 신청을 할 경우 이관기관, 소요예산, 요청구분은 필수적으로 작성해주세요.)</div>
@@ -446,7 +446,7 @@
 					            	<label for="srPic" class="form-label">이관기관</label>
 					          	</div>
 					 			<div class="w-45">
-						            <select id="trnsf-srinst" class="srTrnsfYn_Y form-control" name="srTrnsfInstNo">
+						            <select id="trnsf-srinst" class="srTrnsfYn_Y srInput form-control" name="srTrnsfInstNo">
 						 				<option value="" >--이관기관 선택--</option>
 						 				<c:forEach items="${instByOutsrcYList}" var="inst">					 				
 											<option id="${inst.instNm}" value="${inst.instNo}" >${inst.instNm}</option>
@@ -459,7 +459,7 @@
 						          <label for="writerDepartment" class="form-label">소요예산</label>
 						        </div>
 						        <div class="w-45">
-						          <input id="trnsf-srReqBgt" type="text" class="srTrnsfYn_Y form-control" name="srReqBgt">
+						          <input id="trnsf-srReqBgt" type="text" class="srTrnsfYn_Y srInput form-control" name="srReqBgt">
 						        </div>
 						    </div>
 						</div>
@@ -471,7 +471,7 @@
 						            	<label for="writeDate" class="form-label">요청구분</label>
 						          	</div>
 						 			<div class="w-45">
-							            <select class="srTrnsfYn_Y form-control" id="trnsf-srDmndClsf" name="srDmndNo">
+							            <select class="srTrnsfYn_Y srInput form-control" id="trnsf-srDmndClsf" name="srDmndNo">
 											<option value="" >--요청구분 선택--</option>
 											<c:forEach items="${srDmndClsfList}" var="srDmndClsf">					 				
 												<option id="${srDmndClsf.srDmndNm}" value="${srDmndClsf.srDmndNo}" >${srDmndClsf.srDmndNm}</option>
@@ -485,7 +485,7 @@
 							          <label for="systemName" class="form-label">업무구분</label>
 							        </div>
 							        <div class="w-45">
-							        	<select class="form-control" id="srTaskNo" name="srTaskNo">
+							        	<select class="srInput form-control" id="srTaskNo" name="srTaskNo">
 											<option value="" >--업무구분 선택--</option>
 											<c:forEach items="${srTaskClsfList}" var="srTaskClsf">					 				
 												<option id="${srTaskClsf.srTaskNm}" value="${srTaskClsf.srTaskNo}" >${srTaskClsf.srTaskNm}</option>
@@ -502,7 +502,7 @@
 							            	<label for="writeDate" class="form-label">우선순위</label>
 							          	</div>
 							 			<div class="w-45">
-								            <select class="form-control" id="srPri" name="srPri">
+								            <select class="srInput form-control" id="srPri" name="srPri">
 												<option value="" >--우선순위 선택--</option>
 												<option value="상" >상</option>
 												<option value="중" >중</option>
@@ -515,7 +515,7 @@
 								          <label for="systemName" class="form-label">완료예정일</label>
 								        </div>
 								        <div class="w-45">
-								          <input id="srCmptnPrnmntDt" type="date" class="form-control" name="srCmptnPrnmntDt" >
+								          <input id="srCmptnPrnmntDt" type="date" class="srInput form-control" name="srCmptnPrnmntDt" >
 								        </div>
 								    </div>
 								</div>
@@ -525,7 +525,7 @@
 						          <label for="systemName" class="form-label">개발내용</label>
 						        </div>
 						        <div style="width: 550.41px;">
-						          <textarea id="srDvlConts" class="form-control" rows="3" name="srDvlConts"></textarea>
+						          <textarea id="srDvlConts" class="srInput form-control" rows="3" name="srDvlConts"></textarea>
 						        </div>
 						    </div>
 					        <div class="d-flex w-100 pt-2">
@@ -533,7 +533,7 @@
 						          <label for="systemName" class="form-label modal-input">첨부파일</label>
 						        </div>
 						        <div style="width: 500px;">
-						          <input type="file" id="file" name=file multiple>	
+						          <input type="file" id="file" class="srInput" name=file multiple>	
 						        </div>
 						    </div>
 						    <div class="d-flex w-100 pt-2">

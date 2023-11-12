@@ -182,9 +182,10 @@ public class PicHomeController {
 	//sr 개발계획 등록 또는 수정 하기
 	@PostMapping("writeOrModifySrForPicHome")
 	public String writeSr(SrSubmit srSubmit) throws Exception{
+		
 		//srRqstNo에 해당하는 sr정보가 있는지 확인
 		int countOfSr = srRqstService.checkIfSrInformationPresent(srSubmit.getSrRqstNo());
-		log.info("과연: " + srSubmit.toString());
+	
 		//sr정보가 없을 경우 insert(등록)
 		if(countOfSr == 0) {	
 			srRqstService.writeSr(srSubmit);

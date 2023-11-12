@@ -40,6 +40,14 @@
 			   	  			<div>승인대기</div>
 			   	  			<div id="numOfAprvWait" class="pb-1"></div>
 		   	  			</div>
+		   	  			<div id="APRV_REEXAM" class="filterTab d-flex justify-content-center align-items-center">
+			   	  			<div>승인재검토</div>
+			   	  			<div id="numOfAprvReexam" class="pb-1"></div>
+		   	  			</div>
+		   	  			<div id="APRV_RETURN" class="filterTab d-flex justify-content-center align-items-center">
+			   	  			<div>승인반려</div>
+			   	  			<div id="numOfAprvReturn" class="pb-1"></div>
+		   	  			</div>
 		   	  			<div id="APRV" class="filterTab d-flex justify-content-center align-items-center">
 		   	  				<div>승인</div>
 		   	  				<div id="numOfAprv" class="pb-1"></div>
@@ -48,7 +56,7 @@
 			   	  			<div>개발완료</div>
 			   	  			<div id="numOfDepCmptn" class="m-1"></div>
 		   	  			</div>
-		   	  			<div id="requestAddBtnWrap" class="d-flex flex-row-reverse align-items-end">
+		   	  			<div id="requestAddBtnWrap" class="d-flex flex-row-reverse align-items-end" style="margin-left: 145px;">
 							<button id="requestAddBtn" data-toggle="modal" data-target="#addSrRqst" class="btn-1 d-inline-flex flex-row align-items-center justify-content-center mb-1" onclick="showSysByDeptNo('${usr.deptNo}')">
 								요청 등록
 							</button>
@@ -110,6 +118,13 @@
 		   	  </div>
 		    </div>
 		    <div class="potalTop section shadow w-30">
+				<div class="subcontentTitle">
+					<div class="d-flex st-ct">
+				   		<i class="material-icons stt-ic">chevron_right</i>
+				   	  	<span class="pt-1">내 요청 처리 현황</span>
+				   	</div>
+				   	<canvas id="myChart" style="width:100%; max-width:400px; height: 300px; "></canvas>
+			   	</div>
 		   	</div>
 	   </div>
    </div>

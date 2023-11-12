@@ -342,21 +342,6 @@ function showSrRqstStts() {
            
            $("#srRqstStts-select2").html(html);
            
-           //접수대기-> 접수요청으로 상태 변경
-           $("#srRqstStts-select2 option[value='RCPT_WAIT']").text("접수요청");
-           
-           //승인재검토, 승인반려,승인 & 접수재검토, 접수반려, 접수 상태 숨기기
-           $("#srRqstStts-select2 option[value='RQST']").prop("selected", true).css("display", "none");
-           $("#srRqstStts-select2 option[value='APRV_WAIT']").prop("selected", true).css("display", "none");
-           $("#srRqstStts-select2 option[value='APRV_REEXAM']").prop("selected", true).css("display", "none");
-           $("#srRqstStts-select2 option[value='APRV_RETURN']").prop("selected", true).css("display", "none");
-           $("#srRqstStts-select2 option[value='APRV']").prop("selected", true).css("display", "none");
-           $("#srRqstStts-select2 option[value='RCPT_REEXAM']").prop("selected", true).css("display", "none");
-           $("#srRqstStts-select2 option[value='RCPT_RETURN']").prop("selected", true).css("display", "none");
-           $("#srRqstStts-select2 option[value='RCPT']").prop("selected", true).css("display", "none");
-           $("#srRqstStts-select2 option[value='DEP_CMPTN']").prop("selected", true).css("display", "none");
-           $("#srRqstStts-select2 option[value='']").prop("selected", true);
-           
        },
 		error: function (error) {
 			console.error("오류 발생:", error);
@@ -399,6 +384,14 @@ function showSrRqstBySrRqstNo(choiceSrRqstNo){
         	$("#srRqstStts-select option").css("display", "inline");
         	$("#saveButton").prop("disabled", false);
     		$("#saveButton").css("opacity", 1);
+    		
+    		$("#srRqstStts-select2 option").css("display", "inline");
+    		$("#srRqstStts-select2").prop("disabled", false);
+    		$("#saveButton2").prop("disabled", false);
+   		 	$("#saveButton2").css("opacity", 1);
+   		 	$("#srWriteOrModifyBtn").prop("disabled", false);
+   		 	$("#srWriteOrModifyBtn").css("opacity", 1);
+   		 	$(".srInput").prop("disabled", false);
         	
         	//요청 상태(상태: 요청, 승인요청)
         	if(data.srRqstSttsNo === "RQST"){
@@ -409,7 +402,14 @@ function showSrRqstBySrRqstNo(choiceSrRqstNo){
         		 $("#srRqstStts-select option[id]").filter(function() {
                      return parseInt($(this).attr("id")) >= 2;
                  }).css("display", "none");
-           
+        		 
+        		 //sr개발정보에 상태 표시 X, 수정 불가능/ 저장버튼 비활성화/ sr정보 등록 버튼 비활성화
+        		 $("#srRqstStts-select2").prop("disabled", true);
+        		 $("#saveButton2").prop("disabled", true);
+        		 $("#saveButton2").css("opacity", 0.5);
+        		 $("#srWriteOrModifyBtn").prop("disabled", true);
+        		 $("#srWriteOrModifyBtn").css("opacity", 0.5);
+        		 $(".srInput").prop("disabled", true);
             //승인 대기 상태 (상태: 승인요청, 승인/ 담당자는 승인 상태로 변경 가능해야함)
         	}else if(data.srRqstSttsNo === "APRV_WAIT"){
         		//현재 상태 표시
@@ -422,6 +422,15 @@ function showSrRqstBySrRqstNo(choiceSrRqstNo){
                     return parseInt($(this).attr("id")) >= 2;
                 }).css("display", "none");
         		$("#srRqstStts-select option[id='4']").css("display", "inline");
+        		
+        		//sr개발정보에 상태 표시 X, 수정 불가능/ 저장버튼 비활성화/ sr정보 등록 버튼 비활성화
+        		$("#srRqstStts-select2").val("");
+        		$("#srRqstStts-select2").prop("disabled", true);
+       		    $("#saveButton2").prop("disabled", true);
+       		    $("#saveButton2").css("opacity", 0.5);
+       		    $("#srWriteOrModifyBtn").prop("disabled", true);
+       		    $("#srWriteOrModifyBtn").css("opacity", 0.5);
+       		    $(".srInput").prop("disabled", true);
         	//승인 재검토(수정 후 승인 재요청이 가능해야 함)
         	}else if(data.srRqstSttsNo === "APRV_REEXAM"){
         		//현재 상태 표시
@@ -432,6 +441,15 @@ function showSrRqstBySrRqstNo(choiceSrRqstNo){
         		$("#srRqstStts-select option[id]").filter(function() {
                     return parseInt($(this).attr("id")) >= 2;
                 }).css("display", "none");
+        		
+        		//sr개발정보에 상태 표시 X, 수정 불가능/ 저장버튼 비활성화/ sr정보 등록 버튼 비활성화
+        		$("#srRqstStts-select2").val("");
+        		$("#srRqstStts-select2").prop("disabled", true);
+       		    $("#saveButton2").prop("disabled", true);
+       		    $("#saveButton2").css("opacity", 0.5);
+       		    $("#srWriteOrModifyBtn").prop("disabled", true);
+       		    $("#srWriteOrModifyBtn").css("opacity", 0.5);
+       		    $(".srInput").prop("disabled", true);
         	//승인반려(수정 불가능, 해당 변려건 삭제 가능)
         	}else if(data.srRqstSttsNo === "APRV_RETURN"){
         		//현재 상태 표시
@@ -441,14 +459,130 @@ function showSrRqstBySrRqstNo(choiceSrRqstNo){
         		$("#saveButton").prop("disabled", true);
         		$("#saveButton").css("opacity", 0.5);
         		$(".modifyPossible").prop("disabled", true);
+        		
+        		//sr개발정보에 상태 표시 X, 수정 불가능/ 저장버튼 비활성화/ sr정보 등록 버튼 비활성화
+        		$("#srRqstStts-select2").val("");
+        		$("#srRqstStts-select2").prop("disabled", true);
+       		    $("#saveButton2").prop("disabled", true);
+       		    $("#saveButton2").css("opacity", 0.5);
+       		    $("#srWriteOrModifyBtn").prop("disabled", true);
+       		    $("#srWriteOrModifyBtn").css("opacity", 0.5);
+       		    $(".srInput").prop("disabled", true);
         	//승인 상태(수정 불가능)
-        	}else{
+        	}else if(data.srRqstSttsNo === "APRV"){
         		$("#srRqstStts-select").val("APRV");
         		$("#srRqstStts-select").prop("disabled", true);
         		//수정 불가능
         		$("#saveButton").prop("disabled", true);
         		$("#saveButton").css("opacity", 0.5);
         		$(".modifyPossible").prop("disabled", true);
+        		
+        		//sr개발에서 sr요청 상태는 접수 요청만 변경 가능, sr개발정보 작성 및 수정 가능
+        		$("#srRqstStts-select2").val("");
+        		$("#srRqstStts-select2 option[id]").filter(function() {
+                    return parseInt($(this).attr("id")) <= 4;
+                }).css("display", "none");
+        		$("#srRqstStts-select2 option[id]").filter(function() {
+        			return parseInt($(this).attr("id")) >= 6;
+        		}).css("display", "none");
+        		$("#saveButton2").prop("disabled", false);
+       		    $("#saveButton2").css("opacity", 1);
+        		//접수대기-> 접수요청으로 상태 변경
+                $("#srRqstStts-select2 option[value='RCPT_WAIT']").text("접수요청");
+        	//접수 대기 상태	
+        	}else if(data.srRqstSttsNo === "RCPT_WAIT"){
+        		$("#srRqstStts-select").val("APRV");
+        		$("#srRqstStts-select").prop("disabled", true);
+        		//수정 불가능
+        		$("#saveButton").prop("disabled", true);
+        		$("#saveButton").css("opacity", 0.5);
+        		$(".modifyPossible").prop("disabled", true);
+        		
+        		//sr개발에서 sr요청 상태 변경 불가능, sr정보는 수정 가능
+        		$("#srRqstStts-select2 option[id]").filter(function() {
+                    return parseInt($(this).attr("id")) >= 9;
+                }).css("display", "inline");
+        		$("#srRqstStts-select2 option[value='RCPT_WAIT']").text("접수대기");
+        		//상태 표시
+        		$("#srRqstStts-select2").val(data.srRqstSttsNo);
+        		$("#srRqstStts-select2").prop("disabled", true);
+        		$("#saveButton2").prop("disabled", false);
+       		    $("#saveButton2").css("opacity", 1);
+       		//접수 재검토 상태
+        	}else if(data.srRqstSttsNo === "RCPT_REEXAM"){
+        		$("#srRqstStts-select").val("APRV");
+        		$("#srRqstStts-select").prop("disabled", true);
+        		//수정 불가능
+        		$("#saveButton").prop("disabled", true);
+        		$("#saveButton").css("opacity", 0.5);
+        		$(".modifyPossible").prop("disabled", true);
+        		
+        		//sr개발에서 수정 가능, 접수 재요청 가능
+        		$("#srRqstStts-select2").val(data.srRqstSttsNo);
+        		$("#srRqstStts-select2 option[id]").filter(function() {
+                    return parseInt($(this).attr("id")) <= 4;
+                }).css("display", "none");
+        		$("#srRqstStts-select2 option[id]").filter(function() {
+                    return parseInt($(this).attr("id")) > 5;
+                }).css("display", "none");
+        		//접수대기-> 접수요청으로 상태 변경
+                $("#srRqstStts-select2 option[value='RCPT_WAIT']").text("접수재요청");
+            //접수 반려(삭제만 가능)	
+        	}else if(data.srRqstSttsNo === "RCPT_RETURN"){
+        		//현재 상태 표시
+        		$("#srRqstStts-select").val("APRV");
+        		$("#srRqstStts-select").prop("disabled", true);
+        		//수정 불가능
+        		$("#saveButton").prop("disabled", true);
+        		$("#saveButton").css("opacity", 0.5);
+        		$(".modifyPossible").prop("disabled", true);
+        		
+        		//sr개발정보에 상태 표시 X, 수정 불가능/ 저장버튼 비활성화/ sr정보 등록 버튼 비활성화
+        		$("#srRqstStts-select2").val(data.srRqstSttsNo);
+        		$("#srRqstStts-select2").prop("disabled", true);
+       		    $("#saveButton2").prop("disabled", true);
+       		    $("#saveButton2").css("opacity", 0.5);
+       		    $("#srWriteOrModifyBtn").prop("disabled", true);
+       		    $("#srWriteOrModifyBtn").css("opacity", 0.5);
+       		    $(".srInput").prop("disabled", true);
+       		//접수 상태
+        	}else if(data.srRqstSttsNo === "RCPT"){
+        		//현재 상태 표시
+        		$("#srRqstStts-select").val("APRV");
+        		$("#srRqstStts-select").prop("disabled", true);
+        		//수정 불가능
+        		$("#saveButton").prop("disabled", true);
+        		$("#saveButton").css("opacity", 0.5);
+        		$(".modifyPossible").prop("disabled", true);
+        		
+        		//sr개발정보에 상태 표시, 수정 가능/ 저장버튼 활성화/ sr정보 수정 버튼 비활성화
+        		$("#srRqstStts-select2 option[value='RCPT_WAIT']").css("display", "none");
+        		$("#srRqstStts-select2").val("");
+        		$("#srRqstStts-select2 option[id]").filter(function() {
+                    return parseInt($(this).attr("id")) <= 8;
+                }).css("display", "none");
+        		$("#srRqstStts-select2").val(data.srRqstSttsNo);
+        	}else if(data.srRqstSttsNo === "DEP_ING"){
+        		$("#srRqstStts-select2").val(data.srRqstSttsNo);
+        		$("#srRqstStts-select2 option[id]").filter(function() {
+                    return parseInt($(this).attr("id")) <= 9;
+                }).css("display", "none");
+        	}else if(data.srRqstSttsNo === "DEP_CMPTN"){
+        		//현재 상태 표시
+        		$("#srRqstStts-select").val("APRV");
+        		$("#srRqstStts-select").prop("disabled", true);
+        		//수정 불가능
+        		$("#saveButton").prop("disabled", true);
+        		$("#saveButton").css("opacity", 0.5);
+        		$(".modifyPossible").prop("disabled", true);
+        		
+        		$("#srRqstStts-select2").val(data.srRqstSttsNo);
+        		$("#srRqstStts-select2").prop("disabled", true);
+       		    $("#saveButton2").prop("disabled", true);
+       		    $("#saveButton2").css("opacity", 0.5);
+       		    $("#srWriteOrModifyBtn").prop("disabled", true);
+       		    $("#srWriteOrModifyBtn").css("opacity", 0.5);
+       		    $(".srInput").prop("disabled", true);
         	}
         	
         	//요청상태가 요청 또는 반려일때 삭제가능(버튼 속성 변경)
@@ -461,6 +595,10 @@ function showSrRqstBySrRqstNo(choiceSrRqstNo){
         		$("#deleteButton").css("opacity", 0.5);
         	}
         	
+        	//sr개발정보에 sr요청 상태 표시
+        	/*$("#srRqstStts-select2").val(data.srRqstSttsNo);
+        	$("#srRqstStts-select2 option[value='RCPT_WAIT']").text("접수대기");*/
+ 
         	//첨부파일
         	if (data.srRqstAtchList && typeof data.srRqstAtchList === "object") {
         	    // data.srRqstAtchList는 객체일 때
@@ -517,7 +655,6 @@ function showSrBySrRqstNo(choiceSrRqstNo){
 		data: {srRqstNo: choiceSrRqstNo},
 		success: function(data) {
 			if(data != 0){
-				console.log("데이터 앙 !!");
 				$("#srWriteOrModifyBtn").text("SR정보 수정");
 				//sr번호 지정
 				$("#srNo").val(data.srNo);

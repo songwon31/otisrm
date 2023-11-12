@@ -6,6 +6,8 @@ function init() {
 	 numOftotalRows();
 	 getTotalRows(choiceSrRqstSttsNo);
 	 console.log( $("#loginUsrNo").val());
+	 // 0.5초 후에 함수 실행
+	 setTimeout(doughnutChart, 500);
 }
  
 var choiceSrRqstSttsNo = "";
@@ -135,55 +137,89 @@ function loadSRRequests(pageNo, choiceSrRqstSttsNo) {
 
 //**sr요청 상태 탭 별  행수 표시
 function numOftotalRows(){
-	//전체
+	///전체
 	getTotalRows("").then(function (totalRows) {
-		  console.log(totalRows);
 		  $("#numOfAll").html("("+ totalRows + ")");
 		});
 	//요청
 	getTotalRows("RQST").then(function (totalRows) {
-		  console.log(totalRows);
+		rqstTotal = totalRows;
 		  $("#numOfRqst").html("("+ totalRows + ")");
 		});
 	//승인대기 
 	getTotalRows("APRV_WAIT").then(function (totalRows) {
-		console.log(totalRows);
+		aprvWaitTotal = totalRows;
 		$("#numOfAprvWait").html("("+ totalRows + ")");
+	});
+	//승인재검토
+	getTotalRows("APRV_REEXAM").then(function (totalRows) {
+		aprvReexamTotal = totalRows;
+		$("#numOfAprvReexam").html("("+ totalRows + ")");
+	});
+	//승인반려
+	getTotalRows("APRV_RETURN").then(function (totalRows) {
+		aprvReturnTotal = totalRows;
+		$("#numOfAprvReturn").html("("+ totalRows + ")");
 	});
 	//승인
 	getTotalRows("APRV").then(function (totalRows) {
-		console.log(totalRows);
+		aprvTotal = totalRows;
 		$("#numOfAprv").html("("+ totalRows + ")");
-	});
-	//접수대기
-	getTotalRows("RCPT_WAIT").then(function (totalRows) {
-		console.log(totalRows);
-		$("#numOfRcptWait").html("("+ totalRows + ")");
-	});
-	//접수
-	getTotalRows("RCPT").then(function (totalRows) {
-		console.log(totalRows);
-		$("#numOfRcpt").html("("+ totalRows + ")");
-	});
-	//개발중
-	getTotalRows("DEP_ING").then(function (totalRows) {
-		console.log(totalRows);
-		$("#numOfDepIng").html("("+ totalRows + ")");
-	});
-	//테스트
-	getTotalRows("TEST").then(function (totalRows) {
-		console.log(totalRows);
-		$("#numOfTest").html("("+ totalRows + ")");
-	});
-	//완료요청
-	getTotalRows("CMPTN_RQST").then(function (totalRows) {
-		console.log(totalRows);
-		$("#numOfCmptnRqst").html("("+ totalRows + ")");
 	});
 	//개발완료
 	getTotalRows("DEP_CMPTN").then(function (totalRows) {
-		console.log(totalRows);
+		depCMptn = totalRows;
 		$("#numOfDepCmptn").html("("+ totalRows + ")");
+	});
+}
+
+function doughnutChart(){
+	var rqstTotal = $("#numOfRqst").text();				//요청
+	var aprvWaitTotal = $("#numOfAprvWait").text();		//승인 대기
+	var aprvReexamTotal = $("#numOfAprvReexam").text();	//승인 재검토
+	var aprvReturnTotal = $("#numOfAprvReturn").text();	//승인 반려
+	var aprvTotal = $("#numOfAprv").text();				//승인
+	var depCMptn = $("#numOfDepCmptn").text();			//개발완료
+	
+	// 정규 표현식을 사용하여 괄호를 제외하고 숫자만 추출
+    var numberRqst = rqstTotal.replace(/[^\d]/g, '');
+    console.log("요청수: " + rqstTotal +"/" + numberRqst);
+    var numberAprvWait = aprvWaitTotal.replace(/[^\d]/g, '');
+    var numberAprvReexam = aprvReexamTotal.replace(/[^\d]/g, '');
+    var numberAprvReturn = aprvReturnTotal.replace(/[^\d]/g, '');
+    var numberAprv = aprvTotal.replace(/[^\d]/g, '');
+    var numberDepCMptn = depCMptn.replace(/[^\d]/g, '');
+    
+    // 캔버스 크기 조절
+    var canvas = document.getElementById("myChart");
+ 
+	//도넛차트
+	const xValues = ["요청", "승인대기", "승인재검토", "승인반려", "승인", "개발완료"];
+	const yValues = [numberRqst, numberAprvWait, numberAprvReexam, numberAprvReturn, numberAprv, numberDepCMptn];
+	const barColors = [
+	  "#b91d47",
+	  "#00aba9",
+	  "#2b5797",
+	  "#e8c3b9",
+	  "#1e7145",
+	  "red"
+	];
+	
+	new Chart("myChart", {
+	  type: "doughnut",
+	  data: {
+	    labels: xValues,
+	    datasets: [{
+	      backgroundColor: barColors,
+	      data: yValues
+	    }]
+	  },
+	  options: {
+	    title: {
+	      display: true
+	    },
+	    cutoutPercentage: 60, // 도넛 차트의 크기를 조절할 값 (0 ~ 100)
+	  }
 	});
 }
 
@@ -198,7 +234,7 @@ function getTotalRows(choiceSrRqstSttsNo) {
       dataType: "json",
       method: "GET",
       success: function (totalRows) {
-        resolve(totalRows);
+        resolve(totalRows);  	
       },
       error: function (error) {
         reject(error);
