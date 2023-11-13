@@ -355,4 +355,56 @@
 		SET usr_authrt_no = #{authrtNo}
 		WHERE usr_no = #{usrNo}
 	</update>
+	
+	<!-- 기업 관리 페이지 구성 -->
+	<select id="countInstForInstManagementBoard" parameterType="com.finalteam5.otisrm.dto.usr.InstManagementSearch" resultType="int">
+    	SELECT COUNT(*)
+    	FROM (
+	    	SELECT inst_no, inst_nm, outsrc_yn
+	    	FROM inst
+	    	<where>
+				<if test="keywordContent != null">
+					<if test="keywordCategory == 'instNm'">
+						AND inst_nm like '%' || #{keywordContent} || '%'
+					</if>
+					<if test="keywordCategory == 'instNo'">
+						AND inst_no like '%' || #{keywordContent} || '%'
+					</if>
+				</if>
+    		</where>
+    		)
+    </select>
+    
+    <select id="selectInstForInstManagementBoard" parameterType="map" resultType="com.finalteam5.otisrm.dto.usr.InstForInstManagementBoard">
+    	SELECT rnum, inst_no, inst_nm, outsrc_yn
+		FROM(
+			SELECT rownum as rnum, inst_no, inst_nm, outsrc_yn
+			FROM (
+		    	SELECT inst_no, inst_nm, outsrc_yn
+		    	FROM inst
+		    	<where>
+					<if test="instManagementSearch.keywordContent != null">
+						<if test="instManagementSearch.keywordCategory == 'instNm'">
+							AND inst_nm like '%' || #{instManagementSearch.keywordContent} || '%'
+						</if>
+						<if test="instManagementSearch.keywordCategory == 'instNo'">
+							AND inst_no like '%' || #{instManagementSearch.keywordContent} || '%'
+						</if>
+					</if>
+	    		</where>
+	    		)
+		<![CDATA[
+			WHERE rownum <= #{pager.endRowNo}
+			)
+		WHERE rnum >= #{pager.startRowNo}
+		]]>
+    </select>
+    
+    <!-- 기업 상세 정보 -->
+    <select id="selectInstDetail" parameterType="String" resultType="com.finalteam5.otisrm.dto.usr.InstDetail">
+    	SELECT inst_no, inst_nm, outsrc_yn
+    	FROM inst
+    	WHERE inst_no = #{instNo}
+    </select>
+    
 </mapper>

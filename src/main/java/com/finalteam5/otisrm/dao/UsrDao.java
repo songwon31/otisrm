@@ -10,6 +10,9 @@ import com.finalteam5.otisrm.dto.sr.SrNoAndTtl;
 import com.finalteam5.otisrm.dto.usr.Dept;
 import com.finalteam5.otisrm.dto.usr.Ibps;
 import com.finalteam5.otisrm.dto.usr.Inst;
+import com.finalteam5.otisrm.dto.usr.InstDetail;
+import com.finalteam5.otisrm.dto.usr.InstForInstManagementBoard;
+import com.finalteam5.otisrm.dto.usr.InstManagementSearch;
 import com.finalteam5.otisrm.dto.usr.Login;
 import com.finalteam5.otisrm.dto.usr.Role;
 import com.finalteam5.otisrm.dto.usr.Usr;
@@ -78,4 +81,13 @@ public interface UsrDao {
 	public int updateUsrSttsToWhdwl(String usrNo);
 	//권한 수정
 	public int updateUsrAuthrt(@Param("usrNo") String usrNo, @Param("authrtNo") String authrtNo);
+	
+	//기업관리
+	public int countInstForInstManagementBoard(InstManagementSearch instManagementSearch);
+	public List<InstForInstManagementBoard> selectInstForInstManagementBoard(
+			@Param("instManagementSearch") InstManagementSearch instManagementSearch, 
+			@Param("pager") Pager pager);
+	
+	//기업 상세 정보
+	public InstDetail selectInstDetail(String instNo);
 }

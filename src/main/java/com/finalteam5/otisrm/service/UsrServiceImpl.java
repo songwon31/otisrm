@@ -16,6 +16,9 @@ import com.finalteam5.otisrm.dto.Pager;
 import com.finalteam5.otisrm.dto.usr.Dept;
 import com.finalteam5.otisrm.dto.usr.Ibps;
 import com.finalteam5.otisrm.dto.usr.Inst;
+import com.finalteam5.otisrm.dto.usr.InstDetail;
+import com.finalteam5.otisrm.dto.usr.InstManagementSearch;
+import com.finalteam5.otisrm.dto.usr.InstTableConfigForInstManagement;
 import com.finalteam5.otisrm.dto.usr.Login;
 import com.finalteam5.otisrm.dto.usr.Role;
 import com.finalteam5.otisrm.dto.usr.Usr;
@@ -322,5 +325,51 @@ public class UsrServiceImpl implements UsrService{
 		}
 	}
 	
+	//기업관리페이지 메인테이블 구성
+	@Override
+	public InstTableConfigForInstManagement getInstTableConfigForInstManagement(String jsonData) {
+		try {
+			ObjectMapper objectMapper = new ObjectMapper();
+			InstManagementSearch instManagementSearch = new InstManagementSearch();
+			Integer pageNo;
+        
+            // JSON 문자열을 Map으로 파싱
+            Map<String, Object> jsonMap = objectMapper.readValue(jsonData, Map.class);
+            String innerJson = (String) jsonMap.get("instManagementSearch");
+            instManagementSearch = objectMapper.readValue(innerJson, InstManagementSearch.class);
+            pageNo = (Integer) jsonMap.get("pageNo");
+            
+            // 결과 출력
+            /*
+            log.info("instManagementSearch: " + instManagementSearch);
+            log.info("pageNo: " + pageNo);
+            */
+       
+            int totalInstForInstManagementBoardNum = usrDao.countInstForInstManagementBoard(instManagementSearch);
+            log.info(""+totalInstForInstManagementBoardNum);
+	        Pager pager = new Pager(10, 5, totalInstForInstManagementBoardNum, pageNo);
+	        
+	        InstTableConfigForInstManagement instTableConfigForUsrManagement = new InstTableConfigForInstManagement();
+	        instTableConfigForUsrManagement.setInstList(usrDao.selectInstForInstManagementBoard(instManagementSearch, pager));
+	        instTableConfigForUsrManagement.setPager(pager);
+	        log.info(""+instTableConfigForUsrManagement);
+
+	        
+			return instTableConfigForUsrManagement;
+		} catch (IOException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	//기업 상세정보
+	@Override
+	public InstDetail getDetailInstInfo(String instNo) {
+		InstDetail instDetail = usrDao.selectInstDetail(instNo);
+		instDetail.setIbpsList(usrDao.selectIbpsListByInstNo(instNo));
+		instDetail.setRoleList(usrDao.selectRoleListByInstNo(instNo));
+		instDetail.setDeptList(usrDao.selectDeptListByInstNo(instNo));
+		return null;
+	}
 
 }

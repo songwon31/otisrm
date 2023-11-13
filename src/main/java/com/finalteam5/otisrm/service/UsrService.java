@@ -5,6 +5,8 @@ import java.util.List;
 import com.finalteam5.otisrm.dto.usr.Dept;
 import com.finalteam5.otisrm.dto.usr.Ibps;
 import com.finalteam5.otisrm.dto.usr.Inst;
+import com.finalteam5.otisrm.dto.usr.InstDetail;
+import com.finalteam5.otisrm.dto.usr.InstTableConfigForInstManagement;
 import com.finalteam5.otisrm.dto.usr.Login;
 import com.finalteam5.otisrm.dto.usr.Role;
 import com.finalteam5.otisrm.dto.usr.Usr;
@@ -99,4 +101,10 @@ public interface UsrService {
 	
 	//권한 수정
 	public int editUsrAuthrt(String usrNo, String newUsrAuthrtNo);
+	
+	//기업관리페이지 메인 테이블 구성
+	public InstTableConfigForInstManagement getInstTableConfigForInstManagement(String jsonData);
+	
+	//기업 상세정보
+	public InstDetail getDetailInstInfo(String instNo);
 }

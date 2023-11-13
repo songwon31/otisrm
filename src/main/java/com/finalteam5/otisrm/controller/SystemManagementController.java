@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.finalteam5.otisrm.dto.usr.Dept;
+import com.finalteam5.otisrm.dto.usr.InstDetail;
+import com.finalteam5.otisrm.dto.usr.InstTableConfigForInstManagement;
 import com.finalteam5.otisrm.dto.usr.Usr;
 import com.finalteam5.otisrm.dto.usr.UsrManagementModalConfigure;
 import com.finalteam5.otisrm.dto.usr.UsrManagementSearchConfigure;
@@ -101,5 +103,19 @@ public class SystemManagementController {
 		} else {
 			return "/systemManagement/instManagement";
 		}
+	}
+	
+	//기업 관리 페이지 메인 테이블 구성
+	@RequestMapping("/instManagement/getInstManagementMainTableConfig")
+	@ResponseBody
+	public InstTableConfigForInstManagement getInstManagementMainTableConfig(@RequestBody String jsonData) {
+		return usrService.getInstTableConfigForInstManagement(jsonData);
+	}
+	
+	//기업 상세 정보 구성
+	@RequestMapping("/instManagement/getDetailInstInfo")
+	@ResponseBody
+	public InstDetail getDetailInstInfo(String instNo) {
+		return usrService.getDetailInstInfo(instNo);
 	}
 }

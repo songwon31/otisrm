@@ -1,25 +1,16 @@
 $(init);
 
 //메인 테이블 검색 옵션
-var currentUsrManagementSearch = {
-	usrAuthrt: null,
-	usrStts: null,
+var currentInstManagementSearch = {
 	keywordCategory: null,
-	keywordContent: null,
-	usrInst: null,
-	usrDept: null,
-	joinDateStart: null,
-	joinDateEnd: null
+	keywordContent: null
 }
 //메인 테이블 페이지 번호
 var currentPageNo = 1;
-var currentDetailUsrNo;
+var currentDetailInstNo;
 
 function init() {
-	/*
-	mainTableSearchDivConfig();
-	mainTableConfig(currentUsrManagementSearch, currentPageNo);
-	*/
+	mainTableConfig(currentInstManagementSearch, currentPageNo);
 }
 
 $(document).ready(function() {
@@ -44,123 +35,58 @@ function formatDateTime(date) {
     return year + '-' + month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds;
 }
 
-//검색창 구성
-function mainTableSearchDivConfig() {
-	$.ajax({
-		type: "POST",
-		url: "/otisrm/systemManagement/usrManagement/getUsrManagementSearchConfig",
-		success: function(data) {
-			console.log(data.usrAuthrtList);
-			$('#authrtSelect').html('<option value="" selected>전체</option>');
-			for (let i=0; i<data.usrAuthrtList.length; ++i) {
-				let authrtData = data.usrAuthrtList[i];
-				$('#authrtSelect').append('<option value="'+ authrtData.usrAuthrtNo + '">' + authrtData.usrAuthrtNm + '</option>');
-			}
-			
-			$('#sttsSelect').html('<option value="" selected>전체</option>');
-			for (let i=0; i<data.usrSttsList.length; ++i) {
-				let sttsData = data.usrSttsList[i];
-				$('#sttsSelect').append('<option value="'+ sttsData.usrSttsNo + '">' + sttsData.usrSttsNm + '</option>');
-			}
-			
-			$('#instSelect').html('<option value="" selected>전체</option>');
-			for (let i=0; i<data.instList.length; ++i) {
-				let instData = data.instList[i];
-				$('#instSelect').append('<option value="'+ instData.instNo + '">' + instData.instNm + '</option>');
-			}
-			
-			$('#deptSelect').html('<option value="" selected>전체</option>');
-			
-			$('#joinDateStart').val('');
-			$('#joinDateEnd').val('');
-			
-			//instSelect값이 변경될 때마다 실행되는 함수. 협력사에 맞는 부서 정보를 가져와서 deptSelect구성
-			$('#instSelect').change(function() {
-				let instNo = $('#instSelect').val();
-				if (instNo == '') {
-					$('#deptSelect').html('<option value="" selected>전체</option>');
-				} else {
-					$.ajax({
-						type: "POST",
-						url: "/otisrm/systemManagement/usrManagement/getDeptSelectConfig",
-						data: {instNo: instNo},
-						success: function(deptList) {
-							$('#deptSelect').html('<option value="" selected>전체</option>');
-							for (let i=0; i<deptList.length; ++i) {
-								let deptData = deptList[i];
-								$('#deptSelect').append('<option value="'+ deptData.deptNo + '">' + deptData.deptNm + '</option>');
-							}
-						}
-					});
-				}
-			});
-		}
-	});
-}
-
 //메인 테이블 구성
-function mainTableConfig(usrManagementSearch, pageNo) {
+function mainTableConfig(instManagementSearch, pageNo) {
+	console.log(instManagementSearch, pageNo);
 	currentPageNo = pageNo;
 	let requestData = {
-		usrManagementSearch: JSON.stringify(usrManagementSearch),
+		instManagementSearch: JSON.stringify(instManagementSearch),
 		pageNo: pageNo
 	}
 	console.log(JSON.stringify(requestData));
 	$.ajax({
 		type: "POST",
-		url: "/otisrm/systemManagement/usrManagement/getUsrManagementMainTableConfig",
+		url: "/otisrm/systemManagement/instManagement/getInstManagementMainTableConfig",
 		data: JSON.stringify(requestData),
 		contentType: "application/json",
 		success: function(data) {
+			console.log(data);
 			//테이블 body 구성
 			//테이블 body 초기화
 			$('#mainTable tbody').html('');
 			//테이블 body 재구성
-			for (let i=0; i<data.usrList.length; ++i) {
-				let usr = data.usrList[i];
+			for (let i=0; i<data.instList.length; ++i) {
+				let inst = data.instList[i];
 				let mainTableHtml = '';
 				mainTableHtml += '<tr style="height:4.7rem; font-size:1.5rem; background-color:white;">';
-				mainTableHtml += '<td><input type="checkbox" class="checkbox" style="vertical-align: middle;"></td>';
-				mainTableHtml += '<td class="usrNo">' + usr.usrNo + '</td>';
-				mainTableHtml += '<td>' + usr.usrNm+ '</td>';
-				mainTableHtml += '<td>' + usr.usrTelno + '</td>';
-				mainTableHtml += '<td>' + usr.usrEml + '</td>';
-				mainTableHtml += '<td>' + usr.instNm + '</td>';
-				mainTableHtml += '<td>' + usr.deptNm + '</td>';
-				mainTableHtml += '<td>' + usr.roleNm + '</td>';
-				mainTableHtml += '<td>' + usr.usrAuthrtNm + '</td>';
-				let joinDt = new Date(usr.usrJoinDt);
-				mainTableHtml += '<td>' + formatDate(joinDt) + '</td>';
-				
-				mainTableHtml += '<td>' + usr.usrSttsNm + '</td>';
-				/*
-				mainTableHtml += '<td>';
-				mainTableHtml += '<select class="rowSttsSelect" name="rowSttsSelect">';
-				if (usr.usrSttsNm == '승인 대기') {
-					mainTableHtml += '<option value="PENDING" selected>승인 대기</option>';
-					mainTableHtml += '<option value="NORMAL">일반</option>';
-					mainTableHtml += '<option value="WITHDRAWL">탈퇴</option>';
-				} else if (usr.usrSttsNm == '일반') {
-					mainTableHtml += '<option value="PENDING">승인 대기</option>';
-					mainTableHtml += '<option value="NORMAL" selected>일반</option>';
-					mainTableHtml += '<option value="WITHDRAWL">탈퇴</option>';
-				} else if (usr.usrSttsNm == '탈퇴') {
-					mainTableHtml += '<option value="PENDING">승인 대기</option>';
-					mainTableHtml += '<option value="NORMAL">일반</option>';
-					mainTableHtml += '<option value="WITHDRAWL" selected>탈퇴</option>';
+				mainTableHtml += '<td>' + (i+1) + '</td>';
+				mainTableHtml += '<td>' + inst.instNm+ '</td>';
+				mainTableHtml += '<td class="tableInstNo">' + inst.instNo + '</td>';
+				if (inst.outsrcYn == 'N') {
+					mainTableHtml += '<td class="tableInstNo">본사</td>';
+				} else if (inst.outsrcYn == 'Y') {
+					mainTableHtml += '<td class="tableInstNo">협력사</td>';
+				} else if (inst.outsrcYn == 'C') {
+					mainTableHtml += '<td class="tableInstNo">고객사</td>';
 				}
-				mainTableHtml += '</select>';
-				mainTableHtml += '</td>'
 				
-				*/
-				/*
-				mainTableHtml += '<td> <button data-toggle="modal" data-target="#requestDetailModal" class="btn-2 detail-button" onclick="showRequestDetailModal(\'' + sr.srNo + '\')">요청상세</button> </td>';
-				mainTableHtml += '<td> <button data-toggle="modal" data-target="#srProgressModal" class="btn-2 detail-button" onclick="showSrProgressModal(\'' + sr.srNo + '\')">진척관리</button> </td>';
-				*/
 				//jsp에 삽입
 				$('#mainTable tbody').append(mainTableHtml);
 			}
 			
+			//테이블 행 선택 시 우측 작업창에 데이터 세팅
+			$('#mainTable tr').click(function() {
+				//행 element 탐색
+				let row = $(this).closest('tr');
+				
+				console.log(row);
+				//해당 행의 데이터를 추출
+				let instNo = row.find('td:eq(2)').text();
+
+			    setInstDetail(instNo);
+				
+			});
+			/*
 			//일괄 체크 구현
 			$("#batchCheck").on("change", function() {
 		        if ($(this).prop("checked")) {
@@ -171,7 +97,7 @@ function mainTableConfig(usrManagementSearch, pageNo) {
 		            $("#mainTable input[type='checkbox']").prop("checked", false);
 		        }
 		    });
-			
+			*/
 			//페이징 파트 구현
 			let pagerHtml = '';
 			if (data.pager.totalRows == 0) {
@@ -223,46 +149,224 @@ function mainTableConfig(usrManagementSearch, pageNo) {
 }
 
 function mainTableSearchReset() {
-	currentUsrManagementSearch.usrAuthrt = null;
-	currentUsrManagementSearch.usrStts = null;
-	currentUsrManagementSearch.keywordCategory = null;
-	currentUsrManagementSearch.keywordContent = null;
-	currentUsrManagementSearch.usrInst = null;
-	currentUsrManagementSearch.usrDept = null;
-	currentUsrManagementSearch.joinDateStart = null;
-	currentUsrManagementSearch.joinDateEnd = null;
+	currentInstManagementSearch.keywordCategory = null;
+	currentInstManagementSearch.keywordContent = null;
 	
 	currentPageNo = 1;
-	mainTableSearchDivConfig();
-	mainTableConfig(currentUsrManagementSearch, currentPageNo);
+	$('#keywordCategoty').val('instNm');
+	$('#keywordContent').val('');
+	mainTableConfig(currentInstManagementSearch, currentPageNo);
 }
 
 function mainTableSearch() {
-	currentUsrManagementSearch.usrAuthrt = $('#authrtSelect').val();
-	if ($('#authrtSelect').val() == '') currentUsrManagementSearch.usrAuthrt = null;
+	currentInstManagementSearch.keywordCategory = $('#keywordCategoty').val();
+	if ($('#keywordCategoty').val() == '') currentInstManagementSearch.keywordCategory = null;
 	
-	currentUsrManagementSearch.usrStts = $('#sttsSelect').val();
-	if ($('#sttsSelect').val() == '') currentUsrManagementSearch.usrStts = null;
+	currentInstManagementSearch.keywordContent = $('#keywordContent').val();
+	if ($('#keywordContent').val() == '') currentInstManagementSearch.keywordContent = null;
 	
-	currentUsrManagementSearch.keywordCategory = $('#keywordCategoty').val();
-	if ($('#keywordCategoty').val() == '') currentUsrManagementSearch.keywordCategory = null;
+	mainTableConfig(currentInstManagementSearch, currentPageNo);
+}
+
+function setInstDetail(instNo) {
+	let requestData = {
+        instNo: instNo
+    };
 	
-	currentUsrManagementSearch.keywordContent = $('#keywordContent').val();
-	if ($('#keywordContent').val() == '') currentUsrManagementSearch.keywordContent = null;
+	$.ajax({
+		type: "POST",
+		url: "/otisrm/instManagement/getDetailInstInfo",
+		data: requestData,
+		success: function(data) {
+			$('#instDetailNm').html(data.instNm);
+			$('#instDetailNo').html(data.instNo);
+			if (data.outsrcYn == 'Y') {
+				$('#instDetailClsf').html('본사');
+			} else if (data.outsrcYn == 'N') {
+				$('#instDetailClsf').html('협력사');
+			} else if (data.outsrcYn == 'C') {
+				$('#instDetailClsf').html('고객사');
+			} 
+			
+			for (let i=0; i<data.ibpsList.length; ++i) {
+				let ibps = data.ibpsList[i];
+				let html = '';
+				html += '<tr style="height:4rem; font-size:1.6rem; background-color:white;">';
+				html += '<td>' + (i+1) + '</td>';
+				html += '<td><input type="text" class="detailIbpsNm" value="' + ibps.ibpsNm + '" style="width:50%; text-align: center;"></td>';
+				html += '<td><input type="text" class="detailIbpsNo" value="' + ibps.ibpsNo + '" style="width:50%; text-align: center;"></td>';
+				html += '<td>' + ibps.ibpsNm+ '</td>';
+				html += '<td>' + ibps.ibpsNo+ '</td>';
+				html += '<td>' + ibps.ibpsNo+ '</td>';
+			}
+			
+
+			//SR계획정보 구성
+			$('#srPlanInfoDmnd').html(data.srDmndNm);
+			$('#srPlanInfoTask').html(data.srTaskNm);
+			$('#srPlanInfoInst').html(data.instNm);
+			$('#srPlanInfoDept').html(data.deptNm);
+			$('#srPlanInfoPic').html(data.usrNm);
+			if (data.srTrgtBgngDt == '' || data.srTrgtBgngDt == null) {
+				$('#srPlanInfoBgngDt').html('');
+			} else {
+				let bgngDt = new Date(data.srTrgtBgngDt);
+				$('#srPlanInfoBgngDt').html(formatDate(bgngDt));
+			}
+			if (data.srTrgtCmptnDt == '' || data.srTrgtCmptnDt == null) {
+				$('#srPlanInfoCmptnDt').html('');
+			} else {
+				let cmptnDt = new Date(data.srTrgtCmptnDt);
+				$('#srPlanInfoCmptnDt').html(formatDate(cmptnDt));
+			}
+			$('#srPlanInfoTotalCapacity').html(data.totalCapacity);
+			$('#srPlanInfoNote').html(data.srTrnsfNote);
+			
+			//SR자원정보 구성
+			$('#srHrInfo tbody').html('');	//html 초기화
+			if (data.srTrnsfHrList != null) {
+				for (let i=0; i<data.srTrnsfHrList.length; ++i) {
+					let srTrnsfHr = data.srTrnsfHrList[i];
+					let srTrnsfHrHtml = '';
+					srTrnsfHrHtml += '<tr style="height:4rem; font-size:1.6rem; background-color:white;">';
+					srTrnsfHrHtml += '<td><input type="checkbox" class="checkbox"></td>';
+					srTrnsfHrHtml += '<td class="srNo" style="display:none">' + srTrnsfHr.srNo + '</td>';
+					srTrnsfHrHtml += '<td class="usrNo" style="display:none">' + srTrnsfHr.usrNo + '</td>';
+					srTrnsfHrHtml += '<td>' + srTrnsfHr.usrNm + '</td>';
+					srTrnsfHrHtml += '<td>' + srTrnsfHr.roleNm + '</td>';
+					if (srTrnsfHr.planCapacity != '' && srTrnsfHr.planCapacity != null) {
+						srTrnsfHrHtml += '<td><input type="text" value="' + srTrnsfHr.planCapacity + '" style="width:50%; text-align: center;"></div></td>';
+					} else {
+						srTrnsfHrHtml += '<td><input type="text" value="" style="width:50%; text-align: center;"></div></td>';
+					}
+					if (srTrnsfHr.performanceCapacity != '' && srTrnsfHr.performanceCapacity != null) {
+						srTrnsfHrHtml += '<td><input type="text" value="' + srTrnsfHr.performanceCapacity + '" style="width:50%; text-align: center;"></div></td>';
+					} else {
+						srTrnsfHrHtml += '<td><input type="text" value="" style="width:50%; text-align: center;"></div></td>';
+					}
+					srTrnsfHrHtml += '</tr>';
+					$('#srHrInfo tbody').append(srTrnsfHrHtml);
+				}
+			}
+			
+			
+			//SR진척률 구성
+			$('#prgrsTable td').html('');
+			if (data.srPrgrsList != null) {
+				for (let i=0; i<data.srPrgrsList.length; ++i) {
+					let srPrgrs = data.srPrgrsList[i];
+					let bgngDt = new Date(srPrgrs.srPrgrsBgngDt);
+			        let cmptnDt = new Date(srPrgrs.srPrgrsCmptnDt);
+					if (srPrgrs.srPrgrsSttsNm == '분석') {
+						if (srPrgrs.srPrgrsBgngDt != null) {
+							$('#srAnalysisBgngDt').html(formatDate(bgngDt));
+						}
+						if (srPrgrs.srPrgrsCmptnDt != null) {
+							$('#srAnalysisCmptnDt').html(formatDate(cmptnDt));
+						}
+						$('#srAnalysisPrgrs').html('<input value="" style="width:40%; height:3rem; margin:0rem 1rem; text-align: center;">');
+						if (srPrgrs.srPrgrs > 0) {
+							$('#srAnalysisPrgrs input').val(srPrgrs.srPrgrs);
+							
+							//그래프 재구성
+							$('#totalProgressGraph').css('width', srPrgrs.srPrgrs + '%');
+							$('#totalProgressGraphText').html(srPrgrs.srPrgrs + '%');
+							$('#analysisProgressGraph').css('width', (srPrgrs.srPrgrs * 10) + '%');
+						}
+						let btnHtml = '<center><a data-toggle="modal" data-target="#manageSrOutputModal" href="javascript:void(0)" onclick="composeManageSrOutputModal(\'ANALYSIS\')"';
+						btnHtml += 'style="height: 3rem; width: 30%; border-radius: 5px; background-color:#2c7be4; color:white; font-weight:700;';
+						btnHtml += 'display: flex; flex-direction: row; justify-content: center; align-items: center;">관리</a></center>';
+						$('#srAnalysisOtptBtn').html(btnHtml);	 
+					} else if (srPrgrs.srPrgrsSttsNm == '설계') {
+						if (srPrgrs.srPrgrsBgngDt != null) {
+							$('#srDesignBgngDt').html(formatDate(bgngDt));
+						}
+						if (srPrgrs.srPrgrsCmptnDt != null) {
+							$('#srDesignCmptnDt').html(formatDate(cmptnDt));
+						}
+						$('#srDesignPrgrs').html('<input value="" style="width:40%; height:3rem; margin:0rem 1rem; text-align: center;">');
+						if (srPrgrs.srPrgrs > 0) {
+							$('#srDesignPrgrs input').val(srPrgrs.srPrgrs);
+							
+							//그래프 재구성
+							$('#totalProgressGraph').css('width', srPrgrs.srPrgrs + '%');
+							$('#totalProgressGraphText').html(srPrgrs.srPrgrs + '%');
+							$('#designProgressGraph').css('width', ((srPrgrs.srPrgrs - 10) * 10) + '%');
+						}
+						let btnHtml = '<center><a data-toggle="modal" data-target="#manageSrOutputModal" href="javascript:void(0)" onclick="composeManageSrOutputModal(\'DESIGN\')"';
+						btnHtml += 'style="height: 3rem; width: 30%; border-radius: 5px; background-color:#2c7be4; color:white; font-weight:700;';
+						btnHtml += 'display: flex; flex-direction: row; justify-content: center; align-items: center;">관리</a></center>';
+						$('#srDesignOtptBtn').html(btnHtml);
+					} else if (srPrgrs.srPrgrsSttsNm == '구현') {
+						if (srPrgrs.srPrgrsBgngDt != null) {
+							$('#srImplBgngDt').html(formatDate(bgngDt));
+						}
+						if (srPrgrs.srPrgrsCmptnDt != null) {
+							$('#srImplCmptnDt').html(formatDate(cmptnDt));
+						}
+						$('#srImplPrgrs').html('<input value="" style="width:40%; height:3rem; margin:0rem 1rem; text-align: center;">');
+						if (srPrgrs.srPrgrs > 0) {
+							$('#srImplPrgrs input').val(srPrgrs.srPrgrs);
+							
+							//그래프 재구성
+							$('#totalProgressGraph').css('width', srPrgrs.srPrgrs + '%');
+							$('#totalProgressGraphText').html(srPrgrs.srPrgrs + '%');
+							$('#implementProgressGraph').css('width', ((srPrgrs.srPrgrs - 20) * 2) + '%');
+						}
+						let btnHtml = '<center><a data-toggle="modal" data-target="#manageSrOutputModal" href="javascript:void(0)" onclick="composeManageSrOutputModal(\'IMPLEMENT\')"';
+						btnHtml += 'style="height: 3rem; width: 30%; border-radius: 5px; background-color:#2c7be4; color:white; font-weight:700;';
+						btnHtml += 'display: flex; flex-direction: row; justify-content: center; align-items: center;">관리</a></center>';
+						$('#srImplOtptBtn').html(btnHtml);
+					} else if (srPrgrs.srPrgrsSttsNm == '시험') {
+						if (srPrgrs.srPrgrsBgngDt != null) {
+							$('#srTestBgngDt').html(formatDate(bgngDt));
+						}
+						if (srPrgrs.srPrgrsCmptnDt != null) {
+							$('#srTestCmptnDt').html(formatDate(cmptnDt));
+						}
+						$('#srTestPrgrs').html('<input value="" style="width:40%; height:3rem; margin:0rem 1rem; text-align: center;">');
+						if (srPrgrs.srPrgrs > 0) {
+							$('#srTestPrgrs input').val(srPrgrs.srPrgrs);
+							
+							//그래프 재구성
+							$('#totalProgressGraph').css('width', srPrgrs.srPrgrs + '%');
+							$('#totalProgressGraphText').html(srPrgrs.srPrgrs + '%');
+							$('#testProgressGraph').css('width', ((srPrgrs.srPrgrs - 70) * 5) + '%');
+						}
+						let btnHtml = '<center><a data-toggle="modal" data-target="#manageSrOutputModal" href="javascript:void(0)" onclick="composeManageSrOutputModal(\'TEST\')"';
+						btnHtml += 'style="height: 3rem; width: 30%; border-radius: 5px; background-color:#2c7be4; color:white; font-weight:700;';
+						btnHtml += 'display: flex; flex-direction: row; justify-content: center; align-items: center;">관리</a></center>';
+						$('#srTestOtptBtn').html(btnHtml);
+					} else if (srPrgrs.srPrgrsSttsNm == '반영요청') {
+						if (srPrgrs.srPrgrsBgngDt != null) {
+							$('#srApplyBgngDt').html(formatDate(bgngDt));
+						}
+						if (srPrgrs.srPrgrsCmptnDt != null) {
+							$('#srApplyCmptnDt').html(formatDate(cmptnDt));
+						}
+						$('#srApplyPrgrs').html('<input value="" style="width:40%; height:3rem; margin:0rem 1rem; text-align: center;">');
+						if (srPrgrs.srPrgrs > 0) {
+							$('#srApplyPrgrs input').val(srPrgrs.srPrgrs);
+							
+							//그래프 재구성
+							$('#totalProgressGraph').css('width', srPrgrs.srPrgrs + '%');
+							$('#totalProgressGraphText').html(srPrgrs.srPrgrs + '%');
+							$('#applyRequestProgressGraph').css('width', ((srPrgrs.srPrgrs - 90) * 10) + '%');
+						}
+						let btnHtml = '<center><a data-toggle="modal" data-target="#manageSrOutputModal" href="javascript:void(0)" onclick="composeManageSrOutputModal(\'APPLY_REQUEST\')"';
+						btnHtml += 'style="height: 3rem; width: 30%; border-radius: 5px; background-color:#2c7be4; color:white; font-weight:700;';
+						btnHtml += 'display: flex; flex-direction: row; justify-content: center; align-items: center;">관리</a></center>';
+						$('#srApplyOtptBtn').html(btnHtml);
+					}
+				}
+			}
+			
+			
+		}
+	});
 	
-	currentUsrManagementSearch.usrInst = $('#instSelect').val();
-	if ($('#instSelect').val() == '') currentUsrManagementSearch.usrInst = null;
-	
-	currentUsrManagementSearch.usrDept = $('#deptSelect').val();
-	if ($('#deptSelect').val() == '') currentUsrManagementSearch.usrDept = null;
-	
-	currentUsrManagementSearch.joinDateStart = $('#joinDateStart').val();
-	if ($('#joinDateStart').val() == '') currentUsrManagementSearch.joinDateStart = null;
-	
-	currentUsrManagementSearch.joinDateEnd = $('#joinDateEnd').val();
-	if ($('#joinDateEnd').val() == '') currentUsrManagementSearch.joinDateEnd = null;
-	
-	mainTableConfig(currentUsrManagementSearch, currentPageNo);
+	currentDetailInstNo = instNo;
+	sessionStorage.setItem('developerHomeCurrentDetailInstNo', currentDetailInstNo);
 }
 
 function batchApproval() {
