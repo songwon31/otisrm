@@ -1016,8 +1016,8 @@
 </div>
 
 <!-- 일정변경요청 모달 -->
-<div id="changeScheduleRequestModal" class="modal" data-backdrop="static" style="width:1700px;">
-	<div class="modal-dialog modal-dialog-centered">
+<div id="changeScheduleRequestModal" class="modal" data-backdrop="static" style="width:700px; height:auto; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); margin:auto;">
+	<div>
 		<div class="modal-content">
 			<div class="modal-header">
 				<div class="modal-title" style="font-size:2rem; font-weight:700;">SR일정 변경 요청</div>
