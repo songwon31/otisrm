@@ -239,7 +239,7 @@
 				</div>
 				<div style="height: 15rem; display: flex; flex-direction: row;">
 					<div style="height: 15rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #edf2f8; border-radius: 0px 0px 0px 10px; font-weight:700;">참고사항</div>
-					<div style="height: 15rem; width: 85%; padding-left: 0.5rem; display: flex; flex-direction: column;">
+					<div style="height: 15rem; width: 85%; display: flex; flex-direction: column;">
 						<div style="height: 15rem; display: flex; flex-direction: row; align-items: center;">
 							<div id="srPlanInfoNote" style="height: 15rem; width: 100%; padding: 0.5rem; overflow-y: auto; white-space: pre-line;">
 
@@ -479,46 +479,46 @@
 			<div class="modal-body" style="margin:0px; padding:0px; font-size:1.5rem;">
 				<div id="srRqstInfo">
 					<div style="height:4rem; display:flex; flex-direction:row;">
-						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#f9fafe; font-weight:700;">SR번호</div>
+						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#edf2f8; font-weight:700;">SR번호</div>
 						<div id="modal_sr_no" style="height:4rem; width:35%; padding-left:0.5rem; display:flex; align-items:center;"></div>
-						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#f9fafe; font-weight:700;">SR요청번호</div>
+						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#edf2f8; font-weight:700;">SR요청번호</div>
 						<div id="modal_sr_rqst_no" style="height:4rem; width:35%; padding-left:0.5rem; display:flex; align-items:center;"></div>
 					</div>
 					<div style="height:4rem; display:flex; flex-direction:row;">
-						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#f9fafe; font-weight:700;">시스템구분</div>
+						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#edf2f8; font-weight:700;">시스템구분</div>
 						<div id="modal_sys_nm" style="height:4rem; width:35%; padding-left:0.5rem; display:flex; align-items:center;"></div>
-						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#f9fafe; font-weight:700;">업무구분</div>
+						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#edf2f8; font-weight:700;">업무구분</div>
 						<div id="modal_sr_task_nm" style="height:4rem; width:35%; padding-left:0.5rem; display:flex; align-items:center;"></div>
 					</div>
 					<div style="height:4rem; display:flex; flex-direction:row;">
-						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#f9fafe; font-weight:700;">SR제목</div>
+						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#edf2f8; font-weight:700;">SR제목</div>
 						<div id="modal_sr_ttl" style="height:4rem; width:85%; padding-left:0.5rem; display:flex; align-items:center;"></div>
 					</div>
 					<div style="height:4rem; display:flex; flex-direction:row;">
-						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#f9fafe; font-weight:700;">SR목적</div>
+						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#edf2f8; font-weight:700;">SR목적</div>
 						<div id="modal_sr_prps" style="height:4rem; width:85%; padding-left:0.5rem; display:flex; align-items:center;"></div>
 					</div>
 					<div style="height:4rem; display:flex; flex-direction:row;">
-						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#f9fafe; font-weight:700;">요청팀</div>
+						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#edf2f8; font-weight:700;">요청팀</div>
 						<div id="modal_dept_nm" style="height:4rem; width:35%; padding-left:0.5rem; display:flex; align-items:center;"></div>
-						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#f9fafe; font-weight:700;">요청자</div>
+						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#edf2f8; font-weight:700;">요청자</div>
 						<div id="modal_pic_nm" style="height:4rem; width:35%; padding-left:0.5rem; display:flex; align-items:center;"></div>
 					</div>
 					<div style="height:4rem; display:flex; flex-direction:row;">
-						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#f9fafe; font-weight:700;">요청일</div>
+						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#edf2f8; font-weight:700;">요청일</div>
 						<div id="modal_sr_rqst_reg_dt" style="height:4rem; width:35%; padding-left:0.5rem; display:flex; align-items:center;"></div>
-						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#f9fafe; font-weight:700;">완료요청일</div>
+						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#edf2f8; font-weight:700;">완료요청일</div>
 						<div id="modal_sr_cmptn_prnmnt_dt" style="height:4rem; width:35%; padding-left:0.5rem; display:flex; align-items:center;"></div>
 					</div>
 					<div style="height:4rem; display:flex; flex-direction:row;">
-						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#f9fafe; font-weight:700;">협력사</div>
+						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#edf2f8; font-weight:700;">협력사</div>
 						<div id="modal_inst_nm" style="height:4rem; width:35%; padding-left:0.5rem; display:flex; align-items:center;"></div>
-						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#f9fafe; font-weight:700;">유지보수 이관일</div>
+						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#edf2f8; font-weight:700;">유지보수 이관일</div>
 						<div id="modal_sr_trnsf_dt" style="height:4rem; width:35%; padding-left:0.5rem; display:flex; align-items:center;"></div>
 					</div>
 					<div style="height:11rem; display:flex; flex-direction:row;">
-						<div style="height:11rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#f9fafe; font-weight:700;">SR내용</div>
-						<div style="height:11rem; width:85%; padding-left:0.5rem; display:flex; flex-direction: column;">
+						<div style="height:11rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#edf2f8; font-weight:700;">SR내용</div>
+						<div style="height:11rem; width:85%; padding:0rem 0.5rem; display:flex; flex-direction: column;">
 							<div style="height:3rem;">
 								<form>
 									<div style="display:flex; flex-direction: row; align-items:center;">
@@ -540,9 +540,11 @@
 							</div>
 						</div>
 					</div>
-					<div style="height:4rem; display:flex; flex-direction:row;">
-						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#f9fafe; border-radius:0px 0px 0px 10px/0px 0px 0px 10px;  font-weight:700;">첨부파일</div>
-						<div style="height:4rem; width:85%; padding-left:0.5rem; display:flex; align-items:center;">(요청내용)230712_EIS변경요청.hwp</div>
+					<div style="height:12rem; display:flex; flex-direction:row;">
+						<div style="height:12rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; border-bottom:1px solid gray; background-color:#edf2f8;  font-weight:700;">첨부파일</div>
+						<div id="modalSrAtch" style="height:12rem; width:85%; padding:0.5rem; display:flex; align-items:center; overflow-y:auto;">
+							
+						</div>
 					</div>
 				</div>
 			</div>
@@ -984,11 +986,11 @@
 				<div class="modal-title" style="font-size:2rem; font-weight:700;">SR실적등록</div>
 				<i class="material-icons close-icon" data-dismiss="modal" style="cursor: pointer;">close</i>
 			</div>
-			<div class="modal-body" style="margin:0px; padding:2rem; font-size:1.5rem;">
-				<div style="display:flex; align-items:center;">
+			<div class="modal-body" style="margin:0px; font-size:1.5rem;">
+				<div style="display:flex; align-items:center; margin-bottom:0.5rem;">
 					<span>*투입실적은 1일(8시간) 합계 1.0으로 입력 바랍니다. (단, 연장 근무시 2.0 이내 초과 입력 가능)</span>
 					<span style="flex-grow:1;"></span>
-					<button class="btn-2" onclick="registerCapacity()" style="display:flex; align-items:center; justify-content:center;">저장</button>
+					<button class="btn-1" onclick="registerCapacity()" style="width:5%; height:2.5rem;">저장</button>
 				</div>
 				<table id="srPerformanceRegistrationModalTable" style="width: 100%; text-align: center; border-radius:5px;">
 					<colgroup>
@@ -999,7 +1001,7 @@
 						<col width="15"/>
 						<col width="15%"/>
 					</colgroup>
-					<thead>
+					<thead style="background-color: #edf2f8;">
 						<tr style="height: 4.3rem; font-size: 1.5rem; font-weight: 700;">
 							<th scope="col">SR번호</th>
 							<th scope="col">목표시작일</th>
@@ -1062,18 +1064,20 @@
 			</div>
 			<div class="modal-body" style="margin:0px; padding:0px; font-size:1.5rem;">
 				<div id="srPlanInfoFindPic">
-					<div style="height:31rem; background-color:#f9fafe; margin:0.5rem; overflow-y:auto;">
+					<div style="height:31rem; margin:0.5rem; overflow-y:auto;">
 						<table id="manageChangeScheduleRequestModalTable" style="width: 100%; text-align: center; border-radius:5px;">
 							<colgroup>
+								<col width="5%"/>
 								<col width="20%"/>
 								<col width="20%"/>
 								<col width="20%"/>
 								<col width="10%"/>
-								<col width="20%"/>
+								<col width="15%"/>
 								<col width="10%"/>
 							</colgroup>
-							<thead>
+							<thead style="background-color:#edf2f8;">
 								<tr style="height: 4.3rem; font-size: 1.5rem; font-weight: 700;">
+									<th scope="col"></th>
 									<th scope="col">SR번호</th>
 									<th scope="col">현재 완료예정일</th>
 									<th scope="col">요청된 완료예정일</th>

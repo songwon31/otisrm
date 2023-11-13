@@ -1301,21 +1301,28 @@ function manageChangeScheduleRequestModalConfig() {
         url: "/otisrm/getManageChangeScheduleRequestModalConfig",
         method: "POST",
         success: function (data) {
+        	if (data.length == 0) {
+        		let html = '<tr style="height: 4.5rem; font-size: 1.5rem; background-color:white;">';
+        		html += '<td colspan=\'7\'>일정변경요청 내역이 없습니다.</td>';
+        		html += '</tr>'
+        		$('#manageChangeScheduleRequestModalTable tbody').append(html);
+        	}
         	for (let i=0; i<data.length; ++i) {
         		let config = data[i];
     			let html = '';
     			html += '<tr style="height: 4.5rem; font-size: 1.5rem; background-color:white;">';
+    			html += '<td>' + (i+1) + '</td>';
     			html += '<td>' + config.srNo + '</td>';
     			let srCmptnPrnmntDt = new Date(config.srCmptnPrnmntDt);
     			html += '<td><input type="date" value="' + formatDate(srCmptnPrnmntDt) + '" disabled></td>';
     			let srSchdlChgRqstDt = new Date(config.srSchdlChgRqstDt);
     			html += '<td><input class="chgRqstDt" type="date" value="' + formatDate(srSchdlChgRqstDt) + '"></td>';
     			html += '<td>' + config.status + '</td>';
-    			html += '<td> <button onclick="srScheduleChangeRequestModal(\'' + config.srNo + '\')">요청수정/재신청</button> </td>';
+    			html += '<td> <button class="btn-1" style="height:2.8rem;" onclick="srScheduleChangeRequestModal(\'' + config.srNo + '\')">요청수정/재신청</button> </td>';
     			if (config.srSchdlChgRqstAprvYn == null || config.srSchdlChgRqstAprvYn == '') {
     				html += '<td></td>'
     			} else {
-    				html += '<td> <button onclick="srScheduleChangeRequestResultCheck(\'' + config.srNo + '\')">확인</button> </td>';
+    				html += '<td> <button class="btn-1" style="height:2.8rem;" onclick="srScheduleChangeRequestResultCheck(\'' + config.srNo + '\')">확인</button> </td>';
     			}
     			html += '</tr>';
     			
