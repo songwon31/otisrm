@@ -40,60 +40,64 @@
 			</div>
 			<div id="statusChoiceBtnDiv">
 				<a id="mainTableTotalTab" href="javascript:void(0)" onclick="refactorMainTable('TOTAL', 1)"
-					class="mainTableSelectElement filterTab filterTabSelected" style="width: 6%;"> 
+					class="mainTableSelectElement filterTab filterTabSelected"> 
 					<span>전체(</span>
 					<span id="totalNum"></span> 
 					<span>)</span>
 				</a>
 				<a id="mainTableRqstTab" href="javascript:void(0)" onclick="refactorMainTable('RQST', 1)"
-					class="mainTableSelectElement filterTab" style="width: 6%;"> 
+					class="mainTableSelectElement filterTab"> 
 					<span>요청(</span>
 					<span id="requestNum"></span> 
 					<span>)</span>
 				</a>
 				<a id="mainTableReceiptTab" href="javascript:void(0)" onclick="refactorMainTable('RECEIPT', 1)"
-					class="mainTableSelectElement filterTab" style="width: 6%;"> 
+					class="mainTableSelectElement filterTab"> 
 					<span>접수(</span>
 					<span id="receiptNum"></span> 
 					<span>)</span>
 				</a> 
 				<a id="mainTableAnalysisTab" href="javascript:void(0)" onclick="refactorMainTable('ANALYSIS', 1)"
-					class="mainTableSelectElement filterTab" style="width: 6%;"> 
+					class="mainTableSelectElement filterTab"> 
 					<span>분석(</span>
 					<span id="analysisNum"></span> 
 					<span>)</span>
 				</a> 
 				<a id="mainTableDesignTab" href="javascript:void(0)" onclick="refactorMainTable('DESIGN', 1)"
-					class="mainTableSelectElement filterTab" style="width: 6%;"> 
+					class="mainTableSelectElement filterTab"> 
 					<span>설계(</span>
 					<span id="designNum"></span> 
 					<span>)</span>
 				</a> 
 				<a id="mainTableImplementTab" href="javascript:void(0)" onclick="refactorMainTable('IMPLEMENT', 1)"
-					class="mainTableSelectElement filterTab" style="width: 6%;"> 
+					class="mainTableSelectElement filterTab"> 
 					<span>구현(</span>
 					<span id="implementNum"></span> 
 					<span>)</span>
 				</a> 
 				<a id="mainTableTestTab" href="javascript:void(0)" onclick="refactorMainTable('TEST', 1)"
-					class="mainTableSelectElement filterTab" style="width: 6%;"> 
+					class="mainTableSelectElement filterTab"> 
 					<span>시험(</span>
 					<span id="testNum"></span> 
 					<span>)</span>
 				</a> 
 				<a id="mainTableApplyRequestTab" href="javascript:void(0)" onclick="refactorMainTable('APPLY_REQUEST', 1)"
-					class="mainTableSelectElement filterTab" style="width: 8%;"> 
+					class="mainTableSelectElement filterTab"> 
 					<span>반영요청(</span>
 					<span id="applyNum"></span> 
 					<span>)</span>
 				</a>
 				<div style="flex-grow:1;"></div>
+				<!-- 
 				<button type="button" data-toggle="modal" data-target="#manageChangeScheduleRequestModal" onclick="manageChangeScheduleRequestModalConfig()"
 						style="height:2.5rem; display:flex; align-items:center; justify-content:center;">
 					일정변경요청 내역 관리
 				</button>
+				 -->
+				<button type="button" data-toggle="modal" data-target="#manageChangeScheduleRequestModal" onclick="manageChangeScheduleRequestModalConfig()"
+						class="btn-1" style="height:2.5rem;">일정변경요청 내역 관리</button>
 				<button type="button" data-toggle="modal" data-target="#srPerformanceRegistrationModal" onclick="srPerformanceRegistrationModalConfig()"
-						class="btn-2" style="display:flex; align-items:center; justify-content:center; margin-left:0.5rem;">
+						class="btn-1" style="height:2.5rem; margin-left:0.5rem;">
 					실적 등록
 				</button>
 				<!-- 
@@ -115,11 +119,12 @@
 			<div style="height:27rem; background-color:#f9fafe;">
 				<table id="mainTable" style="width: 100%; text-align: center;">
 					<colgroup>
+						<col width="3%" />
 						<col width="10%" />
 						<col width="10%" />
 						<col width="10%" />
 						<col width="20%" />
-						<col width="10%" />
+						<col width="7%" />
 						<col width="10%" />
 						<col width="10%" />
 						<col width="10%" />
@@ -127,6 +132,7 @@
 					</colgroup>
 					<thead>
 						<tr style="height: 4.3rem; font-size: 1.5rem; font-weight: 700;">
+							<th scope="col"></th>
 							<th scope="col">SR번호</th>
 							<th scope="col">시스템구분</th>
 							<th scope="col">업무구분</th>
@@ -156,7 +162,7 @@
 					<span>SR요청 처리 정보</span>
 				</div>
 				<div style="flex-grow:1;"></div>
-				<button data-toggle="modal" data-target="#changeScheduleRequestModal" onclick="changeScheduleRequestModalConfig()" style="display:flex; align-items:center; justify-content:center;">일정변경요청/수정</button>
+				<button type="button" data-toggle="modal" data-target="#changeScheduleRequestModal" onclick="changeScheduleRequestModalConfig()" class="btn-1" style="height:2.5rem;">일정변경요청/수정</button>
 			</div>
 			<div style="display:flex;">
 				<div id="srProgressChoiceDiv" style="width:60%;">
@@ -181,16 +187,16 @@
 					<div style="flex-grow: 1; border-bottom: 1.5px solid #edf2f8;"></div>
 				</div>
 				<div id="srProgressBtnDiv" style="display:flex; line-height:3rem; justify-content:flex-end; align-items:center; width:40%; border-bottom: 1.5px solid #edf2f8;">
-					<a class="srProgressBtn srPlanBtn" data-toggle="modal" data-target="#srPlanInfoEditModal" onclick="showSrPlanInfoEditModal()" href="javascript:void(0)" 
-						style="pointer-events: none; height: 2.5rem; width: 5rem; border: 1px solid gray; border-radius: 5px; display: flex; flex-direction: row; justify-content: center; align-items: center;">수정</a> 
-					<a class="srProgressBtn srHrBtn" data-toggle="modal" data-target="#setHrFindPicModal" onclick="composeSetHrFindPicModal()" href="javascript:void(0)" 
-						style="pointer-events: none; height: 2.5rem; width: 5rem; border: 1px solid gray; border-radius: 5px; display: none; flex-direction: row; justify-content: center; align-items: center;">추가</a>
-					<a class="srProgressBtn srHrBtn" onclick="deleteHrInfo()" href="javascript:void(0)" 
-						style="pointer-events: none; height: 2.5rem; width: 5rem; border: 1px solid gray; border-radius: 5px; display: none; flex-direction: row; justify-content: center; align-items: center;">삭제</a>
-					<a class="srProgressBtn srHrBtn" onclick="saveHrInfo()" href="javascript:void(0)" 
-						style="pointer-events: none; height: 2.5rem; width: 5rem; border: 1px solid gray; border-radius: 5px; display: none; flex-direction: row; justify-content: center; align-items: center;">저장</a>  
-					<a class="srProgressBtn srPrgrsBtn" href="javascript:void(0)" onclick="updatePrgrs()"
-						style="pointer-events: none; height: 2.5rem; width: 5rem; border: 1px solid gray; border-radius: 5px; display: none; flex-direction: row; justify-content: center; align-items: center;">저장</a> 
+					<button type="button" class="srProgressBtn srPlanBtn btn-1" data-toggle="modal" data-target="#srPlanInfoEditModal" onclick="showSrPlanInfoEditModal()" 
+						style="height:2.5rem;">수정</button> 
+					<button type="button" class="srProgressBtn srHrBtn btn-1" data-toggle="modal" data-target="#setHrFindPicModal" onclick="composeSetHrFindPicModal()" 
+						style="height:2.5rem; margin-right:0.5rem; display:none;">추가</button> 
+					<button type="button" class="srProgressBtn srHrBtn btn-1" onclick="deleteHrInfo()"
+						style="height:2.5rem; margin-right:0.5rem; display:none;">삭제</button> 
+					<button type="button" class="srProgressBtn srHrBtn btn-1" onclick="saveHrInfo()"
+						style="height:2.5rem; display:none;">저장</button> 
+					<button type="button" class="srProgressBtn srPrgrsBtn btn-1" onclick="updatePrgrs()"
+						style="height:2.5rem; display:none;">저장</button> 
 				</div>
 			</div>
 			<!-- SR계획정보 div -->

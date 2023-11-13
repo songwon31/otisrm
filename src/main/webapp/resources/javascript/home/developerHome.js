@@ -168,6 +168,7 @@ function refactorMainTable(filterType, page) {
 				let sr = data.srList[i];
 				let srTrHtml = '';
 				srTrHtml += '<tr style="height: 4.5rem; font-size: 1.5rem; background-color:white;">';
+				srTrHtml += '<td>' + (i+1) + '</td>';
 				srTrHtml += '<td>' + sr.srNo + '</td>';
 				srTrHtml += '<td>' + sr.sysNm + '</td>';
 				srTrHtml += '<td>' + sr.srTaskNm + '</td>';
@@ -182,7 +183,7 @@ function refactorMainTable(filterType, page) {
 					srTrHtml += '<td>' + formatDate(srTrgtCmptnDt) + '</td>';
 		        }
 				srTrHtml += '<td>' + sr.srPrgrsSttsNm + '</td>';
-				srTrHtml += '<td> <button data-toggle="modal" data-target="#requestDetailModal" class="btn-2 detail-button" onclick="showRequestDetail(\'' + sr.srNo + '\')">요청상세</button> </td>';
+				srTrHtml += '<td> <button data-toggle="modal" data-target="#requestDetailModal" class="btn-1 detail-button" style="height:2.6rem; width:60%;" onclick="showRequestDetail(\'' + sr.srNo + '\')">요청상세</button> </td>';
 				//jsp에 삽입
 				$('#mainTable tbody').append(srTrHtml);
 			}
@@ -194,7 +195,7 @@ function refactorMainTable(filterType, page) {
 				
 				console.log(row);
 				//해당 행의 데이터를 추출
-				let srNo = row.find('td:eq(0)').text();
+				let srNo = row.find('td:eq(1)').text();
 
 			    setSrDetail(srNo);
 				
@@ -332,6 +333,7 @@ function showRequestDetail(srNo) {
 }
 
 function setSrDetail(srNo) {
+	console.log("srNo: "+srNo);
 	//그래프 초기화
 	$('#totalProgressGraph').css('width', '0%');
 	$('#totalProgressGraphText').html('0%');
@@ -340,7 +342,7 @@ function setSrDetail(srNo) {
 	$('#implementProgressGraph').css('width', '0%');
 	$('#testProgressGraph').css('width', '0%');
 	$('#applyRequestProgressGraph').css('width', '0%');
-	
+
 	let requestData = {
         srNo: srNo
     };
@@ -713,6 +715,8 @@ function editSrTrnsfPlan() {
         srTrnsfNote: srTrnsfNote,
         srDmndNo: srDmndNo
     };
+	
+	console.log(requestData);
 	
 	$.ajax({
 		type: "POST",

@@ -150,8 +150,13 @@ public class DeveloperHomeController {
 	@PostMapping("/editSrTrnsfPlan")
 	@ResponseBody
 	public String editSrTrnsfPlan(SrTrnsfPlanForm srTrnsfPlanForm) {
-		srService.editSrTrnsfPlan(srTrnsfPlanForm);
-		return "success";
+		if (srService.editSrTrnsfPlan(srTrnsfPlanForm) == 1) {
+			return "success";
+		} else {
+			return "fail";
+		}
+		
+		
 	}
 	
 	//자원관리 모달 구성
