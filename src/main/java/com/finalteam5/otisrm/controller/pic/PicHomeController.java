@@ -71,9 +71,7 @@ public class PicHomeController {
 	//담당자 홈 페이지에서 요청등록하기
 	@PostMapping("writeSrRqstForPicHome")
 	public String writeSrRqst(SrRqstSubmit srRqstSubmit) throws Exception{
-		log.info("등록 실행: " + srRqstSubmit);
 		srRqstService.writeSrRqst(srRqstSubmit);
-		log.info("등록 실행2");
 	    
 		//첨부파일이 있다면 첨부파일 업로드
 		MultipartFile[] files = srRqstSubmit.getFile();

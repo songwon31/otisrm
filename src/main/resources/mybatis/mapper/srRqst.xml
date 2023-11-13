@@ -6,7 +6,7 @@
 	<!-- sr요청등록 폼 -->
 	<!-- 부서번호에 해당하는 관련 시스템 목록 불러오기 -->
 	<select id="selectSysByDeptNo" parameterType="String" resultType="Sys">
-		select * from sys where dept_no = #{deptNo}
+		select distinct * from sys 
 	</select>
 	
 	<!-- sr요청 등록하기 -->
@@ -572,7 +572,7 @@
 				join sr on sr.sr_rqst_no = r.sr_rqst_no
 				where sr.pic_usr_no = #{usr, jdbcType=VARCHAR}
 				and sr.sr_schdl_chg_rqst_yn='Y'
-				and sr.sr_schdl_chg_aprv_yn=#{srSchdlChgAprvYn, jdbcType=VARCHAR}
+				and sr.sr_schdl_chg_aprv_yn= null
 				and sr.sr_trnsf_yn = 'Y' 
 				and sr_rqst_vld_yn = 'Y' 
 				order by sr_rqst_reg_dt desc
@@ -594,7 +594,7 @@
 		join sr on sr.sr_rqst_no = r.sr_rqst_no
 		where sr.pic_usr_no = #{usr, jdbcType=VARCHAR}
 		and sr.sr_schdl_chg_rqst_yn='Y'
-		and sr.sr_schdl_chg_aprv_yn=#{srSchdlChgAprvYn, jdbcType=VARCHAR}
+		and sr.sr_schdl_chg_aprv_yn= null
 		and sr.sr_trnsf_yn = 'Y' 
 		and sr_rqst_vld_yn = 'Y' 
 		order by sr_rqst_reg_dt desc

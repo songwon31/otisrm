@@ -583,14 +583,17 @@ function showSrRqstBySrRqstNo(choiceSrRqstNo){
    		 	$("#srWriteOrModifyBtn").css("opacity", 1);
    		 	$(".srInput").prop("disabled", false);
         	
-        	//요청 상태(상태: 요청, 승인요청)
+        	//요청 상태(상태: 요청, 승인요청, 승인)
         	if(data.srRqstSttsNo === "RQST"){
         		 $("#srRqstStts-select").prop("disabled", false);
         		 $("#srRqstStts-select").val(data.srRqstSttsNo);
         		 //승인대기->승인요청으로변경 
                  $("#srRqstStts-select option[value='APRV_WAIT']").text("승인요청");
-        		 $("#srRqstStts-select option[id]").filter(function() {
-                     return parseInt($(this).attr("id")) >= 2;
+        		 
+                 $("#srRqstStts-select option[value='APRV_REEXAM']").css("display", "none");
+                 $("#srRqstStts-select option[value='APRV_RETURN']").css("display", "none");
+                 $("#srRqstStts-select option[id]").filter(function() {
+                     return parseInt($(this).attr("id")) > 4;
                  }).css("display", "none");
         		 
         		 //sr개발정보에 상태 표시 X, 수정 불가능/ 저장버튼 비활성화/ sr정보 등록 버튼 비활성화
@@ -600,18 +603,10 @@ function showSrRqstBySrRqstNo(choiceSrRqstNo){
         		 $("#srWriteOrModifyBtn").prop("disabled", true);
         		 $("#srWriteOrModifyBtn").css("opacity", 0.5);
         		 $(".srInput").prop("disabled", true);
-            //승인 대기 상태 (상태: 승인요청, 승인/ 담당자는 승인 상태로 변경 가능해야함)
+            //승인 대기 상태 (상태: 아무것도 못함)
         	}else if(data.srRqstSttsNo === "APRV_WAIT"){
-        		//현재 상태 표시
-        		$("#srRqstStts-select").prop("disabled", false);
-        		$("#srRqstStts-select option[value='APRV_WAIT']").text("승인대기");
         		$("#srRqstStts-select").val(data.srRqstSttsNo);
-        		//승인으로 변경 가능하도록 승인 속성을 추가
-        		$("#srRqstStts-select option[id='0']").css("display", "none");
-        		$("#srRqstStts-select option[id]").filter(function() {
-                    return parseInt($(this).attr("id")) >= 2;
-                }).css("display", "none");
-        		$("#srRqstStts-select option[id='4']").css("display", "inline");
+        		$("#srRqstStts-select").prop("disabled", true);
         		
         		//sr개발정보에 상태 표시 X, 수정 불가능/ 저장버튼 비활성화/ sr정보 등록 버튼 비활성화
         		$("#srRqstStts-select2").val("");
@@ -626,6 +621,7 @@ function showSrRqstBySrRqstNo(choiceSrRqstNo){
         		//현재 상태 표시
         		$("#srRqstStts-select").prop("disabled", false);
         		$("#srRqstStts-select").val(data.srRqstSttsNo);
+        		 $("#srRqstStts-select option[value='RQST']").css("display", "none");
         		$("#srRqstStts-select option[value='APRV_WAIT']").text("승인 재요청");
         		//나머지 속성은 안보이도록 숨김
         		$("#srRqstStts-select option[id]").filter(function() {
