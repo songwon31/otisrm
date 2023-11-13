@@ -825,11 +825,12 @@ function composeSetHrFindPicModalTable(pageNo) {
 						let usr = data.usrList[i];
 						let findPicTableHtml = '';
 						findPicTableHtml += '<tr style="height: 4.5rem; font-size: 1.5rem; background-color:white;">';
+						findPicTableHtml += '<td>' + (i+1) + '</td>';
 						findPicTableHtml += '<td>' + usr.deptNm + '</td>';
 						findPicTableHtml += '<td>' + usr.roleNm + '</td>';
 						findPicTableHtml += '<td>' + usr.ibpsNm + '</td>';
 						findPicTableHtml += '<td>' + usr.usrNm + '</td>';
-						findPicTableHtml += '<td> <button class="btn-2 detail-button" data-dismiss="modal" onclick="addHr(\'' + usr.usrNo + '\')">선택</button> </td>';
+						findPicTableHtml += '<td> <button class="btn-1 detail-button" style="height:2.8rem; width:40%;" data-dismiss="modal" onclick="addHr(\'' + usr.usrNo + '\')">선택</button> </td>';
 						//jsp에 삽입
 						$('#setHrFindPicModalTable tbody').append(findPicTableHtml);
 					}
