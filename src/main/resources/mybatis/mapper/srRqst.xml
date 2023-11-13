@@ -942,6 +942,8 @@
 		    r.sr_ttl,
 		    r.sr_conts,
 		    r.sr_rqst_rvw_rsn,
+		    r.sr_rqst_emrg_yn,
+		    sr.sr_no,
 		    pic.usr_nm as sr_pic_usr_nm,
 		    sr.sr_trnsf_yn,
 		    trnsf_inst.inst_nm as sr_trnsf_inst_nm,

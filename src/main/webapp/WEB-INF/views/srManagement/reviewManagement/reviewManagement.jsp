@@ -209,7 +209,12 @@
 			          </div>
 			          <div class="d-flex mb-2 w-100">
 			            <label for="detailmodal_srRqstAtchData" class="w-label col-form-label">첨부파일</label>
-						<input id="detailmodal_srRqstAtchData" type="file" class="w-content form-control-file form-control-sm p-0" disabled>
+						<div class="w-content d-flex justify-content-center align-items-center">
+		            		<div id="detailmodal_srRqstAtchData"></div>
+		            		<div class="ml-auto d-flex">
+		            			<input id="detailmodal_srRqstEmrgYn" type="checkbox" disabled><span class="d-flex justify-content-center align-items-center ml-1">중요</span>
+		            		</div>
+		            	</div>
 			          </div>
 					</div>
 					<div class="card p-2 mb-4">
@@ -277,7 +282,7 @@
 			          	</div>
 			          	<div class="d-flex mb-2 w-100">
 			            	<label for="detailmodal_srAtchData" class="w-label col-form-label">첨부파일</label>
-							<input id="detailmodal_srAtchData" type="file" id="srFile" class="w-content form-control-file form-control-sm p-0" disabled>
+							<div id="detailmodal_srAtchData" class="w-content d-flex align-items-center"></div>
 			          	</div>
 					</div>
 		      </div>
