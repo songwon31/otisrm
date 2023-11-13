@@ -220,8 +220,7 @@
 	<!-- sr요청 삭제하기 -->
 	<update id="deleteSrRqst" parameterType="String">
 		update sr_rqst set sr_rqst_vld_yn='N' 
-		where sr_rqst_stts_no = 'RQST' 
-		and sr_rqst_no= #{srRqstNo, jdbcType=VARCHAR}
+		where sr_rqst_no= #{srRqstNo, jdbcType=VARCHAR}
 	</update>
 	
 	<!-- 담당자홈: 담당자 폼 sr개발정보- 이관기관 가져오기  -->
