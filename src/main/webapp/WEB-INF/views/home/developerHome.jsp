@@ -1030,14 +1030,14 @@
 						<span>현재 완료요청일</span>
 						<input id="currentSrCmptnPrnmntDt" type="date" disabled style="flex-grow:1; margin:0rem 1rem;">
 					</div>
-					<div style="width:5%"></div>
+					<div style="width:3%"></div>
 					<div style="flex-grow:1; display:flex; align-items:center;">
 						<svg style="width:0.5rem; height:0.5rem; margin: 0rem 0.5rem;"><rect width="0.5rem" height="0.5rem" fill="#222E3C" /></svg>
 						<span>변경요청일</span>
 						<input id="requestSrTrgtCmptnDt" type="date" style="flex-grow:1; margin:0rem 1rem;">
 					</div>
-					<div style="width:5%"></div>
-					<div style="display:flex; align-items:center; justify-content:flex-end;">
+					<div style="width:3%"></div>
+					<div style="flex-grow:1; display:flex; align-items:center; justify-content:flex-end;">
 						<button type="button"  data-dismiss="modal" onclick="srScheduleChangeRequest()"
 								class="btn-2" style="display:flex; align-items:center; justify-content:center;">
 							변경 요청
