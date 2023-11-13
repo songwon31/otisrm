@@ -11,6 +11,7 @@ import com.finalteam5.otisrm.dto.Pager;
 import com.finalteam5.otisrm.dto.SrDmndClsf;
 import com.finalteam5.otisrm.dto.SrTaskClsf;
 import com.finalteam5.otisrm.dto.SrTrnsfPlan;
+import com.finalteam5.otisrm.dto.SrTrnsfPlanForm;
 import com.finalteam5.otisrm.dto.Sys;
 import com.finalteam5.otisrm.dto.sr.srForPicHome.Sr;
 import com.finalteam5.otisrm.dto.sr.srForPicHome.SrAtch;
@@ -186,8 +187,8 @@ public class SrRqstServiceImpl implements SrRqstService{
 	
 	//최근 삽입한 이관된 sr에 해당하는 sr이관계획 등록
 	@Override
-	public int writeSrTrnsfPlan(SrTrnsfPlan srTrnsfPlan) {
-		int numOfInsert = srRqstDao.insertSrTrnsfPlan(srTrnsfPlan);
+	public int writeSrTrnsfPlan(SrTrnsfPlanForm srTrnsfPlanForm) {
+		int numOfInsert = srRqstDao.insertSrTrnsfPlan(srTrnsfPlanForm);
 		return numOfInsert;
 	}
 	
@@ -282,7 +283,13 @@ public class SrRqstServiceImpl implements SrRqstService{
 	public int getTotalToDoItemOfSchdlChg(Map<String, Object> map) {
 		int totalRows = srRqstDao.countToDoItemOfSchdlChg(map);
 		return totalRows;
-	}	
+	}
+	
+	//계획 변경 요청 승인 시 sr이관계확 목표완료일도 업데이트
+	@Override
+	public void modifySrTrnsfPlan(SrTrnsfPlanForm srTransfPlanForm) {
+		srRqstDao.updateSrTrnsfPlan(srTransfPlanForm);
+	}
 	
 	//작성자: 이현주 ===================================================================
 	//미처리 요청수 가져오기
@@ -367,5 +374,6 @@ public class SrRqstServiceImpl implements SrRqstService{
 	public List<SrRqstForSearchList> getSrRqstForReviewpManagementByPage(Map<String, Object> params) {
 		return srRqstDao.selectSrRqstForReviewManagementByPage(params);
 	}
+	
 
 }

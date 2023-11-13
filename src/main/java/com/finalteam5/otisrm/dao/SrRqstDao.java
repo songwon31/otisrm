@@ -9,6 +9,7 @@ import com.finalteam5.otisrm.dto.Pager;
 import com.finalteam5.otisrm.dto.SrDmndClsf;
 import com.finalteam5.otisrm.dto.SrTaskClsf;
 import com.finalteam5.otisrm.dto.SrTrnsfPlan;
+import com.finalteam5.otisrm.dto.SrTrnsfPlanForm;
 import com.finalteam5.otisrm.dto.Sys;
 import com.finalteam5.otisrm.dto.sr.srForPicHome.Sr;
 import com.finalteam5.otisrm.dto.sr.srForPicHome.SrAtch;
@@ -98,7 +99,7 @@ public interface SrRqstDao {
 	public String selectAddSrPkByTrnsf();
 	
 	//최근 삽입한 이관된 sr에 해당하는 sr이관계획 등록
-	public int insertSrTrnsfPlan(SrTrnsfPlan srTrnsfPlan);
+	public int insertSrTrnsfPlan(SrTrnsfPlanForm srTrnsfPlanForm);
 	
 	//sr 개발정보 수정하기
 	public void updateSr(SrSubmit srSubmit);
@@ -133,6 +134,8 @@ public interface SrRqstDao {
 	public List<SrRqst> selectToDoItemOfSchdlChg(Map<String, Object> map);
 	public int countToDoItemOfSchdlChg(Map<String, Object> map);
 	
+	//계획 변경 요청 승인 시 sr이관계확 목표완료일도 업데이트
+	public void updateSrTrnsfPlan(SrTrnsfPlanForm srTransfPlanForm);
 	
 	//작성자: 이현주 ====================================================================
 	//미처리 요청수 가져오기

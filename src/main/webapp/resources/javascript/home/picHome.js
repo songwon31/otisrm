@@ -9,7 +9,7 @@ function init() {
 	 console.log( $("#loginUsrNo").val());
 	 numOftotalRows();
 	 numOftotalRows2();
-	 $("#srSchdlChgRqstY").hide();
+	 $(".srSchdlChgRqstY").hide();
 }
  
 var choiceSrRqstSttsNo = "";
@@ -201,7 +201,6 @@ function loadSRRequests2(pageNo, choiceSrRqstSttsNo) {
 		method: "GET",
 		success: function(data) {
 			html="";
-			console.log("두번째: " + data);
 			if(data<1){
 				html += '<tr style="background-color: white;">';
 				html += '	<td></td>';
@@ -271,77 +270,62 @@ function loadSRRequests2(pageNo, choiceSrRqstSttsNo) {
 function numOftotalRows(){
 	//전체
 	getTotalRows("").then(function (totalRows) {
-		  console.log(totalRows);
 		  $("#numOfAll").html("("+ totalRows + ")");
 		});
 	//요청
 	getTotalRows("RQST").then(function (totalRows) {
-		  console.log(totalRows);
 		  $("#numOfRqst").html("("+ totalRows + ")");
 		  $("#numOfRqstItems").html(totalRows);
 		});
 	//승인대기 
 	getTotalRows("APRV_WAIT").then(function (totalRows) {
-		console.log(totalRows);
 		$("#numOfAprvWait").html("("+ totalRows + ")");
 	});
 	//승인재검토
 	getTotalRows("APRV_REEXAM").then(function (totalRows) {
-		console.log(totalRows);
 		$("#numOfAprvReexam").html("("+ totalRows + ")");
 		$("#numOfAprvReexamItems").html(totalRows);
 	});
 	//승인반려
 	getTotalRows("APRV_RETURN").then(function (totalRows) {
-		console.log(totalRows);
 		$("#numOfAprvReturn").html("("+ totalRows + ")");
 	});
 	//승인
 	getTotalRows("APRV").then(function (totalRows) {
-		console.log(totalRows);
 		$("#numOfAprv").html("("+ totalRows + ")");
 		$("#numOfAprvItems").html(totalRows);
 	});
 	//접수대기
 	getTotalRows("RCPT_WAIT").then(function (totalRows) {
-		console.log(totalRows);
 		$("#numOfRcptWait").html("("+ totalRows + ")");
 	});
 	//접수재검토
 	getTotalRows("RCPT_REEXAM").then(function (totalRows) {
-		console.log(totalRows);
 		$("#numOfRcptReexam").html("("+ totalRows + ")");
 		$("#numOfRcptReexamItems").html(totalRows);
 	});
 	//접수반려
 	getTotalRows("RCPT_RETURN").then(function (totalRows) {
-		console.log(totalRows);
 		$("#numOfRcptReturn").html("("+ totalRows + ")");
 	});
 	//접수
 	getTotalRows("RCPT").then(function (totalRows) {
-		console.log(totalRows);
 		$("#numOfRcpt").html("("+ totalRows + ")");
 	});
 	//개발중
 	getTotalRows("DEP_ING").then(function (totalRows) {
-		console.log(totalRows);
 		$("#numOfDepIng").html("("+ totalRows + ")");
 	});
 	//테스트
 	getTotalRows("TEST").then(function (totalRows) {
-		console.log(totalRows);
 		$("#numOfTest").html("("+ totalRows + ")");
 	});
 	//완료요청
 	getTotalRows("CMPTN_RQST").then(function (totalRows) {
-		console.log(totalRows);
 		$("#numOfCmptnRqst").html("("+ totalRows + ")");
 	});
 	//개발완료
 	getTotalRows("DEP_CMPTN").then(function (totalRows) {
-		console.log(totalRows);
-		console.log(choiceSrRqstSttsNo);
 		$("#numOfDepCmptn").html("("+ totalRows + ")");
 	});
 }
@@ -781,10 +765,7 @@ function showSrRqstBySrRqstNo(choiceSrRqstNo){
         		$("#deleteButton").css("opacity", 0.5);
         	}
         	
-        	//sr개발정보에 sr요청 상태 표시
-        	/*$("#srRqstStts-select2").val(data.srRqstSttsNo);
-        	$("#srRqstStts-select2 option[value='RCPT_WAIT']").text("접수대기");*/
- 
+        	
         	//첨부파일
         	if (data.srRqstAtchList && typeof data.srRqstAtchList === "object") {
         	    // data.srRqstAtchList는 객체일 때
@@ -834,7 +815,7 @@ function showSrRqstBySrRqstNo(choiceSrRqstNo){
 //**요청에 해당하는 sr상세내용 가져오기;
 function showSrBySrRqstNo(choiceSrRqstNo){
 	clearFormFields();
-	$("#srSchdlChgRqstY").hide();
+	$(".srSchdlChgRqstY").hide();
 	//sr요청 상세
 	$.ajax({
 		type: "GET",
@@ -877,7 +858,7 @@ function showSrBySrRqstNo(choiceSrRqstNo){
 				//변경 요청일이 있을 경우
 				if(data.srSchdlChgRqstDt !== null || data.srSchdlChgRqstDt !== ""){
 					//변경요청일 항목 보이게하기
-					$("#srSchdlChgRqstY").show();
+					$(".srSchdlChgRqstY").show();
 					//날짜 포멧에 맞게 변경
 					var date = new Date(data.srSchdlChgRqstDt);
 					var formattedDate = $.datepicker.formatDate("yy-mm-dd", date);

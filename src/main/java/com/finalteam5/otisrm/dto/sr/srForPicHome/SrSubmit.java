@@ -27,7 +27,7 @@ public class SrSubmit {
 	//완료예정일 변경 요청
 	private String srSchdlChgRqstYn; //완료예정일 변경요청  승인여부
 	private String srSchdlChgRqstDt; //변경 요청일 
-	private String srSchdlChgAprvYn; //요청 승인 여부
+	private String srSchdlChgRqstAprvYn; //요청 승인 여부
 	
 	//요청 구분번호
 	private String srDmndNo;		

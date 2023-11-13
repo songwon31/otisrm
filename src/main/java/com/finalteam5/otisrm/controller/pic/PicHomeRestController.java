@@ -171,7 +171,6 @@ public class PicHomeRestController {
 		//처리항목 목록6: 계획 변경 요청
 		}else {
 			List<SrRqst> list = srRqstService.getToDoItemOfSchdlChg(map);
-			log.info("변경요청건: " + list.toString());
 			return list;
 		}
 	}

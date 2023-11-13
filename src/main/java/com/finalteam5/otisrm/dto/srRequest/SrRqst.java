@@ -28,8 +28,8 @@ public class SrRqst {
 	private String srRqstVldYn;		//sr요청 유효성(삭제여부)
 	
 	//변경 요청 날짜
-	private Date srSchdlChgRqstDt;	//변경요청날짜
-	private Date srSchdlChgAprvYn;	//승인처리여부
+	private Date srSchdlChgRqstDt;		//변경요청날짜
+	private Date srSchdlChgRqstAprvYn;	//승인처리여부
 	
 	//첨부파일 
 	private List<SrRqstAtch> srRqstAtchList;

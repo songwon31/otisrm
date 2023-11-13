@@ -26,9 +26,9 @@ public class Sr {
 	private Date srTrnsfDt;			//이관 날짜
 	
 	//완료예정일 변경 요청
-	private String srSchdlChgRqstYn; //완료예정일 변경요청  승인여부
-	private Date srSchdlChgRqstDt; //변경 요청일 
-	private String srSchdlChgAprvYn; //요청 승인 여부
+	private String srSchdlChgRqstYn; 		//완료예정일 변경요청  승인여부
+	private Date srSchdlChgRqstDt; 			//변경 요청일 
+	private String srSchdlChgRqstAprvYn; 	//요청 승인 여부
 	
 	//sr요청 상태
 	private String srRqstSttsNo;	//sr요청 상태번호

@@ -314,13 +314,22 @@
 	</select>
 	
 	<!-- 이관된 sr일 경우 sr이관 계획 등록하기 -->
-	<insert id="insertSrTrnsfPlan" parameterType="SrTrnsfPlan">
+	<insert id="insertSrTrnsfPlan" parameterType="SrTrnsfPlanForm">
 	    insert into sr_trnsf_plan(
-	        sr_no, inst_no, sr_dmnd_no
+	        sr_no, inst_no, sr_dmnd_no, sr_prgrs_stts_no, sr_trgt_cmptn_dt
 	    ) values(
-	        #{srNo, jdbcType=VARCHAR}, #{instNo, jdbcType=VARCHAR}, #{srDmndNo, jdbcType=VARCHAR}
+	        #{srNo, jdbcType=VARCHAR}, #{instNo, jdbcType=VARCHAR}, #{srDmndNo, jdbcType=VARCHAR},
+	        #{srPrgrsSttsNo, jdbcType=VARCHAR},TO_DATE(#{srTrgtCmptnDt, jdbcType=VARCHAR}, 'yy-MM-dd')
 	    )
 	</insert>
+	
+	<!-- 완료요청일 변경 승인 시 sr이관 계획 완료예정일도 변경 -->
+	<update id="updateSrTrnsfPlan" parameterType="SrTrnsfPlanForm">
+		update sr_trnsf_plan
+	    set
+	        sr_trgt_cmptn_dt = COALESCE(TO_DATE(#{srTrgtCmptnDt, jdbcType=VARCHAR}, 'yy-MM-dd'), sr_trgt_cmptn_dt),
+	    where sr_no = #{srNo, jdbcType=VARCHAR}
+	</update>
 	
 	<!-- sr 개발계획 수정 -->
 	<update id="updateSr" parameterType="SrSubmit">
@@ -572,7 +581,7 @@
 				join sr on sr.sr_rqst_no = r.sr_rqst_no
 				where sr.pic_usr_no = #{usr, jdbcType=VARCHAR}
 				and sr.sr_schdl_chg_rqst_yn='Y'
-				and sr.sr_schdl_chg_aprv_yn= null
+				and sr.sr_schdl_chg_rqst_aprv_yn= #{srSchdlChgRqstAprvYn, jdbcType=VARCHAR}
 				and sr.sr_trnsf_yn = 'Y' 
 				and sr_rqst_vld_yn = 'Y' 
 				order by sr_rqst_reg_dt desc
@@ -594,7 +603,7 @@
 		join sr on sr.sr_rqst_no = r.sr_rqst_no
 		where sr.pic_usr_no = #{usr, jdbcType=VARCHAR}
 		and sr.sr_schdl_chg_rqst_yn='Y'
-		and sr.sr_schdl_chg_aprv_yn= null
+		and sr.sr_schdl_chg_rqst_aprv_yn= #{srSchdlChgRqstAprvYn, jdbcType=VARCHAR}
 		and sr.sr_trnsf_yn = 'Y' 
 		and sr_rqst_vld_yn = 'Y' 
 		order by sr_rqst_reg_dt desc

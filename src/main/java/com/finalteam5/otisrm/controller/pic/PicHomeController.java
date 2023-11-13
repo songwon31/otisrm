@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.finalteam5.otisrm.dto.SrDmndClsf;
 import com.finalteam5.otisrm.dto.SrTaskClsf;
 import com.finalteam5.otisrm.dto.SrTrnsfPlan;
+import com.finalteam5.otisrm.dto.SrTrnsfPlanForm;
 import com.finalteam5.otisrm.dto.sr.srForPicHome.SrAtch;
 import com.finalteam5.otisrm.dto.sr.srForPicHome.SrSubmit;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstAtch;
@@ -189,6 +190,14 @@ public class PicHomeController {
 			log.info("수정");
 			srRqstService.modifySr(srSubmit);
 			
+			//변경요청 승인 시 이관계획에 목표완료일도 변경
+			if(srSubmit.getSrSchdlChgRqstAprvYn() == "Y") {
+				SrTrnsfPlanForm srTrnsfPlanForm = new SrTrnsfPlanForm();
+				srTrnsfPlanForm.setSrNo(srSubmit.getSrNo());
+				srTrnsfPlanForm.setSrTrgtCmptnDt(srSubmit.getSrCmptnPrnmntDt());
+				srRqstService.modifySrTrnsfPlan(srTrnsfPlanForm);
+			}
+			
 		//해당 sr정보가 있을 경우 update(수정)
 		}else {
 			srRqstService.writeSr(srSubmit);
@@ -218,13 +227,14 @@ public class PicHomeController {
 			
 			//이관된 sr일 경우 sr이관 계획도 등록
 			if(srSubmit.getSrTrnsfYn().equals("Y")) {
-				SrTrnsfPlan srTrnsfPlan = new SrTrnsfPlan();
-				srTrnsfPlan.setSrNo(srPk);
-				srTrnsfPlan.setInstNo(srSubmit.getSrTrnsfInstNo());
-				srTrnsfPlan.setSrDmndNo(srSubmit.getSrDmndNo());
-				srTrnsfPlan.setSrPrgrsSttsNo("RQST");
+				SrTrnsfPlanForm srTrnsfPlanForm = new SrTrnsfPlanForm();
+				srTrnsfPlanForm.setSrNo(srPk);
+				srTrnsfPlanForm.setInstNo(srSubmit.getSrTrnsfInstNo());
+				srTrnsfPlanForm.setSrDmndNo(srSubmit.getSrDmndNo());
+				srTrnsfPlanForm.setSrPrgrsSttsNo("RQST");
+				srTrnsfPlanForm.setSrTrgtCmptnDt(srSubmit.getSrCmptnPrnmntDt());
 				//sr 이관계획 등록
-				srRqstService.writeSrTrnsfPlan(srTrnsfPlan);
+				srRqstService.writeSrTrnsfPlan(srTrnsfPlanForm);
 			}
 		}	
 	    return "redirect:/picHome";

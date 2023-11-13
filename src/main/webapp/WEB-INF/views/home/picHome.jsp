@@ -21,7 +21,7 @@
 		   	  <div class="subcontentTitle">
 			   	  <div class="d-flex st-ct">
 			   	  	<i class="material-icons stt-ic">chevron_right</i>
-			   	  	<span class="pt-1">나의 할일</span>
+			   	  	<span class="pt-1" style="font-size: 2rem;">나의 할일</span>
 			   	  	<div id="requestAddBtnWrap">
 						<button id="requestAddBtn" data-toggle="modal" data-target="#addSrRqst" class="btn-1 d-inline-flex flex-row align-items-center justify-content-center mb-1" style="margin-left: 1180px;" onclick="showSysByDeptNo('${usr.deptNo}')">
 							요청 등록
@@ -137,7 +137,7 @@
 			<div class="subcontentTitle">
 		 		<div class="d-flex st-ct">
 			 	  	<i class="material-icons stt-ic">chevron_right</i>
-			 	  	<span class="pt-1">처리 항목</span>
+			 	  	<span class="pt-1" style="font-size: 2rem;">처리 항목</span>
 		 	 	</div>
 			   <!-- 처리할 항목 -->
 				<div id="toDoItemContends">
@@ -201,7 +201,7 @@
 			<div class="subcontentTitle">
 		 		<div class="d-flex st-ct">
 			 	  	<i class="material-icons stt-ic">chevron_right</i>
-			 	  	<span class="pt-1">SR 진행 현황</span>
+			 	  	<span class="pt-1" style="font-size: 2rem;">SR 진행 현황</span>
 		 	 	</div>
 			 </div>
 		   	  
@@ -579,7 +579,7 @@
 								    </div>
 								</div>
 					        </div>
-			       		   <div id="srSchdlChgRqstY">
+			       		   <div class="srSchdlChgRqstY">
 					        	<div class="d-flex">
 							        <div class="d-flex w-50 pt-2"></div>
 							        <div class="d-flex w-50 pt-2">
@@ -592,7 +592,7 @@
 							        </div>
 								</div>
 					        </div>
-			       		   <div id="srSchdlChgRqstY">
+			       		   <div class="srSchdlChgRqstY">
 					        	<div class="d-flex">
 							        <div class="d-flex w-50 pt-2"></div>
 							        <div class="d-flex w-50 pt-2">
