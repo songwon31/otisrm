@@ -22,7 +22,7 @@
 	</div>
 	
 	<div id="progressManagementSearchDiv" class="shadow" 
-		style="height:13rem; margin:1rem 0rem; padding:3rem 2rem; background-color:white; border-radius:10px;">
+		style="height:13rem; margin:2rem 0rem; padding:3rem 2rem; background-color:white; border-radius:1rem;">
 		<form id="searchForm" method="get" action="usrManagement">
 			<div class="p-0 container-fluid d-inline-flex flex-row" style="height:3rem;">
 				<div style="width:20%;" class="d-inline-flex flex-row align-items-center">
@@ -87,7 +87,7 @@
 						초기화
 					</button> -->
 					<a href="javascript:void(0)" onclick="mainTableSearchReset()"
-							style="height: 3rem; width: 8rem; border-radius: 5px; background-color:#868E96; color:white; font-size:1.6rem; font-weight:700;
+							style="height: 3rem; width: 100%; border-radius: 5px; background-color:#868E96; color:white;
 							display: flex; flex-direction: row; justify-content: center; align-items: center; text-decoration:none;">초기화</a>
 				</div>
 			</div>
@@ -160,33 +160,35 @@
 					</button>
 					 -->
 					<a href="javascript:void(0)" onclick="mainTableSearch()"
-							style="height: 3rem; width: 8rem; border-radius: 5px; background-color:#222E3C; color:white; font-size:1.6rem; font-weight:700;
+							style="height: 3rem; width: 100%; border-radius: 5px; background-color:#222E3C; color:white;
 							display: flex; flex-direction: row; justify-content: center; align-items: center; text-decoration:none;">검색</a>
 				</div>	
 			</div>
 		</form>
 	</div>
 	<div id="progressManagementBoardDiv" class="shadow" 
-		style="height:65rem; background-color:white; border-radius:10px; padding:2rem;">
+		style="height:63rem; background-color:white; border-radius:10px; padding:2rem;">
 		<div style="height:3.5rem; font-size:2.2rem; font-weight:700; color:#222E3C;">SR처리 목록</div>
-		<div class="" style="height:52rem; margin:0.75rem 0rem; background-color:#f9fafe;">
+		<div class="" style="height:51.7rem; margin:0.75rem 0rem; background-color:#f9fafe;">
 			<table id="mainTable" style="width:100%;">
 				<colgroup>
+					<col width="4%"/>
 					<col width="12%"/>
-					<col width="10%"/>
+					<col width="8%"/>
 					<col width="10%"/>
 					<col width="20%"/>
 					<col width="5%"/>
 					<col width="7%"/>
 					<col width="5%"/>
 					<col width="7%"/>
-					<col width="6%"/>
+					<col width="4%"/>
 					<col width="6%"/>
 					<col width="6%"/>
 					<col width="6%"/>
 				</colgroup>
-				<thead>
-					<tr style="height:5rem; font-size:1.5rem; font-weight:700;">
+				<thead style="background-color: #edf2f8;">	
+					<tr style="height:4.7rem; font-size:1.5rem; font-weight:700;">
+						<th scope="col"></th>
 						<th scope="col">SR번호</th>
 						<th scope="col">시스템</th>
 						<th scope="col">업무</th>

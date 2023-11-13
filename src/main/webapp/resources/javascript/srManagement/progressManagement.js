@@ -133,6 +133,7 @@ function mainTableConfig(progressManagementSearch, pageNo) {
 				let sr = data.srList[i];
 				let mainTableHtml = '';
 				mainTableHtml += '<tr style="height:4.7rem; font-size:1.5rem; background-color:white;">';
+				mainTableHtml += '<td>' + (i+1) + '</td>';
 				mainTableHtml += '<td>' + sr.srNo + '</td>';
 				mainTableHtml += '<td>' + sr.sysNm+ '</td>';
 				mainTableHtml += '<td>' + sr.srTaskNm + '</td>';
@@ -161,8 +162,8 @@ function mainTableConfig(progressManagementSearch, pageNo) {
 				
 				mainTableHtml += '<td>' + sr.srRqustSttsNm + '</td>';
 				mainTableHtml += '<td>' + sr.srPrgrsSttsNm + '</td>';
-				mainTableHtml += '<td> <button data-toggle="modal" data-target="#requestDetailModal" class="btn-2 detail-button" onclick="showRequestDetailModal(\'' + sr.srNo + '\')">요청상세</button> </td>';
-				mainTableHtml += '<td> <button data-toggle="modal" data-target="#srProgressModal" class="btn-2 detail-button" onclick="showSrProgressModal(\'' + sr.srNo + '\')">진척관리</button> </td>';
+				mainTableHtml += '<td> <button data-toggle="modal" data-target="#requestDetailModal" class="btn-1 detail-button" style="width:90%; height:2.8rem;" onclick="showRequestDetailModal(\'' + sr.srNo + '\')">요청상세</button> </td>';
+				mainTableHtml += '<td> <button data-toggle="modal" data-target="#srProgressModal" class="btn-1 detail-button" style="width:90%; height:2.8rem;" onclick="showSrProgressModal(\'' + sr.srNo + '\')">진척관리</button> </td>';
 				//jsp에 삽입
 				$('#mainTable tbody').append(mainTableHtml);
 			}
