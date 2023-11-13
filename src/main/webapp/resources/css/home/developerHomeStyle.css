@@ -7,10 +7,11 @@ input:focus, select:focus {
 	outline: none;
 }
 
+/* 그림자 효과 */
 .shadow {
-	border: none;
-	border-radius: 5px;
-	box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
+   border: none;
+   border-radius: 1rem;
+   box-shadow: 2px 28px rgba(58,59,69,.15);
 }
 
 #developerHomeDiv {
@@ -40,7 +41,6 @@ input:focus, select:focus {
 	display:flex;
 	flex-direction:column;
 	padding: 1rem;
-	border: 1px solid gray;
 	border-radius: 10px;
 }
 
@@ -74,7 +74,7 @@ input:focus, select:focus {
 	border-bottom: 1.5px solid #edf2f8;
 	border-left: none;
 	border-right: none;
-	background-color: #f9fafe;
+	background-color: #edf2f8;
 }
 
 .btn-1 {
@@ -88,7 +88,11 @@ input:focus, select:focus {
 	align-items: center; /* 가로 - 중앙으로 */
 	justify-content: center; /* 세로 - 상단으로 */
 }
+.btn-1:hover {
+	color: #f3ffff;
+}
 .btn-1:active {
+	color: #f3ffff;
 	background-color:#4177bf; 
 }
 
@@ -120,7 +124,6 @@ input:focus, select:focus {
 
 #srProgressDiv {
 	width:70%;
-	border: 1px solid gray;
 	border-radius: 10px;
 	padding: 1rem;
 	background-color:white;
@@ -145,7 +148,6 @@ input:focus, select:focus {
 
 #srProgressGraphDiv {
 	width:30%;
-	border: 1px solid gray;
 	border-radius: 10px;
 	padding: 1rem;
 	background-color:white;
