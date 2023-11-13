@@ -23,7 +23,7 @@
 			   	  	<i class="material-icons stt-ic">chevron_right</i>
 			   	  	<span class="pt-1" style="font-size: 2rem;">나의 할일</span>
 			   	  	<div id="requestAddBtnWrap">
-						<button id="requestAddBtn" data-toggle="modal" data-target="#addSrRqst" class="btn-1 d-inline-flex flex-row align-items-center justify-content-center mb-1" style="margin-left: 1180px;" onclick="showSysByDeptNo('${usr.deptNo}')">
+						<button id="requestAddBtn" data-toggle="modal" data-target="#addSrRqst" class="btn-1 d-inline-flex flex-row align-items-center justify-content-center mb-1" style="margin-left: 1160px;" onclick="showSysByDeptNo('${usr.deptNo}')">
 							요청 등록
 						</button>
 					</div>

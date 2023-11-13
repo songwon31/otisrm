@@ -22,6 +22,7 @@ $(document).ready(function() {
 	    	"background-color": "#edf2f8",
 	        "color": "black"
 	    });
+	    $(".toDoItem").css({"background-color": ""});
 	    $(".filterTab").not(this).css({
 	        "background-color": "",
 	        "color": ""
@@ -36,8 +37,12 @@ $(document).ready(function() {
 	$(".toDoItem").click(function() {
 		// 클릭된 요소의 스타일을 변경
 		$(this).css({
-			"background-color": "edf2f8",
-			"color": "black"
+			"background-color": "#edf2f8",
+		});
+		console.log("누구: " + $(this).children());
+		$(".filterTab").css({
+			"background-color": "",
+			"color": ""
 		});
 		$("#toDoItem").css({
 			"background-color": "#edf2f8",
@@ -54,7 +59,6 @@ $(document).ready(function() {
 			"color": ""
 		});
 		choiceSrRqstSttsNo = $(this).attr("id");
-		console.log("id=" +choiceSrRqstSttsNo);
 		//필터링 된 상품 불러오기
 		loadSRRequests2(1, choiceSrRqstSttsNo);
 	});	
@@ -603,14 +607,10 @@ function showSrRqstBySrRqstNo(choiceSrRqstNo){
         	//승인 재검토(수정 후 승인 재요청이 가능해야 함)
         	}else if(data.srRqstSttsNo === "APRV_REEXAM"){
         		//현재 상태 표시
-        		$("#srRqstStts-select").prop("disabled", false);
-        		$("#srRqstStts-select").val(data.srRqstSttsNo);
-        		 $("#srRqstStts-select option[value='RQST']").css("display", "none");
+        		$("#srRqstStts-select").prop("disabled", true);
+        		$("#srRqstStts-select").val('APRV_WAIT');
         		$("#srRqstStts-select option[value='APRV_WAIT']").text("승인 재요청");
-        		//나머지 속성은 안보이도록 숨김
-        		$("#srRqstStts-select option[id]").filter(function() {
-                    return parseInt($(this).attr("id")) >= 2;
-                }).css("display", "none");
+        		$(".modifyPossible").prop("disabled", false);
         		
         		//sr개발정보에 상태 표시 X, 수정 불가능/ 저장버튼 비활성화/ sr정보 등록 버튼 비활성화
         		$("#srRqstStts-select2").val("");
@@ -688,13 +688,9 @@ function showSrRqstBySrRqstNo(choiceSrRqstNo){
         		$(".modifyPossible").prop("disabled", true);
         		
         		//sr개발에서 수정 가능, 접수 재요청 가능
-        		$("#srRqstStts-select2").val(data.srRqstSttsNo);
-        		$("#srRqstStts-select2 option[id]").filter(function() {
-                    return parseInt($(this).attr("id")) <= 4;
-                }).css("display", "none");
-        		$("#srRqstStts-select2 option[id]").filter(function() {
-                    return parseInt($(this).attr("id")) > 5;
-                }).css("display", "none");
+        		$("#srRqstStts-select2").val('RCPT_WAIT');
+        		$("#srRqstStts-select2").prop("disabled", true);
+ 
         		//접수대기-> 접수요청으로 상태 변경
                 $("#srRqstStts-select2 option[value='RCPT_WAIT']").text("접수재요청");
             //접수 반려(삭제만 가능)	
