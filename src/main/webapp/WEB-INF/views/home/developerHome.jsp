@@ -250,7 +250,7 @@
 			</div>
 			<!-- SR자원정보 -->
 			<div id="srHrInfo" class="bottomSubDiv" style="display: none;">
-				<div style="height: 31rem; background-color: #edf2f8; border-radius: 10px;">
+				<div style="height: 31rem; background-color: #F9FAFE; border-radius: 10px;">
 					<table style="width: 100%; text-align: center;">
 						<colgroup>
 							<col width="4%"/>
@@ -276,7 +276,7 @@
 			</div>
 			<!-- SR진척률 -->
 			<div id="srProgressInfo" class="bottomSubDiv" style="display: none;">
-				<div style="height: 31rem; background-color: #edf2f8; border-radius: 10px;">
+				<div style="height: 31rem; background-color: #F9FAFE; border-radius: 10px;">
 					<table id="prgrsTable" style="width: 100%; text-align: center;">
 						<colgroup>
 							<col width="20%" />
@@ -638,7 +638,7 @@
 						<div style="height: 4rem; display: flex; flex-direction: row;">
 							<div style="height: 4rem; width: 10%; padding-left: 0.5rem; display: flex; align-items: center;">
 								<svg style="width:0.5rem; height:0.5rem; margin: 0rem 0.5rem;"><rect width="0.5rem" height="0.5rem" fill="#222E3C" /></svg>
-								처리팀
+								<span style="font-weight:700">처리팀</span>
 							</div>
 							<div style="height: 4rem; width: 25%; display: flex; align-items: center;">
 								<select id="findPicModalDeptSelect" name="modalRqstSelect" style="width:70%; height:3rem; margin:0rem 0.5rem;">
@@ -647,31 +647,32 @@
 							</div>
 							<div style="height: 4rem; width: 10%; padding-left: 0.5rem; display: flex; align-items: center;">
 								<svg style="width:0.5rem; height:0.5rem; margin: 0rem 0.5rem;"><rect width="0.5rem" height="0.5rem" fill="#222E3C" /></svg>
-								담당자
+								<span style="font-weight:700">담당자</span>
 							</div>
 							<div style="height: 4rem; width: 25%; display: flex; align-items: center;">
 								<input id="findPicModalPicInput" value="" style="width:70%; height:3rem; margin:0rem 0.5rem;">
 							</div>
 							<div style="height:4rem; flex-grow:1; display:flex; justify-content:flex-end; align-items:center;">
-								<a href="javascript:void(0)" onclick="composeFindPicModalTable(1)"
-									style="height: 3rem; width: 5rem; border-radius: 5px; background-color:#2c7be4; color:white; font-weight:700; margin-right:0.5rem;
-									display: flex; flex-direction: row; justify-content: center; align-items: center;">검색</a>
+								<button class="btn-1" onclick="composeFindPicModalTable(1)"
+									style="height: 3rem; width: 5rem; margin-right:0.5rem;">검색</button>
 							</div>
 						</div>
 					</div>
 					<div style="display: flex; flex-direction: column; justify-contents:center; margin:0 0 0 0.5rem;">
 						<span style="font-size:1.6rem; font-weight:700;">조회결과</span>
-						<div style="height:27rem; background-color:#f9fafe; margin:0.5rem;">
+						<div style="height:27rem; background-color:#F9FAFE; margin:0.5rem;">
 							<table id="findPicModalTable" style="width: 100%; text-align: center; border-radius:5px;">
 								<colgroup>
+									<col width="5%"/>
 									<col width="20%"/>
 									<col width="20%"/>
 									<col width="20%"/>
-									<col width="20%"/>
+									<col width="15%"/>
 									<col width="20%"/>
 								</colgroup>
-								<thead>
+								<thead style="background-color:#edf2f8;">
 									<tr style="height: 4.3rem; font-size: 1.5rem; font-weight: 700;">
+										<th scope="col"></th>
 										<th scope="col">소속팀</th>
 										<th scope="col">직책</th>
 										<th scope="col">직위</th>
@@ -686,14 +687,6 @@
 						</div>
 						<div id="findPicModalTablePagerDiv" style="height: 4.5rem; font-size: 1.6rem; display: flex; flex-direction: row; justify-content: center; align-items: center;">
 							
-						</div>
-						<div style="height:4rem; display: flex; flex-direction: row; align-items:center; justify-content:flex-end;">
-							<a href="javascript:void(0)" onclick="editSrTrnsfPlan()"
-								style="height: 3rem; width: 5rem; border-radius: 5px; background-color:#222e3c; color:white; font-weight:700; margin-right:0.5rem;
-								display: flex; flex-direction: row; justify-content: center; align-items: center;">저장</a>
-							<a href="javascript:void(0)" data-dismiss="modal"
-								style="height: 3rem; width: 5rem; border-radius: 5px; background-color:red; color:white; font-weight:700; margin-right:0.5rem;
-								display: flex; flex-direction: row; justify-content: center; align-items: center; cursor: pointer;">닫기</a>
 						</div>
 					</div>
 				</div>
