@@ -29,6 +29,7 @@ public class SrRqst {
 	
 	//변경 요청 날짜
 	private Date srSchdlChgRqstDt;	//변경요청날짜
+	private Date srSchdlChgAprvYn;	//승인처리여부
 	
 	//첨부파일 
 	private List<SrRqstAtch> srRqstAtchList;

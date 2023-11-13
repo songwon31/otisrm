@@ -1212,12 +1212,15 @@ function proceedWriteOrModifySrForPicHome() {
 	$("#sr-srRqstNo").val(choiceSrRqstNo);
 	var form = $("#writeOrModifySrForPicHome")[0];
     var formData = new FormData(form);
-   
+
     $.ajax({
         type: "POST",
         url: "writeOrModifySrForPicHome",
         data: formData,
         success: function (data) {
+        	if(data.srSchdlChgRqstDt != null || data.srSchdlChgRqstDt != ""){
+        		
+        	}
             // 수정 작업이 성공적으로 완료되면 여기에 원하는 작업을 수행할 수 있습니다.
             var currentURL = window.location.href;
             window.location.href = currentURL; // 원하는 URL로 변경
