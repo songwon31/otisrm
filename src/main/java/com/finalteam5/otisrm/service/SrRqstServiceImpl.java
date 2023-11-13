@@ -209,6 +209,78 @@ public class SrRqstServiceImpl implements SrRqstService{
 		return list;
 	}
 	
+	//처리항목목록1: 승인 요청처리할 항목
+	@Override
+	public List<SrRqst> getToDoItemOfAprvRqst(Map<String, Object> map) {
+		List<SrRqst> list = srRqstDao.selectToDoItemOfAprvRqst(map);
+		return list;
+	}
+	@Override
+	public int getTotalToDoItemOfAprvRqst() {
+		int totalRows = srRqstDao.countToDoItemOfAprvRqst();
+		return totalRows;
+	}
+	
+	//처리항목 목록2: 승인 요청 처리할 sr
+	@Override
+	public List<SrRqst> getToDoItemOfRcptRqst(Map<String, Object> map) {
+		List<SrRqst> list = srRqstDao.selectToDoItemOfRcptRqst(map);
+		return list;
+	}
+	@Override
+	public int getTotalToDoItemOfRcptRqst() {
+		int totalRows = srRqstDao.countToDoItemOfRcptRqst();
+		return totalRows;
+	}
+	
+	
+	//처리항목 목록3: 접수된 담당sr
+	@Override
+	public List<SrRqst> getToDoItemOfRcpt(Map<String, Object> map) {
+		List<SrRqst> list = srRqstDao.selectToDoItemOfRcpt(map);
+		return list;
+	}
+	@Override
+	public int getTotalToDoItemOfRcpt(Map<String, Object> map) {
+		int totalRows = srRqstDao.countToDoItemOfRcpt(map);
+		return totalRows;
+	}
+	
+	//처리항목 목록4: 이관된 sr
+	@Override
+	public List<SrRqst> getToDoItemOfTrnsfY(Map<String, Object> map) {
+		List<SrRqst> list = srRqstDao.selectToDoItemOfTrnsfY(map);
+		return list;
+	}
+	@Override
+	public int getTotalToDoItemOfTrnsfY(Map<String, Object> map) {
+		int totalRows = srRqstDao.countToDoItemOfTrnsfY(map);
+		return totalRows;
+	}
+	
+	//처리항목 목록5: 개발 반영요청
+	@Override
+	public List<SrRqst> getToDoItemOfApplyRqst(Map<String, Object> map) {
+		List<SrRqst> list = srRqstDao.selectToDoItemOfApplyRqst(map);
+		return list;
+	}
+	@Override
+	public int getTotalToDoItemOfApplyRqst(Map<String, Object> map) {
+		int totalRows = srRqstDao.countToDoItemOfApplyRqst(map);
+		return totalRows;
+	}
+	
+	//처리항목 목록6: 계획 변경 요청
+	@Override
+	public List<SrRqst> getToDoItemOfSchdlChg(Map<String, Object> map) {
+		List<SrRqst> list = srRqstDao.selectToDoItemOfSchdlChg(map);
+		return list;
+	}
+	@Override
+	public int getTotalToDoItemOfSchdlChg(Map<String, Object> map) {
+		int totalRows = srRqstDao.countToDoItemOfSchdlChg(map);
+		return totalRows;
+	}	
 	
 	//작성자: 이현주 =================================================================== 
 	//요청목록 불러오기(검토자 홈)
@@ -276,4 +348,5 @@ public class SrRqstServiceImpl implements SrRqstService{
 		return srRqstDao.selectSrRqstForReviewManagementByPage(params);
 	}
 	
+
 }

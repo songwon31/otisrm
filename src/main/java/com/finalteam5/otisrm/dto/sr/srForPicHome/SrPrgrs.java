@@ -20,10 +20,3 @@ public class SrPrgrs {
 	private String srRqstNo;		//sr요청 번호
 	private String srRqstSttsNo;	//sr요청 상태 번호
 }
-
-/*SR_PRGRS_NO	VARCHAR2(50 BYTE)	No		1	
-SR_NO	VARCHAR2(20 BYTE)	No		2	
-SR_PRGRS_STTS_NO	VARCHAR2(20 BYTE)	No		3	
-SR_PRGRS_BGNG_DT	DATE	Yes		4	
-SR_PRGRS_CMPTN_DT	DATE	Yes		5	
-SR_PRGRS	NUMBER	Yes		6	*/

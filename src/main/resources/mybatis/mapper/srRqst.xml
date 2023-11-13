@@ -331,6 +331,7 @@
 	        sr_pri = COALESCE(#{srPri, jdbcType=VARCHAR}, sr_pri),
 	        sr_dvl_conts = COALESCE(#{srDvlConts, jdbcType=VARCHAR}, sr_dvl_conts),
 	        sr_task_no = COALESCE(#{srTaskNo, jdbcType=VARCHAR}, sr_task_no),
+	        sr_schdl_chg_rqst_aprv_yn = COALESCE(#{srSchdlChgAprvYn, jdbcType=VARCHAR}, sr_schdl_chg_rqst_aprv_yn),
 	        sr_mdfcn_dt = sysdate
 	    where sr_rqst_no = #{srRqstNo, jdbcType=VARCHAR}
 	</update>
@@ -358,8 +359,7 @@
 				join dept d on d.dept_no = u.dept_no 
 				join inst i on i.inst_no = u.inst_no
 				join sr_rqst_stts q on q.sr_rqst_stts_no = r.sr_rqst_stts_no
-		        where r.sr_rqst_stts_no = 'RQST' or r.sr_rqst_stts_no = 'APRV_REEXAM'
-				    
+		        where r.sr_rqst_stts_no = 'RQST' or r.sr_rqst_stts_no = 'APRV_REEXAM'    
 				and sr_rqst_vld_yn = 'Y' 
 			    order by sr_rqst_reg_dt desc
 			   )
@@ -369,6 +369,17 @@
 			 where rnum >= #{startRowNo}
 		]]>
 		
+	</select>
+	<select id="countToDoItemOfAprvRqst" resultType="int">
+	    select count(*)
+		from sr_rqst r
+		join sys s on s.sys_no = r.sys_no 
+		join usr u on u.usr_no = r.sr_reqstr_no
+		join dept d on d.dept_no = u.dept_no 
+		join inst i on i.inst_no = u.inst_no
+		join sr_rqst_stts q on q.sr_rqst_stts_no = r.sr_rqst_stts_no
+	    where r.sr_rqst_stts_no = 'RQST' or r.sr_rqst_stts_no = 'APRV_REEXAM'
+	    and sr_rqst_vld_yn = 'Y' 
 	</select>
 	
 	<!-- 처리항목 목록2: 접수 요청 처리할 sr -->
@@ -388,8 +399,7 @@
 				join dept d on d.dept_no = u.dept_no 
 				join inst i on i.inst_no = u.inst_no
 				join sr_rqst_stts q on q.sr_rqst_stts_no = r.sr_rqst_stts_no
-		        where r.sr_rqst_stts_no = 'APRV' or r.sr_rqst_stts_no = 'RCPT_REEXAM'
-				    
+		        where r.sr_rqst_stts_no = 'APRV' or r.sr_rqst_stts_no = 'RCPT_REEXAM'   
 				and sr_rqst_vld_yn = 'Y' 
 			    order by sr_rqst_reg_dt desc
 			   )
@@ -399,8 +409,19 @@
 			 where rnum >= #{startRowNo}
 		]]>
 	</select>
+	<select id="countToDoItemOfRcptRqst" resultType="int">
+	    select count(*)
+		from sr_rqst r
+		join sys s on s.sys_no = r.sys_no 
+		join usr u on u.usr_no = r.sr_reqstr_no
+		join dept d on d.dept_no = u.dept_no 
+		join inst i on i.inst_no = u.inst_no
+		join sr_rqst_stts q on q.sr_rqst_stts_no = r.sr_rqst_stts_no
+        where r.sr_rqst_stts_no = 'APRV' or r.sr_rqst_stts_no = 'RCPT_REEXAM'   
+		and sr_rqst_vld_yn = 'Y'
+	</select>
 	
-	<!-- 처리항목 목록3: 접수된 sr -->
+	<!-- 처리항목 목록3: 담당하고있는 sr -->
 	<select id="selectToDoItemOfRcpt" parameterType="Map" resultType="SrRqst">
 		select rnum, sr_rqst_no, sr_ttl, sr_reqstr_no, sr_rqst_reg_dt, sr_rqst_mdfcn_dt, dept_no, dept_nm, sr_rqst_stts_seq,
 		sr_rqst_stts_no, sys_no, sr_rqst_emrg_yn, sr_rqst_rvw_rsn, sr_rqst_vld_yn, sys_nm, usr_nm, inst_nm, sr_rqst_stts_nm  
@@ -417,9 +438,11 @@
 				join dept d on d.dept_no = u.dept_no 
 				join inst i on i.inst_no = u.inst_no
 				join sr_rqst_stts q on q.sr_rqst_stts_no = r.sr_rqst_stts_no
-		        where r.sr_rqst_stts_no = 'RCPT'    
+				join sr on sr.sr_rqst_no = r.sr_rqst_no
+				where sr.pic_usr_no = #{usr, jdbcType=VARCHAR}
+				and r.sr_rqst_stts_no = 'RCPT'
 				and sr_rqst_vld_yn = 'Y' 
-			    order by sr_rqst_reg_dt desc
+				order by sr_rqst_reg_dt desc
 			   )
 		<![CDATA[
 				where rownum <= #{endRowNo}
@@ -427,18 +450,31 @@
 			 where rnum >= #{startRowNo}
 		]]>
 	</select>
+	<select id="countToDoItemOfRcpt" parameterType="Map" resultType="int">
+	    select count(*)
+		from sr_rqst r
+		join sys s on s.sys_no = r.sys_no 
+		join usr u on u.usr_no = r.sr_reqstr_no
+		join dept d on d.dept_no = u.dept_no 
+		join inst i on i.inst_no = u.inst_no
+		join sr_rqst_stts q on q.sr_rqst_stts_no = r.sr_rqst_stts_no
+		join sr on sr.sr_rqst_no = r.sr_rqst_no
+		where sr.pic_usr_no = #{usr, jdbcType=VARCHAR}
+		and r.sr_rqst_stts_no = 'RCPT'
+		and sr_rqst_vld_yn = 'Y' 
+	</select>
 	
 	<!-- 처리항목 목록4: 이관된 sr  -->
 	<select id="selectToDoItemOfTrnsfY" parameterType="Map" resultType="SrRqst">
-		select rnum, sr_rqst_no, sr_ttl, sr_reqstr_no, sr_rqst_reg_dt, sr_rqst_mdfcn_dt, dept_no, dept_nm, sr_rqst_stts_seq,
+		select rnum, sr_rqst_no, sr_ttl, sr_reqstr_no, sr_rqst_reg_dt, dept_no, dept_nm, sr_rqst_stts_seq,
 		sr_rqst_stts_no, sys_no, sr_rqst_emrg_yn, sr_rqst_rvw_rsn, sr_rqst_vld_yn, sys_nm, usr_nm, inst_nm, sr_rqst_stts_nm  
 		from (
-		    select rownum as rnum, sr_rqst_no, sr_ttl, sr_reqstr_no, sr_rqst_reg_dt, sr_rqst_mdfcn_dt, dept_no, dept_nm, sr_rqst_stts_seq,
+		    select rownum as rnum, sr_rqst_no, sr_ttl, sr_reqstr_no, sr_rqst_reg_dt, dept_no, dept_nm, sr_rqst_stts_seq,
 		    sr_rqst_stts_no, sys_no, sr_rqst_emrg_yn, sr_rqst_rvw_rsn, sr_rqst_vld_yn, sys_nm, usr_nm, inst_nm, sr_rqst_stts_nm  
 		    from(
-		        select r.sr_rqst_no, r.sr_ttl, r.sr_reqstr_no, r.sr_rqst_reg_dt, r.sr_rqst_mdfcn_dt, r.sr_rqst_stts_no,
-				q.sr_rqst_stts_seq, r.sys_no, r.sr_rqst_emrg_yn, r.sr_rqst_rvw_rsn, r.sr_rqst_vld_yn, s.sys_nm, u.usr_nm, u.inst_no, i.inst_nm, q.sr_rqst_stts_nm,
-				d.dept_no, d.dept_nm, sr.sr_no 
+		        select distinct r.sr_rqst_no, r.sr_ttl, r.sr_reqstr_no, r.sr_rqst_reg_dt, r.sr_rqst_stts_no,
+				q.sr_rqst_stts_seq, r.sys_no, r.sr_rqst_emrg_yn, r.sr_rqst_rvw_rsn, r.sr_rqst_vld_yn, s.sys_nm, u.usr_nm, u.inst_no, i.inst_nm, q.sr_rqst_stts_nm, d.dept_no,
+				d.dept_nm, sr.sr_no 
 				from sr_rqst r
 				join sys s on s.sys_no = r.sys_no 
 				join usr u on u.usr_no = r.sr_reqstr_no
@@ -446,16 +482,29 @@
 				join inst i on i.inst_no = u.inst_no
 				join sr_rqst_stts q on q.sr_rqst_stts_no = r.sr_rqst_stts_no
 				join sr on sr.sr_rqst_no = r.sr_rqst_no
-				join sr_prgrs p on p.sr_no = sr.sr_no
-				where sr.sr_trnsf_yn = 'Y' 
+				where sr.pic_usr_no = #{usr, jdbcType=VARCHAR}
+				and sr.sr_trnsf_yn = 'Y' 
 				and sr_rqst_vld_yn = 'Y' 
-			    order by sr_rqst_reg_dt desc
+				order by sr_rqst_reg_dt desc
 			   )
 		<![CDATA[
 				where rownum <= #{endRowNo}
 			 )
 			 where rnum >= #{startRowNo}
 		]]>
+	</select>
+	<select id="countToDoItemOfTrnsfY" parameterType="Map" resultType="int">
+	    select count(*)
+		from sr_rqst r
+		join sys s on s.sys_no = r.sys_no 
+		join usr u on u.usr_no = r.sr_reqstr_no
+		join dept d on d.dept_no = u.dept_no 
+		join inst i on i.inst_no = u.inst_no
+		join sr_rqst_stts q on q.sr_rqst_stts_no = r.sr_rqst_stts_no
+		join sr on sr.sr_rqst_no = r.sr_rqst_no
+		where sr.pic_usr_no = #{usr, jdbcType=VARCHAR}
+		and sr.sr_trnsf_yn = 'Y' 
+		and sr_rqst_vld_yn = 'Y' 
 	</select>
 	
 	<!-- 처리항목 목록5: 개발 반영요청 -->
@@ -477,7 +526,8 @@
 				join sr_rqst_stts q on q.sr_rqst_stts_no = r.sr_rqst_stts_no
 				join sr on sr.sr_rqst_no = r.sr_rqst_no
 				join sr_prgrs p on p.sr_no = sr.sr_no
-				where p.sr_prgrs_stts_no = 'APPLY_REQUEST'    
+				where sr.pic_usr_no = #{usr, jdbcType=VARCHAR}
+				and p.sr_prgrs_stts_no = 'APPLY_REQUEST'    
 				and sr_rqst_vld_yn = 'Y' 
 			    order by sr_rqst_reg_dt desc
 			   )
@@ -487,8 +537,67 @@
 			 where rnum >= #{startRowNo}
 		]]>
 	</select>
+	<select id="countToDoItemOfApplyRqst" parameterType="Map" resultType="int">
+	    select count(*)
+		from sr_rqst r
+		join sys s on s.sys_no = r.sys_no 
+		join usr u on u.usr_no = r.sr_reqstr_no
+		join dept d on d.dept_no = u.dept_no 
+		join inst i on i.inst_no = u.inst_no
+		join sr_rqst_stts q on q.sr_rqst_stts_no = r.sr_rqst_stts_no
+		join sr on sr.sr_rqst_no = r.sr_rqst_no
+		join sr_prgrs p on p.sr_no = sr.sr_no
+		where sr.pic_usr_no = #{usr, jdbcType=VARCHAR}
+		and p.sr_prgrs_stts_no = 'APPLY_REQUEST'    
+		and sr_rqst_vld_yn = 'Y'
+	</select>
 	
-	
+	<!-- 처리항목 목록6: 계획 변경 요청 -->
+	<select id="selectToDoItemOfSchdlChg" parameterType="Map" resultType="SrRqst">
+		select rnum, sr_rqst_no, sr_ttl, sr_reqstr_no, sr_rqst_reg_dt, dept_no, dept_nm, sr_rqst_stts_seq,
+		sr_rqst_stts_no, sys_no, sr_rqst_emrg_yn, sr_rqst_rvw_rsn, sr_rqst_vld_yn, sys_nm, usr_nm, inst_nm, sr_rqst_stts_nm, sr_schdl_chg_rqst_dt  
+		from (
+		    select rownum as rnum, sr_rqst_no, sr_ttl, sr_reqstr_no, sr_rqst_reg_dt, dept_no, dept_nm, sr_rqst_stts_seq,
+		    sr_rqst_stts_no, sys_no, sr_rqst_emrg_yn, sr_rqst_rvw_rsn, sr_rqst_vld_yn, sys_nm, usr_nm, inst_nm, sr_rqst_stts_nm, sr_schdl_chg_rqst_dt  
+		    from(
+		        select distinct r.sr_rqst_no, r.sr_ttl, r.sr_reqstr_no, r.sr_rqst_reg_dt, r.sr_rqst_stts_no,
+				q.sr_rqst_stts_seq, r.sys_no, r.sr_rqst_emrg_yn, r.sr_rqst_rvw_rsn, r.sr_rqst_vld_yn, s.sys_nm, u.usr_nm, u.inst_no, i.inst_nm,
+				q.sr_rqst_stts_nm, d.dept_no, d.dept_nm, sr.sr_no, sr.sr_schdl_chg_rqst_dt   
+				from sr_rqst r
+				join sys s on s.sys_no = r.sys_no 
+				join usr u on u.usr_no = r.sr_reqstr_no
+				join dept d on d.dept_no = u.dept_no 
+				join inst i on i.inst_no = u.inst_no
+				join sr_rqst_stts q on q.sr_rqst_stts_no = r.sr_rqst_stts_no
+				join sr on sr.sr_rqst_no = r.sr_rqst_no
+				where sr.pic_usr_no = #{usr, jdbcType=VARCHAR}
+				and sr.sr_schdl_chg_rqst_yn='Y'
+				and sr.sr_trnsf_yn = 'Y' 
+				and sr_rqst_vld_yn = 'Y' 
+				order by sr_rqst_reg_dt desc
+			   )
+		<![CDATA[
+				where rownum <= #{endRowNo}
+			 )
+			 where rnum >= #{startRowNo}
+		]]>
+	</select>
+	<select id="countToDoItemOfSchdlChg" parameterType="Map" resultType="int">
+	    select count(*)
+		from sr_rqst r
+		join sys s on s.sys_no = r.sys_no 
+		join usr u on u.usr_no = r.sr_reqstr_no
+		join dept d on d.dept_no = u.dept_no 
+		join inst i on i.inst_no = u.inst_no
+		join sr_rqst_stts q on q.sr_rqst_stts_no = r.sr_rqst_stts_no
+		join sr on sr.sr_rqst_no = r.sr_rqst_no
+		where sr.pic_usr_no = #{usr, jdbcType=VARCHAR}
+		and sr.sr_schdl_chg_rqst_yn='Y'
+		and sr.sr_trnsf_yn = 'Y' 
+		and sr_rqst_vld_yn = 'Y' 
+		order by sr_rqst_reg_dt desc
+	</select>
+		
 
 	<!-- 작성자: 이현주  -->
 	<!-- 상태별 요청수 가져오기 -->

@@ -4,9 +4,12 @@ function init() {
 	 requestInsertDate();
 	 eventPreventSrRqstAtch();
 	 getTotalRows(choiceSrRqstSttsNo);
+	 getTotalRows2(choiceSrRqstSttsNo);
 	 showSrRqstStts();			 
 	 console.log( $("#loginUsrNo").val());
 	 numOftotalRows();
+	 numOftotalRows2();
+	 $("#srSchdlChgRqstY").hide();
 }
  
 var choiceSrRqstSttsNo = "";
@@ -27,6 +30,33 @@ $(document).ready(function() {
 	    console.log(choiceSrRqstSttsNo);
 	    //필터링 된 상품 불러오기
 	    loadSRRequests(1, choiceSrRqstSttsNo);
+	});	
+	
+	//필터링 텝 선택 효과
+	$(".toDoItem").click(function() {
+		// 클릭된 요소의 스타일을 변경
+		$(this).css({
+			"background-color": "edf2f8",
+			"color": "black"
+		});
+		$("#toDoItem").css({
+			"background-color": "#edf2f8",
+	        "color": "black"
+		});
+		$("#toDoItem").not($(".filterTab")).css({
+			"background-color": "",
+	        "color": ""
+		});
+		
+		//클릭안되어있을때
+		$(".toDoItem").not(this).css({
+			"background-color": "",
+			"color": ""
+		});
+		choiceSrRqstSttsNo = $(this).attr("id");
+		console.log("id=" +choiceSrRqstSttsNo);
+		//필터링 된 상품 불러오기
+		loadSRRequests2(1, choiceSrRqstSttsNo);
 	});	
 	
   loadSRRequests(1, choiceSrRqstSttsNo); //페이지 로딩 시 초기 데이터 로드
@@ -159,6 +189,84 @@ function loadSRRequests(pageNo, choiceSrRqstSttsNo) {
   });
 }
 
+//처리항목 목록 불러오기
+function loadSRRequests2(pageNo, choiceSrRqstSttsNo) {
+	$.ajax({
+		url: "getToDoItemsByPageNoForPicHome",
+		data: { 
+			srRqstPageNo: pageNo,
+			item: choiceSrRqstSttsNo
+		},
+		dataType: "json",
+		method: "GET",
+		success: function(data) {
+			html="";
+			console.log("두번째: " + data);
+			if(data<1){
+				html += '<tr style="background-color: white;">';
+				html += '	<td></td>';
+				html += '	<td></td>';
+				html += '	<td></td>';
+				html += '	<td style="width:190px;">';
+				html += '		<p class="t2_nonMessage">해당 목록 결과가 없습니다.</p>';
+				html += '	</td>';
+				html += '	<td></td>';
+				html += '	<td></td>';
+				html += '	<td></td>';
+				html += '	<td></td>';
+				html += '	<td></td>';
+				html += '	<td></td>';
+				html += '</tr>';
+			}
+			data.forEach((item, index)=>{ 	  	  
+				var indexOffset = (pageNo - 1) * 5; // 페이지 번호에 따라 index 오프셋 계산
+				// item.srRqstRegDt를 YYYY-MM-dd 문자열로 변환
+				const formattedDate = formatDateToYYYYMMDD(item.srRqstRegDt);
+				var indexOnPage = index + indexOffset + 1; // 페이지 내에서의 index 계산
+				html += '<tr class="data-tr" style="background-color: white;">';
+				html += '	<td>' + indexOnPage + '</td>';
+				html += '	<td>' + item.srRqstNo + '</td>';
+				html += '	<td class="truncate-text" style="max-width: 221.32px;">' + item.srTtl + '</td>';
+				html += '	<td class="truncate-text" style="max-width: 144.64px;">' + item.sysNm + '</td>';
+				html += '	<td class="truncate-text" style="max-width: 67.56px;">' + item.usrNm + '</td>';
+				html += '	<td class="truncate-text" style="max-width: 69.64px;">' + item.instNm + '</td>';
+				html += '	<td class="truncate-text" style="max-width: 67.56px;">' + item.srRqstSttsNm + '</td>';
+				html += '	<td>'+ formattedDate +'</td>'
+				html += '	<td>'+ item.srRqstEmrgYn +'</td>';
+				html += '	<td><button type="button" id="showSrRqstDetailBtn" class="btn-1" data-toggle="modal" data-target="#srRqstBySrNo" onclick="showSrRqstBySrRqstNo(\''+ item.srRqstNo +'\')">상세보기</button></td>';
+				html += '</tr>';
+			});
+			html +='<tr class="empty-tr" style="height: 100%;">';
+			html +='</tr>';
+			$("#getSrReqstListByPageNo").html(html);
+			
+			//데이터가 없을 경우 페이징 숨기기
+			var paginationContainer = document.getElementById("pagination-container");
+			
+			if(data.length<1){
+				$(".btn").hide();
+			}else{
+				updatePagination2(pageNo, choiceSrRqstSttsNo);
+				$(".btn").show();
+			}
+			//tr 요소에 대한 hover 이벤트 처리
+			$('.data-tr').hover(
+					function() {
+						// 마우스가 요소 위에 있을 때 배경색 변경
+						$(this).css('background-color', '#f3f6fd');
+					},
+					function() {
+						// 마우스가 요소를 벗어날 때 배경색 원래대로 변경
+						$(this).css('background-color', 'white');
+					}
+			);
+		},
+		error: function(error) {
+			console.error("데이터를 불러오는 중 오류가 발생했습니다.");
+		}
+	});
+}
+
 //**sr요청 상태 탭 별  행수 표시
 function numOftotalRows(){
 	//전체
@@ -170,6 +278,7 @@ function numOftotalRows(){
 	getTotalRows("RQST").then(function (totalRows) {
 		  console.log(totalRows);
 		  $("#numOfRqst").html("("+ totalRows + ")");
+		  $("#numOfRqstItems").html(totalRows);
 		});
 	//승인대기 
 	getTotalRows("APRV_WAIT").then(function (totalRows) {
@@ -180,6 +289,7 @@ function numOftotalRows(){
 	getTotalRows("APRV_REEXAM").then(function (totalRows) {
 		console.log(totalRows);
 		$("#numOfAprvReexam").html("("+ totalRows + ")");
+		$("#numOfAprvReexamItems").html(totalRows);
 	});
 	//승인반려
 	getTotalRows("APRV_RETURN").then(function (totalRows) {
@@ -190,6 +300,7 @@ function numOftotalRows(){
 	getTotalRows("APRV").then(function (totalRows) {
 		console.log(totalRows);
 		$("#numOfAprv").html("("+ totalRows + ")");
+		$("#numOfAprvItems").html(totalRows);
 	});
 	//접수대기
 	getTotalRows("RCPT_WAIT").then(function (totalRows) {
@@ -200,6 +311,7 @@ function numOftotalRows(){
 	getTotalRows("RCPT_REEXAM").then(function (totalRows) {
 		console.log(totalRows);
 		$("#numOfRcptReexam").html("("+ totalRows + ")");
+		$("#numOfRcptReexamItems").html(totalRows);
 	});
 	//접수반려
 	getTotalRows("RCPT_RETURN").then(function (totalRows) {
@@ -254,6 +366,50 @@ function getTotalRows(choiceSrRqstSttsNo) {
   });
 }
 
+//**sr요청 상태 탭 별  행수 표시
+function numOftotalRows2(){
+	//처리항목 목록3: 접수된 sr 
+	getTotalRows2("itemOfRcpt").then(function (totalRows) {
+		console.log(totalRows);
+		$("#numOfRcptItems").html(totalRows);
+	});
+	//처리항목 목록4: 이관된 sr
+	getTotalRows2("itemOfTrnsfY").then(function (totalRows) {
+		console.log(totalRows);
+		$("#numOfTrnsfYItems").html(totalRows);
+	});
+	//처리항목 목록5: 개발 반영요청
+	getTotalRows2("itemOfApplyRqst").then(function (totalRows) {
+		console.log(totalRows);
+		$("#numOfApplyRqstItems").html(totalRows);
+	});
+	//처리항목 목록6: 계획 변경 요청
+	getTotalRows2("itemOfSchdlChg").then(function (totalRows) {
+		console.log(totalRows);
+		$("#numOfSchdlChgItems").html(totalRows);
+	});
+}
+
+//**총 처리항목 행수 구하기
+function getTotalRows2(choiceSrRqstSttsNo) {
+	return new Promise(function (resolve, reject) {
+		$.ajax({
+			url: "getCountTodoByitemForPicHome",
+			data: {
+				item: choiceSrRqstSttsNo
+			},
+			dataType: "json",
+			method: "GET",
+			success: function (totalRows) {
+				resolve(totalRows);
+			},
+			error: function (error) {
+				reject(error);
+			}
+		});
+	});
+}
+
 //**상태에 따른 페이징 업데이트 함수
 function updatePagination(pageNo, choiceSrRqstSttsNo) {
   $.ajax({
@@ -298,6 +454,52 @@ function updatePagination(pageNo, choiceSrRqstSttsNo) {
       console.error("총 행 수를 가져오는 중 오류가 발생했습니다.");
     }
   });
+}
+
+//**상태에 따른 처리항목 페이징 업데이트 함수
+function updatePagination2(pageNo, choiceSrRqstSttsNo) {
+	$.ajax({
+		url: "getCountTodoByitemForPicHome",
+		data: {
+			item: choiceSrRqstSttsNo
+		},
+		dataType: "json",
+		method: "GET",
+		success: function (totalRows) {
+			// totalRows를 기반으로 페이징을 업데이트
+			var totalPageNo = Math.ceil(totalRows / 5); // 페이지 수 계산 (5는 페이지당 항목 수)
+			
+			// 현재 페이지 번호 업데이트
+			var currentPageNo = pageNo;
+			
+			// 처음/맨끝 페이지 버튼 생성
+			var firstButton = '<a class="page-button btn" style="font-size: 1.3rem;" href="javascript:loadSRRequests2(1,\''+ choiceSrRqstSttsNo +'\')">처음</a>';
+			var lastButton = '<a class="page-button btn" style="font-size: 1.3rem;" href="javascript:loadSRRequests2(' + totalPageNo + ',\''+ choiceSrRqstSttsNo +'\')">맨끝</a>';
+			
+			// 페이지 번호 버튼 생성
+			var pageButtons = '';
+			for (var i = 1; i <= totalPageNo; i++) {
+				if (i === currentPageNo) {
+					// 현재 페이지 번호는 활성화된 스타일을 적용
+					pageButtons += '<a class="page-button btn active" style="font-size: 1.3rem;" href="javascript:loadSRRequests2(' + i + ',\''+ choiceSrRqstSttsNo +'\')">' + i + '</a>';
+				} else {
+					pageButtons += '<a class="page-button btn" style="font-size: 1.3rem;" href="javascript:loadSRRequests2(' + i + ',\''+ choiceSrRqstSttsNo +'\')">' + i + '</a>';
+				}
+			}
+			
+			// 처음 페이지 버튼만 표시
+			pageButtons = firstButton + pageButtons;
+			
+			// 맨끝 페이지 버튼만 표시
+			pageButtons += lastButton;
+			
+			// 페이지 버튼 컨테이너 업데이트
+			$("#pagination-container").html(pageButtons);
+		},
+		error: function (error) {
+			console.error("총 행 수를 가져오는 중 오류가 발생했습니다.");
+		}
+	});
 }
 
 function onsubmit(){
@@ -351,9 +553,9 @@ function showSrRqstBySrRqstNo(choiceSrRqstNo){
         	//저장버튼(로그인한 회원의 요청만 저장버튼 활성화)
         	var loggedInUsrNo= $("#loginUsrNo").val();// 로그인한 회원 번호 가져오기 
         	var saveButton = $("#saveButton");
-        	console.log(loggedInUsrNo);
         	
         	var formattedDate = $.datepicker.formatDate("yy-mm-dd", date);
+        	
         	$("#srRqst-srRqstNo").val(data.srRqstNo);
         	$("#srRqst-UsrNm").val(data.usrNm);
         	$("#srRqst-inst").val(data.instNm);
@@ -365,7 +567,6 @@ function showSrRqstBySrRqstNo(choiceSrRqstNo){
         	
         	//검토 사유
         	if(data.srRqstRvwRsn !== null || data.srRqstRvwRsn !==""){
-        		console.log("검토있음: " + data.srRqstRvwRsn);
         		$("#srRqst-review").val(data.srRqstRvwRsn);
         	}
         	
@@ -637,6 +838,7 @@ function showSrRqstBySrRqstNo(choiceSrRqstNo){
 //**요청에 해당하는 sr상세내용 가져오기;
 function showSrBySrRqstNo(choiceSrRqstNo){
 	clearFormFields();
+	$("#srSchdlChgRqstY").hide();
 	//sr요청 상세
 	$.ajax({
 		type: "GET",
@@ -649,7 +851,6 @@ function showSrBySrRqstNo(choiceSrRqstNo){
 				$("#srNo").val(data.srNo);
 				
 				var date = new Date(data.srCmptnPrnmntDt);
-				console.log(data);
 				
 				//저장버튼(로그인한 회원의 요청만 저장버튼 활성화)
 				var loggedInUsrNo= $("#loginUsrNo").val();// 로그인한 회원 번호 가져오기 
@@ -676,6 +877,19 @@ function showSrBySrRqstNo(choiceSrRqstNo){
 				$("#srCmptnPrnmntDt").val(formattedDate);
 				//sr 개발내용
 				$("#srDvlConts").val(data.srDvlConts);
+				
+				//변경 요청일이 있을 경우
+				if(data.srSchdlChgRqstDt !== null || data.srSchdlChgRqstDt !== ""){
+					//변경요청일 항목 보이게하기
+					$("#srSchdlChgRqstY").show();
+					//날짜 포멧에 맞게 변경
+					var date = new Date(data.srSchdlChgRqstDt);
+					var formattedDate = $.datepicker.formatDate("yy-mm-dd", date);
+					//변경일 넣어주기
+					$("#srSchdlChgRqstDt").val(formattedDate);
+					$("#srSchdlChgRqstDt").prop("disabled", true);
+				//변경 요청일이 없을 경우 숨김
+				}
 				
 				//첨부파일
 				if (data.srAtchList && typeof data.srAtchList === "object") {
@@ -993,7 +1207,12 @@ function writeOrModifySrForPicHome(choiceSrRqstNo) {
 }
 
 //SR 등록 또는 수정 수행 함수
-function proceedWriteOrModifySrForPicHome(formData) {
+function proceedWriteOrModifySrForPicHome() {
+	choiceSrRqstNo = $("#srRqst-srRqstNo").val();
+	$("#sr-srRqstNo").val(choiceSrRqstNo);
+	var form = $("#writeOrModifySrForPicHome")[0];
+    var formData = new FormData(form);
+   
     $.ajax({
         type: "POST",
         url: "writeOrModifySrForPicHome",

@@ -109,18 +109,27 @@ public interface SrRqstDao {
 	
 	//처리항목목록1: 승인 요청처리할 항목
 	public List<SrRqst> selectToDoItemOfAprvRqst(Map<String, Object> map);
+	public int countToDoItemOfAprvRqst();
 	
 	//처리항목 목록2: 승인 요청 처리할 sr
 	public List<SrRqst> selectToDoItemOfRcptRqst(Map<String, Object> map);
+	public int countToDoItemOfRcptRqst();
 	
 	//처리항목 목록3: 접수된 sr
 	public List<SrRqst> selectToDoItemOfRcpt(Map<String, Object> map);
+	public int countToDoItemOfRcpt(Map<String, Object> map);
 	
 	//처리항목 목록4: 이관된 sr
 	public List<SrRqst> selectToDoItemOfTrnsfY(Map<String, Object> map);
+	public int countToDoItemOfTrnsfY(Map<String, Object> map);
 	
 	//처리항목 목록5: 개발 반영요청
 	public List<SrRqst> selectToDoItemOfApplyRqst(Map<String, Object> map);
+	public int countToDoItemOfApplyRqst(Map<String, Object> map);
+	
+	//처리항목 목록6: 계획 변경 요청
+	public List<SrRqst> selectToDoItemOfSchdlChg(Map<String, Object> map);
+	public int countToDoItemOfSchdlChg(Map<String, Object> map);
 	
 	
 	//작성자: 이현주 ====================================================================

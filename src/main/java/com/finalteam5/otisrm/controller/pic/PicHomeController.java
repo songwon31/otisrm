@@ -187,14 +187,19 @@ public class PicHomeController {
 		int countOfSr = srRqstService.checkIfSrInformationPresent(srSubmit.getSrRqstNo());
 	
 		//sr정보가 없을 경우 insert(등록)
-		if(countOfSr == 0) {	
+		if(countOfSr != 0) {
+			log.info("수정");
+			srRqstService.modifySr(srSubmit);
+			
+		//해당 sr정보가 있을 경우 update(수정)
+		}else {
 			srRqstService.writeSr(srSubmit);
 			
 			//첨부파일이 있다면 첨부파일 업로드
 			MultipartFile[] files = srSubmit.getFile();
 			//첨부파일을 업로드한 sr 번호 
 			String srPk = srRqstService.getAddSrPk();
-			
+			log.info("등록");
 			for(MultipartFile file : files) {
 				SrAtch srAtch = new SrAtch();
 				if(!file.isEmpty()) {
@@ -223,9 +228,6 @@ public class PicHomeController {
 				//sr 이관계획 등록
 				srRqstService.writeSrTrnsfPlan(srTrnsfPlan);
 			}
-		//해당 sr정보가 있을 경우 update(수정)
-		}else {
-			 srRqstService.modifySr(srSubmit);
 		}	
 	    return "redirect:/picHome";
 	}

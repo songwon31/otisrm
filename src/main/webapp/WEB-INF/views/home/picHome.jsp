@@ -85,7 +85,7 @@
 			   	  			<div>완료요청</div>
 			   	  			<div id="numOfCmptnRqst"class="pb-1"></div>
 		   	  			</div>
-		   	  			<div id="" class="filterTab d-flex justify-content-center align-items-center">
+		   	  			<div id="toDoItem" class="filterTab d-flex justify-content-center align-items-center">
 			   	  			<div>처리 항목</div>
 			   	  			<div id="" class="m-1"></div>
 		   	  			</div>
@@ -145,51 +145,51 @@
 				   		나의 처리할 항목
 				   	</div>
 				 	<div class="d-flex justify-content-left">
-					 	<div class="toDoItem" style="width: 100%; margin-right: 0.5rem;">
+					 	<div id="itemOfAprvRqst" class="toDoItem" style="width: 100%; margin-right: 0.5rem;">
 							<div class="pt-1" style="color: #36404a; text-align: center;">미승인 SR요청</div>
 							<div class="d-flex justify-content-center">
 								<div class="w-50 mt-2"> 								
 									<div class="toDoItemNm" style="margin-left: 3px; margin-right: 2px;">요청</div>
-									<div style="text-align: center;"><span style="padding-right:2px; padding-left:5px; font-size: 24px; color: #2278e7;">0</span>건</div>
+									<div style="text-align: center;"><span id="numOfRqstItems" style="padding-right:2px; padding-left:5px; font-size: 24px; color: #2278e7;">0</span>건</div>
 								</div>
 								<div class="w-50 mt-2">								
 									<div class="toDoItemNm"  style="margin-left: 2px; margin-right: 3px;">승인재검토</div>
-									<div style="text-align: center;"><span style="padding-right:2px;font-size: 24px; color: #2278e7;">0</span>건</div>
+									<div style="text-align: center;"><span id="numOfAprvReexamItems" style="padding-right:2px;font-size: 24px; color: #2278e7;">0</span>건</div>
 								</div>
 							</div>
 						</div>
-						<div class="toDoItem" style="width: 100%; margin-right: 0.5rem;">
+						<div id="itemOfRcptRqst" class="toDoItem" style="width: 100%; margin-right: 0.5rem;">
 							<div class="pt-1" style="color: #36404a; text-align: center;">개발계획 작성 필요 SR요청</div>
 							<div class="d-flex justify-content-center">
 								<div class="w-50 mt-2"> 								
 									<div class="toDoItemNm" style="margin-left: 3px; margin-right: 2px;">승인</div>
-									<div style="text-align: center;"><span style="padding-right:2px; padding-left:5px; font-size: 24px; color: #2278e7;">0</span>건</div>
+									<div style="text-align: center;"><span id="numOfAprvItems" style="padding-right:2px; padding-left:5px; font-size: 24px; color: #2278e7;">0</span>건</div>
 								</div>
 								<div class="w-50 mt-2">								
 									<div class="toDoItemNm"  style="margin-left: 2px; margin-right: 3px;">접수재검토</div>
-									<div style="text-align: center;"><span style="padding-right:2px;font-size: 24px; color: #2278e7;">0</span>건</div>
+									<div style="text-align: center;"><span id="numOfRcptReexamItems" style="padding-right:2px;font-size: 24px; color: #2278e7;">0</span>건</div>
 								</div>
 							</div>
 						</div>
 				 	</div>
 				 	<div class="d-flex justify-content-left">
-					 	<div class="toDoItem" style="width: 100%; margin-right: 0.5rem;">
-							<div class="pt-1" style="color: #36404a; text-align: center;">접수된 SR</div>
-							<div style="text-align: center;"><span style="padding-right:2px;font-size: 40px; color: #2278e7;">0</span>건</div>
+					 	<div id="itemOfRcpt" class="toDoItem" style="width: 100%; margin-right: 0.5rem;">
+							<div class="pt-1" style="color: #36404a; text-align: center;">접수된 담당 SR</div>
+							<div style="text-align: center;"><span id="numOfRcptItems" style="padding-right:2px;font-size: 40px; color: #2278e7;">0</span>건</div>
 						</div>
-						<div class="toDoItem"  style="width: 100%; margin-right: 0.5rem;">
+						<div id="itemOfTrnsfY" class="toDoItem"  style="width: 100%; margin-right: 0.5rem;">
 							<div class="pt-1" style="color: #36404a; text-align: center;">이관된 SR</div>
-							<div style="text-align: center;"><span style="padding-right:2px;font-size: 40px; color: #2278e7;">0</span>건</div>
+							<div style="text-align: center;"><span id="numOfTrnsfYItems" style="padding-right:2px;font-size: 40px; color: #2278e7;">0</span>건</div>
 						</div>
 				 	</div>
 				 	<div class="d-flex">
-					 	<div class="toDoItem" style="width: 100%; margin-right: 0.5rem;">
+					 	<div id="itemOfApplyRqst" class="toDoItem" style="width: 100%; margin-right: 0.5rem;">
 							<div class="pt-1" style="color: #36404a; text-align: center;">개발 반영 요청</div>
-							<div style="text-align: center;"><span style="padding-right:2px;font-size: 40px; color: #2278e7;">0</span>건</div>
+							<div style="text-align: center;"><span id="numOfApplyRqstItems" style="padding-right:2px;font-size: 40px; color: #2278e7;">0</span>건</div>
 						</div>
-						<div class="toDoItem" style="width: 100%; margin-right: 0.5rem;">
+						<div id="itemOfSchdlChg"  class="toDoItem" style="width: 100%; margin-right: 0.5rem;">
 							<div class="pt-1" style="color: #36404a; text-align: center;">계획 변경 요청</div>
-							<div style="text-align: center;"><span style="padding-right:2px;font-size: 40px; color: #2278e7;">0</span>건</div>
+							<div style="text-align: center;"><span id="numOfSchdlChgItems" style="padding-right:2px;font-size: 40px; color: #2278e7;">0</span>건</div>
 						</div>
 				 	</div>
 				</div>
@@ -577,6 +577,34 @@
 								          <input id="srCmptnPrnmntDt" type="date" class="srInput form-control" name="srCmptnPrnmntDt" >
 								        </div>
 								    </div>
+								</div>
+					        </div>
+			       		   <div id="srSchdlChgRqstY">
+					        	<div class="d-flex">
+							        <div class="d-flex w-50 pt-2"></div>
+							        <div class="d-flex w-50 pt-2">
+							       		<div class="w-30">
+								          <label for="systemName" class="form-label" style="color: #de483a">변경요청일</label>
+								        </div>
+								        <div class="w-45">
+								          <input id="srSchdlChgRqstDt" type="date" class="srInput form-control">
+								        </div>
+							        </div>
+								</div>
+					        </div>
+			       		   <div id="srSchdlChgRqstY">
+					        	<div class="d-flex">
+							        <div class="d-flex w-50 pt-2"></div>
+							        <div class="d-flex w-50 pt-2">
+							       		<div>				        
+									        <input id="srSchdlChgAprvY" class="srInput" type="radio" name="srSchdlChgAprvYn" value="Y">
+									        <label for="srSchdlChgAprvY">변경 요청 승인</label>
+								        </div>
+										<div class="ml-2">						
+									        <input id="srSchdlChgAprvN" class="srInput" type="radio" name="srSchdlChgAprvYn" value="N">
+									        <label for="srSchdlChgAprvN">변경 요청 반려</label>
+										</div>
+							        </div>
 								</div>
 					        </div>
 					        <div class="d-flex w-100 pt-2">

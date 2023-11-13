@@ -27,6 +27,9 @@ public class SrRqst {
 	private String srRqstRvwRsn;	//검토사유
 	private String srRqstVldYn;		//sr요청 유효성(삭제여부)
 	
+	//변경 요청 날짜
+	private Date srSchdlChgRqstDt;	//변경요청날짜
+	
 	//첨부파일 
 	private List<SrRqstAtch> srRqstAtchList;
 }

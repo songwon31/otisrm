@@ -24,24 +24,14 @@ public class SrSubmit {
 	private String srTrnsfInstNo;	//이관 기관번호
 	private Date srTrnsfDt;			//이관 날짜
 	
+	//완료예정일 변경 요청
+	private String srSchdlChgRqstYn; //완료예정일 변경요청  승인여부
+	private String srSchdlChgRqstDt; //변경 요청일 
+	private String srSchdlChgAprvYn; //요청 승인 여부
+	
 	//요청 구분번호
 	private String srDmndNo;		
 	//첨부파일
 	private MultipartFile[] file;
 	
 } 
-
-/*SR_NO-
-SR_RQST_NO-
-PIC_USR_NO-
-SR_CMPTN_PRNMNT_DT-
-SR_REQ_BGT-
-SR_PRI-
-SR_DVL_CONTS
-SR_TRNSF_YN
-SR_REG_DT-
-SR_MDFCN_DT-
-SR_VLD_YN-
-SR_TASK_NO-
-SR_TRNSF_INST_NO-
-SR_TRNSF_DT*/

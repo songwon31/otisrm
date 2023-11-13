@@ -113,6 +113,116 @@ public class PicHomeRestController {
 		return list;
 	}
 	
+	//처리항목 페이지별 목록 불러오기
+	@GetMapping("getToDoItemsByPageNoForPicHome")
+	public List<SrRqst> getToDoItems(
+			Authentication authentication, 
+			@RequestParam String srRqstPageNo, 
+			@RequestParam(name="item", required=false)String item, 
+			HttpSession session) {
+		//파라미터로 전달받은 값 전달
+		Map<String, Object>map = new HashMap<>();
+		if (authentication != null && authentication.isAuthenticated()) {
+			//로그인한 회원의 정보
+			UsrDetails usrDetails = (UsrDetails) authentication.getPrincipal();
+			Usr usr = usrDetails.getUsr();
+			map.put("usr", usr.getUsrNo());
+		} 
+		//SR요청 목록 페이징  
+		if(srRqstPageNo == null) {
+			//세션에 저장되어 있는지 확인
+			if(session.getAttribute("srRqstPageNo") == null || session.getAttribute("srRqstPageNo") == "") {
+				srRqstPageNo = "1";  
+			}else {
+				srRqstPageNo =  (String) session.getAttribute("srRqstPageNo");
+			}
+		}
+		
+		//세션에 현재 sr요청 페이지번호 저장
+		session.setAttribute("srRqstPageNo", String.valueOf(srRqstPageNo));
+		//문자열을 정수로 변환
+		int intSrRqstPageNo = Integer.parseInt(srRqstPageNo);
+		int totalRows = srRqstService.totalSrRqst(map);
+		Pager srRqstpager = new Pager(5, 5, totalRows, intSrRqstPageNo);
+		
+		map.put("startRowNo", srRqstpager.getStartRowNo());
+		map.put("endRowNo", srRqstpager.getEndRowNo());
+		
+		//처리항목목록1: 승인 요청처리할 항목
+		if(item.equals("itemOfAprvRqst")) {
+			List<SrRqst> list = srRqstService.getToDoItemOfAprvRqst(map);
+			return list;
+		//처리항목 목록2: 승인 요청 처리할 sr
+		}else if(item.equals("itemOfRcptRqst")) {
+			List<SrRqst> list = srRqstService.getToDoItemOfRcptRqst(map);
+			return list;
+		//처리항목 목록3: 접수된 sr
+		}else if(item.equals("itemOfRcpt")) {
+			List<SrRqst> list = srRqstService.getToDoItemOfRcpt(map);
+			return list;
+		//처리항목 목록4: 이관된 sr
+		}else if(item.equals("itemOfTrnsfY")) {
+			List<SrRqst> list = srRqstService.getToDoItemOfTrnsfY(map);
+			return list;
+		//처리항목 목록5: 개발 반영요청
+		}else if(item.equals("itemOfApplyRqst")) {
+			List<SrRqst> list = srRqstService.getToDoItemOfApplyRqst(map);
+			return list;
+		//처리항목 목록6: 계획 변경 요청
+		}else {
+			List<SrRqst> list = srRqstService.getToDoItemOfSchdlChg(map);
+			log.info("변경요청건: " + list.toString());
+			return list;
+		}
+	}
+	
+	//상태에 따른 처리항목 총 행수 불러오기
+	@GetMapping("getCountTodoByitemForPicHome")
+	public int getCountTodoByitemForPicHome(
+			Authentication authentication,
+			@RequestParam(name="item") String item) {
+		//파라미터로 전달받은 값 전달
+		Map<String, Object>map = new HashMap<>();
+		if (authentication != null && authentication.isAuthenticated()) {
+			//로그인한 회원의 정보
+			UsrDetails usrDetails = (UsrDetails) authentication.getPrincipal();
+			Usr usr = usrDetails.getUsr();
+			map.put("usr", usr.getUsrNo());
+		} 
+		
+		//처리항목목록1: 승인 요청처리할 항목
+		if(item.equals("itemOfAprvRqst")) {
+			//item 에 따른 총 행 수를 가져오는 쿼리 실행
+		    int totalRows = srRqstService.getTotalToDoItemOfAprvRqst();
+			return totalRows;
+		//처리항목 목록2: 승인 요청 처리할 sr
+		}else if(item.equals("itemOfRcptRqst")) {
+			//item 에 따른 총 행 수를 가져오는 쿼리 실행
+		    int totalRows = srRqstService.getTotalToDoItemOfRcptRqst();
+			return totalRows;
+		//처리항목 목록3: 접수된 sr
+		}else if(item.equals("itemOfRcpt")) {
+			//item 에 따른 총 행 수를 가져오는 쿼리 실행
+		    int totalRows = srRqstService.getTotalToDoItemOfRcpt(map);
+			return totalRows;
+		//처리항목 목록4: 이관된 sr
+		}else if(item.equals("itemOfTrnsfY")) {
+			//item 에 따른 총 행 수를 가져오는 쿼리 실행
+		    int totalRows = srRqstService.getTotalToDoItemOfTrnsfY(map);
+			return totalRows;
+		//처리항목 목록5: 개발 반영요청
+		}else if(item.equals("itemOfApplyRqst")) {
+			//item 에 따른 총 행 수를 가져오는 쿼리 실행
+		    int totalRows = srRqstService.getTotalToDoItemOfApplyRqst(map);
+			return totalRows;
+		//처리항목 목록6: 계획 변경 요청
+		}else {
+			//item 에 따른 총 행 수를 가져오는 쿼리 실행
+		    int totalRows = srRqstService.getTotalToDoItemOfSchdlChg(map);
+			return totalRows;
+		}
+	}
+	
 	//상태에 따른 sr요청 총 행수 불러오기
 	@GetMapping("getCountSRRequestsByStatusForPicHome")
 	public int countSRRequestsByStatus(
@@ -170,6 +280,7 @@ public class PicHomeRestController {
 			model.addAttribute("srRqstNo", srRqstNo);
 			model.addAttribute("srNo", sr.getSrNo());
 		}
+		log.info("sr: " + sr.toString());
 		return sr;
 	}
 	
