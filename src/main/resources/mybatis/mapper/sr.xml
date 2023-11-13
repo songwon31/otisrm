@@ -201,9 +201,10 @@
    
    <!-- SR계획정보 모달 구성 -->
    <select id="getCurrentSrTrnsfPlanInfo" parameterType="String" resultType="com.finalteam5.otisrm.dto.sr.SrTrnsfPlanModalCompose">
-      SELECT srd.sr_dmnd_nm, srtk.sr_task_nm, dept.dept_nm, usr.usr_nm, srt.sr_trgt_bgng_dt, srt.sr_trgt_cmptn_dt, srt.sr_trnsf_note, srt.total_capacity
+      SELECT srd.sr_dmnd_nm, srtk.sr_task_nm, dept.dept_nm, usr.usr_nm, srt.sr_trgt_bgng_dt, srt.sr_trgt_cmptn_dt, srt.sr_trnsf_note, srt.total_capacity, srr.sr_ttl
       FROM sr_trnsf_plan srt
-        JOIN sr ON srt.sr_no = sr.sr_no
+      JOIN sr ON srt.sr_no = sr.sr_no
+      JOIN sr_rqst srr ON sr.sr_rqst_no = srr.sr_rqst_no
       JOIN sr_dmnd_clsf srd ON srt.sr_dmnd_no = srd.sr_dmnd_no
       JOIN sr_task_clsf srtk ON sr.sr_task_no = srtk.sr_task_no
       JOIN dept ON srt.dept_no = dept.dept_no
@@ -212,9 +213,10 @@
    </select>
    
    <select id="getCurrentSrTrnsfPlanInfoRqst" parameterType="String" resultType="com.finalteam5.otisrm.dto.sr.SrTrnsfPlanModalCompose">
-      SELECT srd.sr_dmnd_nm, srtk.sr_task_nm
+      SELECT srd.sr_dmnd_nm, srtk.sr_task_nm, srr.sr_ttl
       FROM sr_trnsf_plan srt
-        JOIN sr ON srt.sr_no = sr.sr_no
+      JOIN sr ON srt.sr_no = sr.sr_no
+      JOIN sr_rqst srr ON sr.sr_rqst_no = srr.sr_rqst_no
       JOIN sr_dmnd_clsf srd ON srt.sr_dmnd_no = srd.sr_dmnd_no
       JOIN sr_task_clsf srtk ON sr.sr_task_no = srtk.sr_task_no
       WHERE srt.sr_no = #{srNo}

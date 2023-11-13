@@ -324,6 +324,7 @@ function showRequestDetail(srNo) {
 			$('#modal_sys_nm').html(data.sysNm);
 			$('#modal_sr_task_nm').html(data.srTaskNm);
 			$('#modal_sr_ttl').html(data.srTtl);
+			
 			$('#modal_sr_prps').html(data.srPrps);
 			$('#modal_dept_nm').html(data.deptNm);
 			$('#modal_pic_nm').html(data.usrNm);
@@ -356,7 +357,6 @@ function showRequestDetail(srNo) {
 }
 
 function setSrDetail(srNo) {
-	console.log("srNo: "+srNo);
 	//그래프 초기화
 	$('#totalProgressGraph').css('width', '0%');
 	$('#totalProgressGraphText').html('0%');
@@ -580,6 +580,8 @@ function showSrPlanInfoEditModal() {
 			    }).prop("selected", true);
 			}
 			*/
+			
+			$('#srPlanInfoEditModalSrTtl').html(data.srTtl);
 			$('#srPlanModalDmndInput').val(data.srDmndNm);
 			$('#srPlanModalTaskInput').val(data.srTaskNm);
 			$('#srPlanModalDeptInput').val(data.deptNm);

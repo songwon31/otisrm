@@ -23,4 +23,5 @@ public class SrTrnsfPlanModalCompose {
 	private Date srTrgtCmptnDt;
 	private Integer totalCapacity;
 	private String srTrnsfNote;
+	private String srTtl;
 }
