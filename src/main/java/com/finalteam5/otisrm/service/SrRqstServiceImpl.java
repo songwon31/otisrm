@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.finalteam5.otisrm.dao.SrRqstDao;
+import com.finalteam5.otisrm.dto.Pager;
 import com.finalteam5.otisrm.dto.SrDmndClsf;
 import com.finalteam5.otisrm.dto.SrTaskClsf;
 import com.finalteam5.otisrm.dto.SrTrnsfPlan;
@@ -22,6 +23,7 @@ import com.finalteam5.otisrm.dto.srRequest.SrRqstForReviewerHomeBoard;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstForReviewerHomeProgress;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstForReviewerModal;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstStts;
+import com.finalteam5.otisrm.dto.srRequest.SrRqstSttsCountBySys;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstSubmit;
 import com.finalteam5.otisrm.dto.usr.Inst;
 
@@ -282,7 +284,18 @@ public class SrRqstServiceImpl implements SrRqstService{
 		return totalRows;
 	}	
 	
-	//작성자: 이현주 =================================================================== 
+	//작성자: 이현주 ===================================================================
+	//미처리 요청수 가져오기
+	@Override
+	public int getCountUnprocessSrRqst() {
+		return srRqstDao.countUnprocessSrRqst();
+	}
+	
+	//검토자 홈 미처리 요청목록 불러오기	
+	@Override
+	public List<SrRqstForReviewerHomeBoard> getUnprocessSrRqstByPage(Pager pager) {
+		return srRqstDao.selectUnprocessSrRqstByPage(pager);
+	}
 	//요청목록 불러오기(검토자 홈)
 	@Override
 	public List<SrRqstForReviewerHomeBoard> getSrRqstForReviewerHomeBoardListByPage(Map<String, Object> params) {
@@ -324,6 +337,13 @@ public class SrRqstServiceImpl implements SrRqstService{
 	public List<String> getTotalSysNm() {
 		return srRqstDao.selectTotalSysNm();
 	}
+	
+	//시스템별 상태개수 가져오기
+	@Override
+	public List<SrRqstSttsCountBySys> getSttsCountBySysNm() {
+		return srRqstDao.selectSttsCountBySysNm();
+	}
+	
 	//개발관리 요청수 가져오기
 	@Override
 	public int getCountSrRqstForDevelopManagement(Map<String, String> params) {
@@ -347,6 +367,5 @@ public class SrRqstServiceImpl implements SrRqstService{
 	public List<SrRqstForSearchList> getSrRqstForReviewpManagementByPage(Map<String, Object> params) {
 		return srRqstDao.selectSrRqstForReviewManagementByPage(params);
 	}
-	
 
 }

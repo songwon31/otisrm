@@ -77,7 +77,7 @@ function loadReviewManagementList(pageNo) {
 	    	var html = "";
 			var pagingHtml = "";
 			if(data.list.length == 0) {
-				$("#reviewManagementList").html("<tr><td colspan='12' style='height: 47rem;'>해당 목록 결과가 없습니다.</td></tr>");
+				$("#reviewManagementList").html("<tr><td colspan='12' style='height: 47rem; background-color: #f9fafe;'>해당 목록 결과가 없습니다.</td></tr>");
 				$("#reviewManagementListListPaging").html("");
 			} else if(data.list.length != 0) {
 				var lastIndex = 0;
@@ -165,29 +165,29 @@ function loadReviewManagementList(pageNo) {
 }
 
 function initDetailModal() {
-	$("#approveResult").attr("disabled","disabled");
-	$("#approveResultBtn").attr('disabled');
-	$("#approveResultBtn").removeClass('btn-1');
-	$("#approveResultBtn").addClass('btn-3');
-	$("#detailmodal_srRqstRvwRsn").removeAttr('disabled');
-	$("#initApproveResult").prop('selected', true);
-	$("#detailmodal_srRqstRvwRsn").attr("disabled","disabled");
-	
-	$("#receptionResult").attr("disabled","disabled");
-	$("#receptionResultBtn").attr('disabled');
-	$("#initReceptionResult").prop('selected', true);
-	$("#receptionResultBtn").removeClass('btn-1');
-	$("#receptionResultBtn").addClass('btn-3');
-	
-	$("#completionResultBtn").attr('disabled');
-	$("#completionResultBtn").removeClass('btn-complete');
-	$("#completionResultBtn").addClass('btn-complete-disabled');
+	$("#approveResult").attr("disabled", "disabled");
+    $("#approveResultBtn").attr('disabled', true);
+    $("#approveResultBtn").removeClass('btn-1');
+    $("#approveResultBtn").addClass('btn-3');
+    $("#detailmodal_srRqstRvwRsn").removeAttr('disabled');
+    $("#initApproveResult").prop('selected', true);
+    $("#detailmodal_srRqstRvwRsn").attr("disabled", "disabled");
+
+    $("#receptionResult").attr("disabled", "disabled");
+    $("#receptionResultBtn").attr('disabled', true);
+    $("#initReceptionResult").prop('selected', true);
+    $("#receptionResultBtn").removeClass('btn-1');
+    $("#receptionResultBtn").addClass('btn-3');
+
+    $("#completionResultBtn").attr('disabled', true);
+    $("#completionResultBtn").removeClass('btn-complete');
+    $("#completionResultBtn").addClass('btn-complete-disabled');
 }
 
 function showDetailModal(srRqstNo) {
 	$.ajax({
-		type: "GET",
-		url: "/otisrm/getSrRqstForReviewerModal",
+		type: "POST",
+		url: "/otisrm/srManagement/reviewManagement/getSrRqstForModal",
 		data: {selectedSrRqstNo: srRqstNo},
 		success: function(data) {
 			var formattedSrRqstRegDt = formatDateToYYYYMMDD(data.srRqstRegDt);
@@ -207,20 +207,20 @@ function showDetailModal(srRqstNo) {
 				$("#approveResultBtn").addClass('btn-1');
 				$("#detailmodal_srRqstRvwRsn").removeAttr('disabled');
 			} else if(sttsNo == "APRV_RETURN") {
-				$("option[value='APRV_RETURN']").prop('selected', true);
+				$("#approveResult option[value='APRV_RETURN']").prop('selected', true);
 			} else {
-				$("option[value='APRV']").prop('selected', true);
+				$("#approveResult option[value='APRV']").prop('selected', true);
 			}
 			
 			if(sttsNo == "RCPT" || sttsNo == "DEP_ING" || sttsNo == "TEST" || sttsNo == "CMPTN_RQST" || sttsNo == "DEP_CMPTN") {
-				$("option[value='RCPT']").prop('selected', true);
+				$("#receptionResult option[value='RCPT']").prop('selected', true);
 			} else if(sttsNo == "RCPT_WAIT" || sttsNo == "RCPT_REEXAM") {
 				$("#receptionResult").removeAttr('disabled');
 				$("#receptionResultBtn").removeAttr('disabled');
 				$("#receptionResultBtn").removeClass('btn-3');
 				$("#receptionResultBtn").addClass('btn-1');
 			} else if(sttsNo == "RCPT_RETURN") {
-				$("option[value='RCPT_RETURN']").prop('selected', true);
+				$("#receptionResult option[value='RCPT_RETURN']").prop('selected', true);
 			}
 			
 			if(sttsNo == "CMPTN_RQST") {
@@ -268,10 +268,10 @@ function saveApproveResult(e) {
 	
 	$.ajax({
 		type: "POST",
-		url: "/otisrm/saveApproveResult",
+		url: "/otisrm/srManagement/reviewManagement/saveApproveResult",
 		data: {selectedSrRqstNo: srRqstNo, srRqstSttsNo: approveResult, srRqstRvwRsn: srRqstRvwRsn},
 		success: function(data) {
-			loadReviewerHomeCountBoard();
+			$('#successModal').modal('show');
 		}
 	});
 }
@@ -287,10 +287,27 @@ function saveReceptionResult(e) {
 	
 	$.ajax({
 		type: "POST",
-		url: "/otisrm/saveReceptionResult",
+		url: "/otisrm/srManagement/reviewManagement/saveReceptionResult",
 		data: {selectedSrRqstNo: srRqstNo, srRqstSttsNo: receptionResult},
 		success: function(data) {
-			loadReviewerHomeCountBoard();
+			$('#successModal').modal('show');
 		}
 	});
+}
+
+function saveCompletionResult() {
+	var srRqstNo = $("#detailmodal_srRqstNo").val();
+	
+	$.ajax({
+		type: "POST",
+		url: "/otisrm/srManagement/reviewManagement/saveCompletionResult",
+		data: {selectedSrRqstNo: srRqstNo},
+		success: function(data) {
+			$('#successModal').modal('show');
+		}
+	});
+}
+
+function redirect() {
+	window.location.href = "/otisrm/srManagement/reviewManagement";
 }

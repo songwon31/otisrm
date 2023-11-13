@@ -21,6 +21,8 @@ import com.finalteam5.otisrm.dto.srRequest.SrRqst;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstForReviewerHomeBoard;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstForReviewerHomeProgress;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstForReviewerModal;
+import com.finalteam5.otisrm.dto.srRequest.SrRqstStts;
+import com.finalteam5.otisrm.dto.srRequest.SrRqstSttsCountBySys;
 import com.finalteam5.otisrm.dto.usr.Usr;
 import com.finalteam5.otisrm.security.UsrDetails;
 import com.finalteam5.otisrm.service.SrRqstService;
@@ -34,7 +36,7 @@ public class ReviewerHomeController {
 	@Autowired
 	private SrRqstService srRqstService;
 	
-	@GetMapping("/reviewerHome")
+	@RequestMapping("/reviewerHome")
 	public String reviewerHome(Authentication authentication, String reviewerHomeBoardPageNo, Model model, HttpSession session) {
 		if (authentication != null && authentication.isAuthenticated()) {
 			//로그인한 회원의 정보
@@ -43,14 +45,10 @@ public class ReviewerHomeController {
 			model.addAttribute("usr", usr);
 		}
 		
-		//전체 시스템 이름 가져오기
-		List<String> totalSytemList = srRqstService.getTotalSysNm();
-		model.addAttribute("totalSytemList", totalSytemList);
-		
 		return "/home/reviewerHome";
 	}
 	
-	@GetMapping("/getReviewerHomeCountBoard")
+	@PostMapping("/getReviewerHomeCountBoard")
 	@ResponseBody
 	public Map<String, Integer> getReviewerHomeCountBoard() {
 		int aprvWaitCount = srRqstService.getCountSrRqstBySttsNm("승인대기");
@@ -65,9 +63,32 @@ public class ReviewerHomeController {
 		return data;
 	}
 	
-	@GetMapping("/getReviewerHomeBoardList")
+	@PostMapping("/getUnprocessedListAll")
 	@ResponseBody
-	public Map<String, Object> getReviewerHomeBoardList(
+	public Map<String, Object> getUnprocessedListAll(
+			@RequestParam String reviewerHomeBoardPageNo) {
+
+		//파라미터 전달을 위한 map
+		Map<String, Object> params = new HashMap<>();
+		Map<String, Object> data = new HashMap<>();
+		
+		//상태에 따른 SR개수 가져오기
+ 		int totalRows = srRqstService.getCountUnprocessSrRqst();
+ 		int intReviewerHomeBoardPageNo = Integer.parseInt(reviewerHomeBoardPageNo);
+		Pager reviewerHomeBoardPager = new Pager(5, 5, totalRows, intReviewerHomeBoardPageNo);
+		
+		//페이지 별 요청 목록 가져오기
+		List<SrRqstForReviewerHomeBoard> list = srRqstService.getUnprocessSrRqstByPage(reviewerHomeBoardPager);
+		
+		data.put("list", list);
+		data.put("pager", reviewerHomeBoardPager);
+		
+		return data;
+	}
+	
+	@PostMapping("/getUnprocessedListByStts")
+	@ResponseBody
+	public Map<String, Object> getUnprocessedListByStts(
 			@RequestParam String reviewerHomeBoardPageNo,
 			@RequestParam(required=false) String srRqstSttNm) {
 
@@ -93,15 +114,7 @@ public class ReviewerHomeController {
 		return data;
 	}
 	
-	@GetMapping("/getSrRqstForReviewerModal")
-	@ResponseBody
-	public SrRqstForReviewerModal getSrRqstForReviewerModal(@RequestParam String selectedSrRqstNo) {
-		//상세모달에 SR정보 표시
-		SrRqstForReviewerModal data = srRqstService.getSrRqstForReviewerModal(selectedSrRqstNo);
-		return data;
-	}
-	
-	@GetMapping("/getSrRqstForProgressInfo")
+	@PostMapping("/getSrRqstForProgressInfo")
 	@ResponseBody
 	public SrRqstForReviewerHomeProgress getSrRqstForProgressInfo(@RequestParam String selectedSrRqstNo) {
 		//진행상태에 SR정보 표시
@@ -109,7 +122,24 @@ public class ReviewerHomeController {
 		return data;
 	}
 	
-	@PostMapping("/saveApproveResult")
+	@PostMapping("/getReviewerHomeChartBySys")
+	@ResponseBody
+	public List<SrRqstSttsCountBySys> getReviewerHomeChartBySys() {
+		//시스템별 상태개수  리스트
+		List<SrRqstSttsCountBySys> sttsCountList = srRqstService.getSttsCountBySysNm();
+
+		return sttsCountList;
+	}
+	
+	@PostMapping("/reviewerHome/getSrRqstForModal")
+	@ResponseBody
+	public SrRqstForReviewerModal getSrRqstForReviewerModal(@RequestParam String selectedSrRqstNo) {
+		//상세모달에 SR정보 표시
+		SrRqstForReviewerModal data = srRqstService.getSrRqstForReviewerModal(selectedSrRqstNo);
+		return data;
+	}
+	
+	@PostMapping("/reviewerHome/saveApproveResult")
 	@ResponseBody
 	public void saveApproveResult(@RequestParam String selectedSrRqstNo, @RequestParam String srRqstSttsNo, @RequestParam(required=false) String srRqstRvwRsn) {
 		//승인 상태 변경
@@ -127,7 +157,7 @@ public class ReviewerHomeController {
 		}
 	}
 	
-	@PostMapping("/saveReceptionResult")
+	@PostMapping("/reviewerHome/saveReceptionResult")
 	@ResponseBody
 	public void saveReceptionResult(@RequestParam String selectedSrRqstNo, @RequestParam String srRqstSttsNo) {
 		//접수 상태 변경
@@ -137,7 +167,7 @@ public class ReviewerHomeController {
 		srRqstService.saveSrRqstStts(sttsParams);
 	}
 	
-	@PostMapping("/saveCompletionResult")
+	@PostMapping("/reviewerHome/saveCompletionResult")
 	@ResponseBody
 	public void saveCompletionResult(@RequestParam String selectedSrRqstNo) {
 		//개발 완료 처리

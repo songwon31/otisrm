@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.finalteam5.otisrm.dto.Pager;
 import com.finalteam5.otisrm.dto.SrDmndClsf;
 import com.finalteam5.otisrm.dto.SrTaskClsf;
 import com.finalteam5.otisrm.dto.SrTrnsfPlan;
@@ -20,6 +21,7 @@ import com.finalteam5.otisrm.dto.srRequest.SrRqstForReviewerHomeProgress;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstForReviewerModal;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstForSearchList;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstStts;
+import com.finalteam5.otisrm.dto.srRequest.SrRqstSttsCountBySys;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstSubmit;
 import com.finalteam5.otisrm.dto.usr.Inst;
 
@@ -133,14 +135,17 @@ public interface SrRqstDao {
 	
 	
 	//작성자: 이현주 ====================================================================
+	//미처리 요청수 가져오기
+	public int countUnprocessSrRqst();
+	
+	//검토자 홈 미처리 요청목록 불러오기
+	public List<SrRqstForReviewerHomeBoard> selectUnprocessSrRqstByPage(Pager pager);
+	
 	//페이지별로 요청 불러오기(검토자 홈)
 	public List<SrRqstForReviewerHomeBoard> selectSrRqstForReviewerHomeBoardListByPage(Map<String, Object> params);
 	
 	//상태별 요청수 가져오기
 	public int countSrRqstBySttsNm(String srRqstSttNm);
-	
-	//검색조건에 따른 요청 수 가져오기
-	public int countSrRqstForReviewerHomeBoardListByPage();
 	
 	//검토자 상세모달로 SR정보 가져오기
 	public SrRqstForReviewerModal selectSrRqstForReviewerModal(String selectedSrRqstNo);
@@ -157,6 +162,9 @@ public interface SrRqstDao {
 	//전체 시스템 이름 가져오기
 	public List<String> selectTotalSysNm();
 	
+	//시스템별 상태개수 가져오기
+	public List<SrRqstSttsCountBySys> selectSttsCountBySysNm();
+	
 	//개발관리(진행상태 승인이상) 요청수 가져오기
 	public int countSrRqstForDevelopManagement(Map<String, String> params);
 
@@ -168,5 +176,4 @@ public interface SrRqstDao {
 	
 	//검토관리 목록 가져오기
 	public List<SrRqstForSearchList> selectSrRqstForReviewManagementByPage(Map<String, Object> params);
-	
 }

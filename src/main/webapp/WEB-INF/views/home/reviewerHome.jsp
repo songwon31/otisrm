@@ -6,6 +6,8 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/home/reviewerHome.css" />
 <!-- javascript 연결 -->
 <script src="${pageContext.request.contextPath}/resources/javascript/home/reviewerHome.js"></script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
 
 <div id="reviewerHomeDiv" class="shadow">
 	<div id="reviewerHomeTitleDiv" style="height:4rem;">
@@ -17,7 +19,11 @@
 	<div class="d-flex">
 		<div style="width: 70%;">
 			<div id="reviewerHomeCountDiv" class="shadow" style="height:10.5rem; margin: 0.5rem 0; background-color:white; border-radius:1rem; padding:1rem;" >
-				<div class="reviewerHomeSecondTitle">미처리 검토 현황</div>
+				<div class="reviewerHomeSecondTitle">
+					<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem;">chevron_right</i>
+					<span>미처리 검토 현황</span>
+					<button class="btn-all ml-auto px-3 d-flex justify-content-center align-items-center" onclick="loadUnprocessedListAll(1)">전체</button>
+				</div>
 				<div style="width: 100%;" class="d-flex">
 					<a class="countcard" onclick="selectReviewStts(this)">
 						<span>승인대기</span>
@@ -42,7 +48,10 @@
 				</div>
 			</div>
 			<div id="reviewerHomeBoardDiv" class="shadow" style="height:36.5rem; background-color:white; border-radius:1rem; padding:1rem;">
-				<div class="reviewerHomeSecondTitle">검토 목록</div>
+				<div class="reviewerHomeSecondTitle">
+					<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem;">chevron_right</i>
+					<span>검토 목록</span>
+				</div>
 				<div style="height: 27rem;  background-color: #f9fafe;">
 					<table id="reviewerHomeMainTable" style="width: 100%; table-layout: fixed;">
 						<colgroup>
@@ -129,7 +138,7 @@
 					          </div>
 					          <div class="d-flex mb-2 w-100">
 					            <label for="detailmodal_srRqstAtchData" class="w-label col-form-label">첨부파일</label>
-								<input id="detailmodal_srRqstAtchData" type="file" class="w-content form-control-file form-control-sm px-0" disabled>
+								<input id="detailmodal_srRqstAtchData" type="file" class="w-content form-control-file form-control-sm p-0" disabled>
 					          </div>
 							</div>
 							<div class="card p-2 mb-4">
@@ -197,7 +206,7 @@
 					          	</div>
 					          	<div class="d-flex mb-2 w-100">
 					            	<label for="detailmodal_srAtchData" class="w-label col-form-label">첨부파일</label>
-									<input id="detailmodal_srAtchData" type="file" id="srFile" class="w-content form-control-file form-control-sm px-0" disabled>
+									<input id="detailmodal_srAtchData" type="file" id="srFile" class="w-content form-control-file form-control-sm p-0" disabled>
 					          	</div>
 							</div>
 				      </div>
@@ -224,69 +233,43 @@
 						</div>
 					</div>
 				</div>
+				
+				<!-- 변경성공 알림 모달  -->
+				<div id="successModal" class="modal" data-backdrop="static">
+					<div class="modal-dialog modal-dialog-centered modal-sm">
+						<div class="modal-content">
+							<div class="modal-header d-flex" style="background-color: #2c7be4;">
+								<div class="modal-title mr-auto">성공</div>
+								<i class="material-icons close-icon ml-auto" data-dismiss="modal" style="cursor: pointer;" onclick="redirect()">close</i>
+							</div>
+							<div class="modal-body">
+								<div id="alertModalContent" style="height:11rem; font-weight: 700; display: flex; justify-content: center; align-items: center;">
+									SR요청 상태가 변경되었습니다.
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 								
 			</div>
 		</div>
-		<div style="width: 30%; padding-left: 0.5rem;" class="">
-			<div id="reviewerHomeChartDiv" class="shadow" style="height:48rem; background-color:white; border-radius:1rem; padding:1rem;" >
-				<%-- <div class="reviewerHomeSecondTitle ">시스템별 검토 현황</div>
-				<c:forEach var="i" items="${totalSytemList}" varStatus="status">	
-					<div>${i}</div>
-					<div style="width:100%; height: 1.5rem; background-color: #3b82f6; opacity: 0.5;"></div>
-				</c:forEach> --%>
-				
-				<!-- Chart -->
- 			    <!--<script src= "https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script> 
-				<script src= "https://cdn.jsdelivr.net/npm/chart.js@4.0.1/dist/chart.umd.min.js"></script> 
-			    
-			    <div id="containerID">           
-			        <div> 
-			            <canvas id="stackedChartID" width="100%;"></canvas> 
-			        </div> 
-			    </div> 
-			  
-			    <script> 
-			        var myContext = document.getElementById( 
-			            "stackedChartID").getContext('2d'); 
-			              
-			        var myChart = new Chart(myContext, { 
-			            type: 'bar', 
-			            data: { 
-			                labels: ["bike", "car", "scooter", "truck"], 
-			                datasets: [{ 
-			                    label: 'worst', 
-			                    backgroundColor: "blue", 
-			                    data: [17, 16, 4, 1], 
-			                }, { 
-			                    label: 'Okay', 
-			                    backgroundColor: "green", 
-			                    data: [4, 2, 10, 6], 
-			                }, { 
-			                    label: 'bad', 
-			                    backgroundColor: "red", 
-			                    data: [2, 21, 3, 24], 
-			                }], 
-			            }, 
-			            options: { 
-			                indexAxis: 'y', 
-			                scales: { 
-			                    x: { 
-			                        stacked: true, 
-			                    }, 
-			                    y: { 
-			                        stacked: true 
-			                    } 
-			                }, 
-			                responsive: true 
-			            } 
-			        }); 
-			    </script>-->
+		<div style="width: 30%; padding-left: 0.5rem;">
+			<div id="reviewerHomeChartDiv" class="shadow d-flex flex-column" style="height:47.5rem; background-color:white; border-radius:1rem; padding:1rem; margin-top: 0.5rem;" >
+				<div class="reviewerHomeSecondTitle ">
+					<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem;">chevron_right</i>
+					<span>시스템별 SR 현황</span>
+				</div>
+				<div id="reviewerHomeChartBySys" style="height: 42rem;">
+				</div>
 			</div>
 		</div>
 	</div>
 	
 	<div id="reviewerHomeSrProgressDiv" class="shadow" style="height:31.5rem; width: 100%; background-color:white; border-radius:1rem; margin-top: 0.5rem; padding:1rem;">
-       <div class="reviewerHomeSecondTitle ">SR진행현황</div>
+       <div class="reviewerHomeSecondTitle ">
+       		<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem;">chevron_right</i>
+       		<span>SR진행현황</span>
+       	</div>
        <div class="reviewerHomeSrProgressContents d-flex pt-3">
        		<div id="progressCircles" style="width: 70%; height: 23rem;">
 				<div class="progress-steps" style="margin-top: 3.88rem;">

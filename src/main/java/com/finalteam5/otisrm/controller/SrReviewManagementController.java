@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.finalteam5.otisrm.dto.Pager;
+import com.finalteam5.otisrm.dto.srRequest.SrRqstForReviewerModal;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstForSearchList;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstStts;
 import com.finalteam5.otisrm.dto.usr.Dept;
@@ -123,5 +124,51 @@ public class SrReviewManagementController {
 		data.put("pager", reviewManagementPager);
 		
 		return data;
+	}
+	
+	@PostMapping("/reviewManagement/getSrRqstForModal")
+	@ResponseBody
+	public SrRqstForReviewerModal getSrRqstForReviewerModal(@RequestParam String selectedSrRqstNo) {
+		//상세모달에 SR정보 표시
+		SrRqstForReviewerModal data = srRqstService.getSrRqstForReviewerModal(selectedSrRqstNo);
+		return data;
+	}
+	
+	@PostMapping("/reviewManagement/saveApproveResult")
+	@ResponseBody
+	public void saveApproveResult(@RequestParam String selectedSrRqstNo, @RequestParam String srRqstSttsNo, @RequestParam(required=false) String srRqstRvwRsn) {
+		//승인 상태 변경
+		Map<String, String> sttsParams = new HashMap<>();
+		sttsParams.put("selectedSrRqstNo", selectedSrRqstNo);
+		sttsParams.put("srRqstSttsNo", srRqstSttsNo);
+		srRqstService.saveSrRqstStts(sttsParams);
+		
+		//검토의견 업데이트
+		if(srRqstRvwRsn != null || srRqstRvwRsn != "") {
+			Map<String, String> rvwRsnParams = new HashMap<>();
+			rvwRsnParams.put("selectedSrRqstNo", selectedSrRqstNo);
+			rvwRsnParams.put("srRqstRvwRsn", srRqstRvwRsn);
+			srRqstService.saveSrRqstRvwRsn(rvwRsnParams);
+		}
+	}
+	
+	@PostMapping("/reviewManagement/saveReceptionResult")
+	@ResponseBody
+	public void saveReceptionResult(@RequestParam String selectedSrRqstNo, @RequestParam String srRqstSttsNo) {
+		//접수 상태 변경
+		Map<String, String> sttsParams = new HashMap<>();
+		sttsParams.put("selectedSrRqstNo", selectedSrRqstNo);
+		sttsParams.put("srRqstSttsNo", srRqstSttsNo);
+		srRqstService.saveSrRqstStts(sttsParams);
+	}
+	
+	@PostMapping("/reviewManagement/saveCompletionResult")
+	@ResponseBody
+	public void saveCompletionResult(@RequestParam String selectedSrRqstNo) {
+		//개발 완료 처리
+		Map<String, String> sttsParams = new HashMap<>();
+		sttsParams.put("selectedSrRqstNo", selectedSrRqstNo);
+		sttsParams.put("srRqstSttsNo", "DEP_CMPTN");
+		srRqstService.saveSrRqstStts(sttsParams);
 	}
 }
