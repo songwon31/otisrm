@@ -97,7 +97,7 @@ function loadSRRequests(pageNo, choiceSrRqstSttsNo) {
 		  html += '	<td class="truncate-text" style="max-width: 67.56px;">' + item.srRqstSttsNm + '</td>';
 		  html += '	<td>'+ formattedDate +'</td>'
 		  html += '	<td>'+ item.srRqstEmrgYn +'</td>';
-		  html += '	<td><button type="button" id="showSrRqstDetailBtn" class="btn-2" data-toggle="modal" data-target="#srRqstBySrNo" onclick="showSrRqstBySrRqstNo(\''+ item.srRqstNo +'\')">상세보기</button></td>';
+		  html += '	<td><button type="button" id="showSrRqstDetailBtn" class="btn-1" data-toggle="modal" data-target="#srRqstBySrNo" onclick="showSrRqstBySrRqstNo(\''+ item.srRqstNo +'\')">상세보기</button></td>';
 		  html += '</tr>';
     	  
       });
@@ -197,12 +197,12 @@ function doughnutChart(){
 	const xValues = ["요청", "승인대기", "승인재검토", "승인반려", "승인", "개발완료"];
 	const yValues = [numberRqst, numberAprvWait, numberAprvReexam, numberAprvReturn, numberAprv, numberDepCMptn];
 	const barColors = [
-	  "#b91d47",
-	  "#00aba9",
-	  "#2b5797",
-	  "#e8c3b9",
-	  "#1e7145",
-	  "red"
+	  "#26bbfd",
+	  "#d6e2ee",
+	  "#f3803d",
+	  "#c6475c",
+	  "#2c7be4",
+	  "#00d279"
 	];
 	
 	new Chart("myChart", {
@@ -216,7 +216,8 @@ function doughnutChart(){
 	  },
 	  options: {
 	    title: {
-	      display: true
+	      display: true,
+	      text: "나의 SR 요청 현재 상태"
 	    },
 	    cutoutPercentage: 60, // 도넛 차트의 크기를 조절할 값 (0 ~ 100)
 	  }
@@ -253,44 +254,32 @@ function updatePagination(pageNo, choiceSrRqstSttsNo) {
     dataType: "json",
     method: "GET",
     success: function (totalRows) {
-    	// totalRows를 기반으로 페이징을 업데이트
+        // totalRows를 기반으로 페이징을 업데이트
         var totalPageNo = Math.ceil(totalRows / 5); // 페이지 수 계산 (5는 페이지당 항목 수)
         
         // 현재 페이지 번호 업데이트
         var currentPageNo = pageNo;
         
-        // 이전/다음 페이지 버튼 표시 여부 결정
-        var showPrev = currentPageNo > 1;
-        var showNext = currentPageNo < totalPageNo;
-        
-        // 이전/다음 페이지 버튼 생성
-        var prevButton = '<a class="page-button btn" href="javascript:loadSRRequests(' + (currentPageNo - 1) + ',\''+ choiceSrRqstSttsNo +'\')">이전</a>';
-        var nextButton = '<a class="page-button btn" href="javascript:loadSRRequests(' + (currentPageNo + 1) + ',\''+ choiceSrRqstSttsNo +'\')">다음</a>';
+        // 처음/맨끝 페이지 버튼 생성
+        var firstButton = '<a class="page-button btn" style="font-size: 12px;" href="javascript:loadSRRequests(1,\''+ choiceSrRqstSttsNo +'\')">처음</a>';
+        var lastButton = '<a class="page-button btn" style="font-size: 12px;" href="javascript:loadSRRequests(' + totalPageNo + ',\''+ choiceSrRqstSttsNo +'\')">맨끝</a>';
         
         // 페이지 번호 버튼 생성
         var pageButtons = '';
         for (var i = 1; i <= totalPageNo; i++) {
           if (i === currentPageNo) {
             // 현재 페이지 번호는 활성화된 스타일을 적용
-            pageButtons += '<a class="page-button btn active" href="javascript:loadSRRequests(' + i + ',\''+ choiceSrRqstSttsNo +'\')">' + i + '</a>';
+            pageButtons += '<a class="page-button btn active" style="font-size: 12px;" href="javascript:loadSRRequests(' + i + ',\''+ choiceSrRqstSttsNo +'\')">' + i + '</a>';
           } else {
-            pageButtons += '<a class="page-button btn" href="javascript:loadSRRequests(' + i + ',\''+ choiceSrRqstSttsNo +'\')">' + i + '</a>';
+            pageButtons += '<a class="page-button btn" style="font-size: 12px;" href="javascript:loadSRRequests(' + i + ',\''+ choiceSrRqstSttsNo +'\')">' + i + '</a>';
           }
         }
         
-        // 이전 페이지 버튼을 표시
-        if (showPrev) {
-          pageButtons = '<a class="page-button btn" href="javascript:loadSRRequests(1,\''+ choiceSrRqstSttsNo +'\')">처음</a>' + prevButton + pageButtons;
-        } else {
-          pageButtons = '<a class="page-button btn" href="javascript:loadSRRequests(1,\''+ choiceSrRqstSttsNo +'\')">처음</a>' + pageButtons;
-        }
+        // 처음 페이지 버튼만 표시
+        pageButtons = firstButton + pageButtons;
         
-        // 다음 페이지 버튼을 표시
-        if (showNext) {
-          pageButtons += nextButton + '<a class="page-button btn" href="javascript:loadSRRequests(' + totalPageNo + ',\''+ choiceSrRqstSttsNo +'\')">맨끝</a>';
-        } else {
-          pageButtons += '<a class="page-button btn" href="javascript:loadSRRequests(' + totalPageNo + ',\''+ choiceSrRqstSttsNo +'\')">맨끝</a>';
-        }
+        // 맨끝 페이지 버튼만 표시
+        pageButtons += lastButton;
         
         // 페이지 버튼 컨테이너 업데이트
         $("#pagination-container").html(pageButtons);
@@ -300,7 +289,6 @@ function updatePagination(pageNo, choiceSrRqstSttsNo) {
     }
   });
 }
-
 //Byte를 KB로 변환
 function bytesToKB(bytes) {
     return (bytes / 1024).toFixed(2); // 소수점 두 자리까지 표시

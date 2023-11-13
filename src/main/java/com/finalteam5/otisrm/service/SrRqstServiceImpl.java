@@ -13,6 +13,7 @@ import com.finalteam5.otisrm.dto.SrTrnsfPlan;
 import com.finalteam5.otisrm.dto.Sys;
 import com.finalteam5.otisrm.dto.sr.srForPicHome.Sr;
 import com.finalteam5.otisrm.dto.sr.srForPicHome.SrAtch;
+import com.finalteam5.otisrm.dto.sr.srForPicHome.SrPrgrs;
 import com.finalteam5.otisrm.dto.sr.srForPicHome.SrSubmit;
 import com.finalteam5.otisrm.dto.srRequest.SrRqst;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstAtch;
@@ -200,6 +201,14 @@ public class SrRqstServiceImpl implements SrRqstService{
 		int numOfSrBySrRqstNo = srRqstDao.countSrInformationPresent(srRqstNo);
 		return numOfSrBySrRqstNo;
 	}
+	
+	//sr에 해당하는 sr진척률
+	@Override
+	public List<SrPrgrs> getSrPrgrsBySrNo(String srNo) {
+		List<SrPrgrs> list = srRqstDao.selectSrPrgrsBySrNo(srNo);
+		return list;
+	}
+	
 	
 	//작성자: 이현주 =================================================================== 
 	//요청목록 불러오기(검토자 홈)

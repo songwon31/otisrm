@@ -28,6 +28,7 @@ $(document).ready(function() {
 	    //필터링 된 상품 불러오기
 	    loadSRRequests(1, choiceSrRqstSttsNo);
 	});	
+	
   loadSRRequests(1, choiceSrRqstSttsNo); //페이지 로딩 시 초기 데이터 로드
   
   //라디오 버튼 변경 이벤트 리스너 추가
@@ -121,7 +122,7 @@ function loadSRRequests(pageNo, choiceSrRqstSttsNo) {
 		  html += '	<td class="truncate-text" style="max-width: 67.56px;">' + item.srRqstSttsNm + '</td>';
 		  html += '	<td>'+ formattedDate +'</td>'
 		  html += '	<td>'+ item.srRqstEmrgYn +'</td>';
-		  html += '	<td><button type="button" id="showSrRqstDetailBtn" class="btn-2" data-toggle="modal" data-target="#srRqstBySrNo" onclick="showSrRqstBySrRqstNo(\''+ item.srRqstNo +'\')">상세보기</button></td>';
+		  html += '	<td><button type="button" id="showSrRqstDetailBtn" class="btn-1" data-toggle="modal" data-target="#srRqstBySrNo" onclick="showSrRqstBySrRqstNo(\''+ item.srRqstNo +'\')">상세보기</button></td>';
 		  html += '</tr>';
       });
       html +='<tr class="empty-tr" style="height: 100%;">';
@@ -269,38 +270,26 @@ function updatePagination(pageNo, choiceSrRqstSttsNo) {
         // 현재 페이지 번호 업데이트
         var currentPageNo = pageNo;
         
-        // 이전/다음 페이지 버튼 표시 여부 결정
-        var showPrev = currentPageNo > 1;
-        var showNext = currentPageNo < totalPageNo;
-        
-        // 이전/다음 페이지 버튼 생성
-        var prevButton = '<a class="page-button btn" href="javascript:loadSRRequests(' + (currentPageNo - 1) + ',\''+ choiceSrRqstSttsNo +'\')">이전</a>';
-        var nextButton = '<a class="page-button btn" href="javascript:loadSRRequests(' + (currentPageNo + 1) + ',\''+ choiceSrRqstSttsNo +'\')">다음</a>';
+        // 처음/맨끝 페이지 버튼 생성
+        var firstButton = '<a class="page-button btn" style="font-size: 1.3rem;" href="javascript:loadSRRequests(1,\''+ choiceSrRqstSttsNo +'\')">처음</a>';
+        var lastButton = '<a class="page-button btn" style="font-size: 1.3rem;" href="javascript:loadSRRequests(' + totalPageNo + ',\''+ choiceSrRqstSttsNo +'\')">맨끝</a>';
         
         // 페이지 번호 버튼 생성
         var pageButtons = '';
         for (var i = 1; i <= totalPageNo; i++) {
           if (i === currentPageNo) {
             // 현재 페이지 번호는 활성화된 스타일을 적용
-            pageButtons += '<a class="page-button btn active" href="javascript:loadSRRequests(' + i + ',\''+ choiceSrRqstSttsNo +'\')">' + i + '</a>';
+            pageButtons += '<a class="page-button btn active" style="font-size: 1.3rem;" href="javascript:loadSRRequests(' + i + ',\''+ choiceSrRqstSttsNo +'\')">' + i + '</a>';
           } else {
-            pageButtons += '<a class="page-button btn" href="javascript:loadSRRequests(' + i + ',\''+ choiceSrRqstSttsNo +'\')">' + i + '</a>';
+            pageButtons += '<a class="page-button btn" style="font-size: 1.3rem;" href="javascript:loadSRRequests(' + i + ',\''+ choiceSrRqstSttsNo +'\')">' + i + '</a>';
           }
         }
         
-        // 이전 페이지 버튼을 표시
-        if (showPrev) {
-          pageButtons = '<a class="page-button btn" href="javascript:loadSRRequests(1,\''+ choiceSrRqstSttsNo +'\')">처음</a>' + prevButton + pageButtons;
-        } else {
-          pageButtons = '<a class="page-button btn" href="javascript:loadSRRequests(1,\''+ choiceSrRqstSttsNo +'\')">처음</a>' + pageButtons;
-        }
+        // 처음 페이지 버튼만 표시
+        pageButtons = firstButton + pageButtons;
         
-        // 다음 페이지 버튼을 표시
-        if (showNext) {
-          pageButtons += nextButton + '<a class="page-button btn" href="javascript:loadSRRequests(' + totalPageNo + ',\''+ choiceSrRqstSttsNo +'\')">맨끝</a>';
-        } else {
-          pageButtons += '<a class="page-button btn" href="javascript:loadSRRequests(' + totalPageNo + ',\''+ choiceSrRqstSttsNo +'\')">맨끝</a>';
-        }
+        // 맨끝 페이지 버튼만 표시
+        pageButtons += lastButton;
         
         // 페이지 버튼 컨테이너 업데이트
         $("#pagination-container").html(pageButtons);
@@ -666,9 +655,6 @@ function showSrBySrRqstNo(choiceSrRqstNo){
 				var loggedInUsrNo= $("#loginUsrNo").val();// 로그인한 회원 번호 가져오기 
 				var saveButton2 = $("#saveButton2");
 				
-			    // 로그인한 사용자와 요청을 등록한 회원을 비교하여 버튼 활성화/비활성화
-				console.log("슨서: " + data.srRqstSttsNo);
-	
 				var formattedDate = $.datepicker.formatDate("yy-mm-dd", date);
 				//이관여부
 				$('input[name="srTrnsfYn"][value="'+ data.srTrnsfYn +'"]').prop('checked', true);

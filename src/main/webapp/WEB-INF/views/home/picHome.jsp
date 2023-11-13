@@ -85,9 +85,9 @@
 			   	  			<div>완료요청</div>
 			   	  			<div id="numOfCmptnRqst"class="pb-1"></div>
 		   	  			</div>
-		   	  			<div id="DEP_CMPTN" class="filterTab d-flex justify-content-center align-items-center">
-			   	  			<div>개발완료</div>
-			   	  			<div id="numOfDepCmptn" class="m-1"></div>
+		   	  			<div id="" class="filterTab d-flex justify-content-center align-items-center">
+			   	  			<div>처리 항목</div>
+			   	  			<div id="" class="m-1"></div>
 		   	  			</div>
 		   	  			
 		   	  		</div>
@@ -124,31 +124,90 @@
 				    </tbody>
 				</table>
 				<!-- 페이징 -->
-				<div id="pagination-container" class="paging d-flex justify-content-center">
+				<div id="pagination-container" class="paging d-flex justify-content-center align-items-center pt-2">
 					<!-- 비동기로 페이징 들어오는 곳 -->	
 			    </div>	
 		   	  </div>
 		    </div>
 	   </div>
    </div>
-   
-    
-<div class="potalBottom section shadow">
-	<div class="subcontentTitle">
- 		<div class="d-flex st-ct">
-	 	  	<i class="material-icons stt-ic">chevron_right</i>
-	 	  	<span class="pt-1">게시판</span>
- 	 	</div>
-	 </div>
-   	  <div class="st-ct">
-	   	  <div class="subcontentTitle pt-1" style="width: 48%; padding-left: 19px;color: #5d6e7e;">
-	   	  	SR 진행 현황
-	   	  </div>
-   	  </div>
-   	  <div class="d-flex">
-	   	 
-	 </div>
-</div>
+   <!-- 아래 내용 -->
+   <div class="d-flex">
+	   <div class="potalBottom section shadow w-30">
+			<div class="subcontentTitle">
+		 		<div class="d-flex st-ct">
+			 	  	<i class="material-icons stt-ic">chevron_right</i>
+			 	  	<span class="pt-1">처리 항목</span>
+		 	 	</div>
+			   <!-- 처리할 항목 -->
+				<div id="toDoItemContends">
+					<div class="subcontentTitle pt-1" style="padding-left: 19px;color: #5d6e7e;">
+				   		나의 처리할 항목
+				   	</div>
+				 	<div class="d-flex justify-content-left">
+					 	<div class="toDoItem" style="width: 100%; margin-right: 0.5rem;">
+							<div class="pt-1" style="color: #36404a; text-align: center;">미승인 SR요청</div>
+							<div class="d-flex justify-content-center">
+								<div class="w-50 mt-2"> 								
+									<div class="toDoItemNm" style="margin-left: 3px; margin-right: 2px;">요청</div>
+									<div style="text-align: center;"><span style="padding-right:2px; padding-left:5px; font-size: 24px; color: #2278e7;">0</span>건</div>
+								</div>
+								<div class="w-50 mt-2">								
+									<div class="toDoItemNm"  style="margin-left: 2px; margin-right: 3px;">승인재검토</div>
+									<div style="text-align: center;"><span style="padding-right:2px;font-size: 24px; color: #2278e7;">0</span>건</div>
+								</div>
+							</div>
+						</div>
+						<div class="toDoItem" style="width: 100%; margin-right: 0.5rem;">
+							<div class="pt-1" style="color: #36404a; text-align: center;">개발계획 작성 필요 SR요청</div>
+							<div class="d-flex justify-content-center">
+								<div class="w-50 mt-2"> 								
+									<div class="toDoItemNm" style="margin-left: 3px; margin-right: 2px;">승인</div>
+									<div style="text-align: center;"><span style="padding-right:2px; padding-left:5px; font-size: 24px; color: #2278e7;">0</span>건</div>
+								</div>
+								<div class="w-50 mt-2">								
+									<div class="toDoItemNm"  style="margin-left: 2px; margin-right: 3px;">접수재검토</div>
+									<div style="text-align: center;"><span style="padding-right:2px;font-size: 24px; color: #2278e7;">0</span>건</div>
+								</div>
+							</div>
+						</div>
+				 	</div>
+				 	<div class="d-flex justify-content-left">
+					 	<div class="toDoItem" style="width: 100%; margin-right: 0.5rem;">
+							<div class="pt-1" style="color: #36404a; text-align: center;">접수된 SR</div>
+							<div style="text-align: center;"><span style="padding-right:2px;font-size: 40px; color: #2278e7;">0</span>건</div>
+						</div>
+						<div class="toDoItem"  style="width: 100%; margin-right: 0.5rem;">
+							<div class="pt-1" style="color: #36404a; text-align: center;">이관된 SR</div>
+							<div style="text-align: center;"><span style="padding-right:2px;font-size: 40px; color: #2278e7;">0</span>건</div>
+						</div>
+				 	</div>
+				 	<div class="d-flex">
+					 	<div class="toDoItem" style="width: 100%; margin-right: 0.5rem;">
+							<div class="pt-1" style="color: #36404a; text-align: center;">개발 반영 요청</div>
+							<div style="text-align: center;"><span style="padding-right:2px;font-size: 40px; color: #2278e7;">0</span>건</div>
+						</div>
+						<div class="toDoItem" style="width: 100%; margin-right: 0.5rem;">
+							<div class="pt-1" style="color: #36404a; text-align: center;">계획 변경 요청</div>
+							<div style="text-align: center;"><span style="padding-right:2px;font-size: 40px; color: #2278e7;">0</span>건</div>
+						</div>
+				 	</div>
+				</div>
+			 </div>
+	    </div>
+	    
+	   <!-- SR 진행 현황 -->
+	   <div class="potalBottom section shadow w-70">
+			<div class="subcontentTitle">
+		 		<div class="d-flex st-ct">
+			 	  	<i class="material-icons stt-ic">chevron_right</i>
+			 	  	<span class="pt-1">SR 진행 현황</span>
+		 	 	</div>
+			 </div>
+		   	  
+	    </div>
+   </div>
+	
 
 <!-- 요청등록 모달 -->
 <div id="addSrRqst" class="modal" data-backdrop="static">

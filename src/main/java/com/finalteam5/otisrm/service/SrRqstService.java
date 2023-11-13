@@ -10,6 +10,7 @@ import com.finalteam5.otisrm.dto.SrTrnsfPlan;
 import com.finalteam5.otisrm.dto.Sys;
 import com.finalteam5.otisrm.dto.sr.srForPicHome.Sr;
 import com.finalteam5.otisrm.dto.sr.srForPicHome.SrAtch;
+import com.finalteam5.otisrm.dto.sr.srForPicHome.SrPrgrs;
 import com.finalteam5.otisrm.dto.sr.srForPicHome.SrSubmit;
 import com.finalteam5.otisrm.dto.srRequest.SrRqst;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstAtch;
@@ -97,6 +98,9 @@ public interface SrRqstService {
 	
 	//해당 sr요청에 대한 sr정보가 있는지 확인
 	public int checkIfSrInformationPresent(String srRqstNo);
+	
+	//sr에 해당하는 sr진척률 불러오기
+	public List<SrPrgrs> getSrPrgrsBySrNo(String srNo);
 	
 	//작성자: 이현주=================================================================
 	//요청목록불러오기(검토자 홈)

@@ -64,12 +64,7 @@
 		       <if test="status != null and status != '' or usr != null and usr != '' or keyword != null and keyword != '' or startDate != null or endDate != null
 		       	or instNo != null and instNo != '' or deptNo != null and deptNo != '' or startDate != null and startDate != '' or endDate != null and endDate != '' or pic != null and pic != ''">
 				  <where>
-				  	<!-- 담당자 홈일 경우 자신이 요청한 sr요청과 다른 사람의 sr 요청일 경우 승인 상태 불러오기 -->
-				    <!-- <if test="pic != null and pic != ''">
-		 				or (r.sr_reqstr_no = #{pic, jdbcType=VARCHAR})
-    					or (r.sr_reqstr_no != #{pic, jdbcType=VARCHAR} and r.sr_rqst_stts_no = 'APRV')
-				    </if> -->
-				     
+				 
 				  	<!-- 소속기관 -->
 				    <if test="instNo != null and instNo != ''">
 				  		and u.inst_no = #{instNo, jdbcType=VARCHAR}
@@ -255,6 +250,17 @@
 		where sr.sr_rqst_no= #{srRqstNo, jdbcType=VARCHAR}
 	</select>
 	
+	<!-- 담당자홈: srRqstNo에 해당하는 sr 상세 내용 가져오기 -->
+	<select id="selectSrPrgrsBySrNo" parameterType="String" resultType="SrPrgrs">
+		select p.*, r.sr_rqst_no, r.sr_rqst_stts_no, s.sr_rqst_stts_nm, t.sr_prgrs_stts_nm
+		from sr_prgrs p 
+		join sr on sr.sr_no = p.sr_no
+		join sr_rqst r on r.sr_rqst_no = sr.sr_rqst_no 
+		join sr_rqst_stts s on s.sr_rqst_stts_no = r.sr_rqst_stts_no
+		join sr_prgrs_stts t on t.sr_prgrs_stts_no = p.sr_prgrs_stts_no
+		where p.sr_no= #{srNo}
+	</select>
+
 	<!--  담당자홈: sr 상세에 해당하는 첨부파일 불러오기 -->
 	<select id="selectSrAtchBySrNo" parameterType="String" resultType="SrAtch" >
 		select * from sr_atch where sr_no = #{srNo}
@@ -335,6 +341,155 @@
 	    where sr_rqst_no = #{srRqstNo, jdbcType=VARCHAR}
 	</select>
 	
+	<!-- 처리항목 목록1: 승인 요청 처리할 sr -->
+	<select id="selectToDoItemOfAprvRqst" parameterType="Map" resultType="SrRqst">
+		select rnum, sr_rqst_no, sr_ttl, sr_reqstr_no, sr_rqst_reg_dt, sr_rqst_mdfcn_dt, dept_no, dept_nm, sr_rqst_stts_seq,
+		sr_rqst_stts_no, sys_no, sr_rqst_emrg_yn, sr_rqst_rvw_rsn, sr_rqst_vld_yn, sys_nm, usr_nm, inst_nm, sr_rqst_stts_nm  
+		from (
+		    select rownum as rnum, sr_rqst_no, sr_ttl, sr_reqstr_no, sr_rqst_reg_dt, sr_rqst_mdfcn_dt, dept_no, dept_nm, sr_rqst_stts_seq,
+		    sr_rqst_stts_no, sys_no, sr_rqst_emrg_yn, sr_rqst_rvw_rsn, sr_rqst_vld_yn, sys_nm, usr_nm, inst_nm, sr_rqst_stts_nm  
+		    from(
+		        select r.sr_rqst_no, r.sr_ttl, r.sr_reqstr_no, r.sr_rqst_reg_dt, r.sr_rqst_mdfcn_dt, r.sr_rqst_stts_no,
+				q.sr_rqst_stts_seq, r.sys_no, r.sr_rqst_emrg_yn, r.sr_rqst_rvw_rsn, r.sr_rqst_vld_yn, s.sys_nm, u.usr_nm, u.inst_no, i.inst_nm, q.sr_rqst_stts_nm,
+				d.dept_no, d.dept_nm 
+				from sr_rqst r
+				join sys s on s.sys_no = r.sys_no 
+				join usr u on u.usr_no = r.sr_reqstr_no
+				join dept d on d.dept_no = u.dept_no 
+				join inst i on i.inst_no = u.inst_no
+				join sr_rqst_stts q on q.sr_rqst_stts_no = r.sr_rqst_stts_no
+		        where r.sr_rqst_stts_no = 'RQST' or r.sr_rqst_stts_no = 'APRV_REEXAM'
+				    
+				and sr_rqst_vld_yn = 'Y' 
+			    order by sr_rqst_reg_dt desc
+			   )
+		<![CDATA[
+				where rownum <= #{endRowNo}
+			 )
+			 where rnum >= #{startRowNo}
+		]]>
+		
+	</select>
+	
+	<!-- 처리항목 목록2: 접수 요청 처리할 sr -->
+	<select id="selectToDoItemOfRcptRqst" parameterType="Map" resultType="SrRqst">
+		select rnum, sr_rqst_no, sr_ttl, sr_reqstr_no, sr_rqst_reg_dt, sr_rqst_mdfcn_dt, dept_no, dept_nm, sr_rqst_stts_seq,
+		sr_rqst_stts_no, sys_no, sr_rqst_emrg_yn, sr_rqst_rvw_rsn, sr_rqst_vld_yn, sys_nm, usr_nm, inst_nm, sr_rqst_stts_nm  
+		from (
+		    select rownum as rnum, sr_rqst_no, sr_ttl, sr_reqstr_no, sr_rqst_reg_dt, sr_rqst_mdfcn_dt, dept_no, dept_nm, sr_rqst_stts_seq,
+		    sr_rqst_stts_no, sys_no, sr_rqst_emrg_yn, sr_rqst_rvw_rsn, sr_rqst_vld_yn, sys_nm, usr_nm, inst_nm, sr_rqst_stts_nm  
+		    from(
+		        select r.sr_rqst_no, r.sr_ttl, r.sr_reqstr_no, r.sr_rqst_reg_dt, r.sr_rqst_mdfcn_dt, r.sr_rqst_stts_no,
+				q.sr_rqst_stts_seq, r.sys_no, r.sr_rqst_emrg_yn, r.sr_rqst_rvw_rsn, r.sr_rqst_vld_yn, s.sys_nm, u.usr_nm, u.inst_no, i.inst_nm, q.sr_rqst_stts_nm,
+				d.dept_no, d.dept_nm 
+				from sr_rqst r
+				join sys s on s.sys_no = r.sys_no 
+				join usr u on u.usr_no = r.sr_reqstr_no
+				join dept d on d.dept_no = u.dept_no 
+				join inst i on i.inst_no = u.inst_no
+				join sr_rqst_stts q on q.sr_rqst_stts_no = r.sr_rqst_stts_no
+		        where r.sr_rqst_stts_no = 'APRV' or r.sr_rqst_stts_no = 'RCPT_REEXAM'
+				    
+				and sr_rqst_vld_yn = 'Y' 
+			    order by sr_rqst_reg_dt desc
+			   )
+		<![CDATA[
+				where rownum <= #{endRowNo}
+			 )
+			 where rnum >= #{startRowNo}
+		]]>
+	</select>
+	
+	<!-- 처리항목 목록3: 접수된 sr -->
+	<select id="selectToDoItemOfRcpt" parameterType="Map" resultType="SrRqst">
+		select rnum, sr_rqst_no, sr_ttl, sr_reqstr_no, sr_rqst_reg_dt, sr_rqst_mdfcn_dt, dept_no, dept_nm, sr_rqst_stts_seq,
+		sr_rqst_stts_no, sys_no, sr_rqst_emrg_yn, sr_rqst_rvw_rsn, sr_rqst_vld_yn, sys_nm, usr_nm, inst_nm, sr_rqst_stts_nm  
+		from (
+		    select rownum as rnum, sr_rqst_no, sr_ttl, sr_reqstr_no, sr_rqst_reg_dt, sr_rqst_mdfcn_dt, dept_no, dept_nm, sr_rqst_stts_seq,
+		    sr_rqst_stts_no, sys_no, sr_rqst_emrg_yn, sr_rqst_rvw_rsn, sr_rqst_vld_yn, sys_nm, usr_nm, inst_nm, sr_rqst_stts_nm  
+		    from(
+		        select r.sr_rqst_no, r.sr_ttl, r.sr_reqstr_no, r.sr_rqst_reg_dt, r.sr_rqst_mdfcn_dt, r.sr_rqst_stts_no,
+				q.sr_rqst_stts_seq, r.sys_no, r.sr_rqst_emrg_yn, r.sr_rqst_rvw_rsn, r.sr_rqst_vld_yn, s.sys_nm, u.usr_nm, u.inst_no, i.inst_nm, q.sr_rqst_stts_nm,
+				d.dept_no, d.dept_nm 
+				from sr_rqst r
+				join sys s on s.sys_no = r.sys_no 
+				join usr u on u.usr_no = r.sr_reqstr_no
+				join dept d on d.dept_no = u.dept_no 
+				join inst i on i.inst_no = u.inst_no
+				join sr_rqst_stts q on q.sr_rqst_stts_no = r.sr_rqst_stts_no
+		        where r.sr_rqst_stts_no = 'RCPT'    
+				and sr_rqst_vld_yn = 'Y' 
+			    order by sr_rqst_reg_dt desc
+			   )
+		<![CDATA[
+				where rownum <= #{endRowNo}
+			 )
+			 where rnum >= #{startRowNo}
+		]]>
+	</select>
+	
+	<!-- 처리항목 목록4: 이관된 sr  -->
+	<select id="selectToDoItemOfTrnsfY" parameterType="Map" resultType="SrRqst">
+		select rnum, sr_rqst_no, sr_ttl, sr_reqstr_no, sr_rqst_reg_dt, sr_rqst_mdfcn_dt, dept_no, dept_nm, sr_rqst_stts_seq,
+		sr_rqst_stts_no, sys_no, sr_rqst_emrg_yn, sr_rqst_rvw_rsn, sr_rqst_vld_yn, sys_nm, usr_nm, inst_nm, sr_rqst_stts_nm  
+		from (
+		    select rownum as rnum, sr_rqst_no, sr_ttl, sr_reqstr_no, sr_rqst_reg_dt, sr_rqst_mdfcn_dt, dept_no, dept_nm, sr_rqst_stts_seq,
+		    sr_rqst_stts_no, sys_no, sr_rqst_emrg_yn, sr_rqst_rvw_rsn, sr_rqst_vld_yn, sys_nm, usr_nm, inst_nm, sr_rqst_stts_nm  
+		    from(
+		        select r.sr_rqst_no, r.sr_ttl, r.sr_reqstr_no, r.sr_rqst_reg_dt, r.sr_rqst_mdfcn_dt, r.sr_rqst_stts_no,
+				q.sr_rqst_stts_seq, r.sys_no, r.sr_rqst_emrg_yn, r.sr_rqst_rvw_rsn, r.sr_rqst_vld_yn, s.sys_nm, u.usr_nm, u.inst_no, i.inst_nm, q.sr_rqst_stts_nm,
+				d.dept_no, d.dept_nm, sr.sr_no 
+				from sr_rqst r
+				join sys s on s.sys_no = r.sys_no 
+				join usr u on u.usr_no = r.sr_reqstr_no
+				join dept d on d.dept_no = u.dept_no 
+				join inst i on i.inst_no = u.inst_no
+				join sr_rqst_stts q on q.sr_rqst_stts_no = r.sr_rqst_stts_no
+				join sr on sr.sr_rqst_no = r.sr_rqst_no
+				join sr_prgrs p on p.sr_no = sr.sr_no
+				where sr.sr_trnsf_yn = 'Y' 
+				and sr_rqst_vld_yn = 'Y' 
+			    order by sr_rqst_reg_dt desc
+			   )
+		<![CDATA[
+				where rownum <= #{endRowNo}
+			 )
+			 where rnum >= #{startRowNo}
+		]]>
+	</select>
+	
+	<!-- 처리항목 목록5: 개발 반영요청 -->
+	<select id="selectToDoItemOfApplyRqst" parameterType="Map" resultType="SrRqst">
+		select rnum, sr_rqst_no, sr_ttl, sr_reqstr_no, sr_rqst_reg_dt, sr_rqst_mdfcn_dt, dept_no, dept_nm, sr_rqst_stts_seq,
+		sr_rqst_stts_no, sys_no, sr_rqst_emrg_yn, sr_rqst_rvw_rsn, sr_rqst_vld_yn, sys_nm, usr_nm, inst_nm, sr_rqst_stts_nm  
+		from (
+		    select rownum as rnum, sr_rqst_no, sr_ttl, sr_reqstr_no, sr_rqst_reg_dt, sr_rqst_mdfcn_dt, dept_no, dept_nm, sr_rqst_stts_seq,
+		    sr_rqst_stts_no, sys_no, sr_rqst_emrg_yn, sr_rqst_rvw_rsn, sr_rqst_vld_yn, sys_nm, usr_nm, inst_nm, sr_rqst_stts_nm  
+		    from(
+		       select r.sr_rqst_no, r.sr_ttl, r.sr_reqstr_no, r.sr_rqst_reg_dt, r.sr_rqst_mdfcn_dt, r.sr_rqst_stts_no,
+				q.sr_rqst_stts_seq, r.sys_no, r.sr_rqst_emrg_yn, r.sr_rqst_rvw_rsn, r.sr_rqst_vld_yn, s.sys_nm, u.usr_nm, u.inst_no, i.inst_nm, q.sr_rqst_stts_nm,
+				d.dept_no, d.dept_nm, sr.sr_no 
+				from sr_rqst r
+				join sys s on s.sys_no = r.sys_no 
+				join usr u on u.usr_no = r.sr_reqstr_no
+				join dept d on d.dept_no = u.dept_no 
+				join inst i on i.inst_no = u.inst_no
+				join sr_rqst_stts q on q.sr_rqst_stts_no = r.sr_rqst_stts_no
+				join sr on sr.sr_rqst_no = r.sr_rqst_no
+				join sr_prgrs p on p.sr_no = sr.sr_no
+				where p.sr_prgrs_stts_no = 'APPLY_REQUEST'    
+				and sr_rqst_vld_yn = 'Y' 
+			    order by sr_rqst_reg_dt desc
+			   )
+		<![CDATA[
+				where rownum <= #{endRowNo}
+			 )
+			 where rnum >= #{startRowNo}
+		]]>
+	</select>
+	
+	
+
 	<!-- 작성자: 이현주  -->
 	<!-- 상태별 요청수 가져오기 -->
 	<select id="countSrRqstBySttsNm" parameterType="String" resultType="int">

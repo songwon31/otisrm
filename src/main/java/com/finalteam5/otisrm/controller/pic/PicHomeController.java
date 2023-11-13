@@ -219,6 +219,7 @@ public class PicHomeController {
 				srTrnsfPlan.setSrNo(srPk);
 				srTrnsfPlan.setInstNo(srSubmit.getSrTrnsfInstNo());
 				srTrnsfPlan.setSrDmndNo(srSubmit.getSrDmndNo());
+				srTrnsfPlan.setSrPrgrsSttsNo("RQST");
 				//sr 이관계획 등록
 				srRqstService.writeSrTrnsfPlan(srTrnsfPlan);
 			}

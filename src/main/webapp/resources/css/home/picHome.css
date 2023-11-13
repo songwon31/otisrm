@@ -24,7 +24,28 @@
    border-radius: 1rem; 
    display:flex; 
    flex-direction:column;
-   margin-bottom: 0.5rem;
+}
+.toDoItem{
+	height: 10rem;
+	margin-bottom: 0.5rem;
+	border: 1.5px solid #e9ecef;
+	border-radius: 1rem; 
+}
+.toDoItem:hover{
+	height: 10rem;
+	margin-bottom: 0.5rem;
+	border: 1.5px solid #e9ecef;
+	border-radius: 1rem; 
+	background-color: #f3f6fd;
+	cursor: pointer;
+}
+
+.toDoItemNm{
+	background-color: #d5e6fa;
+	border-radius: 1.5rem; 
+	color: #1a4f93;
+	text-align: center;
+	margin: 20x;
 }
 
 /* content */
@@ -41,6 +62,7 @@
 .tt-ct span{
 	margin-left: 1.3rem;;
 }
+
 /* icon */
 .tt-ic{
 	font-size:3.5rem; 
@@ -63,6 +85,12 @@
 	font-weight: bold;
 	margin-bottom: 0.5rem;
 }
+.subcontentTitle2{
+	height: 2rem;
+	font-weight: bold;
+	margin-bottom: 0.5rem;
+	font-size: 1.3rem;
+}
 .st-ct{
 	vertical-align: center;
 }
@@ -72,11 +100,6 @@
 	 height: 40rem;
 	 padding: 1rem;
 	 margin: 0.5rem;
-}
-.patalTopSide{
-	height: 40rem;
-	padding: 1rem;
-	margin: 0.5rem;
 }
 .potalBottom{
 	 height: 40rem;

@@ -21,7 +21,7 @@
 		   	  <div class="subcontentTitle">
 			   	  <div class="d-flex st-ct">
 			   	  	<i class="material-icons stt-ic">chevron_right</i>
-			   	  	<span class="pt-1">나의 할일</span>
+			   	  	<span style="font-size: 2rem;">나의 할일</span>			   	  
 			   	  </div>
 		   	  </div>
 		   	  <div class="tableContainer">
@@ -121,7 +121,7 @@
 				<div class="subcontentTitle">
 					<div class="d-flex st-ct">
 				   		<i class="material-icons stt-ic">chevron_right</i>
-				   	  	<span class="pt-1">내 요청 처리 현황</span>
+				   	  	<span style="font-size: 2rem;">내 요청 처리 현황</span>
 				   	</div>
 				   	<canvas id="myChart" style="width:100%; max-width:400px; height: 300px; "></canvas>
 			   	</div>
@@ -134,7 +134,7 @@
    	  <div class="subcontentTitle">
 	   	  <div class="d-flex st-ct">
 	   	  	<i class="material-icons stt-ic">chevron_right</i>
-	   	  	<span class="pt-1">게시판</span>
+	   	  	<span style="font-size: 2rem;">게시판</span>
 	   	  </div>
    	  </div>
    	  <div class="d-flex st-ct">

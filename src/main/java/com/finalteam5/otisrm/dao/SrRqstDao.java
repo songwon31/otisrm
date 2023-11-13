@@ -11,6 +11,7 @@ import com.finalteam5.otisrm.dto.SrTrnsfPlan;
 import com.finalteam5.otisrm.dto.Sys;
 import com.finalteam5.otisrm.dto.sr.srForPicHome.Sr;
 import com.finalteam5.otisrm.dto.sr.srForPicHome.SrAtch;
+import com.finalteam5.otisrm.dto.sr.srForPicHome.SrPrgrs;
 import com.finalteam5.otisrm.dto.sr.srForPicHome.SrSubmit;
 import com.finalteam5.otisrm.dto.srRequest.SrRqst;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstAtch;
@@ -102,6 +103,25 @@ public interface SrRqstDao {
 	
 	//해당 sr요청에 대한 sr정보가 있는지 확인
 	public int countSrInformationPresent(String srRqstNo);
+	
+	//sr에 해당하는 sr진척률 가져오기
+	public List<SrPrgrs> selectSrPrgrsBySrNo(String srNo);
+	
+	//처리항목목록1: 승인 요청처리할 항목
+	public List<SrRqst> selectToDoItemOfAprvRqst(Map<String, Object> map);
+	
+	//처리항목 목록2: 승인 요청 처리할 sr
+	public List<SrRqst> selectToDoItemOfRcptRqst(Map<String, Object> map);
+	
+	//처리항목 목록3: 접수된 sr
+	public List<SrRqst> selectToDoItemOfRcpt(Map<String, Object> map);
+	
+	//처리항목 목록4: 이관된 sr
+	public List<SrRqst> selectToDoItemOfTrnsfY(Map<String, Object> map);
+	
+	//처리항목 목록5: 개발 반영요청
+	public List<SrRqst> selectToDoItemOfApplyRqst(Map<String, Object> map);
+	
 	
 	//작성자: 이현주 ====================================================================
 	//페이지별로 요청 불러오기(검토자 홈)
