@@ -1038,8 +1038,7 @@
 					</div>
 					<div style="width:3%"></div>
 					<div style="flex-grow:1; display:flex; align-items:center; justify-content:flex-end;">
-						<button type="button"  data-dismiss="modal" onclick="srScheduleChangeRequest()"
-								class="btn-2" style="display:flex; align-items:center; justify-content:center;">
+						<button type="button" data-dismiss="modal" onclick="srScheduleChangeRequest()" class="btn-1">
 							변경 요청
 						</button>
 					</div>
