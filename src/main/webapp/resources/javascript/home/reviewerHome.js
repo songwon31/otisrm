@@ -74,22 +74,7 @@ function loadReviewerHomeChartBySys() {
                   legend: { position: 'bottom', maxLines: 3 },
                   bar: { groupWidth: '75%' },
                   isStacked: true,
-                  colors: [
-                	  "#26bbfd",
-                	  "#21c3f4",
-                	  "#1bdbeb",
-                	  "#16e3e2",
-                	  "#10ebd9",
-                	  "#0bf3d0",
-                	  "#06fbc7",
-                	  "#00ffbe",
-                	  "#00e9ac",
-                	  "#00d39a",
-                	  "#00bd88",
-                	  "#00a776",
-                	  "#009164",
-                	  "#00d279"
-                	],
+                  colors: ["#26bbfd", "#d6e2ee", "#9dc0fa", "#fa9d9d", "#3b82f6", "#b1bbc4", "#b2abf8", "#f63b3b", "#1d65f4", "#4d3dfb","#3381c0", "#27a3a4", "#00d279"],
                   chartArea: { left: 100, bottom: 100, width: '70%', height: '60%' }, // 차트 영역 지정
                   margin: { top: 20, right: 20, bottom: 50, left: 20 } // 여백 조정
                 };
@@ -108,6 +93,7 @@ function loadReviewerHomeCountBoard() {
 		type: "POST",
 		url: "/otisrm/getReviewerHomeCountBoard",
 		success: function(data) {
+			$("#allUnprocessedCount").text(data.allUnprocessedCount);
 			$("#aprvWaitCount").text(data.aprvWaitCount);
 			$("#rcptWaitCount").text(data.rcptWaitCount);
 			$("#cmptnRqstCount").text(data.cmptnRqstCount);

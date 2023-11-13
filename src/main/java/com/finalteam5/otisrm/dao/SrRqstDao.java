@@ -179,4 +179,7 @@ public interface SrRqstDao {
 	
 	//검토관리 목록 가져오기
 	public List<SrRqstForSearchList> selectSrRqstForReviewManagementByPage(Map<String, Object> params);
+	
+	//검토관리 엑셀다운로드를 위한 목록 가져오기
+		public List<SrRqstForSearchList> selectSrRqstForReviewManagementForExport(Map<String, String> params);
 }

@@ -252,4 +252,34 @@ public class SrReviewManagementController {
 		sttsParams.put("srRqstSttsNo", "DEP_CMPTN");
 		srRqstService.saveSrRqstStts(sttsParams);
 	}
+	
+	@PostMapping("/reviewManagement/exportExcelReviewManagementList")
+	@ResponseBody
+	public List<SrRqstForSearchList> exportExcelReviewManagementList(
+			@RequestParam(required=false)String startDate, 
+			@RequestParam(required=false)String endDate, 
+			@RequestParam(required=false)String sysNm, 
+			@RequestParam(required=false)String status, 
+			@RequestParam(required=false)String usr, 
+			@RequestParam(required=false)String instNo, 
+			@RequestParam(required=false)String deptNo, 
+			@RequestParam(required=false)String searchTarget, 
+			@RequestParam(required=false)String keyword) {
+		
+		Map<String, String> params = new HashMap<>();
+
+		params.put("startDate", startDate);
+		params.put("endDate", endDate);
+		params.put("sysNm", sysNm);
+		params.put("status", status);
+		params.put("usr", usr);
+		params.put("instNo", instNo);
+		params.put("deptNo", deptNo);
+		params.put("searchTarget", searchTarget);
+		params.put("keyword", keyword);
+		
+		List<SrRqstForSearchList> list = srRqstService.getSrRqstForReviewManagementForExport(params);
+
+		return list;
+	}
 }

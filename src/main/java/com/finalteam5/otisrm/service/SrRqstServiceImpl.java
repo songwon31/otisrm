@@ -374,6 +374,10 @@ public class SrRqstServiceImpl implements SrRqstService{
 	public List<SrRqstForSearchList> getSrRqstForReviewpManagementByPage(Map<String, Object> params) {
 		return srRqstDao.selectSrRqstForReviewManagementByPage(params);
 	}
-	
 
+	//검토관리 엑셀다운로드를 위한 목록 가져오기
+	@Override
+	public List<SrRqstForSearchList> getSrRqstForReviewManagementForExport(Map<String, String> params) {
+		return srRqstDao.selectSrRqstForReviewManagementForExport(params);
+	}
 }

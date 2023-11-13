@@ -22,9 +22,15 @@
 				<div class="reviewerHomeSecondTitle">
 					<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem;">chevron_right</i>
 					<span>미처리 검토 현황</span>
-					<button class="btn-all ml-auto px-3 d-flex justify-content-center align-items-center" onclick="loadUnprocessedListAll(1)">전체</button>
 				</div>
 				<div style="width: 100%;" class="d-flex">
+					<a class="countcard" onclick="loadUnprocessedListAll(1)">
+						<span>전체 미처리</span>
+						<span class="mr-3">:</span>
+						<span id="allUnprocessedCount" class="mr-3"></span>
+						<span>건</span>
+					</a>
+					<div style="width: 1%;"></div>
 					<a class="countcard" onclick="selectReviewStts(this)">
 						<span>승인대기</span>
 						<span class="mr-3">:</span>

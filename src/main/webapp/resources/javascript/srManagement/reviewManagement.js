@@ -351,3 +351,91 @@ function saveCompletionResult() {
 function redirect() {
 	window.location.href = "/otisrm/srManagement/reviewManagement";
 }
+
+function downloadExcelOnReviewManagement() {
+	//조회기간
+	var searchStartDate = $("#startDate").val();
+	var searchEndDate = $("#endDate").val();
+	//관련 시스템 
+	var searchSysNm = $("#selectSystem option:selected").text();
+	//요청진행상태
+	var searchSrRqstSttsNo = $("#selectProgress option:selected").val();
+	//내 담당여부
+	var searchUsr = "";
+	var checkYn = $("#picCheck").is(':checked');
+	if(checkYn) {
+		searchUsr = $("#loginPic").val();
+	}
+	//등록자 소속
+	var searchInstNo = $("#inputInst").val();
+	//개발부서
+	var searchDeptNo = $("#selectDevDepartment option:selected").val();
+	//키워드 검색대상
+	var searchTarget = $("#searchKeywordKind option:selected").val();
+	//키워드 
+	var searchKeyword = $("#keywordContent").val();
+	
+	//엑셀에 다운될 데이터
+	var data = [
+	    ["요청번호", "제목", "관련시스템", "등록자", "소속", "요청일", "완료예정일", "상태", "중요", "검토의견", "이관여부"],
+	  ];
+
+	$.ajax({
+		type: "POST",
+		url: "/otisrm/srManagement/reviewManagement/exportExcelReviewManagementList",
+	    data: {
+	    	startDate: searchStartDate,
+	    	endDate: searchEndDate,
+	    	sysNm: searchSysNm,
+	    	status: searchSrRqstSttsNo,
+	    	usr: searchUsr,
+	    	instNo: searchInstNo,
+	    	deptNo: searchDeptNo,
+	    	searchTarget: searchTarget,
+	    	keyword: searchKeyword
+	    },
+	    success: function(response) {
+	    	response.forEach(function (item, index) {
+	    		var formattedSrRqstRegDt = formatDateToYYYYMMDD(item.srRqstRegDt);
+				var formattedSrCmptnPrnmntDt = formatDateToYYYYMMDD(item.srCmptnPrnmntDt);
+				
+	    		var srRqstRvwRsnYn = item.srRqstRvwRsn;
+	    		if(srRqstRvwRsnYn == null) {
+	    			srRqstRvwRsnYn = "N";
+	    		} else {
+	    			srRqstRvwRsnYn = "Y";
+	    		}
+	    		
+	    		var srTrnsfYn = item.srTrnsfYn;
+	    		if (srTrnsfYn == null) {
+	    			srTrnsfYn = "";
+	    		}
+	    		
+	    		data.push([
+	    			item.srRqstNo,
+	    			item.srTtl,
+		  	        item.sysNm,
+		  	        item.usrNm,
+		  	        item.instNm,
+		  	        formattedSrRqstRegDt,
+		  	        formattedSrCmptnPrnmntDt,
+		  	        item.srRqstSttsNm,
+		  	        item.srRqstEmrgYn,
+		  	        srRqstRvwRsnYn,
+		  	        item.srTrnsfYn
+		  	        ]);
+	    	});
+	    	//워크북 생성
+	        var wb = XLSX.utils.book_new();
+	        var ws = XLSX.utils.aoa_to_sheet(data);
+	        
+	        //워크북에 워크시트 추가
+	        XLSX.utils.book_append_sheet(wb, ws, "SR검토목록");
+	
+	        //엑셀 파일 생성 및 다운로드
+	        var today = new Date();
+	        var filename = "SR검토목록_" + today.getFullYear() + (today.getMonth() + 1) + today.getDate() + ".xlsx";
+	        XLSX.writeFile(wb, filename);
+	    }
+	});
+}

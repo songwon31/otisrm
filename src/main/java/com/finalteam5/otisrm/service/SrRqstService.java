@@ -174,4 +174,7 @@ public interface SrRqstService {
 		
 	//검토관리 목록 가져오기
 	public List<SrRqstForSearchList> getSrRqstForReviewpManagementByPage(Map<String, Object> params);
+	
+	//검토관리 엑셀다운로드를 위한 목록 가져오기
+	public List<SrRqstForSearchList> getSrRqstForReviewManagementForExport(Map<String, String> params);
 }

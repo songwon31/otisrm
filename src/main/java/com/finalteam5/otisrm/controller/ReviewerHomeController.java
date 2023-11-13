@@ -57,11 +57,13 @@ public class ReviewerHomeController {
 	@PostMapping("/getReviewerHomeCountBoard")
 	@ResponseBody
 	public Map<String, Integer> getReviewerHomeCountBoard() {
+		int allUnprocessedCount = srRqstService.getCountUnprocessSrRqst();
 		int aprvWaitCount = srRqstService.getCountSrRqstBySttsNm("승인대기");
 		int rcptWaitCount = srRqstService.getCountSrRqstBySttsNm("접수대기");
 		int cmptnRqstCount = srRqstService.getCountSrRqstBySttsNm("완료요청");
 		
 		Map<String, Integer> data = new HashMap<>();
+		data.put("allUnprocessedCount", allUnprocessedCount);
 		data.put("aprvWaitCount", aprvWaitCount);
 		data.put("rcptWaitCount", rcptWaitCount);
 		data.put("cmptnRqstCount", cmptnRqstCount);
