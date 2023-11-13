@@ -81,7 +81,7 @@ public class SrServiceImpl implements SrService{
 	
 	@Override
 	public SrTrnsfInfoForDeveloperHome getSrTrnsfInfoForDeveloperHome(String srNo) {
-		log.info(""+srNo);
+		//log.info(""+srNo);
 		//요청 상태인지 확인
 		String status = srDao.checkStatusBySrNo(srNo);
 		

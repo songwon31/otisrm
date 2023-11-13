@@ -279,7 +279,6 @@ public class PicHomeRestController {
 			model.addAttribute("srRqstNo", srRqstNo);
 			model.addAttribute("srNo", sr.getSrNo());
 		}
-		log.info("sr: " + sr.toString());
 		return sr;
 	}
 	

@@ -146,7 +146,7 @@ function loadSRRequests(pageNo, choiceSrRqstSttsNo) {
 		  // item.srRqstRegDt를 YYYY-MM-dd 문자열로 변환
 		  const formattedDate = formatDateToYYYYMMDD(item.srRqstRegDt);
 		  var indexOnPage = index + indexOffset + 1; // 페이지 내에서의 index 계산
-		  html += '<tr class="data-tr" style="background-color: white;">';
+		  html += '<tr class="data-tr" style="background-color: white;" onclick="setSrDetail(\''+ item.srRqstNo +'\')">';
 		  html += '	<td>' + indexOnPage + '</td>';
 		  html += '	<td>' + item.srRqstNo + '</td>';
 		  html += '	<td class="truncate-text" style="max-width: 221.32px;">' + item.srTtl + '</td>';
@@ -226,7 +226,7 @@ function loadSRRequests2(pageNo, choiceSrRqstSttsNo) {
 				// item.srRqstRegDt를 YYYY-MM-dd 문자열로 변환
 				const formattedDate = formatDateToYYYYMMDD(item.srRqstRegDt);
 				var indexOnPage = index + indexOffset + 1; // 페이지 내에서의 index 계산
-				html += '<tr class="data-tr" style="background-color: white;">';
+				html += '<tr class="data-tr" style="background-color: white;" onclick="setSrDetail(\''+ item.srRqstNo +'\')">';
 				html += '	<td>' + indexOnPage + '</td>';
 				html += '	<td>' + item.srRqstNo + '</td>';
 				html += '	<td class="truncate-text" style="max-width: 221.32px;">' + item.srTtl + '</td>';
@@ -811,13 +811,15 @@ function showSrRqstBySrRqstNo(choiceSrRqstNo){
 //**요청에 해당하는 sr상세내용 가져오기;
 function showSrBySrRqstNo(choiceSrRqstNo){
 	clearFormFields();
-	$(".srSchdlChgRqstY").hide();
+	$("#srSchdlChgRqstY").hide();
+	$("#srSchdlChgRqstAprvYn").hide();
 	//sr요청 상세
 	$.ajax({
 		type: "GET",
 		url: "getSrBySrRqstNoForPicHome",
 		data: {srRqstNo: choiceSrRqstNo},
 		success: function(data) {
+			$(".srSchdlChgRqstY").hide();
 			if(data != 0){
 				$("#srWriteOrModifyBtn").text("SR정보 수정");
 				//sr번호 지정
@@ -852,9 +854,11 @@ function showSrBySrRqstNo(choiceSrRqstNo){
 				$("#srDvlConts").val(data.srDvlConts);
 				
 				//변경 요청일이 있을 경우
-				if(data.srSchdlChgRqstDt !== null || data.srSchdlChgRqstDt !== ""){
+				if(data.srSchdlChgRqstDt !== null){
+					console.log("후항: " + data.srSchdlChgRqstDt);
 					//변경요청일 항목 보이게하기
-					$(".srSchdlChgRqstY").show();
+					$("#srSchdlChgRqstY").show();
+					$("#srSchdlChgRqstAprvYn").show();
 					//날짜 포멧에 맞게 변경
 					var date = new Date(data.srSchdlChgRqstDt);
 					var formattedDate = $.datepicker.formatDate("yy-mm-dd", date);
@@ -1213,42 +1217,219 @@ function proceedWriteOrModifySrForPicHome() {
     });
 }
 
-/*// SR 등록 또는 수정 수행
-function writeOrModifySrForPicHome() {
-	choiceSrRqstNo = $("#srRqst-srRqstNo").val();
-	console.log("등록 또는 삭제 실행!")
-	console.log(choiceSrRqstNo);
-	$("sr-srRqstNo").val(choiceSrRqstNo);
-	
-    var form = $("#writeOrModifySrForPicHome")[0];
-    var formData = new FormData(form);
-    
-    //소요예산에 콤마를 함께 입력했을 경우 콤마 제거
-    var formattedNumber =  $("#trnsf-srReqBgt").val();
-    const originalNumber = parseFloat(formattedNumber.replace(/,/g, ''));  // 문자열에서 ',' 제거하고 숫자로 변환
-    $("#trnsf-srReqBgt").val(originalNumber);
-   
-    // Ajax 요청 보내기
-    $.ajax({
-        type: "POST",
-        url: "writeOrModifySrForPicHome",
-        data: formData,
-        success: function (data) {
-            // 수정 작업이 성공적으로 완료되면 여기에 원하는 작업을 수행할 수 있습니다.
-            var currentURL = window.location.href;
-            window.location.href = currentURL; // 원하는 URL로 변경
-            showSrBySrRqstNo(choiceSrRqstNo);
-            loadSRRequests(1, choiceSrRqstSttsNo);
-        },
-        error: function (error) {
-            // 요청 중 오류가 발생한 경우 실행할 코드
-            console.error("오류 발생:", error);
-            alert("수정 실패");
-          
-        },
-        cache: false,
-        processData: false,
-        contentType: false,
-    });
+
+//하단 srDetail
+function setSrDetail(srRqstNo) {
+	$.ajax({
+		type: "GET",
+		url: "getSrBySrRqstNoForPicHome",
+		data: {srRqstNo: srRqstNo},
+		success: function(data) { 
+			setSrDetailBottom(data.srNo);
+		
+		},
+	    error: function() {
+	        console.log(error);
+	      }});	
 }
-*/
+
+function setSrDetailBottom(srNo) {
+	let requestData = {
+        srNo: srNo
+    };
+	
+	$.ajax({
+		type: "POST",
+		url: "/otisrm/getSrTransferInfo",
+		data: requestData,
+		success: function(data) {
+
+			//SR계획정보 구성
+			$('#srPlanInfoDmnd').html(data.srDmndNm);
+			$('#srPlanInfoTask').html(data.srTaskNm);
+			$('#srPlanInfoInst').html(data.instNm);
+			$('#srPlanInfoDept').html(data.deptNm);
+			$('#srPlanInfoPic').html(data.usrNm);
+			if (data.srTrgtBgngDt == '' || data.srTrgtBgngDt == null) {
+				$('#srPlanInfoBgngDt').html('');
+			} else {
+				let bgngDt = new Date(data.srTrgtBgngDt);
+				$('#srPlanInfoBgngDt').html(formatDate(bgngDt));
+			}
+			if (data.srTrgtCmptnDt == '' || data.srTrgtCmptnDt == null) {
+				$('#srPlanInfoCmptnDt').html('');
+			} else {
+				let cmptnDt = new Date(data.srTrgtCmptnDt);
+				$('#srPlanInfoCmptnDt').html(formatDate(cmptnDt));
+			}
+			$('#srPlanInfoTotalCapacity').html(data.totalCapacity);
+			$('#srPlanInfoNote').html(data.srTrnsfNote);
+			
+			//SR자원정보 구성
+			$('#srHrInfo tbody').html('');	//html 초기화
+			if (data.srTrnsfHrList != null) {
+				for (let i=0; i<data.srTrnsfHrList.length; ++i) {
+					let srTrnsfHr = data.srTrnsfHrList[i];
+					let srTrnsfHrHtml = '';
+					srTrnsfHrHtml += '<tr style="height:4rem; font-size:1.6rem; background-color:white;">';
+					srTrnsfHrHtml += '<td><input type="checkbox" class="checkbox"></td>';
+					srTrnsfHrHtml += '<td class="srNo" style="display:none">' + srTrnsfHr.srNo + '</td>';
+					srTrnsfHrHtml += '<td class="usrNo" style="display:none">' + srTrnsfHr.usrNo + '</td>';
+					srTrnsfHrHtml += '<td>' + srTrnsfHr.usrNm + '</td>';
+					srTrnsfHrHtml += '<td>' + srTrnsfHr.roleNm + '</td>';
+					if (srTrnsfHr.planCapacity != '' && srTrnsfHr.planCapacity != null) {
+						srTrnsfHrHtml += '<td><input type="text" value="' + srTrnsfHr.planCapacity + '" style="width:50%; text-align: center;"></div></td>';
+					} else {
+						srTrnsfHrHtml += '<td><input type="text" value="" style="width:50%; text-align: center;"></div></td>';
+					}
+					if (srTrnsfHr.performanceCapacity != '' && srTrnsfHr.performanceCapacity != null) {
+						srTrnsfHrHtml += '<td><input type="text" value="' + srTrnsfHr.performanceCapacity + '" style="width:50%; text-align: center;"></div></td>';
+					} else {
+						srTrnsfHrHtml += '<td><input type="text" value="" style="width:50%; text-align: center;"></div></td>';
+					}
+					srTrnsfHrHtml += '</tr>';
+					$('#srHrInfo tbody').append(srTrnsfHrHtml);
+				}
+			}
+			
+			
+			//SR진척률 구성
+			$('#prgrsTable td').html('');
+			if (data.srPrgrsList != null) {
+				for (let i=0; i<data.srPrgrsList.length; ++i) {
+					let srPrgrs = data.srPrgrsList[i];
+					let bgngDt = new Date(srPrgrs.srPrgrsBgngDt);
+			        let cmptnDt = new Date(srPrgrs.srPrgrsCmptnDt);
+					if (srPrgrs.srPrgrsSttsNm == '분석') {
+						if (srPrgrs.srPrgrsBgngDt != null) {
+							$('#srAnalysisBgngDt').html(formatDate(bgngDt));
+						}
+						if (srPrgrs.srPrgrsCmptnDt != null) {
+							$('#srAnalysisCmptnDt').html(formatDate(cmptnDt));
+						}
+						$('#srAnalysisPrgrs').html('<input value="" style="width:40%; height:3rem; margin:0rem 1rem; text-align: center;">');
+						if (srPrgrs.srPrgrs > 0) {
+							$('#srAnalysisPrgrs input').val(srPrgrs.srPrgrs);
+							
+							//그래프 재구성
+							$('#totalProgressGraph').css('width', srPrgrs.srPrgrs + '%');
+							$('#totalProgressGraphText').html(srPrgrs.srPrgrs + '%');
+							$('#analysisProgressGraph').css('width', (srPrgrs.srPrgrs * 10) + '%');
+						}
+						
+						let btnHtml = '<center><a data-toggle="modal" data-target="#manageSrOutputModal" href="javascript:void(0)" class="btn-1" style="width:30%; height:3rem; font-size:1.5rem;" onclick="composeManageSrOutputModal(\'ANALYSIS\')">관리</a></center>';
+						/*btnHtml += 'style="height: 3rem; width: 30%; border-radius: 5px; background-color:#2c7be4; color:white; font-weight:700;';
+						btnHtml += 'display: flex; flex-direction: row; justify-content: center; align-items: center;">관리</a></center>';*/
+						
+						$('#srAnalysisOtptBtn').html(btnHtml);	 
+					} else if (srPrgrs.srPrgrsSttsNm == '설계') {
+						if (srPrgrs.srPrgrsBgngDt != null) {
+							$('#srDesignBgngDt').html(formatDate(bgngDt));
+						}
+						if (srPrgrs.srPrgrsCmptnDt != null) {
+							$('#srDesignCmptnDt').html(formatDate(cmptnDt));
+						}
+						$('#srDesignPrgrs').html('<input value="" style="width:40%; height:3rem; margin:0rem 1rem; text-align: center;">');
+						if (srPrgrs.srPrgrs > 0) {
+							$('#srDesignPrgrs input').val(srPrgrs.srPrgrs);
+							
+							//그래프 재구성
+							$('#totalProgressGraph').css('width', srPrgrs.srPrgrs + '%');
+							$('#totalProgressGraphText').html(srPrgrs.srPrgrs + '%');
+							$('#designProgressGraph').css('width', ((srPrgrs.srPrgrs - 10) * 10) + '%');
+						}
+						let btnHtml = '<center><a data-toggle="modal" data-target="#manageSrOutputModal" href="javascript:void(0)" class="btn-1" style="width:30%; height:3rem; font-size:1.5rem;" onclick="composeManageSrOutputModal(\'DESIGN\')">관리</a></center>';
+						$('#srDesignOtptBtn').html(btnHtml);
+					} else if (srPrgrs.srPrgrsSttsNm == '구현') {
+						if (srPrgrs.srPrgrsBgngDt != null) {
+							$('#srImplBgngDt').html(formatDate(bgngDt));
+						}
+						if (srPrgrs.srPrgrsCmptnDt != null) {
+							$('#srImplCmptnDt').html(formatDate(cmptnDt));
+						}
+						$('#srImplPrgrs').html('<input value="" style="width:40%; height:3rem; margin:0rem 1rem; text-align: center;">');
+						if (srPrgrs.srPrgrs > 0) {
+							$('#srImplPrgrs input').val(srPrgrs.srPrgrs);
+							
+							//그래프 재구성
+							$('#totalProgressGraph').css('width', srPrgrs.srPrgrs + '%');
+							$('#totalProgressGraphText').html(srPrgrs.srPrgrs + '%');
+							$('#implementProgressGraph').css('width', ((srPrgrs.srPrgrs - 20) * 2) + '%');
+						}
+						let btnHtml = '<center><a data-toggle="modal" data-target="#manageSrOutputModal" href="javascript:void(0)" class="btn-1" style="width:30%; height:3rem; font-size:1.5rem;" onclick="composeManageSrOutputModal(\'IMPLEMENT\')">관리</a></center>';
+						$('#srImplOtptBtn').html(btnHtml);
+					} else if (srPrgrs.srPrgrsSttsNm == '시험') {
+						if (srPrgrs.srPrgrsBgngDt != null) {
+							$('#srTestBgngDt').html(formatDate(bgngDt));
+						}
+						if (srPrgrs.srPrgrsCmptnDt != null) {
+							$('#srTestCmptnDt').html(formatDate(cmptnDt));
+						}
+						$('#srTestPrgrs').html('<input value="" style="width:40%; height:3rem; margin:0rem 1rem; text-align: center;">');
+						if (srPrgrs.srPrgrs > 0) {
+							$('#srTestPrgrs input').val(srPrgrs.srPrgrs);
+							
+							//그래프 재구성
+							$('#totalProgressGraph').css('width', srPrgrs.srPrgrs + '%');
+							$('#totalProgressGraphText').html(srPrgrs.srPrgrs + '%');
+							$('#testProgressGraph').css('width', ((srPrgrs.srPrgrs - 70) * 5) + '%');
+						}
+						let btnHtml = '<center><a data-toggle="modal" data-target="#manageSrOutputModal" href="javascript:void(0)" class="btn-1" style="width:30%; height:3rem; font-size:1.5rem;" onclick="composeManageSrOutputModal(\'TEST\')">관리</a></center>';
+						$('#srTestOtptBtn').html(btnHtml);
+					} else if (srPrgrs.srPrgrsSttsNm == '반영요청') {
+						if (srPrgrs.srPrgrsBgngDt != null) {
+							$('#srApplyBgngDt').html(formatDate(bgngDt));
+						}
+						if (srPrgrs.srPrgrsCmptnDt != null) {
+							$('#srApplyCmptnDt').html(formatDate(cmptnDt));
+						}
+						$('#srApplyPrgrs').html('<input value="" style="width:40%; height:3rem; margin:0rem 1rem; text-align: center;">');
+						if (srPrgrs.srPrgrs > 0) {
+							$('#srApplyPrgrs input').val(srPrgrs.srPrgrs);
+							
+							//그래프 재구성
+							$('#totalProgressGraph').css('width', srPrgrs.srPrgrs + '%');
+							$('#totalProgressGraphText').html(srPrgrs.srPrgrs + '%');
+							$('#applyRequestProgressGraph').css('width', ((srPrgrs.srPrgrs - 90) * 10) + '%');
+						}
+						let btnHtml = '<center><a data-toggle="modal" data-target="#manageSrOutputModal" href="javascript:void(0)" class="btn-1" style="width:30%; height:3rem; font-size:1.5rem;" onclick="composeManageSrOutputModal(\'APPLY_REQUEST\')">관리</a></center>';
+						$('#srApplyOtptBtn').html(btnHtml);
+					}
+				}
+			}
+			
+			
+		}
+	});
+	
+	//버튼 비활성화 해제
+	$('.srProgressBtn').css('pointer-events', '');
+	
+	currentDetailSrNo = srNo;
+	sessionStorage.setItem('developerHomeCurrentDetailSrNo', currentDetailSrNo);
+}
+
+function selectSrProgressTableFilter(tabStyle) {
+	$('.srProgressTableSelectElement').removeClass('filterTabSelected');
+	if (tabStyle == 'srRqstInfoTab') {
+		$('#srRqstInfoTab').addClass('filterTabSelected');
+		$('.bottomSubDiv').css('display', 'none');
+		$('#srPlanInfo').css('display', '');
+		$('.srProgressBtn').css('display', 'none');
+		$('.srPlanBtn').css('display', 'flex');
+	} else if (tabStyle == 'srHrInfoTab') {
+		$('#srHrInfoTab').addClass('filterTabSelected');
+		$('.bottomSubDiv').css('display', 'none');
+		$('#srHrInfo').css('display', '');
+		$('.srProgressBtn').css('display', 'none');
+		$('.srHrBtn').css('display', 'flex');
+	} else if (tabStyle == 'srPrgrsInfoTab') {
+		$('#srPrgrsInfoTab').addClass('filterTabSelected');
+		$('.bottomSubDiv').css('display', 'none');
+		$('#srProgressInfo').css('display', '');
+		$('.srProgressBtn').css('display', 'none');
+		$('.srPrgrsBtn').css('display', 'flex');
+	}	
+	currentBottomTabFilter = tabStyle;
+	sessionStorage.setItem('developerHomecurrentBottomTabFilter', currentBottomTabFilter);
+}
