@@ -32,6 +32,7 @@ import com.finalteam5.otisrm.dto.sr.SrTrnsfInfoForDeveloperHome;
 import com.finalteam5.otisrm.dto.sr.SrTrnsfPlanModalCompose;
 import com.finalteam5.otisrm.dto.sr.SrTrnsfPrgrsPic;
 import com.finalteam5.otisrm.dto.sr.SrTrnsfSetHrModalCompose;
+import com.finalteam5.otisrm.dto.sr.srForPicHome.SrAtch;
 import com.finalteam5.otisrm.dto.usr.Dept;
 import com.finalteam5.otisrm.dto.usr.Usr;
 import com.finalteam5.otisrm.security.UsrDetails;
@@ -68,6 +69,35 @@ public class DeveloperHomeController {
 	@ResponseBody
 	public SrRequestDetailForDeveloperHome getSrDetailInfo(@RequestParam("srNo") String srNo) {
 		return srService.getSrRequestDetailForDeveloperHome(srNo);
+	}
+	
+	@GetMapping("/srAtchDownloadForDeveloperHome")
+	public void srAtchDownloadForDeveloperHome(String srAtchNo, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	    SrAtch srAtch = srService.getSrAtchBySrAtchNo(srAtchNo);
+	    
+	    String fileOriginalName = srAtch.getSrAtchNm();
+	    
+	    String mimeType = srAtch.getSrAtchMimeType();
+	    response.setContentType(mimeType);
+	    
+	   //응답 헤드에 한글 이름의 파일명을 ISO-8859-1 문자셋으로 인코딩해서 추가
+	   String userAgent = request.getHeader("User-Agent");
+	   if(userAgent.contains("Trident")|| userAgent.contains("MSIE")) {
+		   //IE
+		   fileOriginalName = URLEncoder.encode(fileOriginalName,"UTF-8");
+	   }else {
+		   //Chrome, Edge, FireFox, Safari 
+		   fileOriginalName = new String(fileOriginalName.getBytes("UTF-8"),"ISO-8859-1");
+	   }
+	   //response.setHeader가 없으면 브라우저에 바로 보여줄 수 있으면 보여줌	
+	   // 바로 보여줄 수 없으면 파일이 다운로드됨
+	   response.setHeader("Content-Disposition", "attachment; fileName=\"" + fileOriginalName + "\"" );
+	   
+	   //응답 본문에 파일데이터 싣기
+	   OutputStream os = response.getOutputStream();
+	   os.write(srAtch.getSrAtchData());
+	   os.flush();
+	   os.close();
 	}
 	
 	@PostMapping("/getTableInfo")

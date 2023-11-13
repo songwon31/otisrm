@@ -25,6 +25,7 @@ import com.finalteam5.otisrm.dto.sr.SrTrnsfFindPicModalUsrInfo;
 import com.finalteam5.otisrm.dto.sr.SrTrnsfHr;
 import com.finalteam5.otisrm.dto.sr.SrTrnsfInfoForDeveloperHome;
 import com.finalteam5.otisrm.dto.sr.SrTrnsfPlanModalCompose;
+import com.finalteam5.otisrm.dto.sr.srForPicHome.SrAtch;
 import com.finalteam5.otisrm.dto.usr.Dept;
 import com.finalteam5.otisrm.dto.usr.Inst;
 import com.finalteam5.otisrm.dto.usr.Usr;
@@ -42,6 +43,8 @@ public interface SrDao {
 	public List<SrPrgrsForDeveloperHome> selectSrPrgrsForDeveloperHomeList(String srNo);
 	public List<SrTrnsfHr> selectSrTrnsfHrList(String srNo);
 	public SrRequestDetailForDeveloperHome selectSrRequestDetailForDeveloperHome(String srNo);
+	public List<SrAtch> selectSrAtchList(String srNo);
+	public SrAtch selectSrAtchBySrAtchNo(String srAtchNo);
 	
 	public String checkStatusBySrNo(String srNo);
 	

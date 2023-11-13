@@ -20,6 +20,7 @@ import com.finalteam5.otisrm.dto.sr.SrTrnsfInfoForDeveloperHome;
 import com.finalteam5.otisrm.dto.sr.SrTrnsfPlanModalCompose;
 import com.finalteam5.otisrm.dto.sr.SrTrnsfPrgrsPic;
 import com.finalteam5.otisrm.dto.sr.SrTrnsfSetHrModalCompose;
+import com.finalteam5.otisrm.dto.sr.srForPicHome.SrAtch;
 import com.finalteam5.otisrm.dto.usr.Dept;
 
 public interface SrService {
@@ -33,6 +34,7 @@ public interface SrService {
 	
 	public SrTrnsfInfoForDeveloperHome getSrTrnsfInfoForDeveloperHome(String srNo);
 	public SrRequestDetailForDeveloperHome getSrRequestDetailForDeveloperHome(String srNo);
+	public SrAtch getSrAtchBySrAtchNo(String srAtchNo);
 	
 	//개발자 홈 메인 테이블 구성
 	public SrTableElementsForDeveloperHome getSrTableElementsForDeveloperHome(String usrNo, String srPrgrsSttsNo, int page);

@@ -349,6 +349,20 @@ function showRequestDetail(srNo) {
 		        	modal_sr_dvl_conts_btn_checked();
 		        }
 		    });
+			
+			$('#modalSrAtch').html('');
+			if (data.srAtchList != null) {
+				for (let i=0; i<data.srAtchList.length; ++i) {
+					let srAtch = data.srAtchList[i];
+					let html = '';
+	                html += '<a href="srAtchDownloadForDeveloperHome?srAtchNo='+ srAtch.srAtchNo +'" style="width:auto; display:flex; align-items:self; font-size:1.5rem;">';
+	                html += '    <i class="material-icons atch-ic" style="font-size:2.5rem;">download</i>';
+	                html += '    <div>' + srAtch.srAtchNm + ' (' + (srAtch.srAtchSize / 1024).toFixed(2) + 'KB)</div>';
+	                html += '</a>';
+	                $('#modalSrAtch').append(html);
+				}
+			}
+			
         },
 		error: function (error) {
 			console.error("오류 발생:", error);
@@ -404,7 +418,7 @@ function setSrDetail(srNo) {
 					let srTrnsfHr = data.srTrnsfHrList[i];
 					let srTrnsfHrHtml = '';
 					srTrnsfHrHtml += '<tr style="height:4rem; font-size:1.6rem; background-color:white;">';
-					srTrnsfHrHtml += '<td><input type="checkbox" class="checkbox"></td>';
+					srTrnsfHrHtml += '<td><input type="checkbox" class="checkbox" style="vertical-align: middle;"></td>';
 					srTrnsfHrHtml += '<td class="srNo" style="display:none">' + srTrnsfHr.srNo + '</td>';
 					srTrnsfHrHtml += '<td class="usrNo" style="display:none">' + srTrnsfHr.usrNo + '</td>';
 					srTrnsfHrHtml += '<td>' + srTrnsfHr.usrNm + '</td>';
@@ -1074,7 +1088,7 @@ function composeManageSrOutputModal(srPrgrsSttsNo) {
 				let html = '';
 				html += '<tr style="height: 4.5rem; font-size: 1.5rem; background-color:white;">';
 				html += '<td><div class="id" style="display:none;">' + otpt.srPrgrsOtptNo + '</div></td>';
-				html += '<td><input type="checkbox" class="checkbox"></td>';
+				html += '<td><input type="checkbox" class="checkbox" style="vertical-align: middle;"></td>';
 				html += '<td>' + otpt.srPrgrsOtptNm + '</td>';
 				html += '<td>' + otpt.srPrgrsOtptFileNm + '</td>';
 				html += '<td>' + (otpt.srPrgrsOtptSize / 1024).toFixed(2) + 'KB</td>'

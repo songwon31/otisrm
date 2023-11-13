@@ -3,6 +3,8 @@ package com.finalteam5.otisrm.dto.sr;
 import java.util.Date;
 import java.util.List;
 
+import com.finalteam5.otisrm.dto.sr.srForPicHome.SrAtch;
+
 import lombok.Data;
 
 @Data
@@ -21,4 +23,5 @@ public class SrRequestDetailForDeveloperHome {
 	private String InstNm;				//협력사
 	private String srConts;				//sr요청내용
 	private String srDvlConts;			//sr개발내용
+	List<SrAtch> srAtchList;
 }

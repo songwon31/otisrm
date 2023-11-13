@@ -54,6 +54,7 @@ import com.finalteam5.otisrm.dto.sr.SrTrnsfInfoForDeveloperHome;
 import com.finalteam5.otisrm.dto.sr.SrTrnsfPlanModalCompose;
 import com.finalteam5.otisrm.dto.sr.SrTrnsfPrgrsPic;
 import com.finalteam5.otisrm.dto.sr.SrTrnsfSetHrModalCompose;
+import com.finalteam5.otisrm.dto.sr.srForPicHome.SrAtch;
 import com.finalteam5.otisrm.dto.usr.Dept;
 
 import lombok.extern.slf4j.Slf4j;
@@ -81,7 +82,7 @@ public class SrServiceImpl implements SrService{
 	
 	@Override
 	public SrTrnsfInfoForDeveloperHome getSrTrnsfInfoForDeveloperHome(String srNo) {
-		//log.info(""+srNo);
+		log.info(""+srNo);
 		//요청 상태인지 확인
 		String status = srDao.checkStatusBySrNo(srNo);
 		
@@ -100,7 +101,14 @@ public class SrServiceImpl implements SrService{
 	
 	@Override
 	public SrRequestDetailForDeveloperHome getSrRequestDetailForDeveloperHome(String srNo) {
-		return srDao.selectSrRequestDetailForDeveloperHome(srNo);
+		SrRequestDetailForDeveloperHome srRequestDetailForDeveloperHome = srDao.selectSrRequestDetailForDeveloperHome(srNo);
+		srRequestDetailForDeveloperHome.setSrAtchList(srDao.selectSrAtchList(srNo));
+		return srRequestDetailForDeveloperHome;
+	}
+	
+	@Override
+	public SrAtch getSrAtchBySrAtchNo(String srAtchNo) {
+		return srDao.selectSrAtchBySrAtchNo(srAtchNo);
 	}
 	
 	@Override

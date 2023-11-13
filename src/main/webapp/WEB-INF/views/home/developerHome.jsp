@@ -542,7 +542,7 @@
 					</div>
 					<div style="height:12rem; display:flex; flex-direction:row;">
 						<div style="height:12rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; border-bottom:1px solid gray; background-color:#edf2f8;  font-weight:700;">첨부파일</div>
-						<div id="modalSrAtch" style="height:12rem; width:85%; padding:0.5rem; display:flex; align-items:center; overflow-y:auto;">
+						<div id="modalSrAtch" style="height:12rem; width:85%; padding:0.5rem; display:flex; flex-direction:column; overflow-y:auto;">
 							
 						</div>
 					</div>
