@@ -648,11 +648,12 @@ function composeFindPicModalTable(pageNo) {
 				let usr = data.usrList[i];
 				let findPicTableHtml = '';
 				findPicTableHtml += '<tr style="height: 4.5rem; font-size: 1.5rem; background-color:white;">';
+				findPicTableHtml += '<td>' + (i+1) + '</td>';
 				findPicTableHtml += '<td>' + usr.deptNm + '</td>';
 				findPicTableHtml += '<td>' + usr.roleNm + '</td>';
 				findPicTableHtml += '<td>' + usr.ibpsNm + '</td>';
 				findPicTableHtml += '<td>' + usr.usrNm + '</td>';
-				findPicTableHtml += '<td> <button class="btn-2 detail-button" data-dismiss="modal" onclick="setFindPicModalPic(\'' + usr.deptNm + '\', \'' + usr.usrNm + '\')">선택</button> </td>';
+				findPicTableHtml += '<td> <button class="btn-1 detail-button" style="height:2.8rem; width:40%;" data-dismiss="modal" onclick="setFindPicModalPic(\'' + usr.deptNm + '\', \'' + usr.usrNm + '\')">선택</button> </td>';
 				//jsp에 삽입
 				$('#findPicModalTable tbody').append(findPicTableHtml);
 			}
@@ -824,11 +825,12 @@ function composeSetHrFindPicModalTable(pageNo) {
 						let usr = data.usrList[i];
 						let findPicTableHtml = '';
 						findPicTableHtml += '<tr style="height: 4.5rem; font-size: 1.5rem; background-color:white;">';
+						findPicTableHtml += '<td>' + (i+1) + '</td>';
 						findPicTableHtml += '<td>' + usr.deptNm + '</td>';
 						findPicTableHtml += '<td>' + usr.roleNm + '</td>';
 						findPicTableHtml += '<td>' + usr.ibpsNm + '</td>';
 						findPicTableHtml += '<td>' + usr.usrNm + '</td>';
-						findPicTableHtml += '<td> <button class="btn-2 detail-button" data-dismiss="modal" onclick="addHr(\'' + usr.usrNo + '\')">선택</button> </td>';
+						findPicTableHtml += '<td> <button class="btn-1 detail-button" style="height:2.8rem; width:40%;" data-dismiss="modal" onclick="addHr(\'' + usr.usrNo + '\')">선택</button> </td>';
 						//jsp에 삽입
 						$('#setHrFindPicModalTable tbody').append(findPicTableHtml);
 					}
@@ -1301,21 +1303,28 @@ function manageChangeScheduleRequestModalConfig() {
         url: "/otisrm/getManageChangeScheduleRequestModalConfig",
         method: "POST",
         success: function (data) {
+        	if (data.length == 0) {
+        		let html = '<tr style="height: 4.5rem; font-size: 1.5rem; background-color:white;">';
+        		html += '<td colspan=\'7\'>일정변경요청 내역이 없습니다.</td>';
+        		html += '</tr>'
+        		$('#manageChangeScheduleRequestModalTable tbody').append(html);
+        	}
         	for (let i=0; i<data.length; ++i) {
         		let config = data[i];
     			let html = '';
     			html += '<tr style="height: 4.5rem; font-size: 1.5rem; background-color:white;">';
+    			html += '<td>' + (i+1) + '</td>';
     			html += '<td>' + config.srNo + '</td>';
     			let srCmptnPrnmntDt = new Date(config.srCmptnPrnmntDt);
     			html += '<td><input type="date" value="' + formatDate(srCmptnPrnmntDt) + '" disabled></td>';
     			let srSchdlChgRqstDt = new Date(config.srSchdlChgRqstDt);
     			html += '<td><input class="chgRqstDt" type="date" value="' + formatDate(srSchdlChgRqstDt) + '"></td>';
     			html += '<td>' + config.status + '</td>';
-    			html += '<td> <button onclick="srScheduleChangeRequestModal(\'' + config.srNo + '\')">요청수정/재신청</button> </td>';
+    			html += '<td> <button class="btn-1" style="height:2.8rem;" onclick="srScheduleChangeRequestModal(\'' + config.srNo + '\')">요청수정/재신청</button> </td>';
     			if (config.srSchdlChgRqstAprvYn == null || config.srSchdlChgRqstAprvYn == '') {
     				html += '<td></td>'
     			} else {
-    				html += '<td> <button onclick="srScheduleChangeRequestResultCheck(\'' + config.srNo + '\')">확인</button> </td>';
+    				html += '<td> <button class="btn-1" style="height:2.8rem;" onclick="srScheduleChangeRequestResultCheck(\'' + config.srNo + '\')">확인</button> </td>';
     			}
     			html += '</tr>';
     			

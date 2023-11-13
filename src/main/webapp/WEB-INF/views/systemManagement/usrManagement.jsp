@@ -20,7 +20,7 @@
 		</div>
 	</div>
 	<div id="userManagementSearchDiv" class="shadow" 
-		style="height:13rem; margin:2rem 0rem; padding:3rem 2rem; background-color:white; border-radius:10px;">
+		style="height:13rem; margin:2rem 0rem; padding:3rem 2rem; background-color:white; border-radius:1rem;">
 		<form id="searchForm" method="get" action="usrManagement">
 			<div class="p-0 container-fluid d-inline-flex flex-row" style="height:3rem;">
 				<div style="width:20%;" class="d-inline-flex flex-row align-items-center">
@@ -135,17 +135,17 @@
 		</form>
 	</div>
 	<div id="userManagementBoardDiv" class="shadow" 
-		style="height:65rem; background-color:white; border-radius:10px; padding:2rem;">
+		style="height:63rem; background-color:white; border-radius:10px; padding:2rem;">
 		<div style="display:flex; flex-direction:row; align-items:center;">
 			<div style="height:3.5rem; font-size:2.2rem; font-weight:700; color:#222E3C;">사용자목록</div>
 			<div style="flex-grow:1;"></div>
 			<div style="display:flex; flex-direction:row; align-items:center;">
-				<button type="button" onclick="batchApproval()"
-						style="height:3rem; border:none; border-radius:5px; background-color: #2c7be4; color:white; font-weight:700;">
+				<button type="button" onclick="batchApproval()" class="btn-1"
+						style="height:3rem; margin-right:0.5rem; font-size:1.5rem;">
 					일괄 승인/복구
 				</button>
-				<button type="button" onclick="batchWithdrawal()"
-						style="height:3rem; border:none; border-radius:5px; background-color: red; color:white; font-weight:700; margin-left:0.5rem;">
+				<button type="button" onclick="batchWithdrawal()" class="btn-1"
+						style="height:3rem; background-color:red; font-size:1.5rem;">
 					일괄 탈퇴처리
 				</button>
 			</div>
@@ -155,21 +155,23 @@
 			<table id="mainTable" style="width:100%;">
 				<colgroup>
 					<col width="3%"/>
+					<col width="4%"/>
 					<col width="5%"/>
 					<col width="7%"/>
 					<col width="10%"/>
 					<col width="15%"/>
-					<col width="7%"/>
+					<col width="5%"/>
 					<col width="10%"/>
 					<col width="10%"/>
+					<col width="8%"/>
 					<col width="10%"/>
-					<col width="10%"/>
-					<col width="6%"/>
-					<col width="7%"/>
+					<col width="5%"/>
+					<col width="8%"/>
 				</colgroup>
-				<thead>
+				<thead style="background-color:#edf2f8">
 					<tr style="height:5rem; font-size:1.6rem; font-weight:700;">
 						<th scope="col"><input id="batchCheck" type="checkbox" class="checkbox" style="vertical-align: middle;"></th>
+						<th scope="col"></th>
 						<th scope="col">번호</th>
 						<th scope="col">이름</th>
 						<th scope="col">전화번호</th>
@@ -205,35 +207,35 @@
 			<div class="modal-body" style="margin:0px; padding:0px; font-size:1.5rem;">
 				<div id="srRqstInfo">
 					<div style="height:4rem; display:flex; flex-direction:row;">
-						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#f9fafe; font-weight:700;">번호</div>
+						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#edf2f8; font-weight:700;">번호</div>
 						<div id="modalUsrNo" style="height:4rem; width:35%; padding-left:0.5rem; display:flex; align-items:center;"></div>
-						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#f9fafe; font-weight:700;">이름</div>
+						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#edf2f8; font-weight:700;">이름</div>
 						<div id="modalUsrNm" style="height:4rem; width:35%; padding-left:0.5rem; display:flex; align-items:center;"></div>
 					</div>
 					<div style="height:4rem; display:flex; flex-direction:row;">
-						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#f9fafe; font-weight:700;">주민등록번호</div>
+						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#edf2f8; font-weight:700;">주민등록번호</div>
 						<div id="modalUsrRrno" style="height:4rem; width:85%; padding-left:0.5rem; display:flex; align-items:center;"></div>
 					</div>
 					<div style="height:4rem; display:flex; flex-direction:row;">
-						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#f9fafe; font-weight:700;">전화번호</div>
+						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#edf2f8; font-weight:700;">전화번호</div>
 						<div id="modalUsrTelno" style="height:4rem; width:35%; padding-left:0.5rem; display:flex; align-items:center;"></div>
-						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#f9fafe; font-weight:700;">이메일</div>
+						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#edf2f8; font-weight:700;">이메일</div>
 						<div id="modalUsrEml" style="height:4rem; width:35%; padding-left:0.5rem; display:flex; align-items:center;"></div>
 					</div>
 					<div style="height:4rem; display:flex; flex-direction:row;">
-						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#f9fafe; font-weight:700;">소속</div>
+						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#edf2f8; font-weight:700;">소속</div>
 						<div id="modalInstNm" style="height:4rem; width:35%; padding-left:0.5rem; display:flex; align-items:center;"></div>
-						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#f9fafe; font-weight:700;">부서</div>
+						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#edf2f8; font-weight:700;">부서</div>
 						<div id="modalDeptNm" style="height:4rem; width:35%; padding-left:0.5rem; display:flex; align-items:center;"></div>
 					</div>
 					<div style="height:4rem; display:flex; flex-direction:row;">
-						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#f9fafe; font-weight:700;">직위</div>
+						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#edf2f8; font-weight:700;">직위</div>
 						<div id="modalIbpsNm" style="height:4rem; width:35%; padding-left:0.5rem; display:flex; align-items:center;"></div>
-						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#f9fafe; font-weight:700;">직책</div>
+						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#edf2f8; font-weight:700;">직책</div>
 						<div id="modalRoleNm" style="height:4rem; width:35%; padding-left:0.5rem; display:flex; align-items:center;"></div>
 					</div>
 					<div style="height:4rem; display:flex; flex-direction:row;">
-						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#f9fafe; font-weight:700;">권한</div>
+						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#edf2f8; font-weight:700;">권한</div>
 						<div style="height:4rem; width:35%; padding-left:0.5rem; display:flex; align-items:center;">
 						 	<select id="modalUsrAuthrt" name="modalUsrAuthrtNm" style="width:60%; padding:3px;">
 								<option value="CUSTOMER">고객사</option>
@@ -247,17 +249,17 @@
 								저장
 							</button>
 						</div>
-						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#f9fafe; font-weight:700;">상태</div>
+						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#edf2f8; font-weight:700;">상태</div>
 						<div id="modalUsrSttsNm" style="height:4rem; width:35%; padding-left:0.5rem; display:flex; align-items:center;"></div>
 					</div>
 					<div style="height:4rem; display:flex; flex-direction:row;">
-						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#f9fafe; font-weight:700;">가입일</div>
+						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#edf2f8; font-weight:700;">가입일</div>
 						<div id="modalUsrJoinDt" style="height:4rem; width:35%; padding-left:0.5rem; display:flex; align-items:center;"></div>
-						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#f9fafe; font-weight:700;">탈퇴일</div>
+						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#edf2f8; font-weight:700;">탈퇴일</div>
 						<div id="modalUsrWhdwlDt" style="height:4rem; width:35%; padding-left:0.5rem; display:flex; align-items:center;"></div>
 					</div>
 					<div style="height:11rem; display:flex; flex-direction:row;">
-						<div style="height:11rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#f9fafe; font-weight:700;">담당중인 SR</div>
+						<div style="height:11rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#edf2f8; font-weight:700;">담당중인 SR</div>
 						<div id="srList" style="height:11rem; width:85%; padding-left:0.5rem; display:flex; flex-direction: column; overflow:auto">
 							
 						</div>

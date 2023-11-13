@@ -164,6 +164,11 @@ function loadReviewManagementList(pageNo) {
 	});
 }
 
+//Byte를 KB로 변환
+function bytesToKB(bytes) {
+    return (bytes / 1024).toFixed(2); // 소수점 두 자리까지 표시
+}
+
 function initDetailModal() {
 	$("#approveResult").attr("disabled", "disabled");
     $("#approveResultBtn").attr('disabled', true);
@@ -172,6 +177,7 @@ function initDetailModal() {
     $("#detailmodal_srRqstRvwRsn").removeAttr('disabled');
     $("#initApproveResult").prop('selected', true);
     $("#detailmodal_srRqstRvwRsn").attr("disabled", "disabled");
+    $("#detailmodal_srRqstEmrgYn").prop('checked',false);
 
     $("#receptionResult").attr("disabled", "disabled");
     $("#receptionResultBtn").attr('disabled', true);
@@ -190,6 +196,7 @@ function showDetailModal(srRqstNo) {
 		url: "/otisrm/srManagement/reviewManagement/getSrRqstForModal",
 		data: {selectedSrRqstNo: srRqstNo},
 		success: function(data) {
+			console.log(data);
 			var formattedSrRqstRegDt = formatDateToYYYYMMDD(data.srRqstRegDt);
         	var formattedSrCmptnPrnmntDt = formatDateToYYYYMMDD(data.srCmptnPrnmntDt);
         	
@@ -237,6 +244,24 @@ function showDetailModal(srRqstNo) {
         	$("#detailmodal_srTtl").val(data.srTtl);
         	$("#detailmodal_srConts").val(data.srConts);
         	$("#detailmodal_srRqstRvwRsn").val(data.srRqstRvwRsn);
+        	if(data.srRqstEmrgYn == "Y") {
+        		$("#detailmodal_srRqstEmrgYn").prop('checked',true);
+        	}
+        	
+        	//요청첨부파일
+        	var html = '';
+        	if(data.srRqstAtchList.length != 0) {
+        		data.srRqstAtchList.forEach((item, index)=>{
+        			var size = bytesToKB(item.srRqstAtchSize);
+	                html += '<a href="/otisrm/srManagement/reviewManagement/srRqstAtchDownload?srRqstAtchNo='+ item.srRqstAtchNo +'" class="d-flex">';
+	                html += '    <i class="material-icons mt-1" style="font-size: 2rem; color: #666d75;">download</i>';
+	                html += '    <div id="' + item.srRqstAtchNo + '">' + item.srRqstAtchNm + ' (' + size + 'KB)</div>';
+	                html += '</a>';
+        		});
+        	} else {
+        		html += '<span>첨부파일이 존재하지 않습니다.</span>'
+        	}
+        	$("#detailmodal_srRqstAtchData").html(html);
         	
 			//SR개발정보 불러오기
         	$("#detailmodal_srPicUsrNm").val(data.srPicUsrNm);
@@ -252,6 +277,21 @@ function showDetailModal(srRqstNo) {
         	$("#detailmodal_srPri").val(data.srPri);
         	$("#detailmodal_srCmptnPrnmntDt").val(formattedSrCmptnPrnmntDt);
         	$("#detailmodal_srDvlConts").val(data.srDvlConts);
+        	
+        	//SR첨부파일
+        	var html = '';
+        	if(data.srAtchList != null && data.srAtchList.length != 0) {
+        		data.srAtchList.forEach((item, index)=>{
+        			var size = bytesToKB(item.srAtchSize);
+	                html += '<a href="/otisrm/srManagement/reviewManagement/srAtchDownload?srAtchNo='+ item.srAtchNo +'" class="d-flex">';
+	                html += '    <i class="material-icons mt-1" style="font-size: 2rem; color: #666d75;">download</i>';
+	                html += '    <div id="' + item.srAtchNo + '">' + item.srAtchNm + ' (' + size + 'KB)</div>';
+	                html += '</a>';
+        		});
+        	} else {
+        		html += '<span>첨부파일이 존재하지 않습니다.</span>'
+        	}
+        	$("#detailmodal_srAtchData").html(html);
 		}
 	});
 }

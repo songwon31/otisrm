@@ -113,6 +113,8 @@ public interface SrDao {
 	public int updateSrPrgrs(SrPrgrs srPrgrs);
 	public int updateSrTrnsfStts(@Param("srNo") String srNo, @Param("srPrgrsSttsNo") String srPrgrsSttsNo);
 	
+	public int updateSrRqstPrgrs(String srNo);
+	
 	//산출물 업로드
 	public int insertSrPrgrsOtpt(SrPrgrsOtpt srPrgrsOtpt);
 	

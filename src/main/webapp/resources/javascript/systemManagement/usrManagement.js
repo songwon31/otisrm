@@ -119,6 +119,7 @@ function mainTableConfig(usrManagementSearch, pageNo) {
 				let mainTableHtml = '';
 				mainTableHtml += '<tr style="height:4.7rem; font-size:1.5rem; background-color:white;">';
 				mainTableHtml += '<td><input type="checkbox" class="checkbox" style="vertical-align: middle;"></td>';
+				mainTableHtml += '<td>' + (i+1) + '</td>';
 				mainTableHtml += '<td class="usrNo">' + usr.usrNo + '</td>';
 				mainTableHtml += '<td>' + usr.usrNm+ '</td>';
 				mainTableHtml += '<td>' + usr.usrTelno + '</td>';
@@ -156,7 +157,7 @@ function mainTableConfig(usrManagementSearch, pageNo) {
 				mainTableHtml += '<td> <button data-toggle="modal" data-target="#srProgressModal" class="btn-2 detail-button" onclick="showSrProgressModal(\'' + sr.srNo + '\')">진척관리</button> </td>';
 				*/
 				
-				mainTableHtml += '<td><button type="button" id="showSrRqstDetailBtn" class="btn-2" data-toggle="modal" style="border:none; border-radius:5px; background-color:#2c7be4; color:white; font-weight:700;"';
+				mainTableHtml += '<td><button type="button" id="showSrRqstDetailBtn" data-toggle="modal" class="btn-1" style="width:70%; height:2.8rem;"';
 				mainTableHtml += 'data-target="#usrDetailModal" onclick="usrDetailModalConfig(\''+ usr.usrNo +'\')">상세정보</button></td>';
 				
 				//jsp에 삽입

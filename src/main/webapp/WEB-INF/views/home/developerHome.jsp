@@ -239,7 +239,7 @@
 				</div>
 				<div style="height: 15rem; display: flex; flex-direction: row;">
 					<div style="height: 15rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #edf2f8; border-radius: 0px 0px 0px 10px; font-weight:700;">참고사항</div>
-					<div style="height: 15rem; width: 85%; padding-left: 0.5rem; display: flex; flex-direction: column;">
+					<div style="height: 15rem; width: 85%; display: flex; flex-direction: column;">
 						<div style="height: 15rem; display: flex; flex-direction: row; align-items: center;">
 							<div id="srPlanInfoNote" style="height: 15rem; width: 100%; padding: 0.5rem; overflow-y: auto; white-space: pre-line;">
 
@@ -250,7 +250,7 @@
 			</div>
 			<!-- SR자원정보 -->
 			<div id="srHrInfo" class="bottomSubDiv" style="display: none;">
-				<div style="height: 31rem; background-color: #edf2f8; border-radius: 10px;">
+				<div style="height: 31rem; background-color: #F9FAFE; border-radius: 10px;">
 					<table style="width: 100%; text-align: center;">
 						<colgroup>
 							<col width="4%"/>
@@ -276,7 +276,7 @@
 			</div>
 			<!-- SR진척률 -->
 			<div id="srProgressInfo" class="bottomSubDiv" style="display: none;">
-				<div style="height: 31rem; background-color: #edf2f8; border-radius: 10px;">
+				<div style="height: 31rem; background-color: #F9FAFE; border-radius: 10px;">
 					<table id="prgrsTable" style="width: 100%; text-align: center;">
 						<colgroup>
 							<col width="20%" />
@@ -479,46 +479,46 @@
 			<div class="modal-body" style="margin:0px; padding:0px; font-size:1.5rem;">
 				<div id="srRqstInfo">
 					<div style="height:4rem; display:flex; flex-direction:row;">
-						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#f9fafe; font-weight:700;">SR번호</div>
+						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#edf2f8; font-weight:700;">SR번호</div>
 						<div id="modal_sr_no" style="height:4rem; width:35%; padding-left:0.5rem; display:flex; align-items:center;"></div>
-						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#f9fafe; font-weight:700;">SR요청번호</div>
+						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#edf2f8; font-weight:700;">SR요청번호</div>
 						<div id="modal_sr_rqst_no" style="height:4rem; width:35%; padding-left:0.5rem; display:flex; align-items:center;"></div>
 					</div>
 					<div style="height:4rem; display:flex; flex-direction:row;">
-						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#f9fafe; font-weight:700;">시스템구분</div>
+						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#edf2f8; font-weight:700;">시스템구분</div>
 						<div id="modal_sys_nm" style="height:4rem; width:35%; padding-left:0.5rem; display:flex; align-items:center;"></div>
-						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#f9fafe; font-weight:700;">업무구분</div>
+						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#edf2f8; font-weight:700;">업무구분</div>
 						<div id="modal_sr_task_nm" style="height:4rem; width:35%; padding-left:0.5rem; display:flex; align-items:center;"></div>
 					</div>
 					<div style="height:4rem; display:flex; flex-direction:row;">
-						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#f9fafe; font-weight:700;">SR제목</div>
+						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#edf2f8; font-weight:700;">SR제목</div>
 						<div id="modal_sr_ttl" style="height:4rem; width:85%; padding-left:0.5rem; display:flex; align-items:center;"></div>
 					</div>
 					<div style="height:4rem; display:flex; flex-direction:row;">
-						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#f9fafe; font-weight:700;">SR목적</div>
+						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#edf2f8; font-weight:700;">SR목적</div>
 						<div id="modal_sr_prps" style="height:4rem; width:85%; padding-left:0.5rem; display:flex; align-items:center;"></div>
 					</div>
 					<div style="height:4rem; display:flex; flex-direction:row;">
-						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#f9fafe; font-weight:700;">요청팀</div>
+						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#edf2f8; font-weight:700;">요청팀</div>
 						<div id="modal_dept_nm" style="height:4rem; width:35%; padding-left:0.5rem; display:flex; align-items:center;"></div>
-						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#f9fafe; font-weight:700;">요청자</div>
+						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#edf2f8; font-weight:700;">요청자</div>
 						<div id="modal_pic_nm" style="height:4rem; width:35%; padding-left:0.5rem; display:flex; align-items:center;"></div>
 					</div>
 					<div style="height:4rem; display:flex; flex-direction:row;">
-						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#f9fafe; font-weight:700;">요청일</div>
+						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#edf2f8; font-weight:700;">요청일</div>
 						<div id="modal_sr_rqst_reg_dt" style="height:4rem; width:35%; padding-left:0.5rem; display:flex; align-items:center;"></div>
-						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#f9fafe; font-weight:700;">완료요청일</div>
+						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#edf2f8; font-weight:700;">완료요청일</div>
 						<div id="modal_sr_cmptn_prnmnt_dt" style="height:4rem; width:35%; padding-left:0.5rem; display:flex; align-items:center;"></div>
 					</div>
 					<div style="height:4rem; display:flex; flex-direction:row;">
-						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#f9fafe; font-weight:700;">협력사</div>
+						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#edf2f8; font-weight:700;">협력사</div>
 						<div id="modal_inst_nm" style="height:4rem; width:35%; padding-left:0.5rem; display:flex; align-items:center;"></div>
-						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#f9fafe; font-weight:700;">유지보수 이관일</div>
+						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#edf2f8; font-weight:700;">유지보수 이관일</div>
 						<div id="modal_sr_trnsf_dt" style="height:4rem; width:35%; padding-left:0.5rem; display:flex; align-items:center;"></div>
 					</div>
 					<div style="height:11rem; display:flex; flex-direction:row;">
-						<div style="height:11rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#f9fafe; font-weight:700;">SR내용</div>
-						<div style="height:11rem; width:85%; padding-left:0.5rem; display:flex; flex-direction: column;">
+						<div style="height:11rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#edf2f8; font-weight:700;">SR내용</div>
+						<div style="height:11rem; width:85%; padding:0rem 0.5rem; display:flex; flex-direction: column;">
 							<div style="height:3rem;">
 								<form>
 									<div style="display:flex; flex-direction: row; align-items:center;">
@@ -540,9 +540,11 @@
 							</div>
 						</div>
 					</div>
-					<div style="height:4rem; display:flex; flex-direction:row;">
-						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#f9fafe; border-radius:0px 0px 0px 10px/0px 0px 0px 10px;  font-weight:700;">첨부파일</div>
-						<div style="height:4rem; width:85%; padding-left:0.5rem; display:flex; align-items:center;">(요청내용)230712_EIS변경요청.hwp</div>
+					<div style="height:12rem; display:flex; flex-direction:row;">
+						<div style="height:12rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; border-bottom:1px solid gray; background-color:#edf2f8;  font-weight:700;">첨부파일</div>
+						<div id="modalSrAtch" style="height:12rem; width:85%; padding:0.5rem; display:flex; align-items:center; overflow-y:auto;">
+							
+						</div>
 					</div>
 				</div>
 			</div>
@@ -563,26 +565,26 @@
 					<div style="height:4rem; display: flex; flex-direction: row; align-items:center; padding:0 0.5rem;">
 						<div id="srPlanInfoEditModalSrTtl" style="font-size:1.6rem; font-weight:700;"></div>
 						<div style="flex-grow:1;"></div>
-						<button type="button" data-dismiss="modal" onclick="editSrTrnsfPlan()" class="btn-1" style="height:3rem; margin-right:0.5rem;">
+						<button type="button" data-dismiss="modal" onclick="editSrTrnsfPlan()" class="btn-1" style="height:3rem;">
 							등록/수정
 						</button>
 					</div>
 					<div style="height: 4rem; display: flex; flex-direction: row;">
-						<div style="height: 4rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #f9fafe; font-weight:700;">요청구분</div>
+						<div style="height: 4rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #edf2f8; font-weight:700;">요청구분</div>
 						<div style="height: 4rem; width: 35%; display: flex; align-items: center;">
 							<input id="srPlanModalDmndInput" type="text" disabled style="width:80%; height:3rem; margin:0 0 0 0.5rem;">
 						</div>
-						<div style="height: 4rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #f9fafe; font-weight:700;">업무구분</div>
+						<div style="height: 4rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #edf2f8; font-weight:700;">업무구분</div>
 						<div style="height: 4rem; width: 35%; display: flex; align-items: center;">
 							<input id="srPlanModalTaskInput" type="text" disabled style="width:80%; height:3rem; margin:0 0 0 0.5rem;">
 						</div>
 					</div>
 					<div style="height: 4rem; display: flex; flex-direction: row;">
-						<div style="height: 4rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #f9fafe; font-weight:700;">처리팀</div>
+						<div style="height: 4rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #edf2f8; font-weight:700;">처리팀</div>
 						<div style="height: 4rem; width: 35%; display: flex; align-items: center;">
 							<input id="srPlanModalDeptInput" type="text" disabled style="width:80%; height:3rem; margin:0 0 0 0.5rem;">
 						</div>
-						<div style="height: 4rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #f9fafe; font-weight:700;">담당자</div>
+						<div style="height: 4rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #edf2f8; font-weight:700;">담당자</div>
 						<div style="height: 4rem; width: 35%; display: flex; align-items: center;">
 							<input id="srPlanModalPicInput" type="text" disabled style="width:62%; height:3rem; margin:0 0 0 0.5rem;">
 							<div style="width:3%"></div>
@@ -597,26 +599,25 @@
 						</div>
 					</div>
 					<div style="height: 4rem; display: flex; flex-direction: row;">
-						<div style="height: 4rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #f9fafe; font-weight:700;">목표시작일</div>
+						<div style="height: 4rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #edf2f8; font-weight:700;">목표시작일</div>
 						<div style="height: 4rem; width: 35%; display: flex; align-items: center;">
 							<input id="srPlanModalTrgtBgngDt" type="date" style="width:80%; height:3rem; margin:0rem 0.5rem;">
 						</div>
-						<div style="height: 4rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #f9fafe; font-weight:700;">목표완료일</div>
+						<div style="height: 4rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #edf2f8; font-weight:700;">목표완료일</div>
 						<div style="height: 4rem; width: 35%; display: flex; align-items: center;">
 							<input id="srPlanModalTrgtCmptnDt" type="date" style="width:80%; height:3rem; margin:0rem 0.5rem;">
 						</div>
 					</div>
 					<div style="height: 4rem; display: flex; flex-direction: row;">
-						<div style="height: 4rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #f9fafe; font-weight:700;">총 계획공수(M/D)</div>
+						<div style="height: 4rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #edf2f8; font-weight:700;">총 계획공수(M/D)</div>
 						<div style="height: 4rem; width: 35%; display: flex; align-items: center;">
 							<input id="srPlanModalTotalCapacity" type="text" disabled style="width:80%; height:3rem; margin:0rem 0.5rem;">
 						</div>
 					</div>
 					<div style="height: 11rem; display: flex; flex-direction: row;">
-						<div style="height: 11rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #f9fafe; border-radius: 0px 0px 0px 10px; font-weight:700;">검토내용</div>
-							<textarea id="srPlanModalTrnsfNote" style="width:85%; resize:none; margin:0.5rem;">
-							</textarea>
-						</div>
+						<div style="height: 11rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #edf2f8; border-radius: 0px 0px 0px 10px; font-weight:700;">검토내용</div>
+						<textarea id="srPlanModalTrnsfNote" style="width:85%; resize:none; margin:0.5rem;"></textarea>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -637,7 +638,7 @@
 						<div style="height: 4rem; display: flex; flex-direction: row;">
 							<div style="height: 4rem; width: 10%; padding-left: 0.5rem; display: flex; align-items: center;">
 								<svg style="width:0.5rem; height:0.5rem; margin: 0rem 0.5rem;"><rect width="0.5rem" height="0.5rem" fill="#222E3C" /></svg>
-								처리팀
+								<span style="font-weight:700">처리팀</span>
 							</div>
 							<div style="height: 4rem; width: 25%; display: flex; align-items: center;">
 								<select id="findPicModalDeptSelect" name="modalRqstSelect" style="width:70%; height:3rem; margin:0rem 0.5rem;">
@@ -646,31 +647,32 @@
 							</div>
 							<div style="height: 4rem; width: 10%; padding-left: 0.5rem; display: flex; align-items: center;">
 								<svg style="width:0.5rem; height:0.5rem; margin: 0rem 0.5rem;"><rect width="0.5rem" height="0.5rem" fill="#222E3C" /></svg>
-								담당자
+								<span style="font-weight:700">담당자</span>
 							</div>
 							<div style="height: 4rem; width: 25%; display: flex; align-items: center;">
 								<input id="findPicModalPicInput" value="" style="width:70%; height:3rem; margin:0rem 0.5rem;">
 							</div>
 							<div style="height:4rem; flex-grow:1; display:flex; justify-content:flex-end; align-items:center;">
-								<a href="javascript:void(0)" onclick="composeFindPicModalTable(1)"
-									style="height: 3rem; width: 5rem; border-radius: 5px; background-color:#2c7be4; color:white; font-weight:700; margin-right:0.5rem;
-									display: flex; flex-direction: row; justify-content: center; align-items: center;">검색</a>
+								<button class="btn-1" onclick="composeFindPicModalTable(1)"
+									style="height: 3rem; width: 5rem; margin-right:0.5rem;">검색</button>
 							</div>
 						</div>
 					</div>
 					<div style="display: flex; flex-direction: column; justify-contents:center; margin:0 0 0 0.5rem;">
 						<span style="font-size:1.6rem; font-weight:700;">조회결과</span>
-						<div style="height:27rem; background-color:#f9fafe; margin:0.5rem;">
+						<div style="height:27rem; background-color:#F9FAFE; margin:0.5rem;">
 							<table id="findPicModalTable" style="width: 100%; text-align: center; border-radius:5px;">
 								<colgroup>
+									<col width="5%"/>
 									<col width="20%"/>
 									<col width="20%"/>
 									<col width="20%"/>
-									<col width="20%"/>
+									<col width="15%"/>
 									<col width="20%"/>
 								</colgroup>
-								<thead>
+								<thead style="background-color:#edf2f8;">
 									<tr style="height: 4.3rem; font-size: 1.5rem; font-weight: 700;">
+										<th scope="col"></th>
 										<th scope="col">소속팀</th>
 										<th scope="col">직책</th>
 										<th scope="col">직위</th>
@@ -685,14 +687,6 @@
 						</div>
 						<div id="findPicModalTablePagerDiv" style="height: 4.5rem; font-size: 1.6rem; display: flex; flex-direction: row; justify-content: center; align-items: center;">
 							
-						</div>
-						<div style="height:4rem; display: flex; flex-direction: row; align-items:center; justify-content:flex-end;">
-							<a href="javascript:void(0)" onclick="editSrTrnsfPlan()"
-								style="height: 3rem; width: 5rem; border-radius: 5px; background-color:#222e3c; color:white; font-weight:700; margin-right:0.5rem;
-								display: flex; flex-direction: row; justify-content: center; align-items: center;">저장</a>
-							<a href="javascript:void(0)" data-dismiss="modal"
-								style="height: 3rem; width: 5rem; border-radius: 5px; background-color:red; color:white; font-weight:700; margin-right:0.5rem;
-								display: flex; flex-direction: row; justify-content: center; align-items: center; cursor: pointer;">닫기</a>
 						</div>
 					</div>
 				</div>
@@ -826,25 +820,26 @@
 								<input id="setHrFindPicModalPicInput" value="" style="width:70%; height:3rem; margin:0rem 0.5rem;">
 							</div>
 							<div style="height:4rem; flex-grow:1; display:flex; justify-content:flex-end; align-items:center;">
-								<a href="javascript:void(0)" onclick="composeSetHrFindPicModalTable(1)"
-									style="height: 3rem; width: 5rem; border-radius: 5px; background-color:#2c7be4; color:white; font-weight:700; margin-right:0.5rem;
-									display: flex; flex-direction: row; justify-content: center; align-items: center;">검색</a>
+								<button class="btn-1" onclick="composeSetHrFindPicModalTable(1)"
+									style="height: 3rem; width: 5rem; margin-right:0.5rem;">검색</button>
 							</div>
 						</div>
 					</div>
 					<div style="display: flex; flex-direction: column; justify-contents:center; margin:0 0 0 0.5rem;">
 						<span style="font-size:1.6rem; font-weight:700;">조회결과</span>
-						<div style="height:27rem; background-color:#f9fafe; margin:0.5rem;">
+						<div style="height:27rem; background-color:#F9FAFE; margin:0.5rem;">
 							<table id="setHrFindPicModalTable" style="width: 100%; text-align: center; border-radius:5px;">
 								<colgroup>
+									<col width="5%"/>
 									<col width="20%"/>
 									<col width="20%"/>
 									<col width="20%"/>
-									<col width="20%"/>
+									<col width="15%"/>
 									<col width="20%"/>
 								</colgroup>
-								<thead>
+								<thead style="background-color:#edf2f8">
 									<tr style="height: 4.3rem; font-size: 1.5rem; font-weight: 700;">
+										<th scope="col"></th>
 										<th scope="col">소속팀</th>
 										<th scope="col">직책</th>
 										<th scope="col">직위</th>
@@ -859,14 +854,6 @@
 						</div>
 						<div id="setHrFindPicModalTablePagerDiv" style="height: 4.5rem; font-size: 1.6rem; display: flex; flex-direction: row; justify-content: center; align-items: center;">
 							
-						</div>
-						<div style="height:4rem; display: flex; flex-direction: row; align-items:center; justify-content:flex-end;">
-							<a href="javascript:void(0)" onclick="editSrTrnsfPlan()"
-								style="height: 3rem; width: 5rem; border-radius: 5px; background-color:#222e3c; color:white; font-weight:700; margin-right:0.5rem;
-								display: flex; flex-direction: row; justify-content: center; align-items: center;">저장</a>
-							<a href="javascript:void(0)" data-dismiss="modal"
-								style="height: 3rem; width: 5rem; border-radius: 5px; background-color:red; color:white; font-weight:700; margin-right:0.5rem;
-								display: flex; flex-direction: row; justify-content: center; align-items: center; cursor: pointer;">닫기</a>
 						</div>
 					</div>
 				</div>
@@ -893,12 +880,10 @@
 								
 							</div>
 							<div style="height:4rem; display: flex; flex-direction: row; align-items:center; justify-content:flex-end;">
-								<a href="javascript:void(0)" data-toggle="modal" data-target="#addSrOutputModal"
-									style="height: 3rem; width: 5rem; border-radius: 5px; background-color:#222e3c; color:white; font-weight:700; margin-right:0.5rem;
-									display: flex; flex-direction: row; justify-content: center; align-items: center; font-size:1.5rem;">추가</a>
-								<a href="javascript:void(0)" onclick="deleteOutput()"
-									style="height: 3rem; width: 5rem; border-radius: 5px; background-color:red; color:white; font-weight:700; margin-right:0.5rem;
-									display: flex; flex-direction: row; justify-content: center; align-items: center; cursor: pointer; font-size:1.5rem;">삭제</a>
+								<button data-toggle="modal" data-target="#addSrOutputModal" class="btn-1"
+									style="height: 3rem; width: 5rem; margin-right:0.5rem;">추가</button>
+								<button class="btn-1" onclick="deleteOutput()"
+									style="height: 3rem; width: 5rem; margin-right:0.5rem; background-color:red;">삭제</button>
 							</div>
 						</div>
 						<div style="height:27rem; background-color:#f9fafe; margin:0.5rem;">
@@ -912,7 +897,7 @@
 									<col width="10%"/>
 									<col width="15%"/>
 								</colgroup>
-								<thead>
+								<thead style="background-color: #edf2f8;">
 									<tr style="height: 4.3rem; font-size: 1.5rem; font-weight: 700;">
 										<th scope="col"></th>
 										<th scope="col"></th>
@@ -960,16 +945,14 @@
 							<input id="addSrOutputModalOutputNameInput" value="" style="width:100%; height:3rem; margin:0rem 1rem;">
 						</div>
 					</div>
-					<div style="height: 4rem; width:97%; display: flex; flex-direction: row; align-items:center; margin:0.5rem 0 0 0.5rem;">
-						<input type="file" id="addSrOutputModalFileInput" name=file style="width:100%;">
-					</div>
-					<div style="height:4rem; display: flex; flex-direction: row; align-items:center; justify-content:flex-end;">
-						<a href="javascript:void(0)" onclick="addSrOutputFile()" data-dismiss="modal"
-							style="height: 3rem; width: 5rem; border-radius: 5px; background-color:#222e3c; color:white; font-size:1.5rem; font-weight:700; margin-right:0.5rem;
-							display: flex; flex-direction: row; justify-content: center; align-items: center;">추가</a>
-						<a href="javascript:void(0)" data-dismiss="modal"
-							style="height: 3rem; width: 5rem; border-radius: 5px; background-color:red; color:white; font-size:1.5rem; font-weight:700; margin-right:0.5rem;
-							display: flex; flex-direction: row; justify-content: center; align-items: center; cursor: pointer;">닫기</a>
+					<div style="height: 4rem; width:100%; display: flex; flex-direction: row; align-items:center; padding:0.5rem 1rem;">
+						<div style="width:80%; display:flex; align-items:center; justify-content:flex-start;">
+							<input type="file" id="addSrOutputModalFileInput" name=file style="width:100%;">
+						</div>
+						<div style="width:20%; display:flex; align-items:center; justify-content:flex-end;">
+							<button data-dismiss="modal" class="btn-1" onclick="addSrOutputFile()"
+									style="height: 3rem; width: 5rem;">추가</button>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -985,11 +968,11 @@
 				<div class="modal-title" style="font-size:2rem; font-weight:700;">SR실적등록</div>
 				<i class="material-icons close-icon" data-dismiss="modal" style="cursor: pointer;">close</i>
 			</div>
-			<div class="modal-body" style="margin:0px; padding:2rem; font-size:1.5rem;">
-				<div style="display:flex; align-items:center;">
+			<div class="modal-body" style="margin:0px; font-size:1.5rem;">
+				<div style="display:flex; align-items:center; margin-bottom:0.5rem;">
 					<span>*투입실적은 1일(8시간) 합계 1.0으로 입력 바랍니다. (단, 연장 근무시 2.0 이내 초과 입력 가능)</span>
 					<span style="flex-grow:1;"></span>
-					<button class="btn-2" onclick="registerCapacity()" style="display:flex; align-items:center; justify-content:center;">저장</button>
+					<button class="btn-1" onclick="registerCapacity()" style="width:5%; height:2.5rem;">저장</button>
 				</div>
 				<table id="srPerformanceRegistrationModalTable" style="width: 100%; text-align: center; border-radius:5px;">
 					<colgroup>
@@ -1000,7 +983,7 @@
 						<col width="15"/>
 						<col width="15%"/>
 					</colgroup>
-					<thead>
+					<thead style="background-color: #edf2f8;">
 						<tr style="height: 4.3rem; font-size: 1.5rem; font-weight: 700;">
 							<th scope="col">SR번호</th>
 							<th scope="col">목표시작일</th>
@@ -1063,18 +1046,20 @@
 			</div>
 			<div class="modal-body" style="margin:0px; padding:0px; font-size:1.5rem;">
 				<div id="srPlanInfoFindPic">
-					<div style="height:31rem; background-color:#f9fafe; margin:0.5rem; overflow-y:auto;">
+					<div style="height:31rem; margin:0.5rem; overflow-y:auto;">
 						<table id="manageChangeScheduleRequestModalTable" style="width: 100%; text-align: center; border-radius:5px;">
 							<colgroup>
+								<col width="5%"/>
 								<col width="20%"/>
 								<col width="20%"/>
 								<col width="20%"/>
 								<col width="10%"/>
-								<col width="20%"/>
+								<col width="15%"/>
 								<col width="10%"/>
 							</colgroup>
-							<thead>
+							<thead style="background-color:#edf2f8;">
 								<tr style="height: 4.3rem; font-size: 1.5rem; font-weight: 700;">
+									<th scope="col"></th>
 									<th scope="col">SR번호</th>
 									<th scope="col">현재 완료예정일</th>
 									<th scope="col">요청된 완료예정일</th>

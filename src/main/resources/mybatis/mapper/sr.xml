@@ -927,4 +927,13 @@
       WHERE sr_no = #{srNo}
    </update>
    
+   <update id="updateSrRqstPrgrs" parameterType="String">
+   		UPDATE sr_rqst
+		  SET sr_rqst.sr_rqst_stts_no = 'DEP_ING'
+		  WHERE sr_rqst.sr_rqst_no = (
+		      SELECT sr.sr_rqst_no
+		      FROM sr
+		      WHERE sr.sr_no = #{srNo}
+		    )
+   </update>
 </mapper>

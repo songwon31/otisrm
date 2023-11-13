@@ -14,7 +14,7 @@ a, a:hover {
 	font-family: pretendard;
 	padding: 2rem; 
 	background-color: white; 
-	border-radius: 1rem; 
+	border-radius: 10px; 
 	display:flex; 
 	flex-direction:column;
 }

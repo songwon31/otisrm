@@ -245,7 +245,7 @@
 					</div>
 					<div style="width:100%; display: flex; flex-direction: row;">
 						<div style="height: 4rem; padding-left: 0.5rem; display: flex; align-items: center;">
-							<button type="button" id="whdwlButton" data-toggle="modal" data-target="#whdwlModal" style="background-color:red;">
+							<button type="button" id="whdwlButton" data-toggle="modal" data-target="#footerWhdwlModal" style="background-color:red;">
 								회원탈퇴
 							</button>
 						</div>
@@ -257,7 +257,7 @@
 </div>
 
 <!-- 알림 모달 -->
-<div id="alertModal" class="modal" data-backdrop="static">
+<div id="footerAlertModal" class="modal" data-backdrop="static">
 	<div class="modal-dialog modal-dialog-centered modal-sm">
 		<div class="modal-content">
 			<div class="modal-header" style="background-color:#2c7be4; color:white; display:flex;">
@@ -265,7 +265,7 @@
 				<i class="material-icons close-icon" data-dismiss="modal" style="cursor: pointer;">close</i>
 			</div>
 			<div class="modal-body" style="margin:0px; padding:0px; font-size:1.5rem;">
-				<div id="alertContent" style="height:11rem; font-size:1.7rem; font-weight:700; display:flex; justify-content:center; align-items:center; white-space: pre-wrap;">
+				<div id="footerAlertContent" style="height:11rem; font-size:1.7rem; font-weight:700; display:flex; justify-content:center; align-items:center; white-space: pre-wrap;">
 					
 				</div>
 			</div>
@@ -274,7 +274,7 @@
 </div>
 
 <!-- 경고 모달 -->
-<div id="warningModal" class="modal" data-backdrop="static">
+<div id="footerWarningModal" class="modal" data-backdrop="static">
 	<div class="modal-dialog modal-dialog-centered modal-sm">
 		<div class="modal-content">
 			<div class="modal-header" style="background-color:red; color:white; display:flex;">
@@ -282,7 +282,7 @@
 				<i class="material-icons close-icon" data-dismiss="modal" style="cursor: pointer;">close</i>
 			</div>
 			<div class="modal-body" style="margin:0px; padding:0px; font-size:1.5rem;">
-				<div id="warningContent" style="height:11rem; font-size:1.7rem; font-weight:700; display:flex; justify-content:center; align-items:center; white-space: pre-wrap;">
+				<div id="footerWarningContent" style="height:11rem; font-size:1.7rem; font-weight:700; display:flex; justify-content:center; align-items:center; white-space: pre-wrap;">
 					
 				</div>
 			</div>
@@ -291,7 +291,7 @@
 </div>
 
 <!-- 탈퇴 모달 -->
-<div id="whdwlModal" class="modal" data-backdrop="static">
+<div id="footerWhdwlModal" class="modal" data-backdrop="static">
 	<div class="modal-dialog modal-dialog-centered modal-sm">
 		<div class="modal-content">
 			<div class="modal-header" style="background-color:red; color:white; display:flex;">
@@ -299,7 +299,7 @@
 				<i class="material-icons close-icon" data-dismiss="modal" style="cursor: pointer;">close</i>
 			</div>
 			<div class="modal-body" style="margin:0px; padding:0px; font-size:1.5rem; padding:2rem;">
-				<div id="whdwlContent" style="font-size:1.7rem; font-weight:700; display:flex; flex-direction:column; justify-content:center; align-items:center; white-space: pre-wrap;">
+				<div id="footerWhdwlContent" style="font-size:1.7rem; font-weight:700; display:flex; flex-direction:column; justify-content:center; align-items:center; white-space: pre-wrap;">
 					<div>정말 탈퇴하시겠습니까?</div>
 					<div style="width: 100%; margin-top:1rem; font-size:1.7rem; font-weight:700; display:flex; align-items:center; justify-content:center;">
 						<a href="javascript:void(0)" onclick="usrWhdwl()" style="width:20%; height:3rem; background-color:red; color:white; display:flex; justify-content:center; align-items:center; border-radius:5px;">

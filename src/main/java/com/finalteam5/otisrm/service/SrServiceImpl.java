@@ -444,7 +444,6 @@ public class SrServiceImpl implements SrService{
 					//진행도를 새로운 값으로 갱신
 					analysisSrPrgrs.setSrPrgrs(srPrgrsForm.getAnalysisPrgrs());
 					srDao.updateSrPrgrs(analysisSrPrgrs);
-					return 1;
 				//새로운 값이 최대값이라면
 				} else if (srPrgrsForm.getAnalysisPrgrs() == 10) {
 					//작업 시작일과 완료일을 모두 오늘로 지정하고 진행도를 최대값으로 갱신
@@ -453,6 +452,9 @@ public class SrServiceImpl implements SrService{
 					analysisSrPrgrs.setSrPrgrs(srPrgrsForm.getAnalysisPrgrs());
 					srDao.updateSrPrgrs(analysisSrPrgrs);
 				}
+				
+				//개발중으로 상태 변경
+				srDao.updateSrRqstPrgrs(srPrgrsForm.getSrNo());
 				//srDao.updateSrTrnsfStts(srPrgrsForm.getSrNo(), "ANALYSIS");
 			//기본값이 존재했을 경우
 			} else if (0 < pastSrPrgrsForm.getAnalysisPrgrs() && pastSrPrgrsForm.getAnalysisPrgrs() < 10) {
