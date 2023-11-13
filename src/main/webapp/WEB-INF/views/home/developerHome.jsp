@@ -29,7 +29,7 @@
 			<span style="margin-left: 1.3rem;">My Portal</span>
 		</div>
 	</div>
-	<div id="userManagementMiddleDiv">
+	<div id="userManagementMiddleDiv" class="shadow">
 		<div id="tableDiv">
 			<div>
 				<div class="font-weight-bold d-flex"
@@ -40,60 +40,64 @@
 			</div>
 			<div id="statusChoiceBtnDiv">
 				<a id="mainTableTotalTab" href="javascript:void(0)" onclick="refactorMainTable('TOTAL', 1)"
-					class="mainTableSelectElement filterTab filterTabSelected" style="width: 6%;"> 
+					class="mainTableSelectElement filterTab filterTabSelected"> 
 					<span>전체(</span>
 					<span id="totalNum"></span> 
 					<span>)</span>
 				</a>
 				<a id="mainTableRqstTab" href="javascript:void(0)" onclick="refactorMainTable('RQST', 1)"
-					class="mainTableSelectElement filterTab" style="width: 6%;"> 
+					class="mainTableSelectElement filterTab"> 
 					<span>요청(</span>
 					<span id="requestNum"></span> 
 					<span>)</span>
 				</a>
 				<a id="mainTableReceiptTab" href="javascript:void(0)" onclick="refactorMainTable('RECEIPT', 1)"
-					class="mainTableSelectElement filterTab" style="width: 6%;"> 
+					class="mainTableSelectElement filterTab"> 
 					<span>접수(</span>
 					<span id="receiptNum"></span> 
 					<span>)</span>
 				</a> 
 				<a id="mainTableAnalysisTab" href="javascript:void(0)" onclick="refactorMainTable('ANALYSIS', 1)"
-					class="mainTableSelectElement filterTab" style="width: 6%;"> 
+					class="mainTableSelectElement filterTab"> 
 					<span>분석(</span>
 					<span id="analysisNum"></span> 
 					<span>)</span>
 				</a> 
 				<a id="mainTableDesignTab" href="javascript:void(0)" onclick="refactorMainTable('DESIGN', 1)"
-					class="mainTableSelectElement filterTab" style="width: 6%;"> 
+					class="mainTableSelectElement filterTab"> 
 					<span>설계(</span>
 					<span id="designNum"></span> 
 					<span>)</span>
 				</a> 
 				<a id="mainTableImplementTab" href="javascript:void(0)" onclick="refactorMainTable('IMPLEMENT', 1)"
-					class="mainTableSelectElement filterTab" style="width: 6%;"> 
+					class="mainTableSelectElement filterTab"> 
 					<span>구현(</span>
 					<span id="implementNum"></span> 
 					<span>)</span>
 				</a> 
 				<a id="mainTableTestTab" href="javascript:void(0)" onclick="refactorMainTable('TEST', 1)"
-					class="mainTableSelectElement filterTab" style="width: 6%;"> 
+					class="mainTableSelectElement filterTab"> 
 					<span>시험(</span>
 					<span id="testNum"></span> 
 					<span>)</span>
 				</a> 
 				<a id="mainTableApplyRequestTab" href="javascript:void(0)" onclick="refactorMainTable('APPLY_REQUEST', 1)"
-					class="mainTableSelectElement filterTab" style="width: 8%;"> 
+					class="mainTableSelectElement filterTab"> 
 					<span>반영요청(</span>
 					<span id="applyNum"></span> 
 					<span>)</span>
 				</a>
 				<div style="flex-grow:1;"></div>
+				<!-- 
 				<button type="button" data-toggle="modal" data-target="#manageChangeScheduleRequestModal" onclick="manageChangeScheduleRequestModalConfig()"
 						style="height:2.5rem; display:flex; align-items:center; justify-content:center;">
 					일정변경요청 내역 관리
 				</button>
+				 -->
+				<button type="button" data-toggle="modal" data-target="#manageChangeScheduleRequestModal" onclick="manageChangeScheduleRequestModalConfig()"
+						class="btn-1" style="height:2.5rem;">일정변경요청 내역 관리</button>
 				<button type="button" data-toggle="modal" data-target="#srPerformanceRegistrationModal" onclick="srPerformanceRegistrationModalConfig()"
-						class="btn-2" style="display:flex; align-items:center; justify-content:center; margin-left:0.5rem;">
+						class="btn-1" style="height:2.5rem; margin-left:0.5rem;">
 					실적 등록
 				</button>
 				<!-- 
@@ -112,14 +116,15 @@
 				 -->
 				<!-- <div style="flex-grow: 1; border-bottom: 1.5px solid #edf2f8;"></div> -->
 			</div>
-			<div style="height:27rem; background-color:#f9fafe;">
+			<div style="height:27rem; background-color:#edf2f8;">
 				<table id="mainTable" style="width: 100%; text-align: center;">
 					<colgroup>
+						<col width="3%" />
 						<col width="10%" />
 						<col width="10%" />
 						<col width="10%" />
 						<col width="20%" />
-						<col width="10%" />
+						<col width="7%" />
 						<col width="10%" />
 						<col width="10%" />
 						<col width="10%" />
@@ -127,6 +132,7 @@
 					</colgroup>
 					<thead>
 						<tr style="height: 4.3rem; font-size: 1.5rem; font-weight: 700;">
+							<th scope="col"></th>
 							<th scope="col">SR번호</th>
 							<th scope="col">시스템구분</th>
 							<th scope="col">업무구분</th>
@@ -149,14 +155,14 @@
 		</div>
 	</div>
 	<div id="userManagementBottomDiv">
-		<div id="srProgressDiv">
+		<div id="srProgressDiv" class="shadow">
 			<div style="height:3rem; display:flex; align-items:center;">
 				<div class="font-weight-bold d-flex" style="font-size: 2rem; height: 3rem; vertical-align: center; margin-bottom: 0.5rem;">
 					<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem;">chevron_right</i>
 					<span>SR요청 처리 정보</span>
 				</div>
 				<div style="flex-grow:1;"></div>
-				<button data-toggle="modal" data-target="#changeScheduleRequestModal" onclick="changeScheduleRequestModalConfig()" style="display:flex; align-items:center; justify-content:center;">일정변경요청/수정</button>
+				<button type="button" data-toggle="modal" data-target="#changeScheduleRequestModal" onclick="changeScheduleRequestModalConfig()" class="btn-1" style="height:2.5rem;">일정변경요청/수정</button>
 			</div>
 			<div style="display:flex;">
 				<div id="srProgressChoiceDiv" style="width:60%;">
@@ -181,58 +187,58 @@
 					<div style="flex-grow: 1; border-bottom: 1.5px solid #edf2f8;"></div>
 				</div>
 				<div id="srProgressBtnDiv" style="display:flex; line-height:3rem; justify-content:flex-end; align-items:center; width:40%; border-bottom: 1.5px solid #edf2f8;">
-					<a class="srProgressBtn srPlanBtn" data-toggle="modal" data-target="#srPlanInfoEditModal" onclick="showSrPlanInfoEditModal()" href="javascript:void(0)" 
-						style="pointer-events: none; height: 2.5rem; width: 5rem; border: 1px solid gray; border-radius: 5px; display: flex; flex-direction: row; justify-content: center; align-items: center;">수정</a> 
-					<a class="srProgressBtn srHrBtn" data-toggle="modal" data-target="#setHrFindPicModal" onclick="composeSetHrFindPicModal()" href="javascript:void(0)" 
-						style="pointer-events: none; height: 2.5rem; width: 5rem; border: 1px solid gray; border-radius: 5px; display: none; flex-direction: row; justify-content: center; align-items: center;">추가</a>
-					<a class="srProgressBtn srHrBtn" onclick="deleteHrInfo()" href="javascript:void(0)" 
-						style="pointer-events: none; height: 2.5rem; width: 5rem; border: 1px solid gray; border-radius: 5px; display: none; flex-direction: row; justify-content: center; align-items: center;">삭제</a>
-					<a class="srProgressBtn srHrBtn" onclick="saveHrInfo()" href="javascript:void(0)" 
-						style="pointer-events: none; height: 2.5rem; width: 5rem; border: 1px solid gray; border-radius: 5px; display: none; flex-direction: row; justify-content: center; align-items: center;">저장</a>  
-					<a class="srProgressBtn srPrgrsBtn" href="javascript:void(0)" onclick="updatePrgrs()"
-						style="pointer-events: none; height: 2.5rem; width: 5rem; border: 1px solid gray; border-radius: 5px; display: none; flex-direction: row; justify-content: center; align-items: center;">저장</a> 
+					<button type="button" class="srProgressBtn srPlanBtn btn-1" data-toggle="modal" data-target="#srPlanInfoEditModal" onclick="showSrPlanInfoEditModal()" 
+						style="height:2.5rem;">수정</button> 
+					<button type="button" class="srProgressBtn srHrBtn btn-1" data-toggle="modal" data-target="#setHrFindPicModal" onclick="composeSetHrFindPicModal()" 
+						style="height:2.5rem; margin-right:0.5rem; display:none;">추가</button> 
+					<button type="button" class="srProgressBtn srHrBtn btn-1" onclick="deleteHrInfo()"
+						style="height:2.5rem; margin-right:0.5rem; display:none;">삭제</button> 
+					<button type="button" class="srProgressBtn srHrBtn btn-1" onclick="saveHrInfo()"
+						style="height:2.5rem; display:none;">저장</button> 
+					<button type="button" class="srProgressBtn srPrgrsBtn btn-1" onclick="updatePrgrs()"
+						style="height:2.5rem; display:none;">저장</button> 
 				</div>
 			</div>
 			<!-- SR계획정보 div -->
 			<div id="srPlanInfo" class="bottomSubDiv">
 				<div style="height: 4rem; display: flex; flex-direction: row;">
-					<div style="height: 4rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #f9fafe; font-weight:700;">요청구분</div>
+					<div style="height: 4rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #edf2f8; font-weight:700;">요청구분</div>
 					<div id="srPlanInfoDmnd" style="height: 4rem; width: 35%; padding-left: 0.5rem; display: flex; align-items: center;">
 						
 					</div>
-					<div style="height: 4rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #f9fafe; font-weight:700;">업무구분</div>
+					<div style="height: 4rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #edf2f8; font-weight:700;">업무구분</div>
 					<div id="srPlanInfoTask" style="height: 4rem; width: 35%; padding-left: 0.5rem; display: flex; align-items: center;">
 
 					</div>
 				</div>
 				<div style="height: 4rem; display: flex; flex-direction: row;">
-					<div style="height: 4rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #f9fafe; font-weight:700;">처리팀</div>
+					<div style="height: 4rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #edf2f8; font-weight:700;">처리팀</div>
 					<div id="srPlanInfoDept" style="height: 4rem; width: 35%; padding-left: 0.5rem; display: flex; align-items: center;">
 
 					</div>
-					<div style="height: 4rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #f9fafe; font-weight:700;">담당자</div>
+					<div style="height: 4rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #edf2f8; font-weight:700;">담당자</div>
 					<div id="srPlanInfoPic" style="height: 4rem; width: 35%; padding-left: 0.5rem; display: flex; align-items: center;">
 
 					</div>
 				</div>
 				<div style="height: 4rem; display: flex; flex-direction: row;">
-					<div style="height: 4rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #f9fafe; font-weight:700;">목표시작일</div>
+					<div style="height: 4rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #edf2f8; font-weight:700;">목표시작일</div>
 					<div id="srPlanInfoBgngDt" style="height: 4rem; width: 35%; padding-left: 0.5rem; display: flex; align-items: center;">
 
 					</div>
-					<div style="height: 4rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #f9fafe; font-weight:700;">목표완료일</div>
+					<div style="height: 4rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #edf2f8; font-weight:700;">목표완료일</div>
 					<div id="srPlanInfoCmptnDt" style="height: 4rem; width: 35%; padding-left: 0.5rem; display: flex; align-items: center;">
 					
 					</div>
 				</div>
 				<div style="height: 4rem; display: flex; flex-direction: row;">
-					<div style="height: 4rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #f9fafe; font-weight:700;">총 계획공수(M/D)</div>
+					<div style="height: 4rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #edf2f8; font-weight:700;">총 계획공수(M/D)</div>
 					<div id="srPlanInfoTotalCapacity" style="height: 4rem; width: 85%; padding-left: 0.5rem; display: flex; align-items: center;">
 						
 					</div>
 				</div>
 				<div style="height: 15rem; display: flex; flex-direction: row;">
-					<div style="height: 15rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #f9fafe; border-radius: 0px 0px 0px 10px; font-weight:700;">참고사항</div>
+					<div style="height: 15rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #edf2f8; border-radius: 0px 0px 0px 10px; font-weight:700;">참고사항</div>
 					<div style="height: 15rem; width: 85%; padding-left: 0.5rem; display: flex; flex-direction: column;">
 						<div style="height: 15rem; display: flex; flex-direction: row; align-items: center;">
 							<div id="srPlanInfoNote" style="height: 15rem; width: 100%; padding: 0.5rem; overflow-y: auto; white-space: pre-line;">
@@ -244,7 +250,7 @@
 			</div>
 			<!-- SR자원정보 -->
 			<div id="srHrInfo" class="bottomSubDiv" style="display: none;">
-				<div style="height: 31rem; background-color: #f9fafe; border-radius: 10px;">
+				<div style="height: 31rem; background-color: #edf2f8; border-radius: 10px;">
 					<table style="width: 100%; text-align: center;">
 						<colgroup>
 							<col width="4%"/>
@@ -253,7 +259,7 @@
 							<col width="24%"/>
 							<col width="24%"/>
 						</colgroup>
-						<thead style="background-color: #f9fafe;">
+						<thead style="background-color: #edf2f8;">
 							<tr style="height: 4rem; font-size: 1.6rem; font-weight: 700;">
 								<th scope="col"></th>
 								<th scope="col">담당자명</th>
@@ -270,7 +276,7 @@
 			</div>
 			<!-- SR진척률 -->
 			<div id="srProgressInfo" class="bottomSubDiv" style="display: none;">
-				<div style="height: 31rem; background-color: #f9fafe; border-radius: 10px;">
+				<div style="height: 31rem; background-color: #edf2f8; border-radius: 10px;">
 					<table id="prgrsTable" style="width: 100%; text-align: center;">
 						<colgroup>
 							<col width="20%" />
@@ -279,7 +285,7 @@
 							<col width="20%" />
 							<col width="20%" />
 						</colgroup>
-						<thead style="background-color: #f9fafe;">
+						<thead style="background-color: #edf2f8;">
 							<tr style="height: 4rem; font-size: 1.6rem; font-weight: 700;">
 								<th scope="col">작업구분</th>
 								<th scope="col">시작일</th>
@@ -334,7 +340,7 @@
 				</div>
 			</div>
 		</div>
-		<div id="srProgressGraphDiv">
+		<div id="srProgressGraphDiv" class="shadow">
 			<div>
 				<div class="font-weight-bold d-flex" style="font-size: 2rem; height: 3rem; vertical-align: center; margin-bottom: 0.5rem;">
 					<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem;">chevron_right</i>
@@ -554,59 +560,63 @@
 			</div>
 			<div class="modal-body" style="margin:0px; padding:0px; font-size:1.5rem;">
 				<div id="srPlanInfo">
+					<div style="height:4rem; display: flex; flex-direction: row; align-items:center; padding:0 0.5rem;">
+						<div id="srPlanInfoEditModalSrTtl" style="font-size:1.6rem; font-weight:700;"></div>
+						<div style="flex-grow:1;"></div>
+						<button type="button" data-dismiss="modal" onclick="editSrTrnsfPlan()" class="btn-1" style="height:3rem; margin-right:0.5rem;">
+							등록/수정
+						</button>
+					</div>
 					<div style="height: 4rem; display: flex; flex-direction: row;">
-						<div style="height: 4rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #f9fafe;">요청구분</div>
+						<div style="height: 4rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #f9fafe; font-weight:700;">요청구분</div>
 						<div style="height: 4rem; width: 35%; display: flex; align-items: center;">
 							<input id="srPlanModalDmndInput" type="text" disabled style="width:80%; height:3rem; margin:0 0 0 0.5rem;">
 						</div>
-						<div style="height: 4rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #f9fafe;">업무구분</div>
+						<div style="height: 4rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #f9fafe; font-weight:700;">업무구분</div>
 						<div style="height: 4rem; width: 35%; display: flex; align-items: center;">
 							<input id="srPlanModalTaskInput" type="text" disabled style="width:80%; height:3rem; margin:0 0 0 0.5rem;">
 						</div>
 					</div>
 					<div style="height: 4rem; display: flex; flex-direction: row;">
-						<div style="height: 4rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #f9fafe;">처리팀</div>
+						<div style="height: 4rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #f9fafe; font-weight:700;">처리팀</div>
 						<div style="height: 4rem; width: 35%; display: flex; align-items: center;">
 							<input id="srPlanModalDeptInput" type="text" disabled style="width:80%; height:3rem; margin:0 0 0 0.5rem;">
 						</div>
-						<div style="height: 4rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #f9fafe;">담당자</div>
+						<div style="height: 4rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #f9fafe; font-weight:700;">담당자</div>
 						<div style="height: 4rem; width: 35%; display: flex; align-items: center;">
 							<input id="srPlanModalPicInput" type="text" disabled style="width:62%; height:3rem; margin:0 0 0 0.5rem;">
 							<div style="width:3%"></div>
+							<button type="button" data-toggle="modal" data-target="#srPlanInfoFindPicModal" onclick="composeFindPicModal()" class="btn-1" style="height:3rem; width:15%; margin-right:0.5rem;">
+								찾기
+							</button>
+							<!-- 
 							<a data-toggle="modal" data-target="#srPlanInfoFindPicModal" onclick="composeFindPicModal()" class="srProgressBtn srPlanBtn" href="javascript:void(0)" 
 								style="height: 3rem; width: 15%; border-radius: 5px; background-color:#2c7be4; color:white; font-weight:700; 
 								display: flex; flex-direction: row; justify-content: center; align-items: center;">찾기</a> 
+							 -->	
 						</div>
 					</div>
 					<div style="height: 4rem; display: flex; flex-direction: row;">
-						<div style="height: 4rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #f9fafe;">목표시작일</div>
+						<div style="height: 4rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #f9fafe; font-weight:700;">목표시작일</div>
 						<div style="height: 4rem; width: 35%; display: flex; align-items: center;">
 							<input id="srPlanModalTrgtBgngDt" type="date" style="width:80%; height:3rem; margin:0rem 0.5rem;">
 						</div>
-						<div style="height: 4rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #f9fafe;">목표완료일</div>
+						<div style="height: 4rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #f9fafe; font-weight:700;">목표완료일</div>
 						<div style="height: 4rem; width: 35%; display: flex; align-items: center;">
 							<input id="srPlanModalTrgtCmptnDt" type="date" style="width:80%; height:3rem; margin:0rem 0.5rem;">
 						</div>
 					</div>
 					<div style="height: 4rem; display: flex; flex-direction: row;">
-						<div style="height: 4rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #f9fafe;">총 계획공수(M/D)</div>
+						<div style="height: 4rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #f9fafe; font-weight:700;">총 계획공수(M/D)</div>
 						<div style="height: 4rem; width: 35%; display: flex; align-items: center;">
 							<input id="srPlanModalTotalCapacity" type="text" disabled style="width:80%; height:3rem; margin:0rem 0.5rem;">
 						</div>
 					</div>
 					<div style="height: 11rem; display: flex; flex-direction: row;">
-						<div style="height: 11rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #f9fafe; border-radius: 0px 0px 0px 10px;">검토내용</div>
+						<div style="height: 11rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #f9fafe; border-radius: 0px 0px 0px 10px; font-weight:700;">검토내용</div>
 							<textarea id="srPlanModalTrnsfNote" style="width:85%; resize:none; margin:0.5rem;">
 							</textarea>
 						</div>
-					<div style="height:4rem; display: flex; flex-direction: row; align-items:center; justify-content:flex-end;">
-						<a href="javascript:void(0)" data-dismiss="modal" onclick="editSrTrnsfPlan()"
-							style="height: 3rem; width: 5rem; border-radius: 5px; background-color:#222e3c; color:white; font-weight:700; margin-right:0.5rem;
-							display: flex; flex-direction: row; justify-content: center; align-items: center;">저장</a>
-						<a href="javascript:void(0)" data-dismiss="modal"
-							style="height: 3rem; width: 5rem; border-radius: 5px; background-color:red; color:white; font-weight:700; margin-right:0.5rem;
-							display: flex; flex-direction: row; justify-content: center; align-items: center; cursor: pointer;">닫기</a>
-					</div>
 				</div>
 			</div>
 		</div>
@@ -1010,8 +1020,8 @@
 </div>
 
 <!-- 일정변경요청 모달 -->
-<div id="changeScheduleRequestModal" class="modal" data-backdrop="static">
-	<div class="modal-dialog modal-dialog-centered modal-md">
+<div id="changeScheduleRequestModal" class="modal" data-backdrop="static" style="width:700px; height:auto; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); margin:auto;">
+	<div>
 		<div class="modal-content">
 			<div class="modal-header">
 				<div class="modal-title" style="font-size:2rem; font-weight:700;">SR일정 변경 요청</div>
@@ -1024,16 +1034,15 @@
 						<span>현재 완료요청일</span>
 						<input id="currentSrCmptnPrnmntDt" type="date" disabled style="flex-grow:1; margin:0rem 1rem;">
 					</div>
-					<div style="width:5%"></div>
+					<div style="width:3%"></div>
 					<div style="flex-grow:1; display:flex; align-items:center;">
 						<svg style="width:0.5rem; height:0.5rem; margin: 0rem 0.5rem;"><rect width="0.5rem" height="0.5rem" fill="#222E3C" /></svg>
 						<span>변경요청일</span>
 						<input id="requestSrTrgtCmptnDt" type="date" style="flex-grow:1; margin:0rem 1rem;">
 					</div>
-					<div style="width:5%"></div>
-					<div style="display:flex; align-items:center; justify-content:flex-end;">
-						<button type="button"  data-dismiss="modal" onclick="srScheduleChangeRequest()"
-								class="btn-2" style="display:flex; align-items:center; justify-content:center;">
+					<div style="width:3%"></div>
+					<div style="flex-grow:1; display:flex; align-items:center; justify-content:flex-end;">
+						<button type="button" data-dismiss="modal" onclick="srScheduleChangeRequest()" class="btn-1">
 							변경 요청
 						</button>
 					</div>

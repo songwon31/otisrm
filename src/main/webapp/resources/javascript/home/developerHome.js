@@ -164,27 +164,51 @@ function refactorMainTable(filterType, page) {
 			//테이블 body 초기화
 			$('#mainTable tbody').html('');
 			//테이블 body 재구성
-			for (let i=0; i<data.srList.length; ++i) {
-				let sr = data.srList[i];
-				let srTrHtml = '';
-				srTrHtml += '<tr style="height: 4.5rem; font-size: 1.5rem; background-color:white;">';
-				srTrHtml += '<td>' + sr.srNo + '</td>';
-				srTrHtml += '<td>' + sr.sysNm + '</td>';
-				srTrHtml += '<td>' + sr.srTaskNm + '</td>';
-				srTrHtml += '<td>' + sr.srTtl + '</td>';
-				srTrHtml += '<td>' + sr.usrNm + '</td>';
-				let srCmptnPrnmntDt = new Date(sr.srCmptnPrnmntDt);
-		        srTrHtml += '<td>' + formatDate(srCmptnPrnmntDt) + '</td>';
-		        if (sr.srTrgtCmptnDt == null) {
-		        	srTrHtml += '<td></td>';
-		        } else {
-		        	let srTrgtCmptnDt = new Date(sr.srTrgtCmptnDt);
-					srTrHtml += '<td>' + formatDate(srTrgtCmptnDt) + '</td>';
-		        }
-				srTrHtml += '<td>' + sr.srPrgrsSttsNm + '</td>';
-				srTrHtml += '<td> <button data-toggle="modal" data-target="#requestDetailModal" class="btn-2 detail-button" onclick="showRequestDetail(\'' + sr.srNo + '\')">요청상세</button> </td>';
-				//jsp에 삽입
-				$('#mainTable tbody').append(srTrHtml);
+			for (let i=0; i<5; ++i) {
+				if (data.srList[i] == null) {
+					let html = '';
+					if (i == 0) {
+						html = '<tr style="height: 4.5rem; font-size: 1.5rem; background-color:white;">';
+						html += '<td colspan=\'10\'>해당 목록 결과가 없습니다.</td>';
+					} else {
+						html = '<tr style="height: 4.5rem; font-size: 1.5rem; background-color:#F9FAFE;">';
+						html += '<td></td>';
+						html += '<td></td>';
+						html += '<td></td>';
+						html += '<td></td>';
+						html += '<td></td>';
+						html += '<td></td>';
+						html += '<td></td>';
+						html += '<td></td>';
+						html += '<td></td>';
+						html += '<td></td>';
+					}
+					html += '</tr>'
+					$('#mainTable tbody').append(html);
+				} else {
+					let sr = data.srList[i];
+					let srTrHtml = '';
+					srTrHtml += '<tr style="height: 4.5rem; font-size: 1.5rem; background-color:white;">';
+					srTrHtml += '<td>' + (i+1) + '</td>';
+					srTrHtml += '<td>' + sr.srNo + '</td>';
+					srTrHtml += '<td>' + sr.sysNm + '</td>';
+					srTrHtml += '<td>' + sr.srTaskNm + '</td>';
+					srTrHtml += '<td>' + sr.srTtl + '</td>';
+					srTrHtml += '<td>' + sr.usrNm + '</td>';
+					let srCmptnPrnmntDt = new Date(sr.srCmptnPrnmntDt);
+			        srTrHtml += '<td>' + formatDate(srCmptnPrnmntDt) + '</td>';
+			        if (sr.srTrgtCmptnDt == null) {
+			        	srTrHtml += '<td></td>';
+			        } else {
+			        	let srTrgtCmptnDt = new Date(sr.srTrgtCmptnDt);
+						srTrHtml += '<td>' + formatDate(srTrgtCmptnDt) + '</td>';
+			        }
+					srTrHtml += '<td>' + sr.srPrgrsSttsNm + '</td>';
+					srTrHtml += '<td> <button data-toggle="modal" data-target="#requestDetailModal" class="btn-1 detail-button" style="height:2.6rem; width:60%;" onclick="showRequestDetail(\'' + sr.srNo + '\')">요청상세</button> </td>';
+					//jsp에 삽입
+					$('#mainTable tbody').append(srTrHtml);
+				}
+				
 			}
 			
 			//테이블 행 선택 시 하단 작업창에 데이터 세팅
@@ -194,7 +218,7 @@ function refactorMainTable(filterType, page) {
 				
 				console.log(row);
 				//해당 행의 데이터를 추출
-				let srNo = row.find('td:eq(0)').text();
+				let srNo = row.find('td:eq(1)').text();
 
 			    setSrDetail(srNo);
 				
@@ -300,6 +324,7 @@ function showRequestDetail(srNo) {
 			$('#modal_sys_nm').html(data.sysNm);
 			$('#modal_sr_task_nm').html(data.srTaskNm);
 			$('#modal_sr_ttl').html(data.srTtl);
+			
 			$('#modal_sr_prps').html(data.srPrps);
 			$('#modal_dept_nm').html(data.deptNm);
 			$('#modal_pic_nm').html(data.usrNm);
@@ -340,7 +365,7 @@ function setSrDetail(srNo) {
 	$('#implementProgressGraph').css('width', '0%');
 	$('#testProgressGraph').css('width', '0%');
 	$('#applyRequestProgressGraph').css('width', '0%');
-	
+
 	let requestData = {
         srNo: srNo
     };
@@ -423,9 +448,11 @@ function setSrDetail(srNo) {
 							$('#totalProgressGraphText').html(srPrgrs.srPrgrs + '%');
 							$('#analysisProgressGraph').css('width', (srPrgrs.srPrgrs * 10) + '%');
 						}
-						let btnHtml = '<center><a data-toggle="modal" data-target="#manageSrOutputModal" href="javascript:void(0)" onclick="composeManageSrOutputModal(\'ANALYSIS\')"';
-						btnHtml += 'style="height: 3rem; width: 30%; border-radius: 5px; background-color:#2c7be4; color:white; font-weight:700;';
-						btnHtml += 'display: flex; flex-direction: row; justify-content: center; align-items: center;">관리</a></center>';
+						
+						let btnHtml = '<center><a data-toggle="modal" data-target="#manageSrOutputModal" href="javascript:void(0)" class="btn-1" style="width:30%; height:3rem; font-size:1.5rem;" onclick="composeManageSrOutputModal(\'ANALYSIS\')">관리</a></center>';
+						/*btnHtml += 'style="height: 3rem; width: 30%; border-radius: 5px; background-color:#2c7be4; color:white; font-weight:700;';
+						btnHtml += 'display: flex; flex-direction: row; justify-content: center; align-items: center;">관리</a></center>';*/
+						
 						$('#srAnalysisOtptBtn').html(btnHtml);	 
 					} else if (srPrgrs.srPrgrsSttsNm == '설계') {
 						if (srPrgrs.srPrgrsBgngDt != null) {
@@ -443,9 +470,7 @@ function setSrDetail(srNo) {
 							$('#totalProgressGraphText').html(srPrgrs.srPrgrs + '%');
 							$('#designProgressGraph').css('width', ((srPrgrs.srPrgrs - 10) * 10) + '%');
 						}
-						let btnHtml = '<center><a data-toggle="modal" data-target="#manageSrOutputModal" href="javascript:void(0)" onclick="composeManageSrOutputModal(\'DESIGN\')"';
-						btnHtml += 'style="height: 3rem; width: 30%; border-radius: 5px; background-color:#2c7be4; color:white; font-weight:700;';
-						btnHtml += 'display: flex; flex-direction: row; justify-content: center; align-items: center;">관리</a></center>';
+						let btnHtml = '<center><a data-toggle="modal" data-target="#manageSrOutputModal" href="javascript:void(0)" class="btn-1" style="width:30%; height:3rem; font-size:1.5rem;" onclick="composeManageSrOutputModal(\'DESIGN\')">관리</a></center>';
 						$('#srDesignOtptBtn').html(btnHtml);
 					} else if (srPrgrs.srPrgrsSttsNm == '구현') {
 						if (srPrgrs.srPrgrsBgngDt != null) {
@@ -463,9 +488,7 @@ function setSrDetail(srNo) {
 							$('#totalProgressGraphText').html(srPrgrs.srPrgrs + '%');
 							$('#implementProgressGraph').css('width', ((srPrgrs.srPrgrs - 20) * 2) + '%');
 						}
-						let btnHtml = '<center><a data-toggle="modal" data-target="#manageSrOutputModal" href="javascript:void(0)" onclick="composeManageSrOutputModal(\'IMPLEMENT\')"';
-						btnHtml += 'style="height: 3rem; width: 30%; border-radius: 5px; background-color:#2c7be4; color:white; font-weight:700;';
-						btnHtml += 'display: flex; flex-direction: row; justify-content: center; align-items: center;">관리</a></center>';
+						let btnHtml = '<center><a data-toggle="modal" data-target="#manageSrOutputModal" href="javascript:void(0)" class="btn-1" style="width:30%; height:3rem; font-size:1.5rem;" onclick="composeManageSrOutputModal(\'IMPLEMENT\')">관리</a></center>';
 						$('#srImplOtptBtn').html(btnHtml);
 					} else if (srPrgrs.srPrgrsSttsNm == '시험') {
 						if (srPrgrs.srPrgrsBgngDt != null) {
@@ -483,9 +506,7 @@ function setSrDetail(srNo) {
 							$('#totalProgressGraphText').html(srPrgrs.srPrgrs + '%');
 							$('#testProgressGraph').css('width', ((srPrgrs.srPrgrs - 70) * 5) + '%');
 						}
-						let btnHtml = '<center><a data-toggle="modal" data-target="#manageSrOutputModal" href="javascript:void(0)" onclick="composeManageSrOutputModal(\'TEST\')"';
-						btnHtml += 'style="height: 3rem; width: 30%; border-radius: 5px; background-color:#2c7be4; color:white; font-weight:700;';
-						btnHtml += 'display: flex; flex-direction: row; justify-content: center; align-items: center;">관리</a></center>';
+						let btnHtml = '<center><a data-toggle="modal" data-target="#manageSrOutputModal" href="javascript:void(0)" class="btn-1" style="width:30%; height:3rem; font-size:1.5rem;" onclick="composeManageSrOutputModal(\'TEST\')">관리</a></center>';
 						$('#srTestOtptBtn').html(btnHtml);
 					} else if (srPrgrs.srPrgrsSttsNm == '반영요청') {
 						if (srPrgrs.srPrgrsBgngDt != null) {
@@ -503,9 +524,7 @@ function setSrDetail(srNo) {
 							$('#totalProgressGraphText').html(srPrgrs.srPrgrs + '%');
 							$('#applyRequestProgressGraph').css('width', ((srPrgrs.srPrgrs - 90) * 10) + '%');
 						}
-						let btnHtml = '<center><a data-toggle="modal" data-target="#manageSrOutputModal" href="javascript:void(0)" onclick="composeManageSrOutputModal(\'APPLY_REQUEST\')"';
-						btnHtml += 'style="height: 3rem; width: 30%; border-radius: 5px; background-color:#2c7be4; color:white; font-weight:700;';
-						btnHtml += 'display: flex; flex-direction: row; justify-content: center; align-items: center;">관리</a></center>';
+						let btnHtml = '<center><a data-toggle="modal" data-target="#manageSrOutputModal" href="javascript:void(0)" class="btn-1" style="width:30%; height:3rem; font-size:1.5rem;" onclick="composeManageSrOutputModal(\'APPLY_REQUEST\')">관리</a></center>';
 						$('#srApplyOtptBtn').html(btnHtml);
 					}
 				}
@@ -561,6 +580,8 @@ function showSrPlanInfoEditModal() {
 			    }).prop("selected", true);
 			}
 			*/
+			
+			$('#srPlanInfoEditModalSrTtl').html(data.srTtl);
 			$('#srPlanModalDmndInput').val(data.srDmndNm);
 			$('#srPlanModalTaskInput').val(data.srTaskNm);
 			$('#srPlanModalDeptInput').val(data.deptNm);
@@ -713,6 +734,8 @@ function editSrTrnsfPlan() {
         srTrnsfNote: srTrnsfNote,
         srDmndNo: srDmndNo
     };
+	
+	console.log(requestData);
 	
 	$.ajax({
 		type: "POST",

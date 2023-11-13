@@ -1,928 +1,930 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.finalteam5.otisrm.dao.SrDao">
-	<select id="countSr" resultType="int">
-		count * from sr
-	</select>
-	
-	<!-- 메인 테이블 구성 -->
-	<select id="checkStatusBySrNo" parameterType="String" resultType="String">
-		SELECT sr_prgrs_stts_no
-		FROM sr_trnsf_plan
-		WHERE sr_no = #{srNo}
-	</select>
-	
-	
-	
-	<select id="selectSrListForDeveloperHomeBoardByUsrIdAndStts" parameterType="map" resultType="com.finalteam5.otisrm.dto.sr.SrForDeveloperHomeBoard">
-		SELECT sr.sr_no, sys.sys_nm, srtc.sr_task_nm, srr.sr_ttl, pic.usr_nm, sr.sr_cmptn_prnmnt_dt, srtp.sr_trgt_cmptn_dt, srps.sr_prgrs_stts_nm
-		FROM sr
-		JOIN sr_rqst srr ON sr.sr_rqst_no = srr.sr_rqst_no
-		JOIN sr_trnsf_plan srtp ON sr.sr_no = srtp.sr_no
-		JOIN usr pic ON sr.pic_usr_no = pic.usr_no
-		JOIN usr pl ON srtp.usr_no = pl.usr_no
-		JOIN sys ON srr.sys_no = sys.sys_no
-		JOIN sr_task_clsf srtc ON sr.sr_task_no = srtc.sr_task_no
-		JOIN sr_prgrs_stts srps ON srtp.sr_prgrs_stts_no = srps.sr_prgrs_stts_no
-		LEFT JOIN sr_trnsf_hr srth ON sr.sr_no = srth.sr_no
-		LEFT JOIN usr dvl ON srth.usr_no = dvl.usr_no
-		WHERE (pl.usr_no = #{usrNo} OR dvl.usr_no = #{usrNo})
-		<if test='srPrgrsSttsNo != null'>
-			AND srtp.sr_prgrs_stts_no = #{srPrgrsSttsNo}
-		</if>
-			AND srr.sr_rqst_stts_no != 'DEP_CMPTN'
-		<if test='srPrgrsSttsNo == null || srPrgrsSttsNo == "RQST"'>
-			UNION
-			SELECT sr.sr_no, sys.sys_nm, srtc.sr_task_nm, srr.sr_ttl, pic.usr_nm, sr.sr_cmptn_prnmnt_dt, srtp.sr_trgt_cmptn_dt, srps.sr_prgrs_stts_nm
-			FROM sr
-			JOIN sr_rqst srr ON sr.sr_rqst_no = srr.sr_rqst_no
-			JOIN sr_trnsf_plan srtp ON sr.sr_no = srtp.sr_no
-			JOIN usr pic ON sr.pic_usr_no = pic.usr_no
-			JOIN sys ON srr.sys_no = sys.sys_no
-			JOIN sr_task_clsf srtc ON sr.sr_task_no = srtc.sr_task_no
-			JOIN sr_prgrs_stts srps ON srtp.sr_prgrs_stts_no = srps.sr_prgrs_stts_no
-			LEFT JOIN sr_trnsf_hr srth ON sr.sr_no = srth.sr_no
-			LEFT JOIN usr dvl ON srth.usr_no = dvl.usr_no
-			WHERE srtp.sr_prgrs_stts_no = 'RQST'
-				AND srr.sr_rqst_stts_no != 'DEP_CMPTN'
-		</if>
-		ORDER BY sr_no
-	</select>
-	
-	<select id="selectSrListForDeveloperHomeBoardByUsrIdAndSttsAndPager" parameterType="map" resultType="com.finalteam5.otisrm.dto.sr.SrForDeveloperHomeBoard">
-		SELECT rnum, sr_no, sys_nm, sr_task_nm, sr_ttl, usr_nm, sr_cmptn_prnmnt_dt, sr_trgt_cmptn_dt, sr_prgrs_stts_nm
-		FROM(
-			SELECT rownum as rnum, sr_no, sys_nm, sr_task_nm, sr_ttl, usr_nm, sr_cmptn_prnmnt_dt, sr_trgt_cmptn_dt, sr_prgrs_stts_nm
-			FROM (	
-				SELECT sr.sr_no, sys.sys_nm, srtc.sr_task_nm, srr.sr_ttl, pic.usr_nm, sr.sr_cmptn_prnmnt_dt, srtp.sr_trgt_cmptn_dt, srps.sr_prgrs_stts_nm
-				FROM sr
-				JOIN sr_rqst srr ON sr.sr_rqst_no = srr.sr_rqst_no
-				JOIN sr_trnsf_plan srtp ON sr.sr_no = srtp.sr_no
-				JOIN usr pic ON sr.pic_usr_no = pic.usr_no
-				JOIN usr pl ON srtp.usr_no = pl.usr_no
-				JOIN sys ON srr.sys_no = sys.sys_no
-				JOIN sr_task_clsf srtc ON sr.sr_task_no = srtc.sr_task_no
-				JOIN sr_prgrs_stts srps ON srtp.sr_prgrs_stts_no = srps.sr_prgrs_stts_no
-				LEFT JOIN sr_trnsf_hr srth ON sr.sr_no = srth.sr_no
-				LEFT JOIN usr dvl ON srth.usr_no = dvl.usr_no
-				WHERE (pl.usr_no = #{usrNo} OR dvl.usr_no = #{usrNo})
-				<if test='srPrgrsSttsNo != null'>
-					AND srtp.sr_prgrs_stts_no = #{srPrgrsSttsNo}
-				</if>
-					AND srr.sr_rqst_stts_no != 'DEP_CMPTN'
-				<if test='srPrgrsSttsNo == null || srPrgrsSttsNo == "RQST"'>
-					UNION
-					SELECT sr.sr_no, sys.sys_nm, srtc.sr_task_nm, srr.sr_ttl, pic.usr_nm, sr.sr_cmptn_prnmnt_dt, srtp.sr_trgt_cmptn_dt, srps.sr_prgrs_stts_nm
-					FROM sr
-					JOIN sr_rqst srr ON sr.sr_rqst_no = srr.sr_rqst_no
-					JOIN sr_trnsf_plan srtp ON sr.sr_no = srtp.sr_no
-					JOIN usr pic ON sr.pic_usr_no = pic.usr_no
-					JOIN sys ON srr.sys_no = sys.sys_no
-					JOIN sr_task_clsf srtc ON sr.sr_task_no = srtc.sr_task_no
-					JOIN sr_prgrs_stts srps ON srtp.sr_prgrs_stts_no = srps.sr_prgrs_stts_no
-					LEFT JOIN sr_trnsf_hr srth ON sr.sr_no = srth.sr_no
-					LEFT JOIN usr dvl ON srth.usr_no = dvl.usr_no
-					WHERE srtp.sr_prgrs_stts_no = 'RQST'
-						AND srr.sr_rqst_stts_no != 'DEP_CMPTN'
-				</if>
-				ORDER BY sr_no
-			)
-		<![CDATA[
-			WHERE rownum <= #{pager.endRowNo}
-		)
-		WHERE rnum >= #{pager.startRowNo}
-		]]>
-	</select>
-	
-	<select id="selectSrForDeveloperHomeBoardListByUsrId" parameterType="String" resultType="com.finalteam5.otisrm.dto.sr.SrForDeveloperHomeBoard">
-		SELECT sr.sr_no, sys.sys_nm, srtc.sr_task_nm, srr.sr_ttl, pic.usr_nm, sr.sr_cmptn_prnmnt_dt, srtp.sr_trgt_cmptn_dt, srps.sr_prgrs_stts_nm
-		FROM sr
-		JOIN sr_rqst srr ON sr.sr_rqst_no = srr.sr_rqst_no
-		JOIN sr_trnsf_plan srtp ON sr.sr_no = srtp.sr_no
-		JOIN usr pic ON sr.pic_usr_no = pic.usr_no
-		JOIN usr pl ON srtp.usr_no = pl.usr_no
-		JOIN sys ON srr.sys_no = sys.sys_no
-		JOIN sr_task_clsf srtc ON sr.sr_task_no = srtc.sr_task_no
-		JOIN sr_prgrs_stts srps ON srtp.sr_prgrs_stts_no = srps.sr_prgrs_stts_no
-		LEFT JOIN sr_trnsf_hr srth ON sr.sr_no = srth.sr_no
-		LEFT JOIN usr dvl ON srth.usr_no = dvl.usr_no
-		WHERE (pl.usr_no = #{usrNo} OR dvl.usr_no = #{usrNo})
-			AND srr.sr_rqst_stts_no != 'DEP_CMPTN'
-		UNION
-		SELECT sr.sr_no, sys.sys_nm, srtc.sr_task_nm, srr.sr_ttl, pic.usr_nm, sr.sr_cmptn_prnmnt_dt, srtp.sr_trgt_cmptn_dt, srps.sr_prgrs_stts_nm
-		FROM sr
-		JOIN sr_rqst srr ON sr.sr_rqst_no = srr.sr_rqst_no
-		JOIN sr_trnsf_plan srtp ON sr.sr_no = srtp.sr_no
-		JOIN usr pic ON sr.pic_usr_no = pic.usr_no
-		JOIN sys ON srr.sys_no = sys.sys_no
-		JOIN sr_task_clsf srtc ON sr.sr_task_no = srtc.sr_task_no
-		JOIN sr_prgrs_stts srps ON srtp.sr_prgrs_stts_no = srps.sr_prgrs_stts_no
-		LEFT JOIN sr_trnsf_hr srth ON sr.sr_no = srth.sr_no
-		LEFT JOIN usr dvl ON srth.usr_no = dvl.usr_no
-		WHERE srtp.sr_prgrs_stts_no = 'RQST'
-			AND srr.sr_rqst_stts_no != 'DEP_CMPTN'
-		ORDER BY sr_no
-	</select>
-	
-	<select id="selectSrTrnsfInfoForDeveloperHomeBySrNoRqst" parameterType="String" resultType="com.finalteam5.otisrm.dto.sr.SrTrnsfInfoForDeveloperHome">
-		SELECT srd.sr_dmnd_nm, srk.sr_task_nm
-		FROM sr_trnsf_plan srt
-		JOIN sr ON srt.sr_no = sr.sr_no
-		JOIN sr_dmnd_clsf srd ON srt.sr_dmnd_no = srd.sr_dmnd_no
-		JOIN sr_task_clsf srk ON sr.sr_task_no = srk.sr_task_no
-		WHERE srt.sr_no = #{srNo}
-	</select>
-	
-	<select id="selectSrTrnsfInfoForDeveloperHomeBySrNo" parameterType="String" resultType="com.finalteam5.otisrm.dto.sr.SrTrnsfInfoForDeveloperHome">
-		SELECT srd.sr_dmnd_nm, srk.sr_task_nm, inst.inst_nm, dept.dept_nm, usr.usr_nm, srt.sr_trgt_bgng_dt, srt.sr_trgt_cmptn_dt, srt.sr_trnsf_note, srt.total_capacity
-		FROM sr_trnsf_plan srt
-		JOIN sr ON srt.sr_no = sr.sr_no
-		JOIN usr ON srt.usr_no = usr.usr_no
-		JOIN sr_dmnd_clsf srd ON srt.sr_dmnd_no = srd.sr_dmnd_no
-		JOIN sr_task_clsf srk ON sr.sr_task_no = srk.sr_task_no
-		JOIN inst ON srt.inst_no = inst.inst_no
-		JOIN dept ON srt.dept_no = dept.dept_no
-		WHERE srt.sr_no = #{srNo}
-	</select>
-	
-	<select id="selectSrPrgrsForDeveloperHomeList" parameterType="String" resultType="com.finalteam5.otisrm.dto.sr.SrPrgrsForDeveloperHome">
-		SELECT srps.sr_prgrs_stts_nm, srp.sr_prgrs_bgng_dt, srp.sr_prgrs_cmptn_dt, srp.sr_prgrs
-		FROM sr_prgrs srp
-		JOIN sr_prgrs_stts srps ON srp.sr_prgrs_stts_no = srps.sr_prgrs_stts_no
-		WHERE srp.sr_no = #{srNo}
-		ORDER BY srps.sr_prgrs_stts_seq asc
-	</select>
-	
-	<select id="selectSrTrnsfHrList" parameterType="String" resultType="com.finalteam5.otisrm.dto.sr.SrTrnsfHr">
-		SELECT srth.sr_trnsf_hr_no, srth.sr_no, srth.usr_no, usr.usr_nm, role.role_nm, srth.plan_capacity, srth.performance_capacity
-		FROM sr_trnsf_hr srth
-		JOIN usr ON srth.usr_no = usr.usr_no
-		JOIN role ON usr.role_no = role.role_no
-		WHERE srth.sr_no = #{srNo}
-	</select>
-	
-	<select id="selectSrRequestDetailForDeveloperHome" parameterType="String" resultType="com.finalteam5.otisrm.dto.sr.SrRequestDetailForDeveloperHome">
-		SELECT sr.sr_no, srr.sr_rqst_no, sys.sys_nm, srt.sr_task_nm, srr.sr_ttl, srr.sr_prps, dept.dept_nm, usr.usr_nm,
-			srr.sr_rqst_reg_dt, sr.sr_cmptn_prnmnt_dt, inst.inst_nm, sr.sr_trnsf_dt, srr.sr_conts, sr.sr_dvl_conts
-		FROM sr
-		JOIN sr_rqst srr ON sr.sr_rqst_no = srr.sr_rqst_no
-		JOIN inst on sr.sr_trnsf_inst_no = inst.inst_no
-		JOIN usr ON sr.pic_usr_no = usr.usr_no
-		JOIN dept ON usr.dept_no = dept.dept_no
-		JOIN sys ON srr.sys_no = sys.sys_no
-		JOIN sr_task_clsf srt ON sr.sr_task_no = srt.sr_task_no
-		WHERE sr.sr_no = #{srNo}
-	</select>
-	
-	<select id="selectDmndList" resultType="com.finalteam5.otisrm.dto.SrDmndClsf">
-		SELECT DISTINCT sr_dmnd_no, sr_dmnd_nm
-		FROM sr_dmnd_clsf
-	</select>
-	
-	<select id="selectTaskList" resultType="com.finalteam5.otisrm.dto.SrTaskClsf">
-		SELECT sr_task_no, sr_task_nm
-		FROM sr_task_clsf
-	</select>
-	
-	<select id="selectDeptListByUsrId" parameterType="String" resultType="com.finalteam5.otisrm.dto.usr.Dept">
-		SELECT dept.dept_no, dept.dept_nm
-		FROM usr
-		JOIN dept ON usr.inst_no = dept.inst_no
-		WHERE usr.usr_id = #{usrId}
-	</select>
-	
-	<select id="selectUsrListByUsrId" parameterType="String" resultType="com.finalteam5.otisrm.dto.usr.Usr">
-		SELECT usr2.usr_no, usr2.usr_nm
-		FROM usr
-		JOIN inst ON usr.inst_no = inst.inst_no
-		JOIN usr usr2 ON inst.inst_no = usr2.inst_no
-		WHERE usr.usr_id = #{usrId}
-	</select>
-	
-	<!-- SR계획정보 모달 구성 -->
-	<select id="getCurrentSrTrnsfPlanInfo" parameterType="String" resultType="com.finalteam5.otisrm.dto.sr.SrTrnsfPlanModalCompose">
-		SELECT srd.sr_dmnd_nm, srtk.sr_task_nm, dept.dept_nm, usr.usr_nm, srt.sr_trgt_bgng_dt, srt.sr_trgt_cmptn_dt, srt.sr_trnsf_note, srt.total_capacity
-		FROM sr_trnsf_plan srt
-        JOIN sr ON srt.sr_no = sr.sr_no
-		JOIN sr_dmnd_clsf srd ON srt.sr_dmnd_no = srd.sr_dmnd_no
-		JOIN sr_task_clsf srtk ON sr.sr_task_no = srtk.sr_task_no
-		JOIN dept ON srt.dept_no = dept.dept_no
-		JOIN usr ON srt.usr_no = usr.usr_no
-		WHERE srt.sr_no = #{srNo}
-	</select>
-	
-	<select id="getCurrentSrTrnsfPlanInfoRqst" parameterType="String" resultType="com.finalteam5.otisrm.dto.sr.SrTrnsfPlanModalCompose">
-		SELECT srd.sr_dmnd_nm, srtk.sr_task_nm
-		FROM sr_trnsf_plan srt
-        JOIN sr ON srt.sr_no = sr.sr_no
-		JOIN sr_dmnd_clsf srd ON srt.sr_dmnd_no = srd.sr_dmnd_no
-		JOIN sr_task_clsf srtk ON sr.sr_task_no = srtk.sr_task_no
-		WHERE srt.sr_no = #{srNo}
-	</select>
-	
-	<!-- 담당자 선택 모달 구성 -->
-	<select id="countSrTrnsfFindPicModalCompose" parameterType="map" resultType="int">
-		SELECT COUNT(*)
-		FROM usr
-		JOIN inst ON usr.inst_no = inst.inst_no
-		JOIN usr usr2 ON inst.inst_no = usr2.inst_no
-		JOIN dept ON usr2.dept_no = dept.dept_no
-		JOIN role ON usr2.role_no = role.role_no
-		JOIN ibps ON usr2.ibps_no = ibps.ibps_no
-		WHERE usr.usr_no = #{usrNo}
-		<if test='deptNo != null'>AND dept.dept_no = #{deptNo}</if>
-		<if test='usrNm != null'>AND usr2.usr_nm = #{usrNm}</if>
-		ORDER BY role.role_seq desc
-	</select>
-	
-	<select id="selectSrTrnsfFindPicModalCompose" parameterType="map" resultType="com.finalteam5.otisrm.dto.sr.SrTrnsfFindPicModalUsrInfo">
-		SELECT rnum, dept_nm, role_nm, ibps_nm, usr_nm, usr_no
-		FROM(
-			SELECT rownum as rnum, dept_nm, role_nm, ibps_nm, usr_nm, usr_no
-			FROM (
-				SELECT dept.dept_nm, role.role_nm, ibps.ibps_nm, usr2.usr_nm, usr2.usr_no
-				FROM usr
-				JOIN inst ON usr.inst_no = inst.inst_no
-				JOIN usr usr2 ON inst.inst_no = usr2.inst_no
-				JOIN dept ON usr2.dept_no = dept.dept_no
-				JOIN role ON usr2.role_no = role.role_no
-				JOIN ibps ON usr2.ibps_no = ibps.ibps_no
-				WHERE usr.usr_no = #{usrNo}
-				<if test='deptNo != null'>AND dept.dept_no = #{deptNo}</if>
-				<if test='usrNm != null'>AND usr2.usr_nm = #{usrNm}</if>
-				ORDER BY role.role_seq desc
-			)
-		<![CDATA[
-			WHERE rownum <= #{pager.endRowNo}
-		)
-		WHERE rnum >= #{pager.startRowNo}
-		]]>
-	</select>
-	
-	<!-- HR 추가 -->
-	<select id="checkHr" parameterType="map">
-		SELECT COUNT(*)
-		FROM sr_trnsf_hr
-		WHERE sr_no = #{srNo} AND usr_no = #{usrNo}
-	</select>
-	<insert id="insertHr" parameterType="map">
-		INSERT INTO sr_trnsf_hr (sr_trnsf_hr_no, sr_no, usr_no)
-		VALUES(#{srNo}||#{usrNo}, #{srNo}, #{usrNo})
-	</insert>
-	
-	<!-- 공수 저장 -->
-	<update id="updateSrTrnsfHr" parameterType="com.finalteam5.otisrm.dto.sr.SrTrnsfHr">
-		UPDATE sr_trnsf_hr
-		SET plan_capacity = #{planCapacity},
-			performance_capacity = #{performanceCapacity},
-			last_reg_dt = #{lastRegDt, jdbcType=DATE},
-			last_reg_capacity = #{lastRegCapacity, jdbcType=DECIMAL}
-		WHERE sr_no = #{srNo} and usr_no = #{usrNo}
-	</update>
-	
-	<!-- 자원 삭제 -->
-	<delete id="deleteSrTrnsfHr" parameterType="com.finalteam5.otisrm.dto.sr.SrTrnsfHr">
-		DELETE FROM sr_trnsf_hr
-		WHERE sr_no = #{srNo} and usr_no = #{usrNo}
-	</delete>
-	
-	<!-- sr이관 계획 수정 -->
-	<select id="selectDeptNoByDeptNmAndSrNo" parameterType="map" resultType="String">
-		SELECT dept_no
-		FROM sr
-		JOIN dept ON dept.inst_no = sr_trnsf_inst_no
-		WHERE sr.sr_no = #{srNo} AND dept.dept_nm = #{deptNm}
-	</select>
-	
-	<select id="selectUsrNoByUsrNm" parameterType="String" resultType="String">
-		SELECT usr_no
-		FROM usr
-		WHERE usr_nm = #{usrNm}
-	</select>
-	
-	<update id="updateSrTrnsfPlan" parameterType="com.finalteam5.otisrm.dto.SrTrnsfPlan">
-		UPDATE sr_trnsf_plan
-		SET dept_no = #{deptNo},
-			usr_no = #{usrNo},
-			sr_trgt_bgng_dt = #{srTrgtBgngDt},
-			sr_trgt_cmptn_dt = #{srTrgtCmptnDt},
-			sr_trnsf_note = #{srTrnsfNote, jdbcType=VARCHAR},
-			total_capacity = #{totalCapacity},
-			total_business_dt = #{totalBusinessDt}
-		WHERE sr_no = #{srNo}
-	</update>
-	
-	<!-- 요청->접수 상태로 변경 -->
-	<insert id="insertAnalysisPrgrs" parameterType="String">
-		INSERT INTO sr_prgrs (sr_prgrs_no, sr_no, sr_prgrs_stts_no)
-		VALUES(#{srNo}||'_analysis', #{srNo}, 'ANALYSIS')
-	</insert>
-	
-	<insert id="insertDesignPrgrs" parameterType="String">
-		INSERT INTO sr_prgrs (sr_prgrs_no, sr_no, sr_prgrs_stts_no)
-		VALUES(#{srNo}||'_design', #{srNo}, 'DESIGN')
-	</insert>
-	
-	<insert id="insertImplementPrgrs" parameterType="String">
-		INSERT INTO sr_prgrs (sr_prgrs_no, sr_no, sr_prgrs_stts_no)
-		VALUES(#{srNo}||'_implement', #{srNo}, 'IMPLEMENT')
-	</insert>
-	
-	<insert id="insertTestPrgrs" parameterType="String">
-		INSERT INTO sr_prgrs (sr_prgrs_no, sr_no, sr_prgrs_stts_no)
-		VALUES(#{srNo}||'_test', #{srNo}, 'TEST')
-	</insert>
-	
-	<insert id="insertApplyRequestPrgrs" parameterType="String">
-		INSERT INTO sr_prgrs (sr_prgrs_no, sr_no, sr_prgrs_stts_no)
-		VALUES(#{srNo}||'_apply_request', #{srNo}, 'APPLY_REQUEST')
-	</insert>
-	
-	<update id="updateSttsToReceipt" parameterType="String">
-		UPDATE sr_trnsf_plan
-		SET sr_prgrs_stts_no = 'RECEIPT'
-		WHERE sr_no = #{srNo}
-	</update>
-	
-	<!-- HR설정 모달 구성 -->
-	<select id="selectDeptNmBySrNo" parameterType="String" resultType="String">
-		SELECT dept_nm
-		FROM sr_trnsf_plan srt
-		JOIN dept ON srt.dept_no = dept.dept_no
-		WHERE srt.sr_no = #{srNo}
-	</select>
-	
-	<select id="selectAnalysisPicNm" parameterType="String" resultType="String">
-		SELECT usr.usr_nm
-		FROM sr_prgrs srp
-		JOIN usr ON srp.usr_no = usr.usr_no
-		WHERE srp.sr_prgrs_no = #{srNo} || '_analysis'
-	</select>
-	
-	<select id="selectDesignPicNm" parameterType="String" resultType="String">
-		SELECT usr.usr_nm
-		FROM sr_prgrs srp
-		JOIN usr ON srp.usr_no = usr.usr_no
-		WHERE srp.sr_prgrs_no = #{srNo} || '_design'
-	</select>
-	
-	<select id="selectImplementPicNm" parameterType="String" resultType="String">
-		SELECT usr.usr_nm
-		FROM sr_prgrs srp
-		JOIN usr ON srp.usr_no = usr.usr_no
-		WHERE srp.sr_prgrs_no = #{srNo} || '_implement'
-	</select>
-	
-	<select id="selectTestPicNm" parameterType="String" resultType="String">
-		SELECT usr.usr_nm
-		FROM sr_prgrs srp
-		JOIN usr ON srp.usr_no = usr.usr_no
-		WHERE srp.sr_prgrs_no = #{srNo} || '_test'
-	</select>
-	
-	<select id="selectApplyRequestPicNm" parameterType="String" resultType="String">
-		SELECT usr.usr_nm
-		FROM sr_prgrs srp
-		JOIN usr ON srp.usr_no = usr.usr_no
-		WHERE srp.sr_prgrs_no = #{srNo} || '_apply_request'
-	</select>
-	
-	<!-- HR PIC 업데이트 -->
-	<update id="updateAnalysisPicNm" parameterType="map">
-		UPDATE sr_prgrs
-		SET usr_no = (SELECT usr_no FROM usr WHERE usr_nm = #{picNm})
-		WHERE sr_prgrs_no = #{srNo} || '_analysis'
-	</update>
-	
-	<update id="updateDesignPicNm" parameterType="map">
-		UPDATE sr_prgrs
-		SET usr_no = (SELECT usr_no FROM usr WHERE usr_nm = #{picNm})
-		WHERE sr_prgrs_no = #{srNo} || '_design'
-	</update>
-	
-	<update id="updateImplementPicNm" parameterType="map">
-		UPDATE sr_prgrs
-		SET usr_no = (SELECT usr_no FROM usr WHERE usr_nm = #{picNm})
-		WHERE sr_prgrs_no = #{srNo} || '_implement'
-	</update>
-	
-	<update id="updateTestPicNm" parameterType="map">
-		UPDATE sr_prgrs
-		SET usr_no = (SELECT usr_no FROM usr WHERE usr_nm = #{picNm})
-		WHERE sr_prgrs_no = #{srNo} || '_test'
-	</update>
-	
-	<update id="updateApplyRequestPicNm" parameterType="map">
-		UPDATE sr_prgrs
-		SET usr_no = (SELECT usr_no FROM usr WHERE usr_nm = #{picNm})
-		WHERE sr_prgrs_no = #{srNo} || '_apply_request'
-	</update>
-	
-	<!-- SR 이관 진행률 업데이트 -->
-	<select id="selectAnalysisPrgrs" parameterType="String" resultType="Integer">
-		SELECT sr_prgrs
-		FROM sr_prgrs
-		WHERE sr_prgrs_no = #{srNo}||'_analysis'
-	</select>
-	
-	<select id="selectDesignPrgrs" parameterType="String" resultType="Integer">
-		SELECT sr_prgrs
-		FROM sr_prgrs
-		WHERE sr_prgrs_no = #{srNo}||'_design'
-	</select>
-	
-	<select id="selectImplementPrgrs" parameterType="String" resultType="Integer">
-		SELECT sr_prgrs
-		FROM sr_prgrs
-		WHERE sr_prgrs_no = #{srNo}||'_implement'
-	</select>
-	
-	<select id="selectTestPrgrs" parameterType="String" resultType="Integer">
-		SELECT sr_prgrs
-		FROM sr_prgrs
-		WHERE sr_prgrs_no = #{srNo}||'_test'
-	</select>
-	
-	<select id="selectApplyRequestPrgrs" parameterType="String" resultType="Integer">
-		SELECT sr_prgrs
-		FROM sr_prgrs
-		WHERE sr_prgrs_no = #{srNo}||'_apply_request'
-	</select>
-	
-	<update id="updateSrPrgrs" parameterType="com.finalteam5.otisrm.dto.SrPrgrs">
-		UPDATE sr_prgrs
-		<if test='srPrgrsBgngDt != null and srPrgrsCmptnDt != null'>
-			SET sr_prgrs_bgng_dt = #{srPrgrsBgngDt}, sr_prgrs_cmptn_dt = #{srPrgrsCmptnDt}, sr_prgrs = #{srPrgrs}
-		</if>
-		<if test='srPrgrsBgngDt != null and srPrgrsCmptnDt == null'>
-			SET sr_prgrs_bgng_dt = #{srPrgrsBgngDt}, sr_prgrs = #{srPrgrs}
-		</if>
-		<if test='srPrgrsBgngDt == null and srPrgrsCmptnDt != null'>
-			SET sr_prgrs_cmptn_dt = #{srPrgrsCmptnDt}, sr_prgrs = #{srPrgrs}
-		</if>
-		<if test='srPrgrsBgngDt == null and srPrgrsCmptnDt == null'>
-			SET sr_prgrs = #{srPrgrs}
-		</if>
-		WHERE sr_prgrs_no = #{srPrgrsNo}
-	</update>
-	
-	<update id="updateSrTrnsfStts" parameterType="map">
-		UPDATE sr_trnsf_plan
-		SET sr_prgrs_stts_no = #{srPrgrsSttsNo}
-		WHERE sr_no = #{srNo}
-	</update>
-	
-	<!-- 산출물 업로드 -->
-	<insert id="insertSrPrgrsOtpt" parameterType="com.finalteam5.otisrm.dto.SrPrgrsOtpt">
-		INSERT INTO sr_prgrs_otpt(
-	        sr_prgrs_otpt_no, sr_prgrs_no, sr_prgrs_otpt_nm, sr_prgrs_otpt_mime_type, sr_prgrs_otpt_data,
-	        sr_prgrs_otpt_size, sr_prgrs_otpt_file_nm, sr_prgrs_otpt_reg_dt, usr_no
-	    ) values(
-	        #{srPrgrsOtptNo}, #{srPrgrsNo}, #{srPrgrsOtptNm}, #{srPrgrsOtptMimeType}, #{srPrgrsOtptDataByteArray},
-	        #{srPrgrsOtptSize}, #{srPrgrsOtptFileNm}, #{srPrgrsOtptRegDt}, #{usrNo}
-	    )
-	</insert>
-	
-	<!-- 산출물 목록 출력 -->
-	<select id="selectSrPrgrsOtpt" parameterType="String" resultType="com.finalteam5.otisrm.dto.SrPrgrsOtpt">
-		SELECT sr_prgrs_otpt_no, sr_prgrs_no, sr_prgrs_otpt_nm, sr_prgrs_otpt_mime_type,
-			sr_prgrs_otpt_size, sr_prgrs_otpt_file_nm, sr_prgrs_otpt_reg_dt, usr.usr_nm
-		FROM sr_prgrs_otpt
-		JOIN usr ON sr_prgrs_otpt.usr_no = usr.usr_no
-		WHERE sr_prgrs_no = #{srPrgrsNo}
-	</select>
-	
-	<!-- 산출물 다운로드 -->
-	<select id="selectSrPrgrsOtptBySrPrgrsOtptNo" parameterType="String" resultType="com.finalteam5.otisrm.dto.SrPrgrsOtpt">
-		SELECT sr_prgrs_otpt_no, sr_prgrs_no, sr_prgrs_otpt_nm, sr_prgrs_otpt_mime_type, sr_prgrs_otpt_data as sr_prgrs_otpt_data_byte_array,
-			sr_prgrs_otpt_size, sr_prgrs_otpt_file_nm, sr_prgrs_otpt_reg_dt
-		FROM sr_prgrs_otpt
-		WHERE sr_prgrs_otpt_no = #{srPrgrsOtptNo}
-	</select>
-	
-	<!-- 산출물 삭제 -->
-	<delete id="deleteSrPrgrsOtpt" parameterType="String">
-		DELETE FROM sr_prgrs_otpt WHERE sr_prgrs_otpt_no = #{srPrgrsOtptNo}
-	</delete>
-	
-	<!-- SR공수 등록 -->
-	<select id="selectSrTrnsfHrListByUsrNo" parameterType="String" resultType="com.finalteam5.otisrm.dto.sr.SrTrnsfHr">
-		SELECT srth.sr_no, srth.usr_no, srtp.sr_trgt_bgng_dt, srtp.sr_trgt_cmptn_dt, srth.plan_capacity, srth.performance_capacity,
-				srth.last_reg_dt, srth.last_reg_capacity
-		FROM sr_trnsf_hr srth
-		JOIN sr_trnsf_plan srtp ON srth.sr_no = srtp.sr_no
-		WHERE srth.usr_no = #{usrNo}
-	</select>
-	
-	<!-- 금일 SR공수 등록 -->
-	<select id="getSrTrnsfHrBySrNoAndUsrNo" parameterType="map" resultType="com.finalteam5.otisrm.dto.sr.SrTrnsfHr">
-		SELECT sr_trnsf_hr_no, sr_no, usr_no, plan_capacity, performance_capacity, last_reg_dt, last_reg_capacity
-		FROM sr_trnsf_hr
-		WHERE sr_no = #{srNo} and usr_no = #{usrNo}
-	</select>
-	
-	
-	<!-- SR진척관리 옵션 select구성 -->
-	<!-- Sys List -->
-	<select id="selectSysList" resultType="com.finalteam5.otisrm.dto.Sys">
-		SELECT sys_no, dept_no, sys_nm
-		FROM sys
-	</select>
-	
-	<!-- Task List(위에 있음) -->
-	<!-- 
-	<select id="selectTaskList" resultType="com.finalteam5.otisrm.dto.SrTaskClsf">
-		SELECT sr_task_no, sr_task_nm
-		FROM sr_task_clsf
-	</select>
-	 -->
-	
-	<!-- Inst List -->
-	<select id="selectInstList" resultType="com.finalteam5.otisrm.dto.usr.Inst">
-		SELECT inst_no, inst_nm, outsrc_yn
-		FROM inst
-	</select>
-	
-	<!-- srPrgrsSttsList List -->
-	<select id="selectSrPrgrsSttsList" resultType="com.finalteam5.otisrm.dto.SrPrgrsStts">
-		SELECT sr_prgrs_stts_no, sr_prgrs_stts_nm, sr_prgrs_stts_seq
-		FROM sr_prgrs_stts
-		ORDER BY sr_prgrs_stts_seq ASC
-	</select>
-	
-	<!-- Dept List -->
-	<select id="selectDeptListByInstNo" parameterType="String" resultType="com.finalteam5.otisrm.dto.usr.Dept">
-		SELECT dept_no, inst_no, dept_nm
-		FROM dept
-		WHERE inst_no = #{instNo}
-	</select>
-	
-	<!-- 메인 테이블 구성 -->
-	<select id="countSrForProgressManagementBoard" parameterType="map" resultType="int">
-		SELECT COUNT(*)
-		FROM(
-			SELECT DISTINCT 
-				sr.sr_no, sys.sys_nm, sr_task_clsf.sr_task_nm, reqstr.usr_nm as rqstrNm,
-				sr.sr_cmptn_prnmnt_dt, inst.inst_nm, sr_trnsf_plan.sr_trgt_cmptn_dt, sr_prgrs_stts.sr_prgrs_stts_nm
-			FROM sr
-			JOIN sr_rqst ON sr.sr_rqst_no = sr_rqst.sr_rqst_no
-			JOIN sr_trnsf_plan ON sr.sr_no = sr_trnsf_plan.sr_no
-			JOIN sys ON sr_rqst.sys_no = sys.sys_no
-			JOIN sr_task_clsf ON sr.sr_task_no = sr_task_clsf.sr_task_no
-			JOIN sr_prgrs_stts ON sr_trnsf_plan.sr_prgrs_stts_no = sr_prgrs_stts.sr_prgrs_stts_no
-			JOIN usr reqstr ON sr.pic_usr_no = reqstr.usr_no
-			JOIN usr pic ON sr_trnsf_plan.usr_no = pic.usr_no
-			JOIN inst ON sr.sr_trnsf_inst_no = inst.inst_no
-			JOIN dept ON sr_trnsf_plan.dept_no = dept.dept_no
-			<where>
-				<if test="progressManagementSearch.sysNo != null">
-					sr_rqst.sys_no = #{progressManagementSearch.sysNo}
-				</if>
-				<if test="progressManagementSearch.taskNo != null">
-					AND sr.sr_task_no = #{progressManagementSearch.taskNo}
-				</if>
-				<if test="progressManagementSearch.receiptNo != null">
-					<if test="progressManagementSearch.receiptNo == 'RQST'">
-						AND sr_prgrs_stts.sr_prgrs_stts_seq = 0
-					</if>
-					<if test="progressManagementSearch.receiptNo == 'RECEIPT'">
-						<![CDATA[
-						AND sr_prgrs_stts.sr_prgrs_stts_seq >= 1
-						]]>
-					</if>
-				</if>
-				<if test="progressManagementSearch.prgrsNo != null">
-					AND sr_trnsf_plan.sr_prgrs_stts_no = #{progressManagementSearch.prgrsNo}
-				</if>
-				<if test="progressManagementSearch.instNo != null">
-					AND sr.sr_trnsf_inst_no = #{progressManagementSearch.instNo}
-				</if>
-				<if test="progressManagementSearch.deptNo != null">
-					AND sr_trnsf_plan.dept_no = #{progressManagementSearch.deptNo}
-				</if>
-				<if test="progressManagementSearch.keywordContent != null">
-					<if test="progressManagementSearch.keywordCategory == 'srTitle'">
-						AND sr_rqst.sr_ttl like '%' || #{progressManagementSearch.keywordContent} || '%'
-					</if>
-					<if test="progressManagementSearch.keywordCategory == 'rqstr'">
-						AND reqstr.usr_nm like '%' || #{progressManagementSearch.keywordContent} || '%'
-					</if>
-					<if test="progressManagementSearch.keywordCategory == 'pic'">
-						AND pic.usr_nm like '%' || #{progressManagementSearch.keywordContent} || '%'
-					</if>
-				</if>
-				<if test="progressManagementSearch.mySrCheck != null">
-					AND (reqstr.usr_no = #{usrNo} OR pic.usr_no = #{usrNo})
-				</if>
-			</where>
-			
-			UNION
-			
-			SELECT DISTINCT 
-				sr.sr_no, sys.sys_nm, sr_task_clsf.sr_task_nm, reqstr.usr_nm as rqstrNm,
-				sr.sr_cmptn_prnmnt_dt, inst.inst_nm, sr_trnsf_plan.sr_trgt_cmptn_dt, sr_prgrs_stts.sr_prgrs_stts_nm
-			FROM sr
-			JOIN sr_rqst ON sr.sr_rqst_no = sr_rqst.sr_rqst_no
-			JOIN sr_trnsf_plan ON sr.sr_no = sr_trnsf_plan.sr_no
-			JOIN sys ON sr_rqst.sys_no = sys.sys_no
-			JOIN sr_task_clsf ON sr.sr_task_no = sr_task_clsf.sr_task_no
-			JOIN sr_prgrs_stts ON sr_trnsf_plan.sr_prgrs_stts_no = sr_prgrs_stts.sr_prgrs_stts_no
-			JOIN usr reqstr ON sr.pic_usr_no = reqstr.usr_no
-			JOIN usr pic ON sr_trnsf_plan.usr_no = pic.usr_no
-			JOIN inst ON sr.sr_trnsf_inst_no = inst.inst_no
-			JOIN dept ON sr_trnsf_plan.dept_no = dept.dept_no
-			LEFT JOIN sr_trnsf_hr srth ON sr.sr_no = srth.sr_no
-			<where>
-				<if test="progressManagementSearch.sysNo != null">
-					sr_rqst.sys_no = #{progressManagementSearch.sysNo}
-				</if>
-				<if test="progressManagementSearch.taskNo != null">
-					AND sr.sr_task_no = #{progressManagementSearch.taskNo}
-				</if>
-				<if test="progressManagementSearch.receiptNo != null">
-					<if test="progressManagementSearch.receiptNo == 'RQST'">
-						AND sr_prgrs_stts.sr_prgrs_stts_seq = 0
-					</if>
-					<if test="progressManagementSearch.receiptNo == 'RECEIPT'">
-						<![CDATA[
-						AND sr_prgrs_stts.sr_prgrs_stts_seq >= 1
-						]]>
-					</if>
-				</if>
-				<if test="progressManagementSearch.prgrsNo != null">
-					AND sr_trnsf_plan.sr_prgrs_stts_no = #{progressManagementSearch.prgrsNo}
-				</if>
-				<if test="progressManagementSearch.instNo != null">
-					AND sr.sr_trnsf_inst_no = #{progressManagementSearch.instNo}
-				</if>
-				<if test="progressManagementSearch.deptNo != null">
-					AND sr_trnsf_plan.dept_no = #{progressManagementSearch.deptNo}
-				</if>
-				<if test="progressManagementSearch.keywordContent != null">
-					<if test="progressManagementSearch.keywordCategory == 'srTitle'">
-						AND sr_rqst.sr_ttl like '%' || #{progressManagementSearch.keywordContent} || '%'
-					</if>
-					<if test="progressManagementSearch.keywordCategory == 'rqstr'">
-						AND reqstr.usr_nm like '%' || #{progressManagementSearch.keywordContent} || '%'
-					</if>
-					<if test="progressManagementSearch.keywordCategory == 'pic'">
-						AND pic.usr_nm like '%' || #{progressManagementSearch.keywordContent} || '%'
-					</if>
-				</if>
-				<if test="progressManagementSearch.mySrCheck != null">
-					AND (reqstr.usr_no = #{usrNo} OR pic.usr_no = #{usrNo} OR srth.usr_no = #{usrNo})
-				</if>
-			</where>
-			
-			UNION
-	
-			SELECT DISTINCT 
-			    sr.sr_no, sys.sys_nm, sr_task_clsf.sr_task_nm, reqstr.usr_nm as rqstrNm,
-			    sr.sr_cmptn_prnmnt_dt, inst.INST_NM, NULL AS SR_TRGT_CMPTN_DT, sr_prgrs_stts.sr_prgrs_stts_nm
-			FROM sr
-			JOIN sr_rqst ON sr.sr_rqst_no = sr_rqst.sr_rqst_no
-			JOIN sr_trnsf_plan ON sr.sr_no = sr_trnsf_plan.sr_no
-			JOIN sys ON sr_rqst.sys_no = sys.sys_no
-			JOIN sr_task_clsf ON sr.sr_task_no = sr_task_clsf.sr_task_no
-			JOIN sr_prgrs_stts ON sr_trnsf_plan.sr_prgrs_stts_no = sr_prgrs_stts.sr_prgrs_stts_no
-			JOIN usr reqstr ON sr.pic_usr_no = reqstr.usr_no
-			JOIN inst ON sr.sr_trnsf_inst_no = inst.inst_no
-			<where>
-				<if test="true">
-					sr_trnsf_plan.sr_prgrs_stts_no = 'RQST'
-				</if>
-				<if test="progressManagementSearch.sysNo != null">
-					AND sr_rqst.sys_no = #{progressManagementSearch.sysNo}
-				</if>
-				<if test="progressManagementSearch.taskNo != null">
-					AND sr.sr_task_no = #{progressManagementSearch.taskNo}
-				</if>
-				<if test="progressManagementSearch.receiptNo != null">
-					<if test="progressManagementSearch.receiptNo == 'RQST'">
-						AND sr_prgrs_stts.sr_prgrs_stts_seq = 0
-					</if>
-					<if test="progressManagementSearch.receiptNo == 'RECEIPT'">
-						<![CDATA[
-						AND sr_prgrs_stts.sr_prgrs_stts_seq >= 1
-						]]>
-					</if>
-				</if>
-				<if test="progressManagementSearch.keywordContent != null">
-					<if test="progressManagementSearch.keywordCategory == 'srTitle'">
-						AND sr_rqst.sr_ttl like '%' || #{progressManagementSearch.keywordContent} || '%'
-					</if>
-					<if test="progressManagementSearch.keywordCategory == 'rqstr'">
-						AND reqstr.usr_nm like '%' || #{progressManagementSearch.keywordContent} || '%'
-					</if>
-				</if>
-				<if test="progressManagementSearch.mySrCheck != null">
-					AND (reqstr.usr_no = #{usrNo})
-				</if>
-			</where>
-		)
-	</select>
-	
-	<select id="selectSrForProgressManagementBoard" parameterType="map" resultType="com.finalteam5.otisrm.dto.sr.SrForProgressManagementBoard">
-		SELECT rnum, sr_no, sys_nm, sr_task_nm, sr_ttl, rqstr_nm, 
-			   sr_cmptn_prnmnt_dt, inst_nm, sr_trgt_cmptn_dt, sr_prgrs_stts_nm
-		FROM(
-			SELECT rownum as rnum, sr_no, sys_nm, sr_task_nm, sr_ttl, rqstr_nm, 
-				   sr_cmptn_prnmnt_dt, inst_nm, sr_trgt_cmptn_dt, sr_prgrs_stts_nm
-			FROM (
-				SELECT DISTINCT 
-					sr.sr_no, sys.sys_nm, sr_task_clsf.sr_task_nm, sr_rqst.sr_ttl, reqstr.usr_nm as rqstr_nm,
-					sr.sr_cmptn_prnmnt_dt, inst.inst_nm, sr_trnsf_plan.sr_trgt_cmptn_dt, sr_prgrs_stts.sr_prgrs_stts_nm
-				FROM sr
-				JOIN sr_rqst ON sr.sr_rqst_no = sr_rqst.sr_rqst_no
-				JOIN sr_trnsf_plan ON sr.sr_no = sr_trnsf_plan.sr_no
-				JOIN sys ON sr_rqst.sys_no = sys.sys_no
-				JOIN sr_task_clsf ON sr.sr_task_no = sr_task_clsf.sr_task_no
-				JOIN sr_prgrs_stts ON sr_trnsf_plan.sr_prgrs_stts_no = sr_prgrs_stts.sr_prgrs_stts_no
-				JOIN usr reqstr ON sr.pic_usr_no = reqstr.usr_no
-				JOIN usr pic ON sr_trnsf_plan.usr_no = pic.usr_no
-				JOIN inst ON sr.sr_trnsf_inst_no = inst.inst_no
-				JOIN dept ON sr_trnsf_plan.dept_no = dept.dept_no
-				<where>
-					<if test="progressManagementSearch.sysNo != null">
-						sr_rqst.sys_no = #{progressManagementSearch.sysNo}
-					</if>
-					<if test="progressManagementSearch.taskNo != null">
-						AND sr.sr_task_no = #{progressManagementSearch.taskNo}
-					</if>
-					<if test="progressManagementSearch.receiptNo != null">
-						<if test="progressManagementSearch.receiptNo == 'RQST'">
-							AND sr_prgrs_stts.sr_prgrs_stts_seq = 0
-						</if>
-						<if test="progressManagementSearch.receiptNo == 'RECEIPT'">
-							<![CDATA[
-							AND sr_prgrs_stts.sr_prgrs_stts_seq >= 1
-							]]>
-						</if>
-					</if>
-					<if test="progressManagementSearch.prgrsNo != null">
-						AND sr_trnsf_plan.sr_prgrs_stts_no = #{progressManagementSearch.prgrsNo}
-					</if>
-					<if test="progressManagementSearch.instNo != null">
-						AND sr.sr_trnsf_inst_no = #{progressManagementSearch.instNo}
-					</if>
-					<if test="progressManagementSearch.deptNo != null">
-						AND sr_trnsf_plan.dept_no = #{progressManagementSearch.deptNo}
-					</if>
-					<if test="progressManagementSearch.keywordContent != null">
-						<if test="progressManagementSearch.keywordCategory == 'srTitle'">
-							AND sr_rqst.sr_ttl like '%' || #{progressManagementSearch.keywordContent} || '%'
-						</if>
-						<if test="progressManagementSearch.keywordCategory == 'rqstr'">
-							AND reqstr.usr_nm like '%' || #{progressManagementSearch.keywordContent} || '%'
-						</if>
-						<if test="progressManagementSearch.keywordCategory == 'pic'">
-							AND pic.usr_nm like '%' || #{progressManagementSearch.keywordContent} || '%'
-						</if>
-					</if>
-					<if test="progressManagementSearch.mySrCheck != null">
-						AND (reqstr.usr_no = #{usrNo} OR pic.usr_no = #{usrNo})
-					</if>
-				</where>
-				
-				UNION
-				
-				SELECT DISTINCT 
-					sr.sr_no, sys.sys_nm, sr_task_clsf.sr_task_nm, sr_rqst.sr_ttl, reqstr.usr_nm as rqstr_nm,
-					sr.sr_cmptn_prnmnt_dt, inst.inst_nm, sr_trnsf_plan.sr_trgt_cmptn_dt, sr_prgrs_stts.sr_prgrs_stts_nm
-				FROM sr
-				JOIN sr_rqst ON sr.sr_rqst_no = sr_rqst.sr_rqst_no
-				JOIN sr_trnsf_plan ON sr.sr_no = sr_trnsf_plan.sr_no
-				JOIN sys ON sr_rqst.sys_no = sys.sys_no
-				JOIN sr_task_clsf ON sr.sr_task_no = sr_task_clsf.sr_task_no
-				JOIN sr_prgrs_stts ON sr_trnsf_plan.sr_prgrs_stts_no = sr_prgrs_stts.sr_prgrs_stts_no
-				JOIN usr reqstr ON sr.pic_usr_no = reqstr.usr_no
-				JOIN usr pic ON sr_trnsf_plan.usr_no = pic.usr_no
-				JOIN inst ON sr.sr_trnsf_inst_no = inst.inst_no
-				JOIN dept ON sr_trnsf_plan.dept_no = dept.dept_no
-				LEFT JOIN sr_trnsf_hr srth ON sr.sr_no = srth.sr_no
-				<where>
-					<if test="progressManagementSearch.sysNo != null">
-						sr_rqst.sys_no = #{progressManagementSearch.sysNo}
-					</if>
-					<if test="progressManagementSearch.taskNo != null">
-						AND sr.sr_task_no = #{progressManagementSearch.taskNo}
-					</if>
-					<if test="progressManagementSearch.receiptNo != null">
-						<if test="progressManagementSearch.receiptNo == 'RQST'">
-							AND sr_prgrs_stts.sr_prgrs_stts_seq = 0
-						</if>
-						<if test="progressManagementSearch.receiptNo == 'RECEIPT'">
-							<![CDATA[
-							AND sr_prgrs_stts.sr_prgrs_stts_seq >= 1
-							]]>
-						</if>
-					</if>
-					<if test="progressManagementSearch.prgrsNo != null">
-						AND sr_trnsf_plan.sr_prgrs_stts_no = #{progressManagementSearch.prgrsNo}
-					</if>
-					<if test="progressManagementSearch.instNo != null">
-						AND sr.sr_trnsf_inst_no = #{progressManagementSearch.instNo}
-					</if>
-					<if test="progressManagementSearch.deptNo != null">
-						AND sr_trnsf_plan.dept_no = #{progressManagementSearch.deptNo}
-					</if>
-					<if test="progressManagementSearch.keywordContent != null">
-						<if test="progressManagementSearch.keywordCategory == 'srTitle'">
-							AND sr_rqst.sr_ttl like '%' || #{progressManagementSearch.keywordContent} || '%'
-						</if>
-						<if test="progressManagementSearch.keywordCategory == 'rqstr'">
-							AND reqstr.usr_nm like '%' || #{progressManagementSearch.keywordContent} || '%'
-						</if>
-						<if test="progressManagementSearch.keywordCategory == 'pic'">
-							AND pic.usr_nm like '%' || #{progressManagementSearch.keywordContent} || '%'
-						</if>
-					</if>
-					<if test="progressManagementSearch.mySrCheck != null">
-						AND (reqstr.usr_no = #{usrNo} OR pic.usr_no = #{usrNo} OR srth.usr_no = #{usrNo})
-					</if>
-				</where>
-				
-				UNION
-		
-				SELECT DISTINCT 
-				    sr.sr_no, sys.sys_nm, sr_task_clsf.sr_task_nm, sr_rqst.sr_ttl, reqstr.usr_nm as rqstr_nm,
-				    sr.sr_cmptn_prnmnt_dt, inst.inst_nm, NULL AS sr_trgt_cmptn_dt, sr_prgrs_stts.sr_prgrs_stts_nm
-				FROM sr
-				JOIN sr_rqst ON sr.sr_rqst_no = sr_rqst.sr_rqst_no
-				JOIN sr_trnsf_plan ON sr.sr_no = sr_trnsf_plan.sr_no
-				JOIN sys ON sr_rqst.sys_no = sys.sys_no
-				JOIN sr_task_clsf ON sr.sr_task_no = sr_task_clsf.sr_task_no
-				JOIN sr_prgrs_stts ON sr_trnsf_plan.sr_prgrs_stts_no = sr_prgrs_stts.sr_prgrs_stts_no
-				JOIN usr reqstr ON sr.pic_usr_no = reqstr.usr_no
-				JOIN inst ON sr.sr_trnsf_inst_no = inst.inst_no
-				<where>
-					<if test="true">
-						sr_trnsf_plan.sr_prgrs_stts_no = 'RQST'
-					</if>
-					<if test="progressManagementSearch.sysNo != null">
-						AND sr_rqst.sys_no = #{progressManagementSearch.sysNo}
-					</if>
-					<if test="progressManagementSearch.taskNo != null">
-						AND sr.sr_task_no = #{progressManagementSearch.taskNo}
-					</if>
-					<if test="progressManagementSearch.receiptNo != null">
-						<if test="progressManagementSearch.receiptNo == 'RQST'">
-							AND sr_prgrs_stts.sr_prgrs_stts_seq = 0
-						</if>
-						<if test="progressManagementSearch.receiptNo == 'RECEIPT'">
-							<![CDATA[
-							AND sr_prgrs_stts.sr_prgrs_stts_seq >= 1
-							]]>
-						</if>
-					</if>
-					<if test="progressManagementSearch.keywordContent != null">
-						<if test="progressManagementSearch.keywordCategory == 'srTitle'">
-							AND sr_rqst.sr_ttl like '%' || #{progressManagementSearch.keywordContent} || '%'
-						</if>
-						<if test="progressManagementSearch.keywordCategory == 'rqstr'">
-							AND reqstr.usr_nm like '%' || #{progressManagementSearch.keywordContent} || '%'
-						</if>
-					</if>
-					<if test="progressManagementSearch.mySrCheck != null">
-						AND reqstr.usr_no = #{usrNo}
-					</if>
-				</where>
-				)
-		<![CDATA[
-			WHERE rownum <= #{pager.endRowNo}
-		)
-		WHERE rnum >= #{pager.startRowNo}
-		]]>
-	</select>
-	
-	<select id="selectSrCmptnPrnmntDtBySrNo" parameterType="String" resultType="com.finalteam5.otisrm.dto.sr.DatesForScheduleChangeRequest">
-		SELECT sr_cmptn_prnmnt_dt, sr_schdl_chg_rqst_dt
-		FROM sr
-		WHERE sr_no = #{srNo}
-	</select>
-	
-	<!-- sr일정변경요청 -->
-	<update id="updateSrSchdlChgRqst" parameterType="map">
-		UPDATE sr
-		SET sr_schdl_chg_rqst_yn = 'Y',
-			sr_schdl_chg_rqst_dt = #{srSchdlChgRqstDt}
-		WHERE sr_no = #{srNo}
-	</update>
-	
-	<!-- 일정변경요청 내역 관리 -->
-	<select id="selectManageChangeScheduleRequestModalConfigList" resultType="com.finalteam5.otisrm.dto.sr.ManageChangeScheduleRequestModalConfig">
-		SELECT sr_no, sr_cmptn_prnmnt_dt, sr_schdl_chg_rqst_dt, sr_schdl_chg_rqst_aprv_yn
-		FROM sr
-		WHERE sr_schdl_chg_rqst_yn = 'Y'
-	</select>
-	
-	<!-- 일정변경요청 결과 확인 -->
-	<update id="updateSrScheduleChangeRequestResultCheck" parameterType="String">
-		UPDATE sr
-		SET sr_schdl_chg_rqst_yn = 'N',
-			sr_schdl_chg_rqst_dt = null,
-			sr_schdl_chg_rqst_aprv_yn = null
-		WHERE sr_no = #{srNo}
-	</update>
-	
+   <select id="countSr" resultType="int">
+      count * from sr
+   </select>
+   
+   <!-- 메인 테이블 구성 -->
+   <select id="checkStatusBySrNo" parameterType="String" resultType="String">
+      SELECT sr_prgrs_stts_no
+      FROM sr_trnsf_plan
+      WHERE sr_no = #{srNo}
+   </select>
+   
+   
+   
+   <select id="selectSrListForDeveloperHomeBoardByUsrIdAndStts" parameterType="map" resultType="com.finalteam5.otisrm.dto.sr.SrForDeveloperHomeBoard">
+      SELECT sr.sr_no, sys.sys_nm, srtc.sr_task_nm, srr.sr_ttl, pic.usr_nm, sr.sr_cmptn_prnmnt_dt, srtp.sr_trgt_cmptn_dt, srps.sr_prgrs_stts_nm
+      FROM sr
+      JOIN sr_rqst srr ON sr.sr_rqst_no = srr.sr_rqst_no
+      JOIN sr_trnsf_plan srtp ON sr.sr_no = srtp.sr_no
+      JOIN usr pic ON sr.pic_usr_no = pic.usr_no
+      JOIN usr pl ON srtp.usr_no = pl.usr_no
+      JOIN sys ON srr.sys_no = sys.sys_no
+      JOIN sr_task_clsf srtc ON sr.sr_task_no = srtc.sr_task_no
+      JOIN sr_prgrs_stts srps ON srtp.sr_prgrs_stts_no = srps.sr_prgrs_stts_no
+      LEFT JOIN sr_trnsf_hr srth ON sr.sr_no = srth.sr_no
+      LEFT JOIN usr dvl ON srth.usr_no = dvl.usr_no
+      WHERE (pl.usr_no = #{usrNo} OR dvl.usr_no = #{usrNo})
+      <if test='srPrgrsSttsNo != null'>
+         AND srtp.sr_prgrs_stts_no = #{srPrgrsSttsNo}
+      </if>
+         AND srr.sr_rqst_stts_no != 'DEP_CMPTN'
+      <if test='srPrgrsSttsNo == null || srPrgrsSttsNo == "RQST"'>
+         UNION
+         SELECT sr.sr_no, sys.sys_nm, srtc.sr_task_nm, srr.sr_ttl, pic.usr_nm, sr.sr_cmptn_prnmnt_dt, srtp.sr_trgt_cmptn_dt, srps.sr_prgrs_stts_nm
+         FROM sr
+         JOIN sr_rqst srr ON sr.sr_rqst_no = srr.sr_rqst_no
+         JOIN sr_trnsf_plan srtp ON sr.sr_no = srtp.sr_no
+         JOIN usr pic ON sr.pic_usr_no = pic.usr_no
+         JOIN sys ON srr.sys_no = sys.sys_no
+         JOIN sr_task_clsf srtc ON sr.sr_task_no = srtc.sr_task_no
+         JOIN sr_prgrs_stts srps ON srtp.sr_prgrs_stts_no = srps.sr_prgrs_stts_no
+         LEFT JOIN sr_trnsf_hr srth ON sr.sr_no = srth.sr_no
+         LEFT JOIN usr dvl ON srth.usr_no = dvl.usr_no
+         WHERE srtp.sr_prgrs_stts_no = 'RQST'
+            AND srr.sr_rqst_stts_no != 'DEP_CMPTN'
+      </if>
+      ORDER BY sr_no
+   </select>
+   
+   <select id="selectSrListForDeveloperHomeBoardByUsrIdAndSttsAndPager" parameterType="map" resultType="com.finalteam5.otisrm.dto.sr.SrForDeveloperHomeBoard">
+      SELECT rnum, sr_no, sys_nm, sr_task_nm, sr_ttl, usr_nm, sr_cmptn_prnmnt_dt, sr_trgt_cmptn_dt, sr_prgrs_stts_nm
+      FROM(
+         SELECT rownum as rnum, sr_no, sys_nm, sr_task_nm, sr_ttl, usr_nm, sr_cmptn_prnmnt_dt, sr_trgt_cmptn_dt, sr_prgrs_stts_nm
+         FROM (   
+            SELECT sr.sr_no, sys.sys_nm, srtc.sr_task_nm, srr.sr_ttl, pic.usr_nm, sr.sr_cmptn_prnmnt_dt, srtp.sr_trgt_cmptn_dt, srps.sr_prgrs_stts_nm
+            FROM sr
+            JOIN sr_rqst srr ON sr.sr_rqst_no = srr.sr_rqst_no
+            JOIN sr_trnsf_plan srtp ON sr.sr_no = srtp.sr_no
+            JOIN usr pic ON sr.pic_usr_no = pic.usr_no
+            JOIN usr pl ON srtp.usr_no = pl.usr_no
+            JOIN sys ON srr.sys_no = sys.sys_no
+            JOIN sr_task_clsf srtc ON sr.sr_task_no = srtc.sr_task_no
+            JOIN sr_prgrs_stts srps ON srtp.sr_prgrs_stts_no = srps.sr_prgrs_stts_no
+            LEFT JOIN sr_trnsf_hr srth ON sr.sr_no = srth.sr_no
+            LEFT JOIN usr dvl ON srth.usr_no = dvl.usr_no
+            WHERE (pl.usr_no = #{usrNo} OR dvl.usr_no = #{usrNo})
+            <if test='srPrgrsSttsNo != null'>
+               AND srtp.sr_prgrs_stts_no = #{srPrgrsSttsNo}
+            </if>
+               AND srr.sr_rqst_stts_no != 'DEP_CMPTN'
+            <if test='srPrgrsSttsNo == null || srPrgrsSttsNo == "RQST"'>
+               UNION
+               SELECT sr.sr_no, sys.sys_nm, srtc.sr_task_nm, srr.sr_ttl, pic.usr_nm, sr.sr_cmptn_prnmnt_dt, srtp.sr_trgt_cmptn_dt, srps.sr_prgrs_stts_nm
+               FROM sr
+               JOIN sr_rqst srr ON sr.sr_rqst_no = srr.sr_rqst_no
+               JOIN sr_trnsf_plan srtp ON sr.sr_no = srtp.sr_no
+               JOIN usr pic ON sr.pic_usr_no = pic.usr_no
+               JOIN sys ON srr.sys_no = sys.sys_no
+               JOIN sr_task_clsf srtc ON sr.sr_task_no = srtc.sr_task_no
+               JOIN sr_prgrs_stts srps ON srtp.sr_prgrs_stts_no = srps.sr_prgrs_stts_no
+               LEFT JOIN sr_trnsf_hr srth ON sr.sr_no = srth.sr_no
+               LEFT JOIN usr dvl ON srth.usr_no = dvl.usr_no
+               WHERE srtp.sr_prgrs_stts_no = 'RQST'
+                  AND srr.sr_rqst_stts_no != 'DEP_CMPTN'
+            </if>
+            ORDER BY sr_no
+         )
+      <![CDATA[
+         WHERE rownum <= #{pager.endRowNo}
+      )
+      WHERE rnum >= #{pager.startRowNo}
+      ]]>
+   </select>
+   
+   <select id="selectSrForDeveloperHomeBoardListByUsrId" parameterType="String" resultType="com.finalteam5.otisrm.dto.sr.SrForDeveloperHomeBoard">
+      SELECT sr.sr_no, sys.sys_nm, srtc.sr_task_nm, srr.sr_ttl, pic.usr_nm, sr.sr_cmptn_prnmnt_dt, srtp.sr_trgt_cmptn_dt, srps.sr_prgrs_stts_nm
+      FROM sr
+      JOIN sr_rqst srr ON sr.sr_rqst_no = srr.sr_rqst_no
+      JOIN sr_trnsf_plan srtp ON sr.sr_no = srtp.sr_no
+      JOIN usr pic ON sr.pic_usr_no = pic.usr_no
+      JOIN usr pl ON srtp.usr_no = pl.usr_no
+      JOIN sys ON srr.sys_no = sys.sys_no
+      JOIN sr_task_clsf srtc ON sr.sr_task_no = srtc.sr_task_no
+      JOIN sr_prgrs_stts srps ON srtp.sr_prgrs_stts_no = srps.sr_prgrs_stts_no
+      LEFT JOIN sr_trnsf_hr srth ON sr.sr_no = srth.sr_no
+      LEFT JOIN usr dvl ON srth.usr_no = dvl.usr_no
+      WHERE (pl.usr_no = #{usrNo} OR dvl.usr_no = #{usrNo})
+         AND srr.sr_rqst_stts_no != 'DEP_CMPTN'
+      UNION
+      SELECT sr.sr_no, sys.sys_nm, srtc.sr_task_nm, srr.sr_ttl, pic.usr_nm, sr.sr_cmptn_prnmnt_dt, srtp.sr_trgt_cmptn_dt, srps.sr_prgrs_stts_nm
+      FROM sr
+      JOIN sr_rqst srr ON sr.sr_rqst_no = srr.sr_rqst_no
+      JOIN sr_trnsf_plan srtp ON sr.sr_no = srtp.sr_no
+      JOIN usr pic ON sr.pic_usr_no = pic.usr_no
+      JOIN sys ON srr.sys_no = sys.sys_no
+      JOIN sr_task_clsf srtc ON sr.sr_task_no = srtc.sr_task_no
+      JOIN sr_prgrs_stts srps ON srtp.sr_prgrs_stts_no = srps.sr_prgrs_stts_no
+      LEFT JOIN sr_trnsf_hr srth ON sr.sr_no = srth.sr_no
+      LEFT JOIN usr dvl ON srth.usr_no = dvl.usr_no
+      WHERE srtp.sr_prgrs_stts_no = 'RQST'
+         AND srr.sr_rqst_stts_no != 'DEP_CMPTN'
+      ORDER BY sr_no
+   </select>
+   
+   <select id="selectSrTrnsfInfoForDeveloperHomeBySrNoRqst" parameterType="String" resultType="com.finalteam5.otisrm.dto.sr.SrTrnsfInfoForDeveloperHome">
+      SELECT srd.sr_dmnd_nm, srk.sr_task_nm
+      FROM sr_trnsf_plan srt
+      JOIN sr ON srt.sr_no = sr.sr_no
+      JOIN sr_dmnd_clsf srd ON srt.sr_dmnd_no = srd.sr_dmnd_no
+      JOIN sr_task_clsf srk ON sr.sr_task_no = srk.sr_task_no
+      WHERE srt.sr_no = #{srNo}
+   </select>
+   
+   <select id="selectSrTrnsfInfoForDeveloperHomeBySrNo" parameterType="String" resultType="com.finalteam5.otisrm.dto.sr.SrTrnsfInfoForDeveloperHome">
+      SELECT srd.sr_dmnd_nm, srk.sr_task_nm, inst.inst_nm, dept.dept_nm, usr.usr_nm, srt.sr_trgt_bgng_dt, srt.sr_trgt_cmptn_dt, srt.sr_trnsf_note, srt.total_capacity
+      FROM sr_trnsf_plan srt
+      JOIN sr ON srt.sr_no = sr.sr_no
+      JOIN usr ON srt.usr_no = usr.usr_no
+      JOIN sr_dmnd_clsf srd ON srt.sr_dmnd_no = srd.sr_dmnd_no
+      JOIN sr_task_clsf srk ON sr.sr_task_no = srk.sr_task_no
+      JOIN inst ON srt.inst_no = inst.inst_no
+      JOIN dept ON srt.dept_no = dept.dept_no
+      WHERE srt.sr_no = #{srNo}
+   </select>
+   
+   <select id="selectSrPrgrsForDeveloperHomeList" parameterType="String" resultType="com.finalteam5.otisrm.dto.sr.SrPrgrsForDeveloperHome">
+      SELECT srps.sr_prgrs_stts_nm, srp.sr_prgrs_bgng_dt, srp.sr_prgrs_cmptn_dt, srp.sr_prgrs
+      FROM sr_prgrs srp
+      JOIN sr_prgrs_stts srps ON srp.sr_prgrs_stts_no = srps.sr_prgrs_stts_no
+      WHERE srp.sr_no = #{srNo}
+      ORDER BY srps.sr_prgrs_stts_seq asc
+   </select>
+   
+   <select id="selectSrTrnsfHrList" parameterType="String" resultType="com.finalteam5.otisrm.dto.sr.SrTrnsfHr">
+      SELECT srth.sr_trnsf_hr_no, srth.sr_no, srth.usr_no, usr.usr_nm, role.role_nm, srth.plan_capacity, srth.performance_capacity
+      FROM sr_trnsf_hr srth
+      JOIN usr ON srth.usr_no = usr.usr_no
+      JOIN role ON usr.role_no = role.role_no
+      WHERE srth.sr_no = #{srNo}
+   </select>
+   
+   <select id="selectSrRequestDetailForDeveloperHome" parameterType="String" resultType="com.finalteam5.otisrm.dto.sr.SrRequestDetailForDeveloperHome">
+      SELECT sr.sr_no, srr.sr_rqst_no, sys.sys_nm, srt.sr_task_nm, srr.sr_ttl, srr.sr_prps, dept.dept_nm, usr.usr_nm,
+         srr.sr_rqst_reg_dt, sr.sr_cmptn_prnmnt_dt, inst.inst_nm, sr.sr_trnsf_dt, srr.sr_conts, sr.sr_dvl_conts
+      FROM sr
+      JOIN sr_rqst srr ON sr.sr_rqst_no = srr.sr_rqst_no
+      JOIN inst on sr.sr_trnsf_inst_no = inst.inst_no
+      JOIN usr ON sr.pic_usr_no = usr.usr_no
+      JOIN dept ON usr.dept_no = dept.dept_no
+      JOIN sys ON srr.sys_no = sys.sys_no
+      JOIN sr_task_clsf srt ON sr.sr_task_no = srt.sr_task_no
+      WHERE sr.sr_no = #{srNo}
+   </select>
+   
+   <select id="selectDmndList" resultType="com.finalteam5.otisrm.dto.SrDmndClsf">
+      SELECT DISTINCT sr_dmnd_no, sr_dmnd_nm
+      FROM sr_dmnd_clsf
+   </select>
+   
+   <select id="selectTaskList" resultType="com.finalteam5.otisrm.dto.SrTaskClsf">
+      SELECT sr_task_no, sr_task_nm
+      FROM sr_task_clsf
+   </select>
+   
+   <select id="selectDeptListByUsrId" parameterType="String" resultType="com.finalteam5.otisrm.dto.usr.Dept">
+      SELECT dept.dept_no, dept.dept_nm
+      FROM usr
+      JOIN dept ON usr.inst_no = dept.inst_no
+      WHERE usr.usr_id = #{usrId}
+   </select>
+   
+   <select id="selectUsrListByUsrId" parameterType="String" resultType="com.finalteam5.otisrm.dto.usr.Usr">
+      SELECT usr2.usr_no, usr2.usr_nm
+      FROM usr
+      JOIN inst ON usr.inst_no = inst.inst_no
+      JOIN usr usr2 ON inst.inst_no = usr2.inst_no
+      WHERE usr.usr_id = #{usrId}
+   </select>
+   
+   <!-- SR계획정보 모달 구성 -->
+   <select id="getCurrentSrTrnsfPlanInfo" parameterType="String" resultType="com.finalteam5.otisrm.dto.sr.SrTrnsfPlanModalCompose">
+      SELECT srd.sr_dmnd_nm, srtk.sr_task_nm, dept.dept_nm, usr.usr_nm, srt.sr_trgt_bgng_dt, srt.sr_trgt_cmptn_dt, srt.sr_trnsf_note, srt.total_capacity, srr.sr_ttl
+      FROM sr_trnsf_plan srt
+      JOIN sr ON srt.sr_no = sr.sr_no
+      JOIN sr_rqst srr ON sr.sr_rqst_no = srr.sr_rqst_no
+      JOIN sr_dmnd_clsf srd ON srt.sr_dmnd_no = srd.sr_dmnd_no
+      JOIN sr_task_clsf srtk ON sr.sr_task_no = srtk.sr_task_no
+      JOIN dept ON srt.dept_no = dept.dept_no
+      JOIN usr ON srt.usr_no = usr.usr_no
+      WHERE srt.sr_no = #{srNo}
+   </select>
+   
+   <select id="getCurrentSrTrnsfPlanInfoRqst" parameterType="String" resultType="com.finalteam5.otisrm.dto.sr.SrTrnsfPlanModalCompose">
+      SELECT srd.sr_dmnd_nm, srtk.sr_task_nm, srr.sr_ttl
+      FROM sr_trnsf_plan srt
+      JOIN sr ON srt.sr_no = sr.sr_no
+      JOIN sr_rqst srr ON sr.sr_rqst_no = srr.sr_rqst_no
+      JOIN sr_dmnd_clsf srd ON srt.sr_dmnd_no = srd.sr_dmnd_no
+      JOIN sr_task_clsf srtk ON sr.sr_task_no = srtk.sr_task_no
+      WHERE srt.sr_no = #{srNo}
+   </select>
+   
+   <!-- 담당자 선택 모달 구성 -->
+   <select id="countSrTrnsfFindPicModalCompose" parameterType="map" resultType="int">
+      SELECT COUNT(*)
+      FROM usr
+      JOIN inst ON usr.inst_no = inst.inst_no
+      JOIN usr usr2 ON inst.inst_no = usr2.inst_no
+      JOIN dept ON usr2.dept_no = dept.dept_no
+      JOIN role ON usr2.role_no = role.role_no
+      JOIN ibps ON usr2.ibps_no = ibps.ibps_no
+      WHERE usr.usr_no = #{usrNo}
+      <if test='deptNo != null'>AND dept.dept_no = #{deptNo}</if>
+      <if test='usrNm != null'>AND usr2.usr_nm = #{usrNm}</if>
+      ORDER BY role.role_seq desc
+   </select>
+   
+   <select id="selectSrTrnsfFindPicModalCompose" parameterType="map" resultType="com.finalteam5.otisrm.dto.sr.SrTrnsfFindPicModalUsrInfo">
+      SELECT rnum, dept_nm, role_nm, ibps_nm, usr_nm, usr_no
+      FROM(
+         SELECT rownum as rnum, dept_nm, role_nm, ibps_nm, usr_nm, usr_no
+         FROM (
+            SELECT dept.dept_nm, role.role_nm, ibps.ibps_nm, usr2.usr_nm, usr2.usr_no
+            FROM usr
+            JOIN inst ON usr.inst_no = inst.inst_no
+            JOIN usr usr2 ON inst.inst_no = usr2.inst_no
+            JOIN dept ON usr2.dept_no = dept.dept_no
+            JOIN role ON usr2.role_no = role.role_no
+            JOIN ibps ON usr2.ibps_no = ibps.ibps_no
+            WHERE usr.usr_no = #{usrNo}
+            <if test='deptNo != null'>AND dept.dept_no = #{deptNo}</if>
+            <if test='usrNm != null'>AND usr2.usr_nm = #{usrNm}</if>
+            ORDER BY role.role_seq desc
+         )
+      <![CDATA[
+         WHERE rownum <= #{pager.endRowNo}
+      )
+      WHERE rnum >= #{pager.startRowNo}
+      ]]>
+   </select>
+   
+   <!-- HR 추가 -->
+   <select id="checkHr" parameterType="map">
+      SELECT COUNT(*)
+      FROM sr_trnsf_hr
+      WHERE sr_no = #{srNo} AND usr_no = #{usrNo}
+   </select>
+   <insert id="insertHr" parameterType="map">
+      INSERT INTO sr_trnsf_hr (sr_trnsf_hr_no, sr_no, usr_no)
+      VALUES(#{srNo}||#{usrNo}, #{srNo}, #{usrNo})
+   </insert>
+   
+   <!-- 공수 저장 -->
+   <update id="updateSrTrnsfHr" parameterType="com.finalteam5.otisrm.dto.sr.SrTrnsfHr">
+      UPDATE sr_trnsf_hr
+      SET plan_capacity = #{planCapacity},
+         performance_capacity = #{performanceCapacity},
+         last_reg_dt = #{lastRegDt, jdbcType=DATE},
+         last_reg_capacity = #{lastRegCapacity, jdbcType=DECIMAL}
+      WHERE sr_no = #{srNo} and usr_no = #{usrNo}
+   </update>
+   
+   <!-- 자원 삭제 -->
+   <delete id="deleteSrTrnsfHr" parameterType="com.finalteam5.otisrm.dto.sr.SrTrnsfHr">
+      DELETE FROM sr_trnsf_hr
+      WHERE sr_no = #{srNo} and usr_no = #{usrNo}
+   </delete>
+   
+   <!-- sr이관 계획 수정 -->
+   <select id="selectDeptNoByDeptNmAndSrNo" parameterType="map" resultType="String">
+      SELECT dept_no
+      FROM sr
+      JOIN dept ON dept.inst_no = sr_trnsf_inst_no
+      WHERE sr.sr_no = #{srNo} AND dept.dept_nm = #{deptNm}
+   </select>
+   
+   <select id="selectUsrNoByUsrNm" parameterType="String" resultType="String">
+      SELECT usr_no
+      FROM usr
+      WHERE usr_nm = #{usrNm}
+   </select>
+   
+   <update id="updateSrTrnsfPlan" parameterType="com.finalteam5.otisrm.dto.SrTrnsfPlan">
+      UPDATE sr_trnsf_plan
+      SET dept_no = #{deptNo},
+         usr_no = #{usrNo},
+         sr_trgt_bgng_dt = #{srTrgtBgngDt},
+         sr_trgt_cmptn_dt = #{srTrgtCmptnDt},
+         sr_trnsf_note = #{srTrnsfNote, jdbcType=VARCHAR},
+         total_capacity = #{totalCapacity},
+         total_business_dt = #{totalBusinessDt}
+      WHERE sr_no = #{srNo}
+   </update>
+   
+   <!-- 요청->접수 상태로 변경 -->
+   <insert id="insertAnalysisPrgrs" parameterType="String">
+      INSERT INTO sr_prgrs (sr_prgrs_no, sr_no, sr_prgrs_stts_no)
+      VALUES(#{srNo}||'_analysis', #{srNo}, 'ANALYSIS')
+   </insert>
+   
+   <insert id="insertDesignPrgrs" parameterType="String">
+      INSERT INTO sr_prgrs (sr_prgrs_no, sr_no, sr_prgrs_stts_no)
+      VALUES(#{srNo}||'_design', #{srNo}, 'DESIGN')
+   </insert>
+   
+   <insert id="insertImplementPrgrs" parameterType="String">
+      INSERT INTO sr_prgrs (sr_prgrs_no, sr_no, sr_prgrs_stts_no)
+      VALUES(#{srNo}||'_implement', #{srNo}, 'IMPLEMENT')
+   </insert>
+   
+   <insert id="insertTestPrgrs" parameterType="String">
+      INSERT INTO sr_prgrs (sr_prgrs_no, sr_no, sr_prgrs_stts_no)
+      VALUES(#{srNo}||'_test', #{srNo}, 'TEST')
+   </insert>
+   
+   <insert id="insertApplyRequestPrgrs" parameterType="String">
+      INSERT INTO sr_prgrs (sr_prgrs_no, sr_no, sr_prgrs_stts_no)
+      VALUES(#{srNo}||'_apply_request', #{srNo}, 'APPLY_REQUEST')
+   </insert>
+   
+   <update id="updateSttsToReceipt" parameterType="String">
+      UPDATE sr_trnsf_plan
+      SET sr_prgrs_stts_no = 'RECEIPT'
+      WHERE sr_no = #{srNo}
+   </update>
+   
+   <!-- HR설정 모달 구성 -->
+   <select id="selectDeptNmBySrNo" parameterType="String" resultType="String">
+      SELECT dept_nm
+      FROM sr_trnsf_plan srt
+      JOIN dept ON srt.dept_no = dept.dept_no
+      WHERE srt.sr_no = #{srNo}
+   </select>
+   
+   <select id="selectAnalysisPicNm" parameterType="String" resultType="String">
+      SELECT usr.usr_nm
+      FROM sr_prgrs srp
+      JOIN usr ON srp.usr_no = usr.usr_no
+      WHERE srp.sr_prgrs_no = #{srNo} || '_analysis'
+   </select>
+   
+   <select id="selectDesignPicNm" parameterType="String" resultType="String">
+      SELECT usr.usr_nm
+      FROM sr_prgrs srp
+      JOIN usr ON srp.usr_no = usr.usr_no
+      WHERE srp.sr_prgrs_no = #{srNo} || '_design'
+   </select>
+   
+   <select id="selectImplementPicNm" parameterType="String" resultType="String">
+      SELECT usr.usr_nm
+      FROM sr_prgrs srp
+      JOIN usr ON srp.usr_no = usr.usr_no
+      WHERE srp.sr_prgrs_no = #{srNo} || '_implement'
+   </select>
+   
+   <select id="selectTestPicNm" parameterType="String" resultType="String">
+      SELECT usr.usr_nm
+      FROM sr_prgrs srp
+      JOIN usr ON srp.usr_no = usr.usr_no
+      WHERE srp.sr_prgrs_no = #{srNo} || '_test'
+   </select>
+   
+   <select id="selectApplyRequestPicNm" parameterType="String" resultType="String">
+      SELECT usr.usr_nm
+      FROM sr_prgrs srp
+      JOIN usr ON srp.usr_no = usr.usr_no
+      WHERE srp.sr_prgrs_no = #{srNo} || '_apply_request'
+   </select>
+   
+   <!-- HR PIC 업데이트 -->
+   <update id="updateAnalysisPicNm" parameterType="map">
+      UPDATE sr_prgrs
+      SET usr_no = (SELECT usr_no FROM usr WHERE usr_nm = #{picNm})
+      WHERE sr_prgrs_no = #{srNo} || '_analysis'
+   </update>
+   
+   <update id="updateDesignPicNm" parameterType="map">
+      UPDATE sr_prgrs
+      SET usr_no = (SELECT usr_no FROM usr WHERE usr_nm = #{picNm})
+      WHERE sr_prgrs_no = #{srNo} || '_design'
+   </update>
+   
+   <update id="updateImplementPicNm" parameterType="map">
+      UPDATE sr_prgrs
+      SET usr_no = (SELECT usr_no FROM usr WHERE usr_nm = #{picNm})
+      WHERE sr_prgrs_no = #{srNo} || '_implement'
+   </update>
+   
+   <update id="updateTestPicNm" parameterType="map">
+      UPDATE sr_prgrs
+      SET usr_no = (SELECT usr_no FROM usr WHERE usr_nm = #{picNm})
+      WHERE sr_prgrs_no = #{srNo} || '_test'
+   </update>
+   
+   <update id="updateApplyRequestPicNm" parameterType="map">
+      UPDATE sr_prgrs
+      SET usr_no = (SELECT usr_no FROM usr WHERE usr_nm = #{picNm})
+      WHERE sr_prgrs_no = #{srNo} || '_apply_request'
+   </update>
+   
+   <!-- SR 이관 진행률 업데이트 -->
+   <select id="selectAnalysisPrgrs" parameterType="String" resultType="Integer">
+      SELECT sr_prgrs
+      FROM sr_prgrs
+      WHERE sr_prgrs_no = #{srNo}||'_analysis'
+   </select>
+   
+   <select id="selectDesignPrgrs" parameterType="String" resultType="Integer">
+      SELECT sr_prgrs
+      FROM sr_prgrs
+      WHERE sr_prgrs_no = #{srNo}||'_design'
+   </select>
+   
+   <select id="selectImplementPrgrs" parameterType="String" resultType="Integer">
+      SELECT sr_prgrs
+      FROM sr_prgrs
+      WHERE sr_prgrs_no = #{srNo}||'_implement'
+   </select>
+   
+   <select id="selectTestPrgrs" parameterType="String" resultType="Integer">
+      SELECT sr_prgrs
+      FROM sr_prgrs
+      WHERE sr_prgrs_no = #{srNo}||'_test'
+   </select>
+   
+   <select id="selectApplyRequestPrgrs" parameterType="String" resultType="Integer">
+      SELECT sr_prgrs
+      FROM sr_prgrs
+      WHERE sr_prgrs_no = #{srNo}||'_apply_request'
+   </select>
+   
+   <update id="updateSrPrgrs" parameterType="com.finalteam5.otisrm.dto.SrPrgrs">
+      UPDATE sr_prgrs
+      <if test='srPrgrsBgngDt != null and srPrgrsCmptnDt != null'>
+         SET sr_prgrs_bgng_dt = #{srPrgrsBgngDt}, sr_prgrs_cmptn_dt = #{srPrgrsCmptnDt}, sr_prgrs = #{srPrgrs}
+      </if>
+      <if test='srPrgrsBgngDt != null and srPrgrsCmptnDt == null'>
+         SET sr_prgrs_bgng_dt = #{srPrgrsBgngDt}, sr_prgrs = #{srPrgrs}
+      </if>
+      <if test='srPrgrsBgngDt == null and srPrgrsCmptnDt != null'>
+         SET sr_prgrs_cmptn_dt = #{srPrgrsCmptnDt}, sr_prgrs = #{srPrgrs}
+      </if>
+      <if test='srPrgrsBgngDt == null and srPrgrsCmptnDt == null'>
+         SET sr_prgrs = #{srPrgrs}
+      </if>
+      WHERE sr_prgrs_no = #{srPrgrsNo}
+   </update>
+   
+   <update id="updateSrTrnsfStts" parameterType="map">
+      UPDATE sr_trnsf_plan
+      SET sr_prgrs_stts_no = #{srPrgrsSttsNo}
+      WHERE sr_no = #{srNo}
+   </update>
+   
+   <!-- 산출물 업로드 -->
+   <insert id="insertSrPrgrsOtpt" parameterType="com.finalteam5.otisrm.dto.SrPrgrsOtpt">
+      INSERT INTO sr_prgrs_otpt(
+           sr_prgrs_otpt_no, sr_prgrs_no, sr_prgrs_otpt_nm, sr_prgrs_otpt_mime_type, sr_prgrs_otpt_data,
+           sr_prgrs_otpt_size, sr_prgrs_otpt_file_nm, sr_prgrs_otpt_reg_dt, usr_no
+       ) values(
+           #{srPrgrsOtptNo}, #{srPrgrsNo}, #{srPrgrsOtptNm}, #{srPrgrsOtptMimeType}, #{srPrgrsOtptDataByteArray},
+           #{srPrgrsOtptSize}, #{srPrgrsOtptFileNm}, #{srPrgrsOtptRegDt}, #{usrNo}
+       )
+   </insert>
+   
+   <!-- 산출물 목록 출력 -->
+   <select id="selectSrPrgrsOtpt" parameterType="String" resultType="com.finalteam5.otisrm.dto.SrPrgrsOtpt">
+      SELECT sr_prgrs_otpt_no, sr_prgrs_no, sr_prgrs_otpt_nm, sr_prgrs_otpt_mime_type,
+         sr_prgrs_otpt_size, sr_prgrs_otpt_file_nm, sr_prgrs_otpt_reg_dt, usr.usr_nm
+      FROM sr_prgrs_otpt
+      JOIN usr ON sr_prgrs_otpt.usr_no = usr.usr_no
+      WHERE sr_prgrs_no = #{srPrgrsNo}
+   </select>
+   
+   <!-- 산출물 다운로드 -->
+   <select id="selectSrPrgrsOtptBySrPrgrsOtptNo" parameterType="String" resultType="com.finalteam5.otisrm.dto.SrPrgrsOtpt">
+      SELECT sr_prgrs_otpt_no, sr_prgrs_no, sr_prgrs_otpt_nm, sr_prgrs_otpt_mime_type, sr_prgrs_otpt_data as sr_prgrs_otpt_data_byte_array,
+         sr_prgrs_otpt_size, sr_prgrs_otpt_file_nm, sr_prgrs_otpt_reg_dt
+      FROM sr_prgrs_otpt
+      WHERE sr_prgrs_otpt_no = #{srPrgrsOtptNo}
+   </select>
+   
+   <!-- 산출물 삭제 -->
+   <delete id="deleteSrPrgrsOtpt" parameterType="String">
+      DELETE FROM sr_prgrs_otpt WHERE sr_prgrs_otpt_no = #{srPrgrsOtptNo}
+   </delete>
+   
+   <!-- SR공수 등록 -->
+   <select id="selectSrTrnsfHrListByUsrNo" parameterType="String" resultType="com.finalteam5.otisrm.dto.sr.SrTrnsfHr">
+      SELECT srth.sr_no, srth.usr_no, srtp.sr_trgt_bgng_dt, srtp.sr_trgt_cmptn_dt, srth.plan_capacity, srth.performance_capacity,
+            srth.last_reg_dt, srth.last_reg_capacity
+      FROM sr_trnsf_hr srth
+      JOIN sr_trnsf_plan srtp ON srth.sr_no = srtp.sr_no
+      WHERE srth.usr_no = #{usrNo}
+   </select>
+   
+   <!-- 금일 SR공수 등록 -->
+   <select id="getSrTrnsfHrBySrNoAndUsrNo" parameterType="map" resultType="com.finalteam5.otisrm.dto.sr.SrTrnsfHr">
+      SELECT sr_trnsf_hr_no, sr_no, usr_no, plan_capacity, performance_capacity, last_reg_dt, last_reg_capacity
+      FROM sr_trnsf_hr
+      WHERE sr_no = #{srNo} and usr_no = #{usrNo}
+   </select>
+   
+   
+   <!-- SR진척관리 옵션 select구성 -->
+   <!-- Sys List -->
+   <select id="selectSysList" resultType="com.finalteam5.otisrm.dto.Sys">
+      SELECT sys_no, dept_no, sys_nm
+      FROM sys
+   </select>
+   
+   <!-- Task List(위에 있음) -->
+   <!-- 
+   <select id="selectTaskList" resultType="com.finalteam5.otisrm.dto.SrTaskClsf">
+      SELECT sr_task_no, sr_task_nm
+      FROM sr_task_clsf
+   </select>
+    -->
+   
+   <!-- Inst List -->
+   <select id="selectInstList" resultType="com.finalteam5.otisrm.dto.usr.Inst">
+      SELECT inst_no, inst_nm, outsrc_yn
+      FROM inst
+   </select>
+   
+   <!-- srPrgrsSttsList List -->
+   <select id="selectSrPrgrsSttsList" resultType="com.finalteam5.otisrm.dto.SrPrgrsStts">
+      SELECT sr_prgrs_stts_no, sr_prgrs_stts_nm, sr_prgrs_stts_seq
+      FROM sr_prgrs_stts
+      ORDER BY sr_prgrs_stts_seq ASC
+   </select>
+   
+   <!-- Dept List -->
+   <select id="selectDeptListByInstNo" parameterType="String" resultType="com.finalteam5.otisrm.dto.usr.Dept">
+      SELECT dept_no, inst_no, dept_nm
+      FROM dept
+      WHERE inst_no = #{instNo}
+   </select>
+   
+   <!-- 메인 테이블 구성 -->
+   <select id="countSrForProgressManagementBoard" parameterType="map" resultType="int">
+      SELECT COUNT(*)
+      FROM(
+         SELECT DISTINCT 
+            sr.sr_no, sys.sys_nm, sr_task_clsf.sr_task_nm, reqstr.usr_nm as rqstrNm,
+            sr.sr_cmptn_prnmnt_dt, inst.inst_nm, sr_trnsf_plan.sr_trgt_cmptn_dt, sr_prgrs_stts.sr_prgrs_stts_nm
+         FROM sr
+         JOIN sr_rqst ON sr.sr_rqst_no = sr_rqst.sr_rqst_no
+         JOIN sr_trnsf_plan ON sr.sr_no = sr_trnsf_plan.sr_no
+         JOIN sys ON sr_rqst.sys_no = sys.sys_no
+         JOIN sr_task_clsf ON sr.sr_task_no = sr_task_clsf.sr_task_no
+         JOIN sr_prgrs_stts ON sr_trnsf_plan.sr_prgrs_stts_no = sr_prgrs_stts.sr_prgrs_stts_no
+         JOIN usr reqstr ON sr.pic_usr_no = reqstr.usr_no
+         JOIN usr pic ON sr_trnsf_plan.usr_no = pic.usr_no
+         JOIN inst ON sr.sr_trnsf_inst_no = inst.inst_no
+         JOIN dept ON sr_trnsf_plan.dept_no = dept.dept_no
+         <where>
+            <if test="progressManagementSearch.sysNo != null">
+               sr_rqst.sys_no = #{progressManagementSearch.sysNo}
+            </if>
+            <if test="progressManagementSearch.taskNo != null">
+               AND sr.sr_task_no = #{progressManagementSearch.taskNo}
+            </if>
+            <if test="progressManagementSearch.receiptNo != null">
+               <if test="progressManagementSearch.receiptNo == 'RQST'">
+                  AND sr_prgrs_stts.sr_prgrs_stts_seq = 0
+               </if>
+               <if test="progressManagementSearch.receiptNo == 'RECEIPT'">
+                  <![CDATA[
+                  AND sr_prgrs_stts.sr_prgrs_stts_seq >= 1
+                  ]]>
+               </if>
+            </if>
+            <if test="progressManagementSearch.prgrsNo != null">
+               AND sr_trnsf_plan.sr_prgrs_stts_no = #{progressManagementSearch.prgrsNo}
+            </if>
+            <if test="progressManagementSearch.instNo != null">
+               AND sr.sr_trnsf_inst_no = #{progressManagementSearch.instNo}
+            </if>
+            <if test="progressManagementSearch.deptNo != null">
+               AND sr_trnsf_plan.dept_no = #{progressManagementSearch.deptNo}
+            </if>
+            <if test="progressManagementSearch.keywordContent != null">
+               <if test="progressManagementSearch.keywordCategory == 'srTitle'">
+                  AND sr_rqst.sr_ttl like '%' || #{progressManagementSearch.keywordContent} || '%'
+               </if>
+               <if test="progressManagementSearch.keywordCategory == 'rqstr'">
+                  AND reqstr.usr_nm like '%' || #{progressManagementSearch.keywordContent} || '%'
+               </if>
+               <if test="progressManagementSearch.keywordCategory == 'pic'">
+                  AND pic.usr_nm like '%' || #{progressManagementSearch.keywordContent} || '%'
+               </if>
+            </if>
+            <if test="progressManagementSearch.mySrCheck != null">
+               AND (reqstr.usr_no = #{usrNo} OR pic.usr_no = #{usrNo})
+            </if>
+         </where>
+         
+         UNION
+         
+         SELECT DISTINCT 
+            sr.sr_no, sys.sys_nm, sr_task_clsf.sr_task_nm, reqstr.usr_nm as rqstrNm,
+            sr.sr_cmptn_prnmnt_dt, inst.inst_nm, sr_trnsf_plan.sr_trgt_cmptn_dt, sr_prgrs_stts.sr_prgrs_stts_nm
+         FROM sr
+         JOIN sr_rqst ON sr.sr_rqst_no = sr_rqst.sr_rqst_no
+         JOIN sr_trnsf_plan ON sr.sr_no = sr_trnsf_plan.sr_no
+         JOIN sys ON sr_rqst.sys_no = sys.sys_no
+         JOIN sr_task_clsf ON sr.sr_task_no = sr_task_clsf.sr_task_no
+         JOIN sr_prgrs_stts ON sr_trnsf_plan.sr_prgrs_stts_no = sr_prgrs_stts.sr_prgrs_stts_no
+         JOIN usr reqstr ON sr.pic_usr_no = reqstr.usr_no
+         JOIN usr pic ON sr_trnsf_plan.usr_no = pic.usr_no
+         JOIN inst ON sr.sr_trnsf_inst_no = inst.inst_no
+         JOIN dept ON sr_trnsf_plan.dept_no = dept.dept_no
+         LEFT JOIN sr_trnsf_hr srth ON sr.sr_no = srth.sr_no
+         <where>
+            <if test="progressManagementSearch.sysNo != null">
+               sr_rqst.sys_no = #{progressManagementSearch.sysNo}
+            </if>
+            <if test="progressManagementSearch.taskNo != null">
+               AND sr.sr_task_no = #{progressManagementSearch.taskNo}
+            </if>
+            <if test="progressManagementSearch.receiptNo != null">
+               <if test="progressManagementSearch.receiptNo == 'RQST'">
+                  AND sr_prgrs_stts.sr_prgrs_stts_seq = 0
+               </if>
+               <if test="progressManagementSearch.receiptNo == 'RECEIPT'">
+                  <![CDATA[
+                  AND sr_prgrs_stts.sr_prgrs_stts_seq >= 1
+                  ]]>
+               </if>
+            </if>
+            <if test="progressManagementSearch.prgrsNo != null">
+               AND sr_trnsf_plan.sr_prgrs_stts_no = #{progressManagementSearch.prgrsNo}
+            </if>
+            <if test="progressManagementSearch.instNo != null">
+               AND sr.sr_trnsf_inst_no = #{progressManagementSearch.instNo}
+            </if>
+            <if test="progressManagementSearch.deptNo != null">
+               AND sr_trnsf_plan.dept_no = #{progressManagementSearch.deptNo}
+            </if>
+            <if test="progressManagementSearch.keywordContent != null">
+               <if test="progressManagementSearch.keywordCategory == 'srTitle'">
+                  AND sr_rqst.sr_ttl like '%' || #{progressManagementSearch.keywordContent} || '%'
+               </if>
+               <if test="progressManagementSearch.keywordCategory == 'rqstr'">
+                  AND reqstr.usr_nm like '%' || #{progressManagementSearch.keywordContent} || '%'
+               </if>
+               <if test="progressManagementSearch.keywordCategory == 'pic'">
+                  AND pic.usr_nm like '%' || #{progressManagementSearch.keywordContent} || '%'
+               </if>
+            </if>
+            <if test="progressManagementSearch.mySrCheck != null">
+               AND (reqstr.usr_no = #{usrNo} OR pic.usr_no = #{usrNo} OR srth.usr_no = #{usrNo})
+            </if>
+         </where>
+         
+         UNION
+   
+         SELECT DISTINCT 
+             sr.sr_no, sys.sys_nm, sr_task_clsf.sr_task_nm, reqstr.usr_nm as rqstrNm,
+             sr.sr_cmptn_prnmnt_dt, inst.INST_NM, NULL AS SR_TRGT_CMPTN_DT, sr_prgrs_stts.sr_prgrs_stts_nm
+         FROM sr
+         JOIN sr_rqst ON sr.sr_rqst_no = sr_rqst.sr_rqst_no
+         JOIN sr_trnsf_plan ON sr.sr_no = sr_trnsf_plan.sr_no
+         JOIN sys ON sr_rqst.sys_no = sys.sys_no
+         JOIN sr_task_clsf ON sr.sr_task_no = sr_task_clsf.sr_task_no
+         JOIN sr_prgrs_stts ON sr_trnsf_plan.sr_prgrs_stts_no = sr_prgrs_stts.sr_prgrs_stts_no
+         JOIN usr reqstr ON sr.pic_usr_no = reqstr.usr_no
+         JOIN inst ON sr.sr_trnsf_inst_no = inst.inst_no
+         <where>
+            <if test="true">
+               sr_trnsf_plan.sr_prgrs_stts_no = 'RQST'
+            </if>
+            <if test="progressManagementSearch.sysNo != null">
+               AND sr_rqst.sys_no = #{progressManagementSearch.sysNo}
+            </if>
+            <if test="progressManagementSearch.taskNo != null">
+               AND sr.sr_task_no = #{progressManagementSearch.taskNo}
+            </if>
+            <if test="progressManagementSearch.receiptNo != null">
+               <if test="progressManagementSearch.receiptNo == 'RQST'">
+                  AND sr_prgrs_stts.sr_prgrs_stts_seq = 0
+               </if>
+               <if test="progressManagementSearch.receiptNo == 'RECEIPT'">
+                  <![CDATA[
+                  AND sr_prgrs_stts.sr_prgrs_stts_seq >= 1
+                  ]]>
+               </if>
+            </if>
+            <if test="progressManagementSearch.keywordContent != null">
+               <if test="progressManagementSearch.keywordCategory == 'srTitle'">
+                  AND sr_rqst.sr_ttl like '%' || #{progressManagementSearch.keywordContent} || '%'
+               </if>
+               <if test="progressManagementSearch.keywordCategory == 'rqstr'">
+                  AND reqstr.usr_nm like '%' || #{progressManagementSearch.keywordContent} || '%'
+               </if>
+            </if>
+            <if test="progressManagementSearch.mySrCheck != null">
+               AND (reqstr.usr_no = #{usrNo})
+            </if>
+         </where>
+      )
+   </select>
+   
+   <select id="selectSrForProgressManagementBoard" parameterType="map" resultType="com.finalteam5.otisrm.dto.sr.SrForProgressManagementBoard">
+      SELECT rnum, sr_no, sys_nm, sr_task_nm, sr_ttl, rqstr_nm, 
+            sr_cmptn_prnmnt_dt, inst_nm, sr_trgt_cmptn_dt, sr_prgrs_stts_nm
+      FROM(
+         SELECT rownum as rnum, sr_no, sys_nm, sr_task_nm, sr_ttl, rqstr_nm, 
+               sr_cmptn_prnmnt_dt, inst_nm, sr_trgt_cmptn_dt, sr_prgrs_stts_nm
+         FROM (
+            SELECT DISTINCT 
+               sr.sr_no, sys.sys_nm, sr_task_clsf.sr_task_nm, sr_rqst.sr_ttl, reqstr.usr_nm as rqstr_nm,
+               sr.sr_cmptn_prnmnt_dt, inst.inst_nm, sr_trnsf_plan.sr_trgt_cmptn_dt, sr_prgrs_stts.sr_prgrs_stts_nm
+            FROM sr
+            JOIN sr_rqst ON sr.sr_rqst_no = sr_rqst.sr_rqst_no
+            JOIN sr_trnsf_plan ON sr.sr_no = sr_trnsf_plan.sr_no
+            JOIN sys ON sr_rqst.sys_no = sys.sys_no
+            JOIN sr_task_clsf ON sr.sr_task_no = sr_task_clsf.sr_task_no
+            JOIN sr_prgrs_stts ON sr_trnsf_plan.sr_prgrs_stts_no = sr_prgrs_stts.sr_prgrs_stts_no
+            JOIN usr reqstr ON sr.pic_usr_no = reqstr.usr_no
+            JOIN usr pic ON sr_trnsf_plan.usr_no = pic.usr_no
+            JOIN inst ON sr.sr_trnsf_inst_no = inst.inst_no
+            JOIN dept ON sr_trnsf_plan.dept_no = dept.dept_no
+            <where>
+               <if test="progressManagementSearch.sysNo != null">
+                  sr_rqst.sys_no = #{progressManagementSearch.sysNo}
+               </if>
+               <if test="progressManagementSearch.taskNo != null">
+                  AND sr.sr_task_no = #{progressManagementSearch.taskNo}
+               </if>
+               <if test="progressManagementSearch.receiptNo != null">
+                  <if test="progressManagementSearch.receiptNo == 'RQST'">
+                     AND sr_prgrs_stts.sr_prgrs_stts_seq = 0
+                  </if>
+                  <if test="progressManagementSearch.receiptNo == 'RECEIPT'">
+                     <![CDATA[
+                     AND sr_prgrs_stts.sr_prgrs_stts_seq >= 1
+                     ]]>
+                  </if>
+               </if>
+               <if test="progressManagementSearch.prgrsNo != null">
+                  AND sr_trnsf_plan.sr_prgrs_stts_no = #{progressManagementSearch.prgrsNo}
+               </if>
+               <if test="progressManagementSearch.instNo != null">
+                  AND sr.sr_trnsf_inst_no = #{progressManagementSearch.instNo}
+               </if>
+               <if test="progressManagementSearch.deptNo != null">
+                  AND sr_trnsf_plan.dept_no = #{progressManagementSearch.deptNo}
+               </if>
+               <if test="progressManagementSearch.keywordContent != null">
+                  <if test="progressManagementSearch.keywordCategory == 'srTitle'">
+                     AND sr_rqst.sr_ttl like '%' || #{progressManagementSearch.keywordContent} || '%'
+                  </if>
+                  <if test="progressManagementSearch.keywordCategory == 'rqstr'">
+                     AND reqstr.usr_nm like '%' || #{progressManagementSearch.keywordContent} || '%'
+                  </if>
+                  <if test="progressManagementSearch.keywordCategory == 'pic'">
+                     AND pic.usr_nm like '%' || #{progressManagementSearch.keywordContent} || '%'
+                  </if>
+               </if>
+               <if test="progressManagementSearch.mySrCheck != null">
+                  AND (reqstr.usr_no = #{usrNo} OR pic.usr_no = #{usrNo})
+               </if>
+            </where>
+            
+            UNION
+            
+            SELECT DISTINCT 
+               sr.sr_no, sys.sys_nm, sr_task_clsf.sr_task_nm, sr_rqst.sr_ttl, reqstr.usr_nm as rqstr_nm,
+               sr.sr_cmptn_prnmnt_dt, inst.inst_nm, sr_trnsf_plan.sr_trgt_cmptn_dt, sr_prgrs_stts.sr_prgrs_stts_nm
+            FROM sr
+            JOIN sr_rqst ON sr.sr_rqst_no = sr_rqst.sr_rqst_no
+            JOIN sr_trnsf_plan ON sr.sr_no = sr_trnsf_plan.sr_no
+            JOIN sys ON sr_rqst.sys_no = sys.sys_no
+            JOIN sr_task_clsf ON sr.sr_task_no = sr_task_clsf.sr_task_no
+            JOIN sr_prgrs_stts ON sr_trnsf_plan.sr_prgrs_stts_no = sr_prgrs_stts.sr_prgrs_stts_no
+            JOIN usr reqstr ON sr.pic_usr_no = reqstr.usr_no
+            JOIN usr pic ON sr_trnsf_plan.usr_no = pic.usr_no
+            JOIN inst ON sr.sr_trnsf_inst_no = inst.inst_no
+            JOIN dept ON sr_trnsf_plan.dept_no = dept.dept_no
+            LEFT JOIN sr_trnsf_hr srth ON sr.sr_no = srth.sr_no
+            <where>
+               <if test="progressManagementSearch.sysNo != null">
+                  sr_rqst.sys_no = #{progressManagementSearch.sysNo}
+               </if>
+               <if test="progressManagementSearch.taskNo != null">
+                  AND sr.sr_task_no = #{progressManagementSearch.taskNo}
+               </if>
+               <if test="progressManagementSearch.receiptNo != null">
+                  <if test="progressManagementSearch.receiptNo == 'RQST'">
+                     AND sr_prgrs_stts.sr_prgrs_stts_seq = 0
+                  </if>
+                  <if test="progressManagementSearch.receiptNo == 'RECEIPT'">
+                     <![CDATA[
+                     AND sr_prgrs_stts.sr_prgrs_stts_seq >= 1
+                     ]]>
+                  </if>
+               </if>
+               <if test="progressManagementSearch.prgrsNo != null">
+                  AND sr_trnsf_plan.sr_prgrs_stts_no = #{progressManagementSearch.prgrsNo}
+               </if>
+               <if test="progressManagementSearch.instNo != null">
+                  AND sr.sr_trnsf_inst_no = #{progressManagementSearch.instNo}
+               </if>
+               <if test="progressManagementSearch.deptNo != null">
+                  AND sr_trnsf_plan.dept_no = #{progressManagementSearch.deptNo}
+               </if>
+               <if test="progressManagementSearch.keywordContent != null">
+                  <if test="progressManagementSearch.keywordCategory == 'srTitle'">
+                     AND sr_rqst.sr_ttl like '%' || #{progressManagementSearch.keywordContent} || '%'
+                  </if>
+                  <if test="progressManagementSearch.keywordCategory == 'rqstr'">
+                     AND reqstr.usr_nm like '%' || #{progressManagementSearch.keywordContent} || '%'
+                  </if>
+                  <if test="progressManagementSearch.keywordCategory == 'pic'">
+                     AND pic.usr_nm like '%' || #{progressManagementSearch.keywordContent} || '%'
+                  </if>
+               </if>
+               <if test="progressManagementSearch.mySrCheck != null">
+                  AND (reqstr.usr_no = #{usrNo} OR pic.usr_no = #{usrNo} OR srth.usr_no = #{usrNo})
+               </if>
+            </where>
+            
+            UNION
+      
+            SELECT DISTINCT 
+                sr.sr_no, sys.sys_nm, sr_task_clsf.sr_task_nm, sr_rqst.sr_ttl, reqstr.usr_nm as rqstr_nm,
+                sr.sr_cmptn_prnmnt_dt, inst.inst_nm, NULL AS sr_trgt_cmptn_dt, sr_prgrs_stts.sr_prgrs_stts_nm
+            FROM sr
+            JOIN sr_rqst ON sr.sr_rqst_no = sr_rqst.sr_rqst_no
+            JOIN sr_trnsf_plan ON sr.sr_no = sr_trnsf_plan.sr_no
+            JOIN sys ON sr_rqst.sys_no = sys.sys_no
+            JOIN sr_task_clsf ON sr.sr_task_no = sr_task_clsf.sr_task_no
+            JOIN sr_prgrs_stts ON sr_trnsf_plan.sr_prgrs_stts_no = sr_prgrs_stts.sr_prgrs_stts_no
+            JOIN usr reqstr ON sr.pic_usr_no = reqstr.usr_no
+            JOIN inst ON sr.sr_trnsf_inst_no = inst.inst_no
+            <where>
+               <if test="true">
+                  sr_trnsf_plan.sr_prgrs_stts_no = 'RQST'
+               </if>
+               <if test="progressManagementSearch.sysNo != null">
+                  AND sr_rqst.sys_no = #{progressManagementSearch.sysNo}
+               </if>
+               <if test="progressManagementSearch.taskNo != null">
+                  AND sr.sr_task_no = #{progressManagementSearch.taskNo}
+               </if>
+               <if test="progressManagementSearch.receiptNo != null">
+                  <if test="progressManagementSearch.receiptNo == 'RQST'">
+                     AND sr_prgrs_stts.sr_prgrs_stts_seq = 0
+                  </if>
+                  <if test="progressManagementSearch.receiptNo == 'RECEIPT'">
+                     <![CDATA[
+                     AND sr_prgrs_stts.sr_prgrs_stts_seq >= 1
+                     ]]>
+                  </if>
+               </if>
+               <if test="progressManagementSearch.keywordContent != null">
+                  <if test="progressManagementSearch.keywordCategory == 'srTitle'">
+                     AND sr_rqst.sr_ttl like '%' || #{progressManagementSearch.keywordContent} || '%'
+                  </if>
+                  <if test="progressManagementSearch.keywordCategory == 'rqstr'">
+                     AND reqstr.usr_nm like '%' || #{progressManagementSearch.keywordContent} || '%'
+                  </if>
+               </if>
+               <if test="progressManagementSearch.mySrCheck != null">
+                  AND reqstr.usr_no = #{usrNo}
+               </if>
+            </where>
+            )
+      <![CDATA[
+         WHERE rownum <= #{pager.endRowNo}
+      )
+      WHERE rnum >= #{pager.startRowNo}
+      ]]>
+   </select>
+   
+   <select id="selectSrCmptnPrnmntDtBySrNo" parameterType="String" resultType="com.finalteam5.otisrm.dto.sr.DatesForScheduleChangeRequest">
+      SELECT sr_cmptn_prnmnt_dt, sr_schdl_chg_rqst_dt
+      FROM sr
+      WHERE sr_no = #{srNo}
+   </select>
+   
+   <!-- sr일정변경요청 -->
+   <update id="updateSrSchdlChgRqst" parameterType="map">
+      UPDATE sr
+      SET sr_schdl_chg_rqst_yn = 'Y',
+         sr_schdl_chg_rqst_dt = #{srSchdlChgRqstDt}
+      WHERE sr_no = #{srNo}
+   </update>
+   
+   <!-- 일정변경요청 내역 관리 -->
+   <select id="selectManageChangeScheduleRequestModalConfigList" resultType="com.finalteam5.otisrm.dto.sr.ManageChangeScheduleRequestModalConfig">
+      SELECT sr_no, sr_cmptn_prnmnt_dt, sr_schdl_chg_rqst_dt, sr_schdl_chg_rqst_aprv_yn
+      FROM sr
+      WHERE sr_schdl_chg_rqst_yn = 'Y'
+   </select>
+   
+   <!-- 일정변경요청 결과 확인 -->
+   <update id="updateSrScheduleChangeRequestResultCheck" parameterType="String">
+      UPDATE sr
+      SET sr_schdl_chg_rqst_yn = 'N',
+         sr_schdl_chg_rqst_dt = null,
+         sr_schdl_chg_rqst_aprv_yn = null
+      WHERE sr_no = #{srNo}
+   </update>
+   
 </mapper>
