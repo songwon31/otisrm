@@ -268,8 +268,8 @@
 			SELECT sr.sr_no, sr_rqst.sr_ttl
 			FROM sr
 			JOIN sr_rqst ON sr.sr_rqst_no = sr_rqst.sr_rqst_no
-			JOIN sr_prgrs srp ON sr.sr_no = srp.sr_no
-			WHERE srp.usr_no = #{usrNo}
+			JOIN sr_trnsf_hr srth ON sr.sr_no = srth.sr_no
+			WHERE srth.usr_no = #{usrNo}
 		)
 	</select>
 	

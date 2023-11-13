@@ -563,26 +563,26 @@
 					<div style="height:4rem; display: flex; flex-direction: row; align-items:center; padding:0 0.5rem;">
 						<div id="srPlanInfoEditModalSrTtl" style="font-size:1.6rem; font-weight:700;"></div>
 						<div style="flex-grow:1;"></div>
-						<button type="button" data-dismiss="modal" onclick="editSrTrnsfPlan()" class="btn-1" style="height:3rem; margin-right:0.5rem;">
+						<button type="button" data-dismiss="modal" onclick="editSrTrnsfPlan()" class="btn-1" style="height:3rem;">
 							등록/수정
 						</button>
 					</div>
 					<div style="height: 4rem; display: flex; flex-direction: row;">
-						<div style="height: 4rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #f9fafe; font-weight:700;">요청구분</div>
+						<div style="height: 4rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #edf2f8; font-weight:700;">요청구분</div>
 						<div style="height: 4rem; width: 35%; display: flex; align-items: center;">
 							<input id="srPlanModalDmndInput" type="text" disabled style="width:80%; height:3rem; margin:0 0 0 0.5rem;">
 						</div>
-						<div style="height: 4rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #f9fafe; font-weight:700;">업무구분</div>
+						<div style="height: 4rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #edf2f8; font-weight:700;">업무구분</div>
 						<div style="height: 4rem; width: 35%; display: flex; align-items: center;">
 							<input id="srPlanModalTaskInput" type="text" disabled style="width:80%; height:3rem; margin:0 0 0 0.5rem;">
 						</div>
 					</div>
 					<div style="height: 4rem; display: flex; flex-direction: row;">
-						<div style="height: 4rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #f9fafe; font-weight:700;">처리팀</div>
+						<div style="height: 4rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #edf2f8; font-weight:700;">처리팀</div>
 						<div style="height: 4rem; width: 35%; display: flex; align-items: center;">
 							<input id="srPlanModalDeptInput" type="text" disabled style="width:80%; height:3rem; margin:0 0 0 0.5rem;">
 						</div>
-						<div style="height: 4rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #f9fafe; font-weight:700;">담당자</div>
+						<div style="height: 4rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #edf2f8; font-weight:700;">담당자</div>
 						<div style="height: 4rem; width: 35%; display: flex; align-items: center;">
 							<input id="srPlanModalPicInput" type="text" disabled style="width:62%; height:3rem; margin:0 0 0 0.5rem;">
 							<div style="width:3%"></div>
@@ -597,26 +597,25 @@
 						</div>
 					</div>
 					<div style="height: 4rem; display: flex; flex-direction: row;">
-						<div style="height: 4rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #f9fafe; font-weight:700;">목표시작일</div>
+						<div style="height: 4rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #edf2f8; font-weight:700;">목표시작일</div>
 						<div style="height: 4rem; width: 35%; display: flex; align-items: center;">
 							<input id="srPlanModalTrgtBgngDt" type="date" style="width:80%; height:3rem; margin:0rem 0.5rem;">
 						</div>
-						<div style="height: 4rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #f9fafe; font-weight:700;">목표완료일</div>
+						<div style="height: 4rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #edf2f8; font-weight:700;">목표완료일</div>
 						<div style="height: 4rem; width: 35%; display: flex; align-items: center;">
 							<input id="srPlanModalTrgtCmptnDt" type="date" style="width:80%; height:3rem; margin:0rem 0.5rem;">
 						</div>
 					</div>
 					<div style="height: 4rem; display: flex; flex-direction: row;">
-						<div style="height: 4rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #f9fafe; font-weight:700;">총 계획공수(M/D)</div>
+						<div style="height: 4rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #edf2f8; font-weight:700;">총 계획공수(M/D)</div>
 						<div style="height: 4rem; width: 35%; display: flex; align-items: center;">
 							<input id="srPlanModalTotalCapacity" type="text" disabled style="width:80%; height:3rem; margin:0rem 0.5rem;">
 						</div>
 					</div>
 					<div style="height: 11rem; display: flex; flex-direction: row;">
-						<div style="height: 11rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #f9fafe; border-radius: 0px 0px 0px 10px; font-weight:700;">검토내용</div>
-							<textarea id="srPlanModalTrnsfNote" style="width:85%; resize:none; margin:0.5rem;">
-							</textarea>
-						</div>
+						<div style="height: 11rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #edf2f8; border-radius: 0px 0px 0px 10px; font-weight:700;">검토내용</div>
+						<textarea id="srPlanModalTrnsfNote" style="width:85%; resize:none; margin:0.5rem;"></textarea>
+					</div>
 				</div>
 			</div>
 		</div>
