@@ -126,7 +126,7 @@
 			<button id="excelDownloadBtn" onclick="location.href='#';">엑셀 다운로드</button>
 		</div>
 		<div style="height:51.7rem; margin:0.75rem 0rem; background-color: #f9fafe;">
-			<table id="developManagementMainTable" style="width: 100%;">
+			<table id="developManagementMainTable" style="width: 100%;  table-layout: fixed;">
 				<colgroup>
 					<col width="4.5%" />
 					<col width="10.5%" />

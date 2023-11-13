@@ -600,15 +600,45 @@
 		
 
 	<!-- 작성자: 이현주  -->
+	<!-- 미처리 요청수 가져오기 -->
+	<select id="countUnprocessSrRqst" resultType="int">
+		select count(*)
+		from sr_rqst
+		where sr_rqst_stts_no in ('APRV_WAIT', 'RCPT_WAIT', 'CMPTN_RQST')
+	</select>
+	
+	<!-- 검토자 홈 미처리 요청목록 불러오기 -->
+	<select id="selectUnprocessSrRqstByPage" parameterType="Map" resultType="com.finalteam5.otisrm.dto.srRequest.SrRqstForReviewerHomeBoard">
+		<![CDATA[
+		select rnum, sr_rqst_no, sr_ttl, sys_nm, usr_nm, inst_nm, sr_rqst_stts_nm, sr_rqst_reg_dt, sr_cmptn_prnmnt_dt
+		from (
+		    select rownum as rnum, sr_rqst_no, sr_ttl, sys_nm, usr_nm, inst_nm, sr_rqst_stts_nm, sr_rqst_reg_dt, sr_cmptn_prnmnt_dt
+		    from(
+		        select r.sr_rqst_no, r.sr_ttl, s.sys_nm, u.usr_nm, i.inst_nm, st.sr_rqst_stts_nm, r.sr_rqst_reg_dt, sr.sr_cmptn_prnmnt_dt
+		        from sr_rqst r
+		        join sys s on s.sys_no = r.sys_no 
+		        join usr u on u.usr_no = r.sr_reqstr_no
+		        join inst i on i.inst_no = u.inst_no
+		        join sr_rqst_stts st on st.sr_rqst_stts_no = r.sr_rqst_stts_no
+		        left join sr on sr.sr_rqst_no = r.sr_rqst_no
+		        where st.sr_rqst_stts_no in ('APRV_WAIT', 'RCPT_WAIT', 'CMPTN_RQST')
+		        order by sr_rqst_no desc
+		        )
+			where rownum <= #{endRowNo}
+		)
+		where rnum >= #{startRowNo}	
+		]]>
+	</select>
+	
 	<!-- 상태별 요청수 가져오기 -->
 	<select id="countSrRqstBySttsNm" parameterType="String" resultType="int">
 		select count(*)
 		from sr_rqst r
 		join sr_rqst_stts st on st.sr_rqst_stts_no = r.sr_rqst_stts_no
-		where #{srRqstSttNm} = '전체' or st.sr_rqst_stts_nm = #{srRqstSttNm}
+		where st.sr_rqst_stts_nm = #{srRqstSttNm}
 	</select>
 	
-	<!-- 검토자 홈 요청목록 불러오기 -->
+	<!-- 검토자 홈 선택 상태에 따라 요청목록 불러오기 -->
 	<select id="selectSrRqstForReviewerHomeBoardListByPage" parameterType="Map" resultType="com.finalteam5.otisrm.dto.srRequest.SrRqstForReviewerHomeBoard">
 		<![CDATA[
 		select rnum, sr_rqst_no, sr_ttl, sys_nm, usr_nm, inst_nm, sr_rqst_stts_nm, sr_rqst_reg_dt, sr_cmptn_prnmnt_dt
@@ -622,7 +652,7 @@
 		        join inst i on i.inst_no = u.inst_no
 		        join sr_rqst_stts st on st.sr_rqst_stts_no = r.sr_rqst_stts_no
 		        left join sr on sr.sr_rqst_no = r.sr_rqst_no
-		        where #{srRqstSttNm} = '전체' or st.sr_rqst_stts_nm = #{srRqstSttNm}
+		        where st.sr_rqst_stts_nm = #{srRqstSttNm}
 		        order by sr_rqst_no desc
 		        )
 			where rownum <= #{endRowNo}
@@ -972,5 +1002,27 @@
 	<!-- 전체 시스템명 가져오기 -->
 	<select id="selectTotalSysNm" resultType="String">
 		select distinct sys_nm from sys
+	</select>
+	
+	<!-- 시스템별 상태개수 가져오기 -->
+	<select id="selectSttsCountBySysNm" resultType="com.finalteam5.otisrm.dto.srRequest.SrRqstSttsCountBySys">
+		select
+		    s.sys_nm,
+		    count(case when r.sr_rqst_stts_no = 'RQST' then 1 end) as rqst_count,
+		    count(case when r.sr_rqst_stts_no = 'APRV_WAIT' then 1 end) as aprv_wait_count,
+		    count(case when r.sr_rqst_stts_no = 'APRV_REEXAM' then 1 end) as aprv_reexam_count,
+		    count(case when r.sr_rqst_stts_no = 'APRV_RETURN' then 1 end) as aprv_return_count,
+		    count(case when r.sr_rqst_stts_no = 'APRV' then 1 end) as aprv_count,
+		    count(case when r.sr_rqst_stts_no = 'RCPT_WAIT' then 1 end) as rcpt_wait_count,
+		    count(case when r.sr_rqst_stts_no = 'RCPT_REEXAM' then 1 end) as rcpt_reexam_count,
+		    count(case when r.sr_rqst_stts_no = 'RCPT_RETURN' then 1 end) as rcpt_return_count,
+		    count(case when r.sr_rqst_stts_no = 'RCPT' then 1 end) as rcpt_count,
+		    count(case when r.sr_rqst_stts_no = 'DEP_ING' then 1 end) as dep_ing_count,
+		    count(case when r.sr_rqst_stts_no = 'TEST' then 1 end) as test_count,
+		    count(case when r.sr_rqst_stts_no = 'CMPTN_RQST' then 1 end) as cmptn_rqst_count,
+		    count(case when r.sr_rqst_stts_no = 'DEP_CMPTN' then 1 end) as dep_cmptn_count
+		from sr_rqst r
+		join sys s on r.sys_no = s.sys_no
+		group by s.sys_nm
 	</select>
 </mapper>

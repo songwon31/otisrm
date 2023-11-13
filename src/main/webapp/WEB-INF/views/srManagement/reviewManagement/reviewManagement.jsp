@@ -209,7 +209,7 @@
 			          </div>
 			          <div class="d-flex mb-2 w-100">
 			            <label for="detailmodal_srRqstAtchData" class="w-label col-form-label">첨부파일</label>
-						<input id="detailmodal_srRqstAtchData" type="file" class="w-content form-control-file form-control-sm px-0" disabled>
+						<input id="detailmodal_srRqstAtchData" type="file" class="w-content form-control-file form-control-sm p-0" disabled>
 			          </div>
 					</div>
 					<div class="card p-2 mb-4">
@@ -277,7 +277,7 @@
 			          	</div>
 			          	<div class="d-flex mb-2 w-100">
 			            	<label for="detailmodal_srAtchData" class="w-label col-form-label">첨부파일</label>
-							<input id="detailmodal_srAtchData" type="file" id="srFile" class="w-content form-control-file form-control-sm px-0" disabled>
+							<input id="detailmodal_srAtchData" type="file" id="srFile" class="w-content form-control-file form-control-sm p-0" disabled>
 			          	</div>
 					</div>
 		      </div>
@@ -299,6 +299,23 @@
 					<div class="modal-body">
 						<div id="alertModalContent" style="height:11rem; font-weight: 700; display: flex; justify-content: center; align-items: center;">
 							변경할 상태를 선택해주십시오.
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<!-- 변경성공 알림 모달  -->
+		<div id="successModal" class="modal" data-backdrop="static">
+			<div class="modal-dialog modal-dialog-centered modal-sm">
+				<div class="modal-content">
+					<div class="modal-header d-flex" style="background-color: #2c7be4;">
+						<div class="modal-title mr-auto">성공</div>
+						<i class="material-icons close-icon ml-auto" data-dismiss="modal" style="cursor: pointer;" onclick="redirect()">close</i>
+					</div>
+					<div class="modal-body">
+						<div id="alertModalContent" style="height:11rem; font-weight: 700; display: flex; justify-content: center; align-items: center;">
+							SR요청 상태가 변경되었습니다.
 						</div>
 					</div>
 				</div>

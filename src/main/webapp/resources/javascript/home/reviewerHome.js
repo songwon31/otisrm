@@ -1,14 +1,12 @@
 $(init)
 
-var selectedStts = "전체";
-
 function init() {
 	//테이블에 전체 SR목록 가져오기
-	loadReviewerHomeBoardList(1, selectedStts);
-	//첫번쨰 SR진행현황 가져오기
-	loadFirstSrToProgressInfo();
+	loadUnprocessedListAll(1);
 	//미처리 검토 요청개수 가져오기
 	loadReviewerHomeCountBoard();
+	//시스템별 현황 가져오기
+	loadReviewerHomeChartBySys();
 }
 
 function formatDateToYYYYMMDD(timestamp) {
@@ -29,9 +27,85 @@ function formatDateToYYYYMMDD(timestamp) {
 	}
 }
 
+function loadReviewerHomeChartBySys() {
+	$.ajax({
+		type: "POST",
+		url: "/otisrm/getReviewerHomeChartBySys",
+		success: function(data) {
+			function convertDataForChart(data) {
+				var chartData = [['시스템', '요청', '승인대기', '승인재검토', '승인반려', '승인', '접수대기', '접수재검토', '접수반려', '접수', '개발중', '테스트', '완료요청', '개발완료']];
+	
+				// 주어진 데이터를 그래프 데이터로 변환
+				data.forEach(function(sysData) {
+				  var row = [
+					    sysData.sysNm,
+					    sysData.rqstCount,
+					    sysData.aprvWaitCount,
+					    sysData.aprvReexamCount,
+					    sysData.aprvReturnCount,
+					    sysData.aprvCount,
+					    sysData.rcptWaitCount,
+					    sysData.rcptReexamCount,
+					    sysData.rcptReturnCount,
+					    sysData.rcptCount,
+					    sysData.depIngCount,
+					    sysData.testCount,
+					    sysData.cmptnRqstCount,
+					    sysData.depCmptnCount
+				    ];
+	
+				    chartData.push(row);
+				  });
+	
+				  return chartData;
+			}
+			
+            google.charts.load('current', {packages: ['corechart', 'bar']});
+            google.charts.setOnLoadCallback(drawBasic);
+            
+            var chartData = convertDataForChart(data);
+
+            function drawBasic() {
+            	var data = google.visualization.arrayToDataTable(chartData);
+
+                var options = {
+                  width: 380,
+                  height: 380,
+                  legend: { position: 'bottom', maxLines: 3 },
+                  bar: { groupWidth: '75%' },
+                  isStacked: true,
+                  colors: [
+                	  "#26bbfd",
+                	  "#21c3f4",
+                	  "#1bdbeb",
+                	  "#16e3e2",
+                	  "#10ebd9",
+                	  "#0bf3d0",
+                	  "#06fbc7",
+                	  "#00ffbe",
+                	  "#00e9ac",
+                	  "#00d39a",
+                	  "#00bd88",
+                	  "#00a776",
+                	  "#009164",
+                	  "#00d279"
+                	],
+                  chartArea: { left: 100, bottom: 100, width: '70%', height: '60%' }, // 차트 영역 지정
+                  margin: { top: 20, right: 20, bottom: 50, left: 20 } // 여백 조정
+                };
+                  
+                var chart = new google.visualization.BarChart(document.getElementById('reviewerHomeChartBySys'));
+
+                chart.draw(data, options);
+            }
+		}
+	});
+}
+
+
 function loadReviewerHomeCountBoard() {
 	$.ajax({
-		type: "GET",
+		type: "POST",
 		url: "/otisrm/getReviewerHomeCountBoard",
 		success: function(data) {
 			$("#aprvWaitCount").text(data.aprvWaitCount);
@@ -54,22 +128,107 @@ function loadFirstSrToProgressInfo(){
 
 function selectReviewStts(e) {
 	selectedStts = $(e).find("span:first").text();
-	loadReviewerHomeBoardList(1, selectedStts);
+	loadUnprocessedListByStts(1, selectedStts);
 	
 	//첫번째 SR진행현황 가져오기
 	loadFirstSrToProgressInfo();
 }
 
-function loadReviewerHomeBoardList(pageNo, selectedStts) {
+function loadUnprocessedListAll(pageNo) {
 	$.ajax({
-		type: "GET",
-		url: "/otisrm/getReviewerHomeBoardList",
+		type: "POST",
+		url: "/otisrm/getUnprocessedListAll",
+		data: {reviewerHomeBoardPageNo: pageNo},
+		success: function(data) {
+			var html = "";
+			var pagingHtml = "";
+			if(data.list.length == 0) {
+				$("#reviewerHomeBoardList").html("<tr><td colspan='10' style='height: 22.5rem; background-color: #f9fafe;'>해당 목록 결과가 없습니다.</td></tr>");
+				$("#reviewerHomeMainTablePaging").html("");
+				var lastIndex = 0;
+			} else if(data.list.length != 0) {
+				//tr 생성
+				data.list.forEach((item, index)=>{
+					lastIndex = index;
+					var formattedSrRqstRegDt = formatDateToYYYYMMDD(item.srRqstRegDt);
+					var formattedSrCmptnPrnmntDt = formatDateToYYYYMMDD(item.srCmptnPrnmntDt);
+					var trIndex = (pageNo - 1) * 5 + index + 1;
+					
+					html += '<tr style="height: 4.5rem; font-size: 1.5rem; background-color: white;" onclick="loadProgressInfo(\''+ item.srRqstNo +'\')">';
+					html += '	<td>' + trIndex + '</td>';
+					html += '	<td>' + item.srRqstNo + '</td>';
+					html += '	<td class="text-align-left" style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">' + item.srTtl + '</td>';
+					html += '	<td style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">' + item.sysNm + '</td>';
+					html += '	<td>' + item.usrNm + '</td>';
+					html += '	<td style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">' + item.instNm + '</td>';
+					html += '	<td>' + item.srRqstSttsNm + '</td>';
+					html += '	<td>' + formattedSrRqstRegDt + '</td>';
+					html += '	<td>' + formattedSrCmptnPrnmntDt + '</td>';
+					html += '	<td><button class="btn-1" data-toggle="modal" data-target="#detailmodal" onclick="showDetailModal(\''+ item.srRqstNo +'\')">상세보기</button></td>';
+					html += '</tr>';
+				});
+				$("#reviewerHomeBoardList").html(html);
+				
+				if(lastIndex < 4) {
+					html += '<tr style="height:100%;">';
+					html += '</tr>';
+					$("#reviewerHomeBoardList").html(html);
+				}
+				
+				//hover 효과 동적으로 추가
+				$('tbody tr').hover(
+					function() {
+					  //마우스가 요소 위에 있을 때 배경색 변경
+					  $(this).css('background-color', '#f3f6fd');
+					},
+					function() {
+					  //마우스가 요소를 벗어날 때 배경색 원래대로 변경
+					  $(this).css('background-color', 'white');
+				    }
+				);
+				
+				//페이징 처리
+			    var reviewerHomeBoardPager = data.pager;
+			    console.log(reviewerHomeBoardPager);
+			    //동적으로 페이징 컨트롤 생성
+			    pagingHtml += '<a class="btn" onclick="loadFirstSrToProgressInfo()" href="javascript:loadReviewerHomeBoardList(' + 1 + ')">처음</a>';
+			    //이전 페이지로 이동하는 링크 추가
+			    if (reviewerHomeBoardPager.groupNo > 1) {
+			        pagingHtml += '<a class="btn" onclick="loadFirstSrToProgressInfo()" href="javascript:loadReviewerHomeBoardList(' + reviewerHomeBoardPager.startPageNo - 1 + ')">이전</a>';
+			    }
+			    //중간 페이지 번호 링크 추가
+			    for (var i = reviewerHomeBoardPager.startPageNo; i <= reviewerHomeBoardPager.endPageNo; i++) {
+			    	if (reviewerHomeBoardPager.pageNo != i) {
+			    		pagingHtml += '<a class="btn" onclick="loadFirstSrToProgressInfo()" href="javascript:loadReviewerHomeBoardList(' + i + ')">' + i + '</a>';
+			        } else {
+			        	pagingHtml += '<a class="btn" onclick="loadFirstSrToProgressInfo()" href="javascript:loadReviewerHomeBoardList(' + i + ')">' + i + '</a>';
+			        }
+			    }
+			    //다음 페이지로 이동하는 링크 추가
+			    if (reviewerHomeBoardPager.groupNo < reviewerHomeBoardPager.totalGroupNo) {
+			      pagingHtml += '<a class="btn" onclick="loadFirstSrToProgressInfo()" href="javascript:loadReviewerHomeBoardList(' + reviewerHomeBoardPager.endPageNo + 1 + ')">다음</a>';
+			    }
+			    //맨끝 페이지로 이동하는 링크 추가
+			    pagingHtml += '<a class="btn" onclick="loadFirstSrToProgressInfo()" href="javascript:loadReviewerHomeBoardList(' + reviewerHomeBoardPager.totalPageNo + ')">맨끝</a>';
+			}
+			$("#reviewerHomeMainTablePaging").html(pagingHtml);
+		}
+	});
+	
+	//첫번쨰 SR진행현황 가져오기
+	loadFirstSrToProgressInfo();
+}
+
+function loadUnprocessedListByStts(pageNo, selectedStts) {
+	$.ajax({
+		type: "POST",
+		url: "/otisrm/getUnprocessedListByStts",
 		data: {reviewerHomeBoardPageNo: pageNo, srRqstSttNm: selectedStts},
 		success: function(data) {
 			var html = "";
 			var pagingHtml = "";
 			if(data.list.length == 0) {
-				$("#reviewerHomeBoardList").html("<tr><td colspan='10' style='height: 22.5rem;'>해당 목록 결과가 없습니다.</td></tr>");
+				$("#reviewerHomeBoardList").html("<tr><td colspan='10' style='height: 22.5rem; background-color: #f9fafe;'>해당 목록 결과가 없습니다.</td></tr>");
 				$("#reviewerHomeMainTablePaging").html("");
 				var lastIndex = 0;
 			} else if(data.list.length != 0) {
@@ -164,8 +323,8 @@ function initDetailModal() {
 
 function showDetailModal(srRqstNo) {
 	$.ajax({
-		type: "GET",
-		url: "/otisrm/getSrRqstForReviewerModal",
+		type: "POST",
+		url: "/otisrm/reviewerHome/getSrRqstForModal",
 		data: {selectedSrRqstNo: srRqstNo},
 		success: function(data) {
 			var formattedSrRqstRegDt = formatDateToYYYYMMDD(data.srRqstRegDt);
@@ -174,7 +333,7 @@ function showDetailModal(srRqstNo) {
 			//SR번호
 			$("#detailmodal_srRqstNo").val(data.srRqstNo);
 			
- 			//진행상태에 따른 select, button 활성화
+			//진행상태에 따른 select, button 활성화
 			var sttsNo = data.srRqstSttsNo;
 			if(sttsNo == "RQST") {
 				//변화없음
@@ -185,20 +344,20 @@ function showDetailModal(srRqstNo) {
 				$("#approveResultBtn").addClass('btn-1');
 				$("#detailmodal_srRqstRvwRsn").removeAttr('disabled');
 			} else if(sttsNo == "APRV_RETURN") {
-				$("option[value='APRV_RETURN']").prop('selected', true);
+				$("#approveResult option[value='APRV_RETURN']").prop('selected', true);
 			} else {
-				$("option[value='APRV']").prop('selected', true);
+				$("#approveResult option[value='APRV']").prop('selected', true);
 			}
 			
 			if(sttsNo == "RCPT" || sttsNo == "DEP_ING" || sttsNo == "TEST" || sttsNo == "CMPTN_RQST" || sttsNo == "DEP_CMPTN") {
-				$("option[value='RCPT']").prop('selected', true);
+				$("#receptionResult option[value='RCPT']").prop('selected', true);
 			} else if(sttsNo == "RCPT_WAIT" || sttsNo == "RCPT_REEXAM") {
 				$("#receptionResult").removeAttr('disabled');
 				$("#receptionResultBtn").removeAttr('disabled');
 				$("#receptionResultBtn").removeClass('btn-3');
 				$("#receptionResultBtn").addClass('btn-1');
 			} else if(sttsNo == "RCPT_RETURN") {
-				$("option[value='RCPT_RETURN']").prop('selected', true);
+				$("#receptionResult option[value='RCPT_RETURN']").prop('selected', true);
 			}
 			
 			if(sttsNo == "CMPTN_RQST") {
@@ -250,7 +409,7 @@ function initProgress() {
 
 function loadProgressInfo(srRqstNo) {
 	$.ajax({
-		type: "GET",
+		type: "POST",
 		url: "/otisrm/getSrRqstForProgressInfo",
 		data: {selectedSrRqstNo: srRqstNo},
 		success: function(data) {
@@ -322,10 +481,11 @@ function saveApproveResult(e) {
 	
 	$.ajax({
 		type: "POST",
-		url: "/otisrm/saveApproveResult",
+		url: "/otisrm/reviewerHome/saveApproveResult",
 		data: {selectedSrRqstNo: srRqstNo, srRqstSttsNo: approveResult, srRqstRvwRsn: srRqstRvwRsn},
 		success: function(data) {
 			loadReviewerHomeCountBoard();
+			$('#successModal').modal('show');
 		}
 	});
 }
@@ -341,10 +501,11 @@ function saveReceptionResult(e) {
 	
 	$.ajax({
 		type: "POST",
-		url: "/otisrm/saveReceptionResult",
+		url: "/otisrm/reviewerHome/saveReceptionResult",
 		data: {selectedSrRqstNo: srRqstNo, srRqstSttsNo: receptionResult},
 		success: function(data) {
 			loadReviewerHomeCountBoard();
+			$('#successModal').modal('show');
 		}
 	});
 }
@@ -354,10 +515,15 @@ function saveCompletionResult() {
 	
 	$.ajax({
 		type: "POST",
-		url: "/otisrm/saveCompletionResult",
+		url: "/otisrm/reviewerHome/saveCompletionResult",
 		data: {selectedSrRqstNo: srRqstNo},
 		success: function(data) {
 			loadReviewerHomeCountBoard();
+			$('#successModal').modal('show');
 		}
 	});
+}
+
+function redirect() {
+	window.location.href = "/otisrm/reviewerHome";
 }

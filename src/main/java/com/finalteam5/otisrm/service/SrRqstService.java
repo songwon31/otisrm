@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import com.finalteam5.otisrm.dto.Pager;
 import com.finalteam5.otisrm.dto.SrDmndClsf;
 import com.finalteam5.otisrm.dto.SrTaskClsf;
 import com.finalteam5.otisrm.dto.SrTrnsfPlan;
@@ -19,6 +20,7 @@ import com.finalteam5.otisrm.dto.srRequest.SrRqstForReviewerHomeBoard;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstForReviewerHomeProgress;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstForReviewerModal;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstStts;
+import com.finalteam5.otisrm.dto.srRequest.SrRqstSttsCountBySys;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstSubmit;
 import com.finalteam5.otisrm.dto.usr.Inst;
 
@@ -127,6 +129,12 @@ public interface SrRqstService {
 	public int getTotalToDoItemOfSchdlChg(Map<String, Object> map);
 	
 	//작성자: 이현주=================================================================
+	//미처리 요청수 가져오기
+	public int getCountUnprocessSrRqst();
+	
+	//검토자 홈 미처리 요청목록 불러오기
+	public List<SrRqstForReviewerHomeBoard> getUnprocessSrRqstByPage(Pager pager);
+	
 	//요청목록불러오기(검토자 홈)
 	public List<SrRqstForReviewerHomeBoard> getSrRqstForReviewerHomeBoardListByPage(Map<String, Object> params);
 	
@@ -147,6 +155,9 @@ public interface SrRqstService {
 	
 	//전체 시스템 이름 가져오기
 	public List<String> getTotalSysNm();
+	
+	//시스템별 상태개수 가져오기
+	public List<SrRqstSttsCountBySys> getSttsCountBySysNm();
 	
 	//개발관리(진행상태 승인이상) 요청수 가져오기
 	public int getCountSrRqstForDevelopManagement(Map<String, String> params);
