@@ -275,6 +275,7 @@ function showRequestDetailModal(srNo) {
 			$('#modal_sys_nm').html(data.sysNm);
 			$('#modal_sr_task_nm').html(data.srTaskNm);
 			$('#modal_sr_ttl').html(data.srTtl);
+			
 			$('#modal_sr_prps').html(data.srPrps);
 			$('#modal_dept_nm').html(data.deptNm);
 			$('#modal_pic_nm').html(data.usrNm);
@@ -287,23 +288,37 @@ function showRequestDetailModal(srNo) {
 			$('#modal_sr_trnsf_dt').html(formatDateTime(trnsfDt));
 			$('#modal_sr_conts').html(data.srConts);
 			$('#modal_sr_dvl_conts').html(data.srDvlConts);
+			
+			$("#modal_sr_conts_btn").on("click", function() {
+		        if ($(this).is(":checked")) {
+		        	modal_sr_conts_btn_checked();
+		        }
+		    });
+			
+			$("#modal_sr_dvl_conts_btn").on("click", function() {
+		        if ($(this).is(":checked")) {
+		        	modal_sr_dvl_conts_btn_checked();
+		        }
+		    });
+			
+			$('#modalSrAtch').html('');
+			if (data.srAtchList != null) {
+				for (let i=0; i<data.srAtchList.length; ++i) {
+					let srAtch = data.srAtchList[i];
+					let html = '';
+	                html += '<a href="/otisrm/srAtchDownloadForDeveloperHome?srAtchNo='+ srAtch.srAtchNo +'" style="width:auto; display:flex; align-items:self; font-size:1.5rem;">';
+	                html += '    <i class="material-icons atch-ic" style="font-size:2.5rem;">download</i>';
+	                html += '    <div>' + srAtch.srAtchNm + ' (' + (srAtch.srAtchSize / 1024).toFixed(2) + 'KB)</div>';
+	                html += '</a>';
+	                $('#modalSrAtch').append(html);
+				}
+			}
+			
         },
 		error: function (error) {
 			console.error("오류 발생:", error);
 		}
 	});
-	
-	$("#modal_sr_conts_btn").on("click", function() {
-        if ($(this).is(":checked")) {
-        	modal_sr_conts_btn_checked();
-        }
-    });
-	
-	$("#modal_sr_dvl_conts_btn").on("click", function() {
-        if ($(this).is(":checked")) {
-        	modal_sr_dvl_conts_btn_checked();
-        }
-    });
 }
 
 function modal_sr_conts_btn_checked() {
@@ -383,7 +398,7 @@ function showSrProgressModal(srNo) {
 					let srTrnsfHr = data.srTrnsfHrList[i];
 					let srTrnsfHrHtml = '';
 					srTrnsfHrHtml += '<tr style="height:4rem; font-size:1.6rem; background-color:white;">';
-					srTrnsfHrHtml += '<td><input type="checkbox" class="checkbox"></td>';
+					srTrnsfHrHtml += '<td><input type="checkbox" class="checkbox" style="vertical-align: middle;"></td>';
 					srTrnsfHrHtml += '<td class="srNo" style="display:none">' + srTrnsfHr.srNo + '</td>';
 					srTrnsfHrHtml += '<td class="usrNo" style="display:none">' + srTrnsfHr.usrNo + '</td>';
 					srTrnsfHrHtml += '<td>' + srTrnsfHr.usrNm + '</td>';
@@ -421,11 +436,18 @@ function showSrProgressModal(srNo) {
 						$('#srAnalysisPrgrs').html('<input value="" style="width:40%; height:3rem; margin:0rem 1rem; text-align: center;">');
 						if (srPrgrs.srPrgrs > 0) {
 							$('#srAnalysisPrgrs input').val(srPrgrs.srPrgrs);
+							
+							//그래프 재구성
+							$('#totalProgressGraph').css('width', srPrgrs.srPrgrs + '%');
+							$('#totalProgressGraphText').html(srPrgrs.srPrgrs + '%');
+							$('#analysisProgressGraph').css('width', (srPrgrs.srPrgrs * 10) + '%');
 						}
-						let btnHtml = '<center><a data-toggle="modal" data-target="#manageSrOutputModal" href="javascript:void(0)" onclick="composeManageSrOutputModal(\'ANALYSIS\')"';
-						btnHtml += 'style="height: 3rem; width: 30%; border-radius: 5px; background-color:#2c7be4; color:white; font-weight:700;';
-						btnHtml += 'display: flex; flex-direction: row; justify-content: center; align-items: center;">관리</a></center>';
-						$('#srAnalysisOtptBtn').html(btnHtml);
+						
+						let btnHtml = '<center><a data-toggle="modal" data-target="#manageSrOutputModal" href="javascript:void(0)" class="btn-1" style="width:30%; height:3rem; font-size:1.5rem;" onclick="composeManageSrOutputModal(\'ANALYSIS\')">관리</a></center>';
+						/*btnHtml += 'style="height: 3rem; width: 30%; border-radius: 5px; background-color:#2c7be4; color:white; font-weight:700;';
+						btnHtml += 'display: flex; flex-direction: row; justify-content: center; align-items: center;">관리</a></center>';*/
+						
+						$('#srAnalysisOtptBtn').html(btnHtml);	 
 					} else if (srPrgrs.srPrgrsSttsNm == '설계') {
 						if (srPrgrs.srPrgrsBgngDt != null) {
 							$('#srDesignBgngDt').html(formatDate(bgngDt));
@@ -436,10 +458,13 @@ function showSrProgressModal(srNo) {
 						$('#srDesignPrgrs').html('<input value="" style="width:40%; height:3rem; margin:0rem 1rem; text-align: center;">');
 						if (srPrgrs.srPrgrs > 0) {
 							$('#srDesignPrgrs input').val(srPrgrs.srPrgrs);
+							
+							//그래프 재구성
+							$('#totalProgressGraph').css('width', srPrgrs.srPrgrs + '%');
+							$('#totalProgressGraphText').html(srPrgrs.srPrgrs + '%');
+							$('#designProgressGraph').css('width', ((srPrgrs.srPrgrs - 10) * 10) + '%');
 						}
-						let btnHtml = '<center><a data-toggle="modal" data-target="#manageSrOutputModal" href="javascript:void(0)" onclick="composeManageSrOutputModal(\'DESIGN\')"';
-						btnHtml += 'style="height: 3rem; width: 30%; border-radius: 5px; background-color:#2c7be4; color:white; font-weight:700;';
-						btnHtml += 'display: flex; flex-direction: row; justify-content: center; align-items: center;">관리</a></center>';
+						let btnHtml = '<center><a data-toggle="modal" data-target="#manageSrOutputModal" href="javascript:void(0)" class="btn-1" style="width:30%; height:3rem; font-size:1.5rem;" onclick="composeManageSrOutputModal(\'DESIGN\')">관리</a></center>';
 						$('#srDesignOtptBtn').html(btnHtml);
 					} else if (srPrgrs.srPrgrsSttsNm == '구현') {
 						if (srPrgrs.srPrgrsBgngDt != null) {
@@ -451,10 +476,13 @@ function showSrProgressModal(srNo) {
 						$('#srImplPrgrs').html('<input value="" style="width:40%; height:3rem; margin:0rem 1rem; text-align: center;">');
 						if (srPrgrs.srPrgrs > 0) {
 							$('#srImplPrgrs input').val(srPrgrs.srPrgrs);
+							
+							//그래프 재구성
+							$('#totalProgressGraph').css('width', srPrgrs.srPrgrs + '%');
+							$('#totalProgressGraphText').html(srPrgrs.srPrgrs + '%');
+							$('#implementProgressGraph').css('width', ((srPrgrs.srPrgrs - 20) * 2) + '%');
 						}
-						let btnHtml = '<center><a data-toggle="modal" data-target="#manageSrOutputModal" href="javascript:void(0)" onclick="composeManageSrOutputModal(\'IMPLEMENT\')"';
-						btnHtml += 'style="height: 3rem; width: 30%; border-radius: 5px; background-color:#2c7be4; color:white; font-weight:700;';
-						btnHtml += 'display: flex; flex-direction: row; justify-content: center; align-items: center;">관리</a></center>';
+						let btnHtml = '<center><a data-toggle="modal" data-target="#manageSrOutputModal" href="javascript:void(0)" class="btn-1" style="width:30%; height:3rem; font-size:1.5rem;" onclick="composeManageSrOutputModal(\'IMPLEMENT\')">관리</a></center>';
 						$('#srImplOtptBtn').html(btnHtml);
 					} else if (srPrgrs.srPrgrsSttsNm == '시험') {
 						if (srPrgrs.srPrgrsBgngDt != null) {
@@ -466,10 +494,13 @@ function showSrProgressModal(srNo) {
 						$('#srTestPrgrs').html('<input value="" style="width:40%; height:3rem; margin:0rem 1rem; text-align: center;">');
 						if (srPrgrs.srPrgrs > 0) {
 							$('#srTestPrgrs input').val(srPrgrs.srPrgrs);
+							
+							//그래프 재구성
+							$('#totalProgressGraph').css('width', srPrgrs.srPrgrs + '%');
+							$('#totalProgressGraphText').html(srPrgrs.srPrgrs + '%');
+							$('#testProgressGraph').css('width', ((srPrgrs.srPrgrs - 70) * 5) + '%');
 						}
-						let btnHtml = '<center><a data-toggle="modal" data-target="#manageSrOutputModal" href="javascript:void(0)" onclick="composeManageSrOutputModal(\'TEST\')"';
-						btnHtml += 'style="height: 3rem; width: 30%; border-radius: 5px; background-color:#2c7be4; color:white; font-weight:700;';
-						btnHtml += 'display: flex; flex-direction: row; justify-content: center; align-items: center;">관리</a></center>';
+						let btnHtml = '<center><a data-toggle="modal" data-target="#manageSrOutputModal" href="javascript:void(0)" class="btn-1" style="width:30%; height:3rem; font-size:1.5rem;" onclick="composeManageSrOutputModal(\'TEST\')">관리</a></center>';
 						$('#srTestOtptBtn').html(btnHtml);
 					} else if (srPrgrs.srPrgrsSttsNm == '반영요청') {
 						if (srPrgrs.srPrgrsBgngDt != null) {
@@ -481,10 +512,13 @@ function showSrProgressModal(srNo) {
 						$('#srApplyPrgrs').html('<input value="" style="width:40%; height:3rem; margin:0rem 1rem; text-align: center;">');
 						if (srPrgrs.srPrgrs > 0) {
 							$('#srApplyPrgrs input').val(srPrgrs.srPrgrs);
+							
+							//그래프 재구성
+							$('#totalProgressGraph').css('width', srPrgrs.srPrgrs + '%');
+							$('#totalProgressGraphText').html(srPrgrs.srPrgrs + '%');
+							$('#applyRequestProgressGraph').css('width', ((srPrgrs.srPrgrs - 90) * 10) + '%');
 						}
-						let btnHtml = '<center><a data-toggle="modal" data-target="#manageSrOutputModal" href="javascript:void(0)" onclick="composeManageSrOutputModal(\'APPLY_REQUEST\')"';
-						btnHtml += 'style="height: 3rem; width: 30%; border-radius: 5px; background-color:#2c7be4; color:white; font-weight:700;';
-						btnHtml += 'display: flex; flex-direction: row; justify-content: center; align-items: center;">관리</a></center>';
+						let btnHtml = '<center><a data-toggle="modal" data-target="#manageSrOutputModal" href="javascript:void(0)" class="btn-1" style="width:30%; height:3rem; font-size:1.5rem;" onclick="composeManageSrOutputModal(\'APPLY_REQUEST\')">관리</a></center>';
 						$('#srApplyOtptBtn').html(btnHtml);
 					}
 				}
@@ -547,6 +581,24 @@ function composeFindPicModal() {
 	composeFindPicModalTable(1);
 }
 
+//담당자 검색 모달 구성
+function composeFindPicModal() {
+	//dept select 구성
+	$.ajax({
+		type: "POST",
+		url: "/otisrm/getFindPicModalDeptSelectList",
+		data: {},
+		success: function(data) {
+			for (let i=0; i<data.length; ++i) {
+				let html = '<option value="' + data[i].deptNo + '">' + data[i].deptNm + '</option>';
+				$('#findPicModalDeptSelect').append(html);
+			}
+		}
+	});
+	
+	composeFindPicModalTable(1);
+}
+
 //담당자 검색 모달 테이블 구성
 function composeFindPicModalTable(pageNo) {
 	//데이터 준비
@@ -573,11 +625,12 @@ function composeFindPicModalTable(pageNo) {
 				let usr = data.usrList[i];
 				let findPicTableHtml = '';
 				findPicTableHtml += '<tr style="height: 4.5rem; font-size: 1.5rem; background-color:white;">';
+				findPicTableHtml += '<td>' + (i+1) + '</td>';
 				findPicTableHtml += '<td>' + usr.deptNm + '</td>';
 				findPicTableHtml += '<td>' + usr.roleNm + '</td>';
 				findPicTableHtml += '<td>' + usr.ibpsNm + '</td>';
 				findPicTableHtml += '<td>' + usr.usrNm + '</td>';
-				findPicTableHtml += '<td> <button class="btn-2 detail-button" data-dismiss="modal" onclick="setFindPicModalPic(\'' + usr.deptNm + '\', \'' + usr.usrNm + '\')">선택</button> </td>';
+				findPicTableHtml += '<td> <button class="btn-1 detail-button" style="height:2.8rem; width:40%;" data-dismiss="modal" onclick="setFindPicModalPic(\'' + usr.deptNm + '\', \'' + usr.usrNm + '\')">선택</button> </td>';
 				//jsp에 삽입
 				$('#findPicModalTable tbody').append(findPicTableHtml);
 			}
@@ -640,6 +693,41 @@ function setFindPicModalPic(deptNm, usrNm) {
 }
 
 //--------------------------------------------------------------------------------------------
+//sr계획 작성/수정
+function editSrTrnsfPlan() {
+	let srNo = currentDetailSrNo;
+	let deptNm = $('#srPlanModalDeptInput').val();
+	let usrNm = $('#srPlanModalPicInput').val();
+	let srTrgtBgngDt = $('#srPlanModalTrgtBgngDt').val();
+	let srTrgtCmptnDt = $('#srPlanModalTrgtCmptnDt').val();
+	let srTrnsfNote = $('#srPlanModalTrnsfNote').val();
+	let srDmndNo = $('#srPlanModalDmndInput').val();
+	console.log(srDmndNo);
+	
+	let requestData = {
+		srNo: srNo,
+		deptNm: deptNm,
+        usrNm: usrNm,
+        srTrgtBgngDt: srTrgtBgngDt,
+        srTrgtCmptnDt: srTrgtCmptnDt,
+        srTrnsfNote: srTrnsfNote,
+        srDmndNo: srDmndNo
+    };
+	
+	console.log(requestData);
+	
+	$.ajax({
+		type: "POST",
+		url: "/otisrm/editSrTrnsfPlan",
+		data: requestData,
+		success: function(data) {
+			showSrProgressModal(srNo);
+		}
+	});
+}
+
+
+
 //HR수정 모달
 function showSetHrModal() {
 	let srNo = currentDetailSrNo
@@ -666,16 +754,17 @@ function showSetHrModal() {
 
 
 //HR담당자 검색 모달 구성
-function composeSetHrFindPicModal(e) {
-	let deptNm = $('#srPlanModalDeptInput').val();
+function composeSetHrFindPicModal() {
+	let deptNm = $('#srPlanInfoDept').html();
+	console.log(deptNm);
 	$('#setHrFindPicModalDeptInput').val(deptNm);
-	
+	/*
 	let td = $(e).closest('td');
 	let inputId = td.find('input').attr('id');
 	
 	$('#setHrFindPicModalCallerInputId').html(inputId);
 	console.log(inputId);
-	
+	*/
 	composeSetHrFindPicModalTable(1);
 }
 
@@ -684,7 +773,6 @@ function composeSetHrFindPicModalTable(pageNo) {
 	
 	//데이터 준비
 	let deptNm = $('#setHrFindPicModalDeptInput').val();
-	console.log(deptNm);
 	
 	$.ajax({
 		type: "POST",
@@ -715,11 +803,12 @@ function composeSetHrFindPicModalTable(pageNo) {
 						let usr = data.usrList[i];
 						let findPicTableHtml = '';
 						findPicTableHtml += '<tr style="height: 4.5rem; font-size: 1.5rem; background-color:white;">';
+						findPicTableHtml += '<td>' + (i+1) + '</td>';
 						findPicTableHtml += '<td>' + usr.deptNm + '</td>';
 						findPicTableHtml += '<td>' + usr.roleNm + '</td>';
 						findPicTableHtml += '<td>' + usr.ibpsNm + '</td>';
 						findPicTableHtml += '<td>' + usr.usrNm + '</td>';
-						findPicTableHtml += '<td> <button class="btn-2 detail-button" data-dismiss="modal" onclick="addHr(\'' + usr.usrNo + '\')">선택</button> </td>';
+						findPicTableHtml += '<td> <button class="btn-1 detail-button" style="height:2.8rem; width:40%;" data-dismiss="modal" onclick="addHr(\'' + usr.usrNo + '\')">선택</button> </td>';
 						//jsp에 삽입
 						$('#setHrFindPicModalTable tbody').append(findPicTableHtml);
 					}

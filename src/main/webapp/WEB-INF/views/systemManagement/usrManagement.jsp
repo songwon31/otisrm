@@ -214,7 +214,9 @@
 					</div>
 					<div style="height:4rem; display:flex; flex-direction:row;">
 						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#edf2f8; font-weight:700;">주민등록번호</div>
-						<div id="modalUsrRrno" style="height:4rem; width:85%; padding-left:0.5rem; display:flex; align-items:center;"></div>
+						<div id="modalUsrRrno" style="height:4rem; width:35%; padding-left:0.5rem; display:flex; align-items:center;"></div>
+						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#edf2f8; font-weight:700;">가입일</div>
+						<div id="modalUsrJoinDt" style="height:4rem; width:35%; padding-left:0.5rem; display:flex; align-items:center;"></div>
 					</div>
 					<div style="height:4rem; display:flex; flex-direction:row;">
 						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#edf2f8; font-weight:700;">전화번호</div>
@@ -226,13 +228,34 @@
 						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#edf2f8; font-weight:700;">소속</div>
 						<div id="modalInstNm" style="height:4rem; width:35%; padding-left:0.5rem; display:flex; align-items:center;"></div>
 						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#edf2f8; font-weight:700;">부서</div>
-						<div id="modalDeptNm" style="height:4rem; width:35%; padding-left:0.5rem; display:flex; align-items:center;"></div>
+						<div id="modalDeptNm" style="height:4rem; width:35%; padding-left:0.5rem; display:flex; align-items:center;">
+							<select id="modalUsrDept" name="modalUsrDept" style="width:60%; padding:3px;">
+								
+							</select>
+							<button type="button" onclick="editUsrDeptModal()" class="btn-1" style="height:3rem; margin-left:1rem;">
+								저장
+							</button>
+						</div>
 					</div>
 					<div style="height:4rem; display:flex; flex-direction:row;">
 						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#edf2f8; font-weight:700;">직위</div>
-						<div id="modalIbpsNm" style="height:4rem; width:35%; padding-left:0.5rem; display:flex; align-items:center;"></div>
+						<div id="modalIbpsNm" style="height:4rem; width:35%; padding-left:0.5rem; display:flex; align-items:center;">
+							<select id="modalUsrIbps" name="modalUsrIbps" style="width:60%; padding:3px;">
+								
+							</select>
+							<button type="button" onclick="editUsrIbpsModal()" class="btn-1" style="height:3rem; margin-left:1rem;">
+								저장
+							</button>
+						</div>
 						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#edf2f8; font-weight:700;">직책</div>
-						<div id="modalRoleNm" style="height:4rem; width:35%; padding-left:0.5rem; display:flex; align-items:center;"></div>
+						<div id="modalRoleNm" style="height:4rem; width:35%; padding-left:0.5rem; display:flex; align-items:center;">
+							<select id="modalUsrRole" name="modalUsrRole" style="width:60%; padding:3px;">
+								
+							</select>
+							<button type="button" onclick="editUsrRoleModal()" class="btn-1" style="height:3rem; margin-left:1rem;">
+								저장
+							</button>
+						</div>
 					</div>
 					<div style="height:4rem; display:flex; flex-direction:row;">
 						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#edf2f8; font-weight:700;">권한</div>
@@ -244,19 +267,12 @@
 								<option value="REVIEWER">검토자</option>
 								<option value="SYS_MANAGER">시스템 관리자</option>
 							</select>
-							<button type="button" onclick="editUsrAuthrt()"
-									style="height:3rem; border:none; border-radius:5px; background-color: #2c7be4; color:white; font-weight:700; margin-left:1rem;">
+							<button type="button" onclick="editUsrAuthrt()" class="btn-1" style="height:3rem; margin-left:1rem;">
 								저장
 							</button>
 						</div>
 						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#edf2f8; font-weight:700;">상태</div>
 						<div id="modalUsrSttsNm" style="height:4rem; width:35%; padding-left:0.5rem; display:flex; align-items:center;"></div>
-					</div>
-					<div style="height:4rem; display:flex; flex-direction:row;">
-						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#edf2f8; font-weight:700;">가입일</div>
-						<div id="modalUsrJoinDt" style="height:4rem; width:35%; padding-left:0.5rem; display:flex; align-items:center;"></div>
-						<div style="height:4rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#edf2f8; font-weight:700;">탈퇴일</div>
-						<div id="modalUsrWhdwlDt" style="height:4rem; width:35%; padding-left:0.5rem; display:flex; align-items:center;"></div>
 					</div>
 					<div style="height:11rem; display:flex; flex-direction:row;">
 						<div style="height:11rem; width:15%; padding-left:0.5rem; display:flex; align-items:center; background-color:#edf2f8; font-weight:700;">담당중인 SR</div>

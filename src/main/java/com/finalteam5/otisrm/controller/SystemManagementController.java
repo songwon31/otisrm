@@ -92,6 +92,24 @@ public class SystemManagementController {
 		return usrService.editUsrAuthrt(usrNo, newUsrAuthrtNo);
 	}
 	
+	@RequestMapping("/usrManagement/editUsrDept")
+	@ResponseBody
+	public int editUsrDept(String usrNo, String newUsrDeptNo) {
+		return usrService.editUsrDept(usrNo, newUsrDeptNo);
+	}
+	
+	@RequestMapping("/usrManagement/editUsrIbps")
+	@ResponseBody
+	public int editUsrIbps(String usrNo, String newUsrIbpsNo) {
+		return usrService.editUsrIbps(usrNo, newUsrIbpsNo);
+	}
+	
+	@RequestMapping("/usrManagement/editUsrRole")
+	@ResponseBody
+	public int editUsrRole(String usrNo, String newUsrRoleNo) {
+		return usrService.editUsrRole(usrNo, newUsrRoleNo);
+	}
+	
 	//기업 관리 페이지
 	@RequestMapping("/instManagement")
 	public String instManagement(Authentication authentication, Model model) {

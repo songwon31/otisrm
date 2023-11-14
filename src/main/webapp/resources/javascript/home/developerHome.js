@@ -316,7 +316,7 @@ function showRequestDetail(srNo) {
     
 	$.ajax({
 		type: "POST", 
-		url: "getSrDetailInfo", 
+		url: "/otisrm/getSrDetailInfo", 
 		data: requestData, 
 		success: function (data) {
 			$('#modal_sr_no').html(data.srNo);

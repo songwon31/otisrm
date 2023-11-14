@@ -239,8 +239,8 @@
 	<!-- 사용자 상세 모달 구성 -->
 	<select id="selectUsrInfoByUsrNo" parameterType="String" resultType="com.finalteam5.otisrm.dto.usr.UsrManagementModalConfigure">
 		SELECT	usr.usr_no, usr.usr_id, usr.usr_nm, usr.usr_rrno || '******' as usr_rrno, usr.usr_telno, usr.usr_eml,
-				inst.inst_nm, dept.dept_nm, ibps.ibps_nm, role.role_nm, usr_authrt.usr_authrt_no, usr_authrt.usr_authrt_nm, usr_stts.usr_stts_nm,
-				usr.usr_join_dt, usr.usr_whdwl_dt
+				inst.inst_nm, dept.dept_no, dept.dept_nm, ibps.ibps_no, ibps.ibps_nm, role.role_no, role.role_nm, 
+				usr_authrt.usr_authrt_no, usr_authrt.usr_authrt_nm, usr_stts.usr_stts_nm, usr.usr_join_dt, usr.usr_whdwl_dt
 		FROM usr
 		JOIN inst ON usr.inst_no = inst.inst_no
 		JOIN dept ON usr.dept_no = dept.dept_no
