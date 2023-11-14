@@ -10,6 +10,9 @@ function init() {
 	 numOftotalRows();
 	 numOftotalRows2();
 	 $(".srSchdlChgRqstY").hide();
+	 //하단 상세 숨기기
+	 $("#progressCircles").hide();
+	 $("#isTrnsfY").hide();
 }
  
 var choiceSrRqstSttsNo = "";
@@ -1152,7 +1155,6 @@ function writeOrModifySrForPicHome(choiceSrRqstNo) {
     const originalNumber = parseFloat(formattedNumber.replace(/,/g, ''));  // 문자열에서 ',' 제거하고 숫자로 변환
     $("#trnsf-srReqBgt").val(originalNumber);
 	
-    console.log("실행한댱 후후");
 	//formData세팅
 	choiceSrRqstNo = $("#srRqst-srRqstNo").val();
     $("#sr-srRqstNo").val(choiceSrRqstNo);
@@ -1168,11 +1170,9 @@ function writeOrModifySrForPicHome(choiceSrRqstNo) {
             if (countSr > 0) {
                 // SR 정보가 이미 있는 경우 수정 모달 띄우기
             	showSrModifyModal();
-                console.log("sr있음");
             } else {
                 // SR 정보가 없는 경우 등록 또는 수정 수행
             	proceedWriteOrModifySrForPicHome(formData);
-                console.log("sr없으");
             }
         },
         error: function (error) {
@@ -1237,17 +1237,27 @@ function formatDateTime(date) {
 }
 //하단 srDetail
 function setSrDetail(srRqstNo) {
+	 //하단 상세 숨기기
+	 $("#progressCircles").hide();
+	 $("#isTrnsfY").hide();
 	$.ajax({
 		type: "GET",
 		url: "getSrBySrRqstNoForPicHome",
 		data: {srRqstNo: srRqstNo},
 		success: function(data) { 
-			setSrDetailBottom(data.srNo);
+			if(data.srTrnsfYn === "Y"){
+				 $("#isTrnsfY").show();
+				setSrDetailBottom(data.srNo);
+			}else{
+			    $("#progressCircles").show();
+			    console.log("이관아님: " + srRqstNo);
+				loadProgressInfo(srRqstNo);
+			}
 		
 		},
 	    error: function() {
 	        console.log(error);
-	      }});	
+	}});	
 }
 
 function setSrDetailBottom(srNo) {
@@ -1425,7 +1435,7 @@ function setSrDetailBottom(srNo) {
 	currentDetailSrNo = srNo;
 	sessionStorage.setItem('developerHomeCurrentDetailSrNo', currentDetailSrNo);
 }
-
+//하단 테이블 필터 탭
 function selectSrProgressTableFilter(tabStyle) {
 	$('.srProgressTableSelectElement').removeClass('filterTabSelected');
 	if (tabStyle == 'srRqstInfoTab') {
@@ -1449,4 +1459,83 @@ function selectSrProgressTableFilter(tabStyle) {
 	}	
 	currentBottomTabFilter = tabStyle;
 	sessionStorage.setItem('developerHomecurrentBottomTabFilter', currentBottomTabFilter);
+}
+
+//이관하지 않았을 경우
+function initProgress() {
+	$("#progress_rqst_info").addClass('d-none');
+	$("#progress_dep_ing_info").addClass('d-none');
+	$("#progress_dep_cmptn_info").addClass('d-none');
+	
+	$(".inner-circle").css("background-color", "#3b82f6");
+	$(".inner-circle").removeClass('currentCircle');
+	
+	$("#progress_srNo").text("");
+	$("#progress_srTtl").text("");
+	$("#progress_srConts").val("");
+	$("#progress_srRqstRvwRsn").val("");
+}
+
+function loadProgressInfo(srRqstNo) {
+	$.ajax({
+		type: "POST",
+		url: "/otisrm/getSrRqstForProgressInfo",
+		data: {selectedSrRqstNo: srRqstNo},
+		success: function(data) {
+			//초기화
+			initProgress();
+			
+			//요청 정보
+			var formattedSrRqstRegDt = formatDateToYYYYMMDD(data.srRqstRegDt);
+			var formattedSrCmptnPrnmntDt = formatDateToYYYYMMDD(data.srCmptnPrnmntDt);
+			$("#progress_rqst_info").removeClass('d-none');
+			$("#progress_srRqstRegDt").text(formattedSrRqstRegDt);
+			$("#progress_srReqstrNm").text(data.srReqstrNm);
+			
+			//개발정보
+			var sttsNm = data.srRqstSttsNm;
+			if(sttsNm == "개발중" || sttsNm =="테스트" || sttsNm =="완료요청" || sttsNm == "개발완료") {
+				if(data.srTrnsfYn == "Y") {
+					//이관개발
+					$("#progress_dep_ing_info").removeClass('d-none');
+					$("#progress_deptNmOrTrnsfInstNm").text(data.srTrnsfInstNm);
+					$("#progress_srTrnsfYn").text("이관개발");
+				} else {
+					//자체개발
+					$("#progress_deptNmOrTrnsfInstNm").text(data.deptNm);
+					$("#progress_srTrnsfYn").text("자체개발");
+				}
+				
+				//완료정보
+				$("#progress_dep_cmptn_info").removeClass('d-none');
+				$("#progress_srCmptnPrnmntDt").text(formattedSrCmptnPrnmntDt);
+			}
+			
+			//SR 정보
+			$("#progress_srNo").text(data.srRqstNo);
+			$("#progress_srTtl").text(data.srTtl);
+			$("#progress_srConts").val(data.srConts);
+			$("#progress_srRqstRvwRsn").val(data.srRqstRvwRsn);
+			
+			//진행상태 color변경			
+			$(".progress-step").each(function() {
+				if(sttsNm =="승인재검토" || sttsNm =="승인반려") {
+					sttsNm ="승인대기";
+				}
+				
+				if(sttsNm =="접수재검토" || sttsNm =="접수반려") {
+					sttsNm = "접수대기";
+				}
+				
+				var progressStepStts = $(this).find(".progress-content p").text();
+				console.log("스탭:" + progressStepStts);
+				console.log("상태명:" + sttsNm);
+				
+			    if (progressStepStts === sttsNm) {
+			    	$(this).find(".inner-circle").css("background-color", "#f63b3b");
+			    	$(this).find(".inner-circle").addClass('currentCircle');
+			    }
+			});
+		}
+	});
 }

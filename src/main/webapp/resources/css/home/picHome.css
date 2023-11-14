@@ -398,3 +398,74 @@
 .fs-16{
 	
 }
+
+/* Shape */
+.progress-steps {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.progress-steps .progress-step {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin: 0.5rem 0.5rem 0 0.5rem
+}
+
+.progress-step:first-child {
+    margin-left: 0;
+}
+
+.progress-step:last-child {
+    margin-right: 0;
+}
+
+.progress-steps .progress-step:not(:last-child):after {
+    content: "";
+    display: block;
+    border-top: .25rem dotted #3b82f6;
+    width: 2.27rem;
+    position: absolute;
+    left: 7.5rem;
+    top: 0.3125rem;
+}
+.progress-steps .progress-step:not(:first-child):before {
+    content: "";
+    display: block;
+    border-top: .25rem dotted #3b82f6;
+    width: 3.51rem;
+    position: absolute;
+    right: 7.5rem;
+    top: 0.3125rem;
+}
+
+.progress-steps .progress-content {
+    width: 10rem;
+    text-align: center;
+}
+
+.progress-steps .progress-content .inner-circle {
+    border-radius: 1.5rem;
+    height: 1rem;
+    width: 1rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #3b82f6;
+}
+
+.progress-steps .progress-content .inner-circle:before {
+    content: "";
+    background-color: #3b82f6;
+    display: inline-block;
+    height: 3rem;
+    width: 3rem;
+    min-width: 3rem;
+    border-radius: 6.25rem;
+    opacity: .5;
+}
+
+.currentCircle:before {
+     background-color: #f63b3b !important;
+}
