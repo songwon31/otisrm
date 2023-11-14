@@ -149,6 +149,38 @@
 	text-align: center;
 	border-bottom: 1.5px solid #e0e7ed;
 }
+/* 하단 테이블 */
+#bottomTable{
+	background-color: #f9fafe;
+}
+#bottomTable thead{
+	border: 1.5px solid #e9ecef;
+	background-color: #edf2f8;
+	height: 4.3rem;
+}
+#bottomTable thead tr{
+	height: 5rem; 
+	font-size: 1.5rem; 
+	font-weight: 700;
+}
+
+#bottomTable tbody{
+	border: 1.5px solid #e9ecef;
+}
+#bottomTable tbody tr{ 
+	font-size: 1.5rem; 
+	height: 4.5rem; 
+	font-size: 1.5rem;
+}
+ 
+#bottomTable tbody tr:hover{
+	cursor: pointer;
+} 
+
+#bottomTable td{
+	text-align: center;
+	border-bottom: 1.5px solid #e0e7ed;
+}
 
 /* 필터링 탭  */
 .filterTabWrap{
@@ -172,6 +204,23 @@
 }
 .tableContainer{
 	height: 31rem;
+}
+
+.filterTab2 {
+	width: 100px;
+	height: 3rem;
+	border: 1.5px solid #e0e7ed;
+	border-bottom: none;
+	border-radius: 8px 8px 0 0;
+	text-align: center;
+	background-color: #f9fafe;
+	font-weight: bold;
+	color: #5d6e7e;
+	cursor: pointer;
+}
+
+.filterTab2 div{
+	font-size: 1.3rem;
 }
 /* 테이블 항목(col사이즈보다 넘어갈경우 .. 처리) */
 .truncate-text {

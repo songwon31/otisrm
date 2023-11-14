@@ -211,19 +211,19 @@
 				<div id="srProgressChoiceDiv" style="width:60%;">
 					<a id="srRqstInfoTab" href="javascript:void(0)"
 						onclick="selectSrProgressTableFilter('srRqstInfoTab')"
-						class="srProgressTableSelectElement srProgressPlan filterTab filterTabSelected"
+						class="srProgressTableSelectElement srProgressPlan filterTab2 filterTabSelected"
 						style="width: 25%"> 
 						<span>SR계획정보</span>
 					</a> 
 					<a id="srHrInfoTab" href="javascript:void(0)"
 						onclick="selectSrProgressTableFilter('srHrInfoTab')"
-						class="srProgressTableSelectElement srProgressHr filterTab"
+						class="srProgressTableSelectElement srProgressHr filterTab2"
 						style="width: 25%"> 
 						<span>SR자원정보</span>
 					</a> 
 					<a id="srPrgrsInfoTab" href="javascript:void(0)"
 						onclick="selectSrProgressTableFilter('srPrgrsInfoTab')"
-						class="srProgressTableSelectElement srProgressPercentage filterTab"
+						class="srProgressTableSelectElement srProgressPercentage filterTab2"
 						style="width: 25%"> 
 						<span>SR진척률</span>
 					</a>
@@ -280,9 +280,9 @@
 				</div>
 			</div>
 			<!-- SR자원정보 -->
-			<div id="srHrInfo" class="bottomSubDiv" style="display: none;">
+			<div id="srHrInfo" class="bottomSubDiv" style="display: none; border: 1.5px solid #e9ecef;">
 				<div style="height: 31rem; background-color: #F9FAFE; border-radius: 10px;">
-					<table style="width: 100%; text-align: center;">
+					<table id="bottomTable" style="width: 100%; text-align: center;">
 						<colgroup>
 							<col width="4%"/>
 							<col width="24%"/>

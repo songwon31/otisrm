@@ -1217,7 +1217,24 @@ function proceedWriteOrModifySrForPicHome() {
     });
 }
 
+//이관했을 경우 하단 상세정보
+//날짜 형식을 변환하는 함수
+function formatDate(date) {
+    var year = date.getFullYear();
+    var month = (date.getMonth() + 1).toString().padStart(2, '0');
+    var day = date.getDate().toString().padStart(2, '0');
+    return year + '-' + month + '-' + day;
+}
 
+function formatDateTime(date) {
+    var year = date.getFullYear();
+    var month = (date.getMonth() + 1).toString().padStart(2, '0');
+    var day = date.getDate().toString().padStart(2, '0');
+    var hours = date.getHours().toString().padStart(2, '0');
+    var minutes = date.getMinutes().toString().padStart(2, '0');
+    var seconds = date.getSeconds().toString().padStart(2, '0');
+    return year + '-' + month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds;
+}
 //하단 srDetail
 function setSrDetail(srRqstNo) {
 	$.ajax({
