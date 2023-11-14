@@ -150,34 +150,37 @@
 	border-bottom: 1.5px solid #e0e7ed;
 }
 /* 하단 테이블 */
-#bottomTable{
+.bottomTable{
 	background-color: #f9fafe;
 }
-#bottomTable thead{
-	border: 1.5px solid #e9ecef;
+.bottomTable thead{
 	background-color: #edf2f8;
 	height: 4.3rem;
 }
-#bottomTable thead tr{
+.bottomTable thead tr{
 	height: 5rem; 
 	font-size: 1.5rem; 
 	font-weight: 700;
 }
 
-#bottomTable tbody{
+.bottomTable tbody{
 	border: 1.5px solid #e9ecef;
 }
-#bottomTable tbody tr{ 
+.bottomTable tbody th{
+	border: 1.5px solid #e9ecef;
+	border-right: none;
+}
+.bottomTable tbody tr{ 
 	font-size: 1.5rem; 
 	height: 4.5rem; 
 	font-size: 1.5rem;
 }
  
-#bottomTable tbody tr:hover{
+.bottomTable tbody tr:hover{
 	cursor: pointer;
 } 
 
-#bottomTable td{
+.bottomTable td{
 	text-align: center;
 	border-bottom: 1.5px solid #e0e7ed;
 }
@@ -208,7 +211,7 @@
 
 .filterTab2 {
 	width: 100px;
-	height: 3rem;
+	height: 28.5px;
 	border: 1.5px solid #e0e7ed;
 	border-bottom: none;
 	border-radius: 8px 8px 0 0;
@@ -217,11 +220,9 @@
 	font-weight: bold;
 	color: #5d6e7e;
 	cursor: pointer;
+	display: block;
 }
 
-.filterTab2 div{
-	font-size: 1.3rem;
-}
 /* 테이블 항목(col사이즈보다 넘어갈경우 .. 처리) */
 .truncate-text {
     white-space: nowrap; 
@@ -397,6 +398,13 @@
 /* font-size */
 .fs-16{
 	
+}
+
+/* 이관했을 경우 제목 */
+.bottomSrRqstNo{
+	border: 1.5px solid #e0e7ed;
+	height: 4.5rem;
+	border-radius: 1rem;
 }
 
 /* Shape */

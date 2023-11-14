@@ -93,7 +93,7 @@
 		   	  			
 		   	  		</div>
 		   	  	</div>
-		   	  <table id="mainTable" style="width: 100%; text-align: center; height: 27rem;">
+		   	  <table id="mainTable" style="width: 100%; text-align: center; height: 27.5rem;">
 				    <colgroup>
 				        <col width="45.04px" />
 				        <col width="118.99px" />
@@ -208,175 +208,184 @@
 			 
 			 <!-- 이관된 경우 -->
 			<div id="isTrnsfY">
+				<div class="bottomSrRqstNo mb-2 p-2">
+				
+				</div>
 				<div id="srProgressDiv">
 					<div style="display:flex;">
-						<div id="srProgressChoiceDiv" style="width:60%;">
+						<div id="srProgressChoiceDiv" style="width:60%;" class="d-flex">
 							<a id="srRqstInfoTab" href="javascript:void(0)"
 								onclick="selectSrProgressTableFilter('srRqstInfoTab')"
-								class="srProgressTableSelectElement srProgressPlan filterTab filterTabSelected"
+								class="srProgressTableSelectElement srProgressPlan filterTab2 filterTabSelected"
 								style="width: 25%"> 
 								<span>SR계획정보</span>
 							</a> 
 							<a id="srHrInfoTab" href="javascript:void(0)"
 								onclick="selectSrProgressTableFilter('srHrInfoTab')"
-								class="srProgressTableSelectElement srProgressHr filterTab"
+								class="srProgressTableSelectElement srProgressHr filterTab2"
 								style="width: 25%"> 
 								<span>SR자원정보</span>
 							</a> 
 							<a id="srPrgrsInfoTab" href="javascript:void(0)"
 								onclick="selectSrProgressTableFilter('srPrgrsInfoTab')"
-								class="srProgressTableSelectElement srProgressPercentage filterTab"
+								class="srProgressTableSelectElement srProgressPercentage filterTab2"
 								style="width: 25%"> 
 								<span>SR진척률</span>
 							</a>
-							<div style="flex-grow: 1; border-bottom: 1.5px solid #edf2f8;"></div>
+							<div style="flex-grow: 1;"></div>
 						</div>
 					</div>
-					<!-- SR계획정보 div -->
-					<div id="srPlanInfo" class="bottomSubDiv">
-						<div style="height: 4rem; display: flex; flex-direction: row;">
-							<div style="height: 4rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #edf2f8; font-weight:700;">요청구분</div>
-							<div id="srPlanInfoDmnd" style="height: 4rem; width: 35%; padding-left: 0.5rem; display: flex; align-items: center;">
+					<div style="height: 27rem;">
+						<!-- SR계획정보 div -->
+						<div id="srPlanInfo" class="bottomSubDiv">
+							<div style="height: 4rem; display: flex; flex-direction: row;">
+								<div style="height: 4rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #edf2f8; font-weight:700;">요청구분</div>
+								<div id="srPlanInfoDmnd" style="height: 4rem; width: 35%; padding-left: 0.5rem; display: flex; align-items: center;  border-top: 1.5px solid #e9ecef;">
+									
+								</div>
+								<div style="height: 4rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #edf2f8; font-weight:700;">업무구분</div>
+								<div id="srPlanInfoTask" style="height: 4rem; width: 35%; padding-left: 0.5rem; display: flex; align-items: center; border-top: 1.5px solid #e9ecef; border-right: 1.5px solid #e9ecef;">
+			
+								</div>
+							</div>
+							<div style="height: 4rem; display: flex; flex-direction: row;">
+								<div style="height: 4rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #edf2f8; font-weight:700;">처리팀</div>
+								<div id="srPlanInfoDept" style="height: 4rem; width: 35%; padding-left: 0.5rem; display: flex; align-items: center;">
+			
+								</div>
+								<div style="height: 4rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #edf2f8; font-weight:700;">담당자</div>
+								<div id="srPlanInfoPic" style="height: 4rem; width: 35%; padding-left: 0.5rem; display: flex; align-items: center; border-right: 1.5px solid #e9ecef;">
+			
+								</div>
+							</div>
+							<div style="height: 4rem; display: flex; flex-direction: row;">
+								<div style="height: 4rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #edf2f8; font-weight:700;">목표시작일</div>
+								<div id="srPlanInfoBgngDt" style="height: 4rem; width: 35%; padding-left: 0.5rem; display: flex; align-items: center;">
+			
+								</div>
+								<div style="height: 4rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #edf2f8; font-weight:700;">목표완료일</div>
+								<div id="srPlanInfoCmptnDt" style="height: 4rem; width: 35%; padding-left: 0.5rem; display: flex; align-items: center; border-right: 1.5px solid #e9ecef;">
 								
+								</div>
 							</div>
-							<div style="height: 4rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #edf2f8; font-weight:700;">업무구분</div>
-							<div id="srPlanInfoTask" style="height: 4rem; width: 35%; padding-left: 0.5rem; display: flex; align-items: center;">
-		
+							<div style="height: 4rem; display: flex; flex-direction: row;">
+								<div style="height: 4rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #edf2f8; font-weight:700;">총 계획공수(M/D)</div>
+								<div id="srPlanInfoTotalCapacity" style="height: 4rem; width: 85%; padding-left: 0.5rem; display: flex; align-items: center; border-right: 1.5px solid #e9ecef;"">
+									
+								</div>
 							</div>
-						</div>
-						<div style="height: 4rem; display: flex; flex-direction: row;">
-							<div style="height: 4rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #edf2f8; font-weight:700;">처리팀</div>
-							<div id="srPlanInfoDept" style="height: 4rem; width: 35%; padding-left: 0.5rem; display: flex; align-items: center;">
-		
-							</div>
-							<div style="height: 4rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #edf2f8; font-weight:700;">담당자</div>
-							<div id="srPlanInfoPic" style="height: 4rem; width: 35%; padding-left: 0.5rem; display: flex; align-items: center;">
-		
-							</div>
-						</div>
-						<div style="height: 4rem; display: flex; flex-direction: row;">
-							<div style="height: 4rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #edf2f8; font-weight:700;">목표시작일</div>
-							<div id="srPlanInfoBgngDt" style="height: 4rem; width: 35%; padding-left: 0.5rem; display: flex; align-items: center;">
-		
-							</div>
-							<div style="height: 4rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #edf2f8; font-weight:700;">목표완료일</div>
-							<div id="srPlanInfoCmptnDt" style="height: 4rem; width: 35%; padding-left: 0.5rem; display: flex; align-items: center;">
-							
-							</div>
-						</div>
-						<div style="height: 4rem; display: flex; flex-direction: row;">
-							<div style="height: 4rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #edf2f8; font-weight:700;">총 계획공수(M/D)</div>
-							<div id="srPlanInfoTotalCapacity" style="height: 4rem; width: 85%; padding-left: 0.5rem; display: flex; align-items: center;">
-								
-							</div>
-						</div>
-						<div style="height: 15rem; display: flex; flex-direction: row;">
-							<div style="height: 15rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #edf2f8; border-radius: 0px 0px 0px 10px; font-weight:700;">참고사항</div>
-							<div style="height: 15rem; width: 85%; display: flex; flex-direction: column;">
-								<div style="height: 15rem; display: flex; flex-direction: row; align-items: center;">
-									<div id="srPlanInfoNote" style="height: 15rem; width: 100%; padding: 0.5rem; overflow-y: auto; white-space: pre-line;">
-		
+							<div style="height: 10rem; display: flex; flex-direction: row;">
+								<div style="height: 10rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #edf2f8; font-weight:700;">참고사항</div>
+								<div style="height: 10rem; width: 85%; display: flex; flex-direction: column;">
+									<div style="height: 10rem; display: flex; flex-direction: row; align-items: center;">
+										<div id="srPlanInfoNote" style="height: 10rem; width: 100%; padding: 0.5rem; overflow-y: auto; white-space: pre-line; border-bottom: 1.5px solid #e9ecef; border-right: 1.5px solid #e9ecef;"">
+			
+										</div>
 									</div>
 								</div>
 							</div>
 						</div>
-					</div>
-					<!-- SR자원정보 -->
-					<div id="srHrInfo" class="bottomSubDiv" style="display: none;">
-						<div style="height: 31rem; background-color: #F9FAFE; border-radius: 10px;">
-							<table style="width: 100%; text-align: center;">
-								<colgroup>
-									<col width="4%"/>
-									<col width="24%"/>
-									<col width="24%"/>
-									<col width="24%"/>
-									<col width="24%"/>
-								</colgroup>
-								<thead style="background-color: #edf2f8;">
-									<tr style="height: 4rem; font-size: 1.6rem; font-weight: 700;">
-										<th scope="col"></th>
-										<th scope="col">담당자명</th>
-										<th scope="col">역할</th>
-										<th scope="col">계획공수(M/D)</th>
-										<th scope="col">실적공수(M/D)</th>
-									</tr>
-								</thead>
-								<tbody>
-		
-								</tbody>
-							</table>
+						<!-- SR자원정보 -->
+						<div id="srHrInfo" class="bottomSubDiv" style="display: none;">
+							<div style="height: 24rem; background-color: #F9FAFE; border: 1.5px solid #e9ecef;">
+								<table class="bottomTable" style="width: 100%; text-align: center;">
+									<colgroup>
+										<col width="4%"/>
+										<col width="24%"/>
+										<col width="24%"/>
+										<col width="24%"/>
+										<col width="24%"/>
+									</colgroup>
+									<thead style="background-color: #edf2f8;">
+										<tr style="height: 4rem; font-size: 1.6rem; font-weight: 700;">
+											<th scope="col"></th>
+											<th scope="col">담당자명</th>
+											<th scope="col">역할</th>
+											<th scope="col">계획공수(M/D)</th>
+											<th scope="col">실적공수(M/D)</th>
+										</tr>
+									</thead>
+									<tbody>
+			
+									</tbody>
+								</table>
+							</div>
+						</div>
+						<!-- SR진척률 -->
+						<div id="srProgressInfo" class="bottomSubDiv" style="display: none;">
+							<div style="height: 24rem; background-color: #F9FAFE; border: 1.5px solid #e9ecef;">
+								<table id="prgrsTable" class="bottomTable" style="width: 100%; text-align: center;">
+									<colgroup>
+										<col width="20%" />
+										<col width="20%" />
+										<col width="20%" />
+										<col width="20%" />
+										<col width="20%" />
+									</colgroup>
+									<thead style="background-color: #edf2f8;">
+										<tr style="height: 4rem; font-size: 1.6rem; font-weight: 700;">
+											<th scope="col">작업구분</th>
+											<th scope="col">시작일</th>
+											<th scope="col">종료일</th>
+											<th scope="col">진척률%(누적)</th>
+											<th scope="col">산출물</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr
+											style="height: 4rem; font-size: 1.6rem; background-color: white;">
+											<th>분석</th>
+											<td id="srAnalysisBgngDt"></td>
+											<td id="srAnalysisCmptnDt"></td>
+											<td id="srAnalysisPrgrs"></td>
+											<td id="srAnalysisOtptBtn"></td>
+										</tr>
+										<tr
+											style="height: 4rem; font-size: 1.6rem; background-color: white;">
+											<th>설계</th>
+											<td id="srDesignBgngDt"></td>
+											<td id="srDesignCmptnDt"></td>
+											<td id="srDesignPrgrs"></td>
+											<td id="srDesignOtptBtn"></td>
+										</tr>
+										<tr
+											style="height: 4rem; font-size: 1.6rem; background-color: white;">
+											<th>구현</th>
+											<td id="srImplBgngDt"></td>
+											<td id="srImplCmptnDt"></td>
+											<td id="srImplPrgrs"></td>
+											<td id="srImplOtptBtn"></td>
+										</tr>
+										<tr
+											style="height: 4rem; font-size: 1.6rem; background-color: white;">
+											<th>시험</th>
+											<td id="srTestBgngDt"></td>
+											<td id="srTestCmptnDt"></td>
+											<td id="srTestPrgrs"></td>
+											<td id="srTestOtptBtn"></td>
+										</tr>
+										<tr
+											style="height: 4rem; font-size: 1.6rem; background-color: white;">
+											<th>반영요청</th>
+											<td id="srApplyBgngDt"></td>
+											<td id="srApplyCmptnDt"></td>
+											<td id="srApplyPrgrs"></td>
+											<td id="srApplyOtptBtn"></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
 						</div>
 					</div>
-					<!-- SR진척률 -->
-					<div id="srProgressInfo" class="bottomSubDiv" style="display: none;">
-						<div style="height: 31rem; background-color: #F9FAFE; border-radius: 10px;">
-							<table id="prgrsTable" style="width: 100%; text-align: center;">
-								<colgroup>
-									<col width="20%" />
-									<col width="20%" />
-									<col width="20%" />
-									<col width="20%" />
-									<col width="20%" />
-								</colgroup>
-								<thead style="background-color: #edf2f8;">
-									<tr style="height: 4rem; font-size: 1.6rem; font-weight: 700;">
-										<th scope="col">작업구분</th>
-										<th scope="col">시작일</th>
-										<th scope="col">종료일</th>
-										<th scope="col">진척률%(누적)</th>
-										<th scope="col">산출물</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr
-										style="height: 4rem; font-size: 1.6rem; background-color: white;">
-										<th>분석</th>
-										<td id="srAnalysisBgngDt"></td>
-										<td id="srAnalysisCmptnDt"></td>
-										<td id="srAnalysisPrgrs"></td>
-										<td id="srAnalysisOtptBtn"></td>
-									</tr>
-									<tr
-										style="height: 4rem; font-size: 1.6rem; background-color: white;">
-										<th>설계</th>
-										<td id="srDesignBgngDt"></td>
-										<td id="srDesignCmptnDt"></td>
-										<td id="srDesignPrgrs"></td>
-										<td id="srDesignOtptBtn"></td>
-									</tr>
-									<tr
-										style="height: 4rem; font-size: 1.6rem; background-color: white;">
-										<th>구현</th>
-										<td id="srImplBgngDt"></td>
-										<td id="srImplCmptnDt"></td>
-										<td id="srImplPrgrs"></td>
-										<td id="srImplOtptBtn"></td>
-									</tr>
-									<tr
-										style="height: 4rem; font-size: 1.6rem; background-color: white;">
-										<th>시험</th>
-										<td id="srTestBgngDt"></td>
-										<td id="srTestCmptnDt"></td>
-										<td id="srTestPrgrs"></td>
-										<td id="srTestOtptBtn"></td>
-									</tr>
-									<tr
-										style="height: 4rem; font-size: 1.6rem; background-color: white;">
-										<th>반영요청</th>
-										<td id="srApplyBgngDt"></td>
-										<td id="srApplyCmptnDt"></td>
-										<td id="srApplyPrgrs"></td>
-										<td id="srApplyOtptBtn"></td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-					</div>
-				</div>
-			</div>
-
+				</div>			
+		   </div>
+					
 		<!-- 이관하지 않을 경우 SR 진행현황 -->
     	<div id="progressCircles">
+    		<div class="bottomSrRqstNo mt-4 mb-2 p-2">
+				
+			</div>
+			<div  style="margin-top: 50px;">
 				<div class="progress-steps d-flex w-100" style="margin-top: 3.88rem;">
 					<div class="progress-step">
 						<div class="progress-content">
@@ -445,9 +454,11 @@
 						</div>
 					</div>
 				</div>
-			</div>	
-	    </div>
-   </div>
+			</div>
+			
+		</div>	
+    </div>
+  </div>
 	
 
 <!-- 요청등록 모달 -->
