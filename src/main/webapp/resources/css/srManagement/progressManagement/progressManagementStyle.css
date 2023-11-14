@@ -135,15 +135,15 @@ input:focus, select:focus {
 
 .filterTab {
 	height: 3rem;
-	border: 1.5px solid #edf2f8;
+	border: 1.5px solid #F9FAFE;
 	text-align: center;
-	background-color: #edf2f8;
+	background-color: #F9FAFE;
 	font-weight: bold;
 	color: #5d6e7e;
 }
 
 .filterTabSelected {
-	background-color: #f9fafe; 
+	background-color: #edf2f8; 
 	color: black;
 	border-bottom:none;
 }

@@ -327,20 +327,43 @@ function usrDetailModalConfig(usrNo) {
         	$('#modalUsrTelno').html(data.usrTelno);
         	$('#modalUsrEml').html(data.usrEml);
         	$('#modalInstNm').html(data.instNm);
-        	$('#modalDeptNm').html(data.deptNm);
-        	$('#modalIbpsNm').html(data.ibpsNm);
-        	$('#modalRoleNm').html(data.roleNm);
-        	console.log(data.usrAuthrtNo);
+        	
+        	$('#modalUsrDept').html('');
+        	for (let i=0; i<data.deptList.length; ++i) {
+        		let dept = data.deptList[i];
+        		let html = '<option value="' + dept.deptNo + '">' + dept.deptNm + '</option>';
+        		$('#modalUsrDept').append(html);
+        	}
+        	$('#modalUsrDept').val(data.deptNo);
+        	
+        	$('#modalUsrIbps').html('');
+        	for (let i=0; i<data.ibpsList.length; ++i) {
+        		let ibps = data.ibpsList[i];
+        		let html = '<option value="' + ibps.ibpsNo + '">' + ibps.ibpsNm + '</option>';
+        		$('#modalUsrIbps').append(html);
+        	}
+        	$('#modalUsrIbps').val(data.ibpsNo);
+        	
+        	$('#modalUsrRole').html('');
+        	for (let i=0; i<data.roleList.length; ++i) {
+        		let role = data.roleList[i];
+        		let html = '<option value="' + role.roleNo + '">' + role.roleNm + '</option>';
+        		$('#modalUsrRole').append(html);
+        	}
+        	$('#modalUsrRole').val(data.roleNo);
+        	
         	$('#modalUsrAuthrt').val(data.usrAuthrtNo);
         	$('#modalUsrSttsNm').html(data.usrSttsNm);
         	let joinDt = new Date(data.usrJoinDt);
         	$('#modalUsrJoinDt').html(formatDate(joinDt));
+        	/*
         	if (data.usrWhdwlDt != null && data.usrWhdwlDt != '') {
         		let whdwlDt = new Date(data.usrWhdwlDt);
         		$('#modalUsrWhdwlDt').html(formatDate(whdwlDt));
         	} else {
         		$('#modalUsrWhdwlDt').html('');
         	}
+        	*/
         	$('#srList').html('');
         	for (let i=0; i<data.srInfo.length; ++i) {
         		let html = '<div style="white-space: pre-wrap;">' + data.srInfo[i].srNo + '\t' + data.srInfo[i].srTtl + '</div>'
@@ -368,6 +391,78 @@ function editUsrAuthrt() {
         		usrDetailModalConfig(usrNo);
         	} else {
         		$('#wraningModalContent').html("진행중인 SR건이 있을 경우\n 권한을 변경할 수 없습니다");
+        		$("#wraningModal").modal("show");
+        	}
+        }
+    });
+}
+
+function editUsrDeptModal() {
+	let usrNo = $('#modalUsrNo').html();
+	let newUsrDeptNo = $('#modalUsrDept').val();
+	$.ajax({
+        url: '/otisrm/systemManagement/usrManagement/editUsrDept',
+        type: 'POST',	
+        data: {
+        	usrNo: usrNo,
+        	newUsrDeptNo: newUsrDeptNo
+        },
+        success: function (data) {
+        	if (data > 0) {
+        		$('#alertModalContent').html("부서가 변경되었습니다.");
+        		$("#alertModal").modal("show");
+        		mainTableConfig(currentUsrManagementSearch, currentPageNo);
+        		usrDetailModalConfig(usrNo);
+        	} else {
+        		$('#wraningModalContent').html("진행중인 SR건이 있을 경우\n 부서를 변경할 수 없습니다");
+        		$("#wraningModal").modal("show");
+        	}
+        }
+    });
+}
+
+function editUsrIbpsModal() {
+	let usrNo = $('#modalUsrNo').html();
+	let newUsrIbpsNo = $('#modalUsrIbps').val();
+	$.ajax({
+        url: '/otisrm/systemManagement/usrManagement/editUsrIbps',
+        type: 'POST',	
+        data: {
+        	usrNo: usrNo,
+        	newUsrIbpsNo: newUsrIbpsNo
+        },
+        success: function (data) {
+        	if (data > 0) {
+        		$('#alertModalContent').html("직위가 변경되었습니다.");
+        		$("#alertModal").modal("show");
+        		mainTableConfig(currentUsrManagementSearch, currentPageNo);
+        		usrDetailModalConfig(usrNo);
+        	} else {
+        		$('#wraningModalContent').html("진행중인 SR건이 있을 경우\n 직위를 변경할 수 없습니다");
+        		$("#wraningModal").modal("show");
+        	}
+        }
+    });
+}
+
+function editUsrRoleModal() {
+	let usrNo = $('#modalUsrNo').html();
+	let newUsrRoleNo = $('#modalUsrRole').val();
+	$.ajax({
+        url: '/otisrm/systemManagement/usrManagement/editUsrRole',
+        type: 'POST',	
+        data: {
+        	usrNo: usrNo,
+        	newUsrRoleNo: newUsrRoleNo
+        },
+        success: function (data) {
+        	if (data > 0) {
+        		$('#alertModalContent').html("역할이 변경되었습니다.");
+        		$("#alertModal").modal("show");
+        		mainTableConfig(currentUsrManagementSearch, currentPageNo);
+        		usrDetailModalConfig(usrNo);
+        	} else {
+        		$('#wraningModalContent').html("진행중인 SR건이 있을 경우\n 역할을 변경할 수 없습니다");
         		$("#wraningModal").modal("show");
         	}
         }

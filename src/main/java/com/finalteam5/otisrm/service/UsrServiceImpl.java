@@ -234,6 +234,10 @@ public class UsrServiceImpl implements UsrService{
 	public UsrManagementModalConfigure getUsrDetailModalConfig(String usrNo) {
 		UsrManagementModalConfigure usrManagementModalConfigure = usrDao.selectUsrInfoByUsrNo(usrNo);
 		usrManagementModalConfigure.setSrInfo(usrDao.selectSrInfoByUsrNo(usrNo));
+		String instNo = usrDao.selectInstNoByUsrNo(usrNo);
+		usrManagementModalConfigure.setDeptList(usrDao.selectDeptListByInstNo(instNo));
+		usrManagementModalConfigure.setIbpsList(usrDao.selectIbpsListByInstNo(instNo));
+		usrManagementModalConfigure.setRoleList(usrDao.selectRoleListByInstNo(instNo));
 		return usrManagementModalConfigure;
 	}
 	

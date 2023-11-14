@@ -15,8 +15,11 @@ public class UsrManagementModalConfigure {
 	private String usrTelno;
 	private String usrEml;
 	private String instNm;
+	private String deptNo;
 	private String deptNm;
+	private String ibpsNo;
 	private String ibpsNm;
+	private String roleNo;
 	private String roleNm;
 	private String usrAuthrtNo;
 	private String usrAuthrtNm;
@@ -24,4 +27,8 @@ public class UsrManagementModalConfigure {
 	private Date usrJoinDt;
 	private Date usrWhdwlDt;
 	List<SrNoAndTtl> srInfo;
+	
+	List<Dept> deptList;
+	List<Ibps> ibpsList;
+	List<Role> roleList;
 }

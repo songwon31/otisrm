@@ -616,7 +616,10 @@
 					</div>
 					<div style="height: 11rem; display: flex; flex-direction: row;">
 						<div style="height: 11rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #edf2f8; border-radius: 0px 0px 0px 10px; font-weight:700;">검토내용</div>
-						<textarea id="srPlanModalTrnsfNote" style="width:85%; resize:none; margin:0.5rem;"></textarea>
+						<div style="height:11rem; width:85%; padding:0.5rem;">
+							<textarea id="srPlanModalTrnsfNote" style="width:100%; height:100%; resize:none; padding:0.5rem;"></textarea>
+						</div>
+						
 					</div>
 				</div>
 			</div>
