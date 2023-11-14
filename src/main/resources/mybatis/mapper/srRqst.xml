@@ -339,7 +339,7 @@
 	        sr_pri = COALESCE(#{srPri, jdbcType=VARCHAR}, sr_pri),
 	        sr_dvl_conts = COALESCE(#{srDvlConts, jdbcType=VARCHAR}, sr_dvl_conts),
 	        sr_task_no = COALESCE(#{srTaskNo, jdbcType=VARCHAR}, sr_task_no),
-	        sr_schdl_chg_rqst_aprv_yn = COALESCE(#{srSchdlChgAprvYn, jdbcType=VARCHAR}, sr_schdl_chg_rqst_aprv_yn),
+	        sr_schdl_chg_rqst_aprv_yn = COALESCE(#{srSchdlChgRqstAprvYn, jdbcType=VARCHAR}, sr_schdl_chg_rqst_aprv_yn),
 	        sr_mdfcn_dt = sysdate
 	    where sr_rqst_no = #{srRqstNo, jdbcType=VARCHAR}
 	</update>
@@ -580,7 +580,7 @@
 				join sr on sr.sr_rqst_no = r.sr_rqst_no
 				where sr.pic_usr_no = #{usr, jdbcType=VARCHAR}
 				and sr.sr_schdl_chg_rqst_yn='Y'
-				and sr.sr_schdl_chg_rqst_aprv_yn= #{srSchdlChgRqstAprvYn, jdbcType=VARCHAR}
+				and sr.sr_schdl_chg_rqst_aprv_yn is null
 				and sr.sr_trnsf_yn = 'Y' 
 				and sr_rqst_vld_yn = 'Y' 
 				order by sr_rqst_reg_dt desc
@@ -602,7 +602,7 @@
 		join sr on sr.sr_rqst_no = r.sr_rqst_no
 		where sr.pic_usr_no = #{usr, jdbcType=VARCHAR}
 		and sr.sr_schdl_chg_rqst_yn='Y'
-		and sr.sr_schdl_chg_rqst_aprv_yn= #{srSchdlChgRqstAprvYn, jdbcType=VARCHAR}
+		and sr.sr_schdl_chg_rqst_aprv_yn is null
 		and sr.sr_trnsf_yn = 'Y' 
 		and sr_rqst_vld_yn = 'Y' 
 		order by sr_rqst_reg_dt desc

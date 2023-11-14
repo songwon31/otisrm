@@ -849,11 +849,11 @@
 							        <div class="d-flex w-50 pt-2"></div>
 							        <div class="d-flex w-50 pt-2">
 							       		<div>				        
-									        <input id="srSchdlChgAprvY" class="srInput" type="radio" name="srSchdlChgAprvYn" value="Y">
+									        <input id="srSchdlChgAprvY" class="srInput" type="radio" name="srSchdlChgRqstAprvYn" value="Y">
 									        <label for="srSchdlChgAprvY">변경 요청 승인</label>
 								        </div>
 										<div class="ml-2">						
-									        <input id="srSchdlChgAprvN" class="srInput" type="radio" name="srSchdlChgAprvYn" value="N">
+									        <input id="srSchdlChgAprvN" class="srInput" type="radio" name="srSchdlChgRqstAprvYn" value="N">
 									        <label for="srSchdlChgAprvN">변경 요청 반려</label>
 										</div>
 							        </div>

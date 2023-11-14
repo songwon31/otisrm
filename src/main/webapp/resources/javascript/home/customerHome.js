@@ -14,22 +14,28 @@ var choiceSrRqstSttsNo = "";
 var pageNo = 1;
 $(document).ready(function() {
 	//필터링 텝 선택 효과
-	$(".filterTab").click(function() {
+	$(".filterTab").click(function(event) {
 	    // 클릭된 요소의 스타일을 변경
 	    $(this).css({
-	    	"background-color": "#edf2f8",
+	        "background-color": "#edf2f8",
 	        "color": "black"
 	    });
+	    $(".toDoItem").css({"background-color": ""});
 	    $(".filterTab").not(this).css({
 	        "background-color": "",
 	        "color": ""
 	    });
-	    choiceSrRqstSttsNo = $(event.target).parent().attr("id");
+	    console.log("아이디 가져갓!");
+
+	    // 클릭된 요소를 더 안전하게 찾기
+	    var clickedTab = $(event.currentTarget);
+	    choiceSrRqstSttsNo = clickedTab.attr("id");
 	    console.log(choiceSrRqstSttsNo);
-	    //필터링 된 상품 불러오기
+
+	    // 필터링 된 상품 불러오기
 	    loadSRRequests(1, choiceSrRqstSttsNo);
-	    // 클릭되지 않은 다른 요소들의 스타일 초기화
-	});	
+	});
+	
   loadSRRequests(1, choiceSrRqstSttsNo); //페이지 로딩 시 초기 데이터 로드
   loadNtcs(1);
   loadInqs(1);
