@@ -199,14 +199,14 @@
 	    
 	   <!-- SR 진행 현황 -->
 	   <div class="potalBottom section shadow w-70">
-			<div class="subcontentTitle">
+			<!-- <div class="subcontentTitle">
 		 		<div class="d-flex st-ct">
 			 	  	<i class="material-icons stt-ic">chevron_right</i>
 			 	  	<span class="pt-1" style="font-size: 2rem;">SR 진행 현황</span>
 		 	 	</div>
 			 </div>
 			 
-			 <!-- 이관된 경우 -->
+			 이관된 경우
 		   	 <div style="display:flex;">
 				<div id="srProgressChoiceDiv" style="width:60%;">
 					<a id="srRqstInfoTab" href="javascript:void(0)"
@@ -230,7 +230,7 @@
 					<div style="flex-grow: 1; border-bottom: 1.5px solid #edf2f8;"></div>
 				</div>
 			</div>
-			<!-- SR계획정보 div -->
+			SR계획정보 div
 			<div id="srPlanInfo" class="bottomSubDiv">
 				<div style="height: 4rem; display: flex; flex-direction: row;">
 					<div style="height: 4rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #edf2f8; font-weight:700;">요청구분</div>
@@ -279,7 +279,7 @@
 					</div>
 				</div>
 			</div>
-			<!-- SR자원정보 -->
+			SR자원정보
 			<div id="srHrInfo" class="bottomSubDiv" style="display: none;">
 				<div style="height: 31rem; background-color: #F9FAFE; border-radius: 10px;">
 					<table style="width: 100%; text-align: center;">
@@ -305,7 +305,7 @@
 					</table>
 				</div>
 			</div>
-			<!-- SR진척률 -->
+			SR진척률
 			<div id="srProgressInfo" class="bottomSubDiv" style="display: none;">
 				<div style="height: 31rem; background-color: #F9FAFE; border-radius: 10px;">
 					<table id="prgrsTable" style="width: 100%; text-align: center;">
@@ -370,7 +370,79 @@
 					</table>
 				</div>
 			</div>
-		</div>
+		</div> -->
+		<!-- 이관하지 않을 경우 SR 진행현황 -->
+		<div id="progressCircles">
+				<div class="progress-steps" style="margin-top: 3.88rem;">
+					<div class="progress-step">
+						<div class="progress-content">
+							<div class="inner-circle"></div>
+							<p class="mt-3 mb-5">요청</p>
+							<div id="progress_rqst_info" class="" style="width: 10rem; height: 10rem; background-color: lightgray; border-radius: 0.5rem; padding: 3rem 0;">
+								<div id="progress_srRqstRegDt"></div>
+								<div id="progress_srReqstrNm"></div>
+							</div>
+						</div>
+					</div>
+					<div class="progress-step">
+						<div class="progress-content">
+							<div class="inner-circle"></div>
+							<p class="mt-3 mb-5">승인대기</p>
+						</div>
+					</div>
+					<div class="progress-step">
+						<div class="progress-content">
+							<div class="inner-circle"></div>
+							<p class="mt-3 mb-5">승인</p>
+						</div>
+					</div>
+					<div class="progress-step">
+						<div class="progress-content">
+							<div class="inner-circle"></div>
+							<p class="mt-3 mb-5">접수대기</p>
+						</div>
+					</div>
+					<div class="progress-step">
+						<div class="progress-content">
+							<div class="inner-circle"></div>
+							<p class="mt-3 mb-5">접수</p>
+						</div>
+					</div>
+					<div class="progress-step">
+						<div class="progress-content">
+							<div class="inner-circle"></div>
+							<p class="mt-3 mb-5">개발중</p>
+							<div id="progress_dep_ing_info" class="" style="width: 10rem;  height: 10rem; background-color: lightgray; border-radius: 0.5rem; padding: 3rem 0;">
+								<div id="progress_deptNmOrTrnsfInstNm"></div>
+								<div id="progress_srTrnsfYn"></div>
+							</div>
+						</div>
+					</div>
+					<div class="progress-step">
+						<div class="progress-content">
+							<div class="inner-circle"></div>
+							<p class="mt-3 mb-5">테스트</p>
+						</div>
+					</div>
+					<div class="progress-step">
+						<div class="progress-content">
+							<div class="inner-circle"></div>
+							<p class="mt-3 mb-5">완료요청</p>
+						</div>
+					</div>
+					<div class="progress-step">
+						<div class="progress-content">
+							<div class="inner-circle"></div>
+							<p class="mt-3 mb-5">개발완료</p>
+							<div id="progress_dep_cmptn_info" class="" style="width: 10rem; height: 10rem; background-color: lightgray; border-radius: 0.5rem; padding: 3rem 0;">
+								<div id="progress_srCmptnPrnmntDt"></div>
+								<div>예정</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>	
+		
 		
 	    </div>
    </div>
