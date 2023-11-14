@@ -1127,7 +1127,7 @@ function removeSrRqst() {
 //sr요청 수정
 function srRqstSttsUpdate() {
 	$("#update-srRqstNo").val($("#srRqst-srRqstNo").val());
-	
+	writeOrModifySrForPicHome();
 	var form = $("#srRqstSttsUpdate")[0];
     var formData = new FormData(form);
     // Ajax 요청 보내기
@@ -1142,6 +1142,7 @@ function srRqstSttsUpdate() {
             window.location.href = currentURL; // 원하는 URL로 변경
             //showSrRqstBySrRqstNo(choiceSrRqstNo);
             //loadSRRequests(1, choiceSrRqstSttsNo);
+            
             alert("수정 완료");
             
         },

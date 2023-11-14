@@ -739,7 +739,7 @@ function downloadExcel() {
 }
 
 //로딩 스피너 함수
-function loading() {
+/*function loading() {
   LoadingWithMask();
   setTimeout("closeLoadingWithMask()", 800);
 }
@@ -759,4 +759,4 @@ function LoadingWithMask() {
 //스피너와 마스크 종료
 function closeLoadingWithMask() {
   $.LoadingOverlay("hide"); 
-}
+}*/

@@ -209,7 +209,25 @@
 			 <!-- 이관된 경우 -->
 			<div id="isTrnsfY">
 				<div class="bottomSrRqstNo mb-2 p-2">
-				
+					<div class="d-flex justify-content-center">
+						<div class="w-30 d-flex">
+							<i class="material-icons pt-2 mr-2">install_desktop</i>
+							<div class="pt-2" style="font-weight: bold;">관련시스템:</div>
+							<div class="pt-2 ml-2" style="font-weight: bold;">고용노동부</div>
+						</div>
+					    <div class="w-30 d-flex">
+							<i class="material-icons pt-2 mr-2">person_add</i>
+							<div class="pt-2" style="font-weight: bold;">신청자:</div>
+							<div class="pt-2 ml-2" style="font-weight: bold;">성유짱</div>
+						</div>
+						<div class="w-30 d-flex">						
+							<i class="material-icons pt-2 mr-2">payments</i>
+						    <div class="pt-2" style="font-weight: bold;">소요예산: </div>
+						    <div  class="pt-2  ml-2" style="font-weight: bold;">30000</div>
+						    <div  class="pt-2" style="font-weight: bold;">원</div>
+						</div>
+					</div>
+					
 				</div>
 				<div id="srProgressDiv">
 					<div style="display:flex;">
