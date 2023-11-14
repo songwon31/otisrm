@@ -166,9 +166,13 @@
 			</div>
 		</form>
 	</div>
-	<div id="progressManagementBoardDiv" class="shadow" 
-		style="height:63rem; background-color:white; border-radius:10px; padding:2rem;">
-		<div style="height:3.5rem; font-size:2.2rem; font-weight:700; color:#222E3C;">SR처리 목록</div>
+	<div id="progressManagementBoardDiv" class="shadow" style="height:63rem; background-color:white; border-radius:10px; padding:2rem;">
+		<div style="height:3.5rem; display:flex;">
+			<div style="height:3.5rem; font-size:2.2rem; font-weight:700; color:#222E3C;">SR처리목록</div>
+			<div style="flex-grow:1;"></div>
+			<button id="downloadExcelButton" class="btn-1" onclick="downloadExcel()"
+					style="background-color:#222E3C; height:3rem; width:12rem; font-size:1.6rem;">엑셀 다운로드</button>
+		</div>
 		<div class="" style="height:51.7rem; margin:0.75rem 0rem; background-color:#f9fafe;">
 			<table id="mainTable" style="width:100%;">
 				<colgroup>

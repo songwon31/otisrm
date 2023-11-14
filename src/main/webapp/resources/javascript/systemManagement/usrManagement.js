@@ -103,7 +103,6 @@ function mainTableConfig(usrManagementSearch, pageNo) {
 		usrManagementSearch: JSON.stringify(usrManagementSearch),
 		pageNo: pageNo
 	}
-	console.log(JSON.stringify(requestData));
 	$.ajax({
 		type: "POST",
 		url: "/otisrm/systemManagement/usrManagement/getUsrManagementMainTableConfig",
@@ -467,4 +466,50 @@ function editUsrRoleModal() {
         	}
         }
     });
+}
+
+function downloadExcel() {
+	let requestData = {
+		usrManagementSearch: JSON.stringify(currentUsrManagementSearch),
+		pageNo: currentPageNo
+	};
+	
+	$.ajax({
+		type: "POST",
+		url: "/otisrm/systemManagement/usrManagement/getUsrManagementMainTableConfig",
+		data: JSON.stringify(requestData),
+		contentType: "application/json",
+		success: function(data) {
+			// 엑셀에 다운될 데이터
+			let excelOutputData = [
+				["사용자번호", "이름", "전화번호", "이메일", "소속", "부서", "직책", "권한", "가입일", "상태"],
+			];
+			for (let i=0; i<data.usrList.length; ++i) {
+				let usr = data.usrList[i];
+				excelOutputData.push([
+					usr.usrNo,
+					usr.usrNm,
+					usr.usrTelno,
+					usr.usrEml,
+					usr.instNm,
+					usr.deptNm,
+					usr.roleNm,
+					usr.usrAuthrtNm,
+					formatDate(new Date(usr.usrJoinDt)),
+					usr.usrSttsNm
+		        ]);
+			}
+			// 워크북 생성
+			var wb = XLSX.utils.book_new();
+			var ws = XLSX.utils.aoa_to_sheet(excelOutputData);
+					
+			// 워크북에 워크시트 추가
+			XLSX.utils.book_append_sheet(wb, ws, "사용자목록");
+					
+			// 엑셀 파일 생성 및 다운로드
+			var today = new Date();
+			var filename = "사용자목록_" + today.getFullYear() + (today.getMonth() + 1) + today.getDate() + ".xlsx";
+			XLSX.writeFile(wb, filename);
+		}
+	});
 }

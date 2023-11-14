@@ -140,6 +140,8 @@
 			<div style="height:3.5rem; font-size:2.2rem; font-weight:700; color:#222E3C;">사용자목록</div>
 			<div style="flex-grow:1;"></div>
 			<div style="display:flex; flex-direction:row; align-items:center;">
+				<button id="downloadExcelButton" class="btn-1" onclick="downloadExcel()"
+					style="background-color:#222E3C; height:3rem; margin-right:0.5rem; font-size:1.5rem;">엑셀 다운로드</button>
 				<button type="button" onclick="batchApproval()" class="btn-1"
 						style="height:3rem; margin-right:0.5rem; font-size:1.5rem;">
 					일괄 승인/복구

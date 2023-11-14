@@ -118,7 +118,7 @@ function mainTableConfig(progressManagementSearch, pageNo) {
 	let requestData = {
 		progressManagementSearch: JSON.stringify(progressManagementSearch),
 		pageNo: pageNo
-	}
+	};
 	$.ajax({
 		type: "POST",
 		url: "/otisrm/srManagement/getProgressManagementMainTableConfig",
@@ -1154,4 +1154,66 @@ function deleteOutput() {
         	composeManageSrOutputModal(stts);
         }
     });
+}
+
+function downloadExcel() {
+	let requestData = {
+		progressManagementSearch: JSON.stringify(currentProgressManagementSearch),
+		pageNo: currentPageNo
+	};
+	
+	$.ajax({
+		type: "POST",
+		url: "/otisrm/srManagement/getProgressManagementMainTableConfig",
+		data: JSON.stringify(requestData),
+		contentType: "application/json",
+		success: function(data) {
+			// 엑셀에 다운될 데이터
+			let excelOutputData = [
+				["SR번호", "시스템", "업무", "SR제목", "요청자", "완료요청일", "협력사", "완료예정일", "접수상태", "진행상태"],
+			];
+			
+			for (let i=0; i<data.srList.length; ++i) {
+				let sr = data.srList[i];
+				
+				if (sr.srCmptnPrnmntDt != null) {
+					let srCmptnPrnmntDt = new Date(sr.srCmptnPrnmntDt);
+					sr.srCmptnPrnmntDt = formatDate(srCmptnPrnmntDt);
+				} else {
+					sr.srCmptnPrnmntDt = '';
+				}
+				
+				if (sr.srTrgtCmptnDt != null) {
+					let srTrgtCmptnDt = new Date(sr.srTrgtCmptnDt);
+					sr.srTrgtCmptnDt = formatDate(srTrgtCmptnDt);
+				} else {
+					sr.srTrgtCmptnDt = '';
+				}
+				
+				excelOutputData.push([
+					sr.srNo,
+					sr.sysNm,
+					sr.srTaskNm,
+					sr.srTtl,
+					sr.rqstrNm,
+					sr.srCmptnPrnmntDt,
+					sr.instNm,
+					sr.srTrgtCmptnDt,
+					sr.srRqustSttsNm,
+					sr.srPrgrsSttsNm
+		        ]);
+			}
+			// 워크북 생성
+			var wb = XLSX.utils.book_new();
+			var ws = XLSX.utils.aoa_to_sheet(excelOutputData);
+					
+			// 워크북에 워크시트 추가
+			XLSX.utils.book_append_sheet(wb, ws, "SR처리목록");
+					
+			// 엑셀 파일 생성 및 다운로드
+			var today = new Date();
+			var filename = "SR처리목록_" + today.getFullYear() + (today.getMonth() + 1) + today.getDate() + ".xlsx";
+			XLSX.writeFile(wb, filename);
+		}
+	});
 }

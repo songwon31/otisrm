@@ -117,7 +117,7 @@
 				<!-- <div style="flex-grow: 1; border-bottom: 1.5px solid #edf2f8;"></div> -->
 			</div>
 			<div style="height:27rem; background-color:#edf2f8;">
-				<table id="mainTable" style="width: 100%; text-align: center;">
+				<table id="mainTable" style="width: 100%; text-align: center; border:1px solid #E9ECEF; border-bottom:none;">
 					<colgroup>
 						<col width="3%" />
 						<col width="10%" />
@@ -1087,7 +1087,7 @@
 	<div class="modal-dialog modal-dialog-centered modal-sm">
 		<div class="modal-content">
 			<div class="modal-header" style="background-color:#2c7be4; color:white; display:flex;">
-				<div class="modal-title" style="font-size:2rem; font-weight:700;">경고</div>
+				<div class="modal-title" style="font-size:2rem; font-weight:700;">알림</div>
 				<i class="material-icons close-icon" data-dismiss="modal" style="cursor: pointer;">close</i>
 			</div>
 			<div class="modal-body" style="margin:0px; padding:0px; font-size:1.5rem;">

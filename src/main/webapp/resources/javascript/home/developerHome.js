@@ -168,10 +168,14 @@ function refactorMainTable(filterType, page) {
 				if (data.srList[i] == null) {
 					let html = '';
 					if (i == 0) {
-						html = '<tr style="height: 4.5rem; font-size: 1.5rem; background-color:white;">';
+						html = '<tr style="height: 4.5rem; font-size: 1.5rem; background-color:white; border-top:1px solid #E9ECEF;">';
 						html += '<td colspan=\'10\'>해당 목록 결과가 없습니다.</td>';
 					} else {
-						html = '<tr style="height: 4.5rem; font-size: 1.5rem; background-color:#F9FAFE;">';
+						if (i==1) {
+							html = '<tr style="height: 4.5rem; font-size: 1.5rem; background-color:#F9FAFE; border-top:1px solid #E9ECEF;">';
+						} else {
+							html = '<tr style="height: 4.5rem; font-size: 1.5rem; background-color:#F9FAFE;">';
+						}
 						html += '<td></td>';
 						html += '<td></td>';
 						html += '<td></td>';
@@ -188,7 +192,7 @@ function refactorMainTable(filterType, page) {
 				} else {
 					let sr = data.srList[i];
 					let srTrHtml = '';
-					srTrHtml += '<tr style="height: 4.5rem; font-size: 1.5rem; background-color:white;">';
+					srTrHtml += '<tr style="height: 4.5rem; font-size: 1.5rem; background-color:white; border-top:1px solid #E9ECEF;">';
 					srTrHtml += '<td>' + (i+1) + '</td>';
 					srTrHtml += '<td>' + sr.srNo + '</td>';
 					srTrHtml += '<td>' + sr.sysNm + '</td>';
@@ -436,6 +440,12 @@ function setSrDetail(srNo) {
 					srTrnsfHrHtml += '</tr>';
 					$('#srHrInfo tbody').append(srTrnsfHrHtml);
 				}
+			} else {
+				let srTrnsfHrHtml = '';
+				srTrnsfHrHtml += '<tr style="height:4rem; font-size:1.6rem; background-color:white;">';
+				srTrnsfHrHtml += '<td colspan=\'4\'>해당 목록 결과가 없습니다.</td>';
+				srTrnsfHrHtml += '</tr>';
+				$('#srHrInfo tbody').append(srTrnsfHrHtml);
 			}
 			
 			
@@ -1387,4 +1397,7 @@ function srScheduleChangeRequestResultCheck(srNo) {
     });
 }
 
+function downloadExcel() {
+	
+}
 

@@ -66,4 +66,5 @@ public class SrProgressManagementController {
 		SrTableConfigForProgressManagement srTableConfigForProgressManagement = srService.getProgressManagementMainTableConfig(usr.getUsrNo(), jsonData);
 		return srTableConfigForProgressManagement;
 	}
+	
 }
