@@ -488,7 +488,7 @@
         <i class="material-icons close-icon" data-dismiss="modal" style="cursor: pointer;">close</i>
       </div>
       <div id="srRqstBySrRqstNoForm" class="modal-body">
-      	<form id="writeSrRqst" action="writeSrRqst" method="post" onsubmit="onsubmit()" enctype="multipart/form-data">
+      	<form id="writeSrRqstForPicHome" action="writeSrRqstForPicHome" method="post" onsubmit="onsubmit()" enctype="multipart/form-data">
       		<!-- SR요청정보 -->
       		<h6 class="modal-sub-title">SR요청등록</h6>
       		<div class="card p-3 mb-4">

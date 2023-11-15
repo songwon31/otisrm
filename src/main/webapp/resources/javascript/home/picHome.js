@@ -1014,7 +1014,7 @@ function submitSrRqst(){
 	        // 성공적으로 요청이 완료된 경우 실행할 코드
 	        var currentURL = window.location.href;
 	        console.log(currentURL);
-	        window.location.href = "/home"; // 또는 다른 원하는 URL로 변경
+	        window.location.href = currentURL; // 또는 다른 원하는 URL로 변경
 	        
 	    },
 	    error: function (error) {
