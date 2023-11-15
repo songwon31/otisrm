@@ -1397,7 +1397,4 @@ function srScheduleChangeRequestResultCheck(srNo) {
     });
 }
 
-function downloadExcel() {
-	
-}
 

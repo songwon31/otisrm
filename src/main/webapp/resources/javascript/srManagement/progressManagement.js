@@ -228,6 +228,7 @@ function mainTableSearchReset() {
 	currentProgressManagementSearch.keywordCategory = null;
 	currentProgressManagementSearch.keywordContent = null;
 	currentProgressManagementSearch.mySrCheck = null;
+	
 	currentPageNo = 1;
 	mainTableSearchDivConfig();
 	mainTableConfig(currentProgressManagementSearch, currentPageNo);

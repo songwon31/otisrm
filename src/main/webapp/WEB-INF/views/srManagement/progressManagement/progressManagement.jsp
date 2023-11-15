@@ -57,7 +57,7 @@
 					<div style="width:100%;" class="p-0 d-inline-flex flex-row align-items-center">
 						<div style="width:30%; display:flex; align-items:center;">
 							<svg style="width:0.5rem; height:0.5rem; margin: 0rem 0.5rem;"><rect width="0.5rem" height="0.5rem" fill="#222E3C" /></svg>
-							<span style="font-size:1.6rem; font-weight:700;">접수 상태</span>
+							<span style="font-size:1.6rem; font-weight:700;">접수상태</span>
 						</div>
 						<div style="width:70%;">
 							<select id="srRqstSttsSelect" name="srRqstSttsSelect" style="width:100%">
@@ -71,7 +71,7 @@
 					<div style="width:100%;" class="p-0 d-inline-flex flex-row align-items-center">
 						<div style="width:30%; display:flex; align-items:center;">
 							<svg style="width:0.5rem; height:0.5rem; margin: 0rem 0.5rem;"><rect width="0.5rem" height="0.5rem" fill="#222E3C" /></svg>
-							<span style="font-size:1.6rem; font-weight:700;">진행 상태</span>
+							<span style="font-size:1.6rem; font-weight:700;">진행상태</span>
 						</div>
 						<div style="width:70%;">
 							<label style="display:none;" for="userStts"></label> 

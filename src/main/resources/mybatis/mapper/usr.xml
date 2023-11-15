@@ -153,8 +153,12 @@
 					AND usr.usr_join_dt <= #{joinDateEnd}
 					]]>
 				</if>
-    	</where>
-    		)
+				<!-- 탈퇴회원 표시 여부 -->
+				<if test="whdwlUsrCheck == null">
+					AND usr.usr_stts_no != 'WITHDRAWL'
+				</if>
+    		</where>
+    	)
     </select>
     
     <select id="selectUsrForUsrManagementBoard" parameterType="map" resultType="com.finalteam5.otisrm.dto.usr.UsrForUsrManagementBoard">
@@ -215,6 +219,10 @@
 							AND usr.usr_join_dt <= #{usrManagementSearch.joinDateEnd}
 							]]>
 						</if>
+						<!-- 탈퇴회원 표시 여부 -->
+						<if test="usrManagementSearch.whdwlUsrCheck == null">
+							AND usr.usr_stts_no != 'WITHDRAWL'
+						</if>
 					</where>
 					)
 		<![CDATA[
@@ -222,6 +230,7 @@
 			)
 		WHERE rnum >= #{pager.startRowNo}
 		]]>
+		ORDER BY usr_join_dt DESC
     </select>
 	
 	<update id="updateUsrSttsToNormal" parameterType="String">

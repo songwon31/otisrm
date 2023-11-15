@@ -19,6 +19,7 @@
 			<span style="margin-left: 9.5px;">사용자관리</span>
 		</div>
 	</div>
+	
 	<div id="userManagementSearchDiv" class="shadow" 
 		style="height:13rem; margin:2rem 0rem; padding:3rem 2rem; background-color:white; border-radius:1rem;">
 		<form id="searchForm" method="get" action="usrManagement">
@@ -32,12 +33,11 @@
 						<div style="width:70%;">
 							<select id="authrtSelect" name="authrtSelect" style="width:100%">
 								<option value="" selected>전체</option>
-								
 							</select>
 						</div>
 					</div>
 				</div>
-				<div style="width:7%;"></div>
+				<div style="width:3.5%;"></div>
 				<div style="width:20%;" class="d-inline-flex flex-row align-items-center">
 					<div style="width:100%;" class="p-0 d-inline-flex flex-row align-items-center">
 						<div style="width:30%; display:flex; align-items:center;">
@@ -52,8 +52,62 @@
 						</div>
 					</div>
 				</div>
-				<div style="width:7%;"></div>
-				<div style="width:35%;" class="d-inline-flex flex-row align-items-center">
+				<div style="width:3.5%;"></div>
+				<div style="width:20%;" class="d-inline-flex flex-row align-items-center">
+					<div style="width:100%;" class="p-0 d-inline-flex flex-row align-items-center ">
+						<div style="width:30%; display:flex; align-items:center;">
+							<svg style="width:0.5rem; height:0.5rem; margin: 0rem 0.5rem;"><rect width="0.5rem" height="0.5rem" fill="#222E3C" /></svg>
+							<span style="font-size:1.6rem; font-weight:700;">소속</span>
+						</div>
+						<div style="width:70%;">
+							<select id="instSelect" name="instSelect" style="width:100%">
+								<option value="" selected>전체</option>
+								
+							</select>
+						</div>
+					</div>
+				</div>
+				<div style="width:3.5%;"></div>
+				<div style="width:20%;" class="d-inline-flex flex-row align-items-center">
+					<div style="width:100%;" class="p-0 d-inline-flex flex-row align-items-center">
+						<div style="width:30%; display:flex; align-items:center;">
+							<svg style="width:0.5rem; height:0.5rem; margin: 0rem 0.5rem;"><rect width="0.5rem" height="0.5rem" fill="#222E3C" /></svg>
+							<span style="font-size:1.6rem; font-weight:700;">부서</span>
+						</div>
+						<div style="width:70%;">
+							<select id="deptSelect" name="deptSelect" style="width:100%">
+								<option value="" selected>전체</option>
+								
+							</select>
+						</div>
+					</div>
+				</div>
+				<div style="width:3.5%;"></div>
+				<div style="width:6%;" class="d-flex flex-row-reverse align-items-center">
+					<button type="button" id="initBtn" class="btn-1" onclick="mainTableSearchReset()"
+							style="height: 3rem; width: 100%; border-radius: 5px; background-color:#868E96;">
+						초기화
+					</button>
+				</div>
+			</div>
+			<div class="p-0 container-fluid d-inline-flex flex-row" style="margin-top:1.2rem; height:3rem;">
+				<div style="width:43.5%;" class="d-inline-flex flex-row align-items-center">
+					<div style="width:100%;" class="p-0 d-inline-flex flex-row align-items-center">
+						<div style="width:13.8%; display:flex; align-items:center;">
+							<svg style="width:0.5rem; height:0.5rem; margin: 0rem 0.5rem;"><rect width="0.5rem" height="0.5rem" fill="#222E3C" /></svg>
+							<span style="font-size:1.6rem; font-weight:700;">가입일</span>
+						</div>
+						<div style="width:86.2%; display:flex; align-items:center;">
+							<div class="d-inline-flex" style="width:100%; flex-direction:row; align-items:center">
+								<input id ="joinDateStart" name="joinDateStart" style="width:45%;" type="date">
+								<div style="width:10%; font-size:1.6rem; display:flex; flex-direction:row; justify-content:center; align-items:center;">~</div>
+								<input id ="joinDateEnd" name="joinDateEnd" style="width:45%;" type="date">
+							</div>
+						</div>
+					</div>
+				</div>
+				<div style="width:3.5%;"></div>
+				<div style="width:30%;" class="d-inline-flex flex-row align-items-center">
 					<div style="width:100%;" class="p-0 d-inline-flex flex-row align-items-center">
 						<div style="width:20%; display:flex; align-items:center;">
 							<svg style="width:0.5rem; height:0.5rem; margin: 0rem 0.5rem;"><rect width="0.5rem" height="0.5rem" fill="#222E3C" /></svg>
@@ -74,60 +128,18 @@
 						</div>
 					</div>
 				</div>
-				<div style="width:11%;" class="d-flex flex-row-reverse align-items-center">
-					<button type="button" id="initBtn" class="d-inline-flex flex-row align-items-center justify-content-center" onclick="mainTableSearchReset()">
-						초기화
-					</button>
-				</div>
-			</div>
-			<div class="p-0 container-fluid d-inline-flex flex-row" style="margin-top:1.2rem; height:3rem;">
-				<div style="width:20%;" class="d-inline-flex flex-row align-items-center">
-					<div style="width:100%;" class="p-0 d-inline-flex flex-row align-items-center ">
-						<div style="width:30%; display:flex; align-items:center;">
-							<svg style="width:0.5rem; height:0.5rem; margin: 0rem 0.5rem;"><rect width="0.5rem" height="0.5rem" fill="#222E3C" /></svg>
-							<span style="font-size:1.6rem; font-weight:700;">소속</span>
-						</div>
-						<div style="width:70%;">
-							<select id="instSelect" name="instSelect" style="width:100%">
-								<option value="" selected>전체</option>
-								
-							</select>
-						</div>
+				<div style="width:3.5%;"></div>
+				<div style="width:10%;" class="d-inline-flex flex-row align-items-center">
+					<div style="width:100%; justify-content:flex-end;" class="p-0 d-inline-flex flex-row align-items-center">
+						<svg style="width:0.5rem; height:0.5rem; margin: 0rem 0.5rem;"><rect width="0.5rem" height="0.5rem" fill="#222E3C" /></svg>
+						<span style="font-size:1.5rem; font-weight:700;">탈퇴 회원 보기</span>
+						<input id="whdwlUsrCheck" type="checkbox" style="margin:0 0 0 1rem;">
 					</div>
 				</div>
-				<div style="width:7%;"></div>
-				<div style="width:20%;" class="d-inline-flex flex-row align-items-center">
-					<div style="width:100%;" class="p-0 d-inline-flex flex-row align-items-center">
-						<div style="width:30%; display:flex; align-items:center;">
-							<svg style="width:0.5rem; height:0.5rem; margin: 0rem 0.5rem;"><rect width="0.5rem" height="0.5rem" fill="#222E3C" /></svg>
-							<span style="font-size:1.6rem; font-weight:700;">부서</span>
-						</div>
-						<div style="width:70%;">
-							<select id="deptSelect" name="deptSelect" style="width:100%">
-								<option value="" selected>전체</option>
-								
-							</select>
-						</div>
-					</div>
-				</div>
-				<div style="width:7%;"></div>
-				<div style="width:35%;" class="d-inline-flex flex-row align-items-center">
-					<div style="width:100%;" class="p-0 d-inline-flex flex-row align-items-center">
-						<div style="width:20%; display:flex; align-items:center;">
-							<svg style="width:0.5rem; height:0.5rem; margin: 0rem 0.5rem;"><rect width="0.5rem" height="0.5rem" fill="#222E3C" /></svg>
-							<span style="font-size:1.6rem; font-weight:700;">가입일</span>
-						</div>
-						<div style="width:80%; display:flex; align-items:center;">
-							<div class="d-inline-flex" style="width:100%; flex-direction:row; align-items:center">
-								<input id ="joinDateStart" name="joinDateStart" style="width:45%;" type="date">
-								<div style="width:10%; font-size:1.6rem; display:flex; flex-direction:row; justify-content:center; align-items:center;">~</div>
-								<input id ="joinDateEnd" name="joinDateEnd" style="width:45%;" type="date">
-							</div>
-						</div>
-					</div>
-				</div>
-				<div style="width:11%;" class="d-flex flex-row-reverse align-items-center">
-					<button type="button" id="searchBtn" class="d-inline-flex flex-row align-items-center justify-content-center" onclick="mainTableSearch()">
+				<div style="width:3.5%;"></div>
+				<div style="width:6%;" class="d-flex flex-row-reverse align-items-center">
+					<button type="button" id="searchBtn" class="btn-1" onclick="mainTableSearch()"
+							style="height: 3rem; width: 100%; border-radius: 5px; background-color:#222E3C;">
 						검색
 					</button>
 				</div>	
@@ -162,9 +174,9 @@
 					<col width="7%"/>
 					<col width="10%"/>
 					<col width="15%"/>
-					<col width="5%"/>
+					<col width="7%"/>
 					<col width="10%"/>
-					<col width="10%"/>
+					<col width="8%"/>
 					<col width="8%"/>
 					<col width="10%"/>
 					<col width="5%"/>

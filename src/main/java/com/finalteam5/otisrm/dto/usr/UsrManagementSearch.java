@@ -12,4 +12,5 @@ public class UsrManagementSearch {
 	private String usrDept;
 	private String joinDateStart;
 	private String joinDateEnd;
+	private String whdwlUsrCheck;
 }

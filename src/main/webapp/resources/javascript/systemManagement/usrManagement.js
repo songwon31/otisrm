@@ -9,7 +9,8 @@ var currentUsrManagementSearch = {
 	usrInst: null,
 	usrDept: null,
 	joinDateStart: null,
-	joinDateEnd: null
+	joinDateEnd: null,
+	whdwlUsrCheck: null
 }
 //메인 테이블 페이지 번호
 var currentPageNo = 1;
@@ -234,6 +235,7 @@ function mainTableSearchReset() {
 	currentUsrManagementSearch.usrDept = null;
 	currentUsrManagementSearch.joinDateStart = null;
 	currentUsrManagementSearch.joinDateEnd = null;
+	currentUsrManagementSearch.whdwlUsrCheck = null;
 	
 	currentPageNo = 1;
 	mainTableSearchDivConfig();
@@ -243,27 +245,25 @@ function mainTableSearchReset() {
 function mainTableSearch() {
 	currentUsrManagementSearch.usrAuthrt = $('#authrtSelect').val();
 	if ($('#authrtSelect').val() == '') currentUsrManagementSearch.usrAuthrt = null;
-	
 	currentUsrManagementSearch.usrStts = $('#sttsSelect').val();
 	if ($('#sttsSelect').val() == '') currentUsrManagementSearch.usrStts = null;
-	
 	currentUsrManagementSearch.keywordCategory = $('#keywordCategoty').val();
 	if ($('#keywordCategoty').val() == '') currentUsrManagementSearch.keywordCategory = null;
-	
 	currentUsrManagementSearch.keywordContent = $('#keywordContent').val();
 	if ($('#keywordContent').val() == '') currentUsrManagementSearch.keywordContent = null;
-	
 	currentUsrManagementSearch.usrInst = $('#instSelect').val();
 	if ($('#instSelect').val() == '') currentUsrManagementSearch.usrInst = null;
-	
 	currentUsrManagementSearch.usrDept = $('#deptSelect').val();
 	if ($('#deptSelect').val() == '') currentUsrManagementSearch.usrDept = null;
-	
 	currentUsrManagementSearch.joinDateStart = $('#joinDateStart').val();
 	if ($('#joinDateStart').val() == '') currentUsrManagementSearch.joinDateStart = null;
-	
 	currentUsrManagementSearch.joinDateEnd = $('#joinDateEnd').val();
 	if ($('#joinDateEnd').val() == '') currentUsrManagementSearch.joinDateEnd = null;
+	if ($('#whdwlUsrCheck').prop('checked')) {
+		currentUsrManagementSearch.whdwlUsrCheck = "checked";
+	} else {
+		currentUsrManagementSearch.whdwlUsrCheck = null;
+	}
 	
 	mainTableConfig(currentUsrManagementSearch, currentPageNo);
 }
