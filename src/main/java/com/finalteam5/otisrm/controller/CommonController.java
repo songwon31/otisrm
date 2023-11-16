@@ -74,6 +74,17 @@ public class CommonController {
 		return id;
 	}
 	
+	//아이디 찾기 모달 폼
+	@PostMapping("login/getUsrNoforChgPswd")
+	@ResponseBody
+	public String getUsrNoforChgPswd(@RequestParam(name="usrNm") String usrNm, @RequestParam(name="usrEml") String usrEml) {
+		Usr usr = new Usr();
+		usr.setUsrNm(usrNm);
+		usr.setUsrEml(usrEml);
+		String usrNo = usrService.getUsrNoforChgPswd(usr);
+		return usrNo;
+	}
+	
 		
 	//로그인 요청
 	/*

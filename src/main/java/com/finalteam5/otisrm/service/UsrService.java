@@ -55,8 +55,9 @@ public interface UsrService {
 	public String getDeptNmByDeptNo(String deptNo);
 	
 	//아아디 찾기
-	public int checkUsrNmAndEml(Usr usr);				//회원이름과 이메일에 해당하는 회원
+	public int checkUsrNmAndEml(Usr usr);			//회원이름과 이메일에 해당하는 회원
 	public String getMyId(Usr usr);					//회원이름과 이메일에 해당하는 회원
+	public String getUsrNoforChgPswd(Usr usr);		//회원이름과 이메일에 해당하는 회원
 	
 
 	/**

@@ -67,15 +67,21 @@
     	select dept_nm from dept where dept_no=#{deptNo} 
     </select>
     
-    <!-- 아이디 찾기 : 정보 유효성 검사 -->
+    <!-- 계정 찾기: 정보 유효성 검사 -->
     <select id="countByUsrNmAndEml" parameterType="Usr" resultType="int">
 	    select count(*) from usr
 		where usr_nm = #{usrNm} and usr_eml = #{usrEml}
     </select>
     
     <!-- 아이디 찾기: 회원 아이디 찾기 -->
-     <select id="selectMyId" parameterType="Usr" resultType="String">
+    <select id="selectMyId" parameterType="Usr" resultType="String">
 	    select usr_id from usr
+		where usr_nm = #{usrNm} and usr_eml = #{usrEml}
+    </select>
+    
+    <!-- 비밀번호 찾기: 회원 번호 얻기 -->
+    <select id="selectUsrNoforChgPswd" parameterType="Usr" resultType="String">
+	    select usr_no from usr
 		where usr_nm = #{usrNm} and usr_eml = #{usrEml}
     </select>
     

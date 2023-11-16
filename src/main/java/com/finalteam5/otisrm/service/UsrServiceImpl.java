@@ -168,6 +168,19 @@ public class UsrServiceImpl implements UsrService{
 		return "fail";
 	}
 	
+	//비밀번호 변경하기
+	@Override
+	public String getUsrNoforChgPswd(Usr usr) {
+		int isMyInfo = usrDao.countByUsrNmAndEml(usr);
+		if(isMyInfo == 1) {
+			String usrNo = usrDao.selectUsrNoforChgPswd(usr);	
+			return usrNo;
+		}
+		
+		return "fail";
+	}
+	
+	
 	
 	/**
 	 * @author 송원석

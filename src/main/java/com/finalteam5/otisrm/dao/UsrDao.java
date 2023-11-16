@@ -37,6 +37,7 @@ public interface UsrDao {
 	//아이디/비밀번호 찾기
 	public int countByUsrNmAndEml(Usr usr);							//회원이름과 이메일에 해당하는 회원
 	public String selectMyId(Usr usr);								//회원이름과 이메일에 해당하는 회원
+	public String selectUsrNoforChgPswd(Usr usr);								//회원이름과 이메일에 해당하는 회원
 	
 	//로그인
 	public Login selectByUsrId(String usrId);
