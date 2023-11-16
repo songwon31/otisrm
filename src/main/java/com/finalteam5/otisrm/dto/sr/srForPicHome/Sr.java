@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.finalteam5.otisrm.dto.SrDmndClsf;
+import com.finalteam5.otisrm.dto.srRequest.SrRqst;
 
 import lombok.Data;
 
@@ -40,4 +41,5 @@ public class Sr {
 
 	//첨부파일 
 	private List<SrAtch> srAtchList;
+	
 } 

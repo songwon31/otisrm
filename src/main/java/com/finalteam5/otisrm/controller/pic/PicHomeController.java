@@ -194,6 +194,7 @@ public class PicHomeController {
 			if(srSubmit.getSrSchdlChgRqstAprvYn() == "Y") {
 				SrTrnsfPlanForm srTrnsfPlanForm = new SrTrnsfPlanForm();
 				srTrnsfPlanForm.setSrNo(srSubmit.getSrNo());
+				srTrnsfPlanForm.setSrDmndNo(srSubmit.getSrDmndNo());
 				srTrnsfPlanForm.setSrTrgtCmptnDt(srSubmit.getSrCmptnPrnmntDt());
 				srRqstService.modifySrTrnsfPlan(srTrnsfPlanForm);
 			}

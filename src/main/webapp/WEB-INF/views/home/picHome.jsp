@@ -213,17 +213,17 @@
 						<div class="w-30 d-flex">
 							<i class="material-icons pt-2 mr-2">install_desktop</i>
 							<div class="pt-2" style="font-weight: bold;">관련시스템:</div>
-							<div class="pt-2 ml-2" style="font-weight: bold;">고용노동부</div>
+							<div id="isTrnsfY-sysNm" class="pt-2 ml-2" style="font-weight: bold;">고용노동부</div>
 						</div>
 					    <div class="w-30 d-flex">
 							<i class="material-icons pt-2 mr-2">person_add</i>
 							<div class="pt-2" style="font-weight: bold;">신청자:</div>
-							<div class="pt-2 ml-2" style="font-weight: bold;">성유짱</div>
+							<div id="isTrnsfY-usrNm" class="pt-2 ml-2" style="font-weight: bold;">성유짱</div>
 						</div>
 						<div class="w-30 d-flex">						
 							<i class="material-icons pt-2 mr-2">payments</i>
 						    <div class="pt-2" style="font-weight: bold;">소요예산: </div>
-						    <div  class="pt-2  ml-2" style="font-weight: bold;">30000</div>
+						    <div id="isTrnsfY-srReqBgt" class="pt-2  ml-2" style="font-weight: bold;">30000</div>
 						    <div  class="pt-2" style="font-weight: bold;">원</div>
 						</div>
 					</div>
@@ -400,10 +400,18 @@
 					
 		<!-- 이관하지 않을 경우 SR 진행현황 -->
     	<div id="progressCircles">
-    		<div class="bottomSrRqstNo mt-4 mb-2 p-2">
-				
+    		<div class=" mt-4 mb-2 p-2" >
+    			<div class="d-flex">
+    				<div class="pr-1" style="color: #60707f; font-size: 17px; font-weight: bold;">[</div> 
+    				<div style="color: #60707f; font-size: 17px; font-weight: bold;">SR231116_0001</div>   			
+    				<div class="pl-1" style="color: #60707f; font-size: 17px; font-weight: bold;">]</div> 
+    				<div class="pl-2" style="color: #424348; font-size: 17px; font-weight: bold;">FAQ 대표 질문 수정</div>   			
+    				<div class="pl-2" style="color: #424348; font-size: 17px; font-weight: bold;">요청상태</div>   			
+    			</div>
+				<div style="border-bottom: 2px solid #e1e6ea; margin-top: 10px;"></div>	
 			</div>
-			<div  style="margin-top: 50px;">
+			
+			<div style="margin-top: 50px;">
 				<div class="progress-steps d-flex w-100" style="margin-top: 3.88rem;">
 					<div class="progress-step">
 						<div class="progress-content">
@@ -473,7 +481,6 @@
 					</div>
 				</div>
 			</div>
-			
 		</div>	
     </div>
   </div>
@@ -626,7 +633,7 @@
 					          <label for="writerDepartment" class="form-label">소속</label>
 					        </div>
 					        <div class="w-45">
-					          <input id="srRqst-inst" type="text" class="form-control" id="writerDepartment" disabled>
+					          <input id="srRqst-instNm" type="text" class="form-control" id="writerDepartment" disabled>
 					        </div>
 					    </div>
 					</div>
@@ -747,7 +754,7 @@
 				          <label for="writerDepartment" class="form-label">개발부서</label>
 				        </div>
 				        <div class="w-45">
-				          <input id="srRqst-inst" type="text" class="form-control" value="${usr.deptNm}" disabled>
+				          <input id="srRqst-inst" type="text" class="form-control" value="${usr.deptNo}" disabled>
 				        </div>
 				    </div>
 				</div>

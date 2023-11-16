@@ -89,6 +89,7 @@ public class SrRqstServiceImpl implements SrRqstService{
 		return list;
 	}
 	
+	
 	@Override
 	public SrRqstAtch getSrRqstAtchBySrRqstAtchNo(String srRqstAtchNo) {
 		SrRqstAtch srRqstAtch = srRqstDao.selectSrRqstAtchBySrRqstAtchNo(srRqstAtchNo);
@@ -140,6 +141,7 @@ public class SrRqstServiceImpl implements SrRqstService{
 	@Override
 	public Sr getSrBySrRqstNo(String SrRqstNo) {
 		Sr sr = srRqstDao.selectSrBySrRqstNo(SrRqstNo);
+
 		return sr;
 	}
 	
@@ -160,6 +162,11 @@ public class SrRqstServiceImpl implements SrRqstService{
 	//sr 정보 입력하기
 	@Override
 	public int writeSr(SrSubmit srSubmit) {
+		//SR PK 지정
+		SrRqst srRqst = srRqstDao.selectSrRqstBySrRqstNo(srSubmit.getSrRqstNo());
+		String sysNo = srRqst.getSysNo();
+		
+		srSubmit.setSrNo(sysNo + "_" + srSubmit.getSrRqstNo());
 		int numOfInsert = srRqstDao.insertSr(srSubmit);
 		return numOfInsert;
 	}

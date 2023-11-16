@@ -271,14 +271,13 @@
 	</select>
 	
 	<!--  담당자홈: sr개발 정보 입력하기 -->
-	<!-- PK는 트리거를 사용해서 null로 지정할  경우 자동으로 정해진 포멧으로 삽입됨 -->
 	<insert id="insertSr" parameterType="SrSubmit">
 		insert into sr (
 		    sr_no, sr_rqst_no, pic_usr_no, sr_cmptn_prnmnt_dt, 
 		    sr_req_bgt, sr_trnsf_inst_no, sr_pri, sr_dvl_conts, sr_trnsf_yn,
 		    sr_reg_dt, sr_mdfcn_dt, sr_vld_yn, sr_task_no
 		) values (
-		    null, #{srRqstNo, jdbcType=VARCHAR}, #{picUsrNo, jdbcType=VARCHAR},
+		    #{srNo, jdbcType=VARCHAR}, #{srRqstNo, jdbcType=VARCHAR}, #{picUsrNo, jdbcType=VARCHAR},
 		    TO_DATE(#{srCmptnPrnmntDt, jdbcType=VARCHAR}, 'yy-MM-dd'), #{srReqBgt},  
 		    #{srTrnsfInstNo, jdbcType=VARCHAR}, #{srPri, jdbcType=VARCHAR}, #{srDvlConts, jdbcType=VARCHAR},
 		    #{srTrnsfYn, jdbcType=VARCHAR}, sysdate, sysdate, 'Y', #{srTaskNo, jdbcType=VARCHAR}

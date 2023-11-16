@@ -277,7 +277,7 @@
 										</div>
 									</div>
 									<sc-toolbar class="style-scope es-spuser-reg" role="toolbar" aria-disabled="false">
-										<sc-label text="개인정보 수집 및 이용에 관한 동의" class="style-scope es-spuser-reg" aria-disabled="false">
+										<sc-label text="개인정보 수집 및 이용에 관한 동의" class="style-scope es-spuser-reg mb-1 p-2" aria-disabled="false">
 											<div class="bullet-container style-scope sc-label">
 												<div class="style-scope sc-label"></div>
 											</div>
@@ -285,7 +285,7 @@
 										</sc-label>
 										<sc-spacer class="style-scope es-spuser-reg" aria-disabled="false"></sc-spacer>
 									</sc-toolbar>
-									<div id="contentDiv" style="border: 1px solid #bcbcbc; width: 100%; height: 200px; overflow: auto;">
+									<div id="contentDiv" class="m-2"style="border: 1px solid #bcbcbc; width: 100%; height: 200px; overflow: auto;">
 									<!-- 개인정보 수집 동의 -->
 									</div>
 									<div class="vspace-5 style-scope es-spuser-reg"></div>
@@ -299,15 +299,10 @@
 								        </sc-label>
 								        <sc-spacer class="style-scope es-spuser-reg" aria-disabled="false">
 								        </sc-spacer>
-								        <button type="submit" id="continue_btn" text="제출" class="btn btn-primary auth-s style-scope es-spuser-reg" role="submit" tabindex="0" aria-disabled="false">
+								        <button type="submit" id="continue_btn" text="제출" class="btn btn-primary auth-s style-scope es-spuser-reg mr-2" style="width: 80px;" role="submit" tabindex="0" aria-disabled="false">
 								        	<div  type="submit" class="button-container style-scope sc-button">
-								        		<div class="style-scope sc-button"></div>
+								        		<div class="style-scope "></div>
 								        	</div> 제출
-								        </button>
-								        <button text="닫기" class="btn btn-secondary style-scope es-spuser-reg" role="button" tabindex="0" aria-disabled="false">
-								        	<div class="button-container style-scope sc-button">
-								        		<div class="style-scope sc-button"></div>
-								        	</div> 닫기
 								        </button>
 								  	</sc-toolbar>
 								  	<div class="vspace-5 style-scope es-spuser-reg"></div>
@@ -329,7 +324,7 @@
 				            						</sc-label>
 				            					</th>
 				            					<td colspan="3" class="style-scope es-spuser-reg">
-			            							<select id="inst-select" class="option custom-select m-3" name="inst" onclick="myInst()">
+			            							<select id="inst-select" class="option custom-select m-3" style="width: 300px;" name="inst" onclick="myInst()">
 														<option value="none">--소속기관--</option>
 														<c:forEach var="inst" items="${instOptions}">
 															<option id="${inst.instNo}" value="${inst.instNo}">${inst.instNm}</option>
@@ -355,7 +350,7 @@
 										  			</sc-label>
 										  		</th>
 										  		<td colspan="3" class="style-scope es-spuser-reg">		
-				            						<select class="option custom-select m-3" onclick="myAuthrt()">
+				            						<select class="option custom-select m-3" style="width: 300px;" onclick="myAuthrt()">
 														<option value="none">--권한--</option>
 														<c:forEach var="usrAuthrt" items="${usrAuthrtOptions}">
 															<option id="${usrAuthrt.usrAuthrtNo}" value="${usrAuthrt.usrAuthrtNo}">${usrAuthrt.usrAuthrtNm}</option>
@@ -614,7 +609,7 @@
 			            						</sc-label>
 			            					</th>
 			            					<td class="style-scope es-spuser-reg">
-			            						<select id="role-select" class="option custom-select m-3" onclick="selectedoption1()">
+			            						<select id="role-select" class="option custom-select m-3" style="width: 300px;" onclick="selectedoption1()">
 													<option value="none">--역할--</option>
 												</select>
 												<input id="submitRole" type="hidden" name="roleNo">
@@ -628,7 +623,7 @@
 			            						</sc-label>
 			            					</th>
 			            					<td class="style-scope es-spuser-reg">
-			            						<select id="ibps-select" class="option custom-select m-3" onclick="selectedoption2()">
+			            						<select id="ibps-select" class="option custom-select m-3" style="width: 300px;" onclick="selectedoption2()">
 													<option value="none">--직위--</option>
 												</select>
 												<input id="submitIbps" type="hidden" name="ibpsNo">

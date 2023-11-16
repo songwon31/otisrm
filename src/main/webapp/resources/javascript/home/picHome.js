@@ -67,6 +67,7 @@ $(document).ready(function() {
 			"color": ""
 		});
 		choiceSrRqstSttsNo = $(this).attr("id");
+		console.log(choiceSrRqstSttsNo);
 		//필터링 된 상품 불러오기
 		loadSRRequests2(1, choiceSrRqstSttsNo);
 	});	
@@ -544,6 +545,10 @@ function showSrRqstBySrRqstNo(choiceSrRqstNo){
         url: "getSrRqstBySrRqstNoForPicHome",
         data: {srRqstNo: choiceSrRqstNo},
         success: function(data) {
+        	
+         	//sr요청 번호에 해당하는 sr 상세 내용
+        	showSrBySrRqstNo(choiceSrRqstNo);
+        	
         	var date = new Date(data.srRqstRegDt);
         	$("#srWriteOrModifyBtn").text("SR정보 등록");
         	//저장버튼(로그인한 회원의 요청만 저장버튼 활성화)
@@ -554,7 +559,7 @@ function showSrRqstBySrRqstNo(choiceSrRqstNo){
         	
         	$("#srRqst-srRqstNo").val(data.srRqstNo);
         	$("#srRqst-UsrNm").val(data.usrNm);
-        	$("#srRqst-inst").val(data.instNm);
+        	$("#srRqst-instNm").val(data.instNm);
         	$("#srRqst-sysNm").val(data.sysNm);
         	$("#srRqst-srTtl").val(data.srTtl);
         	$("#srRqst-srPrps").val(data.srPrps);
@@ -581,6 +586,7 @@ function showSrRqstBySrRqstNo(choiceSrRqstNo){
         	
         	//요청 상태(상태: 요청, 승인요청, 승인)
         	if(data.srRqstSttsNo === "RQST"){
+        		console.log("나실행!");
         		 $("#srRqstStts-select").prop("disabled", false);
         		 $("#srRqstStts-select").val(data.srRqstSttsNo);
         		 //승인대기->승인요청으로변경 
@@ -820,8 +826,7 @@ function showSrRqstBySrRqstNo(choiceSrRqstNo){
         	    $("#srRqst-importantChk").prop("checked", false);
         	}
         	
-        	//sr요청 번호에 해당하는 sr 상세 내용
-        	showSrBySrRqstNo(choiceSrRqstNo);
+       
         },
         error: function() {
           console.log(error);
@@ -843,6 +848,7 @@ function showSrBySrRqstNo(choiceSrRqstNo){
 		success: function(data) {
 			$(".srSchdlChgRqstY").hide();
 			if(data != 0){
+				console.log("앙");
 				$("#srWriteOrModifyBtn").text("SR정보 수정");
 				//sr번호 지정
 				$("#srNo").val(data.srNo);
@@ -865,6 +871,8 @@ function showSrBySrRqstNo(choiceSrRqstNo){
 					$("#srReqBgt").val(data.srReqBgt);//, 안붙인 금액
 					//요청 구분
 					$("#trnsf-srDmndClsf").val(data.srDmndNo);
+					
+					
 				}
 				//업무 구분
 				$("#srTaskNo").val(data.srTaskNo);
@@ -1255,28 +1263,53 @@ function formatDateTime(date) {
     var seconds = date.getSeconds().toString().padStart(2, '0');
     return year + '-' + month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds;
 }
+
 //하단 srDetail
 function setSrDetail(srRqstNo) {
 	 //하단 상세 숨기기
 	 $("#progressCircles").hide();
 	 $("#isTrnsfY").hide();
+	 
+	 $("#progressCircles").show();
+ 	loadProgressInfo(srRqstNo);
 	$.ajax({
 		type: "GET",
 		url: "getSrBySrRqstNoForPicHome",
 		data: {srRqstNo: srRqstNo},
 		success: function(data) { 
-			if(data.srTrnsfYn === "Y"){
-				 $("#isTrnsfY").show();
+			if(data.srTrnsfYn === "Y" || data.srRqstNo != null){
+				$("#isTrnsfY").show();
+				var srRqstNo = data.srRqstNo;
+				$.ajax({
+				    type: "GET",
+				    url: "getSrRqstBySrRqstNoForPicHome",
+				    data: { srRqstNo: srRqstNo },
+				    success: function (data) {
+				        // 받은 데이터를 콘솔에 출력
+				        console.log("Received data:", data);
+				        $("#isTrnsfY-sysNm").text(data.sysNm);
+				        $("#isTrnsfY-usrNm").text(data.usrNm);
+				        // 여기서 데이터를 원하는 방식으로 처리
+				        // 예를 들어, 데이터를 특정 위치에 표시하거나 다른 동적인 작업을 수행할 수 있음
+				    },
+				    error: function (xhr, status, error) {
+				        // 에러가 발생한 경우 적절한 처리
+				        console.error("Error:", error);
+				    }
+				});
+			        	
+				$("#isTrnsfY-srReqBgt").text(data.srReqBgt.toLocaleString('ko-KR'));
 				setSrDetailBottom(data.srNo);
-			}else{
+			}else if(data.srRqst != null){
 			    $("#progressCircles").show();
 			    console.log("이관아님: " + srRqstNo);
-				loadProgressInfo(srRqstNo);
+				
 			}
 		
 		},
 	    error: function() {
-	        console.log(error);
+	    	$("#progressCircles").show();
+	    	loadProgressInfo(srRqstNo);
 	}});	
 }
 
@@ -1284,6 +1317,7 @@ function setSrDetailBottom(srNo) {
 	let requestData = {
         srNo: srNo
     };
+	
 	
 	$.ajax({
 		type: "POST",
@@ -1548,9 +1582,9 @@ function loadProgressInfo(srRqstNo) {
 				}
 				
 				var progressStepStts = $(this).find(".progress-content p").text();
-				console.log("스탭:" + progressStepStts);
+				/*console.log("스탭:" + progressStepStts);
 				console.log("상태명:" + sttsNm);
-				
+				*/
 			    if (progressStepStts === sttsNm) {
 			    	$(this).find(".inner-circle").css("background-color", "#f63b3b");
 			    	$(this).find(".inner-circle").addClass('currentCircle');

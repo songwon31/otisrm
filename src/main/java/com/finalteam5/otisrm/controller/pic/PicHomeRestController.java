@@ -162,7 +162,9 @@ public class PicHomeRestController {
 			return list;
 		//처리항목 목록4: 이관된 sr
 		}else if(item.equals("itemOfTrnsfY")) {
+			log.info("실행");
 			List<SrRqst> list = srRqstService.getToDoItemOfTrnsfY(map);
+			log.info(list.toString());
 			return list;
 		//처리항목 목록5: 개발 반영요청
 		}else if(item.equals("itemOfApplyRqst")) {
@@ -271,7 +273,7 @@ public class PicHomeRestController {
 	
 	//sr에 해당하는 상세정보 불러오기
 	@GetMapping("getSrBySrRqstNoForPicHome")
-	public Sr getSrBySrRqstNo(String srRqstNo, Model model, HttpSession session) {
+	public Sr getSrBySrRqstNo(String srRqstNo, Model model, HttpSession session) throws Exception{
 		Sr sr = srRqstService.getSrBySrRqstNo(srRqstNo);
 		if(sr != null) {			
 			List<SrAtch> list = srRqstService.getSrAtchBySrNo(sr.getSrNo());		

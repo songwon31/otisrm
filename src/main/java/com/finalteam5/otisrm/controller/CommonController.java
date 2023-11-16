@@ -120,6 +120,7 @@ public class CommonController {
 	    
 	    return "common/join/join";
 	}
+	
 	@PostMapping("/join/join")
 	public String submitJoin(Usr usr, Model model) {
 	    JoinResult result = usrService.join(usr);
