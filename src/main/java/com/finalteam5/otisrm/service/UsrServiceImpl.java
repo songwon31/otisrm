@@ -147,6 +147,25 @@ public class UsrServiceImpl implements UsrService{
 		return deptNm;
 	}
 	
+	//계정 정보 유효성 체크
+	@Override
+	public int checkUsrNmAndEml(Usr usr) {
+		int checkmyInfo = usrDao.countByUsrNmAndEml(usr);
+		return checkmyInfo;
+	}
+	
+	//아이디 불러오기
+	@Override
+	public String getMyId(Usr usr) {
+		int isMyInfo = usrDao.countByUsrNmAndEml(usr);
+		if(isMyInfo == 1) {
+			String myId = usrDao.selectMyId(usr);	
+			return myId;
+		}
+		
+		return "fail";
+	}
+	
 	
 	/**
 	 * @author 송원석
@@ -375,5 +394,6 @@ public class UsrServiceImpl implements UsrService{
 		instDetail.setDeptList(usrDao.selectDeptListByInstNo(instNo));
 		return null;
 	}
+	
 
 }

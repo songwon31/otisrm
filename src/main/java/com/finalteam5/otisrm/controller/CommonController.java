@@ -62,6 +62,18 @@ public class CommonController {
 		model.addAttribute("msg", msg);
 		return "common/login";
 	}
+	
+	//아이디 찾기 모달 폼
+	@PostMapping("login/getMyid")
+	@ResponseBody
+	public String getMyId(@RequestParam(name="usrNm") String usrNm, @RequestParam(name="usrEml") String usrEml) {
+		Usr usr = new Usr();
+		usr.setUsrNm(usrNm);
+		usr.setUsrEml(usrEml);
+		String id = usrService.getMyId(usr);
+		return id;
+	}
+	
 		
 	//로그인 요청
 	/*
@@ -177,6 +189,7 @@ public class CommonController {
 		return "header/alerts";
 	}
 	
+
 	//개인정보수정 모달
 	@RequestMapping("/checkPassword")
 	@ResponseBody

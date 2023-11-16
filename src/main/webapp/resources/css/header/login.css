@@ -168,6 +168,26 @@ element.style {
     border: 1px solid #ccc;
     vertical-align: middle;
 }
+/* 결과창 */
+.result-div{
+	width: 536.01px;
+	height: 143.34px;
+	border: 1px solid #ddd;
+	background-color: #fafbfd;
+	padding: 20px;
+	padding-top: 50px;
+}
+
+.resultConts{
+	text-align: center;
+	font-weight: bold;
+	color: #616d7d;
+}
+.resultInfo{
+	text-align: center;
+	font-weight: bold;
+	color: #0b8c56;
+}
 
 @-webkit-keyframes animatezoom {
   from {-webkit-transform: scale(0)} 

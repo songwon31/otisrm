@@ -34,6 +34,10 @@ public interface UsrDao {
 	public int selectNumOfOverlapUsrId(String usrId);			//아이디 중복검사
 	public int insertUsr(Usr usr);								//회원가입
 	
+	//아이디/비밀번호 찾기
+	public int countByUsrNmAndEml(Usr usr);							//회원이름과 이메일에 해당하는 회원
+	public String selectMyId(Usr usr);								//회원이름과 이메일에 해당하는 회원
+	
 	//로그인
 	public Login selectByUsrId(String usrId);
 	public List<UsrStts> selectUsrSttsList();

@@ -53,6 +53,11 @@ public interface UsrService {
 	
 	//로그인 한 회원에 해당하는 업무부서이름
 	public String getDeptNmByDeptNo(String deptNo);
+	
+	//아아디 찾기
+	public int checkUsrNmAndEml(Usr usr);				//회원이름과 이메일에 해당하는 회원
+	public String getMyId(Usr usr);					//회원이름과 이메일에 해당하는 회원
+	
 
 	/**
 	 * @author 송원석

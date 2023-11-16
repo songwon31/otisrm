@@ -54,31 +54,30 @@
 					  <!-- Tab panes -->
 					  <div class="tab-content">
 					    <div id="findId" class="container tab-pane active"><br>
-					    	<form id="findIdForm" >
+					    	<!-- <div class="result-div">
+					    		<div class="resultConts">성유진 회원님의 아이디 입니다.</div>
+					    		<div class="resultInfo">chorong6544</div>
+					    	</div>
+					     -->
+					    	<form id="findIdForm" action="login/getMyid" method="post" >
 						      <table class="find-id-table">
 					          	<tbody>
 						            <tr>
 						                <th scope="row">이름</th>
 						                <td>
-						                    <input class="find-input" type="text" data-err-target="find-id-auth-send-msg__fail-name" style="width: 170px;" data-err-msg="이름을 입력해주세요.">
+						                    <input id="id-usrNm" class="find-input" name="usrNm" type="text" data-err-target="find-id-auth-send-msg__fail-name" style="width: 170px;" data-err-msg="이름을 입력해주세요.">
 						                    <span class="form-err find-id-auth-send-msg__fail find-id-auth-send-msg__fail-name"></span>
 						                </td>
 						            </tr>
 						            <tr>
 						                <th scope="row">등록한 이메일 주소</th>
 						                <td>
-						                    <input class="find-input" id="find-id-phone-tf" type="tel" maxlength="20" data-min-length="8" data-type="number" data-err-target="find-id-auth-send-msg__fail-phone" data-err-msg="휴대폰 번호를 입력하여 주세요.">
+						                    <input id="id-usrEml" class="find-input" id="find-id-phone-tf" type="text" style="width: 170px;" name="usrEml">
 						
-						                    <input type="hidden" id="find-id-by-phone-phoneNumber" name="phoneNumber" value="">
-						                    <button class="btn btn-primary" style="width: 100px; height: 27px; font-size: 12px;" type="button">인증확인</button>
+						                    <button class="btn btn-primary" style="width: 100px; height: 27px; font-size: 12px;" type="button" onclick="findMyId()">인증확인</button>
 						                    <span id="emailErr1" class="errorMsg text-danger d-none small" style="font-family: dotum,sans-serif; font-size: 12px;">이메일을 입력해주세요.</span>
 											<span id="emailErr2" class="errorMsg text-danger d-none small" style="font-family: dotum,sans-serif; font-size: 12px;">이메일 형식으로 입력해주세요.</span>
 											<span id="emailErr3" class="errorMsg text-danger d-none small" style="font-family: dotum,sans-serif; font-size: 12px;">등록된 이메일 정보가 아닙니다.</span>
-						                    <div class="find-id-auth-form" style="display: none;">
-						                        <input class="find-id-auth-tf" type="text" placeholder="인증번호 입력" data-err-target="find-id-auth-send-msg__fail-auth" data-err-msg="인증번호를 입력하여 주세요.">
-						                        <button class="find-id-auth-submit-btn" type="button">확인</button>
-						                        <span class="form-err find-id-auth-send-msg__fail find-id-auth-send-msg__fail-auth"></span>
-						                    </div>
 						                </td>
 						            </tr>
 					              </tbody>
@@ -94,7 +93,7 @@
 						      <table class="find-id-table">
 					          	<tbody>
 						            <tr>
-						                <th scope="row">이름</th>
+						                <th scope="row">아이디</th>
 						                <td>
 						                    <input class="find-input" type="text" data-err-target="find-id-auth-send-msg__fail-name" style="width: 170px;" data-err-msg="이름을 입력해주세요.">
 						                    <span class="form-err find-id-auth-send-msg__fail find-id-auth-send-msg__fail-name"></span>
