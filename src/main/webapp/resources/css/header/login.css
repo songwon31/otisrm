@@ -3,7 +3,7 @@ body {
 	background-color: #edf2f8; 
 }
 
-#title{
+.title{
 	font-size: 20px;
 	font-weight: bold;
 	padding-top: 5px;
@@ -58,7 +58,6 @@ b{
 #eye{
     position: absolute;
     padding-right: 10px;
-    z-index: 100;
     right: 5px; /* 이미지를 우측에 위치시킴 */
     top: 50%; /* 이미지를 수직 가운데 정렬 */
     transform: translateY(-50%); /* 수직 가운데 정렬을 위해 translateY 사용 */
@@ -123,7 +122,7 @@ span.findIdOrPsw {
 }
 
 /* Modal Content/Box */
-.modal-content {
+.id-modal-content {
   background-color: #fefefe;
   margin: 10% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
   border: 1px solid #888;
@@ -135,6 +134,39 @@ span.findIdOrPsw {
 .animate {
   -webkit-animation: animatezoom 0.6s;
   animation: animatezoom 0.6s
+}
+
+/* 아이디 비밀번호 찾기 모달 */
+/* table */
+
+element.style {
+}
+.find-id-table th {
+    width: 160px;
+}
+
+.find-id-table tbody{
+	border: 1px solid #ddd;
+}
+.find-id-table th, .find-password-table th, .find-password-reset-table th {
+    background-color: #eef1f8;
+    text-align: left;
+    white-space: nowrap;
+}
+
+.find-id-table th, .find-password-table th, .find-password-reset-table th, .find-id-table td, .find-password-table td, .find-password-reset-table td {
+    padding: 14px 30px;
+    border-bottom: 1px solid #ddd;
+}
+
+/* input */
+.find-input{
+	width: 170px;
+	height: 27px;
+    padding: 2px 5px;s
+    line-height: 22px;
+    border: 1px solid #ccc;
+    vertical-align: middle;
 }
 
 @-webkit-keyframes animatezoom {
