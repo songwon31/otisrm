@@ -327,7 +327,7 @@
 			            							<select id="inst-select" class="option custom-select m-3" style="width: 300px;" name="inst" onclick="myInst()">
 														<option value="none">--소속기관--</option>
 														<c:forEach var="inst" items="${instOptions}">
-															<option id="${inst.instNo}" value="${inst.instNo}">${inst.instNm}</option>
+															<option id="${inst.instNo}" class="${inst.outsrcYn}" value="${inst.instNo}">${inst.instNm}</option>
 														</c:forEach>
 													</select>
 													<input id="submitInst" type="hidden" name="instNo">
@@ -350,7 +350,7 @@
 										  			</sc-label>
 										  		</th>
 										  		<td colspan="3" class="style-scope es-spuser-reg">		
-				            						<select class="option custom-select m-3" style="width: 300px;" onclick="myAuthrt()">
+				            						<select id="usrAthrt-select" class="option custom-select m-3" style="width: 300px;" onclick="myAuthrt()">
 														<option value="none">--권한--</option>
 														<c:forEach var="usrAuthrt" items="${usrAuthrtOptions}">
 															<option id="${usrAuthrt.usrAuthrtNo}" value="${usrAuthrt.usrAuthrtNo}">${usrAuthrt.usrAuthrtNm}</option>

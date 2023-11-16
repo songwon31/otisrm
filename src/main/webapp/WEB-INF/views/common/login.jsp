@@ -54,12 +54,8 @@
 					  <!-- Tab panes -->
 					  <div class="tab-content">
 					    <div id="findId" class="container tab-pane active"><br>
-					    	<!-- <div class="result-div">
-					    		<div class="resultConts">성유진 회원님의 아이디 입니다.</div>
-					    		<div class="resultInfo">chorong6544</div>
-					    	</div>
-					     -->
 					    	<form id="findIdForm" action="login/getMyid" method="post" >
+
 						      <table class="find-id-table">
 					          	<tbody>
 						            <tr>

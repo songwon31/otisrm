@@ -49,12 +49,26 @@ $(document).ready(function(){
 });
 
 
+
 //소속기관 선택
-function myInst(){
+function myInst(){	
 	//선택된 옵션 id
 	var selectedOptionId = $(event.target).find('option:selected').attr('id');
 	$("#submitInst").val(selectedOptionId);
 	console.log($("#submitInst").val());
+	$("#usrAthrt-select").prop("disabled", false);
+	
+	if($("#submitInst").val() === "VSMG"){
+		$("#usrAthrt-select").val("CUSTOMER");
+		$("#usrAthrt-select").prop("disabled", true);
+	}else if($("#submitInst").val() === "FRSUP" || $("#submitInst").val() === "EXOSYS" || $("#submitInst").val() === "TPSOL"){
+		$("#usrAthrt-select").val("DEVELOPER");
+		$("#usrAthrt-select").prop("disabled", true);
+	}else{
+		$("#usrAthrt-select option[value='CUSTOMER']").css("display", "none");
+		$("#usrAthrt-select option[value='DEVELOPER']").css("display", "none");
+	}
+	
 	//선택된 옵션 내용
 	var selectedOptionNm = $(event.target).val();
 	//선택된 옵션 내용 모달에 표시
@@ -167,6 +181,7 @@ function showRoles(selectedOptionId) {
 		}
 	});
 }
+
 //소속기관에 해당하는 직위
 function showIbps(selectedOptionId) {
 	$.ajax({

@@ -57,7 +57,9 @@ public class UsrServiceImpl implements UsrService{
 		List<Inst> list = usrDao.selectInstList();
 		for(int i=0; i < list.size(); i++) {
 			if(list.get(i).getOutsrcYn().equals("Y")) {
-				list.get(i).setInstNm(list.get(i).getInstNm() + "(외부)");
+				list.get(i).setInstNm(list.get(i).getInstNm() + "(협력사)");
+			}else if(list.get(i).getOutsrcYn().equals("C")) {
+				list.get(i).setInstNm(list.get(i).getInstNm() + "(고객사)");
 			}
 		}
 		return list;
