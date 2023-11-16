@@ -43,8 +43,8 @@
    
    
    <body>
-	<div id="bodyDiv" class="shadow">
-	   	<nav id="header-bar" class="shadow navbar-expand navbar-light">
+	<div id="bodyDiv">
+	   	<nav id="header-bar" class="navbar-expand navbar-light">
 		    <div id="logo">		    	
 				<img id="logo-img" src="${pageContext.request.contextPath}/resources/images/logo2.png" alt=""/>
 				<span id="logo-gap"></span>	    
@@ -54,7 +54,7 @@
 		    <!-- Topbar Navbar -->
 		    <div id="header-list">
 		        <!-- Nav Item - Alerts -->
-		        <div class="dropdown">
+		        <%-- <div class="dropdown">
 		            <a class="dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
 		            	style="padding:0.9rem 0rem; font-size:2rem; 0rem; display:flex; flex-direction:row; align-items:center;">
 		                <i class="fas fa-bell fa-fw"></i>
@@ -106,7 +106,7 @@
 		            </div>
 		        </div>
 		
-				<div style="width:3rem;"></div>
+				<div style="width:3rem;"></div> --%>
 		
 		        <!-- Nav Item - User Information -->
 		        <div class="dropdown" style="height:4rem;">
@@ -118,7 +118,7 @@
 		            </a>
 		            <!-- Dropdown - User Information -->
 		            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown"
-		            	style="font-size:2rem;">
+		            	style="font-size:1.7rem;">
 		                <a class="dropdown-item" href="#">
 		                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
 		                    Profile
