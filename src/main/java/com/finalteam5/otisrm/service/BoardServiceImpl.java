@@ -115,6 +115,27 @@ public class BoardServiceImpl implements BoardService{
 		List<Inq> list = boardDao.selectInqListByPage(map);
 		return list;
 	}
+	
+	//문의 목록에 해당하는 상세 정보 불러오기
+	@Override
+	public Inq getInqByInqNo(String inqNo) {
+		Inq inq = boardDao.selectInqByInqNo(inqNo);
+		return inq;
+	}
+	
+	//문의 상세정보에 해당하는 첨부파일 불러오기
+	@Override
+	public List<InqAtch> getInqAtchByInqNo(String inqNo) {
+		List<InqAtch> list = boardDao.selectInqAtchByInqNo(inqNo);
+		return list;
+	}
+	
+	//문의 첨부파일 번호에 해당하는 첨부파일 가져오기(파일 다운로드를 위함)
+	@Override
+	public InqAtch getInqAtchByInqAtchNo(String inqAtchNo) {
+		InqAtch inqAtch = boardDao.selectInqAtchByInqAtchNo(inqAtchNo);
+		return inqAtch;
+	}
 
 	
 }

@@ -55,6 +55,15 @@ public interface BoardService {
     //문의게시판 목록 불러오기: 페이지에 해당하는 문의 목록 불러오기
   	public List<Inq> getInqListByPage(Map<String, Object> map);
   	
+    //문의 목록에 해당하는 상세 정보 불러오기
+  	public Inq getInqByInqNo(String inqNo);
+  	
+  	//문의 상세정보에 해당하는 첨부파일 불러오기
+  	public List<InqAtch> getInqAtchByInqNo(String inqNo); 
+  	
+  	//문의 첨부파일 번호에 해당하는 첨부파일 가져오기(파일 다운로드를 위함)
+  	public InqAtch getInqAtchByInqAtchNo(String inqAtchNo);
+  	
     
 	
 }

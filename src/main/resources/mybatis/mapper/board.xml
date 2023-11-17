@@ -150,7 +150,7 @@
 		</if>
 	</select>
 	
-	<!-- 공지사항 목록 불러오기 -->
+	<!-- 문의사항 목록 불러오기 -->
 	<select id="selectInqListByPage" parameterType="Map" resultType="Inq">
 		select rnum, inq_no, usr_no, inq_ttl, inq_conts, inq_wrt_dt,
 		inq_mdfcn_dt, inq_prvt_yn, inq_ans, inq_ans_yn, usr_nm
@@ -182,6 +182,24 @@
 			 )
 			 where rnum >= #{startRowNo}
 		]]>
+	</select>
+	
+	<!-- 문의 상세 불러오기-->
+	<select id="selectInqByInqNo" parameterType="String" resultType="Inq">
+		select i.*, u.usr_nm
+		from inq i
+	    join usr u on u.usr_no = i.usr_no
+		where i.inq_no=#{inqNo}	
+	</select>
+	
+	<!-- 문의 상세에 해당하는 첨부파일 불러오기 -->
+	<select id="selectInqAtchByInqNo" parameterType="String" resultType="InqAtch" >
+		select * from inq_atch where inq_no = #{inqNo}
+	</select>
+	
+	<!-- 문의 첨부파일 번호에 해당하는 첨부파일 불러오기 -->
+	<select id="selectInqAtchByInqAtchNo" parameterType="String" resultType="InqAtch">
+		select * from inq_atch where inq_atch_no = #{inqAtchNo}
 	</select>
 	
 </mapper>

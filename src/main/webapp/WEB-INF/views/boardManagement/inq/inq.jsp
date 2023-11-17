@@ -14,7 +14,8 @@
 		</div>
 	</div>
 	<div class="contentTop shadow" >
-		<input type="hidden" id="loginUsr" value="${usr.usrNo}">
+		<input type="hidden" id="loginUsr2" value="${usr.usrNo}">
+		<input type="hidden" id="loginUsrAuthrt2" value="${usr.usrAuthrtNo}">
 		<form id="searchForm" method="post" action="javascript:loadInqs(${inqPager.pageNo})" onsubmit="onsubmitOfSearchForm()">
 			<div class="d-flex" style="height:2rem;">
 				<!-- 검색 조건 -->
@@ -157,7 +158,7 @@
       </div>
       <div class="modal-footer py-1">
         <button type="submit" class="btn-1">저장</button>
-        <button type="button" class="close btn-3" data-dismiss="modal">닫기</button>
+        <button id="btn-close" type="button" class="close" data-dismiss="modal">닫기</button>
       </div>
     </form>
    </div>
@@ -165,18 +166,25 @@
  </div>
 </div>
 
-<!-- 공지목록에 해당하는 상세모달 -->
-<div id="addNtc" class="modal" data-backdrop="static">
+<!-- 문의에 해당하는 상세모달 -->
+<div id="answelInq" class="modal" data-backdrop="static">
   <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h6 class="modal-title">문의</h6>
-        <i class="material-icons close-icon" data-dismiss="modal" style="cursor: pointer;">close</i>
+        <h6 class="modal-title">문의 상세</h6>
+        <i class="material-icons close-icon close" data-dismiss="modal" style="cursor: pointer;">close</i>
       </div>
-      <div id="writeInqForm" class="modal-body">
-      	<form id="writeInq" action="writeInq" method="post" enctype="multipart/form-data">
+      <div id="answerInq" class="modal-body">
+      	<form id="modifyInq" action="modifyInq" method="post" enctype="multipart/form-data">
       		<!-- SR요청정보 -->
-      		<h6 class="modal-sub-title">문의사항 등록</h6>
+      		<div class="d-flex">      		
+	      		<div style="margin-right: 608px;">      		
+	      			<h6 class="modal-sub-title">문의사항 수정</h6>
+	      		</div>
+	      		<div class="mb-2">      		
+	      			<button id="modifySaveBtn" type="submit" class="btn-1">문의수정</button>
+	      		</div>
+      		</div>
       		<div class="card p-3 mb-4">
 		      	<div>
 		        	<div class="d-flex">
@@ -185,20 +193,85 @@
 				            	<label for="writer" class="form-label">등록자</label>
 				          	</div>
 				 			<div class="w-60">
-					            <input type="text" class="form-control" id="writer" value="${usr.usrNm}" disabled>
+					            <input type="text" class="form-control" id="getInq-usrNm" value="" disabled>
 				 			</div>
-				            <input type="hidden" id="usrNo" name="usrNo" value="${usr.usrNo}">
+				            <input type="hidden" id="getInq-usrNo" name="usrNo" value="">
+				            <input type="hidden" id="" name="inqNo" value="${inqOfModiFy}">
 				        </div>
 				        <div class="d-flex w-50 pt-2">
 				          	<div class="w-30">			          	
-				            	<label for="writeDate" class="form-label">등록일</label>
+				            	<label for="writeDate" class="form-label" >등록일</label>
 				          	</div>
 				 			<div class="w-60">
-					            <input type="date" class="form-control" id="writeDate" disabled>
+					            <input type="date" class="form-control" id="getInq-inqWrtDt" name="inqWrtDt" disabled>
 				 			</div>
 				        </div>
 					</div>
 				<div>
+		        <div class="d-flex w-100 pt-2">
+			        <div style="width: 113.9px;">
+			          <label for="inqTtl" class="form-label">제목</label>
+			        </div>
+			        <div style="width: 605px;">
+			          <input type="text" class="form-control" id="getInq-iqnTtl" name="inqTtl" value="">
+			        </div>
+			    </div>
+		        <div class="d-flex w-100 pt-2">
+			        <div style="width: 113.9px;">
+			          <label for="ntcConts" class="form-label">내용</label>
+			        </div>
+			        <div style="width: 605px;">
+			          <textarea class="form-control" id="getInq-inqConts" name="inqConts"></textarea>
+			        </div>
+			    </div>
+		        <div class="d-flex w-100 pt-2">
+			        <div style="width: 113.9px;">
+			          <label for="file" class="form-label modal-input">첨부파일</label>
+			        </div>
+			        <div style="width: 560px;">
+			        	 <input id="file" type="file" name="file" multiple>
+			        </div>
+			        <div class="d-flex">
+			        	<div>
+			        		<input id="prvnChk2" type="checkbox" onclick="isPrvnChecked2()">			        	
+			        	</div>
+			        	<div class="mr-2 mb-1">비밀글</div>
+			        </div>
+			        <input id="inqPrvtYn2" type="hidden" name="inqPrvtYn" value="N">
+			        <div id="showInqAtch">
+			        <!-- 첨부파일 -->
+			        </div>
+			    </div>
+			</div>
+      	</div>
+      </div>
+    </form>
+    
+    <!-- 문의 답변 등록 폼 -->
+    <form>
+      <h6 class="modal-sub-title">문의답변</h6>
+      <div class="card p-3 mb-4">
+	  	<div>
+	       <div class="d-flex">
+		        <div class="d-flex w-50 pt-2">
+		          	<div class="w-30">			          	
+		            	<label for="writer" class="form-label">등록자</label>
+		          	</div>
+		 			<div class="w-60">
+			            <input type="text" class="form-control" id="writer" value="${usr.usrNm}" disabled>
+		 			</div>
+		            <input type="hidden" id="usrNo" name="usrNo" value="${usr.usrNo}">
+		        </div>
+		        <div class="d-flex w-50 pt-2">
+		          	<div class="w-30">			          	
+		            	<label for="writeDate" class="form-label">등록일</label>
+		          	</div>
+		 			<div class="w-60">
+			            <input type="date" class="form-control" id="writeDate" disabled>
+		 			</div>
+		        </div>
+			</div>
+			<div>
 		        <div class="d-flex w-100 pt-2">
 			        <div style="width: 113.9px;">
 			          <label for="ntcTtl" class="form-label">제목</label>
@@ -222,23 +295,17 @@
 			        <div style="width: 560px;">
 			        	 <input id="file" type="file" name="file" multiple>
 			        </div>
-			        <div class="d-flex">
-			        	<div>
-			        		<input id="prvnChk" type="checkbox" onclick="isPrvnChecked()">			        	
-			        	</div>
-			        	<div class="mr-2 mb-1">비밀글</div>
-			        </div>
-			        <input id="inqPrvtYn" type="hidden" name="inqPrvtYn" value="N">
 			    </div>
 			</div>
       	</div>
       </div>
       <div class="modal-footer py-1">
-        <button type="submit" class="btn-1">저장</button>
-        <button type="button" class="close btn-3" data-dismiss="modal">닫기</button>
+        <button type="submit" class="btn-1">답변등록</button>
+        <button id="btn-3 " type="button" class="close" data-dismiss="modal">닫기</button>
       </div>
     </form>
-   </div>
+  </div>
+
 
    
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>

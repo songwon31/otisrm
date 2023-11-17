@@ -220,7 +220,7 @@
 	background-color:#4177bf; 
 }
 /* 회색버튼 */
-.btn-3 {
+#btn-3 {
 	border: none;
 	font-size:1.3rem;
 	color: #f3ffff;
@@ -229,7 +229,7 @@
 	height: 2.8rem;
 	width: 76px;
 }
-.btn-3:active {
+#btn-3:active {
 	background-color:#7c7c7c; 
 }
 /* 검정버튼 작은버전 */

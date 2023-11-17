@@ -105,7 +105,6 @@ function loadInqs(pageNo) {
 	  html += '    </p>';
 	  html += '  </td>';
 	  html += '</tr>';
-      console.log(data);
       if (data < 1) {
         html += '<tr style="background-color: white;">';
         html += '  <td colspan="6">';
@@ -119,36 +118,21 @@ function loadInqs(pageNo) {
           id = item.inqNo
           //비밀글 일때
           if(item.inqPrvtYn == "Y"){
+        	  console.log( $("loginUsrAuthrt2").val());
         	  //로그인한 회원의 비밀글 일때
-        	  if(item.usrNo == $("#loginUsr").val()){        		  
+        	  if(item.usrNo == $("#loginUsr2").val()|| $("loginUsrAuthrt2").val() == "SYS_MANAGER"){        		  
         		  html += '<tr onclick="toggleTr('+ item.inqNo +')" class="data-tr" style="background-color: white;">'; // 일반 행 스타일 적용
         		  html += '  <td><i style="font-size: 2.0rem; color: #5d6e82;" class="material-icons">lock</i></td>';
         		  html += '  <td class="truncate-text">' + item.inqTtl + '</td>';
         		  html += '  <td class="truncate-text">' + item.usrNm + '</td>';
         		  html += '  <td>' + formattedDate + '</td>';
         		  html += '  <td>' + item.inqAnsYn + '</td>';
-        		  html += '  <td><button type="button" id="showinqDetailBtn" class="btn-2" data-toggle="modal" data-target="#getNtcByNtcNo" onclick="showInqByNtcNo(\'' + item.inqNo + '\')">상세보기</button></td>';
+        		  html += '  <td><button type="button" id="showinqDetailBtn" class="btn-2" data-toggle="modal" data-target="#answelInq" onclick="showInqDtail(\'' + item.inqNo + '\')">상세보기</button></td>';
         		  html += '</tr>';
-        		  html += '<tr id="'+ item.inqNo +'" class="inqAnsTr hidden">';
-        		  html += '  <td colspan="6" style="background-color: #e9ecef;">';
-        		  html += '    <p class="t2_nonMessage">아직 해당 문의글에 대한 답변이 달리지 않았습니다.</p>';
-        		  html += '  </td>';
-        		  html += '</tr>';
-        		  if(item.inqAns === null){        	  
-        			  html += '<tr id="'+ item.inqNo +'" class="inqAnsTr hidden">';
-        			  html += '  <td colspan="6" style="background-color: #e9ecef;">';
-        			  html += '    <p class="t2_nonMessage">아직 해당 문의글에 대한 답변이 달리지 않았습니다.</p>';
-        			  html += '  </td>';
-        			  html += '</tr>';
-        		  }else{
-        			  html += '<tr class="inqAnsTr hidden">';
-        			  html += '  <td colspan="6" style="background-color: #e9ecef;">';
-        			  html += '    <p class="t2_nonMessage">' + item.inqAns + '</p>';
-        			  html += '  </td>';
-        			  html += '</tr>';
-        		  }
+        		
+ 
         	  //로그인한 회원의 비밀글이 아닐 때
-        	  }else if(item.usrNo !== $("#loginUsr").val()){
+        	  }else if(item.usrNo !== $("#loginUsr2").val()){
         		  html += '<tr onclick="toggleTr('+ item.inqNo +')" class="data-tr" style="background-color: white;">'; // 일반 행 스타일 적용
         		  html += '  <td><i style="font-size: 2.0rem; color: #5d6e82;" class="material-icons">lock</i></td>';
         		  html += '  <td class="truncate-text">' + item.inqTtl + '</td>';
@@ -165,26 +149,9 @@ function loadInqs(pageNo) {
                   html += '  <td class="truncate-text">' + item.usrNm + '</td>';
                   html += '  <td>' + formattedDate + '</td>';
                   html += '  <td>' + item.inqAnsYn + '</td>';
-                  html += '  <td><button type="button" id="showinqDetailBtn" class="btn-2" data-toggle="modal" data-target="#getNtcByNtcNo" onclick="showInqByNtcNo(\'' + item.inqNo + '\')">상세보기</button></td>';
+                  html += '  <td><button type="button" id="showinqDetailBtn" class="btn-2" data-toggle="modal" data-target="#answelInq" onclick="showInqDtail(\'' + item.inqNo + '\')">상세보기</button></td>';
                   html += '</tr>';
-                  html += '<tr id="'+ item.inqNo +'" class="inqAnsTr hidden">';
-            	  html += '  <td colspan="6" style="background-color: #e9ecef;">';
-            	  html += '    <p class="t2_nonMessage">아직 해당 문의글에 대한 답변이 달리지 않았습니다.</p>';
-            	  html += '  </td>';
-            	  html += '</tr>';
-                  if(item.inqAns === null){        	  
-                	  html += '<tr id="'+ item.inqNo +'" class="inqAnsTr hidden">';
-                	  html += '  <td colspan="6" style="background-color: #e9ecef;">';
-                	  html += '    <p class="t2_nonMessage">아직 해당 문의글에 대한 답변이 달리지 않았습니다.</p>';
-                	  html += '  </td>';
-                	  html += '</tr>';
-                  }else{
-                	  html += '<tr class="inqAnsTr hidden">';
-                	  html += '  <td colspan="6" style="background-color: #e9ecef;">';
-                	  html += '    <p class="t2_nonMessage">' + item.inqAns + '</p>';
-                	  html += '  </td>';
-                	  html += '</tr>'; 
-        	  }
+              
           }
         });
       }
@@ -335,7 +302,7 @@ function parseDateStringToDateFormat(dateString) {
   return date;
 }
 
-//**공지 등록하기
+//**문의 등록하기
 function submitInq(){
 	var form = $("#writeInq")[0];
 	var formData = new FormData(form); // 폼 엘리먼트를 선택하고, [0]을 사용하여 DOM 요소로 변환
@@ -363,7 +330,7 @@ function submitInq(){
 	});
 }
 
-//공지 등록 폼에  체크여부
+//문의 등록 폼에  체크여부
 function isPrvnChecked(){
 	var isChecked = $("#prvnChk").prop("checked");
 	if(isChecked === true){
@@ -372,81 +339,98 @@ function isPrvnChecked(){
 		$("#inqPrvtYn").val("N");
 	}
 }
+function isPrvnChecked2(){
+	var isChecked = $("#prvnChk2").prop("checked");
+	if(isChecked === true){
+		$("#inqPrvtYn2").val("Y");
+	}else{
+		$("#inqPrvtYn2").val("N");
+	}
+}
 
-//** 공지목록에 해당하는 공지 상세 가져오기(모달)
-function showNtcByNtcNo(choiceNtcNo){
+//** 문의목록에 해당하는 공지 상세 가져오기(모달)
+function showInqDtail(choiceInqNo){
 	$.ajax({
 		type: "GET",
-        url: "getNtcByNtcNo",
-        data: {ntcNo: choiceNtcNo},
+        url: "getInqByInqNo",
+        data: {inqNo: choiceInqNo},
         success: function(data) {
-        	$("#showSrRqstAtch").hide();
-        	var date = new Date(data.ntcWrtDt);
+        	console.log("문의상세: " + data.toString());
+        	$("#showInqAtch").hide();
+        	var date = new Date(data.inqWrtDt);
         	
         	//저장버튼(로그인한 회원의 요청만 저장버튼 활성화)
-        	var loggedInUsrNo= $("#loginUsr").val();// 로그인한 회원 번호 가져오기 
-        	var saveButton = $("#saveButton");
-        	console.log(loggedInUsrNo);
+        	var loggedInUsrNo= $("#loginUsr2").val();// 로그인한 회원 번호 가져오기 
+        	var modifySaveBtn = $("#modifySaveBtn");
+        	console.log("실행: " + $("#loginUsr2").val());
         	// 로그인한 사용자와 문의을 등록한 회원을 비교하여 버튼 활성화/비활성화
-        	if (data.srReqstrNo === loggedInUsrNo) {
+        	if (data.usrNo === loggedInUsrNo) {
         		console.log("내요청");
-        		saveButton.prop("disabled", false); // 버튼을 활성화
-        		saveButton.css("opacity", 1); // 버튼을 완전 불투명으로 설정
+        		modifySaveBtn.prop("disabled", false); // 버튼을 활성화
+        		modifySaveBtn.css("opacity", 1); // 버튼을 완전 불투명으로 설정
         	} else{
         		console.log("내요청 아님");
-        		saveButton.prop("disabled", true); // 버튼을 비활성화
-        		saveButton.css("opacity", 0.5); // 버튼을 반투명으로 설정 (예시로 0.5 사용)
+        		modifySaveBtn.prop("disabled", true); // 버튼을 비활성화
+        		modifySaveBtn.css("opacity", 0.5); // 버튼을 반투명으로 설정 (예시로 0.5 사용)
         	}
         	var formattedDate = $.datepicker.formatDate("yy-mm-dd", date);
-        	console.log(formattedDate);
-        	$("#ntc-usrNo").val(data.usrNo);
-        	$("#ntc-usrNm").val(data.usrNm);
-        	$("#ntc-ntcTtl").val(data.ntcTtl);
-        	$("#ntc-ntcConts").val(data.ntcConts);
-        	$("#ntc-ntcWrtDt").val(formattedDate);
-        	$("#ntcInqCnt").html(data.ntcInqCnt);
+        	console.log("유저번호1: " + data.usrNo);
+        	console.log("유저번호2: " + data.usrNm);
+        	console.log("유저번호3: " + data.inqTtl);
+        	console.log("유저번호4: " + data.inqConts);
+        	console.log("유저번호5: " + formattedDate);
+        	$("#getInq-usrNo").val(data.usrNo);
+        	console.log("나: " + data.usrNo);
+        	$("#getInq-usrNm").val(data.usrNm);
+        	$("#getInq-iqnTtl").val(data.inqTtl);
+        	$("#getInq-inqConts").val(data.inqConts);
+        	$("#getInq-inqWrtDt").val(formattedDate);
+       
         	//첨부파일
-        	if (data.ntcAtchList && typeof data.ntcAtchList === "object") {
+        	if (data.inqAtchList && typeof data.inqAtchList === "object") {
         	    // data.srRqstAtchList는 객체일 때
-        	    const keys = Object.keys(data.ntcAtchList);
+        	    const keys = Object.keys(data.inqAtchList);
         	    if (keys.length !== 0) {
         	        let html = "";
         	        for (const key of keys) {
-        	            const ntcAtch = data.ntcAtchList[key];
-        	            console.log(ntcAtch);
-        	            if (ntcAtch && ntcAtch.ntcNo === data.ntcNo) {
-        	                $("#showNtcAtch").show();
+        	            const inqAtch = data.inqAtchList[key];
+        	            console.log(inqAtch);
+        	            if (inqAtch && inqAtch.inqNo === data.inqNo) {
+        	                $("#showInqAtch").show();
         	                console.log("같음");
-        	                var size = bytesToKB(ntcAtch.ntcAtchSize);
-        	                html += '<a href="filedownloadOfNtc?ntcAtchNo='+ ntcAtch.ntcAtchNo +'" class="d-flex srRqstAtchWrap">';
+        	                var size = bytesToKB(inqAtch.inqAtchSize);
+        	                html += '<a href="filedownloadOfInq?inqAtchNo='+ inqAtch.inqAtchNo +'" class="d-flex srRqstAtchWrap">';
         	                html += '    <div>';
         	                html += '    	<i class="material-icons atch-ic">download</i>';
         	                html += '    </div>';
-        	                html += '    <div id="' + ntcAtch.ntcAtchNo + '" class="srRqstAtch p-1">' + ntcAtch.ntcAtchNm + ' (' + size + 'KB)</div>';
+        	                html += '    <div id="' + inqAtch.inqAtchNo + '" class="srRqstAtch p-1">' + inqAtch.inqAtchNm + ' (' + size + 'KB)</div>';
         	                html += '</a>';
         	            }
         	        }
-        	        $("#showNtcAtch").html(html);
+        	        $("#showInqAtch").html(html);
         	    } else {
         	        // srRqstAtchList가 객체지만 아무 항목도 없을 때
-        	        $("#showNtcAtch").hide();
+        	        $("#showInqAtch").hide();
         	    }
         	} else {
         	    // srRqstAtchList가 객체가 아닐 때
-        	    $("#showNtcAtch").hide();
+        	    $("#showInqAtch").hide();
         	}
-        	if (data.ntcEmrgYn === "Y") {
-        	    $("#ntc-importantChk").prop("checked", true);
+        	if (data.inqPrvtYn2 === "Y") {
+        	    $("#prvnCh2k").prop("checked", true);
         	} else {
-        	    $("#ntc-importantChk").prop("checked", false);
+        	    $("#prvnChk2").prop("checked", false);
         	}
-	    
         	
         },
         error: function() {
           console.log(error);
         }
     });
+}
+
+function modalClose(){
+	$("#answerInq").modal("hide");
 }
 
 //a태그 클릭시 폼 제출 막기
