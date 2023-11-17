@@ -166,17 +166,17 @@
 </div>
 
 <!-- 공지목록에 해당하는 상세모달 -->
-<div id="getNtcByNtcNo" class="modal" data-backdrop="static">
+<div id="addNtc" class="modal" data-backdrop="static">
   <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h6 class="modal-title">문의작성</h6>
+        <h6 class="modal-title">문의</h6>
         <i class="material-icons close-icon" data-dismiss="modal" style="cursor: pointer;">close</i>
       </div>
-      <div id="writeNtcForm" class="modal-body">
-      	<form id="modifyNtc" action="modifyNtc" method="post" enctype="multipart/form-data">
+      <div id="writeInqForm" class="modal-body">
+      	<form id="writeInq" action="writeInq" method="post" enctype="multipart/form-data">
       		<!-- SR요청정보 -->
-      		<h6 class="modal-sub-title">상세내용</h6>
+      		<h6 class="modal-sub-title">문의사항 등록</h6>
       		<div class="card p-3 mb-4">
 		      	<div>
 		        	<div class="d-flex">
@@ -185,17 +185,16 @@
 				            	<label for="writer" class="form-label">등록자</label>
 				          	</div>
 				 			<div class="w-60">
-					            <input type="text" class="form-control" id="ntc-usrNm" value="" disabled>
-					            <input type="hidden" class="form-control" id="ntc-usrNo" value="">
+					            <input type="text" class="form-control" id="writer" value="${usr.usrNm}" disabled>
 				 			</div>
-				            <input type="hidden" id="loginUsr" name="usrNo" value="${usr.usrNo}">
+				            <input type="hidden" id="usrNo" name="usrNo" value="${usr.usrNo}">
 				        </div>
 				        <div class="d-flex w-50 pt-2">
 				          	<div class="w-30">			          	
 				            	<label for="writeDate" class="form-label">등록일</label>
 				          	</div>
 				 			<div class="w-60">
-					            <input type="text" class="form-control" id="ntc-ntcWrtDt" disabled>
+					            <input type="date" class="form-control" id="writeDate" disabled>
 				 			</div>
 				        </div>
 					</div>
@@ -205,7 +204,7 @@
 			          <label for="ntcTtl" class="form-label">제목</label>
 			        </div>
 			        <div style="width: 605px;">
-			          <input type="text" class="form-control" id="inq-inqTtl" name="inqTtl">
+			          <input type="text" class="form-control" id="inqTtl" name="inqTtl">
 			        </div>
 			    </div>
 		        <div class="d-flex w-100 pt-2">
@@ -213,7 +212,7 @@
 			          <label for="ntcConts" class="form-label">내용</label>
 			        </div>
 			        <div style="width: 605px;">
-			          <textarea class="form-control" id="inq-inqConts" name="inqConts" style="height: 50rem;"></textarea>
+			          <textarea class="form-control" id="inqConts" name="inqConts" maxlength="5"></textarea>
 			        </div>
 			    </div>
 		        <div class="d-flex w-100 pt-2">
@@ -223,27 +222,23 @@
 			        <div style="width: 560px;">
 			        	 <input id="file" type="file" name="file" multiple>
 			        </div>
-			        <div>
-			        	<input id="ntc-importantChk" class="pb-1" type="checkbox" onclick="isImportendChecked2()"><span class="mb-1">비밀글</span>
+			        <div class="d-flex">
+			        	<div>
+			        		<input id="prvnChk" type="checkbox" onclick="isPrvnChecked()">			        	
+			        	</div>
+			        	<div class="mr-2 mb-1">비밀글</div>
 			        </div>
-			        <input id="inqEmrgYn" type="hidden" name="inqEmrgYn" value="N">
-			    </div>
-			    <div class="d-flex w-100 pt-2">
-			    	<div style="width: 113.9px;"></div>
-			    	<div id="showInqAtch">
-			    	</div>
+			        <input id="inqPrvtYn" type="hidden" name="inqPrvtYn" value="N">
 			    </div>
 			</div>
       	</div>
       </div>
-	  <div class="mr-3 pb-4 d-flex justify-content-end">
-       	<span style="font-size: 1.3rem;">조회수:</span> <span id="ntcInqCnt" class="ml-2" style="font-size: 1.3rem; font-weight: bold;">0</span>
-   	  </div>
       <div class="modal-footer py-1">
         <button type="submit" class="btn-1">저장</button>
-        <button type="button" class="btn-3" data-dismiss="modal">닫기</button>
+        <button type="button" class="close btn-3" data-dismiss="modal">닫기</button>
       </div>
     </form>
    </div>
+
    
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
