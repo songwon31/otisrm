@@ -74,15 +74,22 @@ public class CommonController {
 		return id;
 	}
 	
-	//아이디 찾기 모달 폼
+	//비밀번호 찾기 모달 폼 - 계정 유효성
 	@PostMapping("login/getUsrNoforChgPswd")
 	@ResponseBody
-	public String getUsrNoforChgPswd(@RequestParam(name="usrNm") String usrNm, @RequestParam(name="usrEml") String usrEml) {
+	public String getUsrNoforChgPswd(@RequestParam(name="usrId") String usrId, @RequestParam(name="usrEml") String usrEml) {
 		Usr usr = new Usr();
-		usr.setUsrNm(usrNm);
+		usr.setUsrId(usrId);
 		usr.setUsrEml(usrEml);
 		String usrNo = usrService.getUsrNoforChgPswd(usr);
 		return usrNo;
+	}
+	
+	//비밀번호 찾기
+	@RequestMapping("login/editUsrPasswordForFindId")
+	@ResponseBody
+	public int editUsrPassword(@RequestParam(name="usrNo") String usrNo, @RequestParam(name="usrPswd") String usrPswd) {
+		return usrService.editUsrPassword(usrNo, usrPswd);
 	}
 	
 		

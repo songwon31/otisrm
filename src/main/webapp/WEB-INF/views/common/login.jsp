@@ -62,13 +62,12 @@
 						                <th scope="row">이름</th>
 						                <td>
 						                    <input id="id-usrNm" class="find-input" name="usrNm" type="text" data-err-target="find-id-auth-send-msg__fail-name" style="width: 170px;" data-err-msg="이름을 입력해주세요.">
-						                    <span class="form-err find-id-auth-send-msg__fail find-id-auth-send-msg__fail-name"></span>
 						                </td>
 						            </tr>
 						            <tr>
 						                <th scope="row">등록한 이메일 주소</th>
 						                <td>
-						                    <input id="id-usrEml" class="find-input" id="find-id-phone-tf" type="text" style="width: 170px;" name="usrEml">
+						                    <input id="id-usrEml" class="usrEml find-input" id="find-id-phone-tf" type="text" style="width: 170px;" name="usrEml">
 						
 						                    <button class="btn btn-primary" style="width: 100px; height: 27px; font-size: 12px;" type="button" onclick="findMyId()">인증확인</button>
 						                    <span id="emailErr1" class="errorMsg text-danger d-none small" style="font-family: dotum,sans-serif; font-size: 12px;">이메일을 입력해주세요.</span>
@@ -92,16 +91,13 @@
 							           <tr>
 							           		<th scope="row">아이디</th>
 							                <td>
-							                    <input id="pswd-usrNm" class="find-input" type="text" data-err-target="find-id-auth-send-msg__fail-name" style="width: 170px;" data-err-msg="이름을 입력해주세요.">
-							                    <span class="form-err find-id-auth-send-msg__fail find-id-auth-send-msg__fail-name"></span>
+							                    <input id="pswd-usrId" name="usrId" class="find-input" type="text" style="width: 170px;">
 							                </td>
 							             </tr>
 							             <tr>
 							                <th scope="row">등록한 이메일 주소</th>
 							                <td>
-							                    <input id="pswd-usrEml" class="find-input" id="find-id-phone-tf" type="tel" maxlength="20" data-min-length="8" data-type="number" data-err-target="find-id-auth-send-msg__fail-phone" data-err-msg="휴대폰 번호를 입력하여 주세요.">
-							
-							                    <input type="hidden" id="find-id-by-phone-phoneNumber" name="phoneNumber" value="">
+							                    <input id="pswd-usrEml" name="usrEml" class="usrEml find-input" type="text" >
 							                    <button class="btn btn-primary" style="width: 100px; height: 27px; font-size: 12px;" type="button"  onclick="findUsrNoforChgPswd()">인증확인</button>
 							                    <div>
 								                    <span id="emailErr1" class="errorMsg text-danger d-none small" style="font-family: dotum,sans-serif; font-size: 12px;">이메일을 입력해주세요.</span>
@@ -141,8 +137,7 @@
 				    <div class="d-flex justify-content-center">			    
 				    	<label id="usrId" class="mr-3" for="usrId"><b>ID</b></label>
 				    	<input id="usrId" value="${login.usrId}" type="text" placeholder="아이디를 입력해주세요" name="usrId">
-				    	<div id="usrIdErr1" class="errorMsg text-danger d-none small" style="margin-left:10px; font-family: dotum,sans-serif; font-size: 12px;">아이디를 입력해주세요.</div>
-						<div id="usrIdErr2" class="errorMsg text-danger d-none small" style="margin-left:10px; font-family: dotum,sans-serif; font-size: 12px;">아이디 형식으로 입력해주세요.</div>
+
 				    </div>					
 					<c:if test="${error1 != null}">
 						<div id="usrIdErr1" class="errorMsg text-danger small" style="margin-left:70px; font-family: dotum,sans-serif;
