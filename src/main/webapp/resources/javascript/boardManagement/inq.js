@@ -350,7 +350,7 @@ function isPrvnChecked2(){
 	}
 }
 
-//** 문의목록에 해당하는 공지 상세 가져오기(모달)
+//** 문의목록에 해당하는 문의 상세 가져오기(모달)
 function showInqDtail(choiceInqNo){
 	$.ajax({
 		type: "GET",
@@ -367,22 +367,15 @@ function showInqDtail(choiceInqNo){
         	console.log("내권한: " + $("loginUsrAuthrt2").val());
         	// 로그인한 사용자와 문의을 등록한 회원을 비교하여 버튼 활성화/비활성화
         	if (data.usrNo === loggedInUsrNo) {
-        		console.log("내요청");
         		modifySaveBtn.prop("disabled", false); // 버튼을 활성화
         		modifySaveBtn.css("opacity", 1); // 버튼을 완전 불투명으로 설정
         	} else{
-        		console.log("내요청 아님");
         		modifySaveBtn.prop("disabled", true); // 버튼을 비활성화
         		modifySaveBtn.css("opacity", 0.5); // 버튼을 반투명으로 설정 (예시로 0.5 사용)
         	}
         	var formattedDate = $.datepicker.formatDate("yy-mm-dd", date);
-        	console.log("유저번호1: " + data.usrNo);
-        	console.log("유저번호2: " + data.usrNm);
-        	console.log("유저번호3: " + data.inqTtl);
-        	console.log("유저번호4: " + data.inqConts);
-        	console.log("유저번호5: " + formattedDate);
+
         	$("#getInq-usrNo").val(data.usrNo);
-        	console.log("나: " + data.usrNo);
         	$("#getInq-usrNm").val(data.usrNm);
         	$("#getInq-iqnTtl").val(data.inqTtl);
         	$("#getInq-inqConts").val(data.inqConts);
@@ -423,6 +416,81 @@ function showInqDtail(choiceInqNo){
         	    $("#prvnChk2").prop("checked", true);
         	} else {
         	    $("#prvnChk2").prop("checked", false);
+        	}
+        	
+        	//문의답변 상세
+        	if(data.inqAnsYn === "Y"){
+        		console.log("답변있움ㅎㅎ");
+        		showInqAnstDtail(choiceInqNo);
+        	}
+        	
+        },
+        error: function() {
+          console.log(error);
+        }
+    });
+}
+
+//** 문의답변에 해당하는 문의 상세 가져오기(모달)
+function showInqAnstDtail(choiceInqNo){
+	$.ajax({
+		type: "GET",
+        url: "getInqByInqNo",
+        data: {inqNo: choiceInqNo},
+        success: function(data) {
+        	console.log("문의상세: " + data.toString());
+        	$("#showInqAnsAtch").hide();
+        	var date = new Date(data.inqAnsWrtDt);
+        	
+        	//저장버튼(관리자만 답변 저장버튼 활성화)
+        	var loggedInUsrNo= $("#loginUsr2").val();// 로그인한 회원 번호 가져오기 
+        	var submitInqAnsBtn = $("#submitInqAnsBtn");
+        	
+        	// 로그인한 사용자와 문의을 등록한 회원을 비교하여 버튼 활성화/비활성화
+        	if ($("#loginUsrAuthrt2").val() === "SYS_MANAGER") {
+        		submitInqAnsBtn.prop("disabled", false); // 버튼을 활성화
+        		submitInqAnsBtn.css("opacity", 1); // 버튼을 완전 불투명으로 설정
+        	} else{
+        		submitInqAnsBtn.prop("disabled", true); // 버튼을 비활성화
+        		submitInqAnsBtn.css("opacity", 0.5); // 버튼을 반투명으로 설정 (예시로 0.5 사용)
+        	}
+        	var formattedDate = $.datepicker.formatDate("yy-mm-dd", date);
+        	
+        	$("#getInq-usrNo").val(data.usrNo);
+        	$("#writer").val(data.usrNm);
+        	$("#inqAnsTtl").val(data.inqAnsTtl);
+        	$("#inqAnsConts").val(data.inqAnsConts);
+        	$("#writeDate2").val(formattedDate);
+        	$("#ans-inqNo").val(data.inqNo);
+       
+        	//첨부파일
+        	if (data.inqAnsAtchList && typeof data.inqAnsAtchList === "object") {
+        	    // data.srRqstAtchList는 객체일 때
+        	    const keys = Object.keys(data.inqAnsAtchList);
+        	    if (keys.length !== 0) {
+        	        let html = "";
+        	        for (const key of keys) {
+        	            const inqAnsAtch = data.inqAnsAtchList[key];
+        	            if (inqAnsAtch && inqAnsAtch.inqAnsNo === data.inqAnsNo) {
+        	                $("#showInqAnsAtch").show();
+        	                console.log("같음");
+        	                var size = bytesToKB(inqAnsAtch.inqAnsAtchSize);
+        	                html += '<a href="filedownloadOfInqAns?inqAnsAtchNo='+ inqAnsAtch.inqAnsAtchNo +'" class="d-flex srRqstAtchWrap">';
+        	                html += '    <div>';
+        	                html += '    	<i class="material-icons atch-ic">download</i>';
+        	                html += '    </div>';
+        	                html += '    <div id="' + inqAnsAtch.inqAnsAtchNo + '" class="srRqstAtch p-1">' + inqAnsAtch.inqAnsAtchNm + ' (' + size + 'KB)</div>';
+        	                html += '</a>';
+        	            }
+        	        }
+        	        $("#showInqAnsAtch").html(html);
+        	    } else {
+        	        // srRqstAtchList가 객체지만 아무 항목도 없을 때
+        	        $("#showInqAnsAtch").hide();
+        	    }
+        	} else {
+        	    // srRqstAtchList가 객체가 아닐 때
+        	    $("#showInqAnsAtch").hide();
         	}
         	
         },

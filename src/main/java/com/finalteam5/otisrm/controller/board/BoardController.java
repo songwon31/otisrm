@@ -301,5 +301,36 @@ public class BoardController {
 	    return "redirect:/boardManagement/inq";
 	}
 	
+	@GetMapping("/filedownloadOfInqAns")
+	public void filedownloadOfInqAns(String inqAnsAtchNo, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	    // inqAtchNo에 해당하는 inqAtch 객체를 가져옴
+	    InqAnsAtch inqAnsAtch = boardService.getInqAnsAtchByInqAnsAtchNo(inqAnsAtchNo);
+	    
+	    String fileOriginalName = inqAnsAtch.getInqAnsAtchNm();
+	    
+	    //응답 헤드에 Content-Type 추가
+	    String mimeType = inqAnsAtch.getInqAnsAtchMimeType();
+	    response.setContentType(mimeType);
+	    
+	   //응답 헤드에 한글 이름의 파일명을 ISO-8859-1 문자셋으로 인코딩해서 추가
+	   String userAgent = request.getHeader("User-Agent");
+	   if(userAgent.contains("Trident")|| userAgent.contains("MSIE")) {
+		   //IE
+		   fileOriginalName = URLEncoder.encode(fileOriginalName,"UTF-8");
+	   }else {
+		   //Chrome, Edge, FireFox, Safari 
+		   fileOriginalName = new String(fileOriginalName.getBytes("UTF-8"),"ISO-8859-1");
+	   }
+	   //response.setHeader가 없으면 브라우저에 바로 보여줄 수 있으면 보여줌	
+	   // 바로 보여줄 수 없으면 파일이 다운로드됨
+	   response.setHeader("Content-Disposition", "attachment; fileName=\"" + fileOriginalName + "\"" );
+	   
+	   //응답 본문에 파일데이터 싣기
+	   OutputStream os = response.getOutputStream();
+	   os.write(inqAnsAtch.getInqAnsAtchData());
+	   os.flush();
+	   os.close();    
+	}
+	
 	
 }

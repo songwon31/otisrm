@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
 import com.finalteam5.otisrm.dto.inq.inq.Inq;
 import com.finalteam5.otisrm.dto.inq.inq.InqAtch;
 import com.finalteam5.otisrm.dto.inq.inq.InqSubmit;
+import com.finalteam5.otisrm.dto.inq.inqAns.InqAns;
 import com.finalteam5.otisrm.dto.inq.inqAns.InqAnsAtch;
 import com.finalteam5.otisrm.dto.inq.inqAns.InqAnsSubmit;
 import com.finalteam5.otisrm.dto.ntc.Ntc;
@@ -81,4 +82,13 @@ public interface BoardDao {
 		
 	//문의 답변 첨부파일 업로드
 	public int insertInqAnsAtch(InqAnsAtch inqAnsAtch);
+	
+	//문의 답변에 해당하는 상세 정보 불러오기
+	public InqAns selectInqAnsByInqAnsNo(String inqAnsNo);
+	
+	//문의 답변에 해당하는 첨부파일 불러오기
+	public List<InqAnsAtch> selectInqAnsAtchByInqAnsNo(String inqAnsNo); 
+	
+	//문의답변 첨부파일 번호에 해당하는 첨부파일 가져오기(파일 다운로드를 위함)
+	public InqAnsAtch selectInqAnsAtchByInqAnsAtchNo(String inqAnsAtchNo);
 }

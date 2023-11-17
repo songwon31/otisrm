@@ -10,6 +10,7 @@ import com.finalteam5.otisrm.dao.BoardDao;
 import com.finalteam5.otisrm.dto.inq.inq.Inq;
 import com.finalteam5.otisrm.dto.inq.inq.InqAtch;
 import com.finalteam5.otisrm.dto.inq.inq.InqSubmit;
+import com.finalteam5.otisrm.dto.inq.inqAns.InqAns;
 import com.finalteam5.otisrm.dto.inq.inqAns.InqAnsAtch;
 import com.finalteam5.otisrm.dto.inq.inqAns.InqAnsSubmit;
 import com.finalteam5.otisrm.dto.ntc.Ntc;
@@ -171,6 +172,27 @@ public class BoardServiceImpl implements BoardService{
 	public int uploadInqAnsAtch(InqAnsAtch inqAnsAtch) {
 		int numOfInsert = boardDao.insertInqAnsAtch(inqAnsAtch);
 		return numOfInsert;
+	}
+	
+	//문의 답변에 해당하는 상세 정보 불러오기
+	@Override
+	public InqAns getInqAnsByInqAnsNo(String inqAnsNo) {
+		InqAns inqAns = boardDao.selectInqAnsByInqAnsNo(inqAnsNo);
+		return inqAns;
+	}
+	
+	//문의 답변에 해당하는 첨부파일 불러오기
+	@Override
+	public List<InqAnsAtch> getInqAnsAtchByInqAnsNo(String inqAnsNo) {
+		List<InqAnsAtch> list = boardDao.selectInqAnsAtchByInqAnsNo(inqAnsNo);
+		return list;
+	}
+
+	//문의답변 첨부파일 번호에 해당하는 첨부파일 가져오기(파일 다운로드를 위함)
+	@Override
+	public InqAnsAtch getInqAnsAtchByInqAnsAtchNo(String inqAnsAtchNo) {
+		InqAnsAtch inqAnsAtch = boardDao.selectInqAnsAtchByInqAnsAtchNo(inqAnsAtchNo);
+		return inqAnsAtch;
 	}
 	
 }

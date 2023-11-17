@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.finalteam5.otisrm.dto.Pager;
 import com.finalteam5.otisrm.dto.inq.inq.Inq;
 import com.finalteam5.otisrm.dto.inq.inq.InqAtch;
+import com.finalteam5.otisrm.dto.inq.inqAns.InqAns;
+import com.finalteam5.otisrm.dto.inq.inqAns.InqAnsAtch;
 import com.finalteam5.otisrm.dto.ntc.Ntc;
 import com.finalteam5.otisrm.dto.ntc.NtcAtch;
 import com.finalteam5.otisrm.service.BoardService;
@@ -157,7 +159,7 @@ public class BoardRestController {
 	    return totalRows;
 	}
 	
-	//요청에 해당하는 상세정보 불러오기
+	//문의에 해당하는 상세정보 불러오기
 	@GetMapping("getInqByInqNo")
 	public Inq getInqByInqNo(@RequestParam(name="inqNo")String inqNo, Model model, HttpSession session) {
 		Inq inq = boardService.getInqByInqNo(inqNo);
@@ -165,5 +167,15 @@ public class BoardRestController {
 		inq.setInqAtchList(list);
 		model.addAttribute("inqOfModiFy", inq.getInqNo());
 		return inq;
+	}
+	
+	//문의답변에 해당하는 상세정보 불러오기
+	@GetMapping("getInqAnsByInqAnsNo")
+	public InqAns getInqAnsByInqAnsNo(@RequestParam(name="inqNo")String inqNo, Model model, HttpSession session) {
+		InqAns inqAns = boardService.getInqAnsByInqAnsNo(inqNo);
+		List<InqAnsAtch> list = boardService.getInqAnsAtchByInqAnsNo(inqNo);
+		inqAns.setInqAnsAtchList(list);
+		model.addAttribute("inqAnsOfModiFy", inqAns.getInqAnsNo());
+		return inqAns;
 	}
 }

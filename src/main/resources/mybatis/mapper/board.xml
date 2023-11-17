@@ -206,7 +206,10 @@
 	<update id="updateInq" parameterType="InqSubmit">
 		update inq
 		set
+		  inq_ttl = COALESCE(#{inqTtl, jdbcType=VARCHAR}, inq_ttl),
 		  inq_ans_yn = COALESCE(#{inqAnsYn, jdbcType=VARCHAR}, inq_ans_yn),
+		  inq_prvt_yn = COALESCE(#{inqPrvtYn, jdbcType=VARCHAR}, inq_prvt_yn),
+		  inq_conts = COALESCE(#{inqAnsConts, jdbcType=VARCHAR}, inq_conts),
 		  inq_mdfcn_dt = sysdate
 		where inq_no = #{inqNo, jdbcType=VARCHAR}
 	</update>
@@ -235,5 +238,23 @@
 	        #{inqAnsAtchSize, jdbcType=NUMERIC}
 	    )
 	</insert>
+	
+	<!-- 문의답변 상세 불러오기-->
+	<select id="selectInqAnsByInqAnsNo" parameterType="String" resultType="InqAns">
+		select i.*, u.usr_nm
+		from inq_ans i
+	    join usr u on u.usr_no = i.usr_no
+		where i.inq_no=#{inqNo}	
+	</select>
+	
+	<!-- 문의 상세에 해당하는 첨부파일 불러오기 -->
+	<select id="selectInqAnsAtchByInqAnsNo" parameterType="String" resultType="InqAnsAtch" >
+		select * from inq_ans_atch where inq_ans_no = #{inqAnsNo}
+	</select>
+	
+	<!-- 문의 첨부파일 번호에 해당하는 첨부파일 불러오기 -->
+	<select id="selectInqAnsAtchByInqAnsAtchNo" parameterType="String" resultType="InqAnsAtch">
+		select * from inq_ans_atch where inq_ans_atch_no = #{inqAnsAtchNo}
+	</select>
 	
 </mapper>

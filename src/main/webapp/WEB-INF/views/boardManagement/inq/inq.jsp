@@ -278,7 +278,7 @@
 			          <label for="ntcTtl" class="form-label">제목</label>
 			        </div>
 			        <div style="width: 605px;">
-			          <input type="text" class="form-control" id="inqAnsTtl" name="inqAnsTtl">
+			          <input type="text" class="detail form-control" id="inqAnsTtl" name="inqAnsTtl">
 			        </div>
 			    </div>
 		        <div class="d-flex w-100 pt-2">
@@ -297,12 +297,14 @@
 			        	 <input id="file" type="file" name="file" multiple>
 			        </div>
 			    </div>
+			    <div id="showInqAnsAtch">
+			    <!-- 첨부파일 들어오는 곳 -->
+			    </div>
 			</div>
       	</div>
       </div>
       <div class="modal-footer py-1">
-        <button type="submit" class="btn-1">답변등록</button>
-        <button id="btn-3 " type="button" class="close" data-dismiss="modal">닫기</button>
+        <button id="submitInqAnsBtn" type="submit" class="btn-1">답변등록</button>
       </div>
     </form>
   </div>
