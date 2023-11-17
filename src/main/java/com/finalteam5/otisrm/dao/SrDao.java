@@ -35,7 +35,7 @@ public interface SrDao {
 	public int countSr();
 	
 	public int countTotalTransferedSrNumByUsrId(String usrId);
-	public List<SrForDeveloperHomeBoard> selectSrForDeveloperHomeBoardListByUsrId(String usrNo);
+	public List<SrForDeveloperHomeBoard> selectSrForDeveloperHomeBoardListByUsrId(@Param("usrNo") String usrNo, @Param("instNo") String instNo);
 	public List<SrForDeveloperHomeBoard> selectSrForDeveloperHomeBoardListByUsrIdAndPager(
 			@Param("usrId") String usrId, @Param("pager") Pager pager);
 	public SrTrnsfInfoForDeveloperHome selectSrTrnsfInfoForDeveloperHomeBySrNo(String srNo);
@@ -49,9 +49,9 @@ public interface SrDao {
 	public String checkStatusBySrNo(String srNo);
 	
 	public List<SrForDeveloperHomeBoard> selectSrListForDeveloperHomeBoardByUsrIdAndStts(
-			@Param("usrNo") String usrId, @Param("srPrgrsSttsNo") String srPrgrsSttsNo);
+			@Param("usrNo") String usrNo, @Param("srPrgrsSttsNo") String srPrgrsSttsNo, @Param("instNo") String instNo);
 	public List<SrForDeveloperHomeBoard> selectSrListForDeveloperHomeBoardByUsrIdAndSttsAndPager(
-			@Param("usrNo") String usrId, @Param("srPrgrsSttsNo") String srPrgrsSttsNo, @Param("pager") Pager pager);
+			@Param("usrNo") String usrNo, @Param("srPrgrsSttsNo") String srPrgrsSttsNo, @Param("instNo") String instNo, @Param("pager") Pager pager);
 	
 	public List<SrTaskClsf> selectTaskList();
 	public List<Dept> selectDeptListByUsrId(String usrId);
@@ -166,4 +166,6 @@ public interface SrDao {
 	
 	//일정변경요청 결과 확인
 	public int updateSrScheduleChangeRequestResultCheck(String srNo);
+	
+	public String selectInstNoByUsrNo(String usrNo);
 }

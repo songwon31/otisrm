@@ -29,7 +29,7 @@ public interface SrService {
 	 * 개발자 홈 구성을 위한 메서드
 	 */
 	public int getTotalTransferedSrNumByUsrId(String usrId);
-	public List<SrForDeveloperHomeBoard> getSrForDeveloperHomeBoardListByUsrId(String usrId);
+	//public List<SrForDeveloperHomeBoard> getSrForDeveloperHomeBoardListByUsrId(String usrId);
 	public List<SrForDeveloperHomeBoard> getSrForDeveloperHomeBoardListByUsrIdAndPager(String usrId, Pager pager);
 	
 	public SrTrnsfInfoForDeveloperHome getSrTrnsfInfoForDeveloperHome(String srNo);

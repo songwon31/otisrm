@@ -15,7 +15,7 @@
    
    
    <select id="selectSrListForDeveloperHomeBoardByUsrIdAndStts" parameterType="map" resultType="com.finalteam5.otisrm.dto.sr.SrForDeveloperHomeBoard">
-      SELECT sr.sr_no, sys.sys_nm, srtc.sr_task_nm, srr.sr_ttl, pic.usr_nm, sr.sr_cmptn_prnmnt_dt, srtp.sr_trgt_cmptn_dt, srps.sr_prgrs_stts_nm
+      SELECT DISTINCT sr.sr_no, sys.sys_nm, srtc.sr_task_nm, srr.sr_ttl, pic.usr_nm, sr.sr_cmptn_prnmnt_dt, srtp.sr_trgt_cmptn_dt, srps.sr_prgrs_stts_nm
       FROM sr
       JOIN sr_rqst srr ON sr.sr_rqst_no = srr.sr_rqst_no
       JOIN sr_trnsf_plan srtp ON sr.sr_no = srtp.sr_no
@@ -33,7 +33,7 @@
          AND srr.sr_rqst_stts_no != 'DEP_CMPTN'
       <if test='srPrgrsSttsNo == null || srPrgrsSttsNo == "RQST"'>
          UNION
-         SELECT sr.sr_no, sys.sys_nm, srtc.sr_task_nm, srr.sr_ttl, pic.usr_nm, sr.sr_cmptn_prnmnt_dt, srtp.sr_trgt_cmptn_dt, srps.sr_prgrs_stts_nm
+         SELECT DISTINCT sr.sr_no, sys.sys_nm, srtc.sr_task_nm, srr.sr_ttl, pic.usr_nm, sr.sr_cmptn_prnmnt_dt, srtp.sr_trgt_cmptn_dt, srps.sr_prgrs_stts_nm
          FROM sr
          JOIN sr_rqst srr ON sr.sr_rqst_no = srr.sr_rqst_no
          JOIN sr_trnsf_plan srtp ON sr.sr_no = srtp.sr_no
@@ -41,9 +41,9 @@
          JOIN sys ON srr.sys_no = sys.sys_no
          JOIN sr_task_clsf srtc ON sr.sr_task_no = srtc.sr_task_no
          JOIN sr_prgrs_stts srps ON srtp.sr_prgrs_stts_no = srps.sr_prgrs_stts_no
-         LEFT JOIN sr_trnsf_hr srth ON sr.sr_no = srth.sr_no
-         LEFT JOIN usr dvl ON srth.usr_no = dvl.usr_no
+         JOIN inst trnsf_inst ON sr.sr_trnsf_inst_no = trnsf_inst.inst_no
          WHERE srtp.sr_prgrs_stts_no = 'RQST'
+         	AND trnsf_inst.inst_no = #{instNo}
             AND srr.sr_rqst_stts_no != 'DEP_CMPTN'
       </if>
       ORDER BY sr_no
@@ -54,7 +54,7 @@
       FROM(
          SELECT rownum as rnum, sr_no, sys_nm, sr_task_nm, sr_ttl, usr_nm, sr_cmptn_prnmnt_dt, sr_trgt_cmptn_dt, sr_prgrs_stts_nm
          FROM (   
-            SELECT sr.sr_no, sys.sys_nm, srtc.sr_task_nm, srr.sr_ttl, pic.usr_nm, sr.sr_cmptn_prnmnt_dt, srtp.sr_trgt_cmptn_dt, srps.sr_prgrs_stts_nm
+            SELECT DISTINCT sr.sr_no, sys.sys_nm, srtc.sr_task_nm, srr.sr_ttl, pic.usr_nm, sr.sr_cmptn_prnmnt_dt, srtp.sr_trgt_cmptn_dt, srps.sr_prgrs_stts_nm
             FROM sr
             JOIN sr_rqst srr ON sr.sr_rqst_no = srr.sr_rqst_no
             JOIN sr_trnsf_plan srtp ON sr.sr_no = srtp.sr_no
@@ -72,7 +72,7 @@
                AND srr.sr_rqst_stts_no != 'DEP_CMPTN'
             <if test='srPrgrsSttsNo == null || srPrgrsSttsNo == "RQST"'>
                UNION
-               SELECT sr.sr_no, sys.sys_nm, srtc.sr_task_nm, srr.sr_ttl, pic.usr_nm, sr.sr_cmptn_prnmnt_dt, srtp.sr_trgt_cmptn_dt, srps.sr_prgrs_stts_nm
+               SELECT DISTINCT sr.sr_no, sys.sys_nm, srtc.sr_task_nm, srr.sr_ttl, pic.usr_nm, sr.sr_cmptn_prnmnt_dt, srtp.sr_trgt_cmptn_dt, srps.sr_prgrs_stts_nm
                FROM sr
                JOIN sr_rqst srr ON sr.sr_rqst_no = srr.sr_rqst_no
                JOIN sr_trnsf_plan srtp ON sr.sr_no = srtp.sr_no
@@ -80,9 +80,9 @@
                JOIN sys ON srr.sys_no = sys.sys_no
                JOIN sr_task_clsf srtc ON sr.sr_task_no = srtc.sr_task_no
                JOIN sr_prgrs_stts srps ON srtp.sr_prgrs_stts_no = srps.sr_prgrs_stts_no
-               LEFT JOIN sr_trnsf_hr srth ON sr.sr_no = srth.sr_no
-               LEFT JOIN usr dvl ON srth.usr_no = dvl.usr_no
+               JOIN inst trnsf_inst ON sr.sr_trnsf_inst_no = trnsf_inst.inst_no
                WHERE srtp.sr_prgrs_stts_no = 'RQST'
+               	  AND trnsf_inst.inst_no = #{instNo}
                   AND srr.sr_rqst_stts_no != 'DEP_CMPTN'
             </if>
             ORDER BY sr_no
@@ -94,7 +94,7 @@
       ]]>
    </select>
    
-   <select id="selectSrForDeveloperHomeBoardListByUsrId" parameterType="String" resultType="com.finalteam5.otisrm.dto.sr.SrForDeveloperHomeBoard">
+   <select id="selectSrForDeveloperHomeBoardListByUsrId" parameterType="map" resultType="com.finalteam5.otisrm.dto.sr.SrForDeveloperHomeBoard">
       SELECT sr.sr_no, sys.sys_nm, srtc.sr_task_nm, srr.sr_ttl, pic.usr_nm, sr.sr_cmptn_prnmnt_dt, srtp.sr_trgt_cmptn_dt, srps.sr_prgrs_stts_nm
       FROM sr
       JOIN sr_rqst srr ON sr.sr_rqst_no = srr.sr_rqst_no
@@ -117,9 +117,9 @@
       JOIN sys ON srr.sys_no = sys.sys_no
       JOIN sr_task_clsf srtc ON sr.sr_task_no = srtc.sr_task_no
       JOIN sr_prgrs_stts srps ON srtp.sr_prgrs_stts_no = srps.sr_prgrs_stts_no
-      LEFT JOIN sr_trnsf_hr srth ON sr.sr_no = srth.sr_no
-      LEFT JOIN usr dvl ON srth.usr_no = dvl.usr_no
+      JOIN inst trnsf_inst ON sr.sr_trnsf_inst_no = trnsf_inst.inst_no
       WHERE srtp.sr_prgrs_stts_no = 'RQST'
+      	 AND trnsf_inst.inst_no = #{instNo}
          AND srr.sr_rqst_stts_no != 'DEP_CMPTN'
       ORDER BY sr_no
    </select>
@@ -948,4 +948,10 @@
 		      WHERE sr.sr_no = #{srNo}
 		    )
    </update>
+   
+   <select id="selectInstNoByUsrNo" parameterType="String" resultType="String">
+   		SELECT inst_no 
+   		FROM usr
+   		WHERE usr_no = #{usrNo}
+   </select>
 </mapper>

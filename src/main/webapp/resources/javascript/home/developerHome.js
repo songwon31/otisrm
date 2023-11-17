@@ -393,6 +393,7 @@ function setSrDetail(srNo) {
 		url: "/otisrm/getSrTransferInfo",
 		data: requestData,
 		success: function(data) {
+			
 
 			//SR계획정보 구성
 			$('#srPlanInfoDmnd').html(data.srDmndNm);
@@ -636,6 +637,7 @@ function composeFindPicModal() {
 		url: "/otisrm/getFindPicModalDeptSelectList",
 		data: {},
 		success: function(data) {
+			$('#findPicModalDeptSelect').html('<option value="">선택</option>');
 			for (let i=0; i<data.length; ++i) {
 				let html = '<option value="' + data[i].deptNo + '">' + data[i].deptNm + '</option>';
 				$('#findPicModalDeptSelect').append(html);

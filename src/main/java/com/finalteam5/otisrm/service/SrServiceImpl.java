@@ -69,12 +69,12 @@ public class SrServiceImpl implements SrService{
 	public int getTotalTransferedSrNumByUsrId(String usrId) {
 		return srDao.countTotalTransferedSrNumByUsrId(usrId);
 	}
-	
+	/*
 	@Override
 	public List<SrForDeveloperHomeBoard> getSrForDeveloperHomeBoardListByUsrId(String usrId) {
 		return srDao.selectSrForDeveloperHomeBoardListByUsrId(usrId);
 	}
-	
+	*/
 	@Override
 	public List<SrForDeveloperHomeBoard> getSrForDeveloperHomeBoardListByUsrIdAndPager(String usrId, Pager pager) {
 		return srDao.selectSrForDeveloperHomeBoardListByUsrIdAndPager(usrId, pager);
@@ -87,6 +87,7 @@ public class SrServiceImpl implements SrService{
 		String status = srDao.checkStatusBySrNo(srNo);
 		
 		if (status.equals("RQST")) {
+			log.info(""+srDao.selectSrTrnsfInfoForDeveloperHomeBySrNoRqst(srNo));
 			return srDao.selectSrTrnsfInfoForDeveloperHomeBySrNoRqst(srNo);
 		} else {
 			SrTrnsfInfoForDeveloperHome srTrnsfInfoForDeveloperHome = srDao.selectSrTrnsfInfoForDeveloperHomeBySrNo(srNo);
@@ -120,13 +121,14 @@ public class SrServiceImpl implements SrService{
 			srPrgrsSttsNo = null;
 		}
 		
-		List<SrForDeveloperHomeBoard> totalFilteredSrList = srDao.selectSrListForDeveloperHomeBoardByUsrIdAndStts(usrNo, srPrgrsSttsNo);
+		String instNo = srDao.selectInstNoByUsrNo(usrNo);
+		List<SrForDeveloperHomeBoard> totalFilteredSrList = srDao.selectSrListForDeveloperHomeBoardByUsrIdAndStts(usrNo, srPrgrsSttsNo, instNo);
 		Pager pager = new Pager(5, 5, totalFilteredSrList.size(), page);
 		srTableElementsForDeveloperHome.setPager(pager);
-		List<SrForDeveloperHomeBoard> srList = srDao.selectSrListForDeveloperHomeBoardByUsrIdAndSttsAndPager(usrNo, srPrgrsSttsNo, pager);
+		List<SrForDeveloperHomeBoard> srList = srDao.selectSrListForDeveloperHomeBoardByUsrIdAndSttsAndPager(usrNo, srPrgrsSttsNo, instNo, pager);
 		srTableElementsForDeveloperHome.setSrList(srList);
 		
-		List<SrForDeveloperHomeBoard> totalSrList = srDao.selectSrForDeveloperHomeBoardListByUsrId(usrNo);
+		List<SrForDeveloperHomeBoard> totalSrList = srDao.selectSrForDeveloperHomeBoardListByUsrId(usrNo, instNo);
 		
 		int totalNum = totalSrList.size();
 		int requestNum = 0;
