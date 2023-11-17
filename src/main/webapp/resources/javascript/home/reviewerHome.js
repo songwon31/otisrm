@@ -509,6 +509,12 @@ function saveApproveResult(e) {
 		e.preventDefault();
 	}
 	
+	if(approveResult != "APPV" || srRqstRvwRsn == null){
+		$('#alertModalContent').text("검토 의견을 작성해주십시오.");
+		$('#alertModal').modal('show');
+		e.preventDefault();
+	}
+	
 	$.ajax({
 		type: "POST",
 		url: "/otisrm/reviewerHome/saveApproveResult",

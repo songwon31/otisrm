@@ -227,11 +227,12 @@
 					<!-- SR개발정보 -->
 		      		<div class="d-flex mb-2">
 		      			<span class="modal-sub-title mr-auto">SR개발정보</span>
+		      			<input id="detailmodal_srNo" hidden>
 	      				<select id="receptionResult" name="receptionResult" class="mr-2" disabled>
 					        <option id="initReceptionResult" value="" selected>선택</option>
-					        <option class="optionReceptionResult" value="RCPT_REEXAM">접수재검토</option>
-					        <option class="optionReceptionResult" value="RCPT_RETURN">접수반려</option>
-					        <option class="optionReceptionResult" value="RCPT">접수</option>
+					        <option value="RCPT_REEXAM">접수재검토</option>
+					        <option value="RCPT_RETURN">접수반려</option>
+					        <option value="RCPT">접수</option>
 					    </select>
 		      			<button id="receptionResultBtn" type="button" class="btn-3" onclick="saveReceptionResult(this)" disabled>처리</button>
 		      		</div>
@@ -243,17 +244,34 @@
 				          </div>
 				          <div class="col-sm row">
 				            <label for="detailmodal_srTrnsfYn" class="col-form-label col-5">이관여부</label>
-				            <input id="detailmodal_srTrnsfYn" type="text" class="form-control form-control-sm col-7" disabled>
+				            <div class="d-flex col-7 p-0">
+				            	<div class="d-flex">				        
+							       <input id="srTrnsfYn_Y" type="radio" name="srTrnsfYn" value="Y" disabled>
+							       <label for="srTrnsfYn_Y" class="d-flex ml-3 mb-0 align-items-center">이관신청</label>
+						        </div>
+								<div class="d-flex ml-auto">						
+							       <input id="srTrnsfYn_N" type="radio" name="srTrnsfYn" value="N" disabled>
+							       <label for="srTrnsfYn_N" class="d-flex ml-3 mb-0 align-items-center">자체개발</label>
+								</div>
+							</div>
 				          </div>
 						</div>
 						<div class="row mx-0 mt-0 mb-2">
 				          <div class="col-sm row">
-				            <label for="detailmodal_srTrnsfInstNm" class="col-form-label col-5 pl-0">이관기관</label>
-				            <input id="detailmodal_srTrnsfInstNm" type="text" class="form-control form-control-sm col-7" disabled>
+				            <label for="detailmodal_srTrnsfInst" class="col-form-label col-5 pl-0">이관기관</label>
+				            <select style="width:30%;" id="detailmodal_srTrnsfInst" class="form-control form-control-sm col-7" disabled>
+						        <c:forEach var="i" items="${outsrcInstList}" varStatus="status">	
+									<option value="${i.instNo}">${i.instNm}</option>
+								</c:forEach>
+							</select>
 				          </div>
 				          <div class="col-sm row">
-				            <label for="detailmodal_srTaskNm" class="col-form-label col-5">업무구분</label>
-				            <input id="detailmodal_srTaskNm" type="text" class="form-control form-control-sm col-7" disabled>
+				            <label for="detailmodal_srTaskClsf" class="col-form-label col-5">업무구분</label>
+				            <select style="width:30%;" id="detailmodal_srTaskClsf" class="form-control form-control-sm col-7" disabled>
+						        <c:forEach var="i" items="${taskClsfList}" varStatus="status">	
+									<option value="${i.srTaskNo}">${i.srTaskNm}</option>
+								</c:forEach>
+							</select>
 				          </div>
 						</div>
 						<div class="row mx-0 mt-0 mb-2">
@@ -262,8 +280,12 @@
 				            <input id="detailmodal_srReqBgt" type="text" class="form-control form-control-sm col-7" disabled>
 				          </div>
 				          <div class="col-sm row">
-				            <label for="detailmodal_srDmndNm" class="col-form-label col-5">요청구분</label>
-				            <input id="detailmodal_srDmndNm" type="text" class="form-control form-control-sm col-7" disabled>
+				            <label for="detailmodal_srDmndClsf" class="col-form-label col-5">요청구분</label>
+				            <select style="width:30%;" id="detailmodal_srDmndClsf" class="form-control form-control-sm col-7" disabled>
+						        <c:forEach var="i" items="${dmndClsfList}" varStatus="status">	
+									<option value="${i.srDmndNo}">${i.srDmndNm}</option>
+								</c:forEach>
+							</select>
 				          </div>
 						</div>
 						<div class="row mx-0 mt-0 mb-2">
@@ -282,7 +304,7 @@
 			          	</div>
 			          	<div class="d-flex mb-2 w-100">
 			            	<label for="detailmodal_srAtchData" class="w-label col-form-label">첨부파일</label>
-							<div id="detailmodal_srAtchData" class="w-content d-flex align-items-center"></div>
+			            	<div id="detailmodal_srAtchData" class="w-content d-flex align-items-center"></div>
 			          	</div>
 					</div>
 		      </div>

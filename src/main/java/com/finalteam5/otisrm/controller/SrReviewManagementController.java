@@ -1,6 +1,7 @@
 package com.finalteam5.otisrm.controller;
 import java.io.OutputStream;
 import java.net.URLEncoder;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,6 +20,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.finalteam5.otisrm.dto.Pager;
+import com.finalteam5.otisrm.dto.SrDmndClsf;
+import com.finalteam5.otisrm.dto.SrTaskClsf;
+import com.finalteam5.otisrm.dto.SrTrnsfPlanForm;
 import com.finalteam5.otisrm.dto.sr.srForPicHome.SrAtch;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstAtch;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstForReviewerModal;
@@ -59,7 +63,7 @@ public class SrReviewManagementController {
 			List<String> totalSystemList = srRqstService.getTotalSysNm();
 			model.addAttribute("totalSystemList", totalSystemList);
 			
-			//관할기관 개발부서 목록 가져오기
+			//관할기관부서 목록 가져오기
 			String instNo = "SB";
 			List<Dept> deptList = usrService.getDeptListByInstNo(instNo);
 			model.addAttribute("deptList", deptList);
@@ -71,6 +75,18 @@ public class SrReviewManagementController {
 			//전체 상태 가져오기
 			List<SrRqstStts> sttsList = srRqstService.getSrRqstStts();
 			model.addAttribute("sttsList", sttsList);
+			
+			//이관기관목록 가져오기
+			List<Inst> outsrcInstList = srRqstService.getInstByOutsrcY();
+			model.addAttribute("outsrcInstList", outsrcInstList);
+			
+			//요청구분 가져오기
+			List<SrDmndClsf> dmndClsfList = srRqstService.getSrDmndClsf();
+			model.addAttribute("dmndClsfList", dmndClsfList);
+			
+			//업무구분 가져오기
+			List<SrTaskClsf> taskClsfList = srRqstService.getSrTaskClsf();
+			model.addAttribute("taskClsfList", taskClsfList);
 			
 			return "/srManagement/reviewManagement/reviewManagement";
 		}else {
@@ -235,7 +251,29 @@ public class SrReviewManagementController {
 	
 	@PostMapping("/reviewManagement/saveReceptionResult")
 	@ResponseBody
-	public void saveReceptionResult(@RequestParam String selectedSrRqstNo, @RequestParam String srRqstSttsNo) {
+	public void saveReceptionResult(@RequestParam String selectedSrRqstNo, 
+									@RequestParam String srRqstSttsNo, 
+									@RequestParam String srTrnsfYn,
+									@RequestParam String srNo,
+									@RequestParam String srTrnsfInstNo,
+									@RequestParam String srDmndNo,
+									@RequestParam String srCmptnPrnmntDt) {
+		//이관개발 접수할 경우
+		if(srRqstSttsNo.equals("RCPT") && srTrnsfYn.equals("Y")) {
+			//이관계획 저장
+            SrTrnsfPlanForm srTrnsfPlanForm = new SrTrnsfPlanForm();
+            srTrnsfPlanForm.setSrNo(srNo);
+            srTrnsfPlanForm.setInstNo(srTrnsfInstNo);
+            srTrnsfPlanForm.setSrDmndNo(srDmndNo);
+            srTrnsfPlanForm.setSrPrgrsSttsNo("RQST");
+            srTrnsfPlanForm.setSrTrgtCmptnDt(srCmptnPrnmntDt);
+            srRqstService.writeSrTrnsfPlan(srTrnsfPlanForm);
+            
+            //이관일 저장
+            Date srTrnsfDt = new Date();
+            srRqstService.saveSrTrnsfDt(srNo, srTrnsfDt);
+		}
+		
 		//접수 상태 변경
 		Map<String, String> sttsParams = new HashMap<>();
 		sttsParams.put("selectedSrRqstNo", selectedSrRqstNo);

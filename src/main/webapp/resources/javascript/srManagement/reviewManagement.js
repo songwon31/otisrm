@@ -188,6 +188,12 @@ function initDetailModal() {
     $("#completionResultBtn").attr('disabled', true);
     $("#completionResultBtn").removeClass('btn-complete');
     $("#completionResultBtn").addClass('btn-complete-disabled');
+
+    $("#detailmodal_srTrnsfYn").val("");
+	$("#detailmodal_srTrnsfInst").val("");
+	$("#detailmodal_srTaskClsf").val("");
+	$("#detailmodal_srDmndClsf").val("");
+
 }
 
 function showDetailModal(srRqstNo) {
@@ -263,17 +269,23 @@ function showDetailModal(srRqstNo) {
         	}
         	$("#detailmodal_srRqstAtchData").html(html);
         	
-			//SR개발정보 불러오기
+        	//SR개발정보 불러오기
+        	$("#detailmodal_srNo").val(data.srNo);
         	$("#detailmodal_srPicUsrNm").val(data.srPicUsrNm);
-        	$("#detailmodal_srTrnsfYn").val(data.srTrnsfYn);
-        	$("#detailmodal_srTrnsfInstNm").val(data.srTrnsfInstNm);
-        	$("#detailmodal_srTaskNm").val(data.srTaskNm);
+        	var srTrnsfYn = data.srTrnsfYn;
+        	if(srTrnsfYn == "Y") {
+        		$("#srTrnsfYn_Y").prop('checked',true);
+        	} else {
+        		$("#srTrnsfYn_N").prop('checked',true);
+        	}
+        	$("#detailmodal_srTrnsfInst").val(data.srTrnsfInstNo);
+        	$("#detailmodal_srTaskClsf").val(data.srTaskNo);
         	if(data.srReqBgt == 0) {
         		$("#detailmodal_srReqBgt").val("");
         	} else {
-        		$("#detailmodal_srReqBgt").val(data.srReqBgt);
+        		$("#detailmodal_srReqBgt").val(data.srReqBgt.toLocaleString('ko-KR'));
         	}
-        	$("#detailmodal_srDmndNm").val(data.srDmndNm);
+        	$("#detailmodal_srDmndClsf").val(data.srDmndNo);
         	$("#detailmodal_srPri").val(data.srPri);
         	$("#detailmodal_srCmptnPrnmntDt").val(formattedSrCmptnPrnmntDt);
         	$("#detailmodal_srDvlConts").val(data.srDvlConts);
@@ -306,6 +318,12 @@ function saveApproveResult(e) {
 		e.preventDefault();
 	}
 	
+	if(approveResult != "APPV" || srRqstRvwRsn == null){
+		$('#alertModalContent').text("검토 의견을 작성해주십시오.");
+		$('#alertModal').modal('show');
+		e.preventDefault();
+	}
+	
 	$.ajax({
 		type: "POST",
 		url: "/otisrm/srManagement/reviewManagement/saveApproveResult",
@@ -319,6 +337,11 @@ function saveApproveResult(e) {
 function saveReceptionResult(e) {
 	var srRqstNo = $("#detailmodal_srRqstNo").val();
 	var receptionResult = $("#receptionResult").val();
+	var srTrnsfYn = $("input[name='srTrnsfYn']:checked").val();
+	var srNo = $("#detailmodal_srNo").val();
+	var srTrnsfInstNo = $("#detailmodal_srTrnsfInst").val();
+	var srDmndNo = $("#detailmodal_srDmndClsf").val();
+	var srCmptnPrnmntDt = $("#detailmodal_srCmptnPrnmntDt").val();
 	
 	if(receptionResult == ""){
 		$('#alertModal').modal('show');
@@ -328,7 +351,14 @@ function saveReceptionResult(e) {
 	$.ajax({
 		type: "POST",
 		url: "/otisrm/srManagement/reviewManagement/saveReceptionResult",
-		data: {selectedSrRqstNo: srRqstNo, srRqstSttsNo: receptionResult},
+		data: {selectedSrRqstNo: srRqstNo, 
+			srRqstSttsNo: receptionResult, 
+			srTrnsfYn: srTrnsfYn,
+			srNo: srNo,
+			srTrnsfInstNo: srTrnsfInstNo,
+			srDmndNo: srDmndNo,
+			srCmptnPrnmntDt, srCmptnPrnmntDt
+			},
 		success: function(data) {
 			$('#successModal').modal('show');
 		}
