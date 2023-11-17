@@ -1,6 +1,7 @@
 package com.finalteam5.otisrm.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -177,4 +178,7 @@ public interface SrRqstService {
 	
 	//검토관리 엑셀다운로드를 위한 목록 가져오기
 	public List<SrRqstForSearchList> getSrRqstForReviewManagementForExport(Map<String, String> params);
+	
+	//이관날짜 저장
+	public void saveSrTrnsfDt(String srNo, Date srTrnsfDt);
 }

@@ -28,10 +28,10 @@ public class SrRqstForReviewerModal {
 	private String srNo;
 	private String srPicUsrNm;
 	private String srTrnsfYn;
-	private String srTrnsfInstNm;
-	private String srTaskNm;
+	private String srTrnsfInstNo;
+	private String srTaskNo;
 	private int srReqBgt;
-	private String srDmndNm;
+	private String srDmndNo;
 	private String srPri;
 	private Date srCmptnPrnmntDt;
 	private String srDvlConts;
