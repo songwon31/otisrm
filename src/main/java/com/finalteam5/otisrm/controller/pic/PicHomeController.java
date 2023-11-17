@@ -227,7 +227,7 @@ public class PicHomeController {
 			}
 			
 			//이관된 sr일 경우 sr이관 계획도 등록
-			if(srSubmit.getSrTrnsfYn().equals("Y")) {
+			/*if(srSubmit.getSrTrnsfYn().equals("Y")) {
 				SrTrnsfPlanForm srTrnsfPlanForm = new SrTrnsfPlanForm();
 				srTrnsfPlanForm.setSrNo(srPk);
 				srTrnsfPlanForm.setInstNo(srSubmit.getSrTrnsfInstNo());
@@ -236,7 +236,7 @@ public class PicHomeController {
 				srTrnsfPlanForm.setSrTrgtCmptnDt(srSubmit.getSrCmptnPrnmntDt());
 				//sr 이관계획 등록
 				srRqstService.writeSrTrnsfPlan(srTrnsfPlanForm);
-			}
+			}*/
 		}	
 	    return "redirect:/picHome";
 	}

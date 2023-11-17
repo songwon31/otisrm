@@ -1,5 +1,6 @@
 package com.finalteam5.otisrm.service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -387,4 +388,11 @@ public class SrRqstServiceImpl implements SrRqstService{
 	public List<SrRqstForSearchList> getSrRqstForReviewManagementForExport(Map<String, String> params) {
 		return srRqstDao.selectSrRqstForReviewManagementForExport(params);
 	}
+	
+	//이관날짜 저장
+	@Override
+	public void saveSrTrnsfDt(String srNo, Date srTrnsfDt) {
+		srRqstDao.updateSrTrnsfDt(srNo, srTrnsfDt);
+	}
+	
 }

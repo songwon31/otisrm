@@ -606,7 +606,7 @@
 		and sr_rqst_vld_yn = 'Y' 
 		order by sr_rqst_reg_dt desc
 	</select>
-		
+
 
 	<!-- 작성자: 이현주  -->
 	<!-- 미처리 요청수 가져오기 -->
@@ -1016,10 +1016,10 @@
 		    sr.sr_no,
 		    pic.usr_nm as sr_pic_usr_nm,
 		    sr.sr_trnsf_yn,
-		    trnsf_inst.inst_nm as sr_trnsf_inst_nm,
-		    stc.sr_task_nm,
+		    trnsf_inst.inst_no as sr_trnsf_inst_no,
+		    sr.sr_task_no,
 		    sr.sr_req_bgt,
-		    sdc.sr_dmnd_nm,
+		    sr.sr_dmnd_no,
 		    sr.sr_pri,	
 		    sr.sr_cmptn_prnmnt_dt,
 		    sr.sr_dvl_conts
@@ -1030,9 +1030,6 @@
 		left join sr on r.sr_rqst_no = sr.sr_rqst_no
 		left join usr pic on pic.usr_no = sr.pic_usr_no 
 		left join inst trnsf_inst on trnsf_inst.inst_no = sr.sr_trnsf_inst_no
-		left join sr_task_clsf stc on stc.sr_task_no = sr.sr_task_no
-		left join sr_trnsf_plan stp on stp.sr_no = sr.sr_no
-		left join sr_dmnd_clsf sdc on sdc.sr_dmnd_no = stp.sr_dmnd_no
 		where r.sr_rqst_no = #{selectedSrRqstNo}
 	</select>
 	
@@ -1099,4 +1096,11 @@
 		join sys s on r.sys_no = s.sys_no
 		group by s.sys_nm
 	</select>
+	
+	<!-- 이관날짜 저장 -->
+	<update  id="updateSrTrnsfDt" parameterType="map">
+		update sr set sr_trnsf_dt = #{srTrnsfDt} 
+		where sr_no = #{srNo}
+	</update>
+
 </mapper>
