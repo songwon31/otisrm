@@ -25,9 +25,12 @@
 		<typeAlias alias="Ntc" type="com.finalteam5.otisrm.dto.ntc.Ntc"/>
 		<typeAlias alias="NtcAtch" type="com.finalteam5.otisrm.dto.ntc.NtcAtch"/>
 		<typeAlias alias="NtcSubmit" type="com.finalteam5.otisrm.dto.ntc.NtcSubmit"/>
-		<typeAlias alias="Inq" type="com.finalteam5.otisrm.dto.inq.Inq"/>
-		<typeAlias alias="InqAtch" type="com.finalteam5.otisrm.dto.inq.InqAtch"/>
-		<typeAlias alias="InqSubmit" type="com.finalteam5.otisrm.dto.inq.InqSubmit"/>
+		<typeAlias alias="Inq" type="com.finalteam5.otisrm.dto.inq.inq.Inq"/>
+		<typeAlias alias="InqAtch" type="com.finalteam5.otisrm.dto.inq.inq.InqAtch"/>
+		<typeAlias alias="InqSubmit" type="com.finalteam5.otisrm.dto.inq.inq.InqSubmit"/>
+		<typeAlias alias="InqAns" type="com.finalteam5.otisrm.dto.inq.inqAns.InqAns"/>
+		<typeAlias alias="InqAnsAtch" type="com.finalteam5.otisrm.dto.inq.inqAns.InqAnsAtch"/>
+		<typeAlias alias="InqAnsSubmit" type="com.finalteam5.otisrm.dto.inq.inqAns.InqAnsSubmit"/>
 		<typeAlias alias="SrTaskClsf" type="com.finalteam5.otisrm.dto.SrTaskClsf"/>
 		<typeAlias alias="SrDmndClsf" type="com.finalteam5.otisrm.dto.SrDmndClsf"/>
 		<typeAlias alias="SrTrnsfPlan" type="com.finalteam5.otisrm.dto.SrTrnsfPlan"/>

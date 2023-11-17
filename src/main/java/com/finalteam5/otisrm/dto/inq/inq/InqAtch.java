@@ -1,4 +1,4 @@
-package com.finalteam5.otisrm.dto.inq;
+package com.finalteam5.otisrm.dto.inq.inq;
 
 import lombok.Data;
 

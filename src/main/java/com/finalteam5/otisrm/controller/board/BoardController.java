@@ -20,8 +20,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.finalteam5.otisrm.dto.Pager;
-import com.finalteam5.otisrm.dto.inq.InqAtch;
-import com.finalteam5.otisrm.dto.inq.InqSubmit;
+import com.finalteam5.otisrm.dto.inq.inq.InqAtch;
+import com.finalteam5.otisrm.dto.inq.inq.InqSubmit;
+import com.finalteam5.otisrm.dto.inq.inqAns.InqAnsAtch;
+import com.finalteam5.otisrm.dto.inq.inqAns.InqAnsSubmit;
 import com.finalteam5.otisrm.dto.ntc.NtcAtch;
 import com.finalteam5.otisrm.dto.ntc.NtcSubmit;
 import com.finalteam5.otisrm.dto.usr.Usr;
@@ -270,5 +272,34 @@ public class BoardController {
 	   os.flush();
 	   os.close();    
 	}
+	
+	//문의 답변등록하기
+	@PostMapping("writeInqAnsByInqNo")
+	public String writeInq(InqAnsSubmit inqAnsSubmit) throws Exception{
+		boardService.writeInqAns(inqAnsSubmit);
+	    
+		//첨부파일이 있다면 첨부파일 업로드
+		MultipartFile[] files = inqAnsSubmit.getFile();
+		
+		for(MultipartFile file : files) {
+			InqAnsAtch inqAnsAtch = new InqAnsAtch();
+			if(!file.isEmpty()) {
+				//첨부파일을 업로드한 sr요청 번호 
+				String inqAnsPk = boardService.getAddInqAnsPk();
+				inqAnsAtch.setInqAnsNo(inqAnsPk);
+	    		//브라우저에서 선택한 파일 이름 설정
+				inqAnsAtch.setInqAnsAtchNm(file.getOriginalFilename());
+	    		//파일의 형식(MIME타입)을 설정
+				inqAnsAtch.setInqAnsAtchMimeType(file.getContentType());
+	    		//올린 파일 설정
+				inqAnsAtch.setInqAnsAtchData(file.getBytes());
+	    		//파일 크기 설정
+				inqAnsAtch.setInqAnsAtchSize(file.getSize());
+	    		
+			}
+	    }
+	    return "redirect:/boardManagement/inq";
+	}
+	
 	
 }

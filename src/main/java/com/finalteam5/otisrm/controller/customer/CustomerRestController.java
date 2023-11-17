@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.finalteam5.otisrm.dto.Pager;
 import com.finalteam5.otisrm.dto.Sys;
-import com.finalteam5.otisrm.dto.inq.Inq;
+import com.finalteam5.otisrm.dto.inq.inq.Inq;
 import com.finalteam5.otisrm.dto.ntc.Ntc;
 import com.finalteam5.otisrm.dto.ntc.NtcAtch;
 import com.finalteam5.otisrm.dto.srRequest.SrRqst;

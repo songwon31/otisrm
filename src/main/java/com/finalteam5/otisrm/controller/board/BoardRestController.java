@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.finalteam5.otisrm.dto.Pager;
-import com.finalteam5.otisrm.dto.inq.Inq;
-import com.finalteam5.otisrm.dto.inq.InqAtch;
+import com.finalteam5.otisrm.dto.inq.inq.Inq;
+import com.finalteam5.otisrm.dto.inq.inq.InqAtch;
 import com.finalteam5.otisrm.dto.ntc.Ntc;
 import com.finalteam5.otisrm.dto.ntc.NtcAtch;
 import com.finalteam5.otisrm.service.BoardService;
@@ -160,9 +160,7 @@ public class BoardRestController {
 	//요청에 해당하는 상세정보 불러오기
 	@GetMapping("getInqByInqNo")
 	public Inq getInqByInqNo(@RequestParam(name="inqNo")String inqNo, Model model, HttpSession session) {
-		log.info("문의 번호: " + inqNo);
 		Inq inq = boardService.getInqByInqNo(inqNo);
-		log.info(inq.toString());
 		List<InqAtch> list = boardService.getInqAtchByInqNo(inqNo);
 		inq.setInqAtchList(list);
 		model.addAttribute("inqOfModiFy", inq.getInqNo());

@@ -3,9 +3,11 @@ package com.finalteam5.otisrm.service;
 import java.util.List;
 import java.util.Map;
 
-import com.finalteam5.otisrm.dto.inq.Inq;
-import com.finalteam5.otisrm.dto.inq.InqAtch;
-import com.finalteam5.otisrm.dto.inq.InqSubmit;
+import com.finalteam5.otisrm.dto.inq.inq.Inq;
+import com.finalteam5.otisrm.dto.inq.inq.InqAtch;
+import com.finalteam5.otisrm.dto.inq.inq.InqSubmit;
+import com.finalteam5.otisrm.dto.inq.inqAns.InqAnsAtch;
+import com.finalteam5.otisrm.dto.inq.inqAns.InqAnsSubmit;
 import com.finalteam5.otisrm.dto.ntc.Ntc;
 import com.finalteam5.otisrm.dto.ntc.NtcAtch;
 import com.finalteam5.otisrm.dto.ntc.NtcSubmit;
@@ -38,6 +40,7 @@ public interface BoardService {
 	
 	//공지 조회수 업데이트(상세보기를 했을 경우 update)
     public void addNtcInqCnt(Ntc ntc);
+   
     //===================================================================
     
     //문의게시판 등록폼: 문의 등록하기
@@ -63,6 +66,18 @@ public interface BoardService {
   	
   	//문의 첨부파일 번호에 해당하는 첨부파일 가져오기(파일 다운로드를 위함)
   	public InqAtch getInqAtchByInqAtchNo(String inqAtchNo);
+  	
+    //등록한 문의 수정
+  	public void updateInq(InqSubmit inqSubmit);
+  	
+    //문의답변 등록하기
+  	public int writeInqAns(InqAnsSubmit inqSubmit);
+  	
+  	//최근 삽입한 문의답변 PK 불러오기(첨부파일 등록을 위함)
+  	public String getAddInqAnsPk();
+  		
+  	//문의 답변 첨부파일 업로드
+  	public int uploadInqAnsAtch(InqAnsAtch inqAnsAtch);
   	
     
 	

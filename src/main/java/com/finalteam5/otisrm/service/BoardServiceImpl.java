@@ -7,9 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.finalteam5.otisrm.dao.BoardDao;
-import com.finalteam5.otisrm.dto.inq.Inq;
-import com.finalteam5.otisrm.dto.inq.InqAtch;
-import com.finalteam5.otisrm.dto.inq.InqSubmit;
+import com.finalteam5.otisrm.dto.inq.inq.Inq;
+import com.finalteam5.otisrm.dto.inq.inq.InqAtch;
+import com.finalteam5.otisrm.dto.inq.inq.InqSubmit;
+import com.finalteam5.otisrm.dto.inq.inqAns.InqAnsAtch;
+import com.finalteam5.otisrm.dto.inq.inqAns.InqAnsSubmit;
 import com.finalteam5.otisrm.dto.ntc.Ntc;
 import com.finalteam5.otisrm.dto.ntc.NtcAtch;
 import com.finalteam5.otisrm.dto.ntc.NtcSubmit;
@@ -136,6 +138,39 @@ public class BoardServiceImpl implements BoardService{
 		InqAtch inqAtch = boardDao.selectInqAtchByInqAtchNo(inqAtchNo);
 		return inqAtch;
 	}
-
+	
+	//등록한 문의 수정
+	@Override
+	public void updateInq(InqSubmit inqSubmit) {
+		boardDao.updateInq(inqSubmit);
+	}
+	
+	//문의답변 등록하기
+	@Override
+	public int writeInqAns(InqAnsSubmit inqAnsSubmit) {
+		int numOfInsert = boardDao.insertInqAns(inqAnsSubmit);
+		log.info("문의답변: " + inqAnsSubmit.toString());
+		if(numOfInsert == 1) {
+			InqSubmit inqSubmit = new InqSubmit();
+			inqSubmit.setInqNo(inqAnsSubmit.getInqNo());
+			inqSubmit.setInqAnsYn("Y");
+			boardDao.updateInq(inqSubmit);
+		}
+		return numOfInsert;
+	}
+	
+	//최근 삽입한 문의답변 PK 불러오기(첨부파일 등록을 위함)
+	@Override
+	public String getAddInqAnsPk() {
+		String pk = boardDao.selectAddInqAnsPk();
+		return pk;
+	}
+	
+	//문의 답변 첨부파일 업로드
+	@Override
+	public int uploadInqAnsAtch(InqAnsAtch inqAnsAtch) {
+		int numOfInsert = boardDao.insertInqAnsAtch(inqAnsAtch);
+		return numOfInsert;
+	}
 	
 }

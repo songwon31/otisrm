@@ -1,4 +1,4 @@
-package com.finalteam5.otisrm.dto.inq;
+package com.finalteam5.otisrm.dto.inq.inqAns;
 
 import java.util.Date;
 import java.util.List;
@@ -6,7 +6,8 @@ import java.util.List;
 import lombok.Data;
 
 @Data
-public class Inq {
+public class InqAns {
+	private String inqAnsNo;		//문의 번호	
 	private String inqNo;		//문의 번호	
 	private String usrNo;		//등록자
 	private String usrNm;		//등록자 이름
@@ -19,5 +20,5 @@ public class Inq {
 	private String inqAnsYn;    //답변 여부
 	
 	//첨부파일 
-	private List<InqAtch> inqAtchList;
+	private List<InqAnsAtch> inqAnsAtchList;
 }

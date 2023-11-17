@@ -49,6 +49,7 @@ function loadInqs(pageNo) {
     dataType: "json",
     method: "POST",
     success: function(data) {
+    	console.log("내권한: " + $("#loginUsrAuthrt2").val());
       html="";
       //FAQ 표시
       html += '<tr onclick="toggleTr(10000)" class="data-tr-faq" style="background-color: #f2f7fd;">'; // 일반 행 스타일 적용
@@ -118,9 +119,9 @@ function loadInqs(pageNo) {
           id = item.inqNo
           //비밀글 일때
           if(item.inqPrvtYn == "Y"){
-        	  console.log( $("loginUsrAuthrt2").val());
+        	  console.log( $("#loginUsrAuthrt2").val());
         	  //로그인한 회원의 비밀글 일때
-        	  if(item.usrNo == $("#loginUsr2").val()|| $("loginUsrAuthrt2").val() == "SYS_MANAGER"){        		  
+        	  if(item.usrNo == $("#loginUsr2").val()|| $("#loginUsrAuthrt2").val() == "SYS_MANAGER"){        		  
         		  html += '<tr onclick="toggleTr('+ item.inqNo +')" class="data-tr" style="background-color: white;">'; // 일반 행 스타일 적용
         		  html += '  <td><i style="font-size: 2.0rem; color: #5d6e82;" class="material-icons">lock</i></td>';
         		  html += '  <td class="truncate-text">' + item.inqTtl + '</td>';
@@ -270,7 +271,7 @@ function bytesToKB(bytes) {
 
 
 
-//공지 등록 폼 오늘날짜로 자동 설정
+//등록 폼 오늘날짜로 자동 설정
 function requestInsertDate(){
 	// 오늘의 날짜를 가져오기
 	var today = new Date();
@@ -285,6 +286,7 @@ function requestInsertDate(){
 
 	// 해당 ID를 가진 input 요소에 오늘의 날짜를 설정
 	document.getElementById('writeDate').value = todayFormatted;
+	document.getElementById('writeDate2').value = todayFormatted;
 }
 
 //YY-MM-dd 형식의 String 타입을 Date타입으로 변환
@@ -362,7 +364,7 @@ function showInqDtail(choiceInqNo){
         	//저장버튼(로그인한 회원의 요청만 저장버튼 활성화)
         	var loggedInUsrNo= $("#loginUsr2").val();// 로그인한 회원 번호 가져오기 
         	var modifySaveBtn = $("#modifySaveBtn");
-        	console.log("실행: " + $("#loginUsr2").val());
+        	console.log("내권한: " + $("loginUsrAuthrt2").val());
         	// 로그인한 사용자와 문의을 등록한 회원을 비교하여 버튼 활성화/비활성화
         	if (data.usrNo === loggedInUsrNo) {
         		console.log("내요청");
@@ -385,6 +387,7 @@ function showInqDtail(choiceInqNo){
         	$("#getInq-iqnTtl").val(data.inqTtl);
         	$("#getInq-inqConts").val(data.inqConts);
         	$("#getInq-inqWrtDt").val(formattedDate);
+        	$("#ans-inqNo").val(data.inqNo);
        
         	//첨부파일
         	if (data.inqAtchList && typeof data.inqAtchList === "object") {
@@ -416,8 +419,8 @@ function showInqDtail(choiceInqNo){
         	    // srRqstAtchList가 객체가 아닐 때
         	    $("#showInqAtch").hide();
         	}
-        	if (data.inqPrvtYn2 === "Y") {
-        	    $("#prvnCh2k").prop("checked", true);
+        	if (data.inqPrvtYn === "Y") {
+        	    $("#prvnChk2").prop("checked", true);
         	} else {
         	    $("#prvnChk2").prop("checked", false);
         	}
@@ -467,6 +470,36 @@ function modifySubmitData(){
 		$("#submit_Yn").val("N");
 	}
 }
+
+//**문의답변 등록하기
+function submitInqAns(){
+	var form = $("#writeInqAnsForm")[0];
+	var formData = new FormData(form); // 폼 엘리먼트를 선택하고, [0]을 사용하여 DOM 요소로 변환
+	console.log(form);
+	console.log(formData);
+	$.ajax({
+	    url: "writeInqAnsByInqNo", // 요청을 보낼 URL
+	    method: "POST",
+	    data: formData, // 폼 데이터를 전송
+	    success: function (data) {
+	    	 console.log(data);
+	        // 성공적으로 요청이 완료된 경우 실행할 코드
+	        var currentURL = window.location.href;
+	        console.log(currentURL);
+	        window.location.href = "/boardManagement"; // 또는 다른 원하는 URL로 변경
+	        
+	    },
+	    error: function (error) {
+	        // 요청 중 오류가 발생한 경우 실행할 코드
+	        console.error("으어아으우어");
+	    },
+	    cache: false,        //파일이 포함되어 있으니, 브라우저 메모리에 저장하지 마라
+	    processData: false,  //title=xxx&desc=yyy& 씩으로 만들지 마라
+	    contentType: false,   //파트마다 Content-Type이 포함되기 때문에 따로 헤더에 Content-Type에 추가하지 마라(mutiple-> 파일마다 모두 다름)
+	});
+}
+
+
 
 //공지 수정
 function modifyNtc(srRqstNo) {

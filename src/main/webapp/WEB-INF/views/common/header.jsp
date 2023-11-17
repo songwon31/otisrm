@@ -115,6 +115,7 @@
 		                <img class="img-profile rounded-circle" src="https://themewagon.github.io/stisla-1/assets/img/avatar/avatar-1.png" style="height:4rem; width:4rem; margin-right:1rem;">
 		                <span id="profile_name" class="d-none d-lg-inline text-gray-600 small" style="font-size:1.7rem; margin-right:0.7rem;">${usr.usrNm}</span>
 		                <span id="profile_authority" class="d-none d-lg-inline text-gray-600 small" style="font-size:1.7rem; margin-right:0.7rem;">(${usr.usrAuthrtNm})</span>
+		                <input id="loginAuthrt" type="hidden" value="${usr.usrAuthrtNo}">
 		            </a>
 		            <!-- Dropdown - User Information -->
 		            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown"

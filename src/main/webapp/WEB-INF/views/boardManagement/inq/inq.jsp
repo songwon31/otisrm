@@ -167,7 +167,7 @@
 </div>
 
 <!-- 문의에 해당하는 상세모달 -->
-<div id="answelInq" class="modal" data-backdrop="static">
+<div id="answelInq" class="modal" data-backdrop="static" >
   <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content">
       <div class="modal-header">
@@ -175,7 +175,7 @@
         <i class="material-icons close-icon close" data-dismiss="modal" style="cursor: pointer;">close</i>
       </div>
       <div id="answerInq" class="modal-body">
-      	<form id="modifyInq" action="modifyInq" method="post" enctype="multipart/form-data">
+      	<form id="modifyInq" action="modifyInq" method="post" enctype="multipart/form-data"  enctype="multipart/form-data">
       		<!-- SR요청정보 -->
       		<div class="d-flex">      		
 	      		<div style="margin-right: 608px;">      		
@@ -248,7 +248,7 @@
     </form>
     
     <!-- 문의 답변 등록 폼 -->
-    <form>
+    <form id="writeInqAnsForm" action="writeInqAnsByInqNo" method="post"  enctype="multipart/form-data">
       <h6 class="modal-sub-title">문의답변</h6>
       <div class="card p-3 mb-4">
 	  	<div>
@@ -259,6 +259,7 @@
 		          	</div>
 		 			<div class="w-60">
 			            <input type="text" class="form-control" id="writer" value="${usr.usrNm}" disabled>
+			            <input type="hidden" class="form-control" id="ans-inqNo" name="inqNo" value="">
 		 			</div>
 		            <input type="hidden" id="usrNo" name="usrNo" value="${usr.usrNo}">
 		        </div>
@@ -267,7 +268,7 @@
 		            	<label for="writeDate" class="form-label">등록일</label>
 		          	</div>
 		 			<div class="w-60">
-			            <input type="date" class="form-control" id="writeDate" disabled>
+			            <input type="date" class="form-control" id="writeDate2" disabled>
 		 			</div>
 		        </div>
 			</div>
@@ -277,7 +278,7 @@
 			          <label for="ntcTtl" class="form-label">제목</label>
 			        </div>
 			        <div style="width: 605px;">
-			          <input type="text" class="form-control" id="inqTtl" name="inqTtl">
+			          <input type="text" class="form-control" id="inqAnsTtl" name="inqAnsTtl">
 			        </div>
 			    </div>
 		        <div class="d-flex w-100 pt-2">
@@ -285,7 +286,7 @@
 			          <label for="ntcConts" class="form-label">내용</label>
 			        </div>
 			        <div style="width: 605px;">
-			          <textarea class="form-control" id="inqConts" name="inqConts" maxlength="5"></textarea>
+			          <textarea class="form-control" id="inqAnsConts" name="inqAnsConts"></textarea>
 			        </div>
 			    </div>
 		        <div class="d-flex w-100 pt-2">

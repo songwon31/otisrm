@@ -202,4 +202,38 @@
 		select * from inq_atch where inq_atch_no = #{inqAtchNo}
 	</select>
 	
+	<!-- 등록한 문의 수정 -->
+	<update id="updateInq" parameterType="InqSubmit">
+		update inq
+		set
+		  inq_ans_yn = COALESCE(#{inqAnsYn, jdbcType=VARCHAR}, inq_ans_yn),
+		  inq_mdfcn_dt = sysdate
+		where inq_no = #{inqNo, jdbcType=VARCHAR}
+	</update>
+	
+	<!-- 문의답변 작성하기 -->
+	<insert id="insertInqAns" parameterType="InqAnsSubmit">
+		insert into inq_ans (inq_ans_no, inq_no, usr_no, inq_ans_ttl, inq_ans_conts, inq_ans_wrt_dt, inq_ans_mdfcn_dt)
+		values((select NVL(MAX(inq_ans_no)+1,0)from inq_ans), #{inqNo}, #{usrNo}, #{inqAnsTtl}, #{inqAnsConts}, sysdate, sysdate)
+	</insert>
+	
+	<!-- 최근 삽입한 답변 PK 불러오기(첨부파일 등록을 위함) -->
+	<select id="selectAddInqAnsPk" resultType="String">
+		select inq_ans from (
+		  select * from inq_ans order by inq_ans_wrt_dt desc
+		) where rownum = 1
+	</select>
+	
+	<!-- 문의사항 첨부파일 업로드 -->
+	<insert id="insertInqAnsAtch" parameterType="InqAnsAtch">
+	     insert into inq_ans_atch(
+	        inq_ans_atch_no, inq_ans_no, inq_ans_atch_nm, inq_ans_atch_mime_type,
+	        inq_ans_atch_data, inq_ans_atch_size
+	    ) values(
+	        (select NVL(MAX(inq_atch_no)+1,0)from inq_ans_atch), #{inqAnsNo, jdbcType=VARCHAR}, #{inqAnsAtchNm, jdbcType=VARCHAR},
+	        #{inqAnsAtchMimeType, jdbcType=VARCHAR}, #{inqAnsAtchData, jdbcType=BLOB},
+	        #{inqAnsAtchSize, jdbcType=NUMERIC}
+	    )
+	</insert>
+	
 </mapper>
