@@ -527,7 +527,7 @@ function deleteRole(button) {
 	        data: requestData,
 	        success: function (data) {
 	        	if (data == "roleFailUsrExist") {
-	        		$('#warningContent').html("해당 부서의 사용자가 존재합니다.");
+	        		$('#warningContent').html("해당 역할의 사용자가 존재합니다.");
 	    			$("#warningModal").modal("show");
 	        	} else if (data == "roleFailDelete") {
 	        		$('#warningContent').html("직위 삭제에 실패했습니다.");
@@ -704,18 +704,251 @@ function saveDept() {
         }
     });
 }
-/*
-function sysManageModalTableConfig(pageNo) {
+
+
+
+
+//메인 테이블 검색 옵션
+var currentSystemManagementSearch = {
+	systemKeywordCategory: null,
+	systemKeywordContent: null
+}
+//메인 테이블 페이지 번호
+var currentSystemManagementPageNo = 1;
+
+function systemTableSearch() {
+	
+	currentSystemManagementSearch.systemKeywordCategory = $('#systemKeywordCategory').val();
+	if ($('#systemKeywordCategory').val() == '') currentSystemManagementSearch.systemKeywordCategory = null;
+	
+	currentSystemManagementSearch.systemKeywordContent = $('#systemKeywordContent').val();
+	if ($('#systemKeywordContent').val() == '') currentSystemManagementSearch.systemKeywordContent = null;
+	
+	console.log(currentSystemManagementSearch);
+	
+	systemTableConfig(currentSystemManagementSearch, currentSystemManagementPageNo);
+}
+
+function systemTableSearchReset() {
+	currentSystemManagementSearch.systemKeywordCategory = null;
+	currentSystemManagementSearch.systemKeywordContent = null;
+	
+	currentSystemManagementPageNo = 1;
+	$('#systemKeywordCategory').val('sysNm');
+	$('#systemKeywordContent').val('');
+	systemTableConfig(currentSystemManagementSearch, currentSystemManagementPageNo);
+}
+
+//시스템 테이블 구성
+function systemTableConfig(systemManagementSearch, pageNo) {
+	currentSystemManagementPageNo = pageNo;
+	let requestData = {
+		systemManagementSearch: JSON.stringify(systemManagementSearch),
+		pageNo: pageNo
+	}
 	$.ajax({
-        url: "/otisrm/systemManagement/instManagement/getSysManageModalTableConfigData",
-        method: "POST",
-        data: {pageNo: pageNo},
+		type: "POST",
+		url: "/otisrm/systemManagement/instManagement/getSystemTableConfig",
+		data: JSON.stringify(requestData),
+		contentType: "application/json",
+		success: function(data) {
+			//테이블 body 구성
+			//테이블 body 초기화
+			$('#sysManageModalTable tbody').html('');
+			//테이블 body 재구성
+			for (let i=0; i<data.sysList.length; ++i) {
+				let sys = data.sysList[i];
+				let sysTableHtml = '';
+				sysTableHtml += '<tr style="height:4.7rem; font-size:1.5rem; background-color:white;">';
+				sysTableHtml += '<td><input type="checkbox" class="checkbox" style="vertical-align: middle;"></td>';
+				sysTableHtml += '<td>' + (i+1) + '</td>';
+				sysTableHtml += '<td><input type="text" class="modalTableSysNm" value="' + sys.sysNm + '" style="vertical-align: middle; text-align:center;">';
+				sysTableHtml += '<td><input type="text" class="modalTableSysNo" disabled value="' + sys.sysNo + '" style="vertical-align: middle; text-align:center;">';
+				sysTableHtml += '<td><select class="sysDeptSelect" name="sysDeptSelect" style="height:3rem;">';
+				for (let j=0; j<data.deptList.length; ++j) {
+					let dept = data.deptList[j];
+					if (dept.deptNo == sys.deptNo) {
+						sysTableHtml += '<option value="' + data.deptList[j].deptNo + '" selected>' + (dept.instNm + '-' + dept.deptNm) + '</option>';
+					} else {
+						sysTableHtml += '<option value="' + data.deptList[j].deptNo + '">' + (dept.instNm + '-' + dept.deptNm) + '</option>';
+					}
+					
+				}
+				sysTableHtml += '<td><button class="btn-1" style="height:3rem; width:80%;" onclick="editSystem(this)">수정</button></td>';
+				sysTableHtml += '</select></td>';
+								
+				//jsp에 삽입
+				$('#sysManageModalTable tbody').append(sysTableHtml);
+			}
+			
+			//시스템 추가 테이블 select 구성
+			$('#registSysModalDeptClsf').html('');
+			for (let j=0; j<data.deptList.length; ++j) {
+				let dept = data.deptList[j];
+				let html = '<option value="' + data.deptList[j].deptNo + '">' + (dept.instNm + '-' + dept.deptNm) + '</option>';
+				$('#registSysModalDeptClsf').append(html);
+			}
+
+			
+			//일괄 체크 구현
+			$("#sysBatchCheck").on("change", function() {
+		        if ($(this).prop("checked")) {
+		            // batchCheck가 체크되면 mainTable 안의 모든 체크박스를 체크
+		            $("#sysManageModalTable input[type='checkbox']").prop("checked", true);
+		        } else {
+		            // batchCheck가 체크 해제되면 mainTable 안의 모든 체크박스를 체크 해제
+		            $("#sysManageModalTable input[type='checkbox']").prop("checked", false);
+		        }
+		    });
+			
+			//페이징 파트 구현
+			let pagerHtml = '';
+			if (data.pager.totalRows == 0) {
+				pagerHtml += '<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center; color:#868e96; cursor:default;">first_page</i>';
+				pagerHtml += '<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center; color:#868e96; cursor:default;">chevron_left</i>';
+				pagerHtml += '<a href="javascript:void(0)" style="font-size: 1.6rem; height: 3rem; line-height: 3rem;">1</a>';
+				pagerHtml += '<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center; color:#868e96; cursor:default;">chevron_right</i>';
+				pagerHtml += '<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center; color:#868e96; cursor:default;">last_page</i>';
+			} else {
+				currentPageNo = data.pager.pageNo;
+				if (data.pager.groupNo == 1) {
+					pagerHtml += '<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center; color:#868e96; cursor:default;">first_page</i>';
+					pagerHtml += '<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center; color:#868e96; cursor:default;">chevron_left</i>';
+				} else {
+					pagerHtml += '<a href="javascript:void(0) onclick="systemTableConfig(currentSystemManagementSearch, '+1+')">';
+					pagerHtml += '<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center;">first_page</i>';
+					pagerHtml += '</a>';
+					pagerHtml += '<a href="javascript:void(0)  onclick="systemTableConfig(currentSystemManagementSearch, ' + ((data.pager.groupNo - data.pager.pagesPerGroup) * 5) + ')">';
+					pagerHtml += '<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center;">chevron_left</i>';
+					pagerHtml += '</a>';
+				}
+				
+				for (let i=data.pager.startPageNo; i<=data.pager.endPageNo; ++i) {
+					pagerHtml += '<div style="width: 0.25rem;"></div>';
+					if (data.pager.pageNo != i) {
+						pagerHtml += '<a href="javascript:void(0)" onclick="systemTableConfig(currentSystemManagementSearch, '+i+')" style="font-size: 1.6rem; height: 3rem; line-height: 3rem;">'+i+'</a>';
+					} else {
+						pagerHtml += '<a href="javascript:void(0)" style="font-size: 1.6rem; height: 3rem; line-height: 3rem;">'+i+'</a>';
+					}
+					pagerHtml += '<div style="width: 0.25rem;"></div>';
+					
+				}
+				if (data.pager.groupNo == data.pager.totalGroupNo) {
+					pagerHtml += '<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center; color:#868e96; cursor:default;">chevron_right</i>';
+					pagerHtml += '<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center; color:#868e96; cursor:default;">last_page</i>';
+				} else {
+					pagerHtml += '<a href="javascript:void(0) onclick="systemTableConfig(currentSystemManagementSearch, ' + ((data.pager.groupNo * data.pager.pagesPerGroup)+1) + ')">';
+					pagerHtml += '<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center;">chevron_right</i>';
+					pagerHtml += '</a>';	
+					pagerHtml += '<a href="javascript:void(0) onclick="systemTableConfig(currentSystemManagementSearch, ' + data.pager.endPageNo + ')"">';
+					pagerHtml += '<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center;">last_page</i>';
+					pagerHtml += '</a>';
+				}
+				
+				$('#sysManageModalTablePagerDiv').html(pagerHtml);
+			}
+		}
+	});
+}
+
+function editSystem(button) {
+	let closestTr = $(button).closest('td').parent('tr');
+	let sysNm = closestTr.find('.modalTableSysNm').val();
+	let sysNo = closestTr.find('.modalTableSysNo').val();
+	let deptNo = closestTr.find('.sysDeptSelect').val();
+
+	let requestData = {
+		sysNm: sysNm,
+		sysNo: sysNo,
+		deptNo: deptNo
+    };
+	
+	$.ajax({
+        url: '/otisrm/systemManagement/instManagement/editSystem',
+        type: 'POST',	
+        data: requestData,
         success: function (data) {
-        	
+        	if (data == "fail") {
+        		$('#warningContent').html("진행중인 SR개발건이 존재하여<br>담당 부서를 변경할 수 없습니다.");
+    			$("#warningModal").modal("show");
+        	} else if (data == "success") {
+        		$('#alertContent').html("시스템 정보가 저장되었습니다.");
+    			$("#alertModal").modal("show");
+        	}
+        	systemTableConfig(currentSystemManagementSearch, currentSystemManagementPageNo);
         }
     });
 }
-*/
 
+//시스템 등록 모달 초기화
+function registSysModalConfig() {
+	$('#registSysModalSysNm').val('');
+	$('#registSysModalSysNo').val('');
+	$('#registSysModalDeptClsf').val('');
+}
 
+//시스템 등록
+function registSys() {
+	let sysNm = $('#registSysModalSysNm').val();
+	let sysNo = $('#registSysModalSysNo').val();
+	let deptNo = $('#registSysModalDeptClsf').val();
+	if (sysNm == '' || sysNo == '' || deptNo == '') {
+		$('#warningContent').html("모든 정보를 입력해주세요.");
+		$("#warningModal").modal("show");
+	} else {
+		let requestData = {
+			sysNo: sysNo,
+			sysNm: sysNm,
+			deptNo: deptNo
+	    };
+		
+		$.ajax({
+	        url: '/otisrm/systemManagement/instManagement/registSys',
+	        type: 'POST',	
+	        data: requestData,
+	        success: function (data) {
+	        	if (data == "success") {
+	        		$('#registSysModal').modal('hide');
+	        		$('#alertContent').html("시스템이 등록되었습니다.");
+	    			$("#alertModal").modal("show");
+	        	} else {
+	        		$('#warningContent').html("이미 존재하는 시스템 코드입니다.");
+	    			$("#warningModal").modal("show");
+	        	}
+	        	systemTableConfig(currentSystemManagementSearch, currentSystemManagementPageNo);
+	        }
+	    });
+	}
+}
+
+//시스템 삭제
+function deleteSys() {
+	let sysNoList = [];
+	// 테이블 내의 체크박스를 확인
+	$('#sysManageModalTable td').each(function () {
+	    if ($(this).find('.checkbox').is(':checked')) {
+	        // 체크된 행의 데이터를 객체로 저장
+	    	sysNoList.push($(this).closest('tr').find('.modalTableSysNo').val());
+	    }
+	});
+	
+	$.ajax({
+        url: '/otisrm/systemManagement/instManagement/deleteSys',
+        type: 'POST',	
+        data: JSON.stringify(sysNoList),
+        contentType: 'application/json',
+        success: function (data) {
+        	if (data == "success") {
+        		$('#alertContent').html("시스템이 삭제되었습니다.");
+    			$("#alertModal").modal("show");
+        	} else {
+        		$('#warningContent').html("진행중인 SR개발건이 존재하여<br>시스템을 삭제할 수 없습니다.");
+    			$("#warningModal").modal("show");
+        	}
+        	systemTableConfig(currentSystemManagementSearch, currentSystemManagementPageNo);
+        	$("#sysBatchCheck").prop("checked", false);
+        }
+    });
+	
+}
 
