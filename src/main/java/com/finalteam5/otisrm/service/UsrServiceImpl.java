@@ -400,15 +400,7 @@ public class UsrServiceImpl implements UsrService{
 		}
 	}
 	
-	//기업 상세정보
-	@Override
-	public InstDetail getDetailInstInfo(String instNo) {
-		InstDetail instDetail = usrDao.selectInstDetail(instNo);
-		instDetail.setIbpsList(usrDao.selectIbpsListByInstNo(instNo));
-		instDetail.setRoleList(usrDao.selectRoleListByInstNo(instNo));
-		instDetail.setDeptList(usrDao.selectDeptListByInstNo(instNo));
-		return null;
-	}
+	
 	
 
 }

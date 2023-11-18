@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.finalteam5.otisrm.dto.usr.Dept;
+import com.finalteam5.otisrm.dto.usr.Inst;
 import com.finalteam5.otisrm.dto.usr.InstDetail;
 import com.finalteam5.otisrm.dto.usr.InstTableConfigForInstManagement;
 import com.finalteam5.otisrm.dto.usr.Usr;
@@ -19,6 +20,7 @@ import com.finalteam5.otisrm.dto.usr.UsrManagementModalConfigure;
 import com.finalteam5.otisrm.dto.usr.UsrManagementSearchConfigure;
 import com.finalteam5.otisrm.dto.usr.UsrTableConfigForUsrManagement;
 import com.finalteam5.otisrm.security.UsrDetails;
+import com.finalteam5.otisrm.service.InstService;
 import com.finalteam5.otisrm.service.UsrService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -34,6 +36,8 @@ import lombok.extern.slf4j.Slf4j;
 public class SystemManagementController {
 	@Resource
 	UsrService usrService;
+	@Resource
+	InstService instService;
 	
 	//사용자 관리 페이지
 	@RequestMapping("/usrManagement")
@@ -134,6 +138,77 @@ public class SystemManagementController {
 	@RequestMapping("/instManagement/getDetailInstInfo")
 	@ResponseBody
 	public InstDetail getDetailInstInfo(String instNo) {
-		return usrService.getDetailInstInfo(instNo);
+		return instService.getDetailInstInfo(instNo);
 	}
+	
+	//기업 등록
+	@RequestMapping("/instManagement/registInst")
+	@ResponseBody
+	public String registInst(Inst inst) {
+		return instService.registInst(inst);
+	}
+	
+	//기업 삭제
+	@RequestMapping("/instManagement/deleteInst")
+	@ResponseBody
+	public String deleteInst(@RequestBody List<String> instNoList) {
+		return instService.deleteInst(instNoList);
+	}
+	
+	//기업명 저장
+	@RequestMapping("/instManagement/saveNm")
+	@ResponseBody
+	public String saveNm(String instNo, String instNm) {
+		return instService.updateInstNm(instNo, instNm);
+	}
+	
+	//기업분류 저장
+	@RequestMapping("/instManagement/saveClsf")
+	@ResponseBody
+	public String saveClsf(String instNo, String instClsf) {
+		return instService.updateInstClsf(instNo, instClsf);
+	}
+	
+	//직위 삭제
+	@RequestMapping("/instManagement/deleteIbps")
+	@ResponseBody
+	public String deleteIbps(String ibpsNo) {
+		return instService.deleteIbps(ibpsNo);
+	}
+	
+	//직위 저장
+	@RequestMapping("/instManagement/saveIbps")
+	@ResponseBody
+	public String saveIbps(@RequestBody String jsonData) {
+		return instService.saveIbps(jsonData);
+	}
+	
+	//역할 삭제
+	@RequestMapping("/instManagement/deleteRole")
+	@ResponseBody
+	public String deleteRole(String roleNo) {
+		return instService.deleteRole(roleNo);
+	}
+	
+	//역할 저장
+	@RequestMapping("/instManagement/saveRole")
+	@ResponseBody
+	public String saveRole(@RequestBody String jsonData) {
+		return instService.saveRole(jsonData);
+	}
+	
+	//부서 삭제
+	@RequestMapping("/instManagement/deleteDept")
+	@ResponseBody
+	public String deleteDept(String deptNo) {
+		return instService.deleteDept(deptNo);
+	}
+	
+	//부서 저장
+	@RequestMapping("/instManagement/saveDept")
+	@ResponseBody
+	public String saveDept(@RequestBody String jsonData) {
+		return instService.saveDept(jsonData);
+	}
+	
 }

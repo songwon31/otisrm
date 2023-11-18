@@ -164,7 +164,7 @@ function mainTableConfig(usrManagementSearch, pageNo) {
 				$('#mainTable tbody').append(mainTableHtml);
 			}
 			
-			 $("#batchCheck").prop("checked", false);
+			$("#batchCheck").prop("checked", false);
 			//일괄 체크 구현
 			$("#batchCheck").on("change", function() {
 		        if ($(this).prop("checked")) {

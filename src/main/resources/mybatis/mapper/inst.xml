@@ -9,4 +9,184 @@
 	<select id="selectNoOutsrcInstList"  resultType="Inst">
 	       select * from inst where outsrc_yn = 'N' order by inst_no desc		 
     </select>
+    
+    <!-- 기업 상세 정보 -->
+    <select id="selectInstDetail" parameterType="String" resultType="com.finalteam5.otisrm.dto.usr.InstDetail">
+    	SELECT inst_no, inst_nm, outsrc_yn
+    	FROM inst
+    	WHERE inst_no = #{instNo}
+    </select>
+    
+    <!--기관에 해당하는 개발부서 목록 불러오기 -->
+	<select id="selectDeptListByInstNo" parameterType="String" resultType="Dept">
+       select * from dept
+       <if test="instNo != null">
+       		where inst_no = #{instNo}
+       </if>
+    </select>
+    
+	<!--기관에 해당하는 직위 목록 불러오기 -->
+	<select id="selectIbpsListByInstNo" parameterType="String" resultType="Ibps">
+       select * from ibps
+       <if test="instNo != null">
+       		where inst_no = #{instNo}
+       </if>
+    </select>
+    
+	<!--기관에 해당하는 역할 목록 불러오기 -->
+	<select id="selectRoleListByInstNo" parameterType="String" resultType="Role">
+       select * from role
+       <if test="instNo != null">
+       		where inst_no = #{instNo}
+       </if>
+    </select>
+    
+    <!-- 기업 등록 -->
+    <select id="checkInstExist" parameterType="String" resultType="int">
+    	SELECT COUNT(*)
+    	FROM inst
+    	WHERE inst_no = #{instNo}
+    </select>
+    
+    <insert id="insertInst" parameterType="Inst">
+    	INSERT INTO inst(inst_no, inst_nm, outsrc_yn)
+    	VALUES (#{instNo}, #{instNm}, #{outsrcYn})
+    </insert>
+    
+    <!-- 기업 삭제 -->
+    <select id="checkInstUsr" parameterType="String" resultType="int">
+    	SELECT COUNT(*)
+    	FROM usr
+    	WHERE inst_no = #{instNo}
+    </select>
+    
+    <delete id="deleteInstByInstNo" parameterType="String">
+    	DELETE FROM inst
+    	WHERE inst_no = #{instNo}
+    </delete>
+    
+    <!-- 기업명 저장 -->
+    <update id="updateInstNm" parameterType="map">
+    	UPDATE inst
+    	SET inst_nm = #{instNm}
+    	WHERE inst_no = #{instNo}
+    </update>
+    
+    <!-- 기업분류 저장 -->
+    <select id="checkInstSr" parameterType="String">
+    SELECT COUNT(*)
+    FROM (
+    	SELECT usr.inst_no
+    	FROM sr_rqst
+    	JOIN usr ON sr_rqst.sr_reqstr_no = usr.usr_no
+    	WHERE usr.inst_no = #{instNo} AND sr_rqst.sr_rqst_stts_no != 'DEP_CMPTN'
+    	UNION
+    	SELECT pic.inst_no
+    	FROM sr
+    	JOIN sr_rqst ON sr.sr_rqst_no = sr_rqst.sr_rqst_no
+    	JOIN usr pic ON sr.pic_usr_no = pic.usr_no
+    	WHERE pic.inst_no = #{instNo} AND sr_rqst.sr_rqst_stts_no != 'DEP_CMPTN'
+        UNION
+    	SELECT sr_trnsf_inst_no
+    	FROM sr
+    	JOIN sr_rqst ON sr.sr_rqst_no = sr_rqst.sr_rqst_no
+    	WHERE sr_trnsf_inst_no = #{instNo} AND sr_rqst.sr_rqst_stts_no != 'DEP_CMPTN'
+    )
+    </select>
+    
+    <update id="updateInstClsf" parameterType="map">
+    	UPDATE inst
+    	SET outsrc_yn = #{instClsf}
+    	WHERE inst_no = #{instNo}
+    </update>
+    
+    <!-- 직위 삭제 -->
+    <select id="checkIbpsUsrExist" parameterType="String" resultType="int">
+    	SELECT count(*)
+    	FROM usr
+    	WHERE ibps_no = #{ibpsNo}
+    </select>
+    
+    <delete id="deleteIbps" parameterType="String">
+    	DELETE FROM ibps
+    	WHERE ibps_no = #{ibpsNo}
+    </delete>
+    
+    <!-- 직위 저장 -->
+    <select id="checkIbps" parameterType="String" resultType="int">
+    	SELECT count(*)
+    	FROM ibps
+    	WHERE ibps_no = #{ibpsNo}
+    </select>
+    
+    <update id="updateIbps" parameterType="Ibps">
+    	UPDATE ibps
+    	SET ibps_nm = #{ibpsNm}
+    	WHERE ibps_no = #{ibpsNo}
+    </update>
+    
+    <insert id="insertIbps" parameterType="Ibps">
+    	INSERT INTO ibps(ibps_no, inst_no, ibps_nm)
+    	VALUES (#{ibpsNo}, #{instNo}, #{ibpsNm})
+    </insert>
+    
+    <!-- 역할 삭제 -->
+    <select id="checkRoleUsrExist" parameterType="String" resultType="int">
+    	SELECT count(*)
+    	FROM usr
+    	WHERE role_no = #{roleNo}
+    </select>
+    
+    <delete id="deleteRole" parameterType="String">
+    	DELETE FROM role
+    	WHERE role_no = #{roleNo}
+    </delete>
+    
+    <!-- 역할 저장 -->
+    <select id="checkRole" parameterType="String" resultType="int">
+    	SELECT count(*)
+    	FROM role
+    	WHERE role_no = #{roleNo}
+    </select>
+    
+    <update id="updateRole" parameterType="Role">
+    	UPDATE role
+    	SET role_nm = #{roleNm}, role_seq = #{roleSeq}
+    	WHERE role_no = #{roleNo}
+    </update>
+    
+    <insert id="insertRole" parameterType="Role">
+    	INSERT INTO role(role_no, inst_no, role_nm, role_seq)
+    	VALUES (#{roleNo}, #{instNo}, #{roleNm}, #{roleSeq})
+    </insert>
+    
+    <!-- 부서 삭제 -->
+    <select id="checkDeptUsrExist" parameterType="String" resultType="int">
+    	SELECT count(*)
+    	FROM usr
+    	WHERE dept_no = #{deptNo}
+    </select>
+    
+    <delete id="deleteDept" parameterType="String">
+    	DELETE FROM dept
+    	WHERE dept_no = #{deptNo}
+    </delete>
+    
+    <!-- 부서 저장 -->
+    <select id="checkDept" parameterType="String" resultType="int">
+    	SELECT count(*)
+    	FROM dept
+    	WHERE dept_no = #{deptNo}
+    </select>
+    
+    <update id="updateDept" parameterType="Dept">
+    	UPDATE dept
+    	SET dept_nm = #{deptNm}
+    	WHERE dept_no = #{deptNo}
+    </update>
+    
+    <insert id="insertDept" parameterType="Dept">
+    	INSERT INTO dept(dept_no, inst_no, dept_nm)
+    	VALUES (#{deptNo}, #{instNo}, #{deptNm})
+    </insert>
 </mapper>

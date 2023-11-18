@@ -111,6 +111,5 @@ public interface UsrService {
 	//기업관리페이지 메인 테이블 구성
 	public InstTableConfigForInstManagement getInstTableConfigForInstManagement(String jsonData);
 	
-	//기업 상세정보
-	public InstDetail getDetailInstInfo(String instNo);
+	
 }
