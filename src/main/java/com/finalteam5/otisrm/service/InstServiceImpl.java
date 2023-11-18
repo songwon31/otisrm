@@ -233,4 +233,6 @@ public class InstServiceImpl implements InstService{
 			return "error";
 		}
 	}
+	
+	//시스템 관리 모달 테이블 데이터 구성
 }

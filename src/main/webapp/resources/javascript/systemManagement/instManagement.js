@@ -500,6 +500,7 @@ function addRole() {
 	html += '<td></td>';
 	html += '<td><input type="text" class="detailRoleNm" value="" style="width:50%; text-align: center;"></td>';
 	html += '<td><input type="text" class="detailRoleNo" value="" style="width:50%; text-align: center;"></td>';
+	html += '<td><input type="text" class="detailRoleSeq" value="" style="width:50%; text-align: center;"></td>';
 	html += '<td><button class="btn-1" style="height:3rem; width:50%; background-color:red;" onclick="deleteRole(this)">삭제</button></td>';
 	html += '</tr>';
 	
@@ -703,3 +704,18 @@ function saveDept() {
         }
     });
 }
+/*
+function sysManageModalTableConfig(pageNo) {
+	$.ajax({
+        url: "/otisrm/systemManagement/instManagement/getSysManageModalTableConfigData",
+        method: "POST",
+        data: {pageNo: pageNo},
+        success: function (data) {
+        	
+        }
+    });
+}
+*/
+
+
+

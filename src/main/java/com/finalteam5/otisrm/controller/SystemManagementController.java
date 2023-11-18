@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.finalteam5.otisrm.dto.inst.SysTableConfig;
 import com.finalteam5.otisrm.dto.usr.Dept;
 import com.finalteam5.otisrm.dto.usr.Inst;
 import com.finalteam5.otisrm.dto.usr.InstDetail;
@@ -210,5 +211,8 @@ public class SystemManagementController {
 	public String saveDept(@RequestBody String jsonData) {
 		return instService.saveDept(jsonData);
 	}
+	
+	
+	//시스템 관리
 	
 }
