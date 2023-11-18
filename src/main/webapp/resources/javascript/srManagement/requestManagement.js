@@ -308,7 +308,7 @@ function loadSRRequests(pageNo, choiceSrRqstSttsNo) {
           $(this).css('background-color', 'white');
         }
       );
-      loading();
+
       // 성공적으로 요청이 완료된 경우 실행할 코드
       var currentURL = window.location.href;
     },
@@ -398,7 +398,6 @@ function bytesToKB(bytes) {
 
 //**요청에 해당하는 상세 정보 가져오기 (모달)
 function showSrRqstBySrRqstNo(choiceSrRqstNo){
-	loading();
 	$.ajax({
 		type: "GET",
         url: "getSrRqstBySrRqstNoOfMng",
