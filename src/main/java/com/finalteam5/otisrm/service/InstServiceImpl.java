@@ -1,13 +1,20 @@
 package com.finalteam5.otisrm.service;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.finalteam5.otisrm.dao.InstDao;
+import com.finalteam5.otisrm.dto.Pager;
+import com.finalteam5.otisrm.dto.Sys;
+import com.finalteam5.otisrm.dto.inst.SysTableConfig;
+import com.finalteam5.otisrm.dto.inst.SystemManagementSearch;
 import com.finalteam5.otisrm.dto.usr.Dept;
 import com.finalteam5.otisrm.dto.usr.Ibps;
 import com.finalteam5.otisrm.dto.usr.Inst;
@@ -235,4 +242,74 @@ public class InstServiceImpl implements InstService{
 	}
 	
 	//시스템 관리 모달 테이블 데이터 구성
+	@Override
+	public SysTableConfig getSystemTableConfig(String jsonData) {
+		try {
+			ObjectMapper objectMapper = new ObjectMapper();
+			SystemManagementSearch systemManagementSearch = new SystemManagementSearch();
+			Integer pageNo;
+        
+            // JSON 문자열을 Map으로 파싱
+            Map<String, Object> jsonMap = objectMapper.readValue(jsonData, Map.class);
+            String innerJson = (String) jsonMap.get("systemManagementSearch");
+            systemManagementSearch = objectMapper.readValue(innerJson, SystemManagementSearch.class);
+            pageNo = (Integer) jsonMap.get("pageNo");
+            
+            int totalSysNum = instDao.countSearchedSys(systemManagementSearch);
+            Pager pager = new Pager(5, 5, totalSysNum, pageNo);
+            
+            SysTableConfig sysTableConfig = new SysTableConfig();
+            sysTableConfig.setSysList(instDao.selectSearchedSysByPager(systemManagementSearch, pager));
+            sysTableConfig.setDeptList(instDao.selectMainDeptList());
+            sysTableConfig.setPager(pager);
+            
+            log.info(""+sysTableConfig.getSysList());
+	        
+			return sysTableConfig;
+		} catch (IOException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	//시스템 정보 수정
+	public String editSystem(Sys sys) {
+		instDao.updateSysNm(sys);
+		if (instDao.countSysOnSr(sys.getSysNo()) == 0) {
+			instDao.updateDeptNo(sys);
+			return "success";
+		} else {
+			return "fail";
+		}
+	}
+	
+	//시스템 등록
+	@Override
+	public String registSys(Sys sys) {
+		if (instDao.checkSysExist(sys.getSysNo()) == 0) {
+			instDao.insertSys(sys);
+			return "success";
+		} else {
+			return "fail";
+		}
+	}
+	
+	//시스템 삭제
+	@Override
+	public String deleteSys(List<String> sysNoList) {
+		int totalNum = sysNoList.size();
+		int deletedNum = 0;
+		for (String sysNo : sysNoList) {
+			if (instDao.countSysOnSr(sysNo) == 0) {
+				instDao.deleteSysBySysNo(sysNo);
+				deletedNum++;
+			}
+		}
+		if (totalNum == deletedNum) {
+			return "success";
+		} else {
+			return "fail";
+		}
+	}
+	
 }

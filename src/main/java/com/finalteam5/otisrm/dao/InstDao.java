@@ -5,6 +5,9 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import com.finalteam5.otisrm.dto.Pager;
+import com.finalteam5.otisrm.dto.Sys;
+import com.finalteam5.otisrm.dto.inst.SystemManagementSearch;
 import com.finalteam5.otisrm.dto.usr.Dept;
 import com.finalteam5.otisrm.dto.usr.Ibps;
 import com.finalteam5.otisrm.dto.usr.Inst;
@@ -65,4 +68,22 @@ public interface InstDao {
 	public int checkDept(String deptNo);
 	public int updateDept(Dept dept);
 	public int insertDept(Dept dept);
+	
+	//시스템 테이블 구성
+	public int countSearchedSys(SystemManagementSearch systemManagementSearch);
+	public List<Sys> selectSearchedSysByPager(
+			@Param("systemManagementSearch") SystemManagementSearch systemManagementSearch, @Param("pager") Pager pager);
+	public List<Dept> selectMainDeptList();
+	
+	//시스템 정보 수정
+	public int countSysOnSr(String sysNo);
+	public int updateSysNm(Sys sys);
+	public int updateDeptNo(Sys sys);
+	
+	//시스템 등록
+	public int checkSysExist(String sysNo);
+	public int insertSys(Sys sys);
+	
+	//시스템 삭제
+	public int deleteSysBySysNo(String sysNo);
 }

@@ -202,7 +202,6 @@ function showDetailModal(srRqstNo) {
 		url: "/otisrm/srManagement/reviewManagement/getSrRqstForModal",
 		data: {selectedSrRqstNo: srRqstNo},
 		success: function(data) {
-			console.log(data);
 			var formattedSrRqstRegDt = formatDateToYYYYMMDD(data.srRqstRegDt);
         	var formattedSrCmptnPrnmntDt = formatDateToYYYYMMDD(data.srCmptnPrnmntDt);
         	
@@ -315,13 +314,13 @@ function saveApproveResult(e) {
 	
 	if(approveResult == ""){
 		$('#alertModal').modal('show');
-		e.preventDefault();
+		return false;
 	}
 	
-	if(approveResult != "APPV" || srRqstRvwRsn == null){
+	if(approveResult != "APPV" && (srRqstRvwRsn == "" || srRqstRvwRsn == null)){
 		$('#alertModalContent').text("검토 의견을 작성해주십시오.");
 		$('#alertModal').modal('show');
-		e.preventDefault();
+		return false;
 	}
 	
 	$.ajax({
@@ -345,7 +344,7 @@ function saveReceptionResult(e) {
 	
 	if(receptionResult == ""){
 		$('#alertModal').modal('show');
-		e.preventDefault();
+		return false;
 	}
 	
 	$.ajax({

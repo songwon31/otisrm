@@ -499,20 +499,20 @@ function loadProgressInfo(srRqstNo) {
 	});
 }
 
-function saveApproveResult(e) {
+function saveApproveResult() {
 	var srRqstNo = $("#detailmodal_srRqstNo").val();
 	var approveResult = $("#approveResult").val();
 	var srRqstRvwRsn = $("#detailmodal_srRqstRvwRsn").val();
 	
 	if(approveResult == ""){
 		$('#alertModal').modal('show');
-		e.preventDefault();
+		return false;
 	}
 	
-	if(approveResult != "APPV" || srRqstRvwRsn == null){
+	if(approveResult != "APPV" && (srRqstRvwRsn == "" || srRqstRvwRsn == null)){
 		$('#alertModalContent').text("검토 의견을 작성해주십시오.");
 		$('#alertModal').modal('show');
-		e.preventDefault();
+		return false;
 	}
 	
 	$.ajax({
@@ -537,7 +537,7 @@ function saveReceptionResult(e) {
 	
 	if(receptionResult == ""){
 		$('#alertModal').modal('show');
-		e.preventDefault();
+		return false;
 	}
 	
 	$.ajax({

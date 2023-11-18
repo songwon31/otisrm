@@ -189,4 +189,89 @@
     	INSERT INTO dept(dept_no, inst_no, dept_nm)
     	VALUES (#{deptNo}, #{instNo}, #{deptNm})
     </insert>
+    
+    <!-- 시스템 테이블 구성 -->
+    <select id="countSearchedSys" parameterType="com.finalteam5.otisrm.dto.inst.SysTableConfig" resultType="int">
+    	SELECT COUNT(*)
+    	FROM sys
+    	<where>
+			<if test="systemKeywordContent != null">
+				<if test="systemKeywordCategory == 'sysNm'">
+					AND sys_nm like '%' || #{systemKeywordContent} || '%'
+				</if>
+				<if test="systemKeywordCategory == 'sysNo'">
+					AND sys_no like '%' || #{systemKeywordContent} || '%'
+				</if>
+			</if>
+   		</where>
+    </select>
+    
+    <select id="selectSearchedSysByPager" parameterType="map" resultType="com.finalteam5.otisrm.dto.Sys">
+	    SELECT rnum, sys_no, dept_no, sys_nm
+			FROM(
+				SELECT rownum as rnum, sys_no, dept_no, sys_nm
+				FROM (
+				   	SELECT sys_no, dept_no, sys_nm
+				   	FROM sys
+				   	<where>
+						<if test="systemManagementSearch.systemKeywordContent != null">
+							<if test="systemManagementSearch.systemKeywordCategory == 'sysNm'">
+								AND sys_nm like '%' || #{systemManagementSearch.systemKeywordContent} || '%'
+							</if>
+							<if test="systemManagementSearch.systemKeywordCategory == 'sysNo'">
+								AND sys_no like '%' || #{systemManagementSearch.systemKeywordContent} || '%'
+							</if>
+						</if>
+				  	</where>
+				  	)
+		<![CDATA[
+			WHERE rownum <= #{pager.endRowNo}
+			)
+		WHERE rnum >= #{pager.startRowNo}
+		]]>
+    </select>
+    
+    <select id="selectMainDeptList" resultType="Dept">
+    	SELECT dept.dept_no, dept.inst_no, dept.dept_nm, inst.inst_nm
+    	FROM dept
+    	JOIN inst ON dept.inst_no = inst.inst_no
+    	WHERE inst.outsrc_yn = 'N'
+    </select>
+    
+    <!-- 시스템 정보 수정 -->
+    <select id="countSysOnSr" parameterType="String" resultType="int">
+    	SELECT COUNT(*)
+    	FROM sr_rqst
+    	WHERE sys_no = #{sysNo}
+    </select>
+    
+    <update id="updateSysNm" parameterType="com.finalteam5.otisrm.dto.Sys">
+    	UPDATE sys
+    	SET sys_nm = #{sysNm}
+    	WHERE sys_no = #{sysNo}
+    </update>
+    
+    <update id="updateDeptNo" parameterType="com.finalteam5.otisrm.dto.Sys">
+    	UPDATE sys
+    	SET dept_no = #{deptNo}
+    	WHERE sys_no = #{sysNo}
+    </update>
+    
+    <!-- 시스템 등록 -->
+    <select id="checkSysExist" parameterType="String" resultType="int">
+    	SELECT COUNT(*)
+    	FROM sys
+    	WHERE sys_no = #{sysNo}
+    </select>
+    
+    <insert id="insertSys" parameterType="com.finalteam5.otisrm.dto.Sys">
+    	INSERT INTO sys(sys_no, sys_nm, dept_no)
+    	VALUES (#{sysNo}, #{sysNm}, #{deptNo})
+    </insert>
+    
+    <!-- 시스템 삭제 -->
+    <delete id="deleteSysBySysNo" parameterType="String">
+   		DELETE FROM sys
+    	WHERE sys_no = #{sysNo}
+    </delete>
 </mapper>

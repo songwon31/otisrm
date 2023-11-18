@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.finalteam5.otisrm.dto.Sys;
 import com.finalteam5.otisrm.dto.inst.SysTableConfig;
 import com.finalteam5.otisrm.dto.usr.Dept;
 import com.finalteam5.otisrm.dto.usr.Inst;
@@ -213,6 +214,44 @@ public class SystemManagementController {
 	}
 	
 	
-	//시스템 관리
+	//시스템 관리 모달 메인 테이블 구성
+	@RequestMapping("/instManagement/getSystemTableConfig")
+	@ResponseBody
+	public SysTableConfig getSystemTableConfig(@RequestBody String jsonData) {
+		return instService.getSystemTableConfig(jsonData);
+	}
 	
+	//시스템 정보 수정
+	@RequestMapping("/instManagement/editSystem")
+	@ResponseBody
+	public String editSystem(Sys sys) {
+		return instService.editSystem(sys);
+	}
+	
+	//시스템 등록
+	@RequestMapping("/instManagement/registSys")
+	@ResponseBody
+	public String registSys(Sys sys) {
+		return instService.registSys(sys);
+	}
+	
+	//시스템 삭제
+	@RequestMapping("/instManagement/deleteSys")
+	@ResponseBody
+	public String deleteSys(@RequestBody List<String> sysNoList) {
+		return instService.deleteSys(sysNoList);
+	}
+	
+	//SR 관리 페이지
+	@RequestMapping("/srManagement")
+	public String srManagement(Authentication authentication, Model model) {
+		if (authentication != null && authentication.isAuthenticated()) {
+			UsrDetails usrDetails = (UsrDetails) authentication.getPrincipal();
+			Usr usr = usrDetails.getUsr();
+			model.addAttribute("usr", usr);
+			return "/systemManagement/srManagement";
+		} else {
+			return "/systemManagement/srManagement";
+		}
+	}
 }
