@@ -154,11 +154,11 @@
 				<div style="height: 4rem; font-size:1.7rem; font-weight:700; display: flex; flex-direction: row; align-items:center;">
 					<span>직위</span>
 					<span style="flex-grow:1;"></span>
-					<button type="button" onclick="addIbps()" class="btn-1" style="height:3rem; width:8rem;">
+					<button type="button" onclick="addIbps()" class="btn-1 displayBtn" style="height:3rem; width:8rem; display:none;">
 						추가
 					</button>
-					<button type="button" onclick="saveIbps()" class="btn-1"
-							style="height:3rem; width:8rem; margin-left:0.5rem; background-color: #222E3C;">
+					<button type="button" onclick="saveIbps()" class="btn-1 displayBtn"
+							style="height:3rem; width:8rem; margin-left:0.5rem; background-color: #222E3C; display:none;">
 						저장
 					</button>
 				</div>
@@ -190,11 +190,11 @@
 				<div style="height: 4rem; font-size:1.7rem; font-weight:700; display: flex; flex-direction: row; align-items:center;">
 					<span>직책</span>
 					<span style="flex-grow:1;"></span>
-					<button type="button" onclick="addRole()" class="btn-1" style="height:3rem; width:8rem;">
+					<button type="button" onclick="addRole()" class="btn-1 displayBtn" style="height:3rem; width:8rem; display:none;">
 						추가
 					</button>
-					<button type="button" onclick="saveRole()" class="btn-1"
-							style="height:3rem; width:8rem; margin-left:0.5rem; background-color: #222E3C;">
+					<button type="button" onclick="saveRole()" class="btn-1 displayBtn"
+							style="height:3rem; width:8rem; margin-left:0.5rem; background-color: #222E3C; display:none;">
 						저장
 					</button>
 				</div>
@@ -228,11 +228,11 @@
 				<div style="height: 4rem; font-size:1.7rem; font-weight:700; display: flex; flex-direction: row; align-items:center;">
 					<span>부서</span>
 					<span style="flex-grow:1;"></span>
-					<button type="button" onclick="addDept()" class="btn-1" style="height:3rem; width:8rem;">
+					<button type="button" onclick="addDept()" class="btn-1 displayBtn" style="height:3rem; width:8rem; display:none;">
 						추가
 					</button>
-					<button type="button" onclick="saveDept()" class="btn-1"
-							style="height:3rem; width:8rem; margin-left:0.5rem; background-color: #222E3C;">
+					<button type="button" onclick="saveDept()" class="btn-1 displayBtn"
+							style="height:3rem; width:8rem; margin-left:0.5rem; background-color: #222E3C; display:none;">
 						저장
 					</button>
 				</div>

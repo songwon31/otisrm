@@ -176,6 +176,9 @@ function setInstDetail(instNo) {
 		url: "/otisrm/systemManagement/instManagement/getDetailInstInfo",
 		data: requestData,
 		success: function(data) {
+			//버튼 활성화
+			$('.displayBtn').css('display', 'flex');
+			
 			$('#instDetailNm').html('');
 			let instNmHtml = '';
 			instNmHtml += '<input type="text" id="instDetailNmInput" class="instDetailNmInput" value="' + data.instNm + '" style="width:70%; height:3rem;">'
