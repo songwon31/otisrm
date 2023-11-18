@@ -111,7 +111,7 @@
 							        <option value="APRV_RETURN">승인반려</option>
 							        <option value="APRV">승인</option>
 							    </select>
-				      			<button id="approveResultBtn" type="button" class="btn-3" onclick="saveApproveResult(this)" disabled>처리</button>
+				      			<button id="approveResultBtn" type="button" class="btn-3" onclick="saveApproveResult()" disabled>처리</button>
 				      		</div>
 				      		<div class="card p-2 mb-2">
 						      	<div class="row mx-0 mt-0 mb-2">
@@ -169,7 +169,7 @@
 							        <option value="RCPT_RETURN">접수반려</option>
 							        <option value="RCPT">접수</option>
 							    </select>
-				      			<button id="receptionResultBtn" type="button" class="btn-3" onclick="saveReceptionResult(this)" disabled>처리</button>
+				      			<button id="receptionResultBtn" type="button" class="btn-3" onclick="saveReceptionResult()" disabled>처리</button>
 				      		</div>
 				      		<div class="card p-2">
 					      		<div class="row mx-0 mt-0 mb-2">
