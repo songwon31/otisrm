@@ -754,7 +754,7 @@
 				          <label for="writerDepartment" class="form-label">개발부서</label>
 				        </div>
 				        <div class="w-45">
-				          <input id="srRqst-inst" type="text" class="form-control" value="${usr.deptNo}" disabled>
+				          <input type="text" class="form-control" value="${usr.deptNm}" disabled>
 				        </div>
 				    </div>
 				</div>

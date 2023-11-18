@@ -273,8 +273,10 @@ public class PicHomeRestController {
 	
 	//sr에 해당하는 상세정보 불러오기
 	@GetMapping("getSrBySrRqstNoForPicHome")
-	public Sr getSrBySrRqstNo(String srRqstNo, Model model, HttpSession session) throws Exception{
+	public Sr getSrBySrRqstNo(@RequestParam(name="srRqstNo") String srRqstNo, Model model, HttpSession session) throws Exception{
 		Sr sr = srRqstService.getSrBySrRqstNo(srRqstNo);
+		log.info("sr: " + srRqstNo);
+		log.info("sr: " + sr.toString());
 		if(sr != null) {			
 			List<SrAtch> list = srRqstService.getSrAtchBySrNo(sr.getSrNo());		
 			sr.setSrAtchList(list);

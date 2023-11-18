@@ -847,6 +847,8 @@ function showSrBySrRqstNo(choiceSrRqstNo){
 		data: {srRqstNo: choiceSrRqstNo},
 		success: function(data) {
 			$(".srSchdlChgRqstY").hide();
+			console.log("요청번호: " + choiceSrRqstNo);
+			console.log("데이터: " , data);
 			if(data != 0){
 				console.log("앙");
 				$("#srWriteOrModifyBtn").text("SR정보 수정");
@@ -1185,6 +1187,7 @@ function writeOrModifySrForPicHome(choiceSrRqstNo) {
 	
 	//formData세팅
 	choiceSrRqstNo = $("#srRqst-srRqstNo").val();
+
     $("#sr-srRqstNo").val(choiceSrRqstNo);
 	var form = $("#writeOrModifySrForPicHome")[0];
     var formData = new FormData(form);
@@ -1198,9 +1201,11 @@ function writeOrModifySrForPicHome(choiceSrRqstNo) {
             if (countSr > 0) {
                 // SR 정보가 이미 있는 경우 수정 모달 띄우기
             	showSrModifyModal();
+            	alert("수정이 완료되었습니다.");
             } else {
                 // SR 정보가 없는 경우 등록 또는 수정 수행
             	proceedWriteOrModifySrForPicHome(formData);
+            	alert("등록이 완료되었습니다.");
             }
         },
         error: function (error) {

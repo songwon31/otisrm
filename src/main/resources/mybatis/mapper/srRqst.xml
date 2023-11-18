@@ -240,12 +240,10 @@
 	
 	<!-- 담당자홈: srRqstNo에 해당하는 sr 상세 내용 가져오기 -->
 	<select id="selectSrBySrRqstNo" parameterType="String" resultType="Sr">
-		select sr.*, r.sr_rqst_stts_no,s.sr_rqst_stts_nm, s.sr_rqst_stts_seq, d.sr_dmnd_no
+		select sr.*, r.sr_rqst_stts_no,s.sr_rqst_stts_nm
 		from sr 
 		join sr_rqst r on r.sr_rqst_no = sr.sr_rqst_no 
 		join sr_rqst_stts s on s.sr_rqst_stts_no = r.sr_rqst_stts_no
-		join sr_trnsf_plan t on t.sr_no = sr.sr_no
-		join sr_dmnd_clsf d on d.sr_dmnd_no = t.sr_dmnd_no
 		where sr.sr_rqst_no= #{srRqstNo, jdbcType=VARCHAR}
 	</select>
 	
