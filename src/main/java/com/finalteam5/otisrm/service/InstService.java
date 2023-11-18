@@ -2,6 +2,7 @@ package com.finalteam5.otisrm.service;
 
 import java.util.List;
 
+import com.finalteam5.otisrm.dto.inst.SysTableConfig;
 import com.finalteam5.otisrm.dto.usr.Inst;
 import com.finalteam5.otisrm.dto.usr.InstDetail;
 
@@ -42,4 +43,7 @@ public interface InstService {
 	
 	//부서 저장
 	public String saveDept(String jsonData);
+	
+	//시스템 관리 모달 테이블 데이터 구성
+	
 }
