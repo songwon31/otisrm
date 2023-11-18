@@ -95,6 +95,6 @@
 	<ul style="list-style:none; padding:0; margin:0;">
 		<li class="menu-item"><a href="${pageContext.request.contextPath}/systemManagement/usrManagement">사용자 관리</a></li>
 		<li class="menu-item"><a href="${pageContext.request.contextPath}/systemManagement/instManagement">기업/시스템 관리</a></li>
-		<li class="menu-item"><a href="${pageContext.request.contextPath}/systemManagement/usrManagement">데이터 관리</a></li> 
+		<li class="menu-item"><a href="${pageContext.request.contextPath}/systemManagement/srManagement">SR 관리</a></li> 
 	</ul>
 </div>

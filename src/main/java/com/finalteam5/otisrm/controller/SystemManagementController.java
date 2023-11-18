@@ -241,4 +241,17 @@ public class SystemManagementController {
 	public String deleteSys(@RequestBody List<String> sysNoList) {
 		return instService.deleteSys(sysNoList);
 	}
+	
+	//SR 관리 페이지
+	@RequestMapping("/srManagement")
+	public String srManagement(Authentication authentication, Model model) {
+		if (authentication != null && authentication.isAuthenticated()) {
+			UsrDetails usrDetails = (UsrDetails) authentication.getPrincipal();
+			Usr usr = usrDetails.getUsr();
+			model.addAttribute("usr", usr);
+			return "/systemManagement/srManagement";
+		} else {
+			return "/systemManagement/srManagement";
+		}
+	}
 }
