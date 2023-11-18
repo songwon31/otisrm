@@ -12,15 +12,15 @@
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 </head>
 
-<div id="userManagementDiv" class="shadow">
-	<div id="userManagementTitleDiv" style="height:4rem;">
+<div id="srManagementDiv" class="shadow">
+	<div id="srManagementTitleDiv" style="height:4rem;">
 		<div class="font-weight-bold d-flex" style="font-size:2.5rem; height:4rem; vertical-align: center;">
 			<i class="material-icons top-icon" style="font-size:3.5rem; height:4rem; line-height: 4rem;">settings</i>
-			<span style="margin-left: 9.5px;">사용자관리</span>
+			<span style="margin-left: 9.5px;">SR관리</span>
 		</div>
 	</div>
 	
-	<div id="userManagementSearchDiv" class="shadow" 
+	<div id="srManagementSearchDiv" class="shadow" 
 		style="height:13rem; margin:2rem 0rem; padding:3rem 2rem; background-color:white; border-radius:1rem;">
 		<form id="searchForm" method="get" action="usrManagement">
 			<div class="p-0 container-fluid d-inline-flex flex-row" style="height:3rem;">
@@ -28,10 +28,10 @@
 					<div style="width:100%;" class="p-0 d-inline-flex flex-row align-items-center ">
 						<div style="width:30%; display:flex; align-items:center;">
 							<svg style="width:0.5rem; height:0.5rem; margin: 0rem 0.5rem;"><rect width="0.5rem" height="0.5rem" fill="#222E3C" /></svg>
-							<span style="font-size:1.6rem; font-weight:700;">권한</span>
+							<span style="font-size:1.6rem; font-weight:700;">시스템</span>
 						</div>
 						<div style="width:70%;">
-							<select id="authrtSelect" name="authrtSelect" style="width:100%">
+							<select id="systemSelect" name="systemSelect" style="width:100%">
 								<option value="" selected>전체</option>
 							</select>
 						</div>
@@ -42,10 +42,10 @@
 					<div style="width:100%;" class="p-0 d-inline-flex flex-row align-items-center">
 						<div style="width:30%; display:flex; align-items:center;">
 							<svg style="width:0.5rem; height:0.5rem; margin: 0rem 0.5rem;"><rect width="0.5rem" height="0.5rem" fill="#222E3C" /></svg>
-							<span style="font-size:1.6rem; font-weight:700;">상태</span>
+							<span style="font-size:1.6rem; font-weight:700;">요청사</span>
 						</div>
 						<div style="width:70%;">
-							<select id="sttsSelect" name="sttsSelect" style="width:100%">
+							<select id="rqstInstSelect" name="rqstInstSelect" style="width:100%">
 								<option value="" selected>전체</option>
 								
 							</select>
@@ -57,10 +57,10 @@
 					<div style="width:100%;" class="p-0 d-inline-flex flex-row align-items-center ">
 						<div style="width:30%; display:flex; align-items:center;">
 							<svg style="width:0.5rem; height:0.5rem; margin: 0rem 0.5rem;"><rect width="0.5rem" height="0.5rem" fill="#222E3C" /></svg>
-							<span style="font-size:1.6rem; font-weight:700;">소속</span>
+							<span style="font-size:1.6rem; font-weight:700;">담당부서</span>
 						</div>
 						<div style="width:70%;">
-							<select id="instSelect" name="instSelect" style="width:100%">
+							<select id="deptSelect" name="deptSelect" style="width:100%">
 								<option value="" selected>전체</option>
 								
 							</select>
@@ -72,10 +72,10 @@
 					<div style="width:100%;" class="p-0 d-inline-flex flex-row align-items-center">
 						<div style="width:30%; display:flex; align-items:center;">
 							<svg style="width:0.5rem; height:0.5rem; margin: 0rem 0.5rem;"><rect width="0.5rem" height="0.5rem" fill="#222E3C" /></svg>
-							<span style="font-size:1.6rem; font-weight:700;">부서</span>
+							<span style="font-size:1.6rem; font-weight:700;">진행상태</span>
 						</div>
 						<div style="width:70%;">
-							<select id="deptSelect" name="deptSelect" style="width:100%">
+							<select id="srSttsSelect" name="srSttsSelect" style="width:100%">
 								<option value="" selected>전체</option>
 								
 							</select>
@@ -95,13 +95,13 @@
 					<div style="width:100%;" class="p-0 d-inline-flex flex-row align-items-center">
 						<div style="width:13.8%; display:flex; align-items:center;">
 							<svg style="width:0.5rem; height:0.5rem; margin: 0rem 0.5rem;"><rect width="0.5rem" height="0.5rem" fill="#222E3C" /></svg>
-							<span style="font-size:1.6rem; font-weight:700;">가입일</span>
+							<span style="font-size:1.6rem; font-weight:700;">등록일</span>
 						</div>
 						<div style="width:86.2%; display:flex; align-items:center;">
 							<div class="d-inline-flex" style="width:100%; flex-direction:row; align-items:center">
-								<input id ="joinDateStart" name="joinDateStart" style="width:45%;" type="date">
+								<input id ="regDateStart" name="regDateStart" style="width:45%;" type="date">
 								<div style="width:10%; font-size:1.6rem; display:flex; flex-direction:row; justify-content:center; align-items:center;">~</div>
-								<input id ="joinDateEnd" name="joinDateEnd" style="width:45%;" type="date">
+								<input id ="regDateEnd" name="regDateEnd" style="width:45%;" type="date">
 							</div>
 						</div>
 					</div>
@@ -115,10 +115,10 @@
 						</div>
 						<div style="width:80%; display:flex; align-items:center;">
 							<div style="width:35%; font-size:1.6rem;">
-								<select id="keywordCategoty" name="keywordCategoty" style="width:100%">
-									<option value="usrNm" selected>이름</option>	
-									<option value="usrTelno">전화번호</option>
-									<option value="usrEml">이메일</option>
+								<select id="keywordCategory" name="keywordCategory" style="width:100%">
+									<option value="srTtl" selected>SR제목</option>	
+									<option value="srReqstrNm">등록자</option>
+									<option value="picNm">담당자</option>
 								</select>
 							</div>
 							<div style="width:2%"></div>
@@ -132,8 +132,8 @@
 				<div style="width:10%;" class="d-inline-flex flex-row align-items-center">
 					<div style="width:100%; justify-content:flex-end;" class="p-0 d-inline-flex flex-row align-items-center">
 						<svg style="width:0.5rem; height:0.5rem; margin: 0rem 0.5rem;"><rect width="0.5rem" height="0.5rem" fill="#222E3C" /></svg>
-						<span style="font-size:1.5rem; font-weight:700;">탈퇴 회원 보기</span>
-						<input id="whdwlUsrCheck" type="checkbox" style="margin:0 0 0 1rem;">
+						<span style="font-size:1.5rem; font-weight:700;">완료된 SR건 보기</span>
+						<input id="dvlCmptnSrCheck" type="checkbox" style="margin:0 0 0 1rem;">
 					</div>
 				</div>
 				<div style="width:3.5%;"></div>
@@ -146,12 +146,13 @@
 			</div>
 		</form>
 	</div>
-	<div id="userManagementBoardDiv" class="shadow" 
+	<div id="srManagementBoardDiv" class="shadow" 
 		style="height:63rem; background-color:white; border-radius:10px; padding:2rem;">
 		<div style="display:flex; flex-direction:row; align-items:center;">
-			<div style="height:3.5rem; font-size:2.2rem; font-weight:700; color:#222E3C;">사용자목록</div>
+			<div style="height:3.5rem; font-size:2.2rem; font-weight:700; color:#222E3C;">SR목록</div>
 			<div style="flex-grow:1;"></div>
 			<div style="display:flex; flex-direction:row; align-items:center;">
+				<!-- 
 				<button id="downloadExcelButton" class="btn-1" onclick="downloadExcel()"
 					style="background-color:#222E3C; height:3rem; margin-right:0.5rem; font-size:1.5rem;">엑셀 다운로드</button>
 				<button type="button" onclick="batchApproval()" class="btn-1"
@@ -162,40 +163,35 @@
 						style="height:3rem; background-color:red; font-size:1.5rem;">
 					일괄 탈퇴처리
 				</button>
+				 -->
 			</div>
 		</div>
 		
 		<div class="" style="height:52rem; margin:0.75rem 0rem; background-color:#f9fafe;">
 			<table id="mainTable" style="width:100%;">
 				<colgroup>
-					<col width="3%"/>
 					<col width="4%"/>
-					<col width="5%"/>
-					<col width="7%"/>
-					<col width="10%"/>
-					<col width="15%"/>
-					<col width="7%"/>
-					<col width="10%"/>
-					<col width="8%"/>
-					<col width="8%"/>
-					<col width="10%"/>
-					<col width="5%"/>
+					<col width="11%"/>
+					<col width="11%"/>
+					<col width="11%"/>
+					<col width="11%"/>
+					<col width="11%"/>
+					<col width="11%"/>
+					<col width="11%"/>
+					<col width="11%"/>
 					<col width="8%"/>
 				</colgroup>
 				<thead style="background-color:#edf2f8">
 					<tr style="height:5rem; font-size:1.6rem; font-weight:700;">
-						<th scope="col"><input id="batchCheck" type="checkbox" class="checkbox" style="vertical-align: middle;"></th>
 						<th scope="col"></th>
-						<th scope="col">번호</th>
-						<th scope="col">이름</th>
-						<th scope="col">전화번호</th>
-						<th scope="col">이메일</th>
-						<th scope="col">소속</th>
-						<th scope="col">부서</th>
-						<th scope="col">직책</th>
-						<th scope="col">권한</th>
-						<th scope="col">가입일</th>
+						<th scope="col">SR요청번호</th>
+						<th scope="col">제목</th>
+						<th scope="col">시스템</th>
+						<th scope="col">등록자</th>
+						<th scope="col">요청사</th>
+						<th scope="col">요청일</th>
 						<th scope="col">상태</th>
+						<th scope="col">이관여부</th>
 						<th scope="col">상세정보</th>
 					</tr>
 				</thead>

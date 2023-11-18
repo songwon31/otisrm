@@ -19,6 +19,8 @@ import com.finalteam5.otisrm.dto.sr.ManageChangeScheduleRequestModalConfig;
 import com.finalteam5.otisrm.dto.sr.ProgressManagementSearch;
 import com.finalteam5.otisrm.dto.sr.SrForDeveloperHomeBoard;
 import com.finalteam5.otisrm.dto.sr.SrForProgressManagementBoard;
+import com.finalteam5.otisrm.dto.sr.SrForSrManagementBoard;
+import com.finalteam5.otisrm.dto.sr.SrManagementSearch;
 import com.finalteam5.otisrm.dto.sr.SrPrgrsForDeveloperHome;
 import com.finalteam5.otisrm.dto.sr.SrRequestDetailForDeveloperHome;
 import com.finalteam5.otisrm.dto.sr.SrTrnsfFindPicModalUsrInfo;
@@ -26,6 +28,7 @@ import com.finalteam5.otisrm.dto.sr.SrTrnsfHr;
 import com.finalteam5.otisrm.dto.sr.SrTrnsfInfoForDeveloperHome;
 import com.finalteam5.otisrm.dto.sr.SrTrnsfPlanModalCompose;
 import com.finalteam5.otisrm.dto.sr.srForPicHome.SrAtch;
+import com.finalteam5.otisrm.dto.srRequest.SrRqstStts;
 import com.finalteam5.otisrm.dto.usr.Dept;
 import com.finalteam5.otisrm.dto.usr.Inst;
 import com.finalteam5.otisrm.dto.usr.Usr;
@@ -168,4 +171,20 @@ public interface SrDao {
 	public int updateSrScheduleChangeRequestResultCheck(String srNo);
 	
 	public String selectInstNoByUsrNo(String usrNo);
+	
+	//요청 가능한 기업 리스트
+	public List<Inst> selectRqstInstList();
+	
+	//sr요청 상태 리스트
+	public List<SrRqstStts> selectSrRqstSttsList();
+	
+	public List<Dept> selectMainDeptList();
+	
+	//sr관리 메인 테이블 구성
+	public int countSrForSrManagementBoard(SrManagementSearch srManagementSearch);
+	public List<SrForSrManagementBoard> selectSrForSrManagementBoard(
+			@Param("srManagementSearch") SrManagementSearch srManagementSearch, 
+			@Param("pager") Pager pager);
+	public int checkSrExist(String srRqstNo);
+	public String getSrTrnsfYnBySrRqstNo(String srRqstNo);
 }

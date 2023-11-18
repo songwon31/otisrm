@@ -1,24 +1,24 @@
 	$(init);
 
 //메인 테이블 검색 옵션
-var currentUsrManagementSearch = {
-	usrAuthrt: null,
-	usrStts: null,
+var currentSrManagementSearch = {
+	sysNo: null,
+	rqstInstNo: null,
+	dvlDeptNo: null,
+	srRqstSttsNo: null,
+	regDateStart: null,
+	regDateEnd: null,
 	keywordCategory: null,
 	keywordContent: null,
-	usrInst: null,
-	usrDept: null,
-	joinDateStart: null,
-	joinDateEnd: null,
-	whdwlUsrCheck: null
+	dvlCmptnSrCheck: null
 }
 //메인 테이블 페이지 번호
 var currentPageNo = 1;
-var currentDetailUsrNo;
+var currentDetailSrRqstNo;
 
 function init() {
 	mainTableSearchDivConfig();
-	mainTableConfig(currentUsrManagementSearch, currentPageNo);
+	mainTableConfig(currentSrManagementSearch, currentPageNo);
 }
 
 $(document).ready(function() {
@@ -47,134 +47,82 @@ function formatDateTime(date) {
 function mainTableSearchDivConfig() {
 	$.ajax({
 		type: "POST",
-		url: "/otisrm/systemManagement/usrManagement/getUsrManagementSearchConfig",
+		url: "/otisrm/systemManagement/srManagement/getSrManagementSearchConfig",
 		success: function(data) {
-			console.log(data.usrAuthrtList);
-			$('#authrtSelect').html('<option value="" selected>전체</option>');
-			for (let i=0; i<data.usrAuthrtList.length; ++i) {
-				let authrtData = data.usrAuthrtList[i];
-				$('#authrtSelect').append('<option value="'+ authrtData.usrAuthrtNo + '">' + authrtData.usrAuthrtNm + '</option>');
+			$('#systemSelect').html('<option value="" selected>전체</option>');
+			for (let i=0; i<data.sysList.length; ++i) {
+				let sys = data.sysList[i];
+				$('#systemSelect').append('<option value="'+ sys.sysNo + '">' + sys.sysNm + '</option>');
 			}
 			
-			$('#sttsSelect').html('<option value="" selected>전체</option>');
-			for (let i=0; i<data.usrSttsList.length; ++i) {
-				let sttsData = data.usrSttsList[i];
-				$('#sttsSelect').append('<option value="'+ sttsData.usrSttsNo + '">' + sttsData.usrSttsNm + '</option>');
-			}
-			
-			$('#instSelect').html('<option value="" selected>전체</option>');
-			for (let i=0; i<data.instList.length; ++i) {
-				let instData = data.instList[i];
-				$('#instSelect').append('<option value="'+ instData.instNo + '">' + instData.instNm + '</option>');
+			$('#rqstInstSelect').html('<option value="" selected>전체</option>');	
+			for (let i=0; i<data.reqstrInstList.length; ++i) {
+				let rqstInst = data.reqstrInstList[i];
+				$('#rqstInstSelect').append('<option value="'+ rqstInst.instNo + '">' + rqstInst.instNm + '</option>');
 			}
 			
 			$('#deptSelect').html('<option value="" selected>전체</option>');
+			for (let i=0; i<data.deptList.length; ++i) {
+				let dept = data.deptList[i];
+				$('#deptSelect').append('<option value="'+ dept.deptNo + '">' + (dept.instNm + '-' + dept.deptNm) + '</option>');
+			}
 			
-			$('#joinDateStart').val('');
-			$('#joinDateEnd').val('');
+			$('#srSttsSelect').html('<option value="" selected>전체</option>');
+			for (let i=0; i<data.srRqstSttsList.length; ++i) {
+				let srRqstStts = data.srRqstSttsList[i];
+				$('#srSttsSelect').append('<option value="'+ srRqstStts.srRqstSttsNo + '">' + srRqstStts.srRqstSttsNm + '</option>');
+			}
 			
-			//instSelect값이 변경될 때마다 실행되는 함수. 협력사에 맞는 부서 정보를 가져와서 deptSelect구성
-			$('#instSelect').change(function() {
-				let instNo = $('#instSelect').val();
-				if (instNo == '') {
-					$('#deptSelect').html('<option value="" selected>전체</option>');
-				} else {
-					$.ajax({
-						type: "POST",
-						url: "/otisrm/systemManagement/usrManagement/getDeptSelectConfig",
-						data: {instNo: instNo},
-						success: function(deptList) {
-							$('#deptSelect').html('<option value="" selected>전체</option>');
-							for (let i=0; i<deptList.length; ++i) {
-								let deptData = deptList[i];
-								$('#deptSelect').append('<option value="'+ deptData.deptNo + '">' + deptData.deptNm + '</option>');
-							}
-						}
-					});
-				}
-			});
+			
+			$('#regDateStart').val('');
+			$('#regDateEnd').val('');
+			
+			$('#keywordCategory').val('srTtl');
+			$('#keywordContent').val('');
 		}
 	});
 }
 
 //메인 테이블 구성
-function mainTableConfig(usrManagementSearch, pageNo) {
+function mainTableConfig(srManagementSearch, pageNo) {
 	currentPageNo = pageNo;
 	let requestData = {
-		usrManagementSearch: JSON.stringify(usrManagementSearch),
+		srManagementSearch: JSON.stringify(srManagementSearch),
 		pageNo: pageNo
 	}
 	$.ajax({
 		type: "POST",
-		url: "/otisrm/systemManagement/usrManagement/getUsrManagementMainTableConfig",
+		url: "/otisrm/systemManagement/srManagement/getSrManagementMainTableConfig",
 		data: JSON.stringify(requestData),
 		contentType: "application/json",
 		success: function(data) {
+			console.log(data);
+			
 			//테이블 body 구성
 			//테이블 body 초기화
 			$('#mainTable tbody').html('');
 			//테이블 body 재구성
-			for (let i=0; i<data.usrList.length; ++i) {
-				let usr = data.usrList[i];
+			for (let i=0; i<data.srList.length; ++i) {
+				let sr = data.srList[i];
 				let mainTableHtml = '';
 				mainTableHtml += '<tr style="height:4.7rem; font-size:1.5rem; background-color:white;">';
-				mainTableHtml += '<td><input type="checkbox" class="checkbox" style="vertical-align: middle;"></td>';
 				mainTableHtml += '<td>' + (i+1) + '</td>';
-				mainTableHtml += '<td class="usrNo">' + usr.usrNo + '</td>';
-				mainTableHtml += '<td>' + usr.usrNm+ '</td>';
-				mainTableHtml += '<td>' + usr.usrTelno + '</td>';
-				mainTableHtml += '<td>' + usr.usrEml + '</td>';
-				mainTableHtml += '<td>' + usr.instNm + '</td>';
-				mainTableHtml += '<td>' + usr.deptNm + '</td>';
-				mainTableHtml += '<td>' + usr.roleNm + '</td>';
-				mainTableHtml += '<td>' + usr.usrAuthrtNm + '</td>';
-				let joinDt = new Date(usr.usrJoinDt);
-				mainTableHtml += '<td>' + formatDate(joinDt) + '</td>';
-				
-				mainTableHtml += '<td>' + usr.usrSttsNm + '</td>';
-				/*
-				mainTableHtml += '<td>';
-				mainTableHtml += '<select class="rowSttsSelect" name="rowSttsSelect">';
-				if (usr.usrSttsNm == '승인 대기') {
-					mainTableHtml += '<option value="PENDING" selected>승인 대기</option>';
-					mainTableHtml += '<option value="NORMAL">일반</option>';
-					mainTableHtml += '<option value="WITHDRAWL">탈퇴</option>';
-				} else if (usr.usrSttsNm == '일반') {
-					mainTableHtml += '<option value="PENDING">승인 대기</option>';
-					mainTableHtml += '<option value="NORMAL" selected>일반</option>';
-					mainTableHtml += '<option value="WITHDRAWL">탈퇴</option>';
-				} else if (usr.usrSttsNm == '탈퇴') {
-					mainTableHtml += '<option value="PENDING">승인 대기</option>';
-					mainTableHtml += '<option value="NORMAL">일반</option>';
-					mainTableHtml += '<option value="WITHDRAWL" selected>탈퇴</option>';
-				}
-				mainTableHtml += '</select>';
-				mainTableHtml += '</td>'
-				
-				*/
-				/*
-				mainTableHtml += '<td> <button data-toggle="modal" data-target="#requestDetailModal" class="btn-2 detail-button" onclick="showRequestDetailModal(\'' + sr.srNo + '\')">요청상세</button> </td>';
-				mainTableHtml += '<td> <button data-toggle="modal" data-target="#srProgressModal" class="btn-2 detail-button" onclick="showSrProgressModal(\'' + sr.srNo + '\')">진척관리</button> </td>';
-				*/
+				mainTableHtml += '<td class="srRqstNo">' + sr.srRqstNo + '</td>';
+				mainTableHtml += '<td>' + sr.srTtl + '</td>';
+				mainTableHtml += '<td>' + sr.sysNm + '</td>';
+				mainTableHtml += '<td>' + sr.reqstrNm + '</td>';
+				mainTableHtml += '<td>' + sr.reqstrInstNm + '</td>';
+				let regDt = new Date(sr.srRqstRegDt);
+				mainTableHtml += '<td>' + formatDate(regDt) + '</td>';
+				mainTableHtml += '<td>' + sr.srRqstSttsNm + '</td>';
+				mainTableHtml += '<td>' + sr.srTrnsfYn + '</td>';
 				
 				mainTableHtml += '<td><button type="button" id="showSrRqstDetailBtn" data-toggle="modal" class="btn-1" style="width:70%; height:2.8rem;"';
-				mainTableHtml += 'data-target="#usrDetailModal" onclick="usrDetailModalConfig(\''+ usr.usrNo +'\')">상세정보</button></td>';
+				mainTableHtml += 'data-target="#usrDetailModal" onclick="">상세정보</button></td>';
 				
 				//jsp에 삽입
 				$('#mainTable tbody').append(mainTableHtml);
 			}
-			
-			$("#batchCheck").prop("checked", false);
-			//일괄 체크 구현
-			$("#batchCheck").on("change", function() {
-		        if ($(this).prop("checked")) {
-		            // batchCheck가 체크되면 mainTable 안의 모든 체크박스를 체크
-		            $("#mainTable input[type='checkbox']").prop("checked", true);
-		        } else {
-		            // batchCheck가 체크 해제되면 mainTable 안의 모든 체크박스를 체크 해제
-		            $("#mainTable input[type='checkbox']").prop("checked", false);
-		        }
-		    });
 			
 			//페이징 파트 구현
 			let pagerHtml = '';
@@ -190,10 +138,10 @@ function mainTableConfig(usrManagementSearch, pageNo) {
 					pagerHtml += '<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center; color:#868e96; cursor:default;">first_page</i>';
 					pagerHtml += '<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center; color:#868e96; cursor:default;">chevron_left</i>';
 				} else {
-					pagerHtml += '<a href="javascript:void(0) onclick="mainTableConfig(currentUsrManagementSearch, '+1+')">';
+					pagerHtml += '<a href="javascript:void(0) onclick="mainTableConfig(currentSrManagementSearch, '+1+')">';
 					pagerHtml += '<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center;">first_page</i>';
 					pagerHtml += '</a>';
-					pagerHtml += '<a href="javascript:void(0)  onclick="mainTableConfig(currentUsrManagementSearch, ' + ((data.pager.groupNo - data.pager.pagesPerGroup) * 5) + ')">';
+					pagerHtml += '<a href="javascript:void(0)  onclick="mainTableConfig(currentSrManagementSearch, ' + ((data.pager.groupNo - data.pager.pagesPerGroup) * 5) + ')">';
 					pagerHtml += '<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center;">chevron_left</i>';
 					pagerHtml += '</a>';
 				}
@@ -201,7 +149,7 @@ function mainTableConfig(usrManagementSearch, pageNo) {
 				for (let i=data.pager.startPageNo; i<=data.pager.endPageNo; ++i) {
 					pagerHtml += '<div style="width: 0.25rem;"></div>';
 					if (data.pager.pageNo != i) {
-						pagerHtml += '<a href="javascript:void(0)" onclick="mainTableConfig(currentUsrManagementSearch, '+i+')" style="font-size: 1.6rem; height: 3rem; line-height: 3rem;">'+i+'</a>';
+						pagerHtml += '<a href="javascript:void(0)" onclick="mainTableConfig(currentSrManagementSearch, '+i+')" style="font-size: 1.6rem; height: 3rem; line-height: 3rem;">'+i+'</a>';
 					} else {
 						pagerHtml += '<a href="javascript:void(0)" style="font-size: 1.6rem; height: 3rem; line-height: 3rem;">'+i+'</a>';
 					}
@@ -212,60 +160,62 @@ function mainTableConfig(usrManagementSearch, pageNo) {
 					pagerHtml += '<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center; color:#868e96; cursor:default;">chevron_right</i>';
 					pagerHtml += '<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center; color:#868e96; cursor:default;">last_page</i>';
 				} else {
-					pagerHtml += '<a href="javascript:void(0) onclick="mainTableConfig(currentUsrManagementSearch, ' + ((data.pager.groupNo * data.pager.pagesPerGroup)+1) + ')">';
+					pagerHtml += '<a href="javascript:void(0) onclick="mainTableConfig(currentSrManagementSearch, ' + ((data.pager.groupNo * data.pager.pagesPerGroup)+1) + ')">';
 					pagerHtml += '<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center;">chevron_right</i>';
 					pagerHtml += '</a>';	
-					pagerHtml += '<a href="javascript:void(0) onclick="mainTableConfig(currentUsrManagementSearch, ' + data.pager.endPageNo + ')"">';
+					pagerHtml += '<a href="javascript:void(0) onclick="mainTableConfig(currentSrManagementSearch, ' + data.pager.endPageNo + ')"">';
 					pagerHtml += '<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center;">last_page</i>';
 					pagerHtml += '</a>';
 				}
 				
 				$('#mainTablePagingDiv').html(pagerHtml);
 			}
+			
+			
 		}
 	});
 }
 
 function mainTableSearchReset() {
-	currentUsrManagementSearch.usrAuthrt = null;
-	currentUsrManagementSearch.usrStts = null;
-	currentUsrManagementSearch.keywordCategory = null;
-	currentUsrManagementSearch.keywordContent = null;
-	currentUsrManagementSearch.usrInst = null;
-	currentUsrManagementSearch.usrDept = null;
-	currentUsrManagementSearch.joinDateStart = null;
-	currentUsrManagementSearch.joinDateEnd = null;
-	currentUsrManagementSearch.whdwlUsrCheck = null;
+	currentSrManagementSearch.sysNo = null;
+	currentSrManagementSearch.rqstInstNo = null;
+	currentSrManagementSearch.dvlDeptNo = null;
+	currentSrManagementSearch.srRqstSttsNo = null;
+	currentSrManagementSearch.regDateStart = null;
+	currentSrManagementSearch.regDateEnd = null;
+	currentSrManagementSearch.keywordCategory = null;
+	currentSrManagementSearch.keywordContent = null;
+	currentSrManagementSearch.dvlCmptnSrCheck = null;
 	
 	currentPageNo = 1;
 	mainTableSearchDivConfig();
-	mainTableConfig(currentUsrManagementSearch, currentPageNo);
+	mainTableConfig(currentSrManagementSearch, currentPageNo);
 }
 
 function mainTableSearch() {
-	currentUsrManagementSearch.usrAuthrt = $('#authrtSelect').val();
-	if ($('#authrtSelect').val() == '') currentUsrManagementSearch.usrAuthrt = null;
-	currentUsrManagementSearch.usrStts = $('#sttsSelect').val();
-	if ($('#sttsSelect').val() == '') currentUsrManagementSearch.usrStts = null;
-	currentUsrManagementSearch.keywordCategory = $('#keywordCategoty').val();
-	if ($('#keywordCategoty').val() == '') currentUsrManagementSearch.keywordCategory = null;
-	currentUsrManagementSearch.keywordContent = $('#keywordContent').val();
-	if ($('#keywordContent').val() == '') currentUsrManagementSearch.keywordContent = null;
-	currentUsrManagementSearch.usrInst = $('#instSelect').val();
-	if ($('#instSelect').val() == '') currentUsrManagementSearch.usrInst = null;
-	currentUsrManagementSearch.usrDept = $('#deptSelect').val();
-	if ($('#deptSelect').val() == '') currentUsrManagementSearch.usrDept = null;
-	currentUsrManagementSearch.joinDateStart = $('#joinDateStart').val();
-	if ($('#joinDateStart').val() == '') currentUsrManagementSearch.joinDateStart = null;
-	currentUsrManagementSearch.joinDateEnd = $('#joinDateEnd').val();
-	if ($('#joinDateEnd').val() == '') currentUsrManagementSearch.joinDateEnd = null;
-	if ($('#whdwlUsrCheck').prop('checked')) {
-		currentUsrManagementSearch.whdwlUsrCheck = "checked";
+	currentSrManagementSearch.sysNo = $('#systemSelect').val();
+	if ($('#systemSelect').val() == '') currentSrManagementSearch.sysNo = null;
+	currentSrManagementSearch.rqstInstNo = $('#rqstInstSelect').val();
+	if ($('#rqstInstSelect').val() == '') currentSrManagementSearch.rqstInstNo = null;
+	currentSrManagementSearch.dvlDeptNo = $('#deptSelect').val();
+	if ($('#deptSelect').val() == '') currentSrManagementSearch.dvlDeptNo = null;
+	currentSrManagementSearch.srRqstSttsNo = $('#srSttsSelect').val();
+	if ($('#srSttsSelect').val() == '') currentSrManagementSearch.srRqstSttsNo = null;
+	currentSrManagementSearch.regDateStart = $('#regDateStart').val();
+	if ($('#regDateStart').val() == '') currentSrManagementSearch.regDateStart = null;
+	currentSrManagementSearch.regDateEnd = $('#regDateEnd').val();
+	if ($('#regDateEnd').val() == '') currentSrManagementSearch.regDateEnd = null;
+	currentSrManagementSearch.keywordCategory = $('#keywordCategory').val();
+	if ($('#keywordCategory').val() == '') currentSrManagementSearch.keywordCategory = null;
+	currentSrManagementSearch.keywordContent = $('#keywordContent').val();
+	if ($('#keywordContent').val() == '') currentSrManagementSearch.keywordContent = null;
+	if ($('#dvlCmptnSrCheck').prop('checked')) {
+		currentSrManagementSearch.dvlCmptnSrCheck = "checked";
 	} else {
-		currentUsrManagementSearch.whdwlUsrCheck = null;
+		currentSrManagementSearch.dvlCmptnSrCheck = null;
 	}
-	
-	mainTableConfig(currentUsrManagementSearch, currentPageNo);
+	console.log(currentSrManagementSearch);
+	mainTableConfig(currentSrManagementSearch, currentPageNo);
 }
 
 function batchApproval() {

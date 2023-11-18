@@ -954,4 +954,270 @@
    		FROM usr
    		WHERE usr_no = #{usrNo}
    </select>
+   
+   <!-- 요청 가능한 기업 리스트 -->
+   <select id="selectRqstInstList" resultType="Inst">
+   		SELECT inst_no, inst_nm, outsrc_yn
+   		FROM inst
+   		WHERE outsrc_yn != 'Y'
+   </select>
+   
+   <select id="selectSrRqstSttsList" resultType="com.finalteam5.otisrm.dto.srRequest.SrRqstStts">
+   		SELECT *
+   		FROM sr_rqst_stts
+   </select>
+   
+    <select id="selectMainDeptList" resultType="Dept">
+    	SELECT dept.dept_no, dept.inst_no, dept.dept_nm, inst.inst_nm
+    	FROM dept
+    	JOIN inst ON dept.inst_no = inst.inst_no
+    	WHERE inst.outsrc_yn = 'N'
+    </select>
+    
+    <select id="countSrForSrManagementBoard" parameterType="com.finalteam5.otisrm.dto.sr.SrManagementSearch" resultType="int">
+    	SELECT COUNT(*)
+    	FROM (
+    		SELECT srr.sr_rqst_no, srr.sr_ttl, sys.sys_nm, reqstr.usr_nm as reqstr_nm, inst.inst_nm as reqstr_inst_nm, 
+    			   srr.sr_rqst_reg_dt, srrs.sr_rqst_stts_nm
+    		FROM sr_rqst srr
+    		JOIN sr ON srr.sr_rqst_no = sr.sr_rqst_no
+    		JOIN sys ON srr.sys_no = sys.sys_no
+    		JOIN usr reqstr ON srr.sr_reqstr_no = reqstr.usr_no
+    		JOIN inst ON reqstr.inst_no = inst.inst_no
+    		JOIN sr_rqst_stts srrs ON srr.sr_rqst_stts_no = srrs.sr_rqst_stts_no
+    		JOIN usr pic ON sr.pic_usr_no = pic.usr_no
+    		<where>
+               <if test="sysNo != null">
+                  sr_rqst.sys_no = #{sysNo}
+               </if>
+               <if test="rqstInstNo != null">
+                  AND inst.inst_no = #{rqstInstNo}
+               </if>
+               <if test="dvlDeptNo != null">
+                  AND pic.dept_no = #{dvlDeptNo}
+               </if>
+               <if test="srRqstSttsNo != null">
+                  AND srrs.sr_rqst_stts_no = #{srRqstSttsNo}
+               </if>
+               <!-- 시작 날짜만 있는 경우 -->
+				<if test="regDateStart != null and regDateEnd == null">
+					<![CDATA[
+					AND srr.sr_rqst_reg_dt >= #{regDateStart}	
+					]]>
+				</if>
+				<!-- 시작 날짜와 끝 날짜 모두 있는 경우 -->
+				<if test="regDateStart != null and regDateEnd != null">
+					<![CDATA[
+					AND srr.sr_rqst_reg_dt >= #{regDateStart}	
+					AND srr.sr_rqst_reg_dt <= #{regDateEnd}
+					]]>
+				</if>
+				<!-- 끝 날짜만 있는 경우 -->
+				<if test="regDateStart == null and regDateEnd != null">
+					<![CDATA[
+					AND srr.sr_rqst_reg_dt <= #{regDateEnd}
+					]]>
+				</if>
+				<if test="keywordContent != null">
+                  <if test="keywordCategory == 'srTtl'">
+                     AND sr_rqst.sr_ttl like '%' || #{keywordContent} || '%'
+                  </if>
+                  <if test="keywordCategory == 'srReqstrNm'">
+                     AND reqstr.usr_nm like '%' || #{keywordContent} || '%'
+                  </if>
+                  <if test="keywordCategory == 'picNm'">
+                     AND pic.usr_nm like '%' || #{keywordContent} || '%'
+                  </if>
+               </if>
+               <if test="dvlCmptnSrCheck == null">
+               		AND srr.sr_rqst_stts_no != 'DEP_CMPTN'
+               </if>
+            </where>
+            <if test="dvlDeptNo == null and (keywordContent == null or (keywordContent != null and keywordCategory == 'picNm'))">
+            	UNION
+            	SELECT srr.sr_rqst_no, srr.sr_ttl, sys.sys_nm, reqstr.usr_nm as reqstr_nm, inst.inst_nm as reqstr_inst_nm, 
+    			   srr.sr_rqst_reg_dt, srrs.sr_rqst_stts_nm
+	    		FROM sr_rqst srr
+	    		JOIN sys ON srr.sys_no = sys.sys_no
+	    		JOIN usr reqstr ON srr.sr_reqstr_no = reqstr.usr_no
+	    		JOIN inst ON reqstr.inst_no = inst.inst_no
+	    		JOIN sr_rqst_stts srrs ON srr.sr_rqst_stts_no = srrs.sr_rqst_stts_no
+	    		<where>
+	               <if test="sysNo != null">
+	                  sr_rqst.sys_no = #{sysNo}
+	               </if>
+	               <if test="rqstInstNo != null">
+	                  AND inst.inst_no = #{rqstInstNo}
+	               </if>
+	               <if test="srRqstSttsNo != null">
+	                  AND srrs.sr_rqst_stts_no = #{srRqstSttsNo}
+	               </if>
+	               <!-- 시작 날짜만 있는 경우 -->
+					<if test="regDateStart != null and regDateEnd == null">
+						<![CDATA[
+						AND srr.sr_rqst_reg_dt >= #{regDateStart}	
+						]]>
+					</if>
+					<!-- 시작 날짜와 끝 날짜 모두 있는 경우 -->
+					<if test="regDateStart != null and regDateEnd != null">
+						<![CDATA[
+						AND srr.sr_rqst_reg_dt >= #{regDateStart}	
+						AND srr.sr_rqst_reg_dt <= #{regDateEnd}
+						]]>
+					</if>
+					<!-- 끝 날짜만 있는 경우 -->
+					<if test="regDateStart == null and regDateEnd != null">
+						<![CDATA[
+						AND srr.sr_rqst_reg_dt <= #{regDateEnd}
+						]]>
+					</if>
+					<if test="keywordContent != null">
+	                  <if test="keywordCategory == 'srTtl'">
+	                     AND sr_rqst.sr_ttl like '%' || #{keywordContent} || '%'
+	                  </if>
+	                  <if test="keywordCategory == 'srReqstrNm'">
+	                     AND reqstr.usr_nm like '%' || #{keywordContent} || '%'
+	                  </if>
+	               </if>
+	               <if test="dvlCmptnSrCheck == null">
+	               		AND srr.sr_rqst_stts_no != 'DEP_CMPTN'
+	               </if>
+	            </where>
+            </if>
+    	)
+    </select>
+    
+    <select id="selectSrForSrManagementBoard" parameterType="map" resultType="com.finalteam5.otisrm.dto.sr.SrForSrManagementBoard">
+    	SELECT rnum, sr_rqst_no, sr_ttl, sys_nm, reqstr_nm, reqstr_inst_nm, 
+	           sr_rqst_reg_dt, sr_rqst_stts_nm
+	      FROM(
+	         SELECT rownum as rnum, sr_rqst_no, sr_ttl, sys_nm, reqstr_nm, reqstr_inst_nm, 
+	               sr_rqst_reg_dt, sr_rqst_stts_nm
+	         FROM (
+		    	SELECT srr.sr_rqst_no, srr.sr_ttl, sys.sys_nm, reqstr.usr_nm as reqstr_nm, inst.inst_nm as reqstr_inst_nm, 
+		   			   srr.sr_rqst_reg_dt, srrs.sr_rqst_stts_nm
+		   		FROM sr_rqst srr
+		   		JOIN sr ON srr.sr_rqst_no = sr.sr_rqst_no
+		   		JOIN sys ON srr.sys_no = sys.sys_no
+		   		JOIN usr reqstr ON srr.sr_reqstr_no = reqstr.usr_no
+		   		JOIN inst ON reqstr.inst_no = inst.inst_no
+		   		JOIN sr_rqst_stts srrs ON srr.sr_rqst_stts_no = srrs.sr_rqst_stts_no
+		   		JOIN usr pic ON sr.pic_usr_no = pic.usr_no
+		   		<where>
+		              <if test="srManagementSearch.sysNo != null">
+		                 sr_rqst.sys_no = #{srManagementSearch.sysNo}
+		              </if>
+		              <if test="srManagementSearch.rqstInstNo != null">
+		                 AND inst.inst_no = #{srManagementSearch.rqstInstNo}
+		              </if>
+		              <if test="srManagementSearch.dvlDeptNo != null">
+		                 AND pic.dept_no = #{srManagementSearch.dvlDeptNo}
+		              </if>
+		              <if test="srManagementSearch.srRqstSttsNo != null">
+		                 AND srrs.sr_rqst_stts_no = #{srManagementSearch.srRqstSttsNo}
+		              </if>
+		              <!-- 시작 날짜만 있는 경우 -->
+					<if test="srManagementSearch.regDateStart != null and srManagementSearch.regDateEnd == null">
+						<![CDATA[
+						AND srr.sr_rqst_reg_dt >= #{srManagementSearch.regDateStart}	
+						]]>
+					</if>
+					<!-- 시작 날짜와 끝 날짜 모두 있는 경우 -->
+					<if test="srManagementSearch.regDateStart != null and srManagementSearch.regDateEnd != null">
+						<![CDATA[
+						AND srr.sr_rqst_reg_dt >= #{srManagementSearch.regDateStart}	
+						AND srr.sr_rqst_reg_dt <= #{srManagementSearch.regDateEnd}
+						]]>
+					</if>
+					<!-- 끝 날짜만 있는 경우 -->
+					<if test="srManagementSearch.regDateStart == null and srManagementSearch.regDateEnd != null">
+						<![CDATA[
+						AND srr.sr_rqst_reg_dt <= #{srManagementSearch.regDateEnd}
+						]]>
+					</if>
+					<if test="srManagementSearch.keywordContent != null">
+		                 <if test="srManagementSearch.keywordCategory == 'srTtl'">
+		                    AND sr_rqst.sr_ttl like '%' || #{srManagementSearch.keywordContent} || '%'
+		                 </if>
+		                 <if test="srManagementSearch.keywordCategory == 'srReqstrNm'">
+		                    AND reqstr.usr_nm like '%' || #{srManagementSearch.keywordContent} || '%'
+		                 </if>
+		                 <if test="srManagementSearch.keywordCategory == 'picNm'">
+		                    AND pic.usr_nm like '%' || #{srManagementSearch.keywordContent} || '%'
+		                 </if>
+		              </if>
+		              <if test="srManagementSearch.dvlCmptnSrCheck == null">
+		               		AND srr.sr_rqst_stts_no != 'DEP_CMPTN'
+		              </if>
+		           </where>
+		           <if test="srManagementSearch.dvlDeptNo == null and (srManagementSearch.keywordContent == null or (srManagementSearch.keywordContent != null and srManagementSearch.keywordCategory == 'picNm'))">
+		            	UNION
+		            	SELECT srr.sr_rqst_no, srr.sr_ttl, sys.sys_nm, reqstr.usr_nm as reqstr_nm, inst.inst_nm as reqstr_inst_nm, 
+		    			   srr.sr_rqst_reg_dt, srrs.sr_rqst_stts_nm
+			    		FROM sr_rqst srr
+			    		JOIN sys ON srr.sys_no = sys.sys_no
+			    		JOIN usr reqstr ON srr.sr_reqstr_no = reqstr.usr_no
+			    		JOIN inst ON reqstr.inst_no = inst.inst_no
+			    		JOIN sr_rqst_stts srrs ON srr.sr_rqst_stts_no = srrs.sr_rqst_stts_no
+			    		<where>
+			               <if test="srManagementSearch.sysNo != null">
+			                  sr_rqst.sys_no = #{srManagementSearch.sysNo}
+			               </if>
+			               <if test="srManagementSearch.rqstInstNo != null">
+			                  AND inst.inst_no = #{srManagementSearch.rqstInstNo}
+			               </if>
+			               <if test="srManagementSearch.srRqstSttsNo != null">
+			                  AND srrs.sr_rqst_stts_no = #{srManagementSearch.srRqstSttsNo}
+			               </if>
+			               <!-- 시작 날짜만 있는 경우 -->
+							<if test="srManagementSearch.regDateStart != null and srManagementSearch.regDateEnd == null">
+								<![CDATA[
+								AND srr.sr_rqst_reg_dt >= #{srManagementSearch.regDateStart}	
+								]]>
+							</if>
+							<!-- 시작 날짜와 끝 날짜 모두 있는 경우 -->
+							<if test="srManagementSearch.regDateStart != null and srManagementSearch.regDateEnd != null">
+								<![CDATA[
+								AND srr.sr_rqst_reg_dt >= #{srManagementSearch.regDateStart}	
+								AND srr.sr_rqst_reg_dt <= #{srManagementSearch.regDateEnd}
+								]]>
+							</if>
+							<!-- 끝 날짜만 있는 경우 -->
+							<if test="srManagementSearch.regDateStart == null and srManagementSearch.regDateEnd != null">
+								<![CDATA[
+								AND srr.sr_rqst_reg_dt <= #{srManagementSearch.regDateEnd}
+								]]>
+							</if>
+							<if test="srManagementSearch.keywordContent != null">
+			                  <if test="srManagementSearch.keywordCategory == 'srTtl'">
+			                     AND sr_rqst.sr_ttl like '%' || #{srManagementSearch.keywordContent} || '%'
+			                  </if>
+			                  <if test="srManagementSearch.keywordCategory == 'srReqstrNm'">
+			                     AND reqstr.usr_nm like '%' || #{srManagementSearch.keywordContent} || '%'
+			                  </if>
+			               </if>
+			            </where>
+			            <if test="srManagementSearch.dvlCmptnSrCheck == null">
+		               		AND srr.sr_rqst_stts_no != 'DEP_CMPTN'
+		               </if>
+		            </if>
+				)
+      <![CDATA[
+         WHERE rownum <= #{pager.endRowNo}
+      )
+      WHERE rnum >= #{pager.startRowNo}
+      ]]>
+    </select>
+    
+    <select id="checkSrExist" parameterType="String" resultType="int">
+    	SELECT COUNT(*)
+    	FROM sr
+    	WHERE sr_rqst_no = #{srRqstNo}
+    </select>
+    
+    <select id="getSrTrnsfYnBySrRqstNo" parameterType="String" resultType="String">
+    	SELECT sr_trnsf_yn
+    	FROM sr
+    	WHERE sr_rqst_no = #{srRqstNo}
+    </select>
 </mapper>

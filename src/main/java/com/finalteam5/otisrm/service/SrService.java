@@ -10,6 +10,8 @@ import com.finalteam5.otisrm.dto.sr.DatesForScheduleChangeRequest;
 import com.finalteam5.otisrm.dto.sr.ManageChangeScheduleRequestModalConfig;
 import com.finalteam5.otisrm.dto.sr.ProgressManagementSearchCompose;
 import com.finalteam5.otisrm.dto.sr.SrForDeveloperHomeBoard;
+import com.finalteam5.otisrm.dto.sr.SrManagementMainTableConfig;
+import com.finalteam5.otisrm.dto.sr.SrManagementSearchConfig;
 import com.finalteam5.otisrm.dto.sr.SrPrgrsForm;
 import com.finalteam5.otisrm.dto.sr.SrRequestDetailForDeveloperHome;
 import com.finalteam5.otisrm.dto.sr.SrTableConfigForProgressManagement;
@@ -107,4 +109,9 @@ public interface SrService {
 	
 	//일정변경요청 결과 확인
 	public int srScheduleChangeRequestResultCheck(String srNo);
+	
+	//----------------------------------------------------------------------------------------
+	//관리자 SR관리 페이지 구성
+	public SrManagementSearchConfig getSrManagementSearchConfig();
+	public SrManagementMainTableConfig getSrManagementMainTableConfig(String jsonData);
 }
