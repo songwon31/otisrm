@@ -475,7 +475,7 @@ function validateSrRqstForm(){
 		
 	}else{
 		event.preventDefault();
-		$("#alertContent").text("SR요청이 성공적으로 등록되었습니다.");
+		$("#alertContent").text("성공적으로 등록되었습니다.");
 		$("#alertModal").modal("show");	
 	}
 }
