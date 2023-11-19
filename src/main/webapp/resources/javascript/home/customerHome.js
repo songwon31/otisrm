@@ -558,15 +558,16 @@ function modifySrRqst(srRqstNo) {
 
 //**sr 요청 삭제
 function removeSrRqst() {
+	console.log("실행: " + $("#srRqst-srRqstNo").val());
 	// Ajax 요청 보내기
 	$.ajax({
 		type: "POST",
 		url: "removeSrRqstForCustomerHome",
 		data: {srRqstNo: $("#srRqst-srRqstNo").val()},
 		success: function (data) {
+			$("#alertContent2").text("성공적으로 삭제되었습니다.");
+    		$("#alertModal2").modal("show");
 			// 성공적으로 요청이 완료된 경우 실행할 코드
-			var currentURL = window.location.href;
-			window.location.href = currentURL; // 원하는 URL로 변경
 			loadSRRequests(1, choiceSrRqstSttsNo);
 		},
 		error: function (error) {
