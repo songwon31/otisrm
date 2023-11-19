@@ -350,5 +350,12 @@ public class DeveloperHomeController {
 		}
 		
 	}
+	
+	//완료 요청일 가져오기
+	@PostMapping("/getCmptnPrnmntDt")
+	@ResponseBody
+	public Date getSrCmptnPrnmntDt(String srNo) {
+		return srService.getSrCmptnPrnmntDt(srNo);
+	}
 }
 

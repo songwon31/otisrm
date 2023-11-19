@@ -988,4 +988,9 @@ public class SrServiceImpl implements SrService{
 			return null;
 		}
 	}
+	
+	@Override
+	public Date getSrCmptnPrnmntDt(String srNo) {
+		return srDao.selectSrCmptnPrnmntDtBySrNo(srNo).getSrCmptnPrnmntDt();
+	}
 }
