@@ -58,12 +58,26 @@
 		<div style="margin-left:1rem; font-weight:700;">SR 관리</div>
 	</div>
 	<div style="border:1px solid #ADB5BD; margin:1rem 0rem;"></div>
-	<ul style="list-style:none; padding:0; margin:0;">
-		<li class="menu-item"><a href="${pageContext.request.contextPath}/srManagement/requestManagement">SR요청관리</a></li>
-		<li class="menu-item"><a href="${pageContext.request.contextPath}/srManagement/reviewManagement">SR검토관리</a></li>
-		<li class="menu-item"><a href="${pageContext.request.contextPath}/srManagement/developManagement">SR개발관리</a></li>
-		<li class="menu-item"><a href="${pageContext.request.contextPath}/srManagement/progressManagement">SR진척관리</a></li>
-	</ul>
+	<c:if test="${usr.usrNo != null && usr.usrAuthrtNo == 'CUSTOMER'}">
+		<ul style="list-style:none; padding:0; margin:0;">
+			<li class="menu-item"><a href="${pageContext.request.contextPath}/srManagement/requestManagement">SR요청관리</a></li>
+		</ul>
+	</c:if>
+	<c:if test="${usr.usrNo != null && usr.usrAuthrtNo == 'DEVELOPER'}">
+		<ul style="list-style:none; padding:0; margin:0;">
+			<li class="menu-item"><a href="${pageContext.request.contextPath}/srManagement/requestManagement">SR요청관리</a></li>
+			<li class="menu-item"><a href="${pageContext.request.contextPath}/srManagement/developManagement">SR개발관리</a></li>
+			<li class="menu-item"><a href="${pageContext.request.contextPath}/srManagement/progressManagement">SR진척관리</a></li>
+		</ul>
+	</c:if>
+	<c:if test="${usr.usrNo != null && usr.usrAuthrtNo == 'REVIEWER' || usr.usrAuthrtNo == 'PIC' || usr.usrAuthrtNo == 'SYS_MANAGER'}">
+		<ul style="list-style:none; padding:0; margin:0;">
+			<li class="menu-item"><a href="${pageContext.request.contextPath}/srManagement/requestManagement">SR요청관리</a></li>
+			<li class="menu-item"><a href="${pageContext.request.contextPath}/srManagement/reviewManagement">SR검토관리</a></li>
+			<li class="menu-item"><a href="${pageContext.request.contextPath}/srManagement/developManagement">SR개발관리</a></li>
+			<li class="menu-item"><a href="${pageContext.request.contextPath}/srManagement/progressManagement">SR진척관리</a></li>
+		</ul>
+	</c:if>
 	
 	<div style="height:3rem;"></div>
 	
@@ -86,15 +100,16 @@
 	</ul>
 	
 	<div style="height:3rem;"></div>
-	
-	<div style="display:flex; flex-direction:row; align-items:center;">
-		<i class="material-icons top-icon" style="margin:0; padding:0;">settings</i>
-		<div style="margin-left:0.5rem; font-weight:700;">시스템 관리</div>
-	</div>
-	<div style="border:1px solid #ADB5BD; margin:1rem 0rem;"></div>
-	<ul style="list-style:none; padding:0; margin:0;">
-		<li class="menu-item"><a href="${pageContext.request.contextPath}/systemManagement/usrManagement">사용자 관리</a></li>
-		<li class="menu-item"><a href="${pageContext.request.contextPath}/systemManagement/instManagement">기업/시스템 관리</a></li>
-		<li class="menu-item"><a href="${pageContext.request.contextPath}/systemManagement/srManagement">SR 관리</a></li> 
-	</ul>
+	<c:if test="${usr.usrNo != null && usr.usrAuthrtNo == 'SYS_MANAGER'}">
+		<div style="display:flex; flex-direction:row; align-items:center;">
+			<i class="material-icons top-icon" style="margin:0; padding:0;">settings</i>
+			<div style="margin-left:0.5rem; font-weight:700;">시스템 관리</div>
+		</div>
+		<div style="border:1px solid #ADB5BD; margin:1rem 0rem;"></div>
+		<ul style="list-style:none; padding:0; margin:0;">
+			<li class="menu-item"><a href="${pageContext.request.contextPath}/systemManagement/usrManagement">사용자 관리</a></li>
+			<li class="menu-item"><a href="${pageContext.request.contextPath}/systemManagement/instManagement">기업/시스템 관리</a></li>
+			<li class="menu-item"><a href="${pageContext.request.contextPath}/systemManagement/srManagement">SR 관리</a></li> 
+		</ul>
+	</c:if>
 </div>
