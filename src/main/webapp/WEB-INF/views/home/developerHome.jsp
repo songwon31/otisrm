@@ -565,7 +565,7 @@
 					<div style="height:4rem; display: flex; flex-direction: row; align-items:center; padding:0 0.5rem;">
 						<div id="srPlanInfoEditModalSrTtl" style="font-size:1.6rem; font-weight:700;"></div>
 						<div style="flex-grow:1;"></div>
-						<button type="button" data-dismiss="modal" onclick="editSrTrnsfPlan()" class="btn-1" style="height:3rem;">
+						<button type="button" onclick="editSrTrnsfPlan()" class="btn-1" style="height:3rem;">
 							등록/수정
 						</button>
 					</div>

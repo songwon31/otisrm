@@ -228,9 +228,6 @@ function refactorMainTable(filterType, page) {
 				
 			});
 			
-			
-			
-			
 			//페이징 파트 구성
 			let pagerHtml = '';
 			if (data.pager.totalRows == 0) {
@@ -750,31 +747,65 @@ function editSrTrnsfPlan() {
 	let srTrgtCmptnDt = $('#srPlanModalTrgtCmptnDt').val();
 	let srTrnsfNote = $('#srPlanModalTrnsfNote').val();
 	let srDmndNo = $('#srPlanModalDmndInput').val();
-	console.log(srDmndNo);
-	
-	let requestData = {
-		srNo: srNo,
-		deptNm: deptNm,
-        usrNm: usrNm,
-        srTrgtBgngDt: srTrgtBgngDt,
-        srTrgtCmptnDt: srTrgtCmptnDt,
-        srTrnsfNote: srTrnsfNote,
-        srDmndNo: srDmndNo
-    };
-	
-	console.log(requestData);
-	
+
+	//날짜 유효성 검사
+	let trgtBgngDt = new Date(srTrgtBgngDt);
+	let trgtCmptnDt = new Date(srTrgtCmptnDt);
+	let today = new Date();
+	trgtBgngDt.setHours(0, 0, 0, 0);
+	trgtCmptnDt.setHours(0, 0, 0, 0);
+	today.setHours(0, 0, 0, 0);
+	var srCmptnPrnmntDt;
 	$.ajax({
 		type: "POST",
-		url: "/otisrm/editSrTrnsfPlan",
-		data: requestData,
+		url: "/otisrm/getCmptnPrnmntDt",
+		data: {srNo: srNo},
 		success: function(data) {
+			let srCmptnPrnmntDt = new Date(data);
+			srCmptnPrnmntDt.setHours(0, 0, 0, 0);
+			if (trgtCmptnDt > srCmptnPrnmntDt) {
+				$('#warningContent').html("목표 완료일은 완료 요청일 이후일 수 없습니다.");
+				$("#warningModal").modal("show");
+				return;
+			}
+			
+			if (trgtBgngDt < today) {
+				$('#warningContent').html("목표 시작일은 작성일 이전일 수 없습니다.");
+				$("#warningModal").modal("show");
+				return;
+			}
+			
+			//유효성 검사 통과
+			let requestData = {
+				srNo: srNo,
+				deptNm: deptNm,
+		        usrNm: usrNm,
+		        srTrgtBgngDt: srTrgtBgngDt,
+		        srTrgtCmptnDt: srTrgtCmptnDt,
+		        srTrnsfNote: srTrnsfNote,
+		        srDmndNo: srDmndNo
+		    };
+			
+			console.log(requestData);
+			
+			$.ajax({
+				type: "POST",
+				url: "/otisrm/editSrTrnsfPlan",
+				data: requestData,
+				success: function(data) {
+					refactorMainTable(mainTableFilter, currentPageNo);
+					setSrDetail(srNo);
+				}
+			});
+			
 			refactorMainTable(mainTableFilter, currentPageNo);
-			setSrDetail(srNo);
+			
+			$('#alertContent').html("SR계획이 저장되었습니다.");
+			$("#alertModal").modal("show");
+			$('#srPlanInfoEditModal').modal("hide");
 		}
 	});
 	
-	refactorMainTable(mainTableFilter, currentPageNo);
 }
 
 //HR수정 모달

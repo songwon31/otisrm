@@ -114,4 +114,6 @@ public interface SrService {
 	//관리자 SR관리 페이지 구성
 	public SrManagementSearchConfig getSrManagementSearchConfig();
 	public SrManagementMainTableConfig getSrManagementMainTableConfig(String jsonData);
+	
+	public Date getSrCmptnPrnmntDt(String srNo);
 }
