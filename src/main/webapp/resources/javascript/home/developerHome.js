@@ -5,6 +5,8 @@ var currentPageNo = 1;
 var currentDetailSrNo;
 var currentBottomTabFilter;
 
+var currentSrDetailPicNo = -1;
+
 function init() {
 	refactorMainTable('TOTAL', 1);
 }
@@ -296,7 +298,9 @@ function selectSrProgressTableFilter(tabStyle) {
 		$('.bottomSubDiv').css('display', 'none');
 		$('#srHrInfo').css('display', '');
 		$('.srProgressBtn').css('display', 'none');
-		$('.srHrBtn').css('display', 'flex');
+		if (currentSrDetailPicNo == modelUsrNo) {
+			$('.srHrBtn').css('display', 'flex');
+		}
 	} else if (tabStyle == 'srPrgrsInfoTab') {
 		$('#srPrgrsInfoTab').addClass('filterTabSelected');
 		$('.bottomSubDiv').css('display', 'none');
@@ -390,8 +394,8 @@ function setSrDetail(srNo) {
 		url: "/otisrm/getSrTransferInfo",
 		data: requestData,
 		success: function(data) {
+			currentSrDetailPicNo = data.usrNo;
 			
-
 			//SR계획정보 구성
 			$('#srPlanInfoDmnd').html(data.srDmndNm);
 			$('#srPlanInfoTask').html(data.srTaskNm);
@@ -410,7 +414,12 @@ function setSrDetail(srNo) {
 				let cmptnDt = new Date(data.srTrgtCmptnDt);
 				$('#srPlanInfoCmptnDt').html(formatDate(cmptnDt));
 			}
-			$('#srPlanInfoTotalCapacity').html(data.totalCapacity);
+			if (data.totalCapacity != null) {
+				$('#srPlanInfoTotalCapacity').html(data.totalCapacity.toFixed(1));
+			} else {
+				$('#srPlanInfoTotalCapacity').html('');
+			}
+			
 			$('#srPlanInfoNote').html(data.srTrnsfNote);
 			
 			//SR자원정보 구성
@@ -425,27 +434,23 @@ function setSrDetail(srNo) {
 					srTrnsfHrHtml += '<td class="usrNo" style="display:none">' + srTrnsfHr.usrNo + '</td>';
 					srTrnsfHrHtml += '<td>' + srTrnsfHr.usrNm + '</td>';
 					srTrnsfHrHtml += '<td>' + srTrnsfHr.roleNm + '</td>';
-					if (srTrnsfHr.planCapacity != '' && srTrnsfHr.planCapacity != null) {
-						srTrnsfHrHtml += '<td><input type="text" value="' + srTrnsfHr.planCapacity + '" style="width:50%; text-align: center;"></div></td>';
+					if (modelUsrNo == data.usrNo) {
+						srTrnsfHrHtml += '<td><input type="text" value="' + srTrnsfHr.planCapacity.toFixed(1) + '" style="width:50%; text-align: center;"></div></td>';
 					} else {
-						srTrnsfHrHtml += '<td><input type="text" value="" style="width:50%; text-align: center;"></div></td>';
+						srTrnsfHrHtml += '<td><input type="text" disabled value="' + srTrnsfHr.planCapacity.toFixed(1) + '" style="width:50%; text-align: center;"></div></td>';
 					}
-					if (srTrnsfHr.performanceCapacity != '' && srTrnsfHr.performanceCapacity != null) {
-						srTrnsfHrHtml += '<td><input type="text" value="' + srTrnsfHr.performanceCapacity + '" style="width:50%; text-align: center;"></div></td>';
-					} else {
-						srTrnsfHrHtml += '<td><input type="text" value="" style="width:50%; text-align: center;"></div></td>';
-					}
+					
+					srTrnsfHrHtml += '<td><input type="text" disabled value="' + srTrnsfHr.performanceCapacity.toFixed(1) + '" style="width:50%; text-align: center;"></div></td>';
 					srTrnsfHrHtml += '</tr>';
 					$('#srHrInfo tbody').append(srTrnsfHrHtml);
 				}
 			} else {
 				let srTrnsfHrHtml = '';
 				srTrnsfHrHtml += '<tr style="height:4rem; font-size:1.6rem; background-color:white;">';
-				srTrnsfHrHtml += '<td colspan=\'4\'>해당 목록 결과가 없습니다.</td>';
+				srTrnsfHrHtml += '<td colspan=\'5\'>해당 목록 결과가 없습니다.</td>';
 				srTrnsfHrHtml += '</tr>';
 				$('#srHrInfo tbody').append(srTrnsfHrHtml);
 			}
-			
 			
 			//SR진척률 구성
 			$('#prgrsTable td').html('');
@@ -586,23 +591,13 @@ function showSrPlanInfoEditModal() {
 		url: "/otisrm/getSrPlanModalCompose",
 		data: requestData,
 		success: function(data) {
-			console.log(data);
-			//SR계획정보 구성
-			/*
-			for (let i=0; i<data.dmndList.length; ++i) {
-				let dmnd = data.dmndList[i];
-				let srPlanModalDmndSelectHtml = '';
-				srPlanModalDmndSelectHtml += '<option value="' + dmnd.srDmndNo + '">' + dmnd.srDmndNm + '</option>';
-				$('#srPlanModalDmndSelect').append(srPlanModalDmndSelectHtml);
+			if (data.srPrgrsSttsNo == 'RQST' || data.srPrgrsSttsNo == 'RECEIPT') {
+				$('#srPlanModalTrgtBgngDt').prop('disabled', false);
+				$('#srPlanModalTrgtCmptnDt').prop('disabled', false);
+			} else {
+				$('#srPlanModalTrgtBgngDt').prop('disabled', true);
+				$('#srPlanModalTrgtCmptnDt').prop('disabled', true);
 			}
-			if (data.srDmndNm != null && data.srDmndNm != '') {
-				$("#srPlanModalDmndSelect option:selected").prop("selected", false);
-			    $("#srPlanModalDmndSelect option").filter(function() {
-			        return $(this).text() == data.srDmndNm;
-			    }).prop("selected", true);
-			}
-			*/
-			
 			$('#srPlanInfoEditModalSrTtl').html(data.srTtl);
 			$('#srPlanModalDmndInput').val(data.srDmndNm);
 			$('#srPlanModalTaskInput').val(data.srTaskNm);
@@ -771,6 +766,12 @@ function editSrTrnsfPlan() {
 			
 			if (trgtBgngDt < today) {
 				$('#warningContent').html("목표 시작일은 작성일 이전일 수 없습니다.");
+				$("#warningModal").modal("show");
+				return;
+			}
+			
+			if (trgtBgngDt > trgtCmptnDt) {
+				$('#warningContent').html("목표 완료일은 목표 시작일 이전일 수 없습니다.");
 				$("#warningModal").modal("show");
 				return;
 			}
@@ -961,6 +962,7 @@ function addHr(usrNo) {
 
 function saveHrInfo() {
 	let dataRows = []; // 데이터를 저장할 배열
+	let totalPlanCapacity = 0.0;
 
     // 테이블 내의 각 행 순회
     $("#srHrInfo tr").each(function (idx) {
@@ -990,6 +992,9 @@ function saveHrInfo() {
 		        		value = $(this).html();
 		        	} else {
 		        		value = $(this).find('input').val();
+		        		if (index == 5) {
+		        			totalPlanCapacity += parseFloat(value);
+		        		}
 		        	}
 		            rowData[key] = value;
 	        	}
@@ -1000,7 +1005,12 @@ function saveHrInfo() {
 	        dataRows.push(rowData);
     	}
     });
-    console.log(dataRows);
+    if (totalPlanCapacity > parseFloat($('#srPlanInfoTotalCapacity').html())) {
+    	$('#warningContent').html("총 계획공수값을 초과하였습니다.");
+		$("#warningModal").modal("show");
+		setSrDetail(currentDetailSrNo);
+		return;
+    }
 
     let jsonData = JSON.stringify(dataRows);
 
@@ -1011,6 +1021,8 @@ function saveHrInfo() {
         data: jsonData,
         contentType: "application/json; charset=utf-8",
         success: function (response) {
+        	$('#alertContent').html("자원 정보가 저장되었습니다.");
+    		$("#alertModal").modal("show");
         	setSrDetail(currentDetailSrNo);
         }
     });
@@ -1260,9 +1272,9 @@ function srPerformanceRegistrationModalConfig() {
         			html += '<td>' + formatDate(srTrgtBgngDt) + '</td>';
         			let srTrgtCmptnDt = new Date(hrData.srTrgtCmptnDt);
         			html += '<td>' + formatDate(srTrgtCmptnDt) + '</td>';
-        			html += '<td>' + hrData.planCapacity + '</td>';
-        			html += '<td>' + hrData.performanceCapacity + '</td>';
-        			html += '<td><input type="text" value="' + hrData.lastRegCapacity + '" style="width:50%; text-align: center;"></div></td>';
+        			html += '<td>' + hrData.planCapacity.toFixed(1) + '</td>';
+        			html += '<td>' + hrData.performanceCapacity.toFixed(1) + '</td>';
+        			html += '<td><input type="text" value="' + hrData.lastRegCapacity.toFixed(1) + '" style="width:50%; text-align: center;"></div></td>';
         			html += '</tr>';
         				
     				$('#srPerformanceRegistrationModalTable tbody').append(html);
@@ -1306,10 +1318,15 @@ function registerCapacity() {
         data: jsonData,
         contentType: "application/json; charset=utf-8",
         success: function (response) {
-        	srPerformanceRegistrationModalConfig();
-        	if (currentDetailSrNo != null) {
-        		setSrDetail(currentDetailSrNo);
+        	if (response == 0) {
+        		$('#warningContent').html("하루에 입력할 수 있는 실적공수의 범위는 0.0~2.0입니다.");
+    			$("#warningModal").modal("show");
+        	} else {
+        		$('#alertContent').html("실적 공수가 등록되었습니다.");
+    			$("#alertModal").modal("show");
         	}
+        	srPerformanceRegistrationModalConfig();
+        	setSrDetail(currentDetailSrNo);
         }
     });
 }
@@ -1333,7 +1350,18 @@ function changeScheduleRequestModalConfig() {
 }
 
 function srScheduleChangeRequest() {
+	let srTrgtBgngDt = $('#srPlanInfoBgngDt').html();
 	let requestSrTrgtCmptnDt = $('#requestSrTrgtCmptnDt').val();
+	let trgtBgngDt = new Date(srTrgtBgngDt);
+	let srTrgtCmptnDt = new Date(requestSrTrgtCmptnDt);
+	trgtBgngDt.setHours(0, 0, 0, 0);
+	srTrgtCmptnDt.setHours(0, 0, 0, 0);
+	console.log(trgtBgngDt + ' ' + srTrgtCmptnDt);
+	if (trgtBgngDt > srTrgtCmptnDt) {
+		$('#warningContent').html("완료예정일은 목표시작일 이전으로 설정할 수 없습니다.");
+		$("#warningModal").modal("show");
+		return;
+	}
 	$.ajax({
         url: "/otisrm/requestSrScheduleChange",
         method: "POST",

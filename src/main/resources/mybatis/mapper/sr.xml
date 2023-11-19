@@ -134,7 +134,7 @@
    </select>
    
    <select id="selectSrTrnsfInfoForDeveloperHomeBySrNo" parameterType="String" resultType="com.finalteam5.otisrm.dto.sr.SrTrnsfInfoForDeveloperHome">
-      SELECT srd.sr_dmnd_nm, srk.sr_task_nm, inst.inst_nm, dept.dept_nm, usr.usr_nm, srt.sr_trgt_bgng_dt, srt.sr_trgt_cmptn_dt, srt.sr_trnsf_note, srt.total_capacity
+      SELECT srd.sr_dmnd_nm, srk.sr_task_nm, inst.inst_nm, dept.dept_nm, usr.usr_no, usr.usr_nm, srt.sr_trgt_bgng_dt, srt.sr_trgt_cmptn_dt, srt.sr_trnsf_note, srt.total_capacity
       FROM sr_trnsf_plan srt
       JOIN sr ON srt.sr_no = sr.sr_no
       JOIN usr ON srt.usr_no = usr.usr_no
@@ -213,7 +213,7 @@
    
    <!-- SR계획정보 모달 구성 -->
    <select id="getCurrentSrTrnsfPlanInfo" parameterType="String" resultType="com.finalteam5.otisrm.dto.sr.SrTrnsfPlanModalCompose">
-      SELECT srd.sr_dmnd_nm, srtk.sr_task_nm, dept.dept_nm, usr.usr_nm, srt.sr_trgt_bgng_dt, srt.sr_trgt_cmptn_dt, srt.sr_trnsf_note, srt.total_capacity, srr.sr_ttl
+      SELECT srt.sr_prgrs_stts_no, srd.sr_dmnd_nm, srtk.sr_task_nm, dept.dept_nm, usr.usr_nm, srt.sr_trgt_bgng_dt, srt.sr_trgt_cmptn_dt, srt.sr_trnsf_note, srt.total_capacity, srr.sr_ttl
       FROM sr_trnsf_plan srt
       JOIN sr ON srt.sr_no = sr.sr_no
       JOIN sr_rqst srr ON sr.sr_rqst_no = srr.sr_rqst_no
@@ -225,7 +225,7 @@
    </select>
    
    <select id="getCurrentSrTrnsfPlanInfoRqst" parameterType="String" resultType="com.finalteam5.otisrm.dto.sr.SrTrnsfPlanModalCompose">
-      SELECT srd.sr_dmnd_nm, srtk.sr_task_nm, srr.sr_ttl
+      SELECT srt.sr_prgrs_stts_no, srd.sr_dmnd_nm, srtk.sr_task_nm, srr.sr_ttl
       FROM sr_trnsf_plan srt
       JOIN sr ON srt.sr_no = sr.sr_no
       JOIN sr_rqst srr ON sr.sr_rqst_no = srr.sr_rqst_no
@@ -280,8 +280,8 @@
       WHERE sr_no = #{srNo} AND usr_no = #{usrNo}
    </select>
    <insert id="insertHr" parameterType="map">
-      INSERT INTO sr_trnsf_hr (sr_trnsf_hr_no, sr_no, usr_no)
-      VALUES(#{srNo}||#{usrNo}, #{srNo}, #{usrNo})
+      INSERT INTO sr_trnsf_hr (sr_trnsf_hr_no, sr_no, usr_no, plan_capacity, performance_capacity)
+      VALUES(#{srNo}||#{usrNo}, #{srNo}, #{usrNo}, 0, 0)
    </insert>
    
    <!-- 공수 저장 -->
