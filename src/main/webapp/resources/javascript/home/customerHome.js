@@ -309,7 +309,7 @@ function showSrRqstBySrRqstNo(choiceSrRqstNo){
         data: {srRqstNo: choiceSrRqstNo},
         success: function(data) {
         	var date = new Date(data.srRqstRegDt);
-        	console.log(data);
+        	
         	//저장버튼(로그인한 회원의 요청만 저장버튼 활성화)
         	var loggedInUsrNo= $("#loginUsrNo").val();// 로그인한 회원 번호 가져오기 
         	var saveButton = $("#saveButton");

@@ -403,10 +403,9 @@
     		<div class=" mt-4 mb-2 p-2" >
     			<div class="d-flex">
     				<div class="pr-1" style="color: #60707f; font-size: 17px; font-weight: bold;">[</div> 
-    				<div style="color: #60707f; font-size: 17px; font-weight: bold;">SR231116_0001</div>   			
+    				<div id="bottomSrRqstNo" style="color: #60707f; font-size: 17px; font-weight: bold;">SR231116_0001</div>   			
     				<div class="pl-1" style="color: #60707f; font-size: 17px; font-weight: bold;">]</div> 
-    				<div class="pl-2" style="color: #424348; font-size: 17px; font-weight: bold;">FAQ 대표 질문 수정</div>   			
-    				<div class="pl-2" style="color: #424348; font-size: 17px; font-weight: bold;">요청상태</div>   			
+    				<div id="bottomSRTtl" class="pl-2" style="color: #424348; font-size: 17px; font-weight: bold;">FAQ 대표 질문 수정</div>   			  			
     			</div>
 				<div style="border-bottom: 2px solid #e1e6ea; margin-top: 10px;"></div>	
 			</div>
@@ -919,26 +918,27 @@
 
 <!-- 요청 삭제 모달 -->  
 <div class="modal" id="srRqstdeleteModal">
-  <div class="modal-dialog">
-	  <div class="modal-content">
-	      <!-- Modal Header -->
-	      <div class="modal-header" style="background-color: #de483a;">
-	        <h6 class="modal-title">sr요청 삭제</h6>
-	      </div>
-	
-	      <!-- Modal body -->
-	      <div class="modal-body">
-	        	해당 sr요청을 정말로 삭제하겠습니까 ?
-	      </div>
-	
-	      <!-- Modal footer -->
-	      <div class="modal-footer">
-	        <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="removeSrRqst()">확인</button>
-	        <button type="button" class="btn" style="background-color: #de483a; color: white;" onclick="cancelBtnForDeleteModal()">취소</button>
-	      </div>
+	  <div class="modal-dialog">
+		  <div class="modal-content">
+		      <!-- Modal Header -->
+		      <div class="modal-header"  style="background-color: white;">
+		        <h6 class="modal-title"  style="color: black; font-weight: bold;">SR요청 삭제</h6>
+		        <button type="button" class="close" data-dismiss="modal">&times;</button>
+		      </div>
+		
+		      <!-- Modal body -->
+		      <div class="modal-body" style="font-size: 1.3rem;">
+		        	해당 SR요청을 정말로 삭제하겠습니까 ?
+		      </div>
+		
+		      <!-- Modal footer -->
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="removeSrRqst()">확인</button>
+		        <button type="button" class="btn" style="background-color: #de483a; color: white;" data-dismiss="modal">취소</button>
+		      </div>
+			</div>
 		</div>
 	</div>
-</div>
 
 <!-- 요청 수정 모달 -->  
 <div class="modal" id="srRqstModyfyModal">

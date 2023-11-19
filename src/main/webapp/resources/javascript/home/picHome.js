@@ -545,6 +545,8 @@ function showSrRqstBySrRqstNo(choiceSrRqstNo){
         url: "getSrRqstBySrRqstNoForPicHome",
         data: {srRqstNo: choiceSrRqstNo},
         success: function(data) {
+        	//sr하단 내용에 데이터 세팅
+        	$("#bottomSrRqstNo").text()
         	
          	//sr요청 번호에 해당하는 sr 상세 내용
         	showSrBySrRqstNo(choiceSrRqstNo);
@@ -1275,8 +1277,27 @@ function setSrDetail(srRqstNo) {
 	 $("#progressCircles").hide();
 	 $("#isTrnsfY").hide();
 	 
+	//sr요청 상세
+	$.ajax({
+	    type: "GET",
+	    url: "getSrRqstBySrRqstNoForPicHome",
+	    data: { srRqstNo: srRqstNo },
+	    success: function (data) {
+	        // sr하단 내용에 데이터 세팅
+	        $("#bottomSrRqstNo").text(data.srRqstNo);
+	        $("#bottomSRTtl").text(data.srTtl);
+	    },
+	    error: function (error) {
+	        console.error("이거:", error);
+	        // 오류 처리 로직을 추가할 수 있습니다.
+	    }
+	});
+		
+	 
 	 $("#progressCircles").show();
  	loadProgressInfo(srRqstNo);
+ 	
+ 	
 	$.ajax({
 		type: "GET",
 		url: "getSrBySrRqstNoForPicHome",
@@ -1536,6 +1557,7 @@ function initProgress() {
 }
 
 function loadProgressInfo(srRqstNo) {
+	
 	$.ajax({
 		type: "POST",
 		url: "/otisrm/getSrRqstForProgressInfo",
