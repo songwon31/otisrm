@@ -439,31 +439,55 @@ function requestInsertDate(){
 
 //**요청등록하기
 function submitSrRqst(){
-	var form = $("#writeSrRqst")[0];
-	var formData = new FormData(form); // 폼 엘리먼트를 선택하고, [0]을 사용하여 DOM 요소로 변환
-	console.log(form);
-	console.log(formData);
-	$.ajax({
-	    url: "writeSrRqst", // 요청을 보낼 URL
-	    method: "POST",
-	    data: formData, // 폼 데이터를 전송
-	    success: function (data) {
-	    	 console.log(data);
-	    	 loadSRRequests(pageNo, choiceSrRqstSttsNo);
-	        // 성공적으로 요청이 완료된 경우 실행할 코드
-	        var currentURL = window.location.href;
-	        console.log(currentURL);
-	        window.location.href = "/home"; // 또는 다른 원하는 URL로 변경
-	        
-	    },
-	    error: function (error) {
-	        // 요청 중 오류가 발생한 경우 실행할 코드
-	        console.error("으어아으우어");
-	    },
-	    cache: false,        //파일이 포함되어 있으니, 브라우저 메모리에 저장하지 마라
-	    processData: false,  //title=xxx&desc=yyy& 씩으로 만들지 마라
-	    contentType: false,   //파트마다 Content-Type이 포함되기 때문에 따로 헤더에 Content-Type에 추가하지 마라(mutiple-> 파일마다 모두 다름)
-	});
+    var form = $("#writeSrRqst")[0];
+    var formData = new FormData(form); // 폼 엘리먼트를 선택하고, [0]을 사용하여 DOM 요소로 변환
+
+    $.ajax({
+        url: "writeSrRqst", // 요청을 보낼 URL
+        method: "POST",
+        data: formData, // 폼 데이터를 전송
+        success: function (data) {
+        	$("#alertModal").text("성공적으로 SR요청이 등록되었습니다.");
+    		$("#alertModal").modal("show");      		
+    		
+    		
+    		// 성공적으로 요청이 완료된 경우 실행할 코드
+    		var currentURL = window.location.href;
+    		console.log(currentURL);
+    		window.location.href = currentURL; // 또는 다른 원하는 URL로 변경
+        	
+        },
+        error: function (error) {
+            console.log(error);
+        },
+        cache: false,
+        processData: false,
+        contentType: false,
+    });
+}
+
+function validateSrRqstForm(){
+	event.preventDefault();
+	console.log($(".isCheckSrRqstInput").val());
+	if($(".isCheckSrRqstInput").val() === ''|| $(".isCheckSrRqstInput").val() === 'none') {
+		$("#warningContent").text("필수항목을 모두 입력해주세요.");
+		$("#warningModal").modal("show");
+		
+	}else{
+		event.preventDefault();
+		$("#alertContent").text("SR요청이 성공적으로 등록되었습니다.");
+		$("#alertModal").modal("show");	
+	}
+}
+
+//모달 close함수
+function alertModalClose(){
+	$("#alertModal").modal("hide");
+	submitSrRqst();
+	loadSRRequests(pageNo, choiceSrRqstSttsNo);
+}
+function warningModalClose(){
+	$("#warningModal").modal("hide");
 }
 
 //sr요청 등록 폼에  체크여부
