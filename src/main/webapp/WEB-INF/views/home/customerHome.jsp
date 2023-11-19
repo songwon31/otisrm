@@ -496,7 +496,7 @@
 			          <label for="srRqst-srTtl" class="form-label">SR제목</label>
 			        </div>
 			        <div style="width: 550.41px;">
-			          <input id="srRqst-srTtl" type="text" class="form-control">
+			          <input id="srRqst-srTtl" type="text" class="isCheckSrRqstModifyInput form-control">
 			        </div>
 			    </div>
 		        <div class="d-flex w-100 pt-2">
@@ -504,7 +504,7 @@
 			          <label for="srRqst-srPrps" class="form-label">관련근거/목적</label>
 			        </div>
 			        <div style="width: 550.41px;">
-			          <input id="srRqst-srPrps" type="text" class="form-control">
+			          <input id="srRqst-srPrps" type="text" class="isCheckSrRqstModifyInput form-control">
 			        </div>
 			    </div>
 		        <div class="d-flex w-100 pt-2">
@@ -512,7 +512,7 @@
 			          <label for="systemName" class="form-label">SR 내용</label>
 			        </div>
 			        <div style="width: 550.41px;">
-			          <textarea id="srRqst-srConts" class="form-control" id="srContent"></textarea>
+			          <textarea id="srRqst-srConts" class="isCheckSrRqstModifyInput form-control" id="srContent"></textarea>
 			        </div>
 			    </div>
 		        <div class="d-flex w-100 pt-2">

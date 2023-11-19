@@ -308,7 +308,6 @@ function showSrRqstBySrRqstNo(choiceSrRqstNo){
         url: "getSrRqstBySrRqstNo",
         data: {srRqstNo: choiceSrRqstNo},
         success: function(data) {
-        	$("#showSrRqstAtch").hide();
         	var date = new Date(data.srRqstRegDt);
         	console.log(data);
         	//저장버튼(로그인한 회원의 요청만 저장버튼 활성화)
@@ -365,11 +364,11 @@ function showSrRqstBySrRqstNo(choiceSrRqstNo){
         	        $("#showSrRqstAtch").html(html);
         	    } else {
         	        // srRqstAtchList가 객체지만 아무 항목도 없을 때
-        	        $("#showSrRqstAtch").html("첨부파일이 존재하지 않습니다.");
+        	        $("#showSrRqstAtch").text("첨부파일이 존재하지 않습니다.");
         	    }
         	} else {
         	    // srRqstAtchList가 객체가 아닐 때
-        	    $("#showSrRqstAtch").html("첨부파일이 존재하지 않습니다.");
+        	    $("#showSrRqstAtch").text("첨부파일이 존재하지 않습니다.");
         	}
         	if (data.srRqstEmrgYn === "Y") {
         	    $("#srRqst-importantChk").prop("checked", true);
