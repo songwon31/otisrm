@@ -315,15 +315,14 @@ function showSrRqstBySrRqstNo(choiceSrRqstNo){
         	var saveButton = $("#saveButton");
         	console.log(loggedInUsrNo);
         	// 로그인한 사용자와 요청을 등록한 회원을 비교하여 버튼 활성화/비활성화
-        	if (data.srReqstrNo === loggedInUsrNo) {
-        		console.log("내요청");
-        		saveButton.prop("disabled", false); // 버튼을 활성화
+            if(data.srRqstSttsNo === "RQST" || data.srRqstSttsNo === "APRV_WAIT"){
+            	saveButton.prop("disabled", false); // 버튼을 활성화
         		saveButton.css("opacity", 1); // 버튼을 완전 불투명으로 설정
-        	} else{
-        		console.log("내요청 아님");
+        	}else{
         		saveButton.prop("disabled", true); // 버튼을 비활성화
         		saveButton.css("opacity", 0.5); // 버튼을 반투명으로 설정 (예시로 0.5 사용)
         	}
+            
         	var formattedDate = $.datepicker.formatDate("yy-mm-dd", date);
         	$("#srRqst-srRqstNo").val(data.srRqstNo);
         	$("#srRqst-UsrNm").val(data.usrNm);
@@ -335,9 +334,14 @@ function showSrRqstBySrRqstNo(choiceSrRqstNo){
         	$("#srRqst-srRqstRegDt").val(formattedDate);
         	
         	//요청상태가 승인대기 이상일 때 삭제 불가능(버튼 속성 변경)
-        	if(data.srRqstSttsNo !== "RQST"){
+        	if(data.srRqstSttsNo === "RQST" || data.srRqstSttsNo === "APRV_RETURN"){
+        		console.log("흐앙");
+        		$("#deleteButton").prop("disabled", false); // 버튼을 활성화
+        		$("#deleteButton").css("opacity", 1); // 버튼을 완전 불투명으로 설정
+        	}else{
         		$("#deleteButton").prop("disabled", true);
         		$("#deleteButton").css("opacity", 0.5); 
+        		
         	}
         	
         	//첨부파일
@@ -539,9 +543,9 @@ function modifySrRqst(srRqstNo) {
         url: "modifySrRqst",
         data: data,
         success: function (response) {
+        	$("#alertContent2").text("성공적으로 등록되었습니다.");
+    		$("#alertModal2").modal("show");	
             // 성공적으로 요청이 완료된 경우 실행할 코드
-            var currentURL = window.location.href;
-            window.location.href = currentURL; // 원하는 URL로 변경
             loadSRRequests(1, choiceSrRqstSttsNo);
         },
         error: function (error) {

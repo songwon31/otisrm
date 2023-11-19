@@ -542,6 +542,24 @@
     </form>
    </div>
    
+   <!-- 알림 모달2 -->
+	<div id="alertModal2" class="modal" data-backdrop="static">
+		<div class="modal-dialog modal-dialog-centered modal-sm">
+			<div class="modal-content">
+				<div class="modal-header" style="background-color:#3d86e5; color:white; display:flex;">
+					<i class="material-icons">info</i>
+					<div class="modal-title pl-2" style="font-size:2rem; font-weight:700;">알림</div>
+					<i class="material-icons close-icon" data-dismiss="modal" style="cursor: pointer; padding-left: 180px;"" onclick="alertModalClose()">close</i>
+				</div>
+				<div class="modal-body" style="margin:0px; padding:0px; font-size:1.5rem;">
+					<div id="alertContent2" style="height:11rem; font-size:1.7rem; font-weight:700; display:flex; justify-content:center; align-items:center; white-space: pre-wrap;">
+						
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+   
    <!-- 요청 삭제 모달 -->  
 	<div class="modal" id="srRqstdeleteModal">
 	  <div class="modal-dialog">
@@ -566,7 +584,6 @@
 		</div>
 	</div>
 	
-
 
 
 <%@ include file="/WEB-INF/views/common/footer.jsp"%>
