@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.finalteam5.otisrm.dto.Sys;
 import com.finalteam5.otisrm.dto.inst.SysTableConfig;
+import com.finalteam5.otisrm.dto.sr.SrManagementMainTableConfig;
+import com.finalteam5.otisrm.dto.sr.SrManagementSearchConfig;
 import com.finalteam5.otisrm.dto.usr.Dept;
 import com.finalteam5.otisrm.dto.usr.Inst;
 import com.finalteam5.otisrm.dto.usr.InstDetail;
@@ -23,6 +25,7 @@ import com.finalteam5.otisrm.dto.usr.UsrManagementSearchConfigure;
 import com.finalteam5.otisrm.dto.usr.UsrTableConfigForUsrManagement;
 import com.finalteam5.otisrm.security.UsrDetails;
 import com.finalteam5.otisrm.service.InstService;
+import com.finalteam5.otisrm.service.SrService;
 import com.finalteam5.otisrm.service.UsrService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -40,6 +43,8 @@ public class SystemManagementController {
 	UsrService usrService;
 	@Resource
 	InstService instService;
+	@Resource
+	SrService srService;
 	
 	//사용자 관리 페이지
 	@RequestMapping("/usrManagement")
@@ -242,6 +247,8 @@ public class SystemManagementController {
 		return instService.deleteSys(sysNoList);
 	}
 	
+	
+	//-------------------------------------------------------------------------------
 	//SR 관리 페이지
 	@RequestMapping("/srManagement")
 	public String srManagement(Authentication authentication, Model model) {
@@ -253,5 +260,19 @@ public class SystemManagementController {
 		} else {
 			return "/systemManagement/srManagement";
 		}
+	}
+	
+	//SR 검색 구성
+	@PostMapping("/srManagement/getSrManagementSearchConfig")
+	@ResponseBody
+	public SrManagementSearchConfig getSrManagementSearchConfig() {
+		return srService.getSrManagementSearchConfig();
+	}
+	
+	//SR 메인 테이블 구성
+	@PostMapping("/srManagement/getSrManagementMainTableConfig")
+	@ResponseBody
+	public SrManagementMainTableConfig getSrManagementMainTableConfig(@RequestBody String jsonData) {
+		return srService.getSrManagementMainTableConfig(jsonData);
 	}
 }

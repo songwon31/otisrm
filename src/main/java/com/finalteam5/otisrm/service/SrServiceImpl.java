@@ -42,6 +42,10 @@ import com.finalteam5.otisrm.dto.sr.ProgressManagementSearch;
 import com.finalteam5.otisrm.dto.sr.ProgressManagementSearchCompose;
 import com.finalteam5.otisrm.dto.sr.SrForDeveloperHomeBoard;
 import com.finalteam5.otisrm.dto.sr.SrForProgressManagementBoard;
+import com.finalteam5.otisrm.dto.sr.SrForSrManagementBoard;
+import com.finalteam5.otisrm.dto.sr.SrManagementMainTableConfig;
+import com.finalteam5.otisrm.dto.sr.SrManagementSearch;
+import com.finalteam5.otisrm.dto.sr.SrManagementSearchConfig;
 import com.finalteam5.otisrm.dto.sr.SrPrgrsForDeveloperHome;
 import com.finalteam5.otisrm.dto.sr.SrPrgrsForm;
 import com.finalteam5.otisrm.dto.sr.SrRequestDetailForDeveloperHome;
@@ -859,7 +863,6 @@ public class SrServiceImpl implements SrService{
 	//mainTable 구성
 	@Override
 	public SrTableConfigForProgressManagement getProgressManagementMainTableConfig(String usrNo, String jsonData) {
-		log.info(""+jsonData);
 		try {
 			ObjectMapper objectMapper = new ObjectMapper();
 			ProgressManagementSearch progressManagementSearch = new ProgressManagementSearch();
@@ -938,4 +941,51 @@ public class SrServiceImpl implements SrService{
 		return srDao.updateSrScheduleChangeRequestResultCheck(srNo);
 	}
 	
+	//---------------------------------------------------------------------------------------
+	//관리자 SR관리 페이지 구성
+	@Override
+	public SrManagementSearchConfig getSrManagementSearchConfig() {
+		SrManagementSearchConfig srManagementSearchConfig = new SrManagementSearchConfig();
+		srManagementSearchConfig.setSysList(srDao.selectSysList());
+		srManagementSearchConfig.setReqstrInstList(srDao.selectRqstInstList());
+		srManagementSearchConfig.setSrRqstSttsList(srDao.selectSrRqstSttsList());
+		srManagementSearchConfig.setDeptList(srDao.selectMainDeptList());
+		return srManagementSearchConfig;
+	}
+	
+	@Override
+	public SrManagementMainTableConfig getSrManagementMainTableConfig(String jsonData) {
+		try {
+			ObjectMapper objectMapper = new ObjectMapper();
+			SrManagementSearch srManagementSearch = new SrManagementSearch();
+			Integer pageNo;
+        
+            // JSON 문자열을 Map으로 파싱
+            Map<String, Object> jsonMap = objectMapper.readValue(jsonData, Map.class);
+            String innerJson = (String) jsonMap.get("srManagementSearch");
+            srManagementSearch = objectMapper.readValue(innerJson, SrManagementSearch.class);
+            pageNo = (Integer) jsonMap.get("pageNo");
+            
+            log.info(""  + srManagementSearch);
+	        int totalSrForSrManagementBoardNum = srDao.countSrForSrManagementBoard(srManagementSearch);
+	        Pager pager = new Pager(10, 5, totalSrForSrManagementBoardNum, pageNo);
+	        
+	        SrManagementMainTableConfig srManagementMainTableConfig = new SrManagementMainTableConfig();
+	        srManagementMainTableConfig.setSrList(srDao.selectSrForSrManagementBoard(srManagementSearch, pager));
+	        srManagementMainTableConfig.setPager(pager);
+	        
+	        for (SrForSrManagementBoard srForSrManagementBoard : srManagementMainTableConfig.getSrList()) {
+	        	if (srDao.checkSrExist(srForSrManagementBoard.getSrRqstNo()) > 0) {
+	        		srForSrManagementBoard.setSrTrnsfYn(srDao.getSrTrnsfYnBySrRqstNo(srForSrManagementBoard.getSrRqstNo()));
+	        	} else {
+	        		srForSrManagementBoard.setSrTrnsfYn("");
+	        	}
+	        }
+	        
+			return srManagementMainTableConfig;
+		} catch (IOException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 }
