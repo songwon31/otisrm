@@ -67,9 +67,12 @@ public class ReviewerHomeController {
 			//업무구분 가져오기
 			List<SrTaskClsf> taskClsfList = srRqstService.getSrTaskClsf();
 			model.addAttribute("taskClsfList", taskClsfList);
+			
+			return "/home/reviewerHome";
+		} else {
+			return "redirect:/";
 		}
 		
-		return "/home/reviewerHome";
 	}
 	
 	@PostMapping("/getReviewerHomeCountBoard")

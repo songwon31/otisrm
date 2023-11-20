@@ -176,25 +176,31 @@ function loadUnprocessedListAll(pageNo) {
 				//페이징 처리
 			    var reviewerHomeBoardPager = data.pager;
 			    //동적으로 페이징 컨트롤 생성
-			    pagingHtml += '<a class="btn" onclick="loadFirstSrToProgressInfo()" href="javascript:loadReviewerHomeBoardList(' + 1 + ')">처음</a>';
+			    pagingHtml += '<a style="font-size: 1.5rem; height: 3rem; line-height: 3rem; cursor:default; margin-right:1rem;" onclick="loadFirstSrToProgressInfo()" href="javascript:loadReviewerHomeBoardList(' + 1 + ')">처음</a>';
 			    //이전 페이지로 이동하는 링크 추가
-			    if (reviewerHomeBoardPager.groupNo > 1) {
-			        pagingHtml += '<a class="btn" onclick="loadFirstSrToProgressInfo()" href="javascript:loadReviewerHomeBoardList(' + reviewerHomeBoardPager.startPageNo - 1 + ')">이전</a>';
-			    }
+			    if (data.pager.groupNo == 1) {
+			    	pagingHtml += '<a href="javascript:void(0)" style="font-size: 1.5rem; height: 3rem; line-height: 3rem; color:#868e96; cursor:default; margin-right:1rem;">이전</a>';
+				} else {
+					pagingHtml += '<a onclick="loadFirstSrToProgressInfo()" href="javascript:loadReviewerHomeBoardList(' + ((reviewerHomeBoardPager.groupNo - reviewerHomeBoardPager.pagesPerGroup) * 5) + ')" style="font-size: 1.5rem; height: 3rem; line-height: 3rem; margin-right:1rem;">이전</a>';
+				}
 			    //중간 페이지 번호 링크 추가
 			    for (var i = reviewerHomeBoardPager.startPageNo; i <= reviewerHomeBoardPager.endPageNo; i++) {
 			    	if (reviewerHomeBoardPager.pageNo != i) {
-			    		pagingHtml += '<a class="btn" onclick="loadFirstSrToProgressInfo()" href="javascript:loadReviewerHomeBoardList(' + i + ')">' + i + '</a>';
+			    		pagingHtml += '<a style="font-size: 1.5rem; height: 3rem; line-height: 3rem; margin: 0 0.5rem;" onclick="loadFirstSrToProgressInfo()" href="javascript:loadReviewerHomeBoardList(' + i + ')">' + i + '</a>';
 			        } else {
-			        	pagingHtml += '<a class="btn" onclick="loadFirstSrToProgressInfo()" href="javascript:loadReviewerHomeBoardList(' + i + ')">' + i + '</a>';
+			        	pagingHtml += '<a style="font-size: 1.5rem; height: 3rem; line-height: 3rem; margin: 0 0.5rem; font-weight:700; color: #2c7be4;" onclick="loadFirstSrToProgressInfo()" href="javascript:loadReviewerHomeBoardList(' + i + ')">' + i + '</a>';
 			        }
 			    }
 			    //다음 페이지로 이동하는 링크 추가
-			    if (reviewerHomeBoardPager.groupNo < reviewerHomeBoardPager.totalGroupNo) {
-			      pagingHtml += '<a class="btn" onclick="loadFirstSrToProgressInfo()" href="javascript:loadReviewerHomeBoardList(' + reviewerHomeBoardPager.endPageNo + 1 + ')">다음</a>';
-			    }
+			    
+			    if (reviewerHomeBoardPager.groupNo == reviewerHomeBoardPager.totalGroupNo) {
+			    	pagingHtml += '<a href="javascript:void(0)" style="font-size: 1.5rem; height: 3rem; line-height: 3rem; color:#868e96; cursor:default; margin-left:1rem;">다음</a>';
+				} else {
+					pagingHtml += '<a href="javascript:void(0)" onclick="loadFirstSrToProgressInfo()" href="javascript:loadReviewerHomeBoardList(' + ((reviewerHomeBoardPager.groupNo * reviewerHomeBoardPager.pagesPerGroup)+1) + ')" style="font-size: 1.5rem; height: 3rem; line-height: 3rem; margin-left:1rem;">다음</a>';
+				}
+			    
 			    //맨끝 페이지로 이동하는 링크 추가
-			    pagingHtml += '<a class="btn" onclick="loadFirstSrToProgressInfo()" href="javascript:loadReviewerHomeBoardList(' + reviewerHomeBoardPager.totalPageNo + ')">맨끝</a>';
+			    pagingHtml += '<a style="font-size: 1.5rem; height: 3rem; line-height: 3rem; cursor:default; margin-left:1rem;" onclick="loadFirstSrToProgressInfo()" href="javascript:loadReviewerHomeBoardList(' + reviewerHomeBoardPager.totalPageNo + ')">맨끝</a>';
 			}
 			$("#reviewerHomeMainTablePaging").html(pagingHtml);
 		}
@@ -261,25 +267,30 @@ function loadUnprocessedListByStts(pageNo, selectedStts) {
 			    var reviewerHomeBoardPager = data.pager;
 	
 			    //동적으로 페이징 컨트롤 생성
-			    pagingHtml += '<a class="btn" onclick="loadFirstSrToProgressInfo()" href="javascript:loadReviewerHomeBoardList(' + 1 + ', \'' + selectedStts + '\')">처음</a>';
+			    pagingHtml += '<a style="font-size: 1.5rem; height: 3rem; line-height: 3rem; cursor:default; margin-right:1rem;" onclick="loadFirstSrToProgressInfo()" href="javascript:loadReviewerHomeBoardList(' + 1 + ', \'' + selectedStts + '\')">처음</a>';
 			    //이전 페이지로 이동하는 링크 추가
-			    if (reviewerHomeBoardPager.groupNo > 1) {
-			        pagingHtml += '<a class="btn" onclick="loadFirstSrToProgressInfo()" href="javascript:loadReviewerHomeBoardList(' + (reviewerHomeBoardPager.startPageNo - 1) + ', \'' + selectedStts + '\')">이전</a>';
-			    }
+			    if (data.pager.groupNo == 1) {
+			    	pagingHtml += '<a href="javascript:void(0)" style="font-size: 1.5rem; height: 3rem; line-height: 3rem; color:#868e96; cursor:default; margin-right:1rem;">이전</a>';
+				} else {
+					pagingHtml += '<a style="font-size: 1.5rem; height: 3rem; line-height: 3rem; margin-right:1rem;" onclick="loadFirstSrToProgressInfo()" href="javascript:loadReviewerHomeBoardList(' + ((reviewerHomeBoardPager.groupNo - reviewerHomeBoardPager.pagesPerGroup) * 5) + ', \'' + selectedStts + '\')">이전</a>';
+				}
+			    
 			    //중간 페이지 번호 링크 추가
 			    for (var i = reviewerHomeBoardPager.startPageNo; i <= reviewerHomeBoardPager.endPageNo; i++) {
 			    	if (reviewerHomeBoardPager.pageNo != i) {
-			    		pagingHtml += '<a class="btn" onclick="loadFirstSrToProgressInfo()" href="javascript:loadReviewerHomeBoardList(' + i + ', \'' + selectedStts + '\')">' + i + '</a>';
+			    		pagingHtml += '<a style="font-size: 1.5rem; height: 3rem; line-height: 3rem; margin: 0 0.5rem;" onclick="loadFirstSrToProgressInfo()" href="javascript:loadReviewerHomeBoardList(' + i + ', \'' + selectedStts + '\')">' + i + '</a>';
 			        } else {
-			        	pagingHtml += '<a class="btn" onclick="loadFirstSrToProgressInfo()" href="javascript:loadReviewerHomeBoardList(' + i + ', \'' + selectedStts + '\')">' + i + '</a>';
+			        	pagingHtml += '<a style="font-size: 1.5rem; height: 3rem; line-height: 3rem; margin: 0 0.5rem; font-weight:700; color: #2c7be4;" onclick="loadFirstSrToProgressInfo()" href="javascript:loadReviewerHomeBoardList(' + i + ', \'' + selectedStts + '\')">' + i + '</a>';
 			        }
 			    }
 			    //다음 페이지로 이동하는 링크 추가
-			    if (reviewerHomeBoardPager.groupNo < reviewerHomeBoardPager.totalGroupNo) {
-			      pagingHtml += '<a class="btn" onclick="loadFirstSrToProgressInfo()" href="javascript:loadReviewerHomeBoardList(' + (reviewerHomeBoardPager.endPageNo + 1) + ', \'' + selectedStts + '\')">다음</a>';
+			    if (reviewerHomeBoardPager.groupNo == reviewerHomeBoardPager.totalGroupNo) {
+			    	pagingHtml += '<a href="javascript:void(0)" style="font-size: 1.5rem; height: 3rem; line-height: 3rem; color:#868e96; cursor:default; margin-left:1rem;">다음</a>';
+			    } else {
+			        pagingHtml += '<a style="font-size: 1.5rem; height: 3rem; line-height: 3rem; margin-left:1rem;" onclick="loadFirstSrToProgressInfo()" href="javascript:loadReviewerHomeBoardList(' + ((reviewerHomeBoardPager.groupNo * reviewerHomeBoardPager.pagesPerGroup)+1)+ ', \'' + selectedStts + '\')">다음</a>';
 			    }
 			    //맨끝 페이지로 이동하는 링크 추가
-			    pagingHtml += '<a class="btn" onclick="loadFirstSrToProgressInfo()" href="javascript:loadReviewerHomeBoardList(' + reviewerHomeBoardPager.totalPageNo + ', \'' + selectedStts + '\')">맨끝</a>';
+			    pagingHtml += '<a style="font-size: 1.5rem; height: 3rem; line-height: 3rem; cursor:default; margin-left:1rem;" onclick="loadFirstSrToProgressInfo()" href="javascript:loadReviewerHomeBoardList(' + reviewerHomeBoardPager.totalPageNo + ', \'' + selectedStts + '\')">맨끝</a>';
 			}
 			$("#reviewerHomeMainTablePaging").html(pagingHtml);
 		}

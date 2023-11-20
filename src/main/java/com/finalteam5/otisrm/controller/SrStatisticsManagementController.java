@@ -56,8 +56,8 @@ public class SrStatisticsManagementController {
 			model.addAttribute("usr", usr);
 
 			return "/srManagement/statisticsManagement/statisticsManagement";
-		}else {
-			return "redirect:/home";
+		} else {
+			return "redirect:/";
 		}
 	}
 	

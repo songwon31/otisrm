@@ -86,7 +86,8 @@ a, a:hover {
 
 .btn-1 {
    border: none;
-   font-size: 1.3rem;
+   font-size: 1.5rem;
+   font-weight: 700;
    color: #f3ffff;
    background-color:#2c7be4; 
    border-radius:3px;
@@ -114,7 +115,8 @@ a, a:hover {
 
 .btn-3 {
    border: none;
-   font-size:1.3rem;
+   font-size: 1.5rem;
+   font-weight: 700;
    color: #f3ffff;
    background-color:#949494; 
    border-radius:3px;
@@ -142,7 +144,8 @@ a, a:hover {
 
 .btn-complete {
    border: none;
-   font-size:1.3rem;
+   font-size: 1.5rem;
+   font-weight: 700;
    color: white;
    background-color:#e42c2c; 
    border-radius:3px;
@@ -156,7 +159,8 @@ a, a:hover {
 
 .btn-complete-disabled {
    border: none;
-   font-size:1.3rem;
+   font-size: 1.5rem;
+   font-weight: 700;
    color: white;
    background-color:#949494; 
    border-radius:3px;
