@@ -612,9 +612,8 @@
 										<td>분석</td>
 										<td style="height:4rem; display:flex; flex-direction:row; justify-content:center; align-items:center;">
 											<input id="setHrModalAnalysisPicInput" disabled value="" style="width:50%; height:3rem; margin:0rem 0.5rem;">
-											<a data-toggle="modal" data-target="#setHrFindPicModal" onclick="composeSetHrFindPicModal(this)" href="javascript:void(0)" 
-												style="height: 3rem; width: 20%; border-radius: 5px; background-color:#2c7be4; color:white; font-weight:700; 
-												display: flex; flex-direction: row; justify-content: center; align-items: center;">찾기</a>
+											<button data-toggle="modal" data-target="#setHrFindPicModal" onclick="composeSetHrFindPicModal(this)" class="btn-blue"
+													style="height:3rem; width:20%">찾기</button>
 										</td>
 									</tr>
 									<tr style="height:4rem; font-size:1.5rem; background-color:white;">

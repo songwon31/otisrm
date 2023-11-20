@@ -475,7 +475,7 @@ function setSrDetail(srNo) {
 							$('#analysisProgressGraph').css('width', (srPrgrs.srPrgrs * 10) + '%');
 						}
 						
-						let btnHtml = '<center><a data-toggle="modal" data-target="#manageSrOutputModal" href="javascript:void(0)" class="btn-1" style="width:30%; height:3rem; font-size:1.5rem;" onclick="composeManageSrOutputModal(\'ANALYSIS\')">관리</a></center>';
+						let btnHtml = '<center><a data-toggle="modal" data-target="#manageSrOutputModal" href="javascript:void(0)" class="btn-blue" style="width:30%; height:3rem; font-size:1.5rem;" onclick="composeManageSrOutputModal(\'ANALYSIS\')">관리</a></center>';
 						/*btnHtml += 'style="height: 3rem; width: 30%; border-radius: 5px; background-color:#2c7be4; color:white; font-weight:700;';
 						btnHtml += 'display: flex; flex-direction: row; justify-content: center; align-items: center;">관리</a></center>';*/
 						
@@ -496,7 +496,7 @@ function setSrDetail(srNo) {
 							$('#totalProgressGraphText').html(srPrgrs.srPrgrs + '%');
 							$('#designProgressGraph').css('width', ((srPrgrs.srPrgrs - 10) * 10) + '%');
 						}
-						let btnHtml = '<center><a data-toggle="modal" data-target="#manageSrOutputModal" href="javascript:void(0)" class="btn-1" style="width:30%; height:3rem; font-size:1.5rem;" onclick="composeManageSrOutputModal(\'DESIGN\')">관리</a></center>';
+						let btnHtml = '<center><a data-toggle="modal" data-target="#manageSrOutputModal" href="javascript:void(0)" class="btn-blue" style="width:30%; height:3rem; font-size:1.5rem;" onclick="composeManageSrOutputModal(\'DESIGN\')">관리</a></center>';
 						$('#srDesignOtptBtn').html(btnHtml);
 					} else if (srPrgrs.srPrgrsSttsNm == '구현') {
 						if (srPrgrs.srPrgrsBgngDt != null) {
@@ -514,7 +514,7 @@ function setSrDetail(srNo) {
 							$('#totalProgressGraphText').html(srPrgrs.srPrgrs + '%');
 							$('#implementProgressGraph').css('width', ((srPrgrs.srPrgrs - 20) * 2) + '%');
 						}
-						let btnHtml = '<center><a data-toggle="modal" data-target="#manageSrOutputModal" href="javascript:void(0)" class="btn-1" style="width:30%; height:3rem; font-size:1.5rem;" onclick="composeManageSrOutputModal(\'IMPLEMENT\')">관리</a></center>';
+						let btnHtml = '<center><a data-toggle="modal" data-target="#manageSrOutputModal" href="javascript:void(0)" class="btn-blue" style="width:30%; height:3rem; font-size:1.5rem;" onclick="composeManageSrOutputModal(\'IMPLEMENT\')">관리</a></center>';
 						$('#srImplOtptBtn').html(btnHtml);
 					} else if (srPrgrs.srPrgrsSttsNm == '시험') {
 						if (srPrgrs.srPrgrsBgngDt != null) {
@@ -532,7 +532,7 @@ function setSrDetail(srNo) {
 							$('#totalProgressGraphText').html(srPrgrs.srPrgrs + '%');
 							$('#testProgressGraph').css('width', ((srPrgrs.srPrgrs - 70) * 5) + '%');
 						}
-						let btnHtml = '<center><a data-toggle="modal" data-target="#manageSrOutputModal" href="javascript:void(0)" class="btn-1" style="width:30%; height:3rem; font-size:1.5rem;" onclick="composeManageSrOutputModal(\'TEST\')">관리</a></center>';
+						let btnHtml = '<center><a data-toggle="modal" data-target="#manageSrOutputModal" href="javascript:void(0)" class="btn-blue" style="width:30%; height:3rem; font-size:1.5rem;" onclick="composeManageSrOutputModal(\'TEST\')">관리</a></center>';
 						$('#srTestOtptBtn').html(btnHtml);
 					} else if (srPrgrs.srPrgrsSttsNm == '반영요청') {
 						if (srPrgrs.srPrgrsBgngDt != null) {
@@ -550,7 +550,7 @@ function setSrDetail(srNo) {
 							$('#totalProgressGraphText').html(srPrgrs.srPrgrs + '%');
 							$('#applyRequestProgressGraph').css('width', ((srPrgrs.srPrgrs - 90) * 10) + '%');
 						}
-						let btnHtml = '<center><a data-toggle="modal" data-target="#manageSrOutputModal" href="javascript:void(0)" class="btn-1" style="width:30%; height:3rem; font-size:1.5rem;" onclick="composeManageSrOutputModal(\'APPLY_REQUEST\')">관리</a></center>';
+						let btnHtml = '<center><a data-toggle="modal" data-target="#manageSrOutputModal" href="javascript:void(0)" class="btn-blue" style="width:30%; height:3rem; font-size:1.5rem;" onclick="composeManageSrOutputModal(\'APPLY_REQUEST\')">관리</a></center>';
 						$('#srApplyOtptBtn').html(btnHtml);
 					}
 				}

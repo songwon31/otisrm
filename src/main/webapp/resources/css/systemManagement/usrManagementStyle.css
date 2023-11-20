@@ -106,18 +106,29 @@
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
+	font-weight:700;
 }
+
+.btn-blue:active {
+   background-color:#4177bf; 
+}
+
 
 .btn-red {
 	border: none;
 	font-size: 1.3rem;
 	color: #ffffff;
-	background-color:#d1180b; 
+	background-color:#de483a; 
 	border-radius:3px;
 	display: inline-flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
+	font-weight:700;
+}
+
+.btn-red:active {
+   background-color:#c53d31; 
 }
 
 .btn-navy {
@@ -130,16 +141,27 @@
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
+	font-weight:700;
 }
+
+.btn-navy:active {
+   background-color:black; 
+}
+
 
 .btn-gray {
 	border: none;
 	font-size: 1.3rem;
 	color: #ffffff;
-	background-color:#868e96; 
+	background-color:#949494; 
 	border-radius:3px;
 	display: inline-flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
+	font-weight:700;
+}
+
+.btn-gray:active {
+   background-color:#7c7c7c; 
 }
