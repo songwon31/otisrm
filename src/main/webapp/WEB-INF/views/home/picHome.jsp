@@ -235,7 +235,7 @@
 							<a id="srRqstInfoTab" href="javascript:void(0)"
 								onclick="selectSrProgressTableFilter('srRqstInfoTab')"
 								class="srProgressTableSelectElement srProgressPlan filterTab2 filterTabSelected"
-								style="width: 25%"> 
+								style="width: 25%; background-color: #edf2f8; color: black;" > 
 								<span>SR계획정보</span>
 							</a> 
 							<a id="srHrInfoTab" href="javascript:void(0)"
@@ -292,11 +292,11 @@
 									
 								</div>
 							</div>
-							<div style="height: 10rem; display: flex; flex-direction: row;">
-								<div style="height: 10rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #edf2f8; font-weight:700;">참고사항</div>
-								<div style="height: 10rem; width: 85%; display: flex; flex-direction: column;">
-									<div style="height: 10rem; display: flex; flex-direction: row; align-items: center;">
-										<div id="srPlanInfoNote" style="height: 10rem; width: 100%; padding: 0.5rem; overflow-y: auto; white-space: pre-line; border-bottom: 1.5px solid #e9ecef; border-right: 1.5px solid #e9ecef;"">
+							<div style="height: 8rem; display: flex; flex-direction: row;">
+								<div style="height: 8rem; width: 15%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #edf2f8; font-weight:700;">참고사항</div>
+								<div style="height: 8rem; width: 85%; display: flex; flex-direction: column;">
+									<div style="height: 8rem; display: flex; flex-direction: row; align-items: center;">
+										<div id="srPlanInfoNote" style="height: 8rem; width: 100%; padding: 0.5rem; overflow-y: auto; white-space: pre-line; border-bottom: 1.5px solid #e9ecef; border-right: 1.5px solid #e9ecef;"">
 			
 										</div>
 									</div>

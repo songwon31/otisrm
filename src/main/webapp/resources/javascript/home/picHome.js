@@ -41,6 +41,19 @@ $(document).ready(function() {
 	    loadSRRequests(1, choiceSrRqstSttsNo);
 	});
 	
+	$(".filterTab2").click(function(event) {
+	    // 클릭된 요소의 스타일을 변경
+	    $(this).css({
+	        "background-color": "#edf2f8",
+	        "color": "black"
+	    });
+	  
+	    $(".filterTab2").not(this).css({
+	        "background-color": "",
+	        "color": ""
+	    });
+	});
+	
 	//필터링 텝 선택 효과
 	$(".toDoItem").click(function() {
 		// 클릭된 요소의 스타일을 변경
@@ -1362,7 +1375,7 @@ function setSrDetailBottom(srNo) {
         srNo: srNo
     };
 	
-	
+	$("#progressCircles").hide();
 	$.ajax({
 		type: "POST",
 		url: "/otisrm/getSrTransferInfo",
@@ -1517,7 +1530,7 @@ function setSrDetailBottom(srNo) {
 							$('#totalProgressGraphText').html(srPrgrs.srPrgrs + '%');
 							$('#applyRequestProgressGraph').css('width', ((srPrgrs.srPrgrs - 90) * 10) + '%');
 						}
-						let btnHtml = '<center><a data-toggle="modal" data-target="#manageSrOutputModal" href="javascript:void(0)" class="btn-1" style="width:30%; height:3rem; font-size:1.5rem;" onclick="composeManageSrOutputModal(\'APPLY_REQUEST\')">관리</a></center>';
+						let btnHtml = '<center><a data-toggle="modal" data-target="#manageSrOutputModal" href="javascript:void(0)" class="btn-1" style="width:100%; height:3rem; font-size:1.5rem;" onclick="composeManageSrOutputModal(\'APPLY_REQUEST\')">관리</a></center>';
 						$('#srApplyOtptBtn').html(btnHtml);
 					}
 				}
