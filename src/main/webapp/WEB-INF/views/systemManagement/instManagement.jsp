@@ -18,8 +18,8 @@
 			<i class="material-icons top-icon" style="font-size:3.5rem; height:4rem; line-height: 4rem;">settings</i>
 			<span style="margin-left: 9.5px;">기업관리</span>
 			<div style="flex-grow:1;"></div>
-			<button type="button" data-toggle="modal" data-target="#sysManageModal" onclick="systemTableSearchReset()" class="btn-1"
-					style="font-size: 1.6rem; font-weight:700; background-color: #222E3C; height: 3rem; margin-right:0.5rem;">
+			<button type="button" data-toggle="modal" data-target="#sysManageModal" onclick="systemTableSearchReset()" class="btn-navy"
+					style="height: 3rem; margin-right:0.5rem;">
 				시스템 관리
 			</button>
 		</div>
@@ -51,12 +51,12 @@
 							</div>
 						</div>
 						<div style="flex-grow:1; display:flex; flex-direction:row; justify-content:flex-end;">
-							<button type="button" id="searchBtn" onclick="mainTableSearch()"
-									style="border: none; font-size: 1.6rem; font-weight:700; color: white; background-color: #222E3C; border-radius: 5px; height: 3rem; width: 8rem;">
+							<button type="button" id="searchBtn" onclick="mainTableSearch()" class="btn-navy"
+									style="height:3rem">
 								검색
 							</button>
-							<button type="button" id="initBtn" onclick="mainTableSearchReset()"
-									style="border: none; font-size: 1.6rem; font-weight:700; color: white; background-color: #868E96; border-radius: 5px; height: 3rem; width: 10rem; margin-left:0.5rem;">
+							<button type="button" id="initBtn" onclick="mainTableSearchReset()" class="btn-gray" 
+									style="height:3rem; margin-left:0.5rem;">
 								초기화
 							</button>
 						</div>
@@ -68,12 +68,11 @@
 				<div style="display:flex; flex-direction:row; align-items:center;">
 					<div style="height:3.5rem; font-size:2.2rem; font-weight:700; color:#222E3C;">기업목록</div>
 					<div style="flex-grow:1;"></div>
-					<button type="button" data-toggle="modal" data-target="#registInstModal" onclick="registInstModalConfig()" class="btn-1"
-							style="font-size: 1.6rem; font-weight:700; background-color: #222E3C; height: 3rem; width: 8rem; margin-right:0.5rem;">
+					<button type="button" data-toggle="modal" data-target="#registInstModal" onclick="registInstModalConfig()" class="btn-navy"
+							style="height:3rem; margin-right:0.5rem;">
 						추가
 					</button>
-					<button type="button" class="btn-1" onclick="deleteInst()"
-							style="font-size: 1.6rem; font-weight:700; background-color: red; height: 3rem; width: 8rem;">
+					<button type="button" onclick="deleteInst()" class="btn-red" style="height:3rem;">
 						삭제
 					</button>
 				</div>
@@ -88,7 +87,7 @@
 							<col width="25%"/>
 						</colgroup>
 						<thead>
-							<tr style="height:5rem; font-size:1.6rem; font-weight:700;">
+							<tr style="height:5rem; font-size:1.6rem; font-weight:700; background-color:#edf2f8;">
 								<th scope="col"><input id="batchCheck" type="checkbox" class="checkbox" style="vertical-align: middle;"></th>
 								<th scope="col"></th>
 								<th scope="col">이름</th>
@@ -129,13 +128,13 @@
 				<div style="height:1rem;"></div>
 				<div style="height: 4rem; display: flex; flex-direction: row;">
 					<div style="width:50%; display: flex; flex-direction: row;">
-						<div style="height: 4rem; width: 30%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #f9fafe;">기업명</div>
+						<div style="height: 4rem; width: 30%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #edf2f8;">기업명</div>
 						<div id="instDetailNm" style="height: 4rem; flex-grow:1; display: flex; align-items: center; margin: 0rem 0.5rem;">
 							
 						</div>
 					</div>
 					<div style="width:50%; display: flex; flex-direction: row;">
-						<div style="height: 4rem; width: 30%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #f9fafe;">기업코드</div>
+						<div style="height: 4rem; width: 30%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #edf2f8;">기업코드</div>
 						<div id="instDetailNo" style="height: 4rem; flex-grow:1; display: flex; align-items: center; margin: 0rem 0.5rem;">
 							
 						</div>
@@ -143,7 +142,7 @@
 				</div>
 				<div style="height: 4rem; display: flex; flex-direction: row;">
 					<div style="width:50%; display: flex; flex-direction: row;">
-						<div style="height: 4rem; width: 30%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #f9fafe;">분류</div>
+						<div style="height: 4rem; width: 30%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #edf2f8;">분류</div>
 						<div id="instDetailClsf" style="height: 4rem; flex-grow:1; display: flex; align-items: center; margin: 0rem 0.5rem;">
 							
 						</div>
@@ -154,24 +153,24 @@
 				<div style="height: 4rem; font-size:1.7rem; font-weight:700; display: flex; flex-direction: row; align-items:center;">
 					<span>직위</span>
 					<span style="flex-grow:1;"></span>
-					<button type="button" onclick="addIbps()" class="btn-1 displayBtn" style="height:3rem; width:8rem; display:none;">
+					<button type="button" onclick="addIbps()" class="btn-blue displayBtn" style="height:3rem; width:8rem; display:none;">
 						추가
 					</button>
-					<button type="button" onclick="saveIbps()" class="btn-1 displayBtn"
+					<button type="button" onclick="saveIbps()" class="btn-navy displayBtn"
 							style="height:3rem; width:8rem; margin-left:0.5rem; background-color: #222E3C; display:none;">
 						저장
 					</button>
 				</div>
 				<div style="height: 15rem; display: flex; flex-direction: row;">
-					<div style="height: 15rem; width: 100%; background-color:#f9fafe;">
-						<div style="height:4rem; width:100%; display:flex; align-items:center;">
+					<div style="height: 15rem; width: 100%; background-color:#F9FAFE;">
+						<div style="height:4rem; width:100%; display:flex; align-items:center; background-color:#edf2f8;">
 							<div style="width:10%; display:flex; justify-content:center; align-items:center;"></div>
 							<div style="width:35%; display:flex; justify-content:center; align-items:center; font-weight:700;">이름</div>
 							<div style="width:35%; display:flex; justify-content:center; align-items:center; font-weight:700;">코드</div>
 							<div style="width:20%;"></div>
 							<div id="instDetailIbpsTableHeaderGap" style="width:17px;"></div>
 						</div>
-						<div id="instDetailIbpsTableDiv" style="height: 11rem; width: 100%; overflow-y:auto;">
+						<div id="instDetailIbpsTableDiv" style="height: 11rem; width: 100%; overflow-y:auto; background-color:#F9FAFE;">
 							<table id="instDetailIbpsTable" style="width:100%; text-align: center;">
 								<colgroup>
 									<col width="10%"/>
@@ -190,17 +189,17 @@
 				<div style="height: 4rem; font-size:1.7rem; font-weight:700; display: flex; flex-direction: row; align-items:center;">
 					<span>직책</span>
 					<span style="flex-grow:1;"></span>
-					<button type="button" onclick="addRole()" class="btn-1 displayBtn" style="height:3rem; width:8rem; display:none;">
+					<button type="button" onclick="addRole()" class="btn-blue displayBtn" style="height:3rem; width:8rem; display:none;">
 						추가
 					</button>
-					<button type="button" onclick="saveRole()" class="btn-1 displayBtn"
-							style="height:3rem; width:8rem; margin-left:0.5rem; background-color: #222E3C; display:none;">
+					<button type="button" onclick="saveRole()" class="btn-navy displayBtn"
+							style="height:3rem; width:8rem; margin-left:0.5rem; display:none;">
 						저장
 					</button>
 				</div>
 				<div style="height: 15rem; display: flex; flex-direction: row;">
 					<div style="height: 15rem; width: 100%; background-color:#f9fafe;">
-						<div style="height:4rem; width:100%; display:flex; align-items:center;">
+						<div style="height:4rem; width:100%; display:flex; align-items:center; background-color:#edf2f8;">
 							<div style="width:10%; display:flex; justify-content:center; align-items:center;"></div>
 							<div style="width:30%; display:flex; justify-content:center; align-items:center; font-weight:700;">이름</div>
 							<div style="width:30%; display:flex; justify-content:center; align-items:center; font-weight:700;">코드</div>
@@ -228,17 +227,17 @@
 				<div style="height: 4rem; font-size:1.7rem; font-weight:700; display: flex; flex-direction: row; align-items:center;">
 					<span>부서</span>
 					<span style="flex-grow:1;"></span>
-					<button type="button" onclick="addDept()" class="btn-1 displayBtn" style="height:3rem; width:8rem; display:none;">
+					<button type="button" onclick="addDept()" class="btn-blue displayBtn" style="height:3rem; width:8rem; display:none;">
 						추가
 					</button>
-					<button type="button" onclick="saveDept()" class="btn-1 displayBtn"
-							style="height:3rem; width:8rem; margin-left:0.5rem; background-color: #222E3C; display:none;">
+					<button type="button" onclick="saveDept()" class="btn-navy displayBtn"
+							style="height:3rem; width:8rem; margin-left:0.5rem; display:none;">
 						저장
 					</button>
 				</div>
 				<div style="height: 15rem; display: flex; flex-direction: row;">
 					<div style="height: 15rem; width: 100%; background-color:#f9fafe;">
-						<div style="height:4rem; width:100%; display:flex; align-items:center;">
+						<div style="height:4rem; width:100%; display:flex; align-items:center; background-color:#edf2f8;">
 							<div style="width:10%; display:flex; justify-content:center; align-items:center;"></div>
 							<div style="width:35%; display:flex; justify-content:center; align-items:center; font-weight:700;">이름</div>
 							<div style="width:35%; display:flex; justify-content:center; align-items:center; font-weight:700;">코드</div>
@@ -309,7 +308,7 @@
 					
 					<div style="width:100%; display: flex; flex-direction: row; justify-content:flex-end; margin-right:1rem;">
 						<div style="height: 4rem; padding-left: 0.5rem; display: flex; align-items: center;">
-							<button type="button" onclick="registInst()" class="btn-1" style="height:3rem;">
+							<button type="button" onclick="registInst()" class="btn-blue" style="height:3rem;">
 								등록
 							</button>
 						</div>
@@ -349,19 +348,19 @@
 								</div>
 							</div>
 							<div style="height:4rem; flex-grow:1; display:flex; align-items:center;">
-								<button class="btn-1" onclick="systemTableSearch()"
-									style="height: 3rem; margin:0 0.5rem 0 1rem; background-color:#222E3C;">검색</button>
-								<button class="btn-1" onclick="systemTableSearchReset()"
-									style="height: 3rem; background-color:#868E96;">초기화</button>
+								<button class="btn-navy" onclick="systemTableSearch()"
+									style="height: 3rem; margin:0 0.5rem 0 1rem;">검색</button>
+								<button class="btn-gray" onclick="systemTableSearchReset()"
+									style="height: 3rem;">초기화</button>
 							</div>
 							<div style="flex-grow:1;"></div>
 							<div style="height:4rem; flex-grow:1; display:flex; justify-content:flex-end; align-items:center;">
-								<button data-toggle="modal" data-target="#registSysModal" class="btn-1" onclick="registSysModalConfig()"
+								<button data-toggle="modal" data-target="#registSysModal" class="btn-blue" onclick="registSysModalConfig()"
 									style="height: 3rem; width: 5rem; margin-right:0.5rem;">추가</button>
-								<button class="btn-1" onclick="deleteSys()"
-									style="height: 3rem; width: 5rem; margin-right:0.5rem; background-color:red;">삭제</button>
-								<button class="btn-1" onclick="saveSystem()"
-									style="height: 3rem; width: 5rem; margin-right:0.5rem; background-color:#222E3C;">저장</button>
+								<button class="btn-red" onclick="deleteSys()"
+									style="height: 3rem; width: 5rem; margin-right:0.5rem;">삭제</button>
+								<button class="btn-navy" onclick="saveSystem()"
+									style="height: 3rem; width: 5rem; margin-right:0.5rem;">저장</button>
 							</div>
 						</div>
 					</div>
@@ -444,7 +443,7 @@
 					
 					<div style="width:100%; display: flex; flex-direction: row; justify-content:flex-end; margin-right:1rem;">
 						<div style="height: 4rem; padding-left: 0.5rem; display: flex; align-items: center;">
-							<button type="button" onclick="registSys()" class="btn-1" style="height:3rem;">
+							<button type="button" onclick="registSys()" class="btn-blue" style="height:3rem;">
 								등록
 							</button>
 						</div>

@@ -1220,4 +1220,29 @@
     	FROM sr
     	WHERE sr_rqst_no = #{srRqstNo}
     </select>
+    
+    <select id="checkPrgrs" parameterType="map" resultType="int">
+    	SELECT COUNT(*)
+    	FROM sr_trnsf_plan
+    	LEFT JOIN sr_trnsf_hr ON sr_trnsf_hr.sr_no = sr_trnsf_plan.sr_no
+    	WHERE sr_trnsf_plan.sr_no = #{srNo} AND (sr_trnsf_plan.usr_no = #{usrNo} OR sr_trnsf_hr.usr_no = #{usrNo})
+    </select>
+    
+    <select id="checkIfPic" parameterType="map" resultType="int">
+    	SELECT COUNT(*)
+    	FROM sr_trnsf_plan
+    	WHERE sr_trnsf_plan.sr_no = #{srNo} AND sr_trnsf_plan.usr_no = #{usrNo}
+    </select>
+    
+    <select id="checkIfInstAndStts" parameterType="map" resultType="int">
+    	SELECT COUNT(*)
+    	FROM sr_trnsf_plan
+    	WHERE sr_trnsf_plan.sr_no = #{srNo} AND sr_trnsf_plan.sr_prgrs_stts_no = 'RQST' AND sr_trnsf_plan.inst_no = #{instNo}
+    </select>
+    
+    <select id="selectSrPrgrsSttsBySrNo" parameterType="String" resultType="String">
+    	SELECT sr_prgrs_stts_no
+    	FROM sr_trnsf_plan
+    	WHERE sr_no = #{srNo}
+    </select>
 </mapper>

@@ -6,6 +6,10 @@
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/srManagement/progressManagement/progressManagementStyle.css" />
 	
 	<!-- javascript 코드 -->
+	<script>
+	    var modelUsrNo = '${usr.usrNo}';
+	    var modelUsrAuthrtNo = '${usr.usrAuthrtNo}';
+	</script>
 	<script src="${pageContext.request.contextPath}/resources/javascript/srManagement/progressManagement.js"></script>
 	
 	<!-- 아이콘 -->
@@ -41,11 +45,11 @@
 				<div style="width:3.5%;"></div>
 				<div style="width:20%;" class="d-inline-flex flex-row align-items-center">
 					<div style="width:100%;" class="p-0 d-inline-flex flex-row align-items-center">
-						<div style="width:30%; display:flex; align-items:center;">
+						<div style="width:25%; display:flex; align-items:center;">
 							<svg style="width:0.5rem; height:0.5rem; margin: 0rem 0.5rem;"><rect width="0.5rem" height="0.5rem" fill="#222E3C" /></svg>
 							<span style="font-size:1.6rem; font-weight:700;">업무</span>
 						</div>
-						<div style="width:70%;"> 
+						<div style="width:75%;"> 
 							<select id="taskSelect" name="taskSelect" style="width:100%">
 								<option value="" selected>전체</option>
 							</select>
@@ -55,11 +59,11 @@
 				<div style="width:3.5%;"></div>
 				<div style="width:20%;" class="d-inline-flex flex-row align-items-center">
 					<div style="width:100%;" class="p-0 d-inline-flex flex-row align-items-center">
-						<div style="width:30%; display:flex; align-items:center;">
+						<div style="width:35%; display:flex; align-items:center;">
 							<svg style="width:0.5rem; height:0.5rem; margin: 0rem 0.5rem;"><rect width="0.5rem" height="0.5rem" fill="#222E3C" /></svg>
 							<span style="font-size:1.6rem; font-weight:700;">접수상태</span>
 						</div>
-						<div style="width:70%;">
+						<div style="width:65%;">
 							<select id="srRqstSttsSelect" name="srRqstSttsSelect" style="width:100%">
 								<option value="" selected>전체</option>
 							</select>
@@ -69,11 +73,11 @@
 				<div style="width:3.5%;"></div>
 				<div style="width:20%;" class="d-inline-flex flex-row align-items-center">
 					<div style="width:100%;" class="p-0 d-inline-flex flex-row align-items-center">
-						<div style="width:30%; display:flex; align-items:center;">
+						<div style="width:35%; display:flex; align-items:center;">
 							<svg style="width:0.5rem; height:0.5rem; margin: 0rem 0.5rem;"><rect width="0.5rem" height="0.5rem" fill="#222E3C" /></svg>
 							<span style="font-size:1.6rem; font-weight:700;">진행상태</span>
 						</div>
-						<div style="width:70%;">
+						<div style="width:65%;">
 							<label style="display:none;" for="userStts"></label> 
 							<select id="srPrgrsSttsSelect" name="userStts" style="width:100%">
 								<option value="" selected>전체</option>
@@ -86,9 +90,10 @@
 					<!-- <button id="resetSearchBtn" class="d-inline-flex flex-row align-items-center justify-content-center" onclick="searchReset()">
 						초기화
 					</button> -->
-					<a href="javascript:void(0)" onclick="mainTableSearchReset()"
+					<button onclick="mainTableSearchReset()" class="btn-gray" style="height:3rem; width:100%">초기화</button>
+					<!-- <a href="javascript:void(0)" onclick="mainTableSearchReset()"
 							style="height: 3rem; width: 100%; border-radius: 5px; background-color:#868E96; color:white;
-							display: flex; flex-direction: row; justify-content: center; align-items: center; text-decoration:none;">초기화</a>
+							display: flex; flex-direction: row; justify-content: center; align-items: center; text-decoration:none;">초기화</a> -->
 				</div>
 			</div>
 			<!-- -------------------------------------------------------------------------------------------------------- -->
@@ -109,11 +114,11 @@
 				<div style="width:3.5%;"></div>
 				<div style="width:20%;" class="d-inline-flex flex-row align-items-center">
 					<div style="width:100%;" class="p-0 d-inline-flex flex-row align-items-center">
-						<div style="width:30%; display:flex; align-items:center;">
+						<div style="width:25%; display:flex; align-items:center;">
 							<svg style="width:0.5rem; height:0.5rem; margin: 0rem 0.5rem;"><rect width="0.5rem" height="0.5rem" fill="#222E3C" /></svg>
 							<span style="font-size:1.6rem; font-weight:700;">부서</span>
 						</div>
-						<div style="width:70%;">
+						<div style="width:75%;">
 							<select id="deptSelect" name="deptSelect" style="width:100%">
 								<option value="" selected>전체</option>
 							</select>
@@ -123,11 +128,11 @@
 				<div style="width:3.5%;"></div>
 				<div style="width:30%;" class="d-inline-flex flex-row align-items-center">
 					<div style="width:100%;" class="p-0 d-inline-flex flex-row align-items-center">
-						<div style="width:20%; display:flex; align-items:center;">
+						<div style="width:23.2%; display:flex; align-items:center;">
 							<svg style="width:0.5rem; height:0.5rem; margin: 0rem 0.5rem;"><rect width="0.5rem" height="0.5rem" fill="#222E3C" /></svg>
 							<span style="font-size:1.6rem; font-weight:700;">키워드</span>
 						</div>
-						<div style="width:80%; display:flex; align-items:center;">
+						<div style="width:76.8%; display:flex; align-items:center;">
 							<div style="width:35%; font-size:1.5rem;">
 								<label style="display:none;" for="keywordCategory"></label> 
 								<select id="keywordCategoty" name="keywordCategoty" style="width:100%">
@@ -159,9 +164,12 @@
 						검색
 					</button>
 					 -->
+					 <button onclick="mainTableSearch()" class="btn-navy" style="height:3rem; width:100%">검색</button>
+					<!-- 
 					<a href="javascript:void(0)" onclick="mainTableSearch()"
 							style="height: 3rem; width: 100%; border-radius: 5px; background-color:#222E3C; color:white;
 							display: flex; flex-direction: row; justify-content: center; align-items: center; text-decoration:none;">검색</a>
+					 -->
 				</div>	
 			</div>
 		</form>
@@ -170,22 +178,21 @@
 		<div style="height:3.5rem; display:flex;">
 			<div style="height:3.5rem; font-size:2.2rem; font-weight:700; color:#222E3C;">SR처리목록</div>
 			<div style="flex-grow:1;"></div>
-			<button id="downloadExcelButton" class="btn-1" onclick="downloadExcel()"
-					style="background-color:#222E3C; height:3rem; width:12rem; font-size:1.6rem;">엑셀 다운로드</button>
+			<button id="downloadExcelButton" class="btn-navy" onclick="downloadExcel()"
+					style="height:3rem;">엑셀 다운로드</button>
 		</div>
-		<div class="" style="height:51.7rem; margin:0.75rem 0rem; background-color:#f9fafe;">
-			<table id="mainTable" style="width:100%;">
+		<div class="" style="height:51.7rem; margin:0.75rem 0rem; background-color:#f9fafe; border:1.5px solid #e9ecef;">
+			<table id="mainTable" style="width: 100%; table-layout: fixed;">
 				<colgroup>
-					<col width="4%"/>
+					<col width="3%"/>
 					<col width="12%"/>
 					<col width="8%"/>
-					<col width="10%"/>
+					<col width="12%"/>
 					<col width="20%"/>
-					<col width="5%"/>
+					<col width="7%"/>
+					<col width="8%"/>
 					<col width="7%"/>
 					<col width="5%"/>
-					<col width="7%"/>
-					<col width="4%"/>
 					<col width="6%"/>
 					<col width="6%"/>
 					<col width="6%"/>
@@ -197,7 +204,6 @@
 						<th scope="col">시스템</th>
 						<th scope="col">업무</th>
 						<th scope="col">SR제목</th>
-						<th scope="col">요청자</th>
 						<th scope="col">완료요청일</th>
 						<th scope="col">협력사</th>
 						<th scope="col">완료예정일</th>
@@ -334,15 +340,15 @@
 							<div style="flex-grow: 1; align-self:flex-end; border-bottom: 1.5px solid #edf2f8;"></div>
 						</div>
 						<div id="srProgressBtnDiv" style="display:flex; margin-right:0.5rem; line-height:3rem; justify-content:flex-end; align-items:center; width:40%; border-bottom: 1.5px solid #edf2f8;">
-							<button type="button" class="srProgressBtn srPlanBtn btn-1" data-toggle="modal" data-target="#srPlanInfoEditModal" onclick="editSrTrnsfPlan()" 
+							<button type="button" class="srProgressBtn srPlanBtn btn-navy" data-toggle="modal" data-target="#srPlanInfoEditModal" onclick="editSrTrnsfPlan()" 
 								style="height:2.5rem;">등록/수정</button> 
-							<button type="button" class="srProgressBtn srHrBtn btn-1" data-toggle="modal" data-target="#setHrFindPicModal" onclick="composeSetHrFindPicModal()" 
+							<button type="button" class="srProgressBtn srHrBtn btn-blue" data-toggle="modal" data-target="#setHrFindPicModal" onclick="composeSetHrFindPicModal()" 
 								style="height:2.5rem; margin-right:0.5rem; display:none;">추가</button> 
-							<button type="button" class="srProgressBtn srHrBtn btn-1" onclick="deleteHrInfo()"
+							<button type="button" class="srProgressBtn srHrBtn btn-red" onclick="deleteHrInfo()"
 								style="height:2.5rem; margin-right:0.5rem; display:none;">삭제</button> 
-							<button type="button" class="srProgressBtn srHrBtn btn-1" onclick="saveHrInfo()"
+							<button type="button" class="srProgressBtn srHrBtn btn-navy" onclick="saveHrInfo()"
 								style="height:2.5rem; display:none;">저장</button> 
-							<button type="button" class="srProgressBtn srPrgrsBtn btn-1" onclick="updatePrgrs()"
+							<button type="button" class="srProgressBtn srPrgrsBtn btn-navy" onclick="updatePrgrs()"
 								style="height:2.5rem; display:none;">저장</button> 
 						</div>
 					</div>
@@ -367,7 +373,7 @@
 							<div style="height: 4rem; width: 35%; display: flex; align-items: center;">
 								<input id="srPlanModalPicInput" type="text" disabled style="width:62%; height:3rem; margin:0 0 0 0.5rem;">
 								<div style="width:3%"></div>
-								<button type="button" data-toggle="modal" data-target="#srPlanInfoFindPicModal" onclick="composeFindPicModal()" class="btn-1" style="height:3rem; width:15%; margin-right:0.5rem;">
+								<button type="button" data-toggle="modal" data-target="#srPlanInfoFindPicModal" onclick="composeFindPicModal()" class="btn-blue" style="height:3rem; width:15%; margin-right:0.5rem;">
 									찾기
 								</button>
 								<!-- 
@@ -526,7 +532,7 @@
 								<input id="findPicModalPicInput" value="" style="width:70%; height:3rem; margin:0rem 0.5rem;">
 							</div>
 							<div style="height:4rem; flex-grow:1; display:flex; justify-content:flex-end; align-items:center;">
-								<button class="btn-1" onclick="composeFindPicModalTable(1)"
+								<button class="btn-navy" onclick="composeFindPicModalTable(1)"
 									style="height: 3rem; width: 5rem; margin-right:0.5rem;">검색</button>
 							</div>
 						</div>
@@ -693,7 +699,7 @@
 								<input id="setHrFindPicModalPicInput" value="" style="width:70%; height:3rem; margin:0rem 0.5rem;">
 							</div>
 							<div style="height:4rem; flex-grow:1; display:flex; justify-content:flex-end; align-items:center;">
-								<button class="btn-1" onclick="composeSetHrFindPicModalTable(1)"
+								<button class="btn-navy" onclick="composeSetHrFindPicModalTable(1)"
 									style="height: 3rem; width: 5rem; margin-right:0.5rem;">검색</button>
 							</div>
 						</div>
@@ -753,10 +759,10 @@
 								
 							</div>
 							<div style="height:4rem; display: flex; flex-direction: row; align-items:center; justify-content:flex-end;">
-								<button data-toggle="modal" data-target="#addSrOutputModal" class="btn-1"
+								<button data-toggle="modal" data-target="#addSrOutputModal" class="btn-blue"
 									style="height: 3rem; width: 5rem; margin-right:0.5rem;">추가</button>
-								<button class="btn-1" onclick="deleteOutput()"
-									style="height: 3rem; width: 5rem; margin-right:0.5rem; background-color:red;">삭제</button>
+								<button class="btn-red" onclick="deleteOutput()"
+									style="height: 3rem; width: 5rem; margin-right:0.5rem;">삭제</button>
 							</div>
 						</div>
 						<div style="height:27rem; background-color:#f9fafe; margin:0.5rem;">
@@ -823,10 +829,44 @@
 							<input type="file" id="addSrOutputModalFileInput" name=file style="width:100%;">
 						</div>
 						<div style="width:20%; display:flex; align-items:center; justify-content:flex-end;">
-							<button data-dismiss="modal" class="btn-1" onclick="addSrOutputFile()"
+							<button data-dismiss="modal" class="btn-blue" onclick="addSrOutputFile()"
 									style="height: 3rem; width: 5rem;">추가</button>
 						</div>
 					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- 알림 모달 -->
+<div id="alertModal" class="modal" data-backdrop="static">
+	<div class="modal-dialog modal-dialog-centered modal-md">
+		<div class="modal-content">
+			<div class="modal-header" style="background-color:#2c7be4; color:white; display:flex;">
+				<div class="modal-title" style="font-size:2rem; font-weight:700;">알림</div>
+				<i class="material-icons close-icon" data-dismiss="modal" style="cursor: pointer;">close</i>
+			</div>
+			<div class="modal-body" style="margin:0px; padding:0px; font-size:1.5rem;">
+				<div id="alertContent" style="height:11rem; font-size:1.7rem; display:flex; justify-content:center; align-items:center; white-space: pre-wrap;">
+					
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- 경고 모달 -->
+<div id="warningModal" class="modal" data-backdrop="static">
+	<div class="modal-dialog modal-dialog-centered modal-md">
+		<div class="modal-content">
+			<div class="modal-header" style="background-color:red; color:white; display:flex;">
+				<div class="modal-title" style="font-size:2rem; font-weight:700;">경고</div>
+				<i class="material-icons close-icon" data-dismiss="modal" style="cursor: pointer;">close</i>
+			</div>
+			<div class="modal-body" style="margin:0px; padding:0px; font-size:1.5rem;">
+				<div id="warningContent" style="height:11rem; font-size:1.7rem; display:flex; justify-content:center; align-items:center; white-space: pre-wrap;">
+					
 				</div>
 			</div>
 		</div>

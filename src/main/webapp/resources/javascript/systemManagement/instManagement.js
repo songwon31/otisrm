@@ -182,7 +182,7 @@ function setInstDetail(instNo) {
 			$('#instDetailNm').html('');
 			let instNmHtml = '';
 			instNmHtml += '<input type="text" id="instDetailNmInput" class="instDetailNmInput" value="' + data.instNm + '" style="width:70%; height:3rem;">'
-			instNmHtml += '<button class="btn-1" style="height:3rem; width:25%; margin-left:0.5rem;" onclick="saveNm()">저장</button>';
+			instNmHtml += '<button class="btn-blue" style="height:3rem; width:25%; margin-left:0.5rem;" onclick="saveNm()">저장</button>';
 			$('#instDetailNm').html(instNmHtml);
 			
 			$('#instDetailNo').html(data.instNo);
@@ -194,7 +194,7 @@ function setInstDetail(instNo) {
 			instClsfHtml += '<option value="Y">협력사</option>';
 			instClsfHtml += '<option value="C">고객사</option>';
 			instClsfHtml += '</select>';
-			instClsfHtml += '<button class="btn-1" style="height:3rem; width:25%; margin-left:0.5rem;" onclick="saveClsf()">저장</button>';
+			instClsfHtml += '<button class="btn-blue" style="height:3rem; width:25%; margin-left:0.5rem;" onclick="saveClsf()">저장</button>';
 			$('#instDetailClsf').html(instClsfHtml);
 			$('#instDetailClsfSelect').val(data.outsrcYn);
 			
@@ -207,7 +207,7 @@ function setInstDetail(instNo) {
 				html += '<td>' + (i+1) + '</td>';
 				html += '<td><input type="text" class="detailIbpsNm" value="' + ibps.ibpsNm + '" style="width:50%; text-align: center;"></td>';
 				html += '<td><input type="text" class="detailIbpsNo" disabled value="' + ibps.ibpsNo + '" style="width:50%; text-align: center;"></td>';
-				html += '<td><button class="btn-1" style="height:3rem; width:50%; background-color:red;" onclick="deleteIbps(this)">삭제</button></td>';
+				html += '<td><button class="btn-red" style="height:3rem; width:50%;" onclick="deleteIbps(this)">삭제</button></td>';
 				html += '</tr>';
 				/*html += '<td>' + ibps.ibpsNm+ '</td>';
 				html += '<td>' + ibps.ibpsNo+ '</td>';*/
@@ -229,7 +229,7 @@ function setInstDetail(instNo) {
 				html += '<td><input type="text" class="detailRoleNm" value="' + role.roleNm + '" style="width:50%; text-align: center;"></td>';
 				html += '<td><input type="text" class="detailRoleNo" disabled value="' + role.roleNo + '" style="width:50%; text-align: center;"></td>';
 				html += '<td><input type="text" class="detailRoleSeq" value="' + role.roleSeq + '" style="width:50%; text-align: center;"></td>';
-				html += '<td><button class="btn-1" style="height:3rem; width:50%; background-color:red;" onclick="deleteRole(this)">삭제</button></td>';
+				html += '<td><button class="btn-red" style="height:3rem; width:50%;" onclick="deleteRole(this)">삭제</button></td>';
 				html += '</tr>';
 				$('#instDetailRoleTable tbody').append(html);
 			}
@@ -248,7 +248,7 @@ function setInstDetail(instNo) {
 				html += '<td>' + (i+1) + '</td>';
 				html += '<td><input type="text" class="detailDeptNm" value="' + dept.deptNm + '" style="width:50%; text-align: center;"></td>';
 				html += '<td><input type="text" class="detailDeptNo" disabled value="' + dept.deptNo + '" style="width:50%; text-align: center;"></td>';
-				html += '<td><button class="btn-1" style="height:3rem; width:50%; background-color:red;" onclick="deleteDept(this)">삭제</button></td>';
+				html += '<td><button class="btn-red" style="height:3rem; width:50%;" onclick="deleteDept(this)">삭제</button></td>';
 				html += '</tr>';
 				$('#instDetailDeptTable tbody').append(html);
 			}
@@ -399,7 +399,7 @@ function addIbps() {
 	html += '<td></td>';
 	html += '<td><input type="text" class="detailIbpsNm" value="" style="width:50%; text-align: center;"></td>';
 	html += '<td><input type="text" class="detailIbpsNo" value="" style="width:50%; text-align: center;"></td>';
-	html += '<td><button class="btn-1" style="height:3rem; width:50%; background-color:red;" onclick="deleteIbps(this)">삭제</button></td>';
+	html += '<td><button class="btn-red" style="height:3rem; width:50%;" onclick="deleteIbps(this)">삭제</button></td>';
 	html += '</tr>';
 	
 	$('#instDetailIbpsTable tbody').append(html);
@@ -504,7 +504,7 @@ function addRole() {
 	html += '<td><input type="text" class="detailRoleNm" value="" style="width:50%; text-align: center;"></td>';
 	html += '<td><input type="text" class="detailRoleNo" value="" style="width:50%; text-align: center;"></td>';
 	html += '<td><input type="text" class="detailRoleSeq" value="" style="width:50%; text-align: center;"></td>';
-	html += '<td><button class="btn-1" style="height:3rem; width:50%; background-color:red;" onclick="deleteRole(this)">삭제</button></td>';
+	html += '<td><button class="btn-red" style="height:3rem; width:50%;" onclick="deleteRole(this)">삭제</button></td>';
 	html += '</tr>';
 	
 	$('#instDetailRoleTable tbody').append(html);
@@ -611,7 +611,7 @@ function addDept() {
 	html += '<td></td>';
 	html += '<td><input type="text" class="detailDeptNm" value="" style="width:50%; text-align: center;"></td>';
 	html += '<td><input type="text" class="detailDeptNo" value="" style="width:50%; text-align: center;"></td>';
-	html += '<td><button class="btn-1" style="height:3rem; width:50%; background-color:red;" onclick="deleteDept(this)">삭제</button></td>';
+	html += '<td><button class="btn-red" style="height:3rem; width:50%;" onclick="deleteDept(this)">삭제</button></td>';
 	html += '</tr>';
 	
 	$('#instDetailDeptTable tbody').append(html);
@@ -777,7 +777,7 @@ function systemTableConfig(systemManagementSearch, pageNo) {
 					}
 					
 				}
-				sysTableHtml += '<td><button class="btn-1" style="height:3rem; width:80%;" onclick="editSystem(this)">수정</button></td>';
+				sysTableHtml += '<td><button class="btn-blue" style="height:3rem; width:80%;" onclick="editSystem(this)">수정</button></td>';
 				sysTableHtml += '</select></td>';
 								
 				//jsp에 삽입

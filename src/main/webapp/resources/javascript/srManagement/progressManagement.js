@@ -18,6 +18,7 @@ var currentPageNo = 1;
 var mainTableFilter = 'Total';
 var currentDetailSrNo;
 var currentBottomTabFilter;
+var currentSrDetailPicNo = -1;
 
 function init() {
 	mainTableSearchDivConfig();
@@ -132,13 +133,17 @@ function mainTableConfig(progressManagementSearch, pageNo) {
 			for (let i=0; i<data.srList.length; ++i) {
 				let sr = data.srList[i];
 				let mainTableHtml = '';
-				mainTableHtml += '<tr style="height:4.7rem; font-size:1.5rem; background-color:white;">';
+				if (i == 9) {
+					mainTableHtml += '<tr style="height:4.7rem; font-size:1.5rem; background-color:white;">';
+				} else {
+					mainTableHtml += '<tr style="height:4.7rem; font-size:1.5rem; background-color:white; border-bottom: 1.5px solid #e9ecef;">';
+				}
 				mainTableHtml += '<td>' + (i+1) + '</td>';
 				mainTableHtml += '<td>' + sr.srNo + '</td>';
-				mainTableHtml += '<td>' + sr.sysNm+ '</td>';
-				mainTableHtml += '<td>' + sr.srTaskNm + '</td>';
-				mainTableHtml += '<td>' + sr.srTtl + '</td>';
-				mainTableHtml += '<td>' + sr.rqstrNm + '</td>';
+				mainTableHtml += '<td style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">' + sr.sysNm+ '</td>';
+				mainTableHtml += '<td style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">' + sr.srTaskNm + '</td>';
+				mainTableHtml += '<td class="text-align-left" style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">' + sr.srTtl + '</td>';
+				//mainTableHtml += '<td>' + sr.rqstrNm + '</td>';
 				
 				if (sr.srCmptnPrnmntDt != null) {
 					let srCmptnPrnmntDt = new Date(sr.srCmptnPrnmntDt);
@@ -163,10 +168,23 @@ function mainTableConfig(progressManagementSearch, pageNo) {
 				mainTableHtml += '<td>' + sr.srRqustSttsNm + '</td>';
 				mainTableHtml += '<td>' + sr.srPrgrsSttsNm + '</td>';
 				mainTableHtml += '<td> <button data-toggle="modal" data-target="#requestDetailModal" class="btn-1 detail-button" style="width:90%; height:2.8rem;" onclick="showRequestDetailModal(\'' + sr.srNo + '\')">요청상세</button> </td>';
-				mainTableHtml += '<td> <button data-toggle="modal" data-target="#srProgressModal" class="btn-1 detail-button" style="width:90%; height:2.8rem;" onclick="showSrProgressModal(\'' + sr.srNo + '\')">진척관리</button> </td>';
+				mainTableHtml += '<td> <button data-toggle="modal" data-target="#srProgressModal" class="btn-1 detail-button" style="width:90%; height:2.8rem;" onclick="showSrProgressModalFromMain(\'' + sr.srNo + '\')">진척관리</button> </td>';
+				mainTableHtml += '</tr>';
 				//jsp에 삽입
 				$('#mainTable tbody').append(mainTableHtml);
 			}
+			
+			//hover 효과 동적으로 추가
+			$('tbody tr').hover(
+				function() {
+				  //마우스가 요소 위에 있을 때 배경색 변경
+				  $(this).css('background-color', '#f3f6fd');
+				},
+				function() {
+				  //마우스가 요소를 벗어날 때 배경색 원래대로 변경
+				  $(this).css('background-color', 'white');
+			    }
+			);
 			
 			//페이징 파트 구현
 			let pagerHtml = '';
@@ -344,24 +362,50 @@ function selectSrProgressTableFilter(tabStyle) {
 		$('.bottomSubDiv').css('display', 'none');
 		$('#srPlanInfo').css('display', '');
 		$('.srProgressBtn').css('display', 'none');
-		$('.srPlanBtn').css('display', 'flex');
+		$.ajax({
+			type: "POST", 
+			url: "/otisrm/checkSavePlan",  
+			data: {srNo: currentDetailSrNo},
+			success: function (data) {
+				if (data == 'success') {
+					$('.srPlanBtn').css('display', 'flex');
+				} else {
+					$('.srPlanBtn').css('display', 'none');
+				}
+			}
+		});
 	} else if (tabStyle == 'srHrInfoTab') {
 		$('#srHrInfoTab').addClass('filterTabSelected');
 		$('.bottomSubDiv').css('display', 'none');
 		$('#srHrInfo').css('display', '');
 		$('.srProgressBtn').css('display', 'none');
-		$('.srHrBtn').css('display', 'flex');
+		if (currentSrDetailPicNo == modelUsrNo) {
+			$('.srHrBtn').css('display', 'flex');
+		}
 	} else if (tabStyle == 'srPrgrsInfoTab') {
 		$('#srPrgrsInfoTab').addClass('filterTabSelected');
 		$('.bottomSubDiv').css('display', 'none');
 		$('#srProgressInfo').css('display', '');
 		$('.srProgressBtn').css('display', 'none');
-		$('.srPrgrsBtn').css('display', 'flex');
+		$.ajax({
+			type: "POST", 
+			url: "/otisrm/checkSavePrgrs",  
+			data: {srNo: currentDetailSrNo},
+			success: function (data) {
+				if (data == 'success') {
+					$('.srPrgrsBtn').css('display', 'flex');
+				} else {
+					$('.srPrgrsBtn').css('display', 'none');
+				}
+			}
+		});
 	}	
 	currentBottomTabFilter = tabStyle;
 }
 
-function showSrProgressModal(srNo) {
+function showSrProgressModalFromMain(srNo) {
+	currentDetailSrNo = srNo;
+	selectSrProgressTableFilter('srRqstInfoTab');
 	let requestData = {
         srNo: srNo
     };
@@ -371,161 +415,639 @@ function showSrProgressModal(srNo) {
 		url: "/otisrm/getSrTransferInfo",
 		data: requestData,
 		success: function(data) {
+			currentSrDetailPicNo = data.usrNo;
 			currentDetailSrNo = srNo;
+			
+			$("#srPlanModalTrgtBgngDt").prop("disabled", true);
+			$("#srPlanModalTrgtCmptnDt").prop("disabled", true);
 			//SR계획정보 구성
-			$('#srPlanModalDmndInput').val(data.srDmndNm);
-			$('#srPlanModalTaskInput').val(data.srTaskNm);
-			$('#srPlanModalDeptInput').val(data.deptNm);
-			$('#srPlanModalPicInput').val(data.usrNm);
-			if (data.srTrgtBgngDt == '' || data.srTrgtBgngDt == null) {
-				$('#srPlanModalTrgtBgngDt').val('');
-			} else {
-				let bgngDt = new Date(data.srTrgtBgngDt);
-				$('#srPlanModalTrgtBgngDt').val(formatDate(bgngDt));
-			}
-			if (data.srTrgtCmptnDt == '' || data.srTrgtCmptnDt == null) {
-				$('#srPlanModalTrgtCmptnDt').val('');
-			} else {
-				let cmptnDt = new Date(data.srTrgtCmptnDt);
-				$('#srPlanModalTrgtCmptnDt').val(formatDate(cmptnDt));
-			}
-			$('#srPlanInfoTotalCapacity').html(data.totalCapacity);
-			$('#srPlanModalTrnsfNote').html(data.srTrnsfNote);
+			$.ajax({
+				type: "POST", 
+				url: "/otisrm/checkSavePlan",  
+				data: {srNo: currentDetailSrNo},
+				success: function (response) {
+					//등록 권한이 있는 경우
+					if (response == 'success') {
+						$('#srPlanModalDmndInput').val(data.srDmndNm);
+						$('#srPlanModalTaskInput').val(data.srTaskNm);
+						$('#srPlanModalDeptInput').val(data.deptNm);
+						$('#srPlanModalPicInput').val(data.usrNm);
+						if (data.totalCapacity != null) {
+							$('#srPlanModalTotalCapacity').val(data.totalCapacity.toFixed(1));
+						} else {
+							$('#srPlanModalTotalCapacity').val(data.totalCapacity);
+						}
+						
+						//진행 상태를 확인하고 날짜 입력 가능 여부 부여
+						$.ajax({
+							type: "POST", 
+							url: "/otisrm/checkSrPrgrsSttsNo",  
+							data: {srNo: currentDetailSrNo},
+							success: function (srPrgrsSttsNo) {
+								console.log(srPrgrsSttsNo);
+								if (srPrgrsSttsNo == 'RQST' || srPrgrsSttsNo == 'RECEIPT') {
+									$("#srPlanModalTrgtBgngDt").prop("disabled", false);
+									$("#srPlanModalTrgtCmptnDt").prop("disabled", false);
+								}
+							}
+						});
+						
+						if (data.srTrgtBgngDt == '' || data.srTrgtBgngDt == null) {
+							$('#srPlanModalTrgtBgngDt').val('');
+						} else {
+							let bgngDt = new Date(data.srTrgtBgngDt);
+							$('#srPlanModalTrgtBgngDt').val(formatDate(bgngDt));
+						}
+						if (data.srTrgtCmptnDt == '' || data.srTrgtCmptnDt == null) {
+							$('#srPlanModalTrgtCmptnDt').val('');
+						} else {
+							let cmptnDt = new Date(data.srTrgtCmptnDt);
+							$('#srPlanModalTrgtCmptnDt').val(formatDate(cmptnDt));
+						}
+						$('#srPlanInfoTotalCapacity').html(data.totalCapacity);
+						$('#srPlanModalTrnsfNote').html(data.srTrnsfNote);
+					} else {
+						//작성 권한이 없는 경우
+						$('#srPlanModalDmndInput').val(data.srDmndNm);
+						$('#srPlanModalTaskInput').val(data.srTaskNm);
+						$('#srPlanModalDeptInput').val(data.deptNm);
+						$('#srPlanModalPicInput').val(data.usrNm);
+						if (data.totalCapacity != null) {
+							$('#srPlanModalTotalCapacity').val(data.totalCapacity.toFixed(1));
+						} else {
+							$('#srPlanModalTotalCapacity').val(data.totalCapacity);
+						}
+						
+						if (data.srTrgtBgngDt == '' || data.srTrgtBgngDt == null) {
+							$('#srPlanModalTrgtBgngDt').val('');
+						} else {
+							let bgngDt = new Date(data.srTrgtBgngDt);
+							$('#srPlanModalTrgtBgngDt').val(formatDate(bgngDt));
+						}
+						if (data.srTrgtCmptnDt == '' || data.srTrgtCmptnDt == null) {
+							$('#srPlanModalTrgtCmptnDt').val('');
+						} else {
+							let cmptnDt = new Date(data.srTrgtCmptnDt);
+							$('#srPlanModalTrgtCmptnDt').val(formatDate(cmptnDt));
+						}
+						$('#srPlanInfoTotalCapacity').html(data.totalCapacity);
+						$('#srPlanModalTrnsfNote').html(data.srTrnsfNote);
+					}
+				}
+			});
+			
 			
 			//SR자원정보 구성
-			$('#srHrInfo tbody').html('');	//html 초기화
-			if (data.srTrnsfHrList != null) {
-				for (let i=0; i<data.srTrnsfHrList.length; ++i) {
-					let srTrnsfHr = data.srTrnsfHrList[i];
-					let srTrnsfHrHtml = '';
-					srTrnsfHrHtml += '<tr style="height:4rem; font-size:1.6rem; background-color:white;">';
-					srTrnsfHrHtml += '<td><input type="checkbox" class="checkbox" style="vertical-align: middle;"></td>';
-					srTrnsfHrHtml += '<td class="srNo" style="display:none">' + srTrnsfHr.srNo + '</td>';
-					srTrnsfHrHtml += '<td class="usrNo" style="display:none">' + srTrnsfHr.usrNo + '</td>';
-					srTrnsfHrHtml += '<td>' + srTrnsfHr.usrNm + '</td>';
-					srTrnsfHrHtml += '<td>' + srTrnsfHr.roleNm + '</td>';
-					if (srTrnsfHr.planCapacity != '' && srTrnsfHr.planCapacity != null) {
-						srTrnsfHrHtml += '<td><input type="text" value="' + srTrnsfHr.planCapacity + '" style="width:50%; text-align: center;"></div></td>';
-					} else {
-						srTrnsfHrHtml += '<td><input type="text" value="" style="width:50%; text-align: center;"></div></td>';
+			//현재 사용자가 담당자일경우
+			if (currentSrDetailPicNo == modelUsrNo) {
+				$('#srHrInfo tbody').html('');	//html 초기화
+				if (data.srTrnsfHrList != null) {
+					for (let i=0; i<data.srTrnsfHrList.length; ++i) {
+						let srTrnsfHr = data.srTrnsfHrList[i];
+						let srTrnsfHrHtml = '';
+						srTrnsfHrHtml += '<tr style="height:4rem; font-size:1.6rem; background-color:white;">';
+						srTrnsfHrHtml += '<td><input type="checkbox" class="checkbox" style="vertical-align: middle;"></td>';
+						srTrnsfHrHtml += '<td class="srNo" style="display:none">' + srTrnsfHr.srNo + '</td>';
+						srTrnsfHrHtml += '<td class="usrNo" style="display:none">' + srTrnsfHr.usrNo + '</td>';
+						srTrnsfHrHtml += '<td>' + srTrnsfHr.usrNm + '</td>';
+						srTrnsfHrHtml += '<td>' + srTrnsfHr.roleNm + '</td>';
+						if (srTrnsfHr.planCapacity != '' && srTrnsfHr.planCapacity != null) {
+							srTrnsfHrHtml += '<td><input type="text" value="' + srTrnsfHr.planCapacity.toFixed(1) + '" style="width:50%; text-align: center;"></div></td>';
+						} else {
+							srTrnsfHrHtml += '<td><input type="text" value="0.0" style="width:50%; text-align: center;"></div></td>';
+						}
+						if (srTrnsfHr.performanceCapacity != '' && srTrnsfHr.performanceCapacity != null) {
+							srTrnsfHrHtml += '<td><input disabled type="text" value="' + srTrnsfHr.performanceCapacity.toFixed(1) + '" style="width:50%; text-align: center;"></div></td>';
+						} else {
+							srTrnsfHrHtml += '<td><input disabled type="text" value="0.0" style="width:50%; text-align: center;"></div></td>';
+						}
+						srTrnsfHrHtml += '</tr>';
+						$('#srHrInfo tbody').append(srTrnsfHrHtml);
 					}
-					if (srTrnsfHr.performanceCapacity != '' && srTrnsfHr.performanceCapacity != null) {
-						srTrnsfHrHtml += '<td><input type="text" value="' + srTrnsfHr.performanceCapacity + '" style="width:50%; text-align: center;"></div></td>';
-					} else {
-						srTrnsfHrHtml += '<td><input type="text" value="" style="width:50%; text-align: center;"></div></td>';
+				}
+			} else {
+				$('#srHrInfo tbody').html('');	//html 초기화
+				if (data.srTrnsfHrList != null) {
+					for (let i=0; i<data.srTrnsfHrList.length; ++i) {
+						let srTrnsfHr = data.srTrnsfHrList[i];
+						let srTrnsfHrHtml = '';
+						srTrnsfHrHtml += '<tr style="height:4rem; font-size:1.6rem; background-color:white;">';
+						srTrnsfHrHtml += '<td><input type="checkbox" class="checkbox" style="vertical-align: middle;"></td>';
+						srTrnsfHrHtml += '<td class="srNo" style="display:none">' + srTrnsfHr.srNo + '</td>';
+						srTrnsfHrHtml += '<td class="usrNo" style="display:none">' + srTrnsfHr.usrNo + '</td>';
+						srTrnsfHrHtml += '<td>' + srTrnsfHr.usrNm + '</td>';
+						srTrnsfHrHtml += '<td>' + srTrnsfHr.roleNm + '</td>';
+						if (srTrnsfHr.planCapacity != '' && srTrnsfHr.planCapacity != null) {
+							srTrnsfHrHtml += '<td><input type="text" disabled value="' + srTrnsfHr.planCapacity.toFixed(1) + '" style="width:50%; text-align: center;"></div></td>';
+						} else {
+							srTrnsfHrHtml += '<td><input type="text" disabled value="0.0" style="width:50%; text-align: center;"></div></td>';
+						}
+						if (srTrnsfHr.performanceCapacity != '' && srTrnsfHr.performanceCapacity != null) {
+							srTrnsfHrHtml += '<td><input type="text" disabled value="' + srTrnsfHr.performanceCapacity.toFixed(1) + '" style="width:50%; text-align: center;"></div></td>';
+						} else {
+							srTrnsfHrHtml += '<td><input type="text" disabled value="0.0" style="width:50%; text-align: center;"></div></td>';
+						}
+						srTrnsfHrHtml += '</tr>';
+						$('#srHrInfo tbody').append(srTrnsfHrHtml);
 					}
-					srTrnsfHrHtml += '</tr>';
-					$('#srHrInfo tbody').append(srTrnsfHrHtml);
 				}
 			}
 			
 			
 			//SR진척률 구성
 			$('#prgrsTable td').html('');
-			if (data.srPrgrsList != null) {
-				for (let i=0; i<data.srPrgrsList.length; ++i) {
-					let srPrgrs = data.srPrgrsList[i];
-					let bgngDt = new Date(srPrgrs.srPrgrsBgngDt);
-			        let cmptnDt = new Date(srPrgrs.srPrgrsCmptnDt);
-					if (srPrgrs.srPrgrsSttsNm == '분석') {
-						if (srPrgrs.srPrgrsBgngDt != null) {
-							$('#srAnalysisBgngDt').html(formatDate(bgngDt));
+			
+			//권한 확인
+			$.ajax({
+				type: "POST", 
+				url: "/otisrm/checkSavePrgrs",  
+				data: {srNo: currentDetailSrNo},
+				success: function (response) {
+					if (response == 'success') {
+						if (data.srPrgrsList != null) {
+							for (let i=0; i<data.srPrgrsList.length; ++i) {
+								let srPrgrs = data.srPrgrsList[i];
+								let bgngDt = new Date(srPrgrs.srPrgrsBgngDt);
+						        let cmptnDt = new Date(srPrgrs.srPrgrsCmptnDt);
+								if (srPrgrs.srPrgrsSttsNm == '분석') {
+									if (srPrgrs.srPrgrsBgngDt != null) {
+										$('#srAnalysisBgngDt').html(formatDate(bgngDt));
+									}
+									if (srPrgrs.srPrgrsCmptnDt != null) {
+										$('#srAnalysisCmptnDt').html(formatDate(cmptnDt));
+									}
+									$('#srAnalysisPrgrs').html('<input value="" style="width:40%; height:3rem; margin:0rem 1rem; text-align: center;">');
+									if (srPrgrs.srPrgrs > 0) {
+										$('#srAnalysisPrgrs input').val(srPrgrs.srPrgrs);
+									}
+									
+									let btnHtml = '<center><a data-toggle="modal" data-target="#manageSrOutputModal" href="javascript:void(0)" class="btn-1" style="width:30%; height:3rem; font-size:1.5rem;" onclick="composeManageSrOutputModal(\'ANALYSIS\')">관리</a></center>';
+									/*btnHtml += 'style="height: 3rem; width: 30%; border-radius: 5px; background-color:#2c7be4; color:white; font-weight:700;';
+									btnHtml += 'display: flex; flex-direction: row; justify-content: center; align-items: center;">관리</a></center>';*/
+									
+									$('#srAnalysisOtptBtn').html(btnHtml);	 
+								} else if (srPrgrs.srPrgrsSttsNm == '설계') {
+									if (srPrgrs.srPrgrsBgngDt != null) {
+										$('#srDesignBgngDt').html(formatDate(bgngDt));
+									}
+									if (srPrgrs.srPrgrsCmptnDt != null) {
+										$('#srDesignCmptnDt').html(formatDate(cmptnDt));
+									}
+									$('#srDesignPrgrs').html('<input value="" style="width:40%; height:3rem; margin:0rem 1rem; text-align: center;">');
+									if (srPrgrs.srPrgrs > 0) {
+										$('#srDesignPrgrs input').val(srPrgrs.srPrgrs);
+									}
+									let btnHtml = '<center><a data-toggle="modal" data-target="#manageSrOutputModal" href="javascript:void(0)" class="btn-1" style="width:30%; height:3rem; font-size:1.5rem;" onclick="composeManageSrOutputModal(\'DESIGN\')">관리</a></center>';
+									$('#srDesignOtptBtn').html(btnHtml);
+								} else if (srPrgrs.srPrgrsSttsNm == '구현') {
+									if (srPrgrs.srPrgrsBgngDt != null) {
+										$('#srImplBgngDt').html(formatDate(bgngDt));
+									}
+									if (srPrgrs.srPrgrsCmptnDt != null) {
+										$('#srImplCmptnDt').html(formatDate(cmptnDt));
+									}
+									$('#srImplPrgrs').html('<input value="" style="width:40%; height:3rem; margin:0rem 1rem; text-align: center;">');
+									if (srPrgrs.srPrgrs > 0) {
+										$('#srImplPrgrs input').val(srPrgrs.srPrgrs);
+									}
+									let btnHtml = '<center><a data-toggle="modal" data-target="#manageSrOutputModal" href="javascript:void(0)" class="btn-1" style="width:30%; height:3rem; font-size:1.5rem;" onclick="composeManageSrOutputModal(\'IMPLEMENT\')">관리</a></center>';
+									$('#srImplOtptBtn').html(btnHtml);
+								} else if (srPrgrs.srPrgrsSttsNm == '시험') {
+									if (srPrgrs.srPrgrsBgngDt != null) {
+										$('#srTestBgngDt').html(formatDate(bgngDt));
+									}
+									if (srPrgrs.srPrgrsCmptnDt != null) {
+										$('#srTestCmptnDt').html(formatDate(cmptnDt));
+									}
+									$('#srTestPrgrs').html('<input value="" style="width:40%; height:3rem; margin:0rem 1rem; text-align: center;">');
+									if (srPrgrs.srPrgrs > 0) {
+										$('#srTestPrgrs input').val(srPrgrs.srPrgrs);
+									}
+									let btnHtml = '<center><a data-toggle="modal" data-target="#manageSrOutputModal" href="javascript:void(0)" class="btn-1" style="width:30%; height:3rem; font-size:1.5rem;" onclick="composeManageSrOutputModal(\'TEST\')">관리</a></center>';
+									$('#srTestOtptBtn').html(btnHtml);
+								} else if (srPrgrs.srPrgrsSttsNm == '반영요청') {
+									if (srPrgrs.srPrgrsBgngDt != null) {
+										$('#srApplyBgngDt').html(formatDate(bgngDt));
+									}
+									if (srPrgrs.srPrgrsCmptnDt != null) {
+										$('#srApplyCmptnDt').html(formatDate(cmptnDt));
+									}
+									$('#srApplyPrgrs').html('<input value="" style="width:40%; height:3rem; margin:0rem 1rem; text-align: center;">');
+									if (srPrgrs.srPrgrs > 0) {
+										$('#srApplyPrgrs input').val(srPrgrs.srPrgrs);
+									}
+									let btnHtml = '<center><a data-toggle="modal" data-target="#manageSrOutputModal" href="javascript:void(0)" class="btn-1" style="width:30%; height:3rem; font-size:1.5rem;" onclick="composeManageSrOutputModal(\'APPLY_REQUEST\')">관리</a></center>';
+									$('#srApplyOtptBtn').html(btnHtml);
+								}
+							}
 						}
-						if (srPrgrs.srPrgrsCmptnDt != null) {
-							$('#srAnalysisCmptnDt').html(formatDate(cmptnDt));
+					} else {
+						if (data.srPrgrsList != null) {
+							for (let i=0; i<data.srPrgrsList.length; ++i) {
+								let srPrgrs = data.srPrgrsList[i];
+								let bgngDt = new Date(srPrgrs.srPrgrsBgngDt);
+						        let cmptnDt = new Date(srPrgrs.srPrgrsCmptnDt);
+								if (srPrgrs.srPrgrsSttsNm == '분석') {
+									if (srPrgrs.srPrgrsBgngDt != null) {
+										$('#srAnalysisBgngDt').html(formatDate(bgngDt));
+									}
+									if (srPrgrs.srPrgrsCmptnDt != null) {
+										$('#srAnalysisCmptnDt').html(formatDate(cmptnDt));
+									}
+									$('#srAnalysisPrgrs').html('<input disabled value="" style="width:40%; height:3rem; margin:0rem 1rem; text-align: center;">');
+									if (srPrgrs.srPrgrs > 0) {
+										$('#srAnalysisPrgrs input').val(srPrgrs.srPrgrs);
+									}
+									
+									let btnHtml = '<center><a href="javascript:void(0)" class="btn-1" style="width:30%; height:3rem; font-size:1.5rem;">관리</a></center>';
+									/*btnHtml += 'style="height: 3rem; width: 30%; border-radius: 5px; background-color:#2c7be4; color:white; font-weight:700;';
+									btnHtml += 'display: flex; flex-direction: row; justify-content: center; align-items: center;">관리</a></center>';*/
+									
+									$('#srAnalysisOtptBtn').html(btnHtml);	 
+								} else if (srPrgrs.srPrgrsSttsNm == '설계') {
+									if (srPrgrs.srPrgrsBgngDt != null) {
+										$('#srDesignBgngDt').html(formatDate(bgngDt));
+									}
+									if (srPrgrs.srPrgrsCmptnDt != null) {
+										$('#srDesignCmptnDt').html(formatDate(cmptnDt));
+									}
+									$('#srDesignPrgrs').html('<input disabled value="" style="width:40%; height:3rem; margin:0rem 1rem; text-align: center;">');
+									if (srPrgrs.srPrgrs > 0) {
+										$('#srDesignPrgrs input').val(srPrgrs.srPrgrs);
+									}
+									let btnHtml = '<center><a href="javascript:void(0)" class="btn-1" style="width:30%; height:3rem; font-size:1.5rem;">관리</a></center>';
+									$('#srDesignOtptBtn').html(btnHtml);
+								} else if (srPrgrs.srPrgrsSttsNm == '구현') {
+									if (srPrgrs.srPrgrsBgngDt != null) {
+										$('#srImplBgngDt').html(formatDate(bgngDt));
+									}
+									if (srPrgrs.srPrgrsCmptnDt != null) {
+										$('#srImplCmptnDt').html(formatDate(cmptnDt));
+									}
+									$('#srImplPrgrs').html('<input disabled value="" style="width:40%; height:3rem; margin:0rem 1rem; text-align: center;">');
+									if (srPrgrs.srPrgrs > 0) {
+										$('#srImplPrgrs input').val(srPrgrs.srPrgrs);
+									}
+									let btnHtml = '<center><a href="javascript:void(0)" class="btn-1" style="width:30%; height:3rem; font-size:1.5rem;">관리</a></center>';
+									$('#srImplOtptBtn').html(btnHtml);
+								} else if (srPrgrs.srPrgrsSttsNm == '시험') {
+									if (srPrgrs.srPrgrsBgngDt != null) {
+										$('#srTestBgngDt').html(formatDate(bgngDt));
+									}
+									if (srPrgrs.srPrgrsCmptnDt != null) {
+										$('#srTestCmptnDt').html(formatDate(cmptnDt));
+									}
+									$('#srTestPrgrs').html('<input disabled value="" style="width:40%; height:3rem; margin:0rem 1rem; text-align: center;">');
+									if (srPrgrs.srPrgrs > 0) {
+										$('#srTestPrgrs input').val(srPrgrs.srPrgrs);
+									}
+									let btnHtml = '<center><a href="javascript:void(0)" class="btn-1" style="width:30%; height:3rem; font-size:1.5rem;">관리</a></center>';
+									$('#srTestOtptBtn').html(btnHtml);
+								} else if (srPrgrs.srPrgrsSttsNm == '반영요청') {
+									if (srPrgrs.srPrgrsBgngDt != null) {
+										$('#srApplyBgngDt').html(formatDate(bgngDt));
+									}
+									if (srPrgrs.srPrgrsCmptnDt != null) {
+										$('#srApplyCmptnDt').html(formatDate(cmptnDt));
+									}
+									$('#srApplyPrgrs').html('<input disabled value="" style="width:40%; height:3rem; margin:0rem 1rem; text-align: center;">');
+									if (srPrgrs.srPrgrs > 0) {
+										$('#srApplyPrgrs input').val(srPrgrs.srPrgrs);
+									}
+									let btnHtml = '<center><a href="javascript:void(0)" class="btn-1" style="width:30%; height:3rem; font-size:1.5rem;">관리</a></center>';
+									$('#srApplyOtptBtn').html(btnHtml);
+								}
+							}
 						}
-						$('#srAnalysisPrgrs').html('<input value="" style="width:40%; height:3rem; margin:0rem 1rem; text-align: center;">');
-						if (srPrgrs.srPrgrs > 0) {
-							$('#srAnalysisPrgrs input').val(srPrgrs.srPrgrs);
-							
-							//그래프 재구성
-							$('#totalProgressGraph').css('width', srPrgrs.srPrgrs + '%');
-							$('#totalProgressGraphText').html(srPrgrs.srPrgrs + '%');
-							$('#analysisProgressGraph').css('width', (srPrgrs.srPrgrs * 10) + '%');
+					}
+				}
+			});
+		}
+	});
+	
+	//버튼 비활성화 해제
+	$('.srProgressBtn').css('pointer-events', '');
+	
+	currentDetailSrNo = srNo;
+}
+
+function showSrProgressModal(srNo) {
+	currentDetailSrNo = srNo;
+	let requestData = {
+        srNo: srNo
+    };
+	
+	$.ajax({
+		type: "POST",
+		url: "/otisrm/getSrTransferInfo",
+		data: requestData,
+		success: function(data) {
+			currentSrDetailPicNo = data.usrNo;
+			currentDetailSrNo = srNo;
+			
+			$("#srPlanModalTrgtBgngDt").prop("disabled", true);
+			$("#srPlanModalTrgtCmptnDt").prop("disabled", true);
+			//SR계획정보 구성
+			$.ajax({
+				type: "POST", 
+				url: "/otisrm/checkSavePlan",  
+				data: {srNo: currentDetailSrNo},
+				success: function (response) {
+					//등록 권한이 있는 경우
+					if (response == 'success') {
+						$('#srPlanModalDmndInput').val(data.srDmndNm);
+						$('#srPlanModalTaskInput').val(data.srTaskNm);
+						$('#srPlanModalDeptInput').val(data.deptNm);
+						$('#srPlanModalPicInput').val(data.usrNm);
+						if (data.totalCapacity != null) {
+							$('#srPlanModalTotalCapacity').val(data.totalCapacity.toFixed(1));
+						} else {
+							$('#srPlanModalTotalCapacity').val(data.totalCapacity);
 						}
 						
-						let btnHtml = '<center><a data-toggle="modal" data-target="#manageSrOutputModal" href="javascript:void(0)" class="btn-1" style="width:30%; height:3rem; font-size:1.5rem;" onclick="composeManageSrOutputModal(\'ANALYSIS\')">관리</a></center>';
-						/*btnHtml += 'style="height: 3rem; width: 30%; border-radius: 5px; background-color:#2c7be4; color:white; font-weight:700;';
-						btnHtml += 'display: flex; flex-direction: row; justify-content: center; align-items: center;">관리</a></center>';*/
+						//진행 상태를 확인하고 날짜 입력 가능 여부 부여
+						$.ajax({
+							type: "POST", 
+							url: "/otisrm/checkSrPrgrsSttsNo",  
+							data: {srNo: currentDetailSrNo},
+							success: function (srPrgrsSttsNo) {
+								console.log(srPrgrsSttsNo);
+								if (srPrgrsSttsNo == 'RQST' || srPrgrsSttsNo == 'RECEIPT') {
+									$("#srPlanModalTrgtBgngDt").prop("disabled", false);
+									$("#srPlanModalTrgtCmptnDt").prop("disabled", false);
+								}
+							}
+						});
 						
-						$('#srAnalysisOtptBtn').html(btnHtml);	 
-					} else if (srPrgrs.srPrgrsSttsNm == '설계') {
-						if (srPrgrs.srPrgrsBgngDt != null) {
-							$('#srDesignBgngDt').html(formatDate(bgngDt));
+						if (data.srTrgtBgngDt == '' || data.srTrgtBgngDt == null) {
+							$('#srPlanModalTrgtBgngDt').val('');
+						} else {
+							let bgngDt = new Date(data.srTrgtBgngDt);
+							$('#srPlanModalTrgtBgngDt').val(formatDate(bgngDt));
 						}
-						if (srPrgrs.srPrgrsCmptnDt != null) {
-							$('#srDesignCmptnDt').html(formatDate(cmptnDt));
+						if (data.srTrgtCmptnDt == '' || data.srTrgtCmptnDt == null) {
+							$('#srPlanModalTrgtCmptnDt').val('');
+						} else {
+							let cmptnDt = new Date(data.srTrgtCmptnDt);
+							$('#srPlanModalTrgtCmptnDt').val(formatDate(cmptnDt));
 						}
-						$('#srDesignPrgrs').html('<input value="" style="width:40%; height:3rem; margin:0rem 1rem; text-align: center;">');
-						if (srPrgrs.srPrgrs > 0) {
-							$('#srDesignPrgrs input').val(srPrgrs.srPrgrs);
-							
-							//그래프 재구성
-							$('#totalProgressGraph').css('width', srPrgrs.srPrgrs + '%');
-							$('#totalProgressGraphText').html(srPrgrs.srPrgrs + '%');
-							$('#designProgressGraph').css('width', ((srPrgrs.srPrgrs - 10) * 10) + '%');
+						$('#srPlanInfoTotalCapacity').html(data.totalCapacity);
+						$('#srPlanModalTrnsfNote').html(data.srTrnsfNote);
+					} else {
+						//작성 권한이 없는 경우
+						$('#srPlanModalDmndInput').val(data.srDmndNm);
+						$('#srPlanModalTaskInput').val(data.srTaskNm);
+						$('#srPlanModalDeptInput').val(data.deptNm);
+						$('#srPlanModalPicInput').val(data.usrNm);
+						if (data.totalCapacity != null) {
+							$('#srPlanModalTotalCapacity').val(data.totalCapacity.toFixed(1));
+						} else {
+							$('#srPlanModalTotalCapacity').val(data.totalCapacity);
 						}
-						let btnHtml = '<center><a data-toggle="modal" data-target="#manageSrOutputModal" href="javascript:void(0)" class="btn-1" style="width:30%; height:3rem; font-size:1.5rem;" onclick="composeManageSrOutputModal(\'DESIGN\')">관리</a></center>';
-						$('#srDesignOtptBtn').html(btnHtml);
-					} else if (srPrgrs.srPrgrsSttsNm == '구현') {
-						if (srPrgrs.srPrgrsBgngDt != null) {
-							$('#srImplBgngDt').html(formatDate(bgngDt));
+						
+						if (data.srTrgtBgngDt == '' || data.srTrgtBgngDt == null) {
+							$('#srPlanModalTrgtBgngDt').val('');
+						} else {
+							let bgngDt = new Date(data.srTrgtBgngDt);
+							$('#srPlanModalTrgtBgngDt').val(formatDate(bgngDt));
 						}
-						if (srPrgrs.srPrgrsCmptnDt != null) {
-							$('#srImplCmptnDt').html(formatDate(cmptnDt));
+						if (data.srTrgtCmptnDt == '' || data.srTrgtCmptnDt == null) {
+							$('#srPlanModalTrgtCmptnDt').val('');
+						} else {
+							let cmptnDt = new Date(data.srTrgtCmptnDt);
+							$('#srPlanModalTrgtCmptnDt').val(formatDate(cmptnDt));
 						}
-						$('#srImplPrgrs').html('<input value="" style="width:40%; height:3rem; margin:0rem 1rem; text-align: center;">');
-						if (srPrgrs.srPrgrs > 0) {
-							$('#srImplPrgrs input').val(srPrgrs.srPrgrs);
-							
-							//그래프 재구성
-							$('#totalProgressGraph').css('width', srPrgrs.srPrgrs + '%');
-							$('#totalProgressGraphText').html(srPrgrs.srPrgrs + '%');
-							$('#implementProgressGraph').css('width', ((srPrgrs.srPrgrs - 20) * 2) + '%');
+						$('#srPlanInfoTotalCapacity').html(data.totalCapacity);
+						$('#srPlanModalTrnsfNote').html(data.srTrnsfNote);
+					}
+				}
+			});
+			
+			//SR자원정보 구성
+			//현재 사용자가 담당자일경우
+			if (currentSrDetailPicNo == modelUsrNo) {
+				$('#srHrInfo tbody').html('');	//html 초기화
+				if (data.srTrnsfHrList != null) {
+					for (let i=0; i<data.srTrnsfHrList.length; ++i) {
+						let srTrnsfHr = data.srTrnsfHrList[i];
+						let srTrnsfHrHtml = '';
+						srTrnsfHrHtml += '<tr style="height:4rem; font-size:1.6rem; background-color:white;">';
+						srTrnsfHrHtml += '<td><input type="checkbox" class="checkbox" style="vertical-align: middle;"></td>';
+						srTrnsfHrHtml += '<td class="srNo" style="display:none">' + srTrnsfHr.srNo + '</td>';
+						srTrnsfHrHtml += '<td class="usrNo" style="display:none">' + srTrnsfHr.usrNo + '</td>';
+						srTrnsfHrHtml += '<td>' + srTrnsfHr.usrNm + '</td>';
+						srTrnsfHrHtml += '<td>' + srTrnsfHr.roleNm + '</td>';
+						if (srTrnsfHr.planCapacity != '' && srTrnsfHr.planCapacity != null) {
+							srTrnsfHrHtml += '<td><input type="text" value="' + srTrnsfHr.planCapacity.toFixed(1) + '" style="width:50%; text-align: center;"></div></td>';
+						} else {
+							srTrnsfHrHtml += '<td><input type="text" value="0.0" style="width:50%; text-align: center;"></div></td>';
 						}
-						let btnHtml = '<center><a data-toggle="modal" data-target="#manageSrOutputModal" href="javascript:void(0)" class="btn-1" style="width:30%; height:3rem; font-size:1.5rem;" onclick="composeManageSrOutputModal(\'IMPLEMENT\')">관리</a></center>';
-						$('#srImplOtptBtn').html(btnHtml);
-					} else if (srPrgrs.srPrgrsSttsNm == '시험') {
-						if (srPrgrs.srPrgrsBgngDt != null) {
-							$('#srTestBgngDt').html(formatDate(bgngDt));
+						if (srTrnsfHr.performanceCapacity != '' && srTrnsfHr.performanceCapacity != null) {
+							srTrnsfHrHtml += '<td><input type="text" disabled value="' + srTrnsfHr.performanceCapacity.toFixed(1) + '" style="width:50%; text-align: center;"></div></td>';
+						} else {
+							srTrnsfHrHtml += '<td><input type="text" disabled value="0.0" style="width:50%; text-align: center;"></div></td>';
 						}
-						if (srPrgrs.srPrgrsCmptnDt != null) {
-							$('#srTestCmptnDt').html(formatDate(cmptnDt));
+						srTrnsfHrHtml += '</tr>';
+						$('#srHrInfo tbody').append(srTrnsfHrHtml);
+					}
+				}
+			} else {
+				$('#srHrInfo tbody').html('');	//html 초기화
+				if (data.srTrnsfHrList != null) {
+					for (let i=0; i<data.srTrnsfHrList.length; ++i) {
+						let srTrnsfHr = data.srTrnsfHrList[i];
+						let srTrnsfHrHtml = '';
+						srTrnsfHrHtml += '<tr style="height:4rem; font-size:1.6rem; background-color:white;">';
+						srTrnsfHrHtml += '<td><input type="checkbox" class="checkbox" style="vertical-align: middle;"></td>';
+						srTrnsfHrHtml += '<td class="srNo" style="display:none">' + srTrnsfHr.srNo + '</td>';
+						srTrnsfHrHtml += '<td class="usrNo" style="display:none">' + srTrnsfHr.usrNo + '</td>';
+						srTrnsfHrHtml += '<td>' + srTrnsfHr.usrNm + '</td>';
+						srTrnsfHrHtml += '<td>' + srTrnsfHr.roleNm + '</td>';
+						if (srTrnsfHr.planCapacity != '' && srTrnsfHr.planCapacity != null) {
+							srTrnsfHrHtml += '<td><input type="text" disabled value="' + srTrnsfHr.planCapacity.toFixed(1) + '" style="width:50%; text-align: center;"></div></td>';
+						} else {
+							srTrnsfHrHtml += '<td><input type="text" disabled value="0.0" style="width:50%; text-align: center;"></div></td>';
 						}
-						$('#srTestPrgrs').html('<input value="" style="width:40%; height:3rem; margin:0rem 1rem; text-align: center;">');
-						if (srPrgrs.srPrgrs > 0) {
-							$('#srTestPrgrs input').val(srPrgrs.srPrgrs);
-							
-							//그래프 재구성
-							$('#totalProgressGraph').css('width', srPrgrs.srPrgrs + '%');
-							$('#totalProgressGraphText').html(srPrgrs.srPrgrs + '%');
-							$('#testProgressGraph').css('width', ((srPrgrs.srPrgrs - 70) * 5) + '%');
+						if (srTrnsfHr.performanceCapacity != '' && srTrnsfHr.performanceCapacity != null) {
+							srTrnsfHrHtml += '<td><input type="text" disabled value="' + srTrnsfHr.performanceCapacity.toFixed(1) + '" style="width:50%; text-align: center;"></div></td>';
+						} else {
+							srTrnsfHrHtml += '<td><input type="text" disabled value="0.0" style="width:50%; text-align: center;"></div></td>';
 						}
-						let btnHtml = '<center><a data-toggle="modal" data-target="#manageSrOutputModal" href="javascript:void(0)" class="btn-1" style="width:30%; height:3rem; font-size:1.5rem;" onclick="composeManageSrOutputModal(\'TEST\')">관리</a></center>';
-						$('#srTestOtptBtn').html(btnHtml);
-					} else if (srPrgrs.srPrgrsSttsNm == '반영요청') {
-						if (srPrgrs.srPrgrsBgngDt != null) {
-							$('#srApplyBgngDt').html(formatDate(bgngDt));
-						}
-						if (srPrgrs.srPrgrsCmptnDt != null) {
-							$('#srApplyCmptnDt').html(formatDate(cmptnDt));
-						}
-						$('#srApplyPrgrs').html('<input value="" style="width:40%; height:3rem; margin:0rem 1rem; text-align: center;">');
-						if (srPrgrs.srPrgrs > 0) {
-							$('#srApplyPrgrs input').val(srPrgrs.srPrgrs);
-							
-							//그래프 재구성
-							$('#totalProgressGraph').css('width', srPrgrs.srPrgrs + '%');
-							$('#totalProgressGraphText').html(srPrgrs.srPrgrs + '%');
-							$('#applyRequestProgressGraph').css('width', ((srPrgrs.srPrgrs - 90) * 10) + '%');
-						}
-						let btnHtml = '<center><a data-toggle="modal" data-target="#manageSrOutputModal" href="javascript:void(0)" class="btn-1" style="width:30%; height:3rem; font-size:1.5rem;" onclick="composeManageSrOutputModal(\'APPLY_REQUEST\')">관리</a></center>';
-						$('#srApplyOtptBtn').html(btnHtml);
+						srTrnsfHrHtml += '</tr>';
+						$('#srHrInfo tbody').append(srTrnsfHrHtml);
 					}
 				}
 			}
 			
 			
+			//SR진척률 구성
+			$('#prgrsTable td').html('');
+			
+			//권한 확인
+			$.ajax({
+				type: "POST", 
+				url: "/otisrm/checkSavePrgrs",  
+				data: {srNo: currentDetailSrNo},
+				success: function (response) {
+					if (response == 'success') {
+						if (data.srPrgrsList != null) {
+							for (let i=0; i<data.srPrgrsList.length; ++i) {
+								let srPrgrs = data.srPrgrsList[i];
+								let bgngDt = new Date(srPrgrs.srPrgrsBgngDt);
+						        let cmptnDt = new Date(srPrgrs.srPrgrsCmptnDt);
+								if (srPrgrs.srPrgrsSttsNm == '분석') {
+									if (srPrgrs.srPrgrsBgngDt != null) {
+										$('#srAnalysisBgngDt').html(formatDate(bgngDt));
+									}
+									if (srPrgrs.srPrgrsCmptnDt != null) {
+										$('#srAnalysisCmptnDt').html(formatDate(cmptnDt));
+									}
+									$('#srAnalysisPrgrs').html('<input value="" style="width:40%; height:3rem; margin:0rem 1rem; text-align: center;">');
+									if (srPrgrs.srPrgrs > 0) {
+										$('#srAnalysisPrgrs input').val(srPrgrs.srPrgrs);
+									}
+									
+									let btnHtml = '<center><a data-toggle="modal" data-target="#manageSrOutputModal" href="javascript:void(0)" class="btn-1" style="width:30%; height:3rem; font-size:1.5rem;" onclick="composeManageSrOutputModal(\'ANALYSIS\')">관리</a></center>';
+									/*btnHtml += 'style="height: 3rem; width: 30%; border-radius: 5px; background-color:#2c7be4; color:white; font-weight:700;';
+									btnHtml += 'display: flex; flex-direction: row; justify-content: center; align-items: center;">관리</a></center>';*/
+									
+									$('#srAnalysisOtptBtn').html(btnHtml);	 
+								} else if (srPrgrs.srPrgrsSttsNm == '설계') {
+									if (srPrgrs.srPrgrsBgngDt != null) {
+										$('#srDesignBgngDt').html(formatDate(bgngDt));
+									}
+									if (srPrgrs.srPrgrsCmptnDt != null) {
+										$('#srDesignCmptnDt').html(formatDate(cmptnDt));
+									}
+									$('#srDesignPrgrs').html('<input value="" style="width:40%; height:3rem; margin:0rem 1rem; text-align: center;">');
+									if (srPrgrs.srPrgrs > 0) {
+										$('#srDesignPrgrs input').val(srPrgrs.srPrgrs);
+									}
+									let btnHtml = '<center><a data-toggle="modal" data-target="#manageSrOutputModal" href="javascript:void(0)" class="btn-1" style="width:30%; height:3rem; font-size:1.5rem;" onclick="composeManageSrOutputModal(\'DESIGN\')">관리</a></center>';
+									$('#srDesignOtptBtn').html(btnHtml);
+								} else if (srPrgrs.srPrgrsSttsNm == '구현') {
+									if (srPrgrs.srPrgrsBgngDt != null) {
+										$('#srImplBgngDt').html(formatDate(bgngDt));
+									}
+									if (srPrgrs.srPrgrsCmptnDt != null) {
+										$('#srImplCmptnDt').html(formatDate(cmptnDt));
+									}
+									$('#srImplPrgrs').html('<input value="" style="width:40%; height:3rem; margin:0rem 1rem; text-align: center;">');
+									if (srPrgrs.srPrgrs > 0) {
+										$('#srImplPrgrs input').val(srPrgrs.srPrgrs);
+									}
+									let btnHtml = '<center><a data-toggle="modal" data-target="#manageSrOutputModal" href="javascript:void(0)" class="btn-1" style="width:30%; height:3rem; font-size:1.5rem;" onclick="composeManageSrOutputModal(\'IMPLEMENT\')">관리</a></center>';
+									$('#srImplOtptBtn').html(btnHtml);
+								} else if (srPrgrs.srPrgrsSttsNm == '시험') {
+									if (srPrgrs.srPrgrsBgngDt != null) {
+										$('#srTestBgngDt').html(formatDate(bgngDt));
+									}
+									if (srPrgrs.srPrgrsCmptnDt != null) {
+										$('#srTestCmptnDt').html(formatDate(cmptnDt));
+									}
+									$('#srTestPrgrs').html('<input value="" style="width:40%; height:3rem; margin:0rem 1rem; text-align: center;">');
+									if (srPrgrs.srPrgrs > 0) {
+										$('#srTestPrgrs input').val(srPrgrs.srPrgrs);
+									}
+									let btnHtml = '<center><a data-toggle="modal" data-target="#manageSrOutputModal" href="javascript:void(0)" class="btn-1" style="width:30%; height:3rem; font-size:1.5rem;" onclick="composeManageSrOutputModal(\'TEST\')">관리</a></center>';
+									$('#srTestOtptBtn').html(btnHtml);
+								} else if (srPrgrs.srPrgrsSttsNm == '반영요청') {
+									if (srPrgrs.srPrgrsBgngDt != null) {
+										$('#srApplyBgngDt').html(formatDate(bgngDt));
+									}
+									if (srPrgrs.srPrgrsCmptnDt != null) {
+										$('#srApplyCmptnDt').html(formatDate(cmptnDt));
+									}
+									$('#srApplyPrgrs').html('<input value="" style="width:40%; height:3rem; margin:0rem 1rem; text-align: center;">');
+									if (srPrgrs.srPrgrs > 0) {
+										$('#srApplyPrgrs input').val(srPrgrs.srPrgrs);
+									}
+									let btnHtml = '<center><a data-toggle="modal" data-target="#manageSrOutputModal" href="javascript:void(0)" class="btn-1" style="width:30%; height:3rem; font-size:1.5rem;" onclick="composeManageSrOutputModal(\'APPLY_REQUEST\')">관리</a></center>';
+									$('#srApplyOtptBtn').html(btnHtml);
+								}
+							}
+						}
+					} else {
+						if (data.srPrgrsList != null) {
+							for (let i=0; i<data.srPrgrsList.length; ++i) {
+								let srPrgrs = data.srPrgrsList[i];
+								let bgngDt = new Date(srPrgrs.srPrgrsBgngDt);
+						        let cmptnDt = new Date(srPrgrs.srPrgrsCmptnDt);
+								if (srPrgrs.srPrgrsSttsNm == '분석') {
+									if (srPrgrs.srPrgrsBgngDt != null) {
+										$('#srAnalysisBgngDt').html(formatDate(bgngDt));
+									}
+									if (srPrgrs.srPrgrsCmptnDt != null) {
+										$('#srAnalysisCmptnDt').html(formatDate(cmptnDt));
+									}
+									$('#srAnalysisPrgrs').html('<input disabled value="" style="width:40%; height:3rem; margin:0rem 1rem; text-align: center;">');
+									if (srPrgrs.srPrgrs > 0) {
+										$('#srAnalysisPrgrs input').val(srPrgrs.srPrgrs);
+									}
+									
+									let btnHtml = '<center><a href="javascript:void(0)" class="btn-1" style="width:30%; height:3rem; font-size:1.5rem;">관리</a></center>';
+									/*btnHtml += 'style="height: 3rem; width: 30%; border-radius: 5px; background-color:#2c7be4; color:white; font-weight:700;';
+									btnHtml += 'display: flex; flex-direction: row; justify-content: center; align-items: center;">관리</a></center>';*/
+									
+									$('#srAnalysisOtptBtn').html(btnHtml);	 
+								} else if (srPrgrs.srPrgrsSttsNm == '설계') {
+									if (srPrgrs.srPrgrsBgngDt != null) {
+										$('#srDesignBgngDt').html(formatDate(bgngDt));
+									}
+									if (srPrgrs.srPrgrsCmptnDt != null) {
+										$('#srDesignCmptnDt').html(formatDate(cmptnDt));
+									}
+									$('#srDesignPrgrs').html('<input disabled value="" style="width:40%; height:3rem; margin:0rem 1rem; text-align: center;">');
+									if (srPrgrs.srPrgrs > 0) {
+										$('#srDesignPrgrs input').val(srPrgrs.srPrgrs);
+									}
+									let btnHtml = '<center><a href="javascript:void(0)" class="btn-1" style="width:30%; height:3rem; font-size:1.5rem;">관리</a></center>';
+									$('#srDesignOtptBtn').html(btnHtml);
+								} else if (srPrgrs.srPrgrsSttsNm == '구현') {
+									if (srPrgrs.srPrgrsBgngDt != null) {
+										$('#srImplBgngDt').html(formatDate(bgngDt));
+									}
+									if (srPrgrs.srPrgrsCmptnDt != null) {
+										$('#srImplCmptnDt').html(formatDate(cmptnDt));
+									}
+									$('#srImplPrgrs').html('<input disabled value="" style="width:40%; height:3rem; margin:0rem 1rem; text-align: center;">');
+									if (srPrgrs.srPrgrs > 0) {
+										$('#srImplPrgrs input').val(srPrgrs.srPrgrs);
+									}
+									let btnHtml = '<center><a href="javascript:void(0)" class="btn-1" style="width:30%; height:3rem; font-size:1.5rem;">관리</a></center>';
+									$('#srImplOtptBtn').html(btnHtml);
+								} else if (srPrgrs.srPrgrsSttsNm == '시험') {
+									if (srPrgrs.srPrgrsBgngDt != null) {
+										$('#srTestBgngDt').html(formatDate(bgngDt));
+									}
+									if (srPrgrs.srPrgrsCmptnDt != null) {
+										$('#srTestCmptnDt').html(formatDate(cmptnDt));
+									}
+									$('#srTestPrgrs').html('<input disabled value="" style="width:40%; height:3rem; margin:0rem 1rem; text-align: center;">');
+									if (srPrgrs.srPrgrs > 0) {
+										$('#srTestPrgrs input').val(srPrgrs.srPrgrs);
+									}
+									let btnHtml = '<center><a href="javascript:void(0)" class="btn-1" style="width:30%; height:3rem; font-size:1.5rem;">관리</a></center>';
+									$('#srTestOtptBtn').html(btnHtml);
+								} else if (srPrgrs.srPrgrsSttsNm == '반영요청') {
+									if (srPrgrs.srPrgrsBgngDt != null) {
+										$('#srApplyBgngDt').html(formatDate(bgngDt));
+									}
+									if (srPrgrs.srPrgrsCmptnDt != null) {
+										$('#srApplyCmptnDt').html(formatDate(cmptnDt));
+									}
+									$('#srApplyPrgrs').html('<input disabled value="" style="width:40%; height:3rem; margin:0rem 1rem; text-align: center;">');
+									if (srPrgrs.srPrgrs > 0) {
+										$('#srApplyPrgrs input').val(srPrgrs.srPrgrs);
+									}
+									let btnHtml = '<center><a href="javascript:void(0)" class="btn-1" style="width:30%; height:3rem; font-size:1.5rem;">관리</a></center>';
+									$('#srApplyOtptBtn').html(btnHtml);
+								}
+							}
+						}
+					}
+				}
+			});
 		}
 	});
 	
@@ -543,23 +1065,68 @@ function editSrTrnsfPlan() {
 	let srTrgtBgngDt = $('#srPlanModalTrgtBgngDt').val();
 	let srTrgtCmptnDt = $('#srPlanModalTrgtCmptnDt').val();
 	let srTrnsfNote = $('#srPlanModalTrnsfNote').val();
-	
-	let requestData = {
-		srNo: srNo,
-		deptNm: deptNm,
-        usrNm: usrNm,
-        srTrgtBgngDt: srTrgtBgngDt,
-        srTrgtCmptnDt: srTrgtCmptnDt,
-        srTrnsfNote: srTrnsfNote
-    };
-	
+	let srDmndNo = $('#srPlanModalDmndInput').val();
+
+	//날짜 유효성 검사
+	let trgtBgngDt = new Date(srTrgtBgngDt);
+	let trgtCmptnDt = new Date(srTrgtCmptnDt);
+	let today = new Date();
+	trgtBgngDt.setHours(0, 0, 0, 0);
+	trgtCmptnDt.setHours(0, 0, 0, 0);
+	today.setHours(0, 0, 0, 0);
+	var srCmptnPrnmntDt;
 	$.ajax({
 		type: "POST",
-		url: "/otisrm/editSrTrnsfPlan",
-		data: requestData,
+		url: "/otisrm/getCmptnPrnmntDt",
+		data: {srNo: srNo},
 		success: function(data) {
-			//모달 재구성
-			showSrProgressModal(srNo);
+			let srCmptnPrnmntDt = new Date(data);
+			srCmptnPrnmntDt.setHours(0, 0, 0, 0);
+			if (trgtCmptnDt > srCmptnPrnmntDt) {
+				$('#warningContent').html("목표 완료일은 완료 요청일 이후일 수 없습니다.");
+				$("#warningModal").modal("show");
+				return;
+			}
+			
+			if (trgtBgngDt < today) {
+				$('#warningContent').html("목표 시작일은 작성일 이전일 수 없습니다.");
+				$("#warningModal").modal("show");
+				return;
+			}
+			
+			if (trgtBgngDt > trgtCmptnDt) {
+				$('#warningContent').html("목표 완료일은 목표 시작일 이전일 수 없습니다.");
+				$("#warningModal").modal("show");
+				return;
+			}
+			
+			//유효성 검사 통과
+			let requestData = {
+				srNo: srNo,
+				deptNm: deptNm,
+		        usrNm: usrNm,
+		        srTrgtBgngDt: srTrgtBgngDt,
+		        srTrgtCmptnDt: srTrgtCmptnDt,
+		        srTrnsfNote: srTrnsfNote,
+		        srDmndNo: srDmndNo
+		    };
+			
+			console.log(requestData);
+			
+			$.ajax({
+				type: "POST",
+				url: "/otisrm/editSrTrnsfPlan",
+				data: requestData,
+				success: function(data) {
+					showSrProgressModalFromMain(srNo);
+				}
+			});
+			
+			mainTableConfig(currentProgressManagementSearch, currentPageNo);
+			
+			$('#alertContent').html("SR계획이 저장되었습니다.");
+			$("#alertModal").modal("show");
+			console.log("111111");
 		}
 	});
 }
@@ -695,39 +1262,6 @@ function setFindPicModalPic(deptNm, usrNm) {
 
 //--------------------------------------------------------------------------------------------
 //sr계획 작성/수정
-function editSrTrnsfPlan() {
-	let srNo = currentDetailSrNo;
-	let deptNm = $('#srPlanModalDeptInput').val();
-	let usrNm = $('#srPlanModalPicInput').val();
-	let srTrgtBgngDt = $('#srPlanModalTrgtBgngDt').val();
-	let srTrgtCmptnDt = $('#srPlanModalTrgtCmptnDt').val();
-	let srTrnsfNote = $('#srPlanModalTrnsfNote').val();
-	let srDmndNo = $('#srPlanModalDmndInput').val();
-	console.log(srDmndNo);
-	
-	let requestData = {
-		srNo: srNo,
-		deptNm: deptNm,
-        usrNm: usrNm,
-        srTrgtBgngDt: srTrgtBgngDt,
-        srTrgtCmptnDt: srTrgtCmptnDt,
-        srTrnsfNote: srTrnsfNote,
-        srDmndNo: srDmndNo
-    };
-	
-	console.log(requestData);
-	
-	$.ajax({
-		type: "POST",
-		url: "/otisrm/editSrTrnsfPlan",
-		data: requestData,
-		success: function(data) {
-			showSrProgressModal(srNo);
-		}
-	});
-}
-
-
 
 //HR수정 모달
 function showSetHrModal() {
@@ -884,6 +1418,7 @@ function addHr(usrNo) {
 
 function saveHrInfo() {
 	let dataRows = []; // 데이터를 저장할 배열
+	let totalPlanCapacity = 0.0;
 
     // 테이블 내의 각 행 순회
     $("#srHrInfo tr").each(function (idx) {
@@ -913,6 +1448,10 @@ function saveHrInfo() {
 		        		value = $(this).html();
 		        	} else {
 		        		value = $(this).find('input').val();
+		        		if (index == 5) {
+		        			totalPlanCapacity += parseFloat(value);
+		        			console.log(totalPlanCapacity);
+		        		}
 		        	}
 		            rowData[key] = value;
 	        	}
@@ -923,7 +1462,13 @@ function saveHrInfo() {
 	        dataRows.push(rowData);
     	}
     });
-    console.log(dataRows);
+    console.log($('#srPlanModalTotalCapacity').val());
+    if (totalPlanCapacity > parseFloat($('#srPlanModalTotalCapacity').val())) {
+    	$('#warningContent').html("총 계획공수값을 초과하였습니다.");
+		$("#warningModal").modal("show");
+		showSrProgressModal(currentDetailSrNo);
+		return;
+    }
 
     let jsonData = JSON.stringify(dataRows);
 
@@ -934,7 +1479,9 @@ function saveHrInfo() {
         data: jsonData,
         contentType: "application/json; charset=utf-8",
         success: function (response) {
-        	showSrProgressModal(currentDetailSrNo);
+        	$('#alertContent').html("자원 정보가 저장되었습니다.");
+    		$("#alertModal").modal("show");
+    		showSrProgressModal(currentDetailSrNo);
         }
     });
 }

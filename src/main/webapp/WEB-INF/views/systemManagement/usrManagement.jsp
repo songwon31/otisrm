@@ -84,8 +84,8 @@
 				</div>
 				<div style="width:3.5%;"></div>
 				<div style="width:6%;" class="d-flex flex-row-reverse align-items-center">
-					<button type="button" id="initBtn" class="btn-1" onclick="mainTableSearchReset()"
-							style="height: 3rem; width: 100%; border-radius: 5px; background-color:#868E96;">
+					<button type="button" id="initBtn" class="btn-gray" onclick="mainTableSearchReset()"
+							style="height: 3rem; width: 100%;">
 						초기화
 					</button>
 				</div>
@@ -138,8 +138,8 @@
 				</div>
 				<div style="width:3.5%;"></div>
 				<div style="width:6%;" class="d-flex flex-row-reverse align-items-center">
-					<button type="button" id="searchBtn" class="btn-1" onclick="mainTableSearch()"
-							style="height: 3rem; width: 100%; border-radius: 5px; background-color:#222E3C;">
+					<button type="button" id="searchBtn" class="btn-navy" onclick="mainTableSearch()"
+							style="height: 3rem; width: 100%;">
 						검색
 					</button>
 				</div>	
@@ -152,14 +152,14 @@
 			<div style="height:3.5rem; font-size:2.2rem; font-weight:700; color:#222E3C;">사용자목록</div>
 			<div style="flex-grow:1;"></div>
 			<div style="display:flex; flex-direction:row; align-items:center;">
-				<button id="downloadExcelButton" class="btn-1" onclick="downloadExcel()"
-					style="background-color:#222E3C; height:3rem; margin-right:0.5rem; font-size:1.5rem;">엑셀 다운로드</button>
-				<button type="button" onclick="batchApproval()" class="btn-1"
-						style="height:3rem; margin-right:0.5rem; font-size:1.5rem;">
+				<button id="downloadExcelButton" class="btn-navy" onclick="downloadExcel()"
+					style="height:3rem; margin-right:0.5rem;">엑셀 다운로드</button>
+				<button type="button" onclick="batchApproval()" class="btn-blue"
+						style="height:3rem; margin-right:0.5rem;">
 					일괄 승인/복구
 				</button>
-				<button type="button" onclick="batchWithdrawal()" class="btn-1"
-						style="height:3rem; background-color:red; font-size:1.5rem;">
+				<button type="button" onclick="batchWithdrawal()" class="btn-red"
+						style="height:3rem;">
 					일괄 탈퇴처리
 				</button>
 			</div>
@@ -246,7 +246,7 @@
 							<select id="modalUsrDept" name="modalUsrDept" style="width:60%; padding:3px;">
 								
 							</select>
-							<button type="button" onclick="editUsrDeptModal()" class="btn-1" style="height:3rem; margin-left:1rem;">
+							<button type="button" onclick="editUsrDeptModal()" class="btn-blue" style="height:3rem; margin-left:1rem;">
 								저장
 							</button>
 						</div>
@@ -257,7 +257,7 @@
 							<select id="modalUsrIbps" name="modalUsrIbps" style="width:60%; padding:3px;">
 								
 							</select>
-							<button type="button" onclick="editUsrIbpsModal()" class="btn-1" style="height:3rem; margin-left:1rem;">
+							<button type="button" onclick="editUsrIbpsModal()" class="btn-blue" style="height:3rem; margin-left:1rem;">
 								저장
 							</button>
 						</div>
@@ -266,7 +266,7 @@
 							<select id="modalUsrRole" name="modalUsrRole" style="width:60%; padding:3px;">
 								
 							</select>
-							<button type="button" onclick="editUsrRoleModal()" class="btn-1" style="height:3rem; margin-left:1rem;">
+							<button type="button" onclick="editUsrRoleModal()" class="btn-blue" style="height:3rem; margin-left:1rem;">
 								저장
 							</button>
 						</div>
@@ -281,7 +281,7 @@
 								<option value="REVIEWER">검토자</option>
 								<option value="SYS_MANAGER">시스템 관리자</option>
 							</select>
-							<button type="button" onclick="editUsrAuthrt()" class="btn-1" style="height:3rem; margin-left:1rem;">
+							<button type="button" onclick="editUsrAuthrt()" class="btn-blue" style="height:3rem; margin-left:1rem;">
 								저장
 							</button>
 						</div>
