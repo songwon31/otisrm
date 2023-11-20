@@ -369,5 +369,35 @@ public class DeveloperHomeController {
 			return null;
 		}
 	}
+	
+	@PostMapping("/checkSavePrgrs")
+	@ResponseBody
+	public String checkSavePrgrs(Authentication authentication, String srNo) {
+		if (authentication != null && authentication.isAuthenticated()) {
+			UsrDetails usrDetails = (UsrDetails) authentication.getPrincipal();
+			Usr usr = usrDetails.getUsr();
+			return srService.checkSavePrgrs(usr.getUsrNo(), srNo);
+		} else {
+			return null;
+		}
+	}
+	
+	@PostMapping("/checkSavePlan")
+	@ResponseBody
+	public String checkSavePlan(Authentication authentication, String srNo) {
+		if (authentication != null && authentication.isAuthenticated()) {
+			UsrDetails usrDetails = (UsrDetails) authentication.getPrincipal();
+			Usr usr = usrDetails.getUsr();
+			return srService.checkSavePlan(usr.getUsrNo(), srNo);
+		} else {
+			return null;
+		}
+	}
+	
+	@PostMapping("/checkSrPrgrsSttsNo")
+	@ResponseBody
+	public String checkSrPrgrsSttsNo(String srNo) {
+		return srService.checkSrPrgrsSttsNo(srNo);
+	}
 }
 

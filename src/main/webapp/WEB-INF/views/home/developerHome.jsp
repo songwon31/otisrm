@@ -99,9 +99,9 @@
 				</button>
 				 -->
 				<button type="button" data-toggle="modal" data-target="#manageChangeScheduleRequestModal" onclick="manageChangeScheduleRequestModalConfig()"
-						class="btn-1" style="height:2.5rem;">일정변경요청 내역 관리</button>
+						class="btn-blue" style="height:2.5rem;">일정변경요청 내역 관리</button>
 				<button type="button" data-toggle="modal" data-target="#srPerformanceRegistrationModal" onclick="srPerformanceRegistrationModalConfig()"
-						class="btn-1" style="height:2.5rem; margin-left:0.5rem;">
+						class="btn-blue" style="height:2.5rem; margin-left:0.5rem;">
 					실적 등록
 				</button>
 				<!-- 
@@ -120,8 +120,8 @@
 				 -->
 				<!-- <div style="flex-grow: 1; border-bottom: 1.5px solid #edf2f8;"></div> -->
 			</div>
-			<div style="height:27rem; background-color:#edf2f8;">
-				<table id="mainTable" style="width: 100%; text-align: center; border:1px solid #E9ECEF; border-bottom:none;">
+			<div style="height:27rem; background-color:#edf2f8; background-color:#f9fafe; border:1.5px solid #e9ecef;">
+				<table id="mainTable" style="width: 100%; table-layout: fixed;">
 					<colgroup>
 						<col width="3%" />
 						<col width="10%" />
@@ -166,7 +166,7 @@
 					<span>SR요청 처리 정보</span>
 				</div>
 				<div style="flex-grow:1;"></div>
-				<button type="button" data-toggle="modal" data-target="#changeScheduleRequestModal" onclick="changeScheduleRequestModalConfig()" class="btn-1" style="height:2.5rem;">일정변경요청/수정</button>
+				<button type="button" data-toggle="modal" data-target="#changeScheduleRequestModal" onclick="changeScheduleRequestModalConfig()" class="btn-blue" style="height:2.5rem;">일정변경요청/수정</button>
 			</div>
 			<div style="display:flex;">
 				<div id="srProgressChoiceDiv" style="width:60%;">
@@ -191,15 +191,15 @@
 					<div style="flex-grow: 1; border-bottom: 1.5px solid #edf2f8;"></div>
 				</div>
 				<div id="srProgressBtnDiv" style="display:flex; line-height:3rem; justify-content:flex-end; align-items:center; width:40%; border-bottom: 1.5px solid #edf2f8;">
-					<button type="button" class="srProgressBtn srPlanBtn btn-1" data-toggle="modal" data-target="#srPlanInfoEditModal" onclick="showSrPlanInfoEditModal()" 
-						style="height:2.5rem;">수정</button> 
-					<button type="button" class="srProgressBtn srHrBtn btn-1" data-toggle="modal" data-target="#setHrFindPicModal" onclick="composeSetHrFindPicModal()" 
+					<button type="button" class="srProgressBtn srPlanBtn btn-navy" data-toggle="modal" data-target="#srPlanInfoEditModal" onclick="showSrPlanInfoEditModal()" 
+						style="height:2.5rem;">등록/수정</button> 
+					<button type="button" class="srProgressBtn srHrBtn btn-blue" data-toggle="modal" data-target="#setHrFindPicModal" onclick="composeSetHrFindPicModal()" 
 						style="height:2.5rem; margin-right:0.5rem; display:none;">추가</button> 
-					<button type="button" class="srProgressBtn srHrBtn btn-1" onclick="deleteHrInfo()"
+					<button type="button" class="srProgressBtn srHrBtn btn-red" onclick="deleteHrInfo()"
 						style="height:2.5rem; margin-right:0.5rem; display:none;">삭제</button> 
-					<button type="button" class="srProgressBtn srHrBtn btn-1" onclick="saveHrInfo()"
+					<button type="button" class="srProgressBtn srHrBtn btn-navy" onclick="saveHrInfo()"
 						style="height:2.5rem; display:none;">저장</button> 
-					<button type="button" class="srProgressBtn srPrgrsBtn btn-1" onclick="updatePrgrs()"
+					<button type="button" class="srProgressBtn srPrgrsBtn btn-navy" onclick="updatePrgrs()"
 						style="height:2.5rem; display:none;">저장</button> 
 				</div>
 			</div>
@@ -569,7 +569,7 @@
 					<div style="height:4rem; display: flex; flex-direction: row; align-items:center; padding:0 0.5rem;">
 						<div id="srPlanInfoEditModalSrTtl" style="font-size:1.6rem; font-weight:700;"></div>
 						<div style="flex-grow:1;"></div>
-						<button type="button" onclick="editSrTrnsfPlan()" class="btn-1" style="height:3rem;">
+						<button type="button" onclick="editSrTrnsfPlan()" class="btn-navy" style="height:3rem;">
 							등록/수정
 						</button>
 					</div>
@@ -592,7 +592,7 @@
 						<div style="height: 4rem; width: 35%; display: flex; align-items: center;">
 							<input id="srPlanModalPicInput" type="text" disabled style="width:62%; height:3rem; margin:0 0 0 0.5rem;">
 							<div style="width:3%"></div>
-							<button type="button" data-toggle="modal" data-target="#srPlanInfoFindPicModal" onclick="composeFindPicModal()" class="btn-1" style="height:3rem; width:15%; margin-right:0.5rem;">
+							<button type="button" data-toggle="modal" data-target="#srPlanInfoFindPicModal" onclick="composeFindPicModal()" class="btn-blue" style="height:3rem; width:15%; margin-right:0.5rem;">
 								찾기
 							</button>
 							<!-- 
@@ -660,7 +660,7 @@
 								<input id="findPicModalPicInput" value="" style="width:70%; height:3rem; margin:0rem 0.5rem;">
 							</div>
 							<div style="height:4rem; flex-grow:1; display:flex; justify-content:flex-end; align-items:center;">
-								<button class="btn-1" onclick="composeFindPicModalTable(1)"
+								<button class="btn-navy" onclick="composeFindPicModalTable(1)"
 									style="height: 3rem; width: 5rem; margin-right:0.5rem;">검색</button>
 							</div>
 						</div>
@@ -827,7 +827,7 @@
 								<input id="setHrFindPicModalPicInput" value="" style="width:70%; height:3rem; margin:0rem 0.5rem;">
 							</div>
 							<div style="height:4rem; flex-grow:1; display:flex; justify-content:flex-end; align-items:center;">
-								<button class="btn-1" onclick="composeSetHrFindPicModalTable(1)"
+								<button class="btn-navy" onclick="composeSetHrFindPicModalTable(1)"
 									style="height: 3rem; width: 5rem; margin-right:0.5rem;">검색</button>
 							</div>
 						</div>
@@ -887,10 +887,10 @@
 								
 							</div>
 							<div style="height:4rem; display: flex; flex-direction: row; align-items:center; justify-content:flex-end;">
-								<button data-toggle="modal" data-target="#addSrOutputModal" class="btn-1"
+								<button data-toggle="modal" data-target="#addSrOutputModal" class="btn-blue"
 									style="height: 3rem; width: 5rem; margin-right:0.5rem;">추가</button>
-								<button class="btn-1" onclick="deleteOutput()"
-									style="height: 3rem; width: 5rem; margin-right:0.5rem; background-color:red;">삭제</button>
+								<button class="btn-red" onclick="deleteOutput()"
+									style="height: 3rem; width: 5rem; margin-right:0.5rem;">삭제</button>
 							</div>
 						</div>
 						<div style="height:27rem; background-color:#f9fafe; margin:0.5rem;">
@@ -957,7 +957,7 @@
 							<input type="file" id="addSrOutputModalFileInput" name=file style="width:100%;">
 						</div>
 						<div style="width:20%; display:flex; align-items:center; justify-content:flex-end;">
-							<button data-dismiss="modal" class="btn-1" onclick="addSrOutputFile()"
+							<button data-dismiss="modal" class="btn-blue" onclick="addSrOutputFile()"
 									style="height: 3rem; width: 5rem;">추가</button>
 						</div>
 					</div>
@@ -979,7 +979,7 @@
 				<div style="display:flex; align-items:center; margin-bottom:0.5rem;">
 					<span>*투입실적은 1일(8시간) 합계 1.0으로 입력 바랍니다. (단, 연장 근무시 2.0 이내 초과 입력 가능)</span>
 					<span style="flex-grow:1;"></span>
-					<button class="btn-1" onclick="registerCapacity()" style="width:5%; height:2.5rem;">저장</button>
+					<button class="btn-navy" onclick="registerCapacity()" style="width:5%; height:2.5rem;">저장</button>
 				</div>
 				<table id="srPerformanceRegistrationModalTable" style="width: 100%; text-align: center; border-radius:5px;">
 					<colgroup>
@@ -1032,7 +1032,7 @@
 					</div>
 					<div style="width:3%"></div>
 					<div style="flex-grow:1; display:flex; align-items:center; justify-content:flex-end;">
-						<button type="button" data-dismiss="modal" onclick="srScheduleChangeRequest()" class="btn-1">
+						<button type="button" data-dismiss="modal" onclick="srScheduleChangeRequest()" class="btn-blue">
 							변경 요청
 						</button>
 					</div>

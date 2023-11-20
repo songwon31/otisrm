@@ -16,7 +16,7 @@
 <div id="identificationModal" class="modal" data-backdrop="static">
 	<div class="modal-dialog modal-dialog-centered modal-md" style="width:100rem;">
 		<div class="modal-content">
-			<div class="modal-header">
+			<div class="modal-header" style="background-color:#222E3C; color:white; display:flex; align-items:center;">
 				<div class="modal-title" style="font-size:2rem; font-weight:700;">본인 확인</div>
 				<i class="material-icons close-icon" data-dismiss="modal" style="cursor: pointer;">close</i>
 			</div>
@@ -46,7 +46,7 @@
 <div id="editPersonInfoModal" class="modal" data-backdrop="static">
 	<div class="modal-dialog modal-dialog-centered">
 		<div class="modal-content">
-			<div class="modal-header">
+			<div class="modal-header" style="background-color:#222E3C; color:white; display:flex; align-items:center;">
 				<div class="modal-title" style="font-size:2rem; font-weight:700;">개인정보수정</div>
 				<i class="material-icons close-icon" data-dismiss="modal" style="cursor: pointer;">close</i>
 			</div>
@@ -145,15 +145,15 @@
 						<div style="width:80%; display: flex; flex-direction:column; justify-content: center;">
 							<div style="width:100%; display:flex; align-items:center;">
 								<div style="height: 4rem; width: 60%; display: flex; align-items: center;">
-									<input id="modalUsrEml" type="text" value="" style="width:100%; height:3rem; margin:0 0 0 0.5rem;">
+									<input id="footerModalUsrEml" type="text" value="" style="width:100%; height:3rem; margin:0 0 0 0.5rem;">
 								</div>
 								<div style="flex-grow:1; height: 4rem; padding-left: 1rem; display: flex; align-items: center;">
-									<button type="button" id="modalUsrEmlEditButton" onclick="editUsrEml()" class="btn-1" style="height:3rem; width:70%;">
+									<button type="button" id="footerModalUsrEmlEditButton" onclick="editUsrEml()" class="btn-1" style="height:3rem; width:70%;">
 										이메일 변경
 									</button>
 								</div>
 							</div>
-							<div id="modalUsrEmlCondition" style="height: 4rem; width:100%; padding-left: 0.5rem; display: none; align-items: center; color:red;">
+							<div id="footerModalUsrEmlCondition" style="height: 4rem; width:100%; padding-left: 0.5rem; display: none; align-items: center; color:red;">
 								주의사항
 							</div>
 						</div>
@@ -166,15 +166,15 @@
 						<div style="width:80%; display: flex; flex-direction:column; justify-content: center;">
 							<div style="width:100%; display:flex; align-items:center;">
 								<div style="height: 4rem; width: 60%; display: flex; align-items: center;">
-									<input id="modalUsrTelno" type="text" value="" style="width:100%; height:3rem; margin:0 0 0 0.5rem;">
+									<input id="footerModalUsrTelno" type="text" value="" style="width:100%; height:3rem; margin:0 0 0 0.5rem;">
 								</div>
 								<div style="flex-grow:1; height: 4rem; padding-left: 1rem; display: flex; align-items: center;">
-									<button type="button" id="modalUsrTelnoEditButton" onclick="editUsrTelno()" class="btn-1" style="height:3rem; width:70%;">
+									<button type="button" id="footerModalUsrTelnoEditButton" onclick="editUsrTelno()" class="btn-1" style="height:3rem; width:70%;">
 										전화번호 변경
 									</button>
 								</div>
 							</div>
-							<div id="modalUsrTelnoCondition" style="height: 4rem; width:100%; padding-left: 0.5rem; display: none; align-items: center; color:red;">
+							<div id="footerModalUsrTelnoCondition" style="height: 4rem; width:100%; padding-left: 0.5rem; display: none; align-items: center; color:red;">
 								주의사항
 							</div>
 						</div>

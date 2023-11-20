@@ -1032,4 +1032,33 @@ public class SrServiceImpl implements SrService{
 	public Date getSrCmptnPrnmntDt(String srNo) {
 		return srDao.selectSrCmptnPrnmntDtBySrNo(srNo).getSrCmptnPrnmntDt();
 	}
+	
+	@Override
+	public String checkSavePrgrs(String usrNo, String srNo) {
+		if (srDao.checkPrgrs(usrNo, srNo) > 0) {
+			return "success";
+		} else {
+			return "fail";
+		}
+	}
+	
+	@Override
+	public String checkSavePlan(String usrNo, String srNo) {
+		if (srDao.checkIfPic(usrNo, srNo) > 0) {
+			return "success";
+		} else {
+			String instNo = srDao.selectInstNoByUsrNo(usrNo);
+			if (srDao.checkIfInstAndStts(instNo, srNo) > 0) {
+				return "success";
+			} else {
+				return "fail";
+			}
+		}
+	}
+	
+	@Override
+	public String checkSrPrgrsSttsNo(String srNo) {
+		log.info(""+srDao.selectSrPrgrsSttsBySrNo(srNo));
+		return srDao.selectSrPrgrsSttsBySrNo(srNo);
+	}
 }

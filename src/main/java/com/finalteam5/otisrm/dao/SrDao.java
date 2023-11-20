@@ -187,4 +187,9 @@ public interface SrDao {
 			@Param("pager") Pager pager);
 	public int checkSrExist(String srRqstNo);
 	public String getSrTrnsfYnBySrRqstNo(String srRqstNo);
+	
+	public int checkPrgrs(@Param("usrNo") String usrNo, @Param("srNo") String srNo);
+	public int checkIfPic(@Param("usrNo") String usrNo, @Param("srNo") String srNo);
+	public int checkIfInstAndStts(@Param("instNo") String instNo, @Param("srNo") String srNo);
+	public String selectSrPrgrsSttsBySrNo(String srNo);
 }

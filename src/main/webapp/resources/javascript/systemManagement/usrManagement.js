@@ -157,7 +157,7 @@ function mainTableConfig(usrManagementSearch, pageNo) {
 				mainTableHtml += '<td> <button data-toggle="modal" data-target="#srProgressModal" class="btn-2 detail-button" onclick="showSrProgressModal(\'' + sr.srNo + '\')">진척관리</button> </td>';
 				*/
 				
-				mainTableHtml += '<td><button type="button" id="showSrRqstDetailBtn" data-toggle="modal" class="btn-1" style="width:70%; height:2.8rem;"';
+				mainTableHtml += '<td><button type="button" id="showSrRqstDetailBtn" data-toggle="modal" class="btn-blue" style="width:70%; height:2.8rem;"';
 				mainTableHtml += 'data-target="#usrDetailModal" onclick="usrDetailModalConfig(\''+ usr.usrNo +'\')">상세정보</button></td>';
 				
 				//jsp에 삽입

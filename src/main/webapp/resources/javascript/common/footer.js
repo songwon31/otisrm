@@ -36,12 +36,13 @@ function editPersonalInfoModalInit() {
 		type: "POST",
 		url: "/otisrm/getEditPersonalInfoConfig",
 		success: function(data) {
-			console.log(data);
+			/*
 			$('#modalUsrId').val(data.usrId);
 			$('#modalUsrNm').val(data.usrNm);
-			$('#modalUsrEml').val(data.usrEml);
-			$('#modalUsrTelno').val(data.usrTelno);
-			
+			*/
+			$('#footerModalUsrEml').val(data.usrEml);
+			$('#footerModalUsrTelno').val(data.usrTelno);
+			/*
 			for (let i=0; i<data.deptList.length; ++i) {
 				let dept = data.deptList[i];
 				let html = '<option value="' + dept.deptNo + '">' + dept.deptNm + '</option>';
@@ -62,6 +63,7 @@ function editPersonalInfoModalInit() {
 				$('#modalUsrIbps').append(html);
 			}
 			$('#modalUsrIbps').val(data.ibpsNo);
+			*/
 		}
 	});
 }
@@ -247,20 +249,20 @@ function editUsrNm() {
 }
 
 function editUsrEml() {
-	let newEml = $('#modalUsrEml').val();
+	let newEml = $('#footerModalUsrEml').val();
 	if(newEml === "") {
-		$('#modalUsrEml').val('');
+		$('#footerModalUsrEml').val('');
 		$('#footerWarningContent').html("새 이메일을 입력하세요.");
 		$("#footerWarningModal").modal("show");
-		$('#modalUsrEmlCondition').css('display', 'flex');
+		$('#footerModalUsrEmlCondition').css('display', 'flex');
 	} else {
 		let pattern = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
 		let result = pattern.test(newEml);
 		if(!result) {
-			$('#modalUsrEml').val('');
+			$('#footerModalUsrEml').val('');
 			$('#footerWarningContent').html("형식에 맞지 않는 이메일입니다.");
 			$("#footerWarningModal").modal("show");
-			$('#modalUsrEmlCondition').css('display', 'flex');
+			$('#footerModalUsrEmlCondition').css('display', 'flex');
 		} else {
 			//이메일 변경
 			$.ajax({
@@ -271,7 +273,7 @@ function editUsrEml() {
 					if (data == 1) {
 						$('#footerAlertContent').html("이메일이 변경되었습니다.");
 						$("#footerAlertModal").modal("show");
-						$('#modalUsrEmlCondition').css('display', 'none');
+						$('#footerModalUsrEmlCondition').css('display', 'none');
 					} else {
 						console.log("something wrong");
 					}
@@ -283,12 +285,12 @@ function editUsrEml() {
 }
 
 function editUsrTelno() {
-	let newUsrTelno = $('#modalUsrTelno').val();
+	let newUsrTelno = $('#footerModalUsrTelno').val();
 	if (newUsrTelno == '') {
-		$('#modalUsrTelno').val('');
+		$('#footerModalUsrTelno').val('');
 		$('#footerWarningContent').html("새 전화번호를 입력하세요.");
 		$("#footerWarningModal").modal("show");
-		$('#modalUsrTelnoCondition').css('display', 'flex');
+		$('#footerModalUsrTelnoCondition').css('display', 'flex');
 	} else {
 		let pattern = /^(01[016789]{1})-?[0-9]{3,4}-?[0-9]{4}$/;
 		let result = pattern.test(newUsrTelno);
@@ -301,17 +303,17 @@ function editUsrTelno() {
 					if (data == 1) {
 						$('#footerAlertContent').html("전화번호가 변경되었습니다.");
 						$("#footerAlertModal").modal("show");
-						$('#modalUsrTelnoCondition').css('display', 'none');
+						$('#footerModalUsrTelnoCondition').css('display', 'none');
 					} else {
 						console.log("something wrong");
 					}
 		        }
 			});
 		} else {
-			$('#modalUsrTelno').val('');
+			$('#footerModalUsrTelno').val('');
 			$('#footerWarningContent').html("형식에 맞지 않는 전화번호입니다.");
 			$("#footerWarningModal").modal("show");
-			$('#modalUsrTelnoCondition').css('display', 'flex');
+			$('#footerModalUsrTelnoCondition').css('display', 'flex');
 		}
 	}
 }

@@ -116,4 +116,8 @@ public interface SrService {
 	public SrManagementMainTableConfig getSrManagementMainTableConfig(String jsonData);
 	
 	public Date getSrCmptnPrnmntDt(String srNo);
+	
+	public String checkSavePrgrs(String usrNo, String srNo);
+	public String checkSavePlan(String usrNo, String srNo);
+	public String checkSrPrgrsSttsNo(String srNo);
 }
