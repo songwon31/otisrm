@@ -780,6 +780,8 @@ function showSrPlanInfoEditModal() {
         srNo: srNo
     };
 	
+	console.log("111111111111");
+	
 	$.ajax({
 		type: "POST",
 		url: "/otisrm/getSrPlanModalCompose",
@@ -797,7 +799,11 @@ function showSrPlanInfoEditModal() {
 			$('#srPlanModalTaskInput').val(data.srTaskNm);
 			$('#srPlanModalDeptInput').val(data.deptNm);
 			$('#srPlanModalPicInput').val(data.usrNm);
-			$('#srPlanModalTotalCapacity').val(data.totalCapacity.toFixed(1))
+			if (data.totalCapacity == null) {
+				$('#srPlanModalTotalCapacity').val('');
+			} else {
+				$('#srPlanModalTotalCapacity').val(data.totalCapacity.toFixed(1))
+			}
 			if (data.srTrgtBgngDt == null) {
 				$('#srPlanModalTrgtBgngDt').val('');
 			} else {
