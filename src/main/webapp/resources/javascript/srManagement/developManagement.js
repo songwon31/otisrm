@@ -149,104 +149,83 @@ function loadDevelopManagementList(pageNo) {
 }
 
 
-/*function showDetailModal(srRqstNo) {
-	$.ajax({
-		type: "GET",
-		url: "/otisrm/getSrRqstForReviewerModal",
-		data: {selectedSrRqstNo: srRqstNo},
-		success: function(data) {
-			var formattedSrRqstRegDt = formatDateToYYYYMMDD(data.srRqstRegDt);
-        	var formattedSrCmptnPrnmntDt = formatDateToYYYYMMDD(data.srCmptnPrnmntDt);
-        	
-			//SR번호
-			$("#detailmodal_srRqstNo").val(data.srRqstNo);
-			
- 			//진행상태에 따른 select, button 활성화
-			var sttsNo = data.srRqstSttsNo;
-			
-			if(sttsNo == "RQST") {
-				$("option[value='APRV_REEXAM']").prop('selected', true);
-			} else if(sttsNo == "APRV_WAIT" || sttsNo == "APRV_REEXAM") {
-				$("option[value='APRV_REEXAM']").prop('selected', true);
-				$("#approveResult").removeAttr('disabled');
-				$("#approveResultBtn").removeAttr('disabled');
-				$("#approveResultBtn").removeClass('btn-3');
-				$("#approveResultBtn").addClass('btn-1');
-				$("#detailmodal_srRqstRvwRsn").removeAttr('disabled');
-			} else if(sttsNo == "APRV_RETURN") {
-				$("option[value='APRV_RETURN']").prop('selected', true);
-			} else {
-				$("option[value='APRV']").prop('selected', true);
-			}
-			
-			if(sttsNo == "RCPT" || sttsNo == "DEP_ING" || sttsNo == "TEST" || sttsNo == "CMPTN_RQST" || sttsNo == "DEP_CMPTN") {
-				$("option[value='RCPT']").prop('selected', true);
-			} else if(sttsNo == "RCPT_WAIT" || sttsNo == "RCPT_REEXAM") {
-				$("option[value='RCPT_REEXAM']").prop('selected', true);
-				$("#receptionResult").removeAttr('disabled');
-				$("#receptionResultBtn").removeAttr('disabled');
-				$("#receptionResultBtn").removeClass('btn-3');
-				$("#receptionResultBtn").addClass('btn-1');
-			} else if(sttsNo == "RCPT_RETURN") {
-				$("option[value='RCPT_RETURN']").prop('selected', true);
-			} else {
-				$("option[value='RCPT_REEXAM']").prop('selected', true);
-			}
-			
-			//SR요청정보 불러오기
-			$("#detailmodal_srReqstrNm").val(data.srReqstrNm);
-        	$("#detailmodal_reqstrInstNm").val(data.reqstrInstNm);
-        	$("#detailmodal_srRqstRegDt").val(formattedSrRqstRegDt);
-        	$("#detailmodal_sysNm").val(data.sysNm);
-        	$("#detailmodal_srTtl").val(data.srTtl);
-        	$("#detailmodal_srConts").val(data.srConts);
-        	$("#detailmodal_srRqstRvwRsn").val(data.srRqstRvwRsn);
-        	
-			//SR개발정보 불러오기
-        	$("#detailmodal_srPicUsrNm").val(data.srPicUsrNm);
-        	$("#detailmodal_srTrnsfYn").val(data.srTrnsfYn);
-        	$("#detailmodal_srTrnsfInstNm").val(data.srTrnsfInstNm);
-        	$("#detailmodal_srTaskNm").val(data.srTaskNm);
-        	if(data.srReqBgt == 0) {
-        		$("#detailmodal_srReqBgt").val("");
-        	} else {
-        		$("#detailmodal_srReqBgt").val(data.srReqBgt);
-        	}
-        	$("#detailmodal_srDmndNm").val(data.srDmndNm);
-        	$("#detailmodal_srPri").val(data.srPri);
-        	$("#detailmodal_srCmptnPrnmntDt").val(formattedSrCmptnPrnmntDt);
-        	$("#detailmodal_srDvlConts").val(data.srDvlConts);
-		}
-	});
-}*/
-
-
-/*
-function saveApproveResult() {
-	const srRqstNo = $("#detailmodal_srRqstNo").val();
-	const approveResult = $("#approveResult").val();
-	const srRqstRvwRsn = $("#detailmodal_srRqstRvwRsn").val();
+function downloadExcelOnDevelopManagement() {
+	console.log("왔다.");
+	//조회기간
+	var searchStartDate = $("#startDate").val();
+	var searchEndDate = $("#endDate").val();
+	//관련 시스템 
+	var searchSysNm = $("#selectSystem option:selected").text();
+	//요청진행상태
+	var searchSrRqstSttsNo = $("#selectProgress option:selected").val();
+	//내 담당여부
+	var searchUsr = "";
+	var checkYn = $("#picCheck").is(':checked');
+	if(checkYn) {
+		searchUsr = $("#loginPic").val();
+	}
+	//등록자 소속
+	var searchInstNo = $("#inputInst").val();
+	//개발부서
+	var searchDeptNo = $("#selectDevDepartment option:selected").val();
+	//키워드 검색대상
+	var searchTarget = $("#searchKeywordKind option:selected").val();
+	//키워드 
+	var searchKeyword = $("#keywordContent").val();
 	
+	//엑셀에 다운될 데이터
+	var data = [
+	    ["요청번호", "제목", "관련시스템", "등록자", "소속", "요청일", "완료예정일", "상태", "중요", "이관여부"],
+	  ];
+
 	$.ajax({
 		type: "POST",
-		url: "/otisrm/saveApproveResult",
-		data: {selectedSrRqstNo: srRqstNo, srRqstSttsNo: approveResult, srRqstRvwRsn: srRqstRvwRsn},
-		success: function(data) {
-			loadReviewerHomeCountBoard();
-		}
+		url: "/otisrm/srManagement/developManagement/exportExcelDevelopManagementList",
+	    data: {
+	    	startDate: searchStartDate,
+	    	endDate: searchEndDate,
+	    	sysNm: searchSysNm,
+	    	status: searchSrRqstSttsNo,
+	    	usr: searchUsr,
+	    	instNo: searchInstNo,
+	    	deptNo: searchDeptNo,
+	    	searchTarget: searchTarget,
+	    	keyword: searchKeyword
+	    },
+	    success: function(response) {
+	    	response.forEach(function (item, index) {
+	    		var formattedSrRqstRegDt = formatDateToYYYYMMDD(item.srRqstRegDt);
+				var formattedSrCmptnPrnmntDt = formatDateToYYYYMMDD(item.srCmptnPrnmntDt);
+	    		
+	    		var srTrnsfYn = item.srTrnsfYn;
+	    		if (srTrnsfYn == null) {
+	    			srTrnsfYn = "";
+	    		}
+	    		
+	    		data.push([
+	    			item.srRqstNo,
+	    			item.srTtl,
+		  	        item.sysNm,
+		  	        item.usrNm,
+		  	        item.instNm,
+		  	        formattedSrRqstRegDt,
+		  	        formattedSrCmptnPrnmntDt,
+		  	        item.srRqstSttsNm,
+		  	        item.srRqstEmrgYn,
+		  	        item.srTrnsfYn
+		  	        ]);
+	    	});
+	    	//워크북 생성
+	        var wb = XLSX.utils.book_new();
+	        var ws = XLSX.utils.aoa_to_sheet(data);
+	        
+	        //워크북에 워크시트 추가
+	        XLSX.utils.book_append_sheet(wb, ws, "SR개발목록");
+	
+	        //엑셀 파일 생성 및 다운로드
+	        var today = new Date();
+	        var filename = "SR개발목록_" + today.getFullYear() + (today.getMonth() + 1) + today.getDate() + ".xlsx";
+	        XLSX.writeFile(wb, filename);
+	    }
 	});
 }
-
-function saveReceptionResult() {
-	const srRqstNo = $("#detailmodal_srRqstNo").val();
-	const receptionResult = $("#receptionResult").val();
-	
-	$.ajax({
-		type: "POST",
-		url: "/otisrm/saveReceptionResult",
-		data: {selectedSrRqstNo: srRqstNo, srRqstSttsNo: receptionResult},
-		success: function(data) {
-			loadReviewerHomeCountBoard();
-		}
-	});
-}*/

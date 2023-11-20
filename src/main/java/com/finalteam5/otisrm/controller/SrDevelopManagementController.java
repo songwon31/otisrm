@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.finalteam5.otisrm.dto.Pager;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstForSearchList;
+import com.finalteam5.otisrm.dto.srRequest.SrRqstStts;
 import com.finalteam5.otisrm.dto.usr.Dept;
 import com.finalteam5.otisrm.dto.usr.Inst;
 import com.finalteam5.otisrm.dto.usr.Usr;
@@ -49,6 +50,10 @@ public class SrDevelopManagementController {
 			//전체 시스템 이름 가져오기
 			List<String> totalSystemList = srRqstService.getTotalSysNm();
 			model.addAttribute("totalSystemList", totalSystemList);
+			
+			//전체 상태 가져오기
+			List<SrRqstStts> sttsList = srRqstService.getSrRqstStts();
+			model.addAttribute("sttsList", sttsList);
 			
 			//관할기관 개발부서 목록 가져오기
 			String instNo = "SB";
@@ -119,6 +124,36 @@ public class SrDevelopManagementController {
 		data.put("pager", developManagementPager);
 		
 		return data;
+	}
+	
+	@PostMapping("/developManagement/exportExcelDevelopManagementList")
+	@ResponseBody
+	public List<SrRqstForSearchList> exportExcelDevelopManagementList(
+			@RequestParam(required=false)String startDate, 
+			@RequestParam(required=false)String endDate, 
+			@RequestParam(required=false)String sysNm, 
+			@RequestParam(required=false)String status, 
+			@RequestParam(required=false)String usr, 
+			@RequestParam(required=false)String instNo, 
+			@RequestParam(required=false)String deptNo, 
+			@RequestParam(required=false)String searchTarget, 
+			@RequestParam(required=false)String keyword) {
+		
+		Map<String, String> params = new HashMap<>();
+
+		params.put("startDate", startDate);
+		params.put("endDate", endDate);
+		params.put("sysNm", sysNm);
+		params.put("status", status);
+		params.put("usr", usr);
+		params.put("instNo", instNo);
+		params.put("deptNo", deptNo);
+		params.put("searchTarget", searchTarget);
+		params.put("keyword", keyword);
+		
+		List<SrRqstForSearchList> list = srRqstService.getSrRqstForDevelopManagementForExport(params);
+
+		return list;
 	}
 	
 }

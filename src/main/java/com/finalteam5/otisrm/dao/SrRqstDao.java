@@ -24,6 +24,7 @@ import com.finalteam5.otisrm.dto.srRequest.SrRqstForReviewerHomeProgress;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstForReviewerModal;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstForSearchList;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstStts;
+import com.finalteam5.otisrm.dto.srRequest.SrRqstSttsCountByDept;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstSttsCountBySys;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstSubmit;
 import com.finalteam5.otisrm.dto.usr.Inst;
@@ -167,14 +168,23 @@ public interface SrRqstDao {
 	//전체 시스템 이름 가져오기
 	public List<String> selectTotalSysNm();
 	
-	//시스템별 상태개수 가져오기
-	public List<SrRqstSttsCountBySys> selectSttsCountBySysNm();
+	//시스템별 상태개수 가져오기(검토자 홈 차트)
+	public List<SrRqstSttsCountBySys> selectSttsCountBySysNmForChart();
 	
-	//개발관리(진행상태 승인이상) 요청수 가져오기
+	//시스템별 상태개수 가져오기
+	public List<SrRqstSttsCountBySys> selectSttsCountBySysNm(Map<String, String> params);
+	
+	//등록부서별 상태개수 가져오기
+	public List<SrRqstSttsCountByDept> selectSttsCountByDeptNm(Map<String, String> params);
+	
+	//개발관리 요청수 가져오기
 	public int countSrRqstForDevelopManagement(Map<String, String> params);
 
-	//개발관리(진행상태 승인이상) 목록 가져오기
+	//개발관 목록 가져오기
 	public List<SrRqstForSearchList> selectSrRqstForDevelopManagementByPage(Map<String, Object> params);
+	
+	//개발관리 엑셀다운로드를 위한 목록 가져오기
+	public List<SrRqstForSearchList> selectSrRqstForDevelopManagementForExport(Map<String, String> params);
 	
 	//검토관리 요청수 가져오기
 	public int countSrRqstForReviewManagement(Map<String, String> params);

@@ -340,7 +340,6 @@ function saveReceptionResult(e) {
 	var srNo = $("#detailmodal_srNo").val();
 	var srTrnsfInstNo = $("#detailmodal_srTrnsfInst").val();
 	var srDmndNo = $("#detailmodal_srDmndClsf").val();
-	var srCmptnPrnmntDt = $("#detailmodal_srCmptnPrnmntDt").val();
 	
 	if(receptionResult == ""){
 		$('#alertModal').modal('show');
@@ -355,8 +354,7 @@ function saveReceptionResult(e) {
 			srTrnsfYn: srTrnsfYn,
 			srNo: srNo,
 			srTrnsfInstNo: srTrnsfInstNo,
-			srDmndNo: srDmndNo,
-			srCmptnPrnmntDt, srCmptnPrnmntDt
+			srDmndNo: srDmndNo
 			},
 		success: function(data) {
 			$('#successModal').modal('show');

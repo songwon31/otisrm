@@ -152,7 +152,7 @@ public class ReviewerHomeController {
 	@ResponseBody
 	public List<SrRqstSttsCountBySys> getReviewerHomeChartBySys() {
 		//시스템별 상태개수  리스트
-		List<SrRqstSttsCountBySys> sttsCountList = srRqstService.getSttsCountBySysNm();
+		List<SrRqstSttsCountBySys> sttsCountList = srRqstService.getSttsCountBySysNmForChart();
 
 		return sttsCountList;
 	}
@@ -264,8 +264,7 @@ public class ReviewerHomeController {
 									@RequestParam String srTrnsfYn,
 									@RequestParam String srNo,
 									@RequestParam String srTrnsfInstNo,
-									@RequestParam String srDmndNo,
-									@RequestParam String srCmptnPrnmntDt) {
+									@RequestParam String srDmndNo) {
 		//이관개발 접수할 경우
 		if(srRqstSttsNo.equals("RCPT") && srTrnsfYn.equals("Y")) {
 			//이관계획 저장
@@ -274,7 +273,6 @@ public class ReviewerHomeController {
             srTrnsfPlanForm.setInstNo(srTrnsfInstNo);
             srTrnsfPlanForm.setSrDmndNo(srDmndNo);
             srTrnsfPlanForm.setSrPrgrsSttsNo("RQST");
-            srTrnsfPlanForm.setSrTrgtCmptnDt(srCmptnPrnmntDt);
             srRqstService.writeSrTrnsfPlan(srTrnsfPlanForm);
             
             //이관일 저장
