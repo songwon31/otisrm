@@ -34,10 +34,10 @@
 							<div style="width:100%;" class="p-0 d-inline-flex flex-row align-items-center">
 								<div style="width:20%; display:flex; align-items:center;">
 									<svg style="width:0.5rem; height:0.5rem; margin: 0rem 0.5rem;"><rect width="0.5rem" height="0.5rem" fill="#222E3C" /></svg>
-									<span style="font-size:1.6rem; font-weight:700;">키워드</span>
+									<span style="font-size:1.5rem; font-weight:700;">키워드</span>
 								</div>
 								<div style="width:80%; display:flex; align-items:center;">
-									<div style="width:35%; font-size:1.6rem;">
+									<div style="width:35%; font-size:1.5rem;">
 										<select id="keywordCategoty" name="keywordCategoty" style="width:100%">
 											<option value="instNm" selected>기업명</option>
 											<option value="instNo">기업코드</option>
@@ -87,7 +87,7 @@
 							<col width="25%"/>
 						</colgroup>
 						<thead>
-							<tr style="height:5rem; font-size:1.6rem; font-weight:700; background-color:#edf2f8;">
+							<tr style="height:5rem; font-size:1.5rem; font-weight:700; background-color:#edf2f8;">
 								<th scope="col"><input id="batchCheck" type="checkbox" class="checkbox" style="vertical-align: middle;"></th>
 								<th scope="col"></th>
 								<th scope="col">이름</th>
@@ -333,10 +333,10 @@
 						<div style="height: 4rem; display: flex; flex-direction: row;">
 							<div style="height: 4rem; width: 10%; padding-left: 0.5rem; display: flex; align-items: center;">
 								<svg style="width:0.5rem; height:0.5rem; margin: 0rem 0.5rem;"><rect width="0.5rem" height="0.5rem" fill="#222E3C" /></svg>
-								<span style="font-size:1.6rem; font-weight:700;">키워드</span>
+								<span style="font-size:1.5rem; font-weight:700;">키워드</span>
 							</div>
 							<div style="width:50%; display:flex; align-items:center;">
-								<div style="width:35%; font-size:1.6rem;">
+								<div style="width:35%; font-size:1.5rem;">
 									<select id="systemKeywordCategory" name="systemKeywordCategoty" style="width:100%">
 										<option value="sysNm" selected>시스템명</option>
 										<option value="sysNo">시스템코드</option>
@@ -365,7 +365,7 @@
 						</div>
 					</div>
 					<div style="display: flex; flex-direction: column; justify-contents:center; margin:0 0 0 0.5rem;">
-						<span style="font-size:1.6rem; font-weight:700;">조회결과</span>
+						<span style="font-size:1.5rem; font-weight:700;">조회결과</span>
 						<div style="height:27rem; background-color:#F9FAFE; margin:0.5rem;">
 							<table id="sysManageModalTable" style="width: 100%; text-align: center; border-radius:5px;">
 								<colgroup>
@@ -391,7 +391,7 @@
 								</tbody>
 							</table>
 						</div>
-						<div id="sysManageModalTablePagerDiv" style="height: 4.5rem; font-size: 1.6rem; display: flex; flex-direction: row; justify-content: center; align-items: center;">
+						<div id="sysManageModalTablePagerDiv" style="height: 4.5rem; font-size: 1.5rem; display: flex; flex-direction: row; justify-content: center; align-items: center;">
 							
 						</div>
 					</div>

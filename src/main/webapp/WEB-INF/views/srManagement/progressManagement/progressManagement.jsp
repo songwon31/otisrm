@@ -33,7 +33,7 @@
 					<div style="width:100%;" class="p-0 d-inline-flex flex-row align-items-center ">
 						<div style="width:30%; display:flex; align-items:center;">
 							<svg style="width:0.5rem; height:0.5rem; margin: 0rem 0.5rem;"><rect width="0.5rem" height="0.5rem" fill="#222E3C" /></svg>
-							<span style="font-size:1.6rem; font-weight:700;">시스템</span>
+							<span style="font-size:1.5rem; font-weight:700;">시스템</span>
 						</div>
 						<div style="width:70%;">
 							<select id="systemSelect" name="systemSelect" style="width:100%">
@@ -47,7 +47,7 @@
 					<div style="width:100%;" class="p-0 d-inline-flex flex-row align-items-center">
 						<div style="width:25%; display:flex; align-items:center;">
 							<svg style="width:0.5rem; height:0.5rem; margin: 0rem 0.5rem;"><rect width="0.5rem" height="0.5rem" fill="#222E3C" /></svg>
-							<span style="font-size:1.6rem; font-weight:700;">업무</span>
+							<span style="font-size:1.5rem; font-weight:700;">업무</span>
 						</div>
 						<div style="width:75%;"> 
 							<select id="taskSelect" name="taskSelect" style="width:100%">
@@ -61,7 +61,7 @@
 					<div style="width:100%;" class="p-0 d-inline-flex flex-row align-items-center">
 						<div style="width:35%; display:flex; align-items:center;">
 							<svg style="width:0.5rem; height:0.5rem; margin: 0rem 0.5rem;"><rect width="0.5rem" height="0.5rem" fill="#222E3C" /></svg>
-							<span style="font-size:1.6rem; font-weight:700;">접수상태</span>
+							<span style="font-size:1.5rem; font-weight:700;">접수상태</span>
 						</div>
 						<div style="width:65%;">
 							<select id="srRqstSttsSelect" name="srRqstSttsSelect" style="width:100%">
@@ -75,7 +75,7 @@
 					<div style="width:100%;" class="p-0 d-inline-flex flex-row align-items-center">
 						<div style="width:35%; display:flex; align-items:center;">
 							<svg style="width:0.5rem; height:0.5rem; margin: 0rem 0.5rem;"><rect width="0.5rem" height="0.5rem" fill="#222E3C" /></svg>
-							<span style="font-size:1.6rem; font-weight:700;">진행상태</span>
+							<span style="font-size:1.5rem; font-weight:700;">진행상태</span>
 						</div>
 						<div style="width:65%;">
 							<label style="display:none;" for="userStts"></label> 
@@ -102,7 +102,7 @@
 					<div style="width:100%;" class="p-0 d-inline-flex flex-row align-items-center ">
 						<div style="width:30%; display:flex; align-items:center;">
 							<svg style="width:0.5rem; height:0.5rem; margin: 0rem 0.5rem;"><rect width="0.5rem" height="0.5rem" fill="#222E3C" /></svg>
-							<span style="font-size:1.6rem; font-weight:700;">협력사</span>
+							<span style="font-size:1.5rem; font-weight:700;">협력사</span>
 						</div>
 						<div style="width:70%;">
 							<select id="instSelect" name="instSelect" style="width:100%">
@@ -116,7 +116,7 @@
 					<div style="width:100%;" class="p-0 d-inline-flex flex-row align-items-center">
 						<div style="width:25%; display:flex; align-items:center;">
 							<svg style="width:0.5rem; height:0.5rem; margin: 0rem 0.5rem;"><rect width="0.5rem" height="0.5rem" fill="#222E3C" /></svg>
-							<span style="font-size:1.6rem; font-weight:700;">부서</span>
+							<span style="font-size:1.5rem; font-weight:700;">부서</span>
 						</div>
 						<div style="width:75%;">
 							<select id="deptSelect" name="deptSelect" style="width:100%">
@@ -130,7 +130,7 @@
 					<div style="width:100%;" class="p-0 d-inline-flex flex-row align-items-center">
 						<div style="width:23.2%; display:flex; align-items:center;">
 							<svg style="width:0.5rem; height:0.5rem; margin: 0rem 0.5rem;"><rect width="0.5rem" height="0.5rem" fill="#222E3C" /></svg>
-							<span style="font-size:1.6rem; font-weight:700;">키워드</span>
+							<span style="font-size:1.5rem; font-weight:700;">키워드</span>
 						</div>
 						<div style="width:76.8%; display:flex; align-items:center;">
 							<div style="width:35%; font-size:1.5rem;">
@@ -153,7 +153,7 @@
 				<div style="width:10%;" class="d-inline-flex flex-row align-items-center">
 					<div style="width:100%; justify-content:flex-end;" class="p-0 d-inline-flex flex-row align-items-center">
 						<svg style="width:0.5rem; height:0.5rem; margin: 0rem 0.5rem;"><rect width="0.5rem" height="0.5rem" fill="#222E3C" /></svg>
-						<span style="font-size:1.6rem; font-weight:700;">내 처리 건만</span>
+						<span style="font-size:1.5rem; font-weight:700;">내 처리 건만</span>
 						<input id="mySrCheck" type="checkbox" style="margin:0 0 0 1rem;">
 					</div>
 				</div>
@@ -277,9 +277,9 @@
 							<div style="height:3rem;">
 								<form>
 									<div style="display:flex; flex-direction: row; align-items:center;">
-										<input id="modal_sr_conts_btn" type="radio" name="srContentType" value="requestContent" style="width:1.6rem; height:1.6rem; margin-right:0.2rem;">요청내용
+										<input id="modal_sr_conts_btn" type="radio" name="srContentType" value="requestContent" style="width:1.5rem; height:1.5rem; margin-right:0.2rem;">요청내용
 										<div style="width:1rem;"></div>
-										<input id="modal_sr_dvl_conts_btn" type="radio" checked name="srContentType" value="developContent" style="width:1.6rem; height:1.6rem; margin-right:0.2rem;">개발내용
+										<input id="modal_sr_dvl_conts_btn" type="radio" checked name="srContentType" value="developContent" style="width:1.5rem; height:1.5rem; margin-right:0.2rem;">개발내용
 									</div>
 								</form>
 							</div>
@@ -418,7 +418,7 @@
 									<col width="24%"/>
 								</colgroup>
 								<thead style="background-color: #edf2f8;">
-									<tr style="height: 4rem; font-size: 1.6rem; font-weight: 700;">
+									<tr style="height: 4rem; font-size: 1.5rem; font-weight: 700;">
 										<th scope="col"></th>
 										<th scope="col">담당자명</th>
 										<th scope="col">역할</th>
@@ -444,7 +444,7 @@
 								<col width="20%" />
 							</colgroup>
 							<thead style="background-color: #edf2f8;">
-								<tr style="height: 4rem; font-size: 1.6rem; font-weight: 700;">
+								<tr style="height: 4rem; font-size: 1.5rem; font-weight: 700;">
 									<th scope="col">작업구분</th>
 									<th scope="col">시작일</th>
 									<th scope="col">종료일</th>
@@ -454,7 +454,7 @@
 							</thead>
 							<tbody>
 								<tr
-									style="height: 4rem; font-size: 1.6rem; background-color: white;">
+									style="height: 4rem; font-size: 1.5rem; background-color: white;">
 									<th>분석</th>
 									<td id="srAnalysisBgngDt"></td>
 									<td id="srAnalysisCmptnDt"></td>
@@ -462,7 +462,7 @@
 									<td id="srAnalysisOtptBtn"></td>
 								</tr>
 								<tr
-									style="height: 4rem; font-size: 1.6rem; background-color: white;">
+									style="height: 4rem; font-size: 1.5rem; background-color: white;">
 									<th>설계</th>
 									<td id="srDesignBgngDt"></td>
 									<td id="srDesignCmptnDt"></td>
@@ -470,7 +470,7 @@
 									<td id="srDesignOtptBtn"></td>
 								</tr>
 								<tr
-									style="height: 4rem; font-size: 1.6rem; background-color: white;">
+									style="height: 4rem; font-size: 1.5rem; background-color: white;">
 									<th>구현</th>
 									<td id="srImplBgngDt"></td>
 									<td id="srImplCmptnDt"></td>
@@ -478,7 +478,7 @@
 									<td id="srImplOtptBtn"></td>
 								</tr>
 								<tr
-									style="height: 4rem; font-size: 1.6rem; background-color: white;">
+									style="height: 4rem; font-size: 1.5rem; background-color: white;">
 									<th>시험</th>
 									<td id="srTestBgngDt"></td>
 									<td id="srTestCmptnDt"></td>
@@ -486,7 +486,7 @@
 									<td id="srTestOtptBtn"></td>
 								</tr>
 								<tr
-									style="height: 4rem; font-size: 1.6rem; background-color: white;">
+									style="height: 4rem; font-size: 1.5rem; background-color: white;">
 									<th>반영요청</th>
 									<td id="srApplyBgngDt"></td>
 									<td id="srApplyCmptnDt"></td>
@@ -538,7 +538,7 @@
 						</div>
 					</div>
 					<div style="display: flex; flex-direction: column; justify-contents:center; margin:0 0 0 0.5rem;">
-						<span style="font-size:1.6rem; font-weight:700;">조회결과</span>
+						<span style="font-size:1.5rem; font-weight:700;">조회결과</span>
 						<div style="height:27rem; background-color:#F9FAFE; margin:0.5rem;">
 							<table id="findPicModalTable" style="width: 100%; text-align: center; border-radius:5px;">
 								<colgroup>
@@ -564,7 +564,7 @@
 								</tbody>
 							</table>
 						</div>
-						<div id="findPicModalTablePagerDiv" style="height: 4.5rem; font-size: 1.6rem; display: flex; flex-direction: row; justify-content: center; align-items: center;">
+						<div id="findPicModalTablePagerDiv" style="height: 4.5rem; font-size: 1.5rem; display: flex; flex-direction: row; justify-content: center; align-items: center;">
 							
 						</div>
 					</div>
@@ -587,14 +587,14 @@
 					<div style="height: 4rem; display: flex; flex-direction: row; margin-top:0.5rem;">
 						<div style="height: 4rem; width: 20%; padding-left: 0.5rem; display: flex; align-items: center;">
 							<svg style="width:0.5rem; height:0.5rem; margin: 0rem 0.5rem;"><rect width="0.5rem" height="0.5rem" fill="#222E3C" /></svg>
-							<span style="font-size:1.6rem; font-weight:700;">처리팀</span>
+							<span style="font-size:1.5rem; font-weight:700;">처리팀</span>
 						</div>
 						<div style="height: 4rem; width: 40%; display: flex; align-items: center;">
 							<input id="setHrModalDeptInput" disabled value="" style="width:100%; height:3rem; margin:0rem 1rem;">
 						</div>
 					</div>
 					<div style="display: flex; flex-direction: column; justify-contents:center; margin:0 0 0 0.5rem;">
-						<!-- <span style="font-size:1.6rem; font-weight:700;">HR관리</span> -->
+						<!-- <span style="font-size:1.5rem; font-weight:700;">HR관리</span> -->
 						<div style="background-color:#f9fafe; margin:0.5rem;">
 							<table id="setHrModalTable" style="width: 100%; text-align: center; border-radius:5px;">
 								<colgroup>
@@ -608,7 +608,7 @@
 									</tr>
 								</thead>
 								<tbody>
-									<tr style="height:4rem; font-size:1.6rem; background-color:white;">
+									<tr style="height:4rem; font-size:1.5rem; background-color:white;">
 										<td>분석</td>
 										<td style="height:4rem; display:flex; flex-direction:row; justify-content:center; align-items:center;">
 											<input id="setHrModalAnalysisPicInput" disabled value="" style="width:50%; height:3rem; margin:0rem 0.5rem;">
@@ -617,7 +617,7 @@
 												display: flex; flex-direction: row; justify-content: center; align-items: center;">찾기</a>
 										</td>
 									</tr>
-									<tr style="height:4rem; font-size:1.6rem; background-color:white;">
+									<tr style="height:4rem; font-size:1.5rem; background-color:white;">
 										<td>설계</td>
 										<td  style="height:4rem; display:flex; flex-direction:row; justify-content:center; align-items:center;">
 											<input id="setHrModalDesignPicInput" disabled value="" style="width:50%; height:3rem; margin:0rem 0.5rem;">
@@ -626,7 +626,7 @@
 												display: flex; flex-direction: row; justify-content: center; align-items: center;">찾기</a> 
 										</td>	
 									</tr>
-									<tr style="height:4rem; font-size:1.6rem; background-color:white;">
+									<tr style="height:4rem; font-size:1.5rem; background-color:white;">
 										<td>구현</td>
 										<td style="height:4rem; display:flex; flex-direction:row; justify-content:center; align-items:center;">
 											<input id="setHrModalImplementPicInput" disabled value="" style="width:50%; height:3rem; margin:0rem 0.5rem;">
@@ -635,7 +635,7 @@
 												display: flex; flex-direction: row; justify-content: center; align-items: center;">찾기</a> 
 										</td>
 									</tr>
-									<tr style="height:4rem; font-size:1.6rem; background-color:white;">
+									<tr style="height:4rem; font-size:1.5rem; background-color:white;">
 										<td>시험</td>
 										<td style="height:4rem; display:flex; flex-direction:row; justify-content:center; align-items:center;">
 											<input id="setHrModalTestPicInput" disabled value="" style="width:50%; height:3rem; margin:0rem 0.5rem;">
@@ -644,7 +644,7 @@
 												display: flex; flex-direction: row; justify-content: center; align-items: center;">찾기</a> 
 										</td>
 									</tr>
-									<tr style="height:4rem; font-size:1.6rem; background-color:white;">
+									<tr style="height:4rem; font-size:1.5rem; background-color:white;">
 										<td>반영요청</td>
 										<td style="height:4rem; display:flex; flex-direction:row; justify-content:center; align-items:center;">
 											<input id="setHrModalApplyRequestPicInput" disabled value="" style="width:50%; height:3rem; margin:0rem 0.5rem;">
@@ -705,7 +705,7 @@
 						</div>
 					</div>
 					<div style="display: flex; flex-direction: column; justify-contents:center; margin:0 0 0 0.5rem;">
-						<span style="font-size:1.6rem; font-weight:700;">조회결과</span>
+						<span style="font-size:1.5rem; font-weight:700;">조회결과</span>
 						<div style="height:27rem; background-color:#F9FAFE; margin:0.5rem;">
 							<table id="setHrFindPicModalTable" style="width: 100%; text-align: center; border-radius:5px;">
 								<colgroup>
@@ -731,7 +731,7 @@
 								</tbody>
 							</table>
 						</div>
-						<div id="setHrFindPicModalTablePagerDiv" style="height: 4.5rem; font-size: 1.6rem; display: flex; flex-direction: row; justify-content: center; align-items: center;">
+						<div id="setHrFindPicModalTablePagerDiv" style="height: 4.5rem; font-size: 1.5rem; display: flex; flex-direction: row; justify-content: center; align-items: center;">
 							
 						</div>
 					</div>
@@ -793,7 +793,7 @@
 							</table>
 						</div>
 						<!-- 
-						<div id="setHrFindPicModalTablePagerDiv" style="height: 4.5rem; font-size: 1.6rem; display: flex; flex-direction: row; justify-content: center; align-items: center;">
+						<div id="setHrFindPicModalTablePagerDiv" style="height: 4.5rem; font-size: 1.5rem; display: flex; flex-direction: row; justify-content: center; align-items: center;">
 							
 						</div>
 						 -->
@@ -818,7 +818,7 @@
 					<div style="height: 4rem; display: flex; flex-direction: row; margin-top:0.5rem;">
 						<div style="height: 4rem; width: 20%; padding-left: 0.5rem; display: flex; align-items: center;">
 							<svg style="width:0.5rem; height:0.5rem; margin: 0rem 0.5rem;"><rect width="0.5rem" height="0.5rem" fill="#222E3C" /></svg>
-							<span style="font-size:1.6rem; font-weight:700;">산출물명</span>
+							<span style="font-size:1.5rem; font-weight:700;">산출물명</span>
 						</div>
 						<div style="height: 4rem; width: 80%; display: flex; align-items: center;">
 							<input id="addSrOutputModalOutputNameInput" value="" style="width:100%; height:3rem; margin:0rem 1rem;">
