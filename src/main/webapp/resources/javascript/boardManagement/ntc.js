@@ -163,32 +163,32 @@ function updatePagination(pageNo) {
         var showNext = currentPageNo < totalPageNo;
         
         // 이전/다음 페이지 버튼 생성
-        var prevButton = '<a class="page-button btn" href="javascript:loadNtcs(' + (currentPageNo - 1) + ')">이전</a>';
-        var nextButton = '<a class="page-button btn" href="javascript:loadNtcs(' + (currentPageNo + 1) + ')">다음</a>';
+        var prevButton = '<a style="font-size: 1.5rem;" class="page-button btn" href="javascript:loadNtcs(' + (currentPageNo - 1) + ')">이전</a>';
+        var nextButton = '<a style="font-size: 1.5rem;" class="page-button btn" href="javascript:loadNtcs(' + (currentPageNo + 1) + ')">다음</a>';
         
         // 페이지 번호 버튼 생성
         var pageButtons = '';
         for (var i = 1; i <= totalPageNo; i++) {
           if (i === currentPageNo) {
             // 현재 페이지 번호는 활성화된 스타일을 적용
-            pageButtons += '<a class="page-button btn active" href="javascript:loadNtcs(' + i + ')">' + i + '</a>';
+            pageButtons += '<a style="font-size: 1.5rem;" class="page-button btn active" href="javascript:loadNtcs(' + i + ')">' + i + '</a>';
           } else {
-            pageButtons += '<a class="page-button btn" href="javascript:loadNtcs(' + i + ')">' + i + '</a>';
+            pageButtons += '<a style="font-size: 1.5rem;" class="page-button btn" href="javascript:loadNtcs(' + i + ')">' + i + '</a>';
           }
         }
         
         // 이전 페이지 버튼을 표시
         if (showPrev) {
-          pageButtons = '<a class="page-button btn" href="javascript:loadNtcs(1)">처음</a>' + prevButton + pageButtons;
+          pageButtons = '<a style="font-size: 1.5rem;" class="page-button btn" href="javascript:loadNtcs(1)">처음</a>' + prevButton + pageButtons;
         } else {
-          pageButtons = '<a class="page-button btn" href="javascript:loadNtcs(1)">처음</a>' + pageButtons;
+          pageButtons = '<a style="font-size: 1.5rem;" class="page-button btn" href="javascript:loadNtcs(1)">처음</a>' + pageButtons;
         }
         
         // 다음 페이지 버튼을 표시
         if (showNext) {
-          pageButtons += nextButton + '<a class="page-button btn" href="javascript:loadNtcs(' + totalPageNo + ')">맨끝</a>';
+          pageButtons += nextButton + '<a style="font-size: 1.5rem;" class="page-button btn" href="javascript:loadNtcs(' + totalPageNo + ')">맨끝</a>';
         } else {
-          pageButtons += '<a class="page-button btn" href="javascript:loadNtcs(' + totalPageNo + ')">맨끝</a>';
+          pageButtons += '<a style="font-size: 1.5rem;" class="page-button btn" href="javascript:loadNtcs(' + totalPageNo + ')">맨끝</a>';
         }
         
         // 페이지 버튼 컨테이너 업데이트
