@@ -134,7 +134,7 @@
    	  <div>
 	   	  <div class="d-flex st-ct">
 	   	  	<i class="material-icons stt-ic">chevron_right</i>
-	   	  	<span style="font-size: 2rem;">게시판</span>
+	   	  	<span style="font-size: 2rem; font-weight: bold;">게시판</span>
 	   	  </div>
    	  </div>
    	  <div class="d-flex st-ct">
