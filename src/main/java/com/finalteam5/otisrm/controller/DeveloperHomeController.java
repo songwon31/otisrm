@@ -53,6 +53,7 @@ public class DeveloperHomeController {
 			UsrDetails usrDetails = (UsrDetails) authentication.getPrincipal();
 			Usr usr = usrDetails.getUsr();
 			model.addAttribute("usr", usr);
+			log.info(""+usr);
 			return "/home/developerHome";
 		} else {
 			return "/home/login";
@@ -163,7 +164,6 @@ public class DeveloperHomeController {
 	@PostMapping("/saveHrInfo")
 	@ResponseBody
 	public int saveHrInfo(@RequestBody String jsonData) {
-		log.info(jsonData);
 		srService.saveHrInfo(jsonData);
 		return 0;
 	}
@@ -356,6 +356,18 @@ public class DeveloperHomeController {
 	@ResponseBody
 	public Date getSrCmptnPrnmntDt(String srNo) {
 		return srService.getSrCmptnPrnmntDt(srNo);
+	}
+	
+	@PostMapping("/gerUsrInfo")
+	@ResponseBody
+	public Usr gerUsrInfo(Authentication authentication) {
+		if (authentication != null && authentication.isAuthenticated()) {
+			UsrDetails usrDetails = (UsrDetails) authentication.getPrincipal();
+			Usr usr = usrDetails.getUsr();
+			return usr;
+		} else {
+			return null;
+		}
 	}
 }
 

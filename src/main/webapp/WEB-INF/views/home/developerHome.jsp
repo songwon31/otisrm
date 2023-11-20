@@ -6,6 +6,10 @@
 <head>
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/home/developerHomeStyle.css" />
 	<!-- javascript 코드 -->
+	<script>
+	    var modelUsrNo = '${usr.usrNo}';
+	    var modelUsrAuthrtNo = '${usr.usrAuthrtNo}';
+	</script>
 	<script src="${pageContext.request.contextPath}/resources/javascript/home/developerHome.js"></script>
 	
 	<!-- 아이콘 -->
@@ -1084,14 +1088,14 @@
 
 <!-- 알림 모달 -->
 <div id="alertModal" class="modal" data-backdrop="static">
-	<div class="modal-dialog modal-dialog-centered modal-sm">
+	<div class="modal-dialog modal-dialog-centered modal-md">
 		<div class="modal-content">
 			<div class="modal-header" style="background-color:#2c7be4; color:white; display:flex;">
 				<div class="modal-title" style="font-size:2rem; font-weight:700;">알림</div>
 				<i class="material-icons close-icon" data-dismiss="modal" style="cursor: pointer;">close</i>
 			</div>
 			<div class="modal-body" style="margin:0px; padding:0px; font-size:1.5rem;">
-				<div id="alertContent" style="height:11rem; font-size:1.7rem; font-weight:700; display:flex; justify-content:center; align-items:center; white-space: pre-wrap;">
+				<div id="alertContent" style="height:11rem; font-size:1.7rem; display:flex; justify-content:center; align-items:center; white-space: pre-wrap;">
 					
 				</div>
 			</div>
@@ -1101,14 +1105,14 @@
 
 <!-- 경고 모달 -->
 <div id="warningModal" class="modal" data-backdrop="static">
-	<div class="modal-dialog modal-dialog-centered modal-sm">
+	<div class="modal-dialog modal-dialog-centered modal-md">
 		<div class="modal-content">
 			<div class="modal-header" style="background-color:red; color:white; display:flex;">
 				<div class="modal-title" style="font-size:2rem; font-weight:700;">경고</div>
 				<i class="material-icons close-icon" data-dismiss="modal" style="cursor: pointer;">close</i>
 			</div>
 			<div class="modal-body" style="margin:0px; padding:0px; font-size:1.5rem;">
-				<div id="warningContent" style="height:11rem; font-size:1.7rem; font-weight:700; display:flex; justify-content:center; align-items:center; white-space: pre-wrap;">
+				<div id="warningContent" style="height:11rem; font-size:1.7rem; display:flex; justify-content:center; align-items:center; white-space: pre-wrap;">
 					
 				</div>
 			</div>

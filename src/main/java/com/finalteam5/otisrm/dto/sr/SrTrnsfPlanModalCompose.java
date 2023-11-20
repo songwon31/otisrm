@@ -14,6 +14,7 @@ import lombok.Data;
 public class SrTrnsfPlanModalCompose {
 	//sr값
 	private String srTaskNm;
+	private String srPrgrsSttsNo;
 	
 	//기존값(존재할 경우0)
 	private String srDmndNm;

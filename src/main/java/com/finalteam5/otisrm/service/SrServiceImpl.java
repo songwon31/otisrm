@@ -132,6 +132,8 @@ public class SrServiceImpl implements SrService{
 		List<SrForDeveloperHomeBoard> srList = srDao.selectSrListForDeveloperHomeBoardByUsrIdAndSttsAndPager(usrNo, srPrgrsSttsNo, instNo, pager);
 		srTableElementsForDeveloperHome.setSrList(srList);
 		
+		log.info("" + srList);
+		
 		List<SrForDeveloperHomeBoard> totalSrList = srDao.selectSrForDeveloperHomeBoardListByUsrId(usrNo, instNo);
 		
 		int totalNum = totalSrList.size();
@@ -286,8 +288,8 @@ public class SrServiceImpl implements SrService{
             calendar.add(Calendar.MONTH, 1); // 다음 월로 이동
         }
         
-        int totalCapacity = (int) calculateBusinessDays(startDate, endDate, holidayList);
-        srTrnsfPlan.setTotalBusinessDt(totalCapacity);
+        int totalBusinessDate = (int) calculateBusinessDays(startDate, endDate, holidayList);
+        srTrnsfPlan.setTotalBusinessDt(totalBusinessDate);
         /*
         // 시드 값을 설정하여 다양한 랜덤 값을 생성
         long seed = System.currentTimeMillis();
@@ -300,13 +302,14 @@ public class SrServiceImpl implements SrService{
         }
         log.info("" + totalCapacity);
         */
-        
+        float totalCapacity = 0.0f;
         if (srTrnsfPlanForm.getSrDmndNo().equals("버그수정")) {
-        	totalCapacity = (int)(totalCapacity * 1.5);
+        	totalCapacity = (float)(totalBusinessDate * 1.5);
         } else {
-        	totalCapacity = (int)(totalCapacity * 2);
+        	totalCapacity = (float)(totalBusinessDate * 2);
         }
         srTrnsfPlan.setTotalCapacity(totalCapacity);
+        log.info(""+totalCapacity);
 
         log.info("srTrnsfPlan: "+srTrnsfPlan);
 		return srDao.updateSrTrnsfPlan(srTrnsfPlan);
@@ -433,6 +436,19 @@ public class SrServiceImpl implements SrService{
 	//SR 이관 진행률 업데이트
 	@Override
 	public int updateSrTrnsfPrgrs(SrPrgrsForm srPrgrsForm) {
+		if (srPrgrsForm.getAnalysisPrgrs() == null || srPrgrsForm.getAnalysisPrgrs() < 10) {
+			srPrgrsForm.setDesignPrgrs(null);
+		}
+		if (srPrgrsForm.getDesignPrgrs() == null || srPrgrsForm.getDesignPrgrs() < 20) {
+			srPrgrsForm.setImplementPrgrs(null);
+		}
+		if (srPrgrsForm.getImplementPrgrs() == null || srPrgrsForm.getImplementPrgrs() < 70) {
+			srPrgrsForm.setTestPrgrs(null);
+		}
+		if (srPrgrsForm.getTestPrgrs() == null || srPrgrsForm.getTestPrgrs() < 90) {
+			srPrgrsForm.setApplyRequestPrgrs(null);
+		}
+		
 		SrPrgrsForm pastSrPrgrsForm = new SrPrgrsForm();
 		pastSrPrgrsForm.setAnalysisPrgrs(srDao.selectAnalysisPrgrs(srPrgrsForm.getSrNo()));
 		pastSrPrgrsForm.setDesignPrgrs(srDao.selectDesignPrgrs(srPrgrsForm.getSrNo()));
@@ -447,6 +463,9 @@ public class SrServiceImpl implements SrService{
 		
 		//Analysis
 		if (srPrgrsForm.getAnalysisPrgrs() != null) {
+			if(srPrgrsForm.getAnalysisPrgrs() > 10) {
+				srPrgrsForm.setAnalysisPrgrs(10);
+			}
 			SrPrgrs analysisSrPrgrs = new SrPrgrs();
 			analysisSrPrgrs.setSrPrgrsNo(srPrgrsForm.getSrNo() + "_analysis");
 			//기존값이 존재하지 않았을 경우
@@ -493,6 +512,9 @@ public class SrServiceImpl implements SrService{
 		
 		//Design
 		if (srPrgrsForm.getDesignPrgrs() != null) {
+			if(srPrgrsForm.getDesignPrgrs() > 20) {
+				srPrgrsForm.setDesignPrgrs(20);
+			}
 			SrPrgrs designSrPrgrs = new SrPrgrs();
 			designSrPrgrs.setSrPrgrsNo(srPrgrsForm.getSrNo() + "_design");
 			//기존값이 존재하지 않았을 경우
@@ -535,6 +557,9 @@ public class SrServiceImpl implements SrService{
 			
 		//Implement
 		if (srPrgrsForm.getImplementPrgrs() != null) {
+			if(srPrgrsForm.getImplementPrgrs() > 70) {
+				srPrgrsForm.setImplementPrgrs(70);
+			}
 			SrPrgrs implementSrPrgrs = new SrPrgrs();
 			implementSrPrgrs.setSrPrgrsNo(srPrgrsForm.getSrNo() + "_implement");
 			//기존값이 존재하지 않았을 경우
@@ -577,6 +602,9 @@ public class SrServiceImpl implements SrService{
 		
 		//Test
 		if (srPrgrsForm.getTestPrgrs() != null) {
+			if(srPrgrsForm.getTestPrgrs() > 90) {
+				srPrgrsForm.setTestPrgrs(90);
+			}
 			SrPrgrs testSrPrgrs = new SrPrgrs();
 			testSrPrgrs.setSrPrgrsNo(srPrgrsForm.getSrNo() + "_test");
 			//기존값이 존재하지 않았을 경우
@@ -619,6 +647,9 @@ public class SrServiceImpl implements SrService{
 		
 		//Apply Request
 		if (srPrgrsForm.getApplyRequestPrgrs() != null) {
+			if(srPrgrsForm.getApplyRequestPrgrs() > 100) {
+				srPrgrsForm.setApplyRequestPrgrs(100);
+			}
 			SrPrgrs applyRequestSrPrgrs = new SrPrgrs();
 			applyRequestSrPrgrs.setSrPrgrsNo(srPrgrsForm.getSrNo() + "_apply_request");
 			//기존값이 존재하지 않았을 경우
@@ -686,8 +717,8 @@ public class SrServiceImpl implements SrService{
 				SrTrnsfHr srTrnsfHr = new SrTrnsfHr();
 				srTrnsfHr.setSrNo(jsonObject.getString("srNo"));
 				srTrnsfHr.setUsrNo(jsonObject.getString("usrNo"));
-				srTrnsfHr.setPlanCapacity(jsonObject.getInt("planCapacity"));
-				srTrnsfHr.setPerformanceCapacity(jsonObject.getInt("performanceCapacity"));
+				srTrnsfHr.setPlanCapacity(jsonObject.getFloat("planCapacity"));
+				srTrnsfHr.setPerformanceCapacity(jsonObject.getFloat("performanceCapacity"));
 				srDao.updateSrTrnsfHr(srTrnsfHr);
 			}
 	        
@@ -783,10 +814,10 @@ public class SrServiceImpl implements SrService{
 				LocalDate date1 = LocalDate.of(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DAY_OF_MONTH));
 				LocalDate date2 = LocalDate.now();
 				if (date1.compareTo(date2) != 0) {
-					srTrnsfHr.setLastRegCapacity(0);
+					srTrnsfHr.setLastRegCapacity((float)0.0);
 				}
 			} else {
-				srTrnsfHr.setLastRegCapacity(0);
+				srTrnsfHr.setLastRegCapacity((float)0.0);
 			}
 		}
 		return srTrnsfHrList;
@@ -796,14 +827,18 @@ public class SrServiceImpl implements SrService{
 	@Override
 	public int registerHrInfo(String jsonData) {
 		try {
-			log.info(jsonData);
 			JSONArray jsonArray = new JSONArray(jsonData);
+			int totalNum = jsonArray.length();
+			int realNum = 0;
 			for (int i=0; i<jsonArray.length(); ++i) {
 				JSONObject jsonObject = jsonArray.getJSONObject(i);
 				SrTrnsfHr srTrnsfHr = new SrTrnsfHr();
 				srTrnsfHr.setSrNo(jsonObject.getString("srNo"));
 				srTrnsfHr.setUsrNo(jsonObject.getString("usrNo"));
-				int lastRegCapacity = jsonObject.getInt("lastRegCapacity");
+				float lastRegCapacity = jsonObject.getFloat("lastRegCapacity");
+				if (lastRegCapacity < 0.0 || lastRegCapacity > 2.0) {
+					continue;
+				}
 				SrTrnsfHr originalSrTrnsfHr = srDao.getSrTrnsfHrBySrNoAndUsrNo(srTrnsfHr.getSrNo(), srTrnsfHr.getUsrNo());
 				
 				if (originalSrTrnsfHr.getLastRegDt() == null) {
@@ -831,9 +866,13 @@ public class SrServiceImpl implements SrService{
 				}
 				
 				srDao.updateSrTrnsfHr(originalSrTrnsfHr);
+				realNum++;
 			}
-	        
-			return 1;
+	        if (totalNum == realNum) {
+	        	return 1;
+	        } else {
+	        	return 0;
+	        }
 		} catch (Exception e) {
 			e.printStackTrace();
 			return 0;

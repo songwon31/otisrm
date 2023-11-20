@@ -11,10 +11,10 @@ public class SrTrnsfHr {
 	private String usrNo;
 	private String usrNm;
 	private String roleNm;
-	private Integer planCapacity;
-	private Integer performanceCapacity;
+	private Float planCapacity;
+	private Float performanceCapacity;
 	private Date lastRegDt;
-	private Integer lastRegCapacity;
+	private Float lastRegCapacity;
 	private Date srTrgtBgngDt;
 	private Date srTrgtCmptnDt;
 }
