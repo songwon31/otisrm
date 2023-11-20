@@ -252,49 +252,70 @@ function getTotalRows(choiceSrRqstSttsNo) {
 
 //**상태에 따른 페이징 업데이트 함수
 function updatePagination(pageNo, choiceSrRqstSttsNo) {
-  $.ajax({
-    url: "getCountSRRequestsByStatus",
-    data: {
-      status: choiceSrRqstSttsNo
-    },
-    dataType: "json",
-    method: "GET",
-    success: function (totalRows) {
-        // totalRows를 기반으로 페이징을 업데이트
-        var totalPageNo = Math.ceil(totalRows / 5); // 페이지 수 계산 (5는 페이지당 항목 수)
-        
-        // 현재 페이지 번호 업데이트
-        var currentPageNo = pageNo;
-        
-        // 처음/맨끝 페이지 버튼 생성
-        var firstButton = '<a class="page-button btn" style="font-size: 12px;" href="javascript:loadSRRequests(1,\''+ choiceSrRqstSttsNo +'\')">처음</a>';
-        var lastButton = '<a class="page-button btn" style="font-size: 12px;" href="javascript:loadSRRequests(' + totalPageNo + ',\''+ choiceSrRqstSttsNo +'\')">맨끝</a>';
-        
-        // 페이지 번호 버튼 생성
-        var pageButtons = '';
-        for (var i = 1; i <= totalPageNo; i++) {
-          if (i === currentPageNo) {
-            // 현재 페이지 번호는 활성화된 스타일을 적용
-            pageButtons += '<a class="page-button btn active" style="font-size: 12px;" href="javascript:loadSRRequests(' + i + ',\''+ choiceSrRqstSttsNo +'\')">' + i + '</a>';
-          } else {
-            pageButtons += '<a class="page-button btn" style="font-size: 12px;" href="javascript:loadSRRequests(' + i + ',\''+ choiceSrRqstSttsNo +'\')">' + i + '</a>';
-          }
-        }
-        
-        // 처음 페이지 버튼만 표시
-        pageButtons = firstButton + pageButtons;
-        
-        // 맨끝 페이지 버튼만 표시
-        pageButtons += lastButton;
-        
-        // 페이지 버튼 컨테이너 업데이트
-        $("#pagination-container").html(pageButtons);
-    },
-    error: function (error) {
-      console.error("총 행 수를 가져오는 중 오류가 발생했습니다.");
-    }
-  });
-}
+	  $.ajax({
+	    url: "getCountSRRequestsByStatus",
+	    data: {
+	      status: choiceSrRqstSttsNo
+	    },
+	    dataType: "json",
+	    method: "GET",
+	    success: function (totalRows) {
+	        // totalRows를 기반으로 페이징을 업데이트
+	        var totalPageNo = Math.ceil(totalRows / 5); // 페이지 수 계산 (5는 페이지당 항목 수)
+	        
+	        // 페이징 파트 구성
+	        let pagerHtml = '';
+	        if (totalRows === 0) {
+	          pagerHtml += '<a href="javascript:void(0)" style="font-size: 1.5rem; height: 3rem; line-height: 3rem; color:#868e96; cursor:default; margin-right:1rem;">처음</a>';
+	          pagerHtml += '<a href="javascript:void(0)" style="font-size: 1.5rem; height: 3rem; line-height: 3rem; color:#868e96; cursor:default; margin-right:1rem;">이전</a>';
+	          pagerHtml += '<a href="javascript:void(0)" style="font-size: 1.5rem; height: 3rem; line-height: 3rem;">1</a>';
+	          pagerHtml += '<a href="javascript:void(0)" style="font-size: 1.5rem; height: 3rem; line-height: 3rem; color:#868e96; cursor:default; margin-left:1rem;">다음</a>';
+	          pagerHtml += '<a href="javascript:void(0)" style="font-size: 1.5rem; height: 3rem; line-height: 3rem; color:#868e96; cursor:default; margin-left:1rem;">맨끝</a>';
+	        } else {
+	          // 현재 페이지 번호 업데이트
+	          var currentPageNo = pageNo;
+	          
+	          // 처음 페이지 버튼 생성
+	          pagerHtml += '<a href="javascript:loadSRRequests(1,\''+ choiceSrRqstSttsNo +'\')" style="font-size: 1.5rem; height: 3rem; line-height: 3rem; margin-right:1rem;">처음</a>';
+	          
+	          // 이전 페이지 버튼 생성
+	          if (currentPageNo > 1) {
+	            pagerHtml += '<a href="javascript:loadSRRequests(' + (currentPageNo - 1) + ',\''+ choiceSrRqstSttsNo +'\')" style="font-size: 1.5rem; height: 3rem; line-height: 3rem; margin-right:0.5rem;">이전</a>';
+	          } else {
+	            pagerHtml += '<a href="javascript:void(0)" style="font-size: 1.5rem; height: 3rem; line-height: 3rem; color:#868e96; cursor:default; margin-right:0.5rem;">이전</a>';
+	          }
+	          
+	          // 페이지 번호 버튼 생성
+	          for (let i = 1; i <= totalPageNo; i++) {
+	            pagerHtml += '<div style="width: 0.5rem;"></div>';
+	            if (i === currentPageNo) {
+	              // 현재 페이지 번호는 활성화된 스타일을 적용
+	              pagerHtml += '<a href="javascript:void(0)" style="font-size: 1.5rem; font-weight:700; color:blue; height: 3rem; line-height: 3rem;">' + i + '</a>';
+	            } else {
+	              pagerHtml += '<a href="javascript:loadSRRequests(' + i + ',\''+ choiceSrRqstSttsNo +'\')" style="font-size: 1.5rem; height: 3rem; line-height: 3rem;">' + i + '</a>';
+	            }
+	            pagerHtml += '<div style="width: 0.5rem;"></div>';
+	          }
+	          
+	          // 다음 페이지 버튼 생성
+	          if (currentPageNo < totalPageNo) {
+	            pagerHtml += '<a href="javascript:loadSRRequests(' + (currentPageNo + 1) + ',\''+ choiceSrRqstSttsNo +'\')" style="font-size: 1.5rem; height: 3rem; line-height: 3rem; margin-left:0.5rem;">다음</a>';
+	          } else {
+	            pagerHtml += '<a href="javascript:void(0)" style="font-size: 1.5rem; height: 3rem; line-height: 3rem; color:#868e96; cursor:default; margin-left:0.5rem;">다음</a>';
+	          }
+	          
+	          // 맨끝 페이지 버튼 생성
+	          pagerHtml += '<a href="javascript:loadSRRequests(' + totalPageNo + ',\''+ choiceSrRqstSttsNo +'\')" style="font-size: 1.5rem; height: 3rem; line-height: 3rem; margin-left:1rem;">맨끝</a>';
+	        }
+	        
+	        // 페이지 버튼 컨테이너 업데이트
+	        $("#pagination-container").html(pagerHtml);
+	    },
+	    error: function (error) {
+	      console.error("총 행 수를 가져오는 중 오류가 발생했습니다.");
+	    }
+	  });
+	}
 //Byte를 KB로 변환
 function bytesToKB(bytes) {
     return (bytes / 1024).toFixed(2); // 소수점 두 자리까지 표시

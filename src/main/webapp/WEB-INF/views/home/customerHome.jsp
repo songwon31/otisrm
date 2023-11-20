@@ -153,7 +153,7 @@
    	  </div>
    	  <div class="d-flex">
 	   	  <div class="tableContainer w-50 p-1">
-		   	  	 <table id="mainTable" style="width: 100%; text-align: center; height: 27rem;">
+		   	  	 <table id="mainTable" style="width: 100%; text-align: center; height: 27.5rem;">
 				    <colgroup>
 						<col width="10%" /> 
 					    <col width="30%" /> 
@@ -174,7 +174,7 @@
 			</table>
 	   	  </div>
 	   	  <div class="tableContainer w-50 p-1">
-		   	   <table id="mainTable" style="width: 100%; text-align: center; height: 28rem;">
+		   	   <table id="mainTable" style="width: 100%; text-align: center; height: 27.5rem;">
 				    <colgroup>
 				        <col width="10%" /> 
 					    <col width="30%" /> 
