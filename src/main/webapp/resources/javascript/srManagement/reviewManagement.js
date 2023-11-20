@@ -144,7 +144,7 @@ function loadReviewManagementList(pageNo) {
 			    if (reviewManagementPager.groupNo == 1) {
 			    	pagingHtml += '<a href="javascript:void(0)" style="font-size: 1.5rem; height: 3rem; line-height: 3rem; color:#868e96; cursor:default; margin-right:1rem;">이전</a>';
 			    } else {
-			        pagingHtml += '<a style="font-size: 1.5rem; height: 3rem; line-height: 3rem; margin-right:1rem;"" href="javascript:loadReviewManagementList(' + ((reviewManagementPager.groupNo - reviewManagementPager.pagesPerGroup) * 5) + ')">이전</a>';
+			        pagingHtml += '<a style="font-size: 1.5rem; height: 3rem; line-height: 3rem; margin-right:1rem;" href="javascript:loadReviewManagementList(' + ((reviewManagementPager.groupNo - reviewManagementPager.pagesPerGroup) * 5) + ')">이전</a>';
 			    }
 			    //중간 페이지 번호 링크 추가
 			    for (var i = reviewManagementPager.startPageNo; i <= reviewManagementPager.endPageNo; i++) {
@@ -158,7 +158,7 @@ function loadReviewManagementList(pageNo) {
 			    if (reviewManagementPager.groupNo == reviewManagementPager.totalGroupNo) {
 			    	pagingHtml += '<a href="javascript:void(0)" style="font-size: 1.5rem; height: 3rem; line-height: 3rem; color:#868e96; cursor:default; margin-left:1rem;">다음</a>';
 				} else {
-			        pagingHtml += '<a class="btn" href="javascript:loadReviewManagementList(' + ((reviewManagementPager.groupNo * reviewManagementPager.pagesPerGroup)+1) + ')">다음</a>';
+			        pagingHtml += '<a style="font-size: 1.5rem; height: 3rem; line-height: 3rem; margin-left:1rem;" href="javascript:loadReviewManagementList(' + ((reviewManagementPager.groupNo * reviewManagementPager.pagesPerGroup)+1) + ')">다음</a>';
 			    }
 			    //맨끝 페이지로 이동하는 링크 추가
 			    pagingHtml += '<a style="font-size: 1.5rem; height: 3rem; line-height: 3rem; cursor:default; margin-left:1rem;" href="javascript:loadReviewManagementList(' + reviewManagementPager.totalPageNo + ')">맨끝</a>';

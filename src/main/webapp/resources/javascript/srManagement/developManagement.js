@@ -123,25 +123,29 @@ function loadDevelopManagementList(pageNo) {
 			    var developManagementPager = data.pager;
 	
 			    //동적으로 페이징 컨트롤 생성
-			    pagingHtml += '<a class="btn" href="javascript:loadDevelopManagementList(1)">처음</a>';
+			    pagingHtml += '<a style="font-size: 1.5rem; height: 3rem; line-height: 3rem; cursor:default; margin-right:1rem;" href="javascript:loadDevelopManagementList(1)">처음</a>';
 			    //이전 페이지로 이동하는 링크 추가
-			    if (developManagementPager.groupNo > 1) {
-			        pagingHtml += '<a class="btn" href="javascript:loadDevelopManagementList(' + developManagementPager.startPageNo - 1 + ')">이전</a>';
+			    if (developManagementPager.groupNo == 1) {
+			    	pagingHtml += '<a href="javascript:void(0)" style="font-size: 1.5rem; height: 3rem; line-height: 3rem; color:#868e96; cursor:default; margin-right:1rem;">이전</a>';
+			    } else {
+			    	pagingHtml += '<a style="font-size: 1.5rem; height: 3rem; line-height: 3rem; margin-right:1rem;" href="javascript:loadDevelopManagementList(' + ((developManagementPager.groupNo - developManagementPager.pagesPerGroup) * 5) + ')">이전</a>';
 			    }
 			    //중간 페이지 번호 링크 추가
 			    for (var i = developManagementPager.startPageNo; i <= developManagementPager.endPageNo; i++) {
 			    	if (developManagementPager.pageNo != i) {
-			    		pagingHtml += '<a class="btn" href="javascript:loadDevelopManagementList(' + i + ')">' + i + '</a>';
+			    		pagingHtml += '<a style="font-size: 1.5rem; height: 3rem; line-height: 3rem; margin: 0 0.5rem;" href="javascript:loadDevelopManagementList(' + i + ')">' + i + '</a>';
 			        } else {
-			        	pagingHtml += '<a class="btn" href="javascript:loadDevelopManagementList(' + i + ')">' + i + '</a>';
+			        	pagingHtml += '<a style="font-size: 1.5rem; height: 3rem; line-height: 3rem; margin: 0 0.5rem; font-weight:700; color: #2c7be4;" href="javascript:loadDevelopManagementList(' + i + ')">' + i + '</a>';
 			        }
 			    }
 			    //다음 페이지로 이동하는 링크 추가
-			    if (developManagementPager.groupNo < developManagementPager.totalGroupNo) {
-			      pagingHtml += '<a class="btn" href="javascript:loadDevelopManagementList(' + developManagementPager.endPageNo + 1 + ')">다음</a>';
+			    if (developManagementPager.groupNo == developManagementPager.totalGroupNo) {
+			    	pagingHtml += '<a href="javascript:void(0)" style="font-size: 1.5rem; height: 3rem; line-height: 3rem; color:#868e96; cursor:default; margin-left:1rem;">다음</a>';
+				} else {
+			        pagingHtml += '<a style="font-size: 1.5rem; height: 3rem; line-height: 3rem; margin-left:1rem;" href="javascript:loadDevelopManagementList(' + ((developManagementPager.groupNo * developManagementPager.pagesPerGroup)+1) + ')">다음</a>';
 			    }
 			    //맨끝 페이지로 이동하는 링크 추가
-			    pagingHtml += '<a class="btn" href="javascript:loadDevelopManagementList(' + developManagementPager.totalPageNo + ')">맨끝</a>';
+			    pagingHtml += '<a style="font-size: 1.5rem; height: 3rem; line-height: 3rem; cursor:default; margin-left:1rem;" href="javascript:loadDevelopManagementList(' + developManagementPager.totalPageNo + ')">맨끝</a>';
 			}
 			$("#developmentManagementListPaging").html(pagingHtml);
 	    }
