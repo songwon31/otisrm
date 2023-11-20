@@ -49,15 +49,9 @@
 			<div style="width: 24.73%;">
 				<select style="width:30%;" id="selectProgress" name="selectProgress">
 					<option value="" selected>전체</option>
-			        <option value="APRV">승인</option>
-					<option value="RCPT_WAIT">접수대기</option>
-					<option value="RCPT_REEXAM">접수재검토</option>
-					<option value="RCPT_RETURN">접수반려</option>
-					<option value="RCPT">접수</option>
-					<option value="DEP_ING">개발중</option>
-					<option value="TEST">테스트</option>
-					<option value="CMPTN_RQST">완료요청</option>
-					<option value="DEP_CMPTN">개발완료</option>
+			        <c:forEach var="i" items="${sttsList}" varStatus="status">	
+						<option  value="${i.srRqstSttsNo}">${i.srRqstSttsNm}</option>
+					</c:forEach>
 				</select>
 			</div>
 			<div style="width: 3.5%;"></div>
@@ -123,7 +117,7 @@
 		style="height:63rem; background-color:white; border-radius:1rem; padding:2rem;">
 		<div class="d-flex">
 			<span class="mr-auto" style="height:3.5rem; font-size:2.2rem; font-weight:700; color:#222E3C;">SR개발목록</span>
-			<button id="excelDownloadBtn" onclick="location.href='#';">엑셀 다운로드</button>
+			<button class="excelDownloadBtn" onclick="downloadExcelOnDevelopManagement()">엑셀 다운로드</button>
 		</div>
 		<div style="height:51.7rem; margin:0.75rem 0rem; background-color: #f9fafe;">
 			<table id="developManagementMainTable" style="width: 100%;  table-layout: fixed;">

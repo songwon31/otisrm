@@ -25,6 +25,7 @@ import com.finalteam5.otisrm.dto.srRequest.SrRqstForReviewerHomeBoard;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstForReviewerHomeProgress;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstForReviewerModal;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstStts;
+import com.finalteam5.otisrm.dto.srRequest.SrRqstSttsCountByDept;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstSttsCountBySys;
 import com.finalteam5.otisrm.dto.srRequest.SrRqstSubmit;
 import com.finalteam5.otisrm.dto.usr.Inst;
@@ -353,10 +354,22 @@ public class SrRqstServiceImpl implements SrRqstService{
 		return srRqstDao.selectTotalSysNm();
 	}
 	
+	//시스템별 상태개수 가져오기(검토자 홈 차트)
+	@Override
+	public List<SrRqstSttsCountBySys> getSttsCountBySysNmForChart() {
+		return srRqstDao.selectSttsCountBySysNmForChart();
+	}
+	
 	//시스템별 상태개수 가져오기
 	@Override
-	public List<SrRqstSttsCountBySys> getSttsCountBySysNm() {
-		return srRqstDao.selectSttsCountBySysNm();
+	public List<SrRqstSttsCountBySys> getSttsCountBySysNm(Map<String, String> params) {
+		return srRqstDao.selectSttsCountBySysNm(params);
+	}
+	
+	//등록부서별 상태개수 가져오
+	@Override
+	public List<SrRqstSttsCountByDept> getSttsCountByDeptNm(Map<String, String> params) {
+		return srRqstDao.selectSttsCountByDeptNm(params);
 	}
 	
 	//개발관리 요청수 가져오기
@@ -369,6 +382,12 @@ public class SrRqstServiceImpl implements SrRqstService{
 	@Override
 	public List<SrRqstForSearchList> getSrRqstForDevelopManagementByPage(Map<String, Object> params) {
 		return srRqstDao.selectSrRqstForDevelopManagementByPage(params);
+	}
+	
+	//개발관리 엑셀다운로드를 위한 목록 가져오기
+	@Override
+	public List<SrRqstForSearchList> getSrRqstForDevelopManagementForExport(Map<String, String> params) {
+		return srRqstDao.selectSrRqstForDevelopManagementForExport(params);
 	}
 
 	//검토관리 요청수 가져오기

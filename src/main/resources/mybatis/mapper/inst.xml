@@ -7,7 +7,7 @@
 	
 	<!-- 외부업체 제외 기관목록 가져오기 -->
 	<select id="selectNoOutsrcInstList"  resultType="Inst">
-	       select * from inst where outsrc_yn = 'N' order by inst_no desc		 
+	       select * from inst where outsrc_yn = 'N' or outsrc_yn = 'C' order by inst_no desc		 
     </select>
     
     <!-- 기업 상세 정보 -->

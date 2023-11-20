@@ -256,8 +256,7 @@ public class SrReviewManagementController {
 									@RequestParam String srTrnsfYn,
 									@RequestParam String srNo,
 									@RequestParam String srTrnsfInstNo,
-									@RequestParam String srDmndNo,
-									@RequestParam String srCmptnPrnmntDt) {
+									@RequestParam String srDmndNo) {
 		//이관개발 접수할 경우
 		if(srRqstSttsNo.equals("RCPT") && srTrnsfYn.equals("Y")) {
 			//이관계획 저장
@@ -266,7 +265,6 @@ public class SrReviewManagementController {
             srTrnsfPlanForm.setInstNo(srTrnsfInstNo);
             srTrnsfPlanForm.setSrDmndNo(srDmndNo);
             srTrnsfPlanForm.setSrPrgrsSttsNo("RQST");
-            srTrnsfPlanForm.setSrTrgtCmptnDt(srCmptnPrnmntDt);
             srRqstService.writeSrTrnsfPlan(srTrnsfPlanForm);
             
             //이관일 저장

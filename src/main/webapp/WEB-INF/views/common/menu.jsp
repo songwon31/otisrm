@@ -68,6 +68,7 @@
 			<li class="menu-item"><a href="${pageContext.request.contextPath}/srManagement/requestManagement">SR요청관리</a></li>
 			<li class="menu-item"><a href="${pageContext.request.contextPath}/srManagement/developManagement">SR개발관리</a></li>
 			<li class="menu-item"><a href="${pageContext.request.contextPath}/srManagement/progressManagement">SR진척관리</a></li>
+			<li class="menu-item"><a href="${pageContext.request.contextPath}/srManagement/statisticsManagement">SR통계관리</a></li>
 		</ul>
 	</c:if>
 	<c:if test="${usr.usrNo != null && usr.usrAuthrtNo == 'REVIEWER' || usr.usrAuthrtNo == 'SYS_MANAGER'}">
@@ -76,6 +77,7 @@
 			<li class="menu-item"><a href="${pageContext.request.contextPath}/srManagement/reviewManagement">SR검토관리</a></li>
 			<li class="menu-item"><a href="${pageContext.request.contextPath}/srManagement/developManagement">SR개발관리</a></li>
 			<li class="menu-item"><a href="${pageContext.request.contextPath}/srManagement/progressManagement">SR진척관리</a></li>
+			<li class="menu-item"><a href="${pageContext.request.contextPath}/srManagement/statisticsManagement">SR통계관리</a></li>
 		</ul>
 	</c:if>
 	

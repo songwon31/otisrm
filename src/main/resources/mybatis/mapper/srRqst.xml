@@ -312,7 +312,7 @@
 	<!-- 이관된 sr일 경우 sr이관 계획 등록하기 -->
 	<insert id="insertSrTrnsfPlan" parameterType="SrTrnsfPlanForm">
 	    insert into sr_trnsf_plan(
-	        sr_no, inst_no, sr_dmnd_no, sr_prgrs_stts_no, sr_trgt_cmptn_dt
+	        sr_no, inst_no, sr_dmnd_no, sr_prgrs_stts_no
 	    ) values(
 	        #{srNo, jdbcType=VARCHAR}, #{instNo, jdbcType=VARCHAR}, #{srDmndNo, jdbcType=VARCHAR},
 	        #{srPrgrsSttsNo, jdbcType=VARCHAR},TO_DATE(#{srTrgtCmptnDt, jdbcType=VARCHAR}, 'yy-MM-dd')
@@ -679,9 +679,7 @@
         left join sr on sr.sr_rqst_no = r.sr_rqst_no
         left join usr pic on pic.usr_no = sr.pic_usr_no
 		left join dept on dept.dept_no = pic.dept_no
-		<where>
-			st.sr_rqst_stts_seq >= 4
-			
+		<where>			
 			<if test="status != null and status != '' or usr != null and usr != '' or keyword != null and keyword != '' or startDate != null or endDate != null
 		       	or instNo != null and instNo != '' or deptNo != null and deptNo != '' or startDate != null and startDate != '' or endDate != null and endDate != ''
 		       	or sysNm != null and sysNm != '' and sysNm != '전체'">
@@ -748,8 +746,6 @@
 		        left join usr pic on pic.usr_no = sr.pic_usr_no
 				left join dept on dept.dept_no = pic.dept_no
 			   <where>
-					st.sr_rqst_stts_seq >= 4
-					
 					<if test="status != null and status != '' or usr != null and usr != '' or keyword != null and keyword != '' or startDate != null or endDate != null
 				       	or instNo != null and instNo != '' or deptNo != null and deptNo != '' or startDate != null and startDate != '' or endDate != null and endDate != ''
 				       	or sysNm != null and sysNm != '' and sysNm != '전체'">
@@ -804,6 +800,69 @@
 		)
 		where rnum >= #{startRowNo}	
 		]]>
+	</select>
+	
+	<!-- 검토관리 엑셀다운로드를 위한 목록 가져오기 -->
+	<select id="selectSrRqstForDevelopManagementForExport" parameterType="Map" resultType="com.finalteam5.otisrm.dto.srRequest.SrRqstForSearchList">
+		select
+			r.sr_rqst_no, r.sr_ttl, s.sys_nm, u.usr_nm, i.inst_nm, r.sr_rqst_reg_dt, sr.sr_cmptn_prnmnt_dt, st.sr_rqst_stts_nm, r.sr_rqst_emrg_yn, r.sr_rqst_rvw_rsn, sr.sr_trnsf_yn
+		from sr_rqst r
+		join sys s on s.sys_no = r.sys_no
+        join usr u on u.usr_no = r.sr_reqstr_no
+        join inst i on i.inst_no = u.inst_no
+        join sr_rqst_stts st on st.sr_rqst_stts_no = r.sr_rqst_stts_no
+        left join sr on sr.sr_rqst_no = r.sr_rqst_no
+        left join usr pic on pic.usr_no = sr.pic_usr_no
+		left join dept on dept.dept_no = pic.dept_no
+	   <where>
+			<if test="status != null and status != '' or usr != null and usr != '' or keyword != null and keyword != '' or startDate != null or endDate != null
+		       	or instNo != null and instNo != '' or deptNo != null and deptNo != '' or startDate != null and startDate != '' or endDate != null and endDate != ''
+		       	or sysNm != null and sysNm != '' and sysNm != '전체'">
+			  	<!-- 조회기간 -->
+		        <if test="startDate != null and startDate != ''">
+		            and r.sr_rqst_reg_dt &gt;= TO_DATE(#{startDate, jdbcType=VARCHAR}, 'yy-MM-dd')
+		        </if>
+		        <if test="endDate != null and endDate != ''">
+		            and sr.sr_cmptn_prnmnt_dt &lt;= TO_DATE(#{endDate, jdbcType=VARCHAR}, 'yy-MM-dd')
+		        </if>
+		        
+		        <!-- 관련 시스템 -->
+			    <if test="sysNm != null and sysNm != '' and sysNm != '전체'">
+			  		and s.sys_nm = #{sysNm, jdbcType=VARCHAR}
+			  	</if>
+			  	
+		        <!-- 요청 진행 상태 -->
+			    <if test="status != null and status != ''">
+			      	and r.sr_rqst_stts_no = #{status, jdbcType=VARCHAR}
+			    </if>
+			    
+			    <!-- 나의 담당 건만 보기 -->
+			    <if test="usr != null and usr != ''">
+			      	and sr.pic_usr_no = #{usr, jdbcType=VARCHAR}
+			    </if>
+			    
+			  	<!-- 등록자 소속 -->
+			    <if test="instNo != null and instNo != ''">
+			  		and u.inst_no = #{instNo, jdbcType=VARCHAR}
+			  	</if>
+			  	
+			  	<!-- 개발 부서 -->
+			  	<if test="deptNo != null and deptNo != ''">
+			  		and pic.dept_no = #{deptNo, jdbcType=VARCHAR}
+			  	</if>
+			    
+			    <!-- 키워드 검색 -->
+			    <if test="keyword != null and keyword != '' or searchTarget != null and searchTarget != ''">
+			    	<if test="searchTarget == 'searchSrRqstNo'">				    	
+			        	and REGEXP_REPLACE(LOWER(REPLACE(r.sr_rqst_no, ' ', '')), '[[:punct:]]', '') LIKE '%' || REGEXP_REPLACE(LOWER(REPLACE(#{keyword}, ' ', '')), '[[:punct:]]', '') || '%'
+			    	</if>
+			    	<if test="searchTarget == 'searchSrRqstNm'">				    	
+			       		and REGEXP_REPLACE(LOWER(REPLACE(r.sr_ttl, ' ', '')), '[[:punct:]]', '') LIKE '%' || REGEXP_REPLACE(LOWER(REPLACE(#{keyword}, ' ', '')), '[[:punct:]]', '') || '%'
+			    	</if>
+			    </if>
+			</if>
+		</where>
+		order by sr_rqst_no desc
 	</select>
 	
 	<!-- 검토관리 검색 조건별 SR개수 가져오기 -->
@@ -1073,8 +1132,8 @@
 		select distinct sys_nm from sys
 	</select>
 	
-	<!-- 시스템별 상태개수 가져오기 -->
-	<select id="selectSttsCountBySysNm" resultType="com.finalteam5.otisrm.dto.srRequest.SrRqstSttsCountBySys">
+	<!-- 시스템별 상태개수 가져오기(검토자홈 차트) -->
+	<select id="selectSttsCountBySysNmForChart" resultType="com.finalteam5.otisrm.dto.srRequest.SrRqstSttsCountBySys">
 		select
 		    s.sys_nm,
 		    count(case when r.sr_rqst_stts_no = 'RQST' then 1 end) as rqst_count,
@@ -1092,7 +1151,74 @@
 		    count(case when r.sr_rqst_stts_no = 'DEP_CMPTN' then 1 end) as dep_cmptn_count
 		from sr_rqst r
 		join sys s on r.sys_no = s.sys_no
+		left join sr on sr.sr_rqst_no = r.sr_rqst_no
 		group by s.sys_nm
+	</select>
+	
+	<!-- 시스템별 상태개수 가져오기 -->
+	<select id="selectSttsCountBySysNm" parameterType="map" resultType="com.finalteam5.otisrm.dto.srRequest.SrRqstSttsCountBySys">
+		select
+		    s.sys_nm,
+		    count(case when r.sr_rqst_stts_no = 'RQST' then 1 end) as rqst_count,
+		    count(case when r.sr_rqst_stts_no = 'APRV_WAIT' then 1 end) as aprv_wait_count,
+		    count(case when r.sr_rqst_stts_no = 'APRV_REEXAM' then 1 end) as aprv_reexam_count,
+		    count(case when r.sr_rqst_stts_no = 'APRV_RETURN' then 1 end) as aprv_return_count,
+		    count(case when r.sr_rqst_stts_no = 'APRV' then 1 end) as aprv_count,
+		    count(case when r.sr_rqst_stts_no = 'RCPT_WAIT' then 1 end) as rcpt_wait_count,
+		    count(case when r.sr_rqst_stts_no = 'RCPT_REEXAM' then 1 end) as rcpt_reexam_count,
+		    count(case when r.sr_rqst_stts_no = 'RCPT_RETURN' then 1 end) as rcpt_return_count,
+		    count(case when r.sr_rqst_stts_no = 'RCPT' then 1 end) as rcpt_count,
+		    count(case when r.sr_rqst_stts_no = 'DEP_ING' then 1 end) as dep_ing_count,
+		    count(case when r.sr_rqst_stts_no = 'TEST' then 1 end) as test_count,
+		    count(case when r.sr_rqst_stts_no = 'CMPTN_RQST' then 1 end) as cmptn_rqst_count,
+		    count(case when r.sr_rqst_stts_no = 'DEP_CMPTN' then 1 end) as dep_cmptn_count
+		from sr_rqst r
+		join sys s on r.sys_no = s.sys_no
+		left join sr on sr.sr_rqst_no = r.sr_rqst_no
+		<where>
+		  	<!-- 조회기간 -->
+	        <if test="startDate != null and startDate != ''">
+	            and r.sr_rqst_reg_dt &gt;= TO_DATE(#{startDate, jdbcType=VARCHAR}, 'yy-MM-dd')
+	        </if>
+	        <if test="endDate != null and endDate != ''">
+	            and sr.sr_cmptn_prnmnt_dt &lt;= TO_DATE(#{endDate, jdbcType=VARCHAR}, 'yy-MM-dd')
+	        </if>
+	    </where>
+		group by s.sys_nm
+	</select>
+	
+	<!-- 등록부서별 상태개수 가져오기 -->
+	<select id="selectSttsCountByDeptNm" parameterType="map" resultType="com.finalteam5.otisrm.dto.srRequest.SrRqstSttsCountByDept">
+		select
+		    d.dept_nm,
+		    count(case when r.sr_rqst_stts_no = 'RQST' then 1 end) as rqst_count,
+		    count(case when r.sr_rqst_stts_no = 'APRV_WAIT' then 1 end) as aprv_wait_count,
+		    count(case when r.sr_rqst_stts_no = 'APRV_REEXAM' then 1 end) as aprv_reexam_count,
+		    count(case when r.sr_rqst_stts_no = 'APRV_RETURN' then 1 end) as aprv_return_count,
+		    count(case when r.sr_rqst_stts_no = 'APRV' then 1 end) as aprv_count,
+		    count(case when r.sr_rqst_stts_no = 'RCPT_WAIT' then 1 end) as rcpt_wait_count,
+		    count(case when r.sr_rqst_stts_no = 'RCPT_REEXAM' then 1 end) as rcpt_reexam_count,
+		    count(case when r.sr_rqst_stts_no = 'RCPT_RETURN' then 1 end) as rcpt_return_count,
+		    count(case when r.sr_rqst_stts_no = 'RCPT' then 1 end) as rcpt_count,
+		    count(case when r.sr_rqst_stts_no = 'DEP_ING' then 1 end) as dep_ing_count,
+		    count(case when r.sr_rqst_stts_no = 'TEST' then 1 end) as test_count,
+		    count(case when r.sr_rqst_stts_no = 'CMPTN_RQST' then 1 end) as cmptn_rqst_count,
+		    count(case when r.sr_rqst_stts_no = 'DEP_CMPTN' then 1 end) as dep_cmptn_count
+		from sr_rqst r
+        join usr u on r.sr_reqstr_no = u.usr_no
+		join dept d on u.dept_no = d.dept_no
+		left join sr on sr.sr_rqst_no = r.sr_rqst_no
+		<where>
+		  	<!-- 조회기간 -->
+	        <if test="startDate != null and startDate != ''">
+	            and r.sr_rqst_reg_dt &gt;= TO_DATE(#{startDate, jdbcType=VARCHAR}, 'yy-MM-dd')
+	        </if>
+	        <if test="endDate != null and endDate != ''">
+	            and sr.sr_cmptn_prnmnt_dt &lt;= TO_DATE(#{endDate, jdbcType=VARCHAR}, 'yy-MM-dd')
+	        </if>
+	    </where>
+		group by d.dept_nm
+        order by d.dept_nm
 	</select>
 	
 	<!-- 이관날짜 저장 -->

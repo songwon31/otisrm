@@ -116,7 +116,7 @@
 		style="height:63rem; background-color:white; border-radius:1rem; padding:2rem;">
 		<div class="d-flex">
 			<span class="mr-auto" style="height:3.5rem; font-size:2.2rem; font-weight:700; color:#222E3C;">SR검토목록</span>
-			<button id="excelDownloadBtn" onclick="downloadExcelOnReviewManagement()">엑셀 다운로드</button>
+			<button class="excelDownloadBtn" onclick="downloadExcelOnReviewManagement()">엑셀 다운로드</button>
 		</div>
 		<div style="height:51.7rem; margin:0.75rem 0rem; background-color: #f9fafe;">
 			<table id="reviewManagementMainTable" style="width: 100%; table-layout: fixed;">
