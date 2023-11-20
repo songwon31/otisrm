@@ -66,7 +66,7 @@
 				    <col width="10%" /> 
 				    <col width="10%" />
 				</colgroup>
-				<thead style="background-color: #e9ecef;">
+				<thead style="background-color:  #edf2f8;">
 					<tr>
 						<th scope="col"></th>
 						<th scope="col">제목</th>

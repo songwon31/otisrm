@@ -586,9 +586,10 @@ function showSrRqstBySrRqstNo(choiceSrRqstNo){
    		 	$("#srWriteOrModifyBtn").css("opacity", 1);
    		 	$(".srInput").prop("disabled", false);
         	
+   		 	
         	//요청 상태(상태: 요청, 승인요청, 승인)
         	if(data.srRqstSttsNo === "RQST"){
-        		console.log("나실행!");
+        		 $(".modifyPossible").prop("disabled", false);
         		 $("#srRqstStts-select").prop("disabled", false);
         		 $("#srRqstStts-select").val(data.srRqstSttsNo);
         		 //승인대기->승인요청으로변경 
@@ -607,10 +608,18 @@ function showSrRqstBySrRqstNo(choiceSrRqstNo){
         		 $("#srWriteOrModifyBtn").prop("disabled", true);
         		 $("#srWriteOrModifyBtn").css("opacity", 0.5);
         		 $(".srInput").prop("disabled", true);
+        		 
+        		 if(data.srReqstrNo === loggedInUsrNo){
+        			 $(".modifyPossible").prop("disabled", false);
+        		 }else{
+        			 $(".modifyPossible").prop("disabled", true);		 
+        		 }
+        		
             //승인 대기 상태 (상태: 아무것도 못함)
         	}else if(data.srRqstSttsNo === "APRV_WAIT"){
         		$("#srRqstStts-select").val(data.srRqstSttsNo);
         		$("#srRqstStts-select").prop("disabled", true);
+        		$("#srRqstStts-select2 option[value='APRV_WAIT']").text("승인대기");
         		
         		//sr개발정보에 상태 표시 X, 수정 불가능/ 저장버튼 비활성화/ sr정보 등록 버튼 비활성화
         		$("#srRqstStts-select2").val("");
@@ -694,6 +703,7 @@ function showSrRqstBySrRqstNo(choiceSrRqstNo){
         		$("#srRqstStts-select2").prop("disabled", true);
         		$("#saveButton2").prop("disabled", false);
        		    $("#saveButton2").css("opacity", 1);
+       		    
        		//접수 재검토 상태
         	}else if(data.srRqstSttsNo === "RCPT_REEXAM"){
         		$("#srRqstStts-select").val("APRV");
@@ -779,10 +789,22 @@ function showSrRqstBySrRqstNo(choiceSrRqstNo){
        		    $("#srWriteOrModifyBtn").prop("disabled", true);
        		    $("#srWriteOrModifyBtn").css("opacity", 0.5);
        		    $(".srInput").prop("disabled", true);
+        	}else if(data.srRqstSttsNo === "CMPTN_RQST"){
+        		//현재 상태 표시
+        		$("#srRqstStts-select").val("APRV");
+        		$("#srRqstStts-select").prop("disabled", true);
+        		//수정 불가능
+        		$("#saveButton").prop("disabled", true);
+        		$("#saveButton").css("opacity", 0.5);
+        		$(".modifyPossible").prop("disabled", true);
+        		
+        		$("#srRqstStts-select2").val(data.srRqstSttsNo);
+        		$("#srRqstStts-select2").prop("disabled", true);
+        		$(".srInput").prop("disabled", true);
         	}
         	
         	//요청상태가 요청 또는 반려일때 삭제가능(버튼 속성 변경)
-        	if(data.srRqstSttsNo == "RQST" || data.srRqstSttsNo == "APRV_RETURN" ||data.srRqstSttsNo == "RCPT_RETURN"){
+        	if(data.srRqstSttsNo == "RQST" && loggedInUsrNo === data.usrNo || data.srRqstSttsNo == "APRV_RETURN" ||data.srRqstSttsNo == "RCPT_RETURN" && loggedInUsrNo === data.usrNo){
         		$("#deleteButton").prop("disabled", false);
         		$("#deleteButton").css("opacity", 1);
         		$(".srRqstModify").prop("disabled", false);	
@@ -1091,17 +1113,17 @@ function confirmSrRqstModify() {
         data: formData,
         success: function (data) {
             // 수정 작업이 성공적으로 완료되면 여기에 원하는 작업을 수행할 수 있습니다.
-            var currentURL = window.location.href;
-            window.location.href = currentURL; // 원하는 URL로 변경
+        	$("#alertContent2").text("성공적으로 변경했습니다.");
+        	$("#alertModal2").modal("show");
+           
             showSrRqstBySrRqstNo(choiceSrRqstNo);
             loadSRRequests(1, choiceSrRqstSttsNo);
-            $('#srRqstModyfyModal').modal('hide'); // 모달 숨기기
         },
         error: function (error) {
             // 요청 중 오류가 발생한 경우 실행할 코드
             console.error("오류 발생:", error);
             alert("수정 실패");
-            $('#srRqstModyfyModal').modal('hide'); // 모달 숨기기
+   
         },
         cache: false,
         processData: false,
@@ -1110,9 +1132,9 @@ function confirmSrRqstModify() {
 }
 
 // "요청 수정 모달"에서 취소 버튼 클릭 시 모달 닫기
-function cancelBtnForModifyModal2() {
+function closeAlertModal() {
 	console.log("모달 닫기!");
-    $('#srRqstModyfyModal').modal('hide');
+    $('#alertModal').modal('hide');
 }
 
 //sr 요청 삭제
@@ -1136,7 +1158,7 @@ function removeSrRqst() {
 	});
 }
 
-//sr요청 수정
+//sr요청 상태 수정
 function srRqstSttsUpdate() {
 	$("#update-srRqstNo").val($("#srRqst-srRqstNo").val());
 	writeOrModifySrForPicHome();
@@ -1150,18 +1172,14 @@ function srRqstSttsUpdate() {
         success: function (data) {
         	console.log($("#srRqst-srRqstNo").val());
             // 수정 작업이 성공적으로 완료되면 여기에 원하는 작업을 수행할 수 있습니다.
-            var currentURL = window.location.href;
-            window.location.href = currentURL; // 원하는 URL로 변경
-            //showSrRqstBySrRqstNo(choiceSrRqstNo);
-            //loadSRRequests(1, choiceSrRqstSttsNo);
-            
-            alert("수정 완료");
+            $("#alertContent2").text("성공적으로 변경했습니다.");
+        	$("#alertModal2").modal("show");
             
         },
         error: function (error) {
             // 요청 중 오류가 발생한 경우 실행할 코드
             console.error("오류 발생:", error);
-            alert("수정 실패");
+            alert("수정 실패:1");
             $('#srRqstModyfyModal').modal('hide'); // 모달 숨기기
         },
         cache: false,
@@ -1295,7 +1313,7 @@ function setSrDetail(srRqstNo) {
 		
 	 
 	 $("#progressCircles").show();
- 	loadProgressInfo(srRqstNo);
+ 	//loadProgressInfo(srRqstNo);
  	
  	
 	$.ajax({

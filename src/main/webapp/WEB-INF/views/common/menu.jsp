@@ -63,14 +63,14 @@
 			<li class="menu-item"><a href="${pageContext.request.contextPath}/srManagement/requestManagement">SR요청관리</a></li>
 		</ul>
 	</c:if>
-	<c:if test="${usr.usrNo != null && usr.usrAuthrtNo == 'DEVELOPER'}">
+	<c:if test="${usr.usrNo != null && usr.usrAuthrtNo == 'DEVELOPER' || usr.usrAuthrtNo == 'PIC'}">
 		<ul style="list-style:none; padding:0; margin:0;">
 			<li class="menu-item"><a href="${pageContext.request.contextPath}/srManagement/requestManagement">SR요청관리</a></li>
 			<li class="menu-item"><a href="${pageContext.request.contextPath}/srManagement/developManagement">SR개발관리</a></li>
 			<li class="menu-item"><a href="${pageContext.request.contextPath}/srManagement/progressManagement">SR진척관리</a></li>
 		</ul>
 	</c:if>
-	<c:if test="${usr.usrNo != null && usr.usrAuthrtNo == 'REVIEWER' || usr.usrAuthrtNo == 'PIC' || usr.usrAuthrtNo == 'SYS_MANAGER'}">
+	<c:if test="${usr.usrNo != null && usr.usrAuthrtNo == 'REVIEWER' || usr.usrAuthrtNo == 'SYS_MANAGER'}">
 		<ul style="list-style:none; padding:0; margin:0;">
 			<li class="menu-item"><a href="${pageContext.request.contextPath}/srManagement/requestManagement">SR요청관리</a></li>
 			<li class="menu-item"><a href="${pageContext.request.contextPath}/srManagement/reviewManagement">SR검토관리</a></li>

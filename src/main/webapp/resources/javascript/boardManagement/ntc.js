@@ -130,7 +130,7 @@ function loadNtcs(pageNo) {
     			  $(this).css('background-color', 'white');
     		  }
       );
-      loading();
+    
       // 성공적으로 요청이 완료된 경우 실행할 코드
       var currentURL = window.location.href;
     },
@@ -465,25 +465,3 @@ function downloadExcel() {
     });
 }
 
-//로딩 스피너 함수
-function loading() {
-  LoadingWithMask();
-  setTimeout("closeLoadingWithMask()", 500);
-}
-
-//스피너와 마스크 표시
-function LoadingWithMask() {
-  //로딩중 이미지 표시
-  $.LoadingOverlay("show", {
-  	background       : "rgba(0, 0, 0, 0.5)",
-  	image            : "https://upload.wikimedia.org/wikipedia/commons/f/fc/Herbert_Kickl.gif",
-  	maxSize          : 150,
-  	fontawesome      : "fa fa-pulse fa-fw",
-  	fontawesomeColor : "#FFFFFF",
-  });
- 
-}
-//스피너와 마스크 종료
-function closeLoadingWithMask() {
-  $.LoadingOverlay("hide"); 
-}

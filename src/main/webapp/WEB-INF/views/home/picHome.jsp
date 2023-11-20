@@ -611,8 +611,8 @@
 				    </select>   		
 				</div>
 	      		<div>      		
-		      		<button id="deleteButton" class="btn-5" type="button" data-toggle="modal" data-target="#srRqstdeleteModal">삭제</button>
-		      		<button id="saveButton" type="button" onclick="modifySrRqst()" class="btn-1">저장</button>
+		      		<button id="deleteButton" class="delete btn-5" type="button" data-toggle="modal" data-target="#srRqstdeleteModal">삭제</button>
+		      		<button id="saveButton" type="button" onclick="confirmSrRqstModify()" class="btn-1">저장</button>
 	      		</div>
       		</div>
       		<div class="card p-3 mb-4">
@@ -939,29 +939,24 @@
 			</div>
 		</div>
 	</div>
-
-<!-- 요청 수정 모달 -->  
-<div class="modal" id="srRqstModyfyModal">
-  <div class="modal-dialog">
-	  <div class="modal-content">
-	      <!-- Modal Header -->
-	      <div class="modal-header" style="background-color: #2c7be4;">
-	        <h6 class="modal-title">sr요청 수정</h6>
-	      </div>
-	
-	      <!-- Modal body -->
-	      <div class="modal-body">
-	        	해당 sr요청을 다음과 같이 변경하시겠습니까 ?
-	      </div>
-	
-	      <!-- Modal footer -->
-	      <div class="modal-footer">
-	        <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="confirmSrRqstModify()" >확인</button>
-	        <button type="button" class="btn" style="background-color: #de483a; color: white;" onclick="cancelBtnForModifyModal2()">취소</button>
-	      </div>
+  
+    <!-- 알림 모달 -->
+	<div id="alertModal" class="modal" data-backdrop="static">
+		<div class="modal-dialog modal-dialog-centered modal-sm">
+			<div class="modal-content">
+				<div class="modal-header" style="background-color:#3d86e5; color:white; display:flex;">
+					<i class="material-icons">info</i>
+					<div class="modal-title pl-2" style="font-size:2rem; font-weight:700;">알림</div>
+					<i class="material-icons close-icon" data-dismiss="modal" style="cursor: pointer; padding-left: 180px;"" onclick="alertModalClose()">close</i>
+				</div>
+				<div class="modal-body" style="margin:0px; padding:0px; font-size:1.5rem;">
+					<div id="alertContent" style="height:11rem; font-size:1.7rem; font-weight:700; display:flex; justify-content:center; align-items:center; white-space: pre-wrap;">
+						
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
-</div>
 
 <!-- sr 수정 모달 -->  
 <div class="modal" id="srModyfyModal">

@@ -123,7 +123,7 @@
 			<button id="downloadExcelButton" class="btn-5" onclick="downloadExcel()">엑셀 다운로드</button>
 		</div>
 		<div class="tableContainer">
-			<table id="mainTable" style="width: 100%; text-align: center; height: 49.3rem;">
+			<table id="mainTable" style="width: 100%; text-align: center; height: 51.7rem;">
 				<colgroup>
 					<col width="45.04px" />
 					<col width="118.99px"/>
@@ -138,7 +138,7 @@
 					<col width="58.85px" />
 					<col width="88.26px" />
 				</colgroup>
-				<thead style="background-color: #e9ecef;">
+				<thead style="background-color: #edf2f8;">
 					<tr>
 						<th scope="col"></th>
 						<th scope="col">요청번호</th>
