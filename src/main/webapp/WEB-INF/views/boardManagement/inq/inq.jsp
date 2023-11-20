@@ -56,7 +56,7 @@
 			<button id="downloadExcelButton" class="btn-5" onclick="downloadExcel()">엑셀 다운로드</button>
 		</div>
 		<div class="tableContainer">
-			<table id="mainTable" style="width: 100%; text-align: center; height: 57.9rem;">
+			<table id="mainTable" style="width: 100%; text-align: center; height: 56.6rem;">
 				<colgroup>
 					<col width="10%" /> 
 				    <col width="30%" /> 
@@ -81,7 +81,7 @@
 				</tbody>
 			</table>
 			<!-- 페이징 -->
-			<div id="pagination-container" class="paging d-flex justify-content-center">
+			<div id="pagination-container" class="paging d-flex justify-content-center"  style="margin-top: 8px;">
 			페이징
 			</div>	
 		</div>

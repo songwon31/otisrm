@@ -75,7 +75,7 @@ function loadNtcs(pageNo) {
           html += '  <td class="truncate-text">' + item.usrNm + '</td>';
           html += '  <td>' + formattedDate + '</td>';
           html += '  <td>' + item.ntcInqCnt + '</td>';
-          html += '  <td><button type="button" id="showSrRqstDetailBtn" class="btn-2" data-toggle="modal" data-target="#getNtcByNtcNo" onclick="showNtcByNtcNo(\'' + item.ntcNo + '\')">상세보기</button></td>';
+          html += '  <td><button type="button" id="showSrRqstDetailBtn" class="btn-1" data-toggle="modal" data-target="#getNtcByNtcNo" onclick="showNtcByNtcNo(\'' + item.ntcNo + '\')">상세보기</button></td>';
           html += '</tr>';
         });
 
@@ -90,7 +90,7 @@ function loadNtcs(pageNo) {
           html += '  <td class="truncate-text">' + item.usrNm + '</td>';
           html += '  <td>' + formattedDate + '</td>';
           html += '  <td>' + item.ntcInqCnt + '</td>';
-          html += '  <td><button type="button" id="showSrRqstDetailBtn" class="btn-2" data-toggle="modal" data-target="#getNtcByNtcNo" onclick="showNtcByNtcNo(\'' + item.ntcNo + '\')">상세보기</button></td>';
+          html += '  <td><button type="button" id="showSrRqstDetailBtn" class="btn-1" data-toggle="modal" data-target="#getNtcByNtcNo" onclick="showNtcByNtcNo(\'' + item.ntcNo + '\')">상세보기</button></td>';
           html += '</tr>';
         });
       }
