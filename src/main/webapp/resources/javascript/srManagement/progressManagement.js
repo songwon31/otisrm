@@ -186,52 +186,41 @@ function mainTableConfig(progressManagementSearch, pageNo) {
 			    }
 			);
 			
-			//페이징 파트 구현
+			//페이징 파트 구성
 			let pagerHtml = '';
 			if (data.pager.totalRows == 0) {
-				pagerHtml += '<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center; color:#868e96; cursor:default;">first_page</i>';
-				pagerHtml += '<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center; color:#868e96; cursor:default;">chevron_left</i>';
-				pagerHtml += '<a href="javascript:void(0)" style="font-size: 1.6rem; height: 3rem; line-height: 3rem;">1</a>';
-				pagerHtml += '<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center; color:#868e96; cursor:default;">chevron_right</i>';
-				pagerHtml += '<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center; color:#868e96; cursor:default;">last_page</i>';
+				pagerHtml += '<a href="javascript:void(0)" style="font-size: 1.5rem; height: 3rem; line-height: 3rem; color:#868e96; cursor:default; margin-right:1rem;">처음</a>';
+				pagerHtml += '<a href="javascript:void(0)" style="font-size: 1.5rem; height: 3rem; line-height: 3rem; color:#868e96; cursor:default; margin-right:1rem;">이전</a>';
+				pagerHtml += '<a href="javascript:void(0)" style="font-size: 1.5rem; height: 3rem; line-height: 3rem;">1</a>';
+				pagerHtml += '<a href="javascript:void(0)" style="font-size: 1.5rem; height: 3rem; line-height: 3rem; color:#868e96; cursor:default; margin-left:1rem;">다음</a>';
+				pagerHtml += '<a href="javascript:void(0)" style="font-size: 1.5rem; height: 3rem; line-height: 3rem; color:#868e96; cursor:default; margin-left:1rem;">맨끝</a>';
 			} else {
 				currentPageNo = data.pager.pageNo;
+				pagerHtml += '<a href="javascript:void(0)" onclick="mainTableConfig(currentUsrManagementSearch, '+1+')"style="font-size: 1.5rem; height: 3rem; line-height: 3rem; margin-right:1rem;">처음</a>';
 				if (data.pager.groupNo == 1) {
-					pagerHtml += '<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center; color:#868e96; cursor:default;">first_page</i>';
-					pagerHtml += '<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center; color:#868e96; cursor:default;">chevron_left</i>';
+					pagerHtml += '<a href="javascript:void(0)" style="font-size: 1.5rem; height: 3rem; line-height: 3rem; color:#868e96; cursor:default; margin-right:0.5rem;">이전</a>';
 				} else {
-					pagerHtml += '<a href="javascript:void(0) onclick="mainTableConfig(currentProgressManagementSearch, '+1+')">';
-					pagerHtml += '<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center;">first_page</i>';
-					pagerHtml += '</a>';
-					pagerHtml += '<a href="javascript:void(0)  onclick="mainTableConfig(currentProgressManagementSearch, ' + ((data.pager.groupNo - data.pager.pagesPerGroup) * 5) + ')">';
-					pagerHtml += '<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center;">chevron_left</i>';
-					pagerHtml += '</a>';
+					pagerHtml += '<a href="javascript:void(0)" onclick="mainTableConfig(currentUsrManagementSearch, ' + ((data.pager.groupNo - data.pager.pagesPerGroup) * 5) + ')" style="font-size: 1.5rem; height: 3rem; line-height: 3rem; margin-right:1rem;">이전</a>';
 				}
 				
 				for (let i=data.pager.startPageNo; i<=data.pager.endPageNo; ++i) {
-					pagerHtml += '<div style="width: 0.25rem;"></div>';
+					pagerHtml += '<div style="width: 0.5rem;"></div>';
 					if (data.pager.pageNo != i) {
-						pagerHtml += '<a href="javascript:void(0)" onclick="mainTableConfig(currentProgressManagementSearch, '+i+')" style="font-size: 1.6rem; height: 3rem; line-height: 3rem;">'+i+'</a>';
+						pagerHtml += '<a href="javascript:void(0)" onclick="mainTableConfig(currentUsrManagementSearch, '+i+')" style="font-size: 1.5rem; height: 3rem; line-height: 3rem;">'+i+'</a>';
 					} else {
-						pagerHtml += '<a href="javascript:void(0)" style="font-size: 1.6rem; height: 3rem; line-height: 3rem;">'+i+'</a>';
+						pagerHtml += '<a href="javascript:void(0)" style="font-size: 1.5rem; font-weight:700; color:blue; height: 3rem; line-height: 3rem;">'+i+'</a>';
 					}
-					pagerHtml += '<div style="width: 0.25rem;"></div>';
+					pagerHtml += '<div style="width: 0.5rem;"></div>';
 					
 				}
 				if (data.pager.groupNo == data.pager.totalGroupNo) {
-					pagerHtml += '<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center; color:#868e96; cursor:default;">chevron_right</i>';
-					pagerHtml += '<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center; color:#868e96; cursor:default;">last_page</i>';
+					pagerHtml += '<a href="javascript:void(0)" style="font-size: 1.5rem; height: 3rem; line-height: 3rem; color:#868e96; cursor:default; margin-left:1rem;">다음</a>';
 				} else {
-					pagerHtml += '<a href="javascript:void(0) onclick="mainTableConfig(currentProgressManagementSearch, ' + ((data.pager.groupNo * data.pager.pagesPerGroup)+1) + ')">';
-					pagerHtml += '<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center;">chevron_right</i>';
-					pagerHtml += '</a>';	
-					pagerHtml += '<a href="javascript:void(0) onclick="mainTableConfig(currentProgressManagementSearch, ' + data.pager.endPageNo + ')"">';
-					pagerHtml += '<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center;">last_page</i>';
-					pagerHtml += '</a>';
+					pagerHtml += '<a href="javascript:void(0)" onclick="mainTableConfig(currentUsrManagementSearch, ' + ((data.pager.groupNo * data.pager.pagesPerGroup)+1) + ')" style="font-size: 1.5rem; height: 3rem; line-height: 3rem; margin-left:1rem;">다음</a>';
 				}
-				
-				$('#mainTablePagingDiv').html(pagerHtml);
+				pagerHtml += '<a href="javascript:void(0)" onclick="mainTableConfig(currentUsrManagementSearch, ' + data.pager.endPageNo + ')" style="font-size: 1.5rem; height: 3rem; line-height: 3rem; margin-left:1rem;">맨끝</a>';
 			}
+			$('#mainTablePagingDiv').html(pagerHtml);
 		}
 	});
 }
@@ -505,7 +494,7 @@ function showSrProgressModalFromMain(srNo) {
 					for (let i=0; i<data.srTrnsfHrList.length; ++i) {
 						let srTrnsfHr = data.srTrnsfHrList[i];
 						let srTrnsfHrHtml = '';
-						srTrnsfHrHtml += '<tr style="height:4rem; font-size:1.6rem; background-color:white;">';
+						srTrnsfHrHtml += '<tr style="height:4rem; font-size:1.5rem; background-color:white;">';
 						srTrnsfHrHtml += '<td><input type="checkbox" class="checkbox" style="vertical-align: middle;"></td>';
 						srTrnsfHrHtml += '<td class="srNo" style="display:none">' + srTrnsfHr.srNo + '</td>';
 						srTrnsfHrHtml += '<td class="usrNo" style="display:none">' + srTrnsfHr.usrNo + '</td>';
@@ -531,7 +520,7 @@ function showSrProgressModalFromMain(srNo) {
 					for (let i=0; i<data.srTrnsfHrList.length; ++i) {
 						let srTrnsfHr = data.srTrnsfHrList[i];
 						let srTrnsfHrHtml = '';
-						srTrnsfHrHtml += '<tr style="height:4rem; font-size:1.6rem; background-color:white;">';
+						srTrnsfHrHtml += '<tr style="height:4rem; font-size:1.5rem; background-color:white;">';
 						srTrnsfHrHtml += '<td><input type="checkbox" class="checkbox" style="vertical-align: middle;"></td>';
 						srTrnsfHrHtml += '<td class="srNo" style="display:none">' + srTrnsfHr.srNo + '</td>';
 						srTrnsfHrHtml += '<td class="usrNo" style="display:none">' + srTrnsfHr.usrNo + '</td>';
@@ -831,7 +820,7 @@ function showSrProgressModal(srNo) {
 					for (let i=0; i<data.srTrnsfHrList.length; ++i) {
 						let srTrnsfHr = data.srTrnsfHrList[i];
 						let srTrnsfHrHtml = '';
-						srTrnsfHrHtml += '<tr style="height:4rem; font-size:1.6rem; background-color:white;">';
+						srTrnsfHrHtml += '<tr style="height:4rem; font-size:1.5rem; background-color:white;">';
 						srTrnsfHrHtml += '<td><input type="checkbox" class="checkbox" style="vertical-align: middle;"></td>';
 						srTrnsfHrHtml += '<td class="srNo" style="display:none">' + srTrnsfHr.srNo + '</td>';
 						srTrnsfHrHtml += '<td class="usrNo" style="display:none">' + srTrnsfHr.usrNo + '</td>';
@@ -857,7 +846,7 @@ function showSrProgressModal(srNo) {
 					for (let i=0; i<data.srTrnsfHrList.length; ++i) {
 						let srTrnsfHr = data.srTrnsfHrList[i];
 						let srTrnsfHrHtml = '';
-						srTrnsfHrHtml += '<tr style="height:4rem; font-size:1.6rem; background-color:white;">';
+						srTrnsfHrHtml += '<tr style="height:4rem; font-size:1.5rem; background-color:white;">';
 						srTrnsfHrHtml += '<td><input type="checkbox" class="checkbox" style="vertical-align: middle;"></td>';
 						srTrnsfHrHtml += '<td class="srNo" style="display:none">' + srTrnsfHr.srNo + '</td>';
 						srTrnsfHrHtml += '<td class="usrNo" style="display:none">' + srTrnsfHr.usrNo + '</td>';
@@ -1203,53 +1192,41 @@ function composeFindPicModalTable(pageNo) {
 				$('#findPicModalTable tbody').append(findPicTableHtml);
 			}
 			
-			
 			//페이징 파트 구성
 			let pagerHtml = '';
 			if (data.pager.totalRows == 0) {
-				pagerHtml += '<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center; color:#868e96; cursor:default;">first_page</i>';
-				pagerHtml += '<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center; color:#868e96; cursor:default;">chevron_left</i>';
-				pagerHtml += '<a href="javascript:void(0)" style="font-size: 1.6rem; height: 3rem; line-height: 3rem;">1</a>';
-				pagerHtml += '<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center; color:#868e96; cursor:default;">chevron_right</i>';
-				pagerHtml += '<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center; color:#868e96; cursor:default;">last_page</i>';
+				pagerHtml += '<a href="javascript:void(0)" style="font-size: 1.5rem; height: 3rem; line-height: 3rem; color:#868e96; cursor:default; margin-right:1rem;">처음</a>';
+				pagerHtml += '<a href="javascript:void(0)" style="font-size: 1.5rem; height: 3rem; line-height: 3rem; color:#868e96; cursor:default; margin-right:1rem;">이전</a>';
+				pagerHtml += '<a href="javascript:void(0)" style="font-size: 1.5rem; height: 3rem; line-height: 3rem;">1</a>';
+				pagerHtml += '<a href="javascript:void(0)" style="font-size: 1.5rem; height: 3rem; line-height: 3rem; color:#868e96; cursor:default; margin-left:1rem;">다음</a>';
+				pagerHtml += '<a href="javascript:void(0)" style="font-size: 1.5rem; height: 3rem; line-height: 3rem; color:#868e96; cursor:default; margin-left:1rem;">맨끝</a>';
 			} else {
 				currentPageNo = data.pager.pageNo;
+				pagerHtml += '<a href="javascript:void(0)" onclick="onclick="composeFindPicModalTable('+1+')"style="font-size: 1.5rem; height: 3rem; line-height: 3rem; margin-right:1rem;">처음</a>';
 				if (data.pager.groupNo == 1) {
-					pagerHtml += '<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center; color:#868e96; cursor:default;">first_page</i>';
-					pagerHtml += '<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center; color:#868e96; cursor:default;">chevron_left</i>';
+					pagerHtml += '<a href="javascript:void(0)" style="font-size: 1.5rem; height: 3rem; line-height: 3rem; color:#868e96; cursor:default; margin-right:0.5rem;">이전</a>';
 				} else {
-					pagerHtml += '<a href="javascript:void(0) onclick="composeFindPicModalTable('+1+')">';
-					pagerHtml += '<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center;">first_page</i>';
-					pagerHtml += '</a>';
-					pagerHtml += '<a href="javascript:void(0)  onclick="composeFindPicModalTable(' + ((data.pager.groupNo - data.pager.pagesPerGroup) * 5) + ')">';
-					pagerHtml += '<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center;">chevron_left</i>';
-					pagerHtml += '</a>';
+					pagerHtml += '<a href="javascript:void(0)" onclick="onclick="composeFindPicModalTable(' + ((data.pager.groupNo - data.pager.pagesPerGroup) * 5) + ')" style="font-size: 1.5rem; height: 3rem; line-height: 3rem; margin-right:1rem;">이전</a>';
 				}
 				
 				for (let i=data.pager.startPageNo; i<=data.pager.endPageNo; ++i) {
-					pagerHtml += '<div style="width: 0.25rem;"></div>';
+					pagerHtml += '<div style="width: 0.5rem;"></div>';
 					if (data.pager.pageNo != i) {
-						pagerHtml += '<a href="javascript:void(0)" onclick="composeFindPicModalTable('+i+')" style="font-size: 1.6rem; height: 3rem; line-height: 3rem;">'+i+'</a>';
+						pagerHtml += '<a href="javascript:void(0)" onclick="onclick="composeFindPicModalTable('+i+')" style="font-size: 1.5rem; height: 3rem; line-height: 3rem;">'+i+'</a>';
 					} else {
-						pagerHtml += '<a href="javascript:void(0)" style="font-size: 1.6rem; height: 3rem; line-height: 3rem;">'+i+'</a>';
+						pagerHtml += '<a href="javascript:void(0)" style="font-size: 1.5rem; font-weight:700; color:blue; height: 3rem; line-height: 3rem;">'+i+'</a>';
 					}
-					pagerHtml += '<div style="width: 0.25rem;"></div>';
+					pagerHtml += '<div style="width: 0.5rem;"></div>';
 					
 				}
 				if (data.pager.groupNo == data.pager.totalGroupNo) {
-					pagerHtml += '<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center; color:#868e96; cursor:default;">chevron_right</i>';
-					pagerHtml += '<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center; color:#868e96; cursor:default;">last_page</i>';
+					pagerHtml += '<a href="javascript:void(0)" style="font-size: 1.5rem; height: 3rem; line-height: 3rem; color:#868e96; cursor:default; margin-left:1rem;">다음</a>';
 				} else {
-					pagerHtml += '<a href="javascript:void(0) onclick="composeFindPicModalTable(' + ((data.pager.groupNo * data.pager.pagesPerGroup)+1) + ')">';
-					pagerHtml += '<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center;">chevron_right</i>';
-					pagerHtml += '</a>';	
-					pagerHtml += '<a href="javascript:void(0) onclick="composeFindPicModalTable(' + data.pager.endPageNo + ')"">';
-					pagerHtml += '<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center;">last_page</i>';
-					pagerHtml += '</a>';
+					pagerHtml += '<a href="javascript:void(0)" onclick="onclick="composeFindPicModalTable(' + ((data.pager.groupNo * data.pager.pagesPerGroup)+1) + ')" style="font-size: 1.5rem; height: 3rem; line-height: 3rem; margin-left:1rem;">다음</a>';
 				}
-				
-				$('#findPicModalTablePagerDiv').html(pagerHtml);
+				pagerHtml += '<a href="javascript:void(0)" onclick="onclick="composeFindPicModalTable(' + data.pager.endPageNo + ')" style="font-size: 1.5rem; height: 3rem; line-height: 3rem; margin-left:1rem;">맨끝</a>';
 			}
+			$('#findPicModalTablePagerDiv').html(pagerHtml);
 		}
 	});
 }
@@ -1352,49 +1329,38 @@ function composeSetHrFindPicModalTable(pageNo) {
 					//페이징 파트 구성
 					let pagerHtml = '';
 					if (data.pager.totalRows == 0) {
-						pagerHtml += '<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center; color:#868e96; cursor:default;">first_page</i>';
-						pagerHtml += '<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center; color:#868e96; cursor:default;">chevron_left</i>';
-						pagerHtml += '<a href="javascript:void(0)" style="font-size: 1.6rem; height: 3rem; line-height: 3rem;">1</a>';
-						pagerHtml += '<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center; color:#868e96; cursor:default;">chevron_right</i>';
-						pagerHtml += '<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center; color:#868e96; cursor:default;">last_page</i>';
+						pagerHtml += '<a href="javascript:void(0)" style="font-size: 1.5rem; height: 3rem; line-height: 3rem; color:#868e96; cursor:default; margin-right:1rem;">처음</a>';
+						pagerHtml += '<a href="javascript:void(0)" style="font-size: 1.5rem; height: 3rem; line-height: 3rem; color:#868e96; cursor:default; margin-right:1rem;">이전</a>';
+						pagerHtml += '<a href="javascript:void(0)" style="font-size: 1.5rem; height: 3rem; line-height: 3rem;">1</a>';
+						pagerHtml += '<a href="javascript:void(0)" style="font-size: 1.5rem; height: 3rem; line-height: 3rem; color:#868e96; cursor:default; margin-left:1rem;">다음</a>';
+						pagerHtml += '<a href="javascript:void(0)" style="font-size: 1.5rem; height: 3rem; line-height: 3rem; color:#868e96; cursor:default; margin-left:1rem;">맨끝</a>';
 					} else {
 						currentPageNo = data.pager.pageNo;
+						pagerHtml += '<a href="javascript:void(0)" onclick="mainTableConfig(composeSetHrFindPicModalTable('+1+')"style="font-size: 1.5rem; height: 3rem; line-height: 3rem; margin-right:1rem;">처음</a>';
 						if (data.pager.groupNo == 1) {
-							pagerHtml += '<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center; color:#868e96; cursor:default;">first_page</i>';
-							pagerHtml += '<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center; color:#868e96; cursor:default;">chevron_left</i>';
+							pagerHtml += '<a href="javascript:void(0)" style="font-size: 1.5rem; height: 3rem; line-height: 3rem; color:#868e96; cursor:default; margin-right:0.5rem;">이전</a>';
 						} else {
-							pagerHtml += '<a href="javascript:void(0) onclick="composeSetHrFindPicModalTable('+1+')">';
-							pagerHtml += '<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center;">first_page</i>';
-							pagerHtml += '</a>';
-							pagerHtml += '<a href="javascript:void(0)  onclick="composeSetHrFindPicModalTable(' + ((data.pager.groupNo - data.pager.pagesPerGroup) * 5) + ')">';
-							pagerHtml += '<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center;">chevron_left</i>';
-							pagerHtml += '</a>';
+							pagerHtml += '<a href="javascript:void(0)" onclick="composeSetHrFindPicModalTable(' + ((data.pager.groupNo - data.pager.pagesPerGroup) * 5) + ')" style="font-size: 1.5rem; height: 3rem; line-height: 3rem; margin-right:1rem;">이전</a>';
 						}
 						
 						for (let i=data.pager.startPageNo; i<=data.pager.endPageNo; ++i) {
-							pagerHtml += '<div style="width: 0.25rem;"></div>';
+							pagerHtml += '<div style="width: 0.5rem;"></div>';
 							if (data.pager.pageNo != i) {
-								pagerHtml += '<a href="javascript:void(0)" onclick="composeSetHrFindPicModalTable('+i+')" style="font-size: 1.6rem; height: 3rem; line-height: 3rem;">'+i+'</a>';
+								pagerHtml += '<a href="javascript:void(0)" onclick="composeSetHrFindPicModalTable('+i+')" style="font-size: 1.5rem; height: 3rem; line-height: 3rem;">'+i+'</a>';
 							} else {
-								pagerHtml += '<a href="javascript:void(0)" style="font-size: 1.6rem; height: 3rem; line-height: 3rem;">'+i+'</a>';
+								pagerHtml += '<a href="javascript:void(0)" style="font-size: 1.5rem; font-weight:700; color:blue; height: 3rem; line-height: 3rem;">'+i+'</a>';
 							}
-							pagerHtml += '<div style="width: 0.25rem;"></div>';
+							pagerHtml += '<div style="width: 0.5rem;"></div>';
 							
 						}
 						if (data.pager.groupNo == data.pager.totalGroupNo) {
-							pagerHtml += '<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center; color:#868e96; cursor:default;">chevron_right</i>';
-							pagerHtml += '<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center; color:#868e96; cursor:default;">last_page</i>';
+							pagerHtml += '<a href="javascript:void(0)" style="font-size: 1.5rem; height: 3rem; line-height: 3rem; color:#868e96; cursor:default; margin-left:1rem;">다음</a>';
 						} else {
-							pagerHtml += '<a href="javascript:void(0) onclick="composeSetHrFindPicModalTable(' + ((data.pager.groupNo * data.pager.pagesPerGroup)+1) + ')">';
-							pagerHtml += '<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center;">chevron_right</i>';
-							pagerHtml += '</a>';	
-							pagerHtml += '<a href="javascript:void(0) onclick="composeSetHrFindPicModalTable(' + data.pager.endPageNo + ')"">';
-							pagerHtml += '<i class="material-icons" style="font-size: 2rem; height: 3rem; line-height: 3rem; display: flex; align-content: center;">last_page</i>';
-							pagerHtml += '</a>';
+							pagerHtml += '<a href="javascript:void(0)" onclick="composeSetHrFindPicModalTable(' + ((data.pager.groupNo * data.pager.pagesPerGroup)+1) + ')" style="font-size: 1.5rem; height: 3rem; line-height: 3rem; margin-left:1rem;">다음</a>';
 						}
-						
-						$('#setHrFindPicModalTablePagerDiv').html(pagerHtml);
+						pagerHtml += '<a href="javascript:void(0)" onclick="composeSetHrFindPicModalTable(' + data.pager.endPageNo + ')" style="font-size: 1.5rem; height: 3rem; line-height: 3rem; margin-left:1rem;">맨끝</a>';
 					}
+					$('#setHrFindPicModalTablePagerDiv').html(pagerHtml);
 				}
 			});
 			

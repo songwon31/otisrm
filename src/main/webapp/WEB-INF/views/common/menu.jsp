@@ -40,9 +40,9 @@
 				<li class="menu-item"><a href="${pageContext.request.contextPath}/picHome">나의 할일</a></li>
 			</ul>
 		</c:if>
+		<div style="height:3rem;"></div>
 	</c:if>
 	
-	<div style="height:3rem;"></div>
 	<div style="display:flex; flex-direction:row; align-items:center;">
 		<svg class="svg-inline--fa fa-chart-pie fa-w-17" aria-hidden="true"
 			data-prefix="fas" data-icon="chart-pie" role="img"
@@ -111,7 +111,6 @@
 		<ul style="list-style:none; padding:0; margin:0;">
 			<li class="menu-item"><a href="${pageContext.request.contextPath}/systemManagement/usrManagement">사용자 관리</a></li>
 			<li class="menu-item"><a href="${pageContext.request.contextPath}/systemManagement/instManagement">기업/시스템 관리</a></li>
-			<li class="menu-item"><a href="${pageContext.request.contextPath}/systemManagement/srManagement">SR 관리</a></li> 
 		</ul>
 	</c:if>
 </div>

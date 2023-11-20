@@ -28,7 +28,7 @@
 					<div style="width:100%;" class="p-0 d-inline-flex flex-row align-items-center ">
 						<div style="width:30%; display:flex; align-items:center;">
 							<svg style="width:0.5rem; height:0.5rem; margin: 0rem 0.5rem;"><rect width="0.5rem" height="0.5rem" fill="#222E3C" /></svg>
-							<span style="font-size:1.6rem; font-weight:700;">권한</span>
+							<span style="font-size:1.5rem; font-weight:700;">권한</span>
 						</div>
 						<div style="width:70%;">
 							<select id="authrtSelect" name="authrtSelect" style="width:100%">
@@ -42,7 +42,7 @@
 					<div style="width:100%;" class="p-0 d-inline-flex flex-row align-items-center">
 						<div style="width:30%; display:flex; align-items:center;">
 							<svg style="width:0.5rem; height:0.5rem; margin: 0rem 0.5rem;"><rect width="0.5rem" height="0.5rem" fill="#222E3C" /></svg>
-							<span style="font-size:1.6rem; font-weight:700;">상태</span>
+							<span style="font-size:1.5rem; font-weight:700;">상태</span>
 						</div>
 						<div style="width:70%;">
 							<select id="sttsSelect" name="sttsSelect" style="width:100%">
@@ -57,7 +57,7 @@
 					<div style="width:100%;" class="p-0 d-inline-flex flex-row align-items-center ">
 						<div style="width:30%; display:flex; align-items:center;">
 							<svg style="width:0.5rem; height:0.5rem; margin: 0rem 0.5rem;"><rect width="0.5rem" height="0.5rem" fill="#222E3C" /></svg>
-							<span style="font-size:1.6rem; font-weight:700;">소속</span>
+							<span style="font-size:1.5rem; font-weight:700;">소속</span>
 						</div>
 						<div style="width:70%;">
 							<select id="instSelect" name="instSelect" style="width:100%">
@@ -72,7 +72,7 @@
 					<div style="width:100%;" class="p-0 d-inline-flex flex-row align-items-center">
 						<div style="width:30%; display:flex; align-items:center;">
 							<svg style="width:0.5rem; height:0.5rem; margin: 0rem 0.5rem;"><rect width="0.5rem" height="0.5rem" fill="#222E3C" /></svg>
-							<span style="font-size:1.6rem; font-weight:700;">부서</span>
+							<span style="font-size:1.5rem; font-weight:700;">부서</span>
 						</div>
 						<div style="width:70%;">
 							<select id="deptSelect" name="deptSelect" style="width:100%">
@@ -95,12 +95,12 @@
 					<div style="width:100%;" class="p-0 d-inline-flex flex-row align-items-center">
 						<div style="width:13.8%; display:flex; align-items:center;">
 							<svg style="width:0.5rem; height:0.5rem; margin: 0rem 0.5rem;"><rect width="0.5rem" height="0.5rem" fill="#222E3C" /></svg>
-							<span style="font-size:1.6rem; font-weight:700;">가입일</span>
+							<span style="font-size:1.5rem; font-weight:700;">가입일</span>
 						</div>
 						<div style="width:86.2%; display:flex; align-items:center;">
 							<div class="d-inline-flex" style="width:100%; flex-direction:row; align-items:center">
 								<input id ="joinDateStart" name="joinDateStart" style="width:45%;" type="date">
-								<div style="width:10%; font-size:1.6rem; display:flex; flex-direction:row; justify-content:center; align-items:center;">~</div>
+								<div style="width:10%; font-size:1.5rem; display:flex; flex-direction:row; justify-content:center; align-items:center;">~</div>
 								<input id ="joinDateEnd" name="joinDateEnd" style="width:45%;" type="date">
 							</div>
 						</div>
@@ -111,10 +111,10 @@
 					<div style="width:100%;" class="p-0 d-inline-flex flex-row align-items-center">
 						<div style="width:20%; display:flex; align-items:center;">
 							<svg style="width:0.5rem; height:0.5rem; margin: 0rem 0.5rem;"><rect width="0.5rem" height="0.5rem" fill="#222E3C" /></svg>
-							<span style="font-size:1.6rem; font-weight:700;">키워드</span>
+							<span style="font-size:1.5rem; font-weight:700;">키워드</span>
 						</div>
 						<div style="width:80%; display:flex; align-items:center;">
-							<div style="width:35%; font-size:1.6rem;">
+							<div style="width:35%; font-size:1.5rem;">
 								<select id="keywordCategoty" name="keywordCategoty" style="width:100%">
 									<option value="usrNm" selected>이름</option>	
 									<option value="usrTelno">전화번호</option>
@@ -183,7 +183,7 @@
 					<col width="8%"/>
 				</colgroup>
 				<thead style="background-color:#edf2f8">
-					<tr style="height:5rem; font-size:1.6rem; font-weight:700;">
+					<tr style="height:5rem; font-size:1.5rem; font-weight:700;">
 						<th scope="col"><input id="batchCheck" type="checkbox" class="checkbox" style="vertical-align: middle;"></th>
 						<th scope="col"></th>
 						<th scope="col">번호</th>
