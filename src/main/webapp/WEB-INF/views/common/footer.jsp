@@ -105,7 +105,7 @@
 								</div>
 							</div>
 							<div style="height: 4rem; display: flex; align-items: center;">
-								<button type="button" id="modalUsrPasswordEditButton" onclick="editUsrPassword()" class="btn-1" style="height:3rem;">
+								<button type="button" id="modalUsrPasswordEditButton" onclick="editUsrPassword()" class="btn-blue" style="height:3rem; width:15rem;">
 									비밀번호 변경
 								</button>
 							</div>
@@ -148,7 +148,7 @@
 									<input id="footerModalUsrEml" type="text" value="" style="width:100%; height:3rem; margin:0 0 0 0.5rem;">
 								</div>
 								<div style="flex-grow:1; height: 4rem; padding-left: 1rem; display: flex; align-items: center;">
-									<button type="button" id="footerModalUsrEmlEditButton" onclick="editUsrEml()" class="btn-1" style="height:3rem; width:70%;">
+									<button type="button" id="footerModalUsrEmlEditButton" onclick="editUsrEml()" class="btn-blue" style="height:3rem; width:70%;">
 										이메일 변경
 									</button>
 								</div>
@@ -169,7 +169,7 @@
 									<input id="footerModalUsrTelno" type="text" value="" style="width:100%; height:3rem; margin:0 0 0 0.5rem;">
 								</div>
 								<div style="flex-grow:1; height: 4rem; padding-left: 1rem; display: flex; align-items: center;">
-									<button type="button" id="footerModalUsrTelnoEditButton" onclick="editUsrTelno()" class="btn-1" style="height:3rem; width:70%;">
+									<button type="button" id="footerModalUsrTelnoEditButton" onclick="editUsrTelno()" class="btn-blue" style="height:3rem; width:70%;">
 										전화번호 변경
 									</button>
 								</div>
@@ -250,7 +250,7 @@
 					 -->
 					<div style="width:100%; display: flex; flex-direction: row;">
 						<div style="height: 4rem; padding-left: 0.5rem; display: flex; align-items: center;">
-							<button type="button" id="whdwlButton" data-toggle="modal" data-target="#footerWhdwlModal" class="btn-1" style="height:3rem; background-color:red;">
+							<button type="button" id="whdwlButton" data-toggle="modal" data-target="#footerWhdwlModal" class="btn-red" style="height:3rem; background-color:red;">
 								회원탈퇴
 							</button>
 						</div>
@@ -282,7 +282,7 @@
 <div id="footerWarningModal" class="modal" data-backdrop="static">
 	<div class="modal-dialog modal-dialog-centered modal-sm">
 		<div class="modal-content">
-			<div class="modal-header" style="background-color:red; color:white; display:flex;">
+			<div class="modal-header" style="background-color:#de483a; color:white; display:flex;">
 				<div class="modal-title" style="font-size:2rem; font-weight:700;">경고</div>
 				<i class="material-icons close-icon" data-dismiss="modal" style="cursor: pointer;">close</i>
 			</div>

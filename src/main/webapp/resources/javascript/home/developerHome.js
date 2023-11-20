@@ -185,7 +185,7 @@ function refactorMainTable(filterType, page) {
 					srTrHtml += '<td>' + sr.srNo + '</td>';
 					srTrHtml += '<td>' + sr.sysNm + '</td>';
 					srTrHtml += '<td>' + sr.srTaskNm + '</td>';
-					srTrHtml += '<td>' + sr.srTtl + '</td>';
+					srTrHtml += '<td class="text-align-left">' + sr.srTtl + '</td>';
 					srTrHtml += '<td>' + sr.usrNm + '</td>';
 					let srCmptnPrnmntDt = new Date(sr.srCmptnPrnmntDt);
 			        srTrHtml += '<td>' + formatDate(srCmptnPrnmntDt) + '</td>';
@@ -196,7 +196,7 @@ function refactorMainTable(filterType, page) {
 						srTrHtml += '<td>' + formatDate(srTrgtCmptnDt) + '</td>';
 			        }
 					srTrHtml += '<td>' + sr.srPrgrsSttsNm + '</td>';
-					srTrHtml += '<td> <button data-toggle="modal" data-target="#requestDetailModal" class="btn-1 detail-button" style="height:2.6rem; width:60%;" onclick="showRequestDetail(\'' + sr.srNo + '\')">요청상세</button> </td>';
+					srTrHtml += '<td> <button data-toggle="modal" data-target="#requestDetailModal" class="btn-blue detail-button" style="height:2.6rem; width:60%;" onclick="showRequestDetail(\'' + sr.srNo + '\')">요청상세</button> </td>';
 					srTrHtml += '</tr>'
 					//jsp에 삽입
 					$('#mainTable tbody').append(srTrHtml);

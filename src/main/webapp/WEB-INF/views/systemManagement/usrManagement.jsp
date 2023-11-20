@@ -153,13 +153,13 @@
 			<div style="flex-grow:1;"></div>
 			<div style="display:flex; flex-direction:row; align-items:center;">
 				<button id="downloadExcelButton" class="btn-navy" onclick="downloadExcel()"
-					style="height:3rem; margin-right:0.5rem;">엑셀 다운로드</button>
+					style="height:3rem; width:12rem; margin-right:0.5rem;">엑셀 다운로드</button>
 				<button type="button" onclick="batchApproval()" class="btn-blue"
-						style="height:3rem; margin-right:0.5rem;">
+						style="height:3rem; width:12rem; margin-right:0.5rem;">
 					일괄 승인/복구
 				</button>
 				<button type="button" onclick="batchWithdrawal()" class="btn-red"
-						style="height:3rem;">
+						style="height:3rem; width:12rem;">
 					일괄 탈퇴처리
 				</button>
 			</div>
@@ -246,7 +246,7 @@
 							<select id="modalUsrDept" name="modalUsrDept" style="width:60%; padding:3px;">
 								
 							</select>
-							<button type="button" onclick="editUsrDeptModal()" class="btn-blue" style="height:3rem; margin-left:1rem;">
+							<button type="button" onclick="editUsrDeptModal()" class="btn-blue" style="height:3rem; width:8rem; margin-left:1rem;">
 								저장
 							</button>
 						</div>
@@ -257,7 +257,7 @@
 							<select id="modalUsrIbps" name="modalUsrIbps" style="width:60%; padding:3px;">
 								
 							</select>
-							<button type="button" onclick="editUsrIbpsModal()" class="btn-blue" style="height:3rem; margin-left:1rem;">
+							<button type="button" onclick="editUsrIbpsModal()" class="btn-blue" style="height:3rem; width:8rem; margin-left:1rem;">
 								저장
 							</button>
 						</div>
@@ -266,7 +266,7 @@
 							<select id="modalUsrRole" name="modalUsrRole" style="width:60%; padding:3px;">
 								
 							</select>
-							<button type="button" onclick="editUsrRoleModal()" class="btn-blue" style="height:3rem; margin-left:1rem;">
+							<button type="button" onclick="editUsrRoleModal()" class="btn-blue" style="height:3rem; width:8rem; margin-left:1rem;">
 								저장
 							</button>
 						</div>
@@ -281,7 +281,7 @@
 								<option value="REVIEWER">검토자</option>
 								<option value="SYS_MANAGER">시스템 관리자</option>
 							</select>
-							<button type="button" onclick="editUsrAuthrt()" class="btn-blue" style="height:3rem; margin-left:1rem;">
+							<button type="button" onclick="editUsrAuthrt()" class="btn-blue" style="height:3rem; width:8rem; margin-left:1rem;">
 								저장
 							</button>
 						</div>
@@ -303,7 +303,7 @@
 <div id="wraningModal" class="modal" data-backdrop="static">
 	<div class="modal-dialog modal-dialog-centered modal-sm">
 		<div class="modal-content">
-			<div class="modal-header" style="background-color:red; color:white; display:flex;">
+			<div class="modal-header" style="background-color:#de483a; color:white; display:flex;">
 				<div class="modal-title" style="font-size:2rem; font-weight:700;">경고</div>
 				<i class="material-icons close-icon" data-dismiss="modal" style="cursor: pointer;">close</i>
 			</div>
