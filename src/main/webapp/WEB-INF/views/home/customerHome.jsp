@@ -131,14 +131,14 @@
    
     
     <div class="potalBottom section shadow">
-   	  <div class="subcontentTitle">
+   	  <div>
 	   	  <div class="d-flex st-ct">
 	   	  	<i class="material-icons stt-ic">chevron_right</i>
 	   	  	<span style="font-size: 2rem;">게시판</span>
 	   	  </div>
    	  </div>
    	  <div class="d-flex st-ct">
-	   	  <div class="subcontentTitle pt-1" style="width: 48%; padding-left: 19px;color: #5d6e7e;">
+	   	  <div class="subcontentTitle pt-1" style="width: 48%; padding-left: px;color: #5d6e7e;">
 	   	  	공지사항
 	   	  </div>
 	   	  <div>	   	  

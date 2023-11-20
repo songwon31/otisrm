@@ -128,7 +128,7 @@ function loadInqs(pageNo) {
         		  html += '  <td class="truncate-text">' + item.usrNm + '</td>';
         		  html += '  <td>' + formattedDate + '</td>';
         		  html += '  <td>' + item.inqAnsYn + '</td>';
-        		  html += '  <td><button type="button" id="showinqDetailBtn" class="btn-2" data-toggle="modal" data-target="#answelInq" onclick="showInqDtail(\'' + item.inqNo + '\')">상세보기</button></td>';
+        		  html += '  <td><button type="button" id="showinqDetailBtn" class="btn-1" data-toggle="modal" data-target="#answelInq" onclick="showInqDtail(\'' + item.inqNo + '\')">상세보기</button></td>';
         		  html += '</tr>';
         		
  
@@ -140,7 +140,7 @@ function loadInqs(pageNo) {
         		  html += '  <td class="truncate-text">' + item.usrNm + '</td>';
         		  html += '  <td>' + formattedDate + '</td>';
         		  html += '  <td>' + item.inqAnsYn + '</td>';
-        		  html += '  <td><button type="button" style="opacity: 0.5;" class="btn-2" disabled>상세보기</button></td>';
+        		  html += '  <td><button type="button" style="opacity: 0.5;" class="btn-1" disabled>상세보기</button></td>';
         		  html += '</tr>';
         	  }
            }else if(item.inqPrvtYn == "N"){
@@ -150,7 +150,7 @@ function loadInqs(pageNo) {
                   html += '  <td class="truncate-text">' + item.usrNm + '</td>';
                   html += '  <td>' + formattedDate + '</td>';
                   html += '  <td>' + item.inqAnsYn + '</td>';
-                  html += '  <td><button type="button" id="showinqDetailBtn" class="btn-2" data-toggle="modal" data-target="#answelInq" onclick="showInqDtail(\'' + item.inqNo + '\')">상세보기</button></td>';
+                  html += '  <td><button type="button" id="showinqDetailBtn" class="btn-1" data-toggle="modal" data-target="#answelInq" onclick="showInqDtail(\'' + item.inqNo + '\')">상세보기</button></td>';
                   html += '</tr>';
               
           }
