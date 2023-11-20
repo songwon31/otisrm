@@ -35,7 +35,7 @@
 				<!-- 개발 부서 -->
 				<div style="width: 8.94%; display:flex; align-items:center;">
 					<svg class="svgicon"><rect/></svg>
-					<span style="font-size:1.6rem; font-weight:700;">개발 부서</span>
+					<span style="font-size:1.5rem; font-weight:700;">개발 부서</span>
 				</div>
 				<div style="width: 9.59%;">
 					<select id="deptNo-select" name="deptNo" style="width:100%">
@@ -48,7 +48,7 @@
 				<!-- 진행 상태 -->
 				<div style="width: 8.94%; display:flex; align-items:center;">
 					<svg class="svgicon"><rect/></svg>
-					<span style="font-size:1.6rem; font-weight:700;">진행상태</span>
+					<span style="font-size:1.5rem; font-weight:700;">진행상태</span>
 				</div>
 				<div style="width: 20.73%;">
 					<select style="width:109.13px;" id="srRqstStts-select" name="status">
@@ -58,7 +58,7 @@
 				<div style="width: 3.5%;"></div>
 				<!-- 내 SR 요청건만 -->
 				<div style="width: 9.79%;" class="d-flex flex-row-reverse align-items-center">
-					<span style="font-size:1.6rem; margin-left: 0.5rem;">내 요청 건만</span>
+					<span style="font-size:1.5rem; margin-left: 0.5rem;">내 요청 건만</span>
 		        	<input type="checkbox" id="myCheck" name="myDevCheck" value="False">
 		        	<input type="hidden" id="usr" name="usr" value="">
 		        </div>
@@ -70,11 +70,11 @@
 				<!-- 조회기간 -->
 				<div class="" style="width: 8.94%; display:flex; align-items:center;">
 					<svg class="svgicon"><rect/></svg>
-					<span class="filter-item">조회기간</span>
+					<span class="filter-item" style="font-size:1.5rem;">조회기간</span>
 				</div>
 				<div style="width: 22.57%; display:flex; align-items:center;">
 						<input id="startDate" style="width: 45%;" name="startDate" type="date">
-						<div style="width: 10%; margin: 0 1rem; font-size:1.6rem; display:flex; flex-direction:row; justify-content:center; align-items:center;">~</div>
+						<div style="width: 10%; margin: 0 1rem; font-size:1.5rem; display:flex; flex-direction:row; justify-content:center; align-items:center;">~</div>
 						<input id="endDate" style="width: 45%;" name="endDate" type="date">
 				</div>
 				<div style="width: 3.5%;"></div>
@@ -82,7 +82,7 @@
 				<!-- 관련 시스템 -->
 				<div style="width: 8.94%; display:flex; align-items:center;">
 					<svg class="svgicon"><rect/></svg>
-					<span class="filter-item">관련 시스템</span>
+					<span class="filter-item" style="font-size:1.5rem;">관련 시스템</span>
 				</div>
 				<div style="width: 9.59%;">
 					<select id="sysNo-select" name="sysNo" style="width:100%">
@@ -95,7 +95,7 @@
 				<!-- 키워드 검색 -->
 				<div style="width: 8.94%; display:flex; align-items:center;">
 					<svg class="svgicon"><rect/></svg>
-					<span style="font-size:1.6rem; font-weight:700;">키워드</span>
+					<span style="font-size:1.5rem; font-weight:700;">키워드</span>
 				</div>
 				<div style="width: 24.73%; display: flex;">
 					<select style="width:30%;" id="searchTarget" name="searchTarget">
@@ -159,7 +159,7 @@
 				</tbody>
 			</table>
 			<!-- 페이징 -->
-			<div id="pagination-container" class="paging d-flex justify-content-center">
+			<div id="pagination-container" class="paging d-flex justify-content-center" style="margin-top: 8px;">
 			
 			</div>	
 		</div>

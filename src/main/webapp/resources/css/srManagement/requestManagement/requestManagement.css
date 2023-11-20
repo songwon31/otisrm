@@ -129,7 +129,7 @@
 	height: 4.7rem;
 }
 #mainTable thead tr{
-	height: 5rem; 
+	height: 4.7rem; 
 	font-size: 1.5rem; 
 	font-weight: 700;
 }
@@ -191,7 +191,8 @@
 /* 파랑버튼 큰버전 */
 .btn-1 {
 	border: none;
-	font-size:1.3rem;
+	font-size:1.5rem;
+	font-weight: 700;
 	color: #f3ffff;
 	background-color:#2c7be4; 
 	border-radius:3px;
@@ -206,6 +207,7 @@
 .btn-2 {
 	border: none;
 	font-size:1rem;
+	font-weight: 700;
 	color: #f3ffff;
 	background-color:#2c7be4; 
 	border-radius:3px;
@@ -219,7 +221,8 @@
 /* 회색버튼 */
 .btn-3 {
 	border: none;
-	font-size:1.3rem;
+	font-size:1.5rem;
+	font-weight: 700;
 	color: #f3ffff;
 	background-color:#949494; 
 	border-radius:3px;
@@ -232,7 +235,8 @@
 /* 검정버튼 작은버전 */
 .btn-4 {
 	border: none;
-	font-size:1.6rem;
+	font-size:1.5rem;
+	font-weight: 700;
 	color:white;
 	background-color: #222E3C; 
 	border-radius: 0.5rem;
@@ -245,7 +249,8 @@
 /* 검정버튼 큰버전 */
 .btn-5 {
 	border: none;
-	font-size:1.6rem;
+	font-size:1.5rem;
+	font-weight: 700;
 	color:white;
 	background-color: #222E3C; 
 	border-radius: 0.5rem;
@@ -258,7 +263,8 @@
 /* 파랭 버튼 가장 큰 버전 */
 .btn-6 {
 	border: none;
-	font-size:1.6rem;
+	font-size:1.5rem;
+	font-weight: 700;
 	color:white;
 	background-color: #2c7be4; 
 	border-radius: 0.5rem;
@@ -272,7 +278,8 @@
 /* 빨간 버튼 */
 .btn-7 {
 	border: none;
-	font-size:1.3rem;
+	font-size:1.5rem;
+	font-weight: 700;
 	color: #f3ffff;
 	background-color:#de483a; 
 	border-radius:3px;
@@ -298,6 +305,16 @@
 	font-weight: 700;
 }
 
+/* searchForem */
+#searchForm input[type="date"], #searchForm input[type="text"], #searchForm select {
+    font-size: 1.5rem;
+    padding: 0 0.8rem;
+    border: 1px solid #ADB5BD;
+    border-radius: 3px;
+    height: 3rem;
+    width: 6rem;
+}
+
 /* Modal-input */
 .form-label {
 	font-weight: 700;
@@ -314,6 +331,10 @@
 }
 .form-control{
 	font-size: 1.3rem;
+}
+
+.paging a{
+	font-size: 1.5rem;
 }
 
 /* width */

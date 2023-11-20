@@ -270,6 +270,7 @@
 }
 .modal-input{
 	height: 3rem;
+	padding-left: 2rem;
 }
 #srContent{
 	height: 15rem;
@@ -280,6 +281,8 @@
 .form-control{
 	font-size: 1.3rem;
 }
+
+
 
 /* width */
 .w-100{

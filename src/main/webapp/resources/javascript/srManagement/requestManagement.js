@@ -362,17 +362,17 @@ function updatePagination(pageNo, choiceSrRqstSttsNo) {
         var currentPageNo = pageNo;
         
         // 처음/맨끝 페이지 버튼 생성
-        var firstButton = '<a class="page-button btn" style="font-size: 1.3rem;" href="javascript:loadSRRequests(1,\''+ choiceSrRqstSttsNo +'\')">처음</a>';
-        var lastButton = '<a class="page-button btn" style="font-size: 1.3rem;" href="javascript:loadSRRequests(' + totalPageNo + ',\''+ choiceSrRqstSttsNo +'\')">맨끝</a>';
+        var firstButton = '<a class="page-button btn" style="font-size: 1.5rem;" href="javascript:loadSRRequests(1,\''+ choiceSrRqstSttsNo +'\')">처음</a>';
+        var lastButton = '<a class="page-button btn" style="font-size: 1.5rem;" href="javascript:loadSRRequests(' + totalPageNo + ',\''+ choiceSrRqstSttsNo +'\')">맨끝</a>';
         
         // 페이지 번호 버튼 생성
         var pageButtons = '';
         for (var i = 1; i <= totalPageNo; i++) {
           if (i === currentPageNo) {
             // 현재 페이지 번호는 활성화된 스타일을 적용
-            pageButtons += '<a class="page-button btn active" style="font-size: 1.3rem;" href="javascript:loadSRRequests(' + i + ',\''+ choiceSrRqstSttsNo +'\')">' + i + '</a>';
+            pageButtons += '<a class="page-button btn active" style="font-size: 1.5rem;" href="javascript:loadSRRequests(' + i + ',\''+ choiceSrRqstSttsNo +'\')">' + i + '</a>';
           } else {
-            pageButtons += '<a class="page-button btn" style="font-size: 1.3rem;" href="javascript:loadSRRequests(' + i + ',\''+ choiceSrRqstSttsNo +'\')">' + i + '</a>';
+            pageButtons += '<a class="page-button btn" style="font-size: 1.5rem;" href="javascript:loadSRRequests(' + i + ',\''+ choiceSrRqstSttsNo +'\')">' + i + '</a>';
           }
         }
         
