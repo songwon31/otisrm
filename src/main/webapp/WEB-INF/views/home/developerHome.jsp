@@ -1107,7 +1107,7 @@
 <div id="warningModal" class="modal" data-backdrop="static">
 	<div class="modal-dialog modal-dialog-centered modal-md">
 		<div class="modal-content">
-			<div class="modal-header" style="background-color:red; color:white; display:flex;">
+			<div class="modal-header" style="background-color:#de483a; color:white; display:flex;">
 				<div class="modal-title" style="font-size:2rem; font-weight:700;">경고</div>
 				<i class="material-icons close-icon" data-dismiss="modal" style="cursor: pointer;">close</i>
 			</div>

@@ -86,7 +86,7 @@
 
 .btn-1 {
 	border: none;
-	font-size: 1.3rem;
+	font-size: 1.5rem;
 	color: #f3ffff;
 	background-color:#2c7be4; 
 	border-radius:3px;
@@ -96,9 +96,13 @@
 	justify-content: center; /* 세로 - 상단으로 */
 }
 
+.btn-1:active {
+   background-color:#4177bf; 
+}
+
 .btn-blue {
 	border: none;
-	font-size: 1.3rem;
+	font-size: 1.5rem;
 	color: #ffffff;
 	background-color:#2c7be4; 
 	border-radius:3px;
@@ -106,23 +110,34 @@
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
+	font-weight:700;
 }
+
+.btn-blue:active {
+   background-color:#4177bf; 
+}
+
 
 .btn-red {
 	border: none;
-	font-size: 1.3rem;
+	font-size: 1.5rem;
 	color: #ffffff;
-	background-color:#d1180b; 
+	background-color:#de483a; 
 	border-radius:3px;
 	display: inline-flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
+	font-weight:700;
+}
+
+.btn-red:active {
+   background-color:#c53d31; 
 }
 
 .btn-navy {
 	border: none;
-	font-size: 1.3rem;
+	font-size: 1.5rem;
 	color: #ffffff;
 	background-color:#222e3c; 
 	border-radius:3px;
@@ -130,16 +145,27 @@
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
+	font-weight:700;
 }
+
+.btn-navy:active {
+   background-color:black; 
+}
+
 
 .btn-gray {
 	border: none;
-	font-size: 1.3rem;
+	font-size: 1.5rem;
 	color: #ffffff;
-	background-color:#868e96; 
+	background-color:#949494; 
 	border-radius:3px;
 	display: inline-flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
+	font-weight:700;
+}
+
+.btn-gray:active {
+   background-color:#7c7c7c; 
 }

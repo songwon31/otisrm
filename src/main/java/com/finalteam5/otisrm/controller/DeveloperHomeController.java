@@ -53,6 +53,7 @@ public class DeveloperHomeController {
 			UsrDetails usrDetails = (UsrDetails) authentication.getPrincipal();
 			Usr usr = usrDetails.getUsr();
 			model.addAttribute("usr", usr);
+			
 			log.info(""+usr);
 			return "/home/developerHome";
 		} else {

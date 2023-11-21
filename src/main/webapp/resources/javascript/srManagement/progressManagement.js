@@ -167,8 +167,8 @@ function mainTableConfig(progressManagementSearch, pageNo) {
 				
 				mainTableHtml += '<td>' + sr.srRqustSttsNm + '</td>';
 				mainTableHtml += '<td>' + sr.srPrgrsSttsNm + '</td>';
-				mainTableHtml += '<td> <button data-toggle="modal" data-target="#requestDetailModal" class="btn-1 detail-button" style="width:90%; height:2.8rem;" onclick="showRequestDetailModal(\'' + sr.srNo + '\')">요청상세</button> </td>';
-				mainTableHtml += '<td> <button data-toggle="modal" data-target="#srProgressModal" class="btn-1 detail-button" style="width:90%; height:2.8rem;" onclick="showSrProgressModalFromMain(\'' + sr.srNo + '\')">진척관리</button> </td>';
+				mainTableHtml += '<td> <button data-toggle="modal" data-target="#requestDetailModal" class="btn-blue detail-button" style="width:90%; height:2.8rem;" onclick="showRequestDetailModal(\'' + sr.srNo + '\')">요청상세</button> </td>';
+				mainTableHtml += '<td> <button data-toggle="modal" data-target="#srProgressModal" class="btn-blue detail-button" style="width:90%; height:2.8rem;" onclick="showSrProgressModalFromMain(\'' + sr.srNo + '\')">진척관리</button> </td>';
 				mainTableHtml += '</tr>';
 				//jsp에 삽입
 				$('#mainTable tbody').append(mainTableHtml);
@@ -339,7 +339,8 @@ function modal_sr_dvl_conts_btn_checked() {
 	$('#modal_sr_dvl_conts_div').css('display', '');
 }
 
-//sr진척관리
+//sr진척
+
 function closeModal() {
 	mainTableConfig(currentProgressManagementSearch, currentPageNo);
 }
@@ -570,7 +571,7 @@ function showSrProgressModalFromMain(srNo) {
 										$('#srAnalysisPrgrs input').val(srPrgrs.srPrgrs);
 									}
 									
-									let btnHtml = '<center><a data-toggle="modal" data-target="#manageSrOutputModal" href="javascript:void(0)" class="btn-1" style="width:30%; height:3rem; font-size:1.5rem;" onclick="composeManageSrOutputModal(\'ANALYSIS\')">관리</a></center>';
+									let btnHtml = '<button data-toggle="modal" data-target="#manageSrOutputModal" href="javascript:void(0)" class="btn-blue" style="width:30%; height:3rem; font-size:1.5rem;" onclick="composeManageSrOutputModal(\'ANALYSIS\')">관리</button>';
 									/*btnHtml += 'style="height: 3rem; width: 30%; border-radius: 5px; background-color:#2c7be4; color:white; font-weight:700;';
 									btnHtml += 'display: flex; flex-direction: row; justify-content: center; align-items: center;">관리</a></center>';*/
 									
@@ -586,7 +587,7 @@ function showSrProgressModalFromMain(srNo) {
 									if (srPrgrs.srPrgrs > 0) {
 										$('#srDesignPrgrs input').val(srPrgrs.srPrgrs);
 									}
-									let btnHtml = '<center><a data-toggle="modal" data-target="#manageSrOutputModal" href="javascript:void(0)" class="btn-1" style="width:30%; height:3rem; font-size:1.5rem;" onclick="composeManageSrOutputModal(\'DESIGN\')">관리</a></center>';
+									let btnHtml = '<button data-toggle="modal" data-target="#manageSrOutputModal" href="javascript:void(0)" class="btn-blue" style="width:30%; height:3rem; font-size:1.5rem;" onclick="composeManageSrOutputModal(\'DESIGN\')">관리</button>';
 									$('#srDesignOtptBtn').html(btnHtml);
 								} else if (srPrgrs.srPrgrsSttsNm == '구현') {
 									if (srPrgrs.srPrgrsBgngDt != null) {
@@ -599,7 +600,7 @@ function showSrProgressModalFromMain(srNo) {
 									if (srPrgrs.srPrgrs > 0) {
 										$('#srImplPrgrs input').val(srPrgrs.srPrgrs);
 									}
-									let btnHtml = '<center><a data-toggle="modal" data-target="#manageSrOutputModal" href="javascript:void(0)" class="btn-1" style="width:30%; height:3rem; font-size:1.5rem;" onclick="composeManageSrOutputModal(\'IMPLEMENT\')">관리</a></center>';
+									let btnHtml = '<button data-toggle="modal" data-target="#manageSrOutputModal" href="javascript:void(0)" class="btn-blue" style="width:30%; height:3rem; font-size:1.5rem;" onclick="composeManageSrOutputModal(\'IMPLEMENT\')">관리</button>';
 									$('#srImplOtptBtn').html(btnHtml);
 								} else if (srPrgrs.srPrgrsSttsNm == '시험') {
 									if (srPrgrs.srPrgrsBgngDt != null) {
@@ -612,7 +613,7 @@ function showSrProgressModalFromMain(srNo) {
 									if (srPrgrs.srPrgrs > 0) {
 										$('#srTestPrgrs input').val(srPrgrs.srPrgrs);
 									}
-									let btnHtml = '<center><a data-toggle="modal" data-target="#manageSrOutputModal" href="javascript:void(0)" class="btn-1" style="width:30%; height:3rem; font-size:1.5rem;" onclick="composeManageSrOutputModal(\'TEST\')">관리</a></center>';
+									let btnHtml = '<button data-toggle="modal" data-target="#manageSrOutputModal" href="javascript:void(0)" class="btn-blue" style="width:30%; height:3rem; font-size:1.5rem;" onclick="composeManageSrOutputModal(\'TEST\')">관리</button>';
 									$('#srTestOtptBtn').html(btnHtml);
 								} else if (srPrgrs.srPrgrsSttsNm == '반영요청') {
 									if (srPrgrs.srPrgrsBgngDt != null) {
@@ -625,7 +626,7 @@ function showSrProgressModalFromMain(srNo) {
 									if (srPrgrs.srPrgrs > 0) {
 										$('#srApplyPrgrs input').val(srPrgrs.srPrgrs);
 									}
-									let btnHtml = '<center><a data-toggle="modal" data-target="#manageSrOutputModal" href="javascript:void(0)" class="btn-1" style="width:30%; height:3rem; font-size:1.5rem;" onclick="composeManageSrOutputModal(\'APPLY_REQUEST\')">관리</a></center>';
+									let btnHtml = '<button data-toggle="modal" data-target="#manageSrOutputModal" href="javascript:void(0)" class="btn-blue" style="width:30%; height:3rem; font-size:1.5rem;" onclick="composeManageSrOutputModal(\'APPLY_REQUEST\')">관리</button>';
 									$('#srApplyOtptBtn').html(btnHtml);
 								}
 							}
@@ -1187,7 +1188,7 @@ function composeFindPicModalTable(pageNo) {
 				findPicTableHtml += '<td>' + usr.roleNm + '</td>';
 				findPicTableHtml += '<td>' + usr.ibpsNm + '</td>';
 				findPicTableHtml += '<td>' + usr.usrNm + '</td>';
-				findPicTableHtml += '<td> <button class="btn-1 detail-button" style="height:2.8rem; width:40%;" data-dismiss="modal" onclick="setFindPicModalPic(\'' + usr.deptNm + '\', \'' + usr.usrNm + '\')">선택</button> </td>';
+				findPicTableHtml += '<td> <button class="btn-blue detail-button" style="height:2.8rem; width:40%;" data-dismiss="modal" onclick="setFindPicModalPic(\'' + usr.deptNm + '\', \'' + usr.usrNm + '\')">선택</button> </td>';
 				//jsp에 삽입
 				$('#findPicModalTable tbody').append(findPicTableHtml);
 			}
@@ -1202,7 +1203,7 @@ function composeFindPicModalTable(pageNo) {
 				pagerHtml += '<a href="javascript:void(0)" style="font-size: 1.5rem; height: 3rem; line-height: 3rem; color:#868e96; cursor:default; margin-left:1rem;">맨끝</a>';
 			} else {
 				currentPageNo = data.pager.pageNo;
-				pagerHtml += '<a href="javascript:void(0)" onclick="onclick="composeFindPicModalTable('+1+')"style="font-size: 1.5rem; height: 3rem; line-height: 3rem; margin-right:1rem;">처음</a>';
+				pagerHtml += '<a href="javascript:void(0)" onclick="composeFindPicModalTable('+1+')" style="font-size: 1.5rem; height: 3rem; line-height: 3rem; margin-right:1rem;">처음</a>';
 				if (data.pager.groupNo == 1) {
 					pagerHtml += '<a href="javascript:void(0)" style="font-size: 1.5rem; height: 3rem; line-height: 3rem; color:#868e96; cursor:default; margin-right:0.5rem;">이전</a>';
 				} else {

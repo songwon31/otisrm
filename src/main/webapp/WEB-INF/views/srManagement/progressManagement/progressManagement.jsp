@@ -179,7 +179,7 @@
 			<div style="height:3.5rem; font-size:2.2rem; font-weight:700; color:#222E3C;">SR처리목록</div>
 			<div style="flex-grow:1;"></div>
 			<button id="downloadExcelButton" class="btn-navy" onclick="downloadExcel()"
-					style="height:3rem;">엑셀 다운로드</button>
+					style="height:3rem; width:12rem; font-size:1.5rem;">엑셀 다운로드</button>
 		</div>
 		<div class="" style="height:51.7rem; margin:0.75rem 0rem; background-color:#f9fafe; border:1.5px solid #e9ecef;">
 			<table id="mainTable" style="width: 100%; table-layout: fixed;">
@@ -612,9 +612,8 @@
 										<td>분석</td>
 										<td style="height:4rem; display:flex; flex-direction:row; justify-content:center; align-items:center;">
 											<input id="setHrModalAnalysisPicInput" disabled value="" style="width:50%; height:3rem; margin:0rem 0.5rem;">
-											<a data-toggle="modal" data-target="#setHrFindPicModal" onclick="composeSetHrFindPicModal(this)" href="javascript:void(0)" 
-												style="height: 3rem; width: 20%; border-radius: 5px; background-color:#2c7be4; color:white; font-weight:700; 
-												display: flex; flex-direction: row; justify-content: center; align-items: center;">찾기</a>
+											<button data-toggle="modal" data-target="#setHrFindPicModal" onclick="composeSetHrFindPicModal(this)" class="btn-blue"
+													style="height:3rem; width:20%">찾기</button>
 										</td>
 									</tr>
 									<tr style="height:4rem; font-size:1.5rem; background-color:white;">
@@ -860,7 +859,7 @@
 <div id="warningModal" class="modal" data-backdrop="static">
 	<div class="modal-dialog modal-dialog-centered modal-md">
 		<div class="modal-content">
-			<div class="modal-header" style="background-color:red; color:white; display:flex;">
+			<div class="modal-header" style="background-color:#de483a; color:white; display:flex;">
 				<div class="modal-title" style="font-size:2rem; font-weight:700;">경고</div>
 				<i class="material-icons close-icon" data-dismiss="modal" style="cursor: pointer;">close</i>
 			</div>

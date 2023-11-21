@@ -6,14 +6,14 @@
 <!-- javascript 연결 -->
 <script src="${pageContext.request.contextPath}/resources/javascript/srManagement/statisticsManagement.js"></script>
 
-<div id="reviewManagementDiv" class="shadow">
-	<div id="reviewManagementTitleDiv" style="height:4rem;">
+<div id="statisticsManagementDiv" class="shadow">
+	<div id="statisticsManagementTitleDiv" style="height:4rem;">
 		<div class="font-weight-bold d-flex" style="font-size:2.5rem; height:4rem; vertical-align: center;">
 			<i class="material-icons top-icon" style="font-size:3.5rem; height:4rem; line-height: 4rem;">developer_board</i>
 			<span style="margin-left: 1rem;">SR통계관리</span>
 		</div>
 	</div>
-	<div id="reviewManagementSearchDiv" class="shadow" style="height:9rem; margin:2rem 0rem; padding:3rem 2rem; background-color:white; border-radius:1rem;">
+	<div id="statisticsManagementSearchDiv" class="shadow" style="height:9rem; margin:2rem 0rem; padding:3rem 2rem; background-color:white; border-radius:1rem;">
 		<input type="hidden" id="loginPic" value="${usr.usrNo}">
 		<div class="d-flex" style="height:3rem;">
 			<!-- 조회기간 -->
@@ -46,14 +46,14 @@
 			</button>
 		</div>
 	</div>
-	<div id="reviewManagementBoardDiv" class="shadow" 
+	<div id="statisticsManagementBoardDiv" class="shadow" 
 		style="height:67rem; background-color:white; border-radius:1rem; padding:2rem;">
 		<div class="d-flex">
 			<span class="mr-auto" style="height:3.5rem; font-size:2.2rem; font-weight:700; color:#222E3C;">SR통계목록</span>
 			<button id="excelDownloadBtn" onclick="downloadExcelOnStatisticsManagement()">엑셀 다운로드</button>
 		</div>
 		<div style="height:58.7rem; margin:0.75rem 0rem; background-color: #f9fafe;">
-			<table id="reviewManagementMainTable" style="width: 100%; margin:0.75rem 0rem; table-layout: fixed;">
+			<table id="statisticsManagementMainTable" style="width: 100%; margin:0.75rem 0rem; table-layout: fixed;">
 				<colgroup>
 					<col width="9%" />
 					<col width="6.5%" />

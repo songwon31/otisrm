@@ -19,7 +19,7 @@
 			<span style="margin-left: 9.5px;">기업관리</span>
 			<div style="flex-grow:1;"></div>
 			<button type="button" data-toggle="modal" data-target="#sysManageModal" onclick="systemTableSearchReset()" class="btn-navy"
-					style="height: 3rem; margin-right:0.5rem;">
+					style="height: 3rem; width:12rem; margin-right:0.5rem;">
 				시스템 관리
 			</button>
 		</div>
@@ -52,11 +52,11 @@
 						</div>
 						<div style="flex-grow:1; display:flex; flex-direction:row; justify-content:flex-end;">
 							<button type="button" id="searchBtn" onclick="mainTableSearch()" class="btn-navy"
-									style="height:3rem">
+									style="height:3rem; width:8rem;">
 								검색
 							</button>
 							<button type="button" id="initBtn" onclick="mainTableSearchReset()" class="btn-gray" 
-									style="height:3rem; margin-left:0.5rem;">
+									style="height:3rem; width:8rem; margin-left:0.5rem;">
 								초기화
 							</button>
 						</div>
@@ -69,10 +69,10 @@
 					<div style="height:3.5rem; font-size:2.2rem; font-weight:700; color:#222E3C;">기업목록</div>
 					<div style="flex-grow:1;"></div>
 					<button type="button" data-toggle="modal" data-target="#registInstModal" onclick="registInstModalConfig()" class="btn-navy"
-							style="height:3rem; margin-right:0.5rem;">
+							style="height:3rem; width:8rem; margin-right:0.5rem;">
 						추가
 					</button>
-					<button type="button" onclick="deleteInst()" class="btn-red" style="height:3rem;">
+					<button type="button" onclick="deleteInst()" class="btn-red" style="height:3rem; width:8rem;">
 						삭제
 					</button>
 				</div>
@@ -308,7 +308,7 @@
 					
 					<div style="width:100%; display: flex; flex-direction: row; justify-content:flex-end; margin-right:1rem;">
 						<div style="height: 4rem; padding-left: 0.5rem; display: flex; align-items: center;">
-							<button type="button" onclick="registInst()" class="btn-blue" style="height:3rem;">
+							<button type="button" onclick="registInst()" class="btn-blue" style="height:3rem; width:6rem;">
 								등록
 							</button>
 						</div>
@@ -476,7 +476,7 @@
 <div id="warningModal" class="modal" data-backdrop="static">
 	<div class="modal-dialog modal-dialog-centered modal-sm">
 		<div class="modal-content">
-			<div class="modal-header" style="background-color:red; color:white; display:flex;">
+			<div class="modal-header" style="background-color:#de483a; color:white; display:flex;">
 				<div class="modal-title" style="font-size:2rem; font-weight:700;">경고</div>
 				<i class="material-icons close-icon" data-dismiss="modal" style="cursor: pointer;">close</i>
 			</div>

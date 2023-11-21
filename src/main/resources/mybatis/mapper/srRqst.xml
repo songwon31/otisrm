@@ -315,7 +315,7 @@
 	        sr_no, inst_no, sr_dmnd_no, sr_prgrs_stts_no
 	    ) values(
 	        #{srNo, jdbcType=VARCHAR}, #{instNo, jdbcType=VARCHAR}, #{srDmndNo, jdbcType=VARCHAR},
-	        #{srPrgrsSttsNo, jdbcType=VARCHAR},TO_DATE(#{srTrgtCmptnDt, jdbcType=VARCHAR}, 'yy-MM-dd')
+	        #{srPrgrsSttsNo, jdbcType=VARCHAR}
 	    )
 	</insert>
 	

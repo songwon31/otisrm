@@ -89,8 +89,8 @@ public class SrReviewManagementController {
 			model.addAttribute("taskClsfList", taskClsfList);
 			
 			return "/srManagement/reviewManagement/reviewManagement";
-		}else {
-			return "redirect:/home";
+		} else {
+			return "redirect:/";
 		}
 	}
 	

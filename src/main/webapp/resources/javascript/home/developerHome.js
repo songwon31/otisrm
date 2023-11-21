@@ -185,7 +185,7 @@ function refactorMainTable(filterType, page) {
 					srTrHtml += '<td>' + sr.srNo + '</td>';
 					srTrHtml += '<td>' + sr.sysNm + '</td>';
 					srTrHtml += '<td>' + sr.srTaskNm + '</td>';
-					srTrHtml += '<td>' + sr.srTtl + '</td>';
+					srTrHtml += '<td class="text-align-left">' + sr.srTtl + '</td>';
 					srTrHtml += '<td>' + sr.usrNm + '</td>';
 					let srCmptnPrnmntDt = new Date(sr.srCmptnPrnmntDt);
 			        srTrHtml += '<td>' + formatDate(srCmptnPrnmntDt) + '</td>';
@@ -196,7 +196,7 @@ function refactorMainTable(filterType, page) {
 						srTrHtml += '<td>' + formatDate(srTrgtCmptnDt) + '</td>';
 			        }
 					srTrHtml += '<td>' + sr.srPrgrsSttsNm + '</td>';
-					srTrHtml += '<td> <button data-toggle="modal" data-target="#requestDetailModal" class="btn-1 detail-button" style="height:2.6rem; width:60%;" onclick="showRequestDetail(\'' + sr.srNo + '\')">요청상세</button> </td>';
+					srTrHtml += '<td> <button data-toggle="modal" data-target="#requestDetailModal" class="btn-blue detail-button" style="height:2.6rem; width:60%;" onclick="showRequestDetail(\'' + sr.srNo + '\')">요청상세</button> </td>';
 					srTrHtml += '</tr>'
 					//jsp에 삽입
 					$('#mainTable tbody').append(srTrHtml);
@@ -475,7 +475,7 @@ function setSrDetail(srNo) {
 							$('#analysisProgressGraph').css('width', (srPrgrs.srPrgrs * 10) + '%');
 						}
 						
-						let btnHtml = '<center><a data-toggle="modal" data-target="#manageSrOutputModal" href="javascript:void(0)" class="btn-1" style="width:30%; height:3rem; font-size:1.5rem;" onclick="composeManageSrOutputModal(\'ANALYSIS\')">관리</a></center>';
+						let btnHtml = '<center><a data-toggle="modal" data-target="#manageSrOutputModal" href="javascript:void(0)" class="btn-blue" style="width:30%; height:3rem; font-size:1.5rem;" onclick="composeManageSrOutputModal(\'ANALYSIS\')">관리</a></center>';
 						/*btnHtml += 'style="height: 3rem; width: 30%; border-radius: 5px; background-color:#2c7be4; color:white; font-weight:700;';
 						btnHtml += 'display: flex; flex-direction: row; justify-content: center; align-items: center;">관리</a></center>';*/
 						
@@ -496,7 +496,7 @@ function setSrDetail(srNo) {
 							$('#totalProgressGraphText').html(srPrgrs.srPrgrs + '%');
 							$('#designProgressGraph').css('width', ((srPrgrs.srPrgrs - 10) * 10) + '%');
 						}
-						let btnHtml = '<center><a data-toggle="modal" data-target="#manageSrOutputModal" href="javascript:void(0)" class="btn-1" style="width:30%; height:3rem; font-size:1.5rem;" onclick="composeManageSrOutputModal(\'DESIGN\')">관리</a></center>';
+						let btnHtml = '<center><a data-toggle="modal" data-target="#manageSrOutputModal" href="javascript:void(0)" class="btn-blue" style="width:30%; height:3rem; font-size:1.5rem;" onclick="composeManageSrOutputModal(\'DESIGN\')">관리</a></center>';
 						$('#srDesignOtptBtn').html(btnHtml);
 					} else if (srPrgrs.srPrgrsSttsNm == '구현') {
 						if (srPrgrs.srPrgrsBgngDt != null) {
@@ -514,7 +514,7 @@ function setSrDetail(srNo) {
 							$('#totalProgressGraphText').html(srPrgrs.srPrgrs + '%');
 							$('#implementProgressGraph').css('width', ((srPrgrs.srPrgrs - 20) * 2) + '%');
 						}
-						let btnHtml = '<center><a data-toggle="modal" data-target="#manageSrOutputModal" href="javascript:void(0)" class="btn-1" style="width:30%; height:3rem; font-size:1.5rem;" onclick="composeManageSrOutputModal(\'IMPLEMENT\')">관리</a></center>';
+						let btnHtml = '<center><a data-toggle="modal" data-target="#manageSrOutputModal" href="javascript:void(0)" class="btn-blue" style="width:30%; height:3rem; font-size:1.5rem;" onclick="composeManageSrOutputModal(\'IMPLEMENT\')">관리</a></center>';
 						$('#srImplOtptBtn').html(btnHtml);
 					} else if (srPrgrs.srPrgrsSttsNm == '시험') {
 						if (srPrgrs.srPrgrsBgngDt != null) {
@@ -532,7 +532,7 @@ function setSrDetail(srNo) {
 							$('#totalProgressGraphText').html(srPrgrs.srPrgrs + '%');
 							$('#testProgressGraph').css('width', ((srPrgrs.srPrgrs - 70) * 5) + '%');
 						}
-						let btnHtml = '<center><a data-toggle="modal" data-target="#manageSrOutputModal" href="javascript:void(0)" class="btn-1" style="width:30%; height:3rem; font-size:1.5rem;" onclick="composeManageSrOutputModal(\'TEST\')">관리</a></center>';
+						let btnHtml = '<center><a data-toggle="modal" data-target="#manageSrOutputModal" href="javascript:void(0)" class="btn-blue" style="width:30%; height:3rem; font-size:1.5rem;" onclick="composeManageSrOutputModal(\'TEST\')">관리</a></center>';
 						$('#srTestOtptBtn').html(btnHtml);
 					} else if (srPrgrs.srPrgrsSttsNm == '반영요청') {
 						if (srPrgrs.srPrgrsBgngDt != null) {
@@ -550,7 +550,7 @@ function setSrDetail(srNo) {
 							$('#totalProgressGraphText').html(srPrgrs.srPrgrs + '%');
 							$('#applyRequestProgressGraph').css('width', ((srPrgrs.srPrgrs - 90) * 10) + '%');
 						}
-						let btnHtml = '<center><a data-toggle="modal" data-target="#manageSrOutputModal" href="javascript:void(0)" class="btn-1" style="width:30%; height:3rem; font-size:1.5rem;" onclick="composeManageSrOutputModal(\'APPLY_REQUEST\')">관리</a></center>';
+						let btnHtml = '<center><a data-toggle="modal" data-target="#manageSrOutputModal" href="javascript:void(0)" class="btn-blue" style="width:30%; height:3rem; font-size:1.5rem;" onclick="composeManageSrOutputModal(\'APPLY_REQUEST\')">관리</a></center>';
 						$('#srApplyOtptBtn').html(btnHtml);
 					}
 				}
@@ -780,6 +780,8 @@ function showSrPlanInfoEditModal() {
         srNo: srNo
     };
 	
+	console.log("111111111111");
+	
 	$.ajax({
 		type: "POST",
 		url: "/otisrm/getSrPlanModalCompose",
@@ -797,7 +799,11 @@ function showSrPlanInfoEditModal() {
 			$('#srPlanModalTaskInput').val(data.srTaskNm);
 			$('#srPlanModalDeptInput').val(data.deptNm);
 			$('#srPlanModalPicInput').val(data.usrNm);
-			$('#srPlanModalTotalCapacity').val(data.totalCapacity.toFixed(1))
+			if (data.totalCapacity == null) {
+				$('#srPlanModalTotalCapacity').val('');
+			} else {
+				$('#srPlanModalTotalCapacity').val(data.totalCapacity.toFixed(1))
+			}
 			if (data.srTrgtBgngDt == null) {
 				$('#srPlanModalTrgtBgngDt').val('');
 			} else {
