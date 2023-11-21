@@ -156,7 +156,6 @@
       </div>
       <div class="modal-footer py-1">
         <button type="submit" class="btn-1">저장</button>
-        <button type="button" class="close btn-3" data-dismiss="modal">닫기</button>
       </div>
     </form>
    </div>

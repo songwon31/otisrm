@@ -637,9 +637,9 @@ function showSrRqstBySrRqstNo(choiceSrRqstNo){
         		
             //승인 대기 상태 (상태: 아무것도 못함)
         	}else if(data.srRqstSttsNo === "APRV_WAIT"){
+        		$("#srRqstStts-select2 option[value='APRV_WAIT']").text("승인대기");
         		$("#srRqstStts-select").val(data.srRqstSttsNo);
         		$("#srRqstStts-select").prop("disabled", true);
-        		$("#srRqstStts-select2 option[value='APRV_WAIT']").text("승인대기");
         		
         		//sr개발정보에 상태 표시 X, 수정 불가능/ 저장버튼 비활성화/ sr정보 등록 버튼 비활성화
         		$("#srRqstStts-select2").val("");
@@ -942,7 +942,15 @@ function showSrBySrRqstNo(choiceSrRqstNo){
 					$("#srSchdlChgRqstDt").val(formattedDate);
 					$("#srSchdlChgRqstDt").prop("disabled", true);
 				//변경 요청일이 없을 경우 숨김
+				} 
+				
+				if(data.srSchdlChgRqstAprvYn !== null){
+					console.log("히: " + data.srSchdlChgRqstAprvYn);
+					$("#srSchdlChgRqstY").hide();
+					$("#srSchdlChgRqstAprvYn").hide();
 				}
+				
+				
 				
 				//첨부파일
 				if (data.srAtchList && typeof data.srAtchList === "object") {

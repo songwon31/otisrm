@@ -158,7 +158,6 @@
       </div>
       <div class="modal-footer py-1">
         <button type="submit" class="btn-1">저장</button>
-        <button id="btn-close" type="button" class="close" data-dismiss="modal">닫기</button>
       </div>
     </form>
    </div>
@@ -172,7 +171,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h6 class="modal-title">문의 상세</h6>
-        <i class="material-icons close-icon close" data-dismiss="modal" style="cursor: pointer;">close</i>
+        <i class="material-icons close-icon close" data-dismiss="modal" style="cursor: pointer; color: white;">close</i>
       </div>
       <div id="answerInq" class="modal-body">
       	<form id="modifyInq" action="modifyInq" method="post" enctype="multipart/form-data"  enctype="multipart/form-data">

@@ -910,7 +910,7 @@
 	    	</div>
 	  	</div>
 	  	 <div class="modal-footer py-1">
-        <button id="srWriteOrModifyBtn" type="button" onclick="writeOrModifySrForPicHome()" class="btn-1">SR정보 등록</button>
+        <button id="srWriteOrModifyBtn" type="button" onclick="writeOrModifySrForPicHome()" class="btn-1" style="font-size: 1.3rem;">SR정보 등록</button>
         <button type="button" class="btn-3" data-dismiss="modal">닫기</button>
       </div>
 	 </form>
