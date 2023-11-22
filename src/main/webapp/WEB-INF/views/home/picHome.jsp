@@ -494,7 +494,7 @@
         <i class="material-icons close-icon" data-dismiss="modal" style="cursor: pointer;">close</i>
       </div>
       <div id="srRqstBySrRqstNoForm" class="modal-body">
-      	<form id="writeSrRqstForPicHome" action="writeSrRqstForPicHome" method="post" onsubmit="validateSrRqstForm()" enctype="multipart/form-data">
+      	<form id="writeSrRqstForPicHome" action="writeSrRqstForPicHome" method="post" enctype="multipart/form-data">
       		<!-- SR요청정보 -->
       		<h6 class="modal-sub-title">SR요청등록</h6>
       		<div class="card p-3 mb-4">
@@ -581,7 +581,7 @@
       	</div>
       </div>
       <div class="modal-footer py-1">
-        <button class="btn-1">저장</button>
+        <button class="btn-1" type="submit">저장</button>
         <button type="button" class="btn-3" data-dismiss="modal">닫기</button>
       </div>
     </form>
@@ -649,7 +649,7 @@
 				</div>
 	      		<div>      		
 		      		<button id="deleteButton" class="delete btn-5" type="button" data-toggle="modal" data-target="#srRqstdeleteModal">삭제</button>
-		      		<button id="saveButton" type="button" onclick="confirmSrRqstModify()" class="btn-1">저장</button>
+		      		<button id="saveButton" type="button" onclick=" modifySrRqst()" class="btn-1">저장</button>
 	      		</div>
       		</div>
       		<div class="card p-3 mb-4">

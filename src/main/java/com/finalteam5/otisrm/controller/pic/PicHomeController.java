@@ -221,6 +221,10 @@ public class PicHomeController {
 				}
 		    }
 			
+			SrRqstSubmit srRqstSubmit = new SrRqstSubmit();
+			srRqstSubmit.setSrRqstSttsNo("RCPT_WAIT");
+			srRqstService.modifySrRqst(srRqstSubmit);
+			
 		//해당 sr정보가 있을 경우 update(수정)
 		}else {
 			srRqstService.writeSr(srSubmit);

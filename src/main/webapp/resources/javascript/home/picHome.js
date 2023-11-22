@@ -1207,8 +1207,8 @@ function modifySrRqst() {
         data: formData,
         success: function (data) {
             // 수정 작업이 성공적으로 완료되면 여기에 원하는 작업을 수행할 수 있습니다.
-        	$("#alertContent2").text("성공적으로 변경했습니다.");
-        	$("#alertModal2").modal("show");
+        	$("#alertContent").text("성공적으로 변경했습니다.");
+        	$("#alertModal").modal("show");
            
             showSrRqstBySrRqstNo(choiceSrRqstNo);
             loadSRRequests(1, choiceSrRqstSttsNo);
