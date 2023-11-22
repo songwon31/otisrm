@@ -141,20 +141,19 @@ function bytesToKB(bytes) {
     return (bytes / 1024).toFixed(2); // 소수점 두 자리까지 표시
 }
 
-
 function downloadExcelOnStatisticsManagement() {
 	//테이블을 배열로 저장
 	var tableData = [];
 
 	//테이블 헤더 데이터 저장
 	var headerData = [];
-	$("#reviewManagementMainTable thead tr th").each(function () {
+	$("#statisticsManagementMainTable thead tr th").each(function () {
 	    headerData.push($(this).text());
 	});
 	tableData.push(headerData);
 
 	// 테이블 본문 데이터 저장
-	$("#reviewManagementMainTable tbody tr").each(function () {
+	$("#statisticsManagementMainTable tbody tr").each(function () {
 	    var rowData = [];
 
 	    //각 행 데이터를 배열에 추가
@@ -164,6 +163,8 @@ function downloadExcelOnStatisticsManagement() {
 
 	    tableData.push(rowData);
 	});
+	
+	console.log(tableData);
 
 	//워크북 생성
     var wb = XLSX.utils.book_new();
