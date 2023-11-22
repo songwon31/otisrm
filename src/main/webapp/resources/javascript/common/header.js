@@ -6,7 +6,7 @@ function init() {
 	let htmlFontSize = window.getComputedStyle(document.documentElement).getPropertyValue('font-size');
 	console.log('HTML 태그의 현재 font-size:', htmlFontSize);
 	
-	//html의 overflow:auto로 설정
+	//html overflow:auto로 설정
 	document.documentElement.style.overflow = 'auto';
 }
 /*
@@ -36,6 +36,7 @@ function setRootFontSize() {
 	console.log("window.screen.availHeight: " + window.screen.availHeight);
 	console.log("window.outerHeight: " + window.outerHeight);
 	console.log("extraHeight: " + extraHeight);
+	
 	/*
 	let width = (window.innerWidth || document.body.clientWidth) + extraWidth;
 	let height = (window.innerHeight || document.body.clientHeight) + extraHeight;
@@ -43,6 +44,10 @@ function setRootFontSize() {
 	
 	let width = window.innerWidth + extraWidth;
 	let height = window.innerHeight + extraHeight;
+	if (window.screen.availWidth != window.outerWidth) {
+		width += (window.outerWidth - window.innerWidth);
+		height += (window.outerWidth - window.innerWidth);
+	}
 	
 	console.log("");
 	//console.log("originalWidth: " + (window.innerWidth || document.body.clientWidth));
