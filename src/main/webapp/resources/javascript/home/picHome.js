@@ -997,8 +997,6 @@ function showSrBySrRqstNo(choiceSrRqstNo){
 					$("#srSchdlChgRqstAprvYn").hide();
 				}
 				
-				
-				
 				//첨부파일
 				if (data.srAtchList && typeof data.srAtchList === "object") {
 					// data.srRqstAtchList는 객체일 때
@@ -1326,6 +1324,8 @@ function writeOrModifySrForPicHome(choiceSrRqstNo) {
             alert("확인 실패");
         },
         cache: false,
+        processData: false,
+        contentType: false
     });
 }
 

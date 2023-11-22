@@ -199,6 +199,28 @@ public class PicHomeController {
 				srRqstService.modifySrTrnsfPlan(srTrnsfPlanForm);
 			}
 			
+			//첨부파일이 있다면 첨부파일 업로드
+			MultipartFile[] files = srSubmit.getFile();
+			
+			for(MultipartFile file : files) {
+				SrAtch srAtch = new SrAtch();
+				if(!file.isEmpty()) {
+					//첨부파일을 업로드한 sr요청 번호 
+		    		srAtch.setSrNo(srSubmit.getSrNo());
+		    		//브라우저에서 선택한 파일 이름 설정
+		    		srAtch.setSrAtchNm(file.getOriginalFilename());
+		    		//파일의 형식(MIME타입)을 설정
+		    		srAtch.setSrAtchMimeType(file.getContentType());
+		    		//올린 파일 설정
+		    		srAtch.setSrAtchData(file.getBytes());
+		    		//파일 크기 설정
+		    		srAtch.setSrAtchSize(file.getSize());
+		    		
+		    		//업로드
+		    		srRqstService.uploadSrAtch(srAtch);
+				}
+		    }
+			
 		//해당 sr정보가 있을 경우 update(수정)
 		}else {
 			srRqstService.writeSr(srSubmit);
@@ -211,7 +233,7 @@ public class PicHomeController {
 			for(MultipartFile file : files) {
 				SrAtch srAtch = new SrAtch();
 				if(!file.isEmpty()) {
-					srAtch.setSrNo(srPk);
+					srAtch.setSrNo(srSubmit.getSrNo());
 					//브라우저에서 선택한 파일 이름 설정
 					srAtch.setSrAtchNm(file.getOriginalFilename());
 					//파일의 형식(MIME타입)을 설정
