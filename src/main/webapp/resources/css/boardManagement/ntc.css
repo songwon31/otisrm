@@ -190,7 +190,7 @@
 /* 파랑버튼 큰버전 */
 .btn-1 {
 	border: none;
-	font-size:1.5rem;
+	font-size:1.4rem;
 	font-weight: 700;
 	color: #f3ffff;
 	background-color:#2c7be4; 
@@ -219,7 +219,7 @@
 /* 회색버튼 */
 .btn-3 {
 	border: none;
-	font-size:1.5rem;
+	font-size:1.4rem;
 	font-weight: 700;
 	color: #f3ffff;
 	background-color:#949494; 
@@ -233,7 +233,7 @@
 /* 검정버튼 작은버전 */
 .btn-4 {
 	border: none;
-	font-size:1.5rem;
+	font-size:1.4rem;
 	font-weight: 700;
 	color:white;
 	background-color: #222E3C; 
@@ -247,7 +247,7 @@
 /* 검정버튼 큰버전 */
 .btn-5 {
 	border: none;
-	font-size:1.5rem;
+	font-size:1.4rem;
 	font-weight: 700;
 	color:white;
 	background-color: #222E3C; 
@@ -261,7 +261,7 @@
 /* 파랭 버튼 가장 큰 버전 */
 .btn-6 {
 	border: none;
-	font-size:1.5rem;
+	font-size:1.4rem;
 	font-weight: 700;
 	color:white;
 	background-color: #2c7be4; 

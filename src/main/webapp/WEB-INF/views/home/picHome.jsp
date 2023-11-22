@@ -161,7 +161,7 @@
 							</div>
 						</div>
 						<div id="itemOfRcptRqst" class="toDoItem" style="width: 100%; margin-right: 0.5rem;">
-							<div class="pt-1" style="color: #36404a; text-align: center;">개발계획 작성 필요 SR요청</div>
+							<div class="pt-1" style="color: #36404a; text-align: center; font-size: 1.3rem;">개발계획 작성 필요 SR요청</div>
 							<div class="d-flex justify-content-center">
 								<div class="w-50 mt-2"> 								
 									<div class="toDoItemNm" style="margin-left: 3px; margin-right: 2px;">승인</div>
