@@ -959,28 +959,6 @@
 		</div>
 	</div>
 
-<!-- sr 수정 모달 -->  
-<div class="modal" id="srModyfyModal">
-  <div class="modal-dialog">
-	  <div class="modal-content">
-	      <!-- Modal Header -->
-	      <div class="modal-header" style="background-color: #2c7be4;">
-	        <h6 class="modal-title">sr개발 정보 수정</h6>
-	      </div>
-	
-	      <!-- Modal body -->
-	      <div class="modal-body">
-	        	해당 sr개발 정보를 다음과 같이 변경하시겠습니까 ?
-	      </div>
-	
-	      <!-- Modal footer -->
-	      <div class="modal-footer">
-	        <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="proceedWriteOrModifySrForPicHome()" >확인</button>
-	        <button type="button" class="btn" style="background-color: #de483a; color: white;" onclick="cancelBtnForModifyModal3()">취소</button>
-	      </div>
-		</div>
-	</div>
-</div>
 
 
 <%@ include file="/WEB-INF/views/common/footer.jsp"%>
