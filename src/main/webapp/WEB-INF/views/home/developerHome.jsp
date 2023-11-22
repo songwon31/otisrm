@@ -176,7 +176,7 @@
 						style="width: 25%"> 
 						<span>SR계획정보</span>
 					</a> 
-					<a id="srHrInfoTab" href="javascript:void(0)"
+					<a id="srHrInfoTab" href="javascript:vofid(0)"
 						onclick="selectSrProgressTableFilter('srHrInfoTab')"
 						class="srProgressTableSelectElement srProgressHr filterTab"
 						style="width: 25%"> 
@@ -979,7 +979,7 @@
 				<div style="display:flex; align-items:center; margin-bottom:0.5rem;">
 					<span>*투입실적은 1일(8시간) 합계 1.0으로 입력 바랍니다. (단, 연장 근무시 2.0 이내 초과 입력 가능)</span>
 					<span style="flex-grow:1;"></span>
-					<button class="btn-navy" onclick="registerCapacity()" style="width:5%; height:2.5rem;">저장</button>
+					<button class="btn-navy" onclick="registerCapacity()" style="width:10%; height:2.5rem;">저장</button>
 				</div>
 				<table id="srPerformanceRegistrationModalTable" style="width: 100%; text-align: center; border-radius:5px;">
 					<colgroup>

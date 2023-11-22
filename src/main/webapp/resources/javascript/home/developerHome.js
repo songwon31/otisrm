@@ -177,9 +177,9 @@ function refactorMainTable(filterType, page) {
 					let sr = data.srList[i];
 					let srTrHtml = '';
 					if (i == 9) {
-						srTrHtml += '<tr style="height:4.7rem; font-size:1.5rem; background-color:white;">';
+						srTrHtml += '<tr style="height:4.5rem; font-size:1.5rem; background-color:white;">';
 					} else {
-						srTrHtml += '<tr style="height:4.7rem; font-size:1.5rem; background-color:white; border-bottom: 1.5px solid #e9ecef;">';
+						srTrHtml += '<tr style="height:4.5rem; font-size:1.5rem; background-color:white; border-bottom: 1.5px solid #e9ecef;">';
 					}
 					srTrHtml += '<td>' + (i+1) + '</td>';
 					srTrHtml += '<td>' + sr.srNo + '</td>';
@@ -1582,11 +1582,11 @@ function manageChangeScheduleRequestModalConfig() {
     			let srSchdlChgRqstDt = new Date(config.srSchdlChgRqstDt);
     			html += '<td><input class="chgRqstDt" type="date" value="' + formatDate(srSchdlChgRqstDt) + '"></td>';
     			html += '<td>' + config.status + '</td>';
-    			html += '<td> <button class="btn-1" style="height:2.8rem;" onclick="srScheduleChangeRequestModal(\'' + config.srNo + '\')">요청수정/재신청</button> </td>';
+    			html += '<td> <button class="btn-blue" style="height:2.8rem; font-size:1.3rem;" onclick="srScheduleChangeRequestModal(\'' + config.srNo + '\')">요청수정/재신청</button> </td>';
     			if (config.srSchdlChgRqstAprvYn == null || config.srSchdlChgRqstAprvYn == '') {
     				html += '<td></td>'
     			} else {
-    				html += '<td> <button class="btn-1" style="height:2.8rem;" onclick="srScheduleChangeRequestResultCheck(\'' + config.srNo + '\')">확인</button> </td>';
+    				html += '<td> <button class="btn-blue" style="height:2.8rem; font-size:1.3rem;" onclick="srScheduleChangeRequestResultCheck(\'' + config.srNo + '\')">확인</button> </td>';
     			}
     			html += '</tr>';
     			
