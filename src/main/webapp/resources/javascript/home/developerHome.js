@@ -182,10 +182,10 @@ function refactorMainTable(filterType, page) {
 						srTrHtml += '<tr style="height:4.5rem; font-size:1.5rem; background-color:white; border-bottom: 1.5px solid #e9ecef;">';
 					}
 					srTrHtml += '<td>' + (i+1) + '</td>';
-					srTrHtml += '<td>' + sr.srNo + '</td>';
-					srTrHtml += '<td>' + sr.sysNm + '</td>';
-					srTrHtml += '<td>' + sr.srTaskNm + '</td>';
-					srTrHtml += '<td class="text-align-left">' + sr.srTtl + '</td>';
+					srTrHtml += '<td style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">' + sr.srNo + '</td>';
+					srTrHtml += '<td style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">' + sr.sysNm + '</td>';
+					srTrHtml += '<td style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">' + sr.srTaskNm + '</td>';
+					srTrHtml += '<td class="text-align-left" style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">' + sr.srTtl + '</td>';
 					srTrHtml += '<td>' + sr.usrNm + '</td>';
 					let srCmptnPrnmntDt = new Date(sr.srCmptnPrnmntDt);
 			        srTrHtml += '<td>' + formatDate(srCmptnPrnmntDt) + '</td>';
