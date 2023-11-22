@@ -484,7 +484,6 @@
 		</div>	
     </div>
   </div>
-	
 
 <!-- 요청등록 모달 -->
 <div id="addSrRqst" class="modal" data-backdrop="static">
@@ -495,7 +494,7 @@
         <i class="material-icons close-icon" data-dismiss="modal" style="cursor: pointer;">close</i>
       </div>
       <div id="srRqstBySrRqstNoForm" class="modal-body">
-      	<form id="writeSrRqstForPicHome" action="writeSrRqstForPicHome" method="post" onsubmit="onsubmit()" enctype="multipart/form-data">
+      	<form id="writeSrRqstForPicHome" action="writeSrRqstForPicHome" method="post" onsubmit="validateSrRqstForm()" enctype="multipart/form-data">
       		<!-- SR요청정보 -->
       		<h6 class="modal-sub-title">SR요청등록</h6>
       		<div class="card p-3 mb-4">
@@ -535,7 +534,7 @@
 					          <label for="systemName" class="form-label">관련시스템</label>
 					        </div>
 					        <div class="w-45">
-					          <select class="form-control" id="sysNo" name="sysNo">
+					          <select class="isCheckSrRqstInput form-control" id="sysNo" name="sysNo">
 					          	<option>--관련시스템--</option>
 					          </select>
 					        </div>
@@ -547,7 +546,7 @@
 			          <label for="systemName" class="form-label">SR제목</label>
 			        </div>
 			        <div style="width: 550.41px;">
-			          <input type="text" class="form-control" id="srTtl" name="srTtl">
+			          <input type="text" class="isCheckSrRqstInput form-control" id="srTtl" name="srTtl">
 			        </div>
 			    </div>
 		        <div class="d-flex w-100 pt-2">
@@ -555,7 +554,7 @@
 			          <label for="systemName" class="form-label">관련근거/목적</label>
 			        </div>
 			        <div style="width: 550.41px;">
-			          <input type="text" class="form-control" id="srPrps" name="srPrps">
+			          <input type="text" class="isCheckSrRqstInput form-control" id="srPrps" name="srPrps">
 			        </div>
 			    </div>
 		        <div class="d-flex w-100 pt-2">
@@ -563,7 +562,7 @@
 			          <label for="systemName" class="form-label">SR 내용</label>
 			        </div>
 			        <div style="width: 550.41px;">
-			          <textarea class="form-control" id="srConts" name="srConts"></textarea>
+			          <textarea class="isCheckSrRqstInput form-control" id="srConts" name="srConts"></textarea>
 			        </div>
 			    </div>
 		        <div class="d-flex w-100 pt-2">
@@ -579,10 +578,10 @@
 			        <input id="srRqstEmrgYn" type="hidden" name="srRqstEmrgYn" value="N">
 			    </div>
 			</div>
-   		</div>
+      	</div>
       </div>
       <div class="modal-footer py-1">
-        <button type="submit" class="btn-1">저장</button>
+        <button class="btn-1">저장</button>
         <button type="button" class="btn-3" data-dismiss="modal">닫기</button>
       </div>
     </form>
@@ -590,6 +589,43 @@
   </div>
  </div>
 </div>
+	
+	<!-- 알림 모달 -->
+	<div id="alertModalSrRqst" class="modal" data-backdrop="static">
+		<div class="modal-dialog modal-dialog-centered modal-sm">
+			<div class="modal-content">
+				<div class="modal-header" style="background-color:#3d86e5; color:white; display:flex;">
+					<i class="material-icons">info</i>
+					<div class="modal-title pl-2" style="font-size:2rem; font-weight:700;">알림</div>
+					<i class="material-icons close-icon" data-dismiss="modal" style="cursor: pointer; padding-left: 180px;"" onclick="alertModalClose()">close</i>
+				</div>
+				<div class="modal-body" style="margin:0px; padding:0px; font-size:1.5rem;">
+					<div id="alertContentSrRqst" style="height:11rem; font-size:1.7rem; font-weight:700; display:flex; justify-content:center; align-items:center; white-space: pre-wrap;">
+						
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- 경고 모달 -->
+	<div id="warningModalSrRqst" class="modal" data-backdrop="static">
+		<div class="modal-dialog modal-dialog-centered modal-sm">
+			<div class="modal-content">
+				<div class="modal-header" style="background-color:#d1322e; color:white; display:flex;  justify-content: flex-start;">					
+					<i class="material-icons">warning</i>
+					<div class="modal-title pl-2" style="font-size:2rem; font-weight:700;">경고</div>
+					<i class="material-icons close-icon" data-dismiss="modal" style="cursor: pointer; padding-left: 180px;" onclick="warningModalClose()">close</i>
+				</div>
+				<div class="modal-body" style="margin:0px; padding:0px; font-size:1.5rem;">
+					<div id="warningContentSrRqst" style="height:11rem; font-size:1.7rem; font-weight:700; display:flex; justify-content:center; align-items:center; white-space: pre-wrap;">
+						
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+		
 
 <!-- sr요청에 해당하는 상세모달 -->
 <div id="srRqstBySrNo" class="modal" data-backdrop="static">

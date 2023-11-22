@@ -498,6 +498,7 @@ function generatePagerButton(label, pageNumber, choiceSrRqstSttsNo, condition = 
     return `<a href="javascript:void(0)" style="${style} ${inactiveStyle}">${label}</a>`;
   }
 }
+
 //**상태에 따른 처리항목 페이징 업데이트 함수
 function updatePagination2(pageNo, choiceSrRqstSttsNo) {
 	$.ajax({
@@ -1118,7 +1119,10 @@ function submitSrRqst(){
 	    data: formData, // 폼 데이터를 전송
 	    success: function (data) {
 	    	 console.log(data);
-	    	 loadSRRequests(pageNo, choiceSrRqstSttsNo);
+	    	 $("#alertContentSrRqst").text("성공적으로 등록했습니다.");
+	         $("#alertModalSrRqst").modal("show");
+	    	
+	         
 	        // 성공적으로 요청이 완료된 경우 실행할 코드
 	        var currentURL = window.location.href;
 	        console.log(currentURL);
@@ -1133,6 +1137,30 @@ function submitSrRqst(){
 	    processData: false,  //title=xxx&desc=yyy& 씩으로 만들지 마라
 	    contentType: false,   //파트마다 Content-Type이 포함되기 때문에 따로 헤더에 Content-Type에 추가하지 마라(mutiple-> 파일마다 모두 다름)
 	});
+}
+
+function validateSrRqstForm(){
+	event.preventDefault();
+	console.log($(".isCheckSrRqstInput").val());
+	if($(".isCheckSrRqstInput").val() === ''|| $(".isCheckSrRqstInput").val() === 'none') {
+		$("#warningContentSrRqst").text("필수항목을 모두 입력해주세요.");
+		$("#warningModalSrRqst").modal("show");
+		
+	}else{
+		event.preventDefault();
+		$("#alertContentSrRqst").text("성공적으로 등록되었습니다.");
+		$("#alertModalSrRqst").modal("show");	
+	}
+}
+
+//모달 close함수
+function alertModalClose(){
+	$("#alertModalSrRqst").modal("hide");
+	submitSrRqst();
+	loadSRRequests(pageNo, choiceSrRqstSttsNo);
+}
+function warningModalClose(){
+	$("#warningModal").modal("hide");
 }
 
 //sr요청 등록 폼에  체크여부
@@ -1171,13 +1199,7 @@ function modifySubmitData(){
 //sr 요청 수정
 //"저장" 버튼 클릭 시 요청 수정 모달 표시
 function modifySrRqst() {
-    // 수정 모달 표시
-    $('#srRqstModyfyModal').modal('show');
-}
-
-// 요청 수정 모달에서 확인 버튼 클릭 시 SR 요청 수정 수행
-function confirmSrRqstModify() {
-    var form = $("#modifySrRqstForPicHome")[0];
+	var form = $("#modifySrRqstForPicHome")[0];
     var formData = new FormData(form);
 
     // Ajax 요청 보내기
@@ -1205,11 +1227,6 @@ function confirmSrRqstModify() {
     });
 }
 
-// "요청 수정 모달"에서 취소 버튼 클릭 시 모달 닫기
-function closeAlertModal() {
-	console.log("모달 닫기!");
-    $('#alertModal').modal('hide');
-}
 
 //sr 요청 삭제
 function removeSrRqst() {
@@ -1220,14 +1237,14 @@ function removeSrRqst() {
 		data: {srRqstNo: $("#srRqst-srRqstNo").val()},
 		success: function (data) {
 			// 성공적으로 요청이 완료된 경우 실행할 코드
-			var currentURL = window.location.href;
+			/*var currentURL = window.location.href;
 			window.location.href = currentURL; // 원하는 URL로 변경
-			loadSRRequests(1, choiceSrRqstSttsNo);
+*/			loadSRRequests(1, choiceSrRqstSttsNo);
 		},
 		error: function (error) {
 			// 요청 중 오류가 발생한 경우 실행할 코드
 			console.error("오류 발생:", error);
-			alert("수정 실패");
+			console.log("수정 실패");
 		}
 	});
 }
@@ -1263,7 +1280,7 @@ function srRqstSttsUpdate() {
 }
 
 
-//sr수정 모달 띄우기
+/*//sr수정 모달 띄우기
 function showSrModifyModal() {
     $('#srModyfyModal').modal('show');
 }
@@ -1271,7 +1288,7 @@ function showSrModifyModal() {
 function cancelBtnForModifyModal3(){
 	 $('#srModyfyModal').modal('hide');
 }
-
+*/
 //**SR 등록 또는 수정 수행
 function writeOrModifySrForPicHome(choiceSrRqstNo) {
 	// 소요예산에 콤마를 함께 입력했을 경우 콤마 제거
@@ -1295,11 +1312,13 @@ function writeOrModifySrForPicHome(choiceSrRqstNo) {
             if (countSr > 0) {
                 // SR 정보가 이미 있는 경우 수정 모달 띄우기
             	showSrModifyModal();
-            	alert("수정이 완료되었습니다.");
+            	$("#alertContent").text("수정이 완료되었습니다.");
+            	$("#alertModal").modal("show");
             } else {
                 // SR 정보가 없는 경우 등록 또는 수정 수행
             	proceedWriteOrModifySrForPicHome(formData);
-            	alert("등록이 완료되었습니다.");
+            	$("#alertContent").text("등록이 완료되었습니다.");
+            	$("#alertModal").modal("show");
             }
         },
         error: function (error) {
@@ -1309,6 +1328,7 @@ function writeOrModifySrForPicHome(choiceSrRqstNo) {
         cache: false,
     });
 }
+
 
 //SR 등록 또는 수정 수행 함수
 function proceedWriteOrModifySrForPicHome() {

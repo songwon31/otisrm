@@ -586,10 +586,11 @@ function removeSrRqst() {
 		url: "removeSrRqstForCustomerHome",
 		data: {srRqstNo: $("#srRqst-srRqstNo").val()},
 		success: function (data) {
-			$("#alertContent2").text("성공적으로 삭제되었습니다.");
-    		$("#alertModal2").modal("show");
 			// 성공적으로 요청이 완료된 경우 실행할 코드
 			loadSRRequests(1, choiceSrRqstSttsNo);
+			
+	        var currentURL = window.location.href;
+	        window.location.href = currentURL; // 또는 다른 원하는 URL로 변경
 		},
 		error: function (error) {
 			// 요청 중 오류가 발생한 경우 실행할 코드
