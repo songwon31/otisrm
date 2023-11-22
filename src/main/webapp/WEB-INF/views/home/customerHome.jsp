@@ -63,7 +63,7 @@
 						</div>
 		   	  		</div>
 		   	  	</div>
-		   	  <table id="mainTable" style="width: 100%; text-align: center; height: 27rem;">
+		   	  <table id="mainTable" style="width: 100%; text-align: center; height: 27.5rem;">
 				    <colgroup>
 				        <col width="45.04px" />
 				        <col width="118.99px" />

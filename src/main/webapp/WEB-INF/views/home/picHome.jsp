@@ -126,7 +126,8 @@
 				</table>
 				<!-- 페이징 -->
 				<div id="pagination-container" class="paging d-flex justify-content-center align-items-center pt-2">
-					<!-- 비동기로 페이징 들어오는 곳 -->	
+					<!-- 비동기로 페이징 들어오는 곳 -->
+						
 			    </div>	
 		   	  </div>
 		    </div>
