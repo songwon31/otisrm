@@ -592,7 +592,7 @@
 						<div style="height: 4rem; width: 35%; display: flex; align-items: center;">
 							<input id="srPlanModalPicInput" type="text" disabled style="width:62%; height:3rem; margin:0 0 0 0.5rem;">
 							<div style="width:3%"></div>
-							<button type="button" data-toggle="modal" data-target="#srPlanInfoFindPicModal" onclick="composeFindPicModal()" class="btn-blue" style="height:3rem; width:15%; margin-right:0.5rem; font-size:1.3rem;">
+							<button type="button" data-toggle="modal" data-target="#srPlanInfoFindPicModal" onclick="composeFindPicModal()" class="btn-blue" style="height:3rem; width:15%; margin-right:0.5rem; font-size:1.2rem;">
 								찾기
 							</button>
 							<!-- 
