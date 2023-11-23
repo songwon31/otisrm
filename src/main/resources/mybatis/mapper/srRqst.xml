@@ -612,6 +612,7 @@
 		select count(*)
 		from sr_rqst
 		where sr_rqst_stts_no in ('APRV_WAIT', 'RCPT_WAIT', 'CMPTN_RQST')
+		and sr_rqst_vld_yn = 'Y'
 	</select>
 	
 	<!-- 검토자 홈 미처리 요청목록 불러오기 -->
@@ -629,6 +630,7 @@
 		        join sr_rqst_stts st on st.sr_rqst_stts_no = r.sr_rqst_stts_no
 		        left join sr on sr.sr_rqst_no = r.sr_rqst_no
 		        where st.sr_rqst_stts_no in ('APRV_WAIT', 'RCPT_WAIT', 'CMPTN_RQST')
+		        and sr_rqst_vld_yn = 'Y'
 		        order by sr_rqst_no desc
 		        )
 			where rownum <= #{endRowNo}
@@ -643,6 +645,7 @@
 		from sr_rqst r
 		join sr_rqst_stts st on st.sr_rqst_stts_no = r.sr_rqst_stts_no
 		where st.sr_rqst_stts_nm = #{srRqstSttNm}
+		and sr_rqst_vld_yn = 'Y'
 	</select>
 	
 	<!-- 검토자 홈 선택 상태에 따라 요청목록 불러오기 -->
@@ -660,6 +663,7 @@
 		        join sr_rqst_stts st on st.sr_rqst_stts_no = r.sr_rqst_stts_no
 		        left join sr on sr.sr_rqst_no = r.sr_rqst_no
 		        where st.sr_rqst_stts_nm = #{srRqstSttNm}
+		        and sr_rqst_vld_yn = 'Y'
 		        order by sr_rqst_no desc
 		        )
 			where rownum <= #{endRowNo}
@@ -726,6 +730,7 @@
 			    	</if>
 			    </if>
 			</if>
+			and sr_rqst_vld_yn = 'Y'
 		</where>
 	</select>	
 	
@@ -792,6 +797,7 @@
 					    	</if>
 					    </if>
 					</if>
+					and sr_rqst_vld_yn = 'Y'
 				</where>
 				order by sr_rqst_no desc
 		<![CDATA[
@@ -861,6 +867,7 @@
 			    	</if>
 			    </if>
 			</if>
+			and sr_rqst_vld_yn = 'Y'
 		</where>
 		order by sr_rqst_no desc
 	</select>
@@ -917,6 +924,7 @@
 		       		and REGEXP_REPLACE(LOWER(REPLACE(r.sr_ttl, ' ', '')), '[[:punct:]]', '') LIKE '%' || REGEXP_REPLACE(LOWER(REPLACE(#{keyword}, ' ', '')), '[[:punct:]]', '') || '%'
 		    	</if>
 		    </if>
+		    and sr_rqst_vld_yn = 'Y'
 		  </where>
 		</if>
 	</select>
@@ -983,6 +991,7 @@
 				       		and REGEXP_REPLACE(LOWER(REPLACE(r.sr_ttl, ' ', '')), '[[:punct:]]', '') LIKE '%' || REGEXP_REPLACE(LOWER(REPLACE(#{keyword}, ' ', '')), '[[:punct:]]', '') || '%'
 				    	</if>
 				    </if>
+				    and sr_rqst_vld_yn = 'Y'
 				  </where>
 				</if>
 				order by sr_rqst_no desc
@@ -1052,6 +1061,7 @@
 		       		and REGEXP_REPLACE(LOWER(REPLACE(r.sr_ttl, ' ', '')), '[[:punct:]]', '') LIKE '%' || REGEXP_REPLACE(LOWER(REPLACE(#{keyword}, ' ', '')), '[[:punct:]]', '') || '%'
 		    	</if>
 		    </if>
+		    and sr_rqst_vld_yn = 'Y'
 		  </where>
 		</if>
 		order by sr_rqst_no desc
@@ -1152,6 +1162,7 @@
 		from sr_rqst r
 		join sys s on r.sys_no = s.sys_no
 		left join sr on sr.sr_rqst_no = r.sr_rqst_no
+		where sr_rqst_vld_yn = 'Y'
 		group by s.sys_nm
 	</select>
 	
@@ -1183,6 +1194,7 @@
 	        <if test="endDate != null and endDate != ''">
 	            and sr.sr_cmptn_prnmnt_dt &lt;= TO_DATE(#{endDate, jdbcType=VARCHAR}, 'yy-MM-dd')
 	        </if>
+	        and sr_rqst_vld_yn = 'Y'
 	    </where>
 		group by s.sys_nm
 	</select>
@@ -1216,6 +1228,7 @@
 	        <if test="endDate != null and endDate != ''">
 	            and sr.sr_cmptn_prnmnt_dt &lt;= TO_DATE(#{endDate, jdbcType=VARCHAR}, 'yy-MM-dd')
 	        </if>
+	        and sr_rqst_vld_yn = 'Y'
 	    </where>
 		group by d.dept_nm
         order by d.dept_nm
