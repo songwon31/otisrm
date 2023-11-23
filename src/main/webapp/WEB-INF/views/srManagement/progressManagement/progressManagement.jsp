@@ -179,7 +179,7 @@
 			<div style="height:3.5rem; font-size:2.2rem; font-weight:700; color:#222E3C;">SR처리목록</div>
 			<div style="flex-grow:1;"></div>
 			<button id="downloadExcelButton" class="btn-navy" onclick="downloadExcel()"
-					style="height:3rem; width:12rem; font-size:1.5rem;">엑셀 다운로드</button>
+					style="height:3rem; width:12rem; font-size:1.4rem;">엑셀 다운로드</button>
 		</div>
 		<div class="" style="height:51.7rem; margin:0.75rem 0rem; background-color:#f9fafe; border:1.5px solid #e9ecef;">
 			<table id="mainTable" style="width: 100%; table-layout: fixed;">

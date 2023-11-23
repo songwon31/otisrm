@@ -128,13 +128,13 @@
 				<div style="height:1rem;"></div>
 				<div style="height: 4rem; display: flex; flex-direction: row;">
 					<div style="width:50%; display: flex; flex-direction: row;">
-						<div style="height: 4rem; width: 30%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #edf2f8;">기업명</div>
+						<div style="height: 4rem; width: 30%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #edf2f8; font-weight:700;">기업명</div>
 						<div id="instDetailNm" style="height: 4rem; flex-grow:1; display: flex; align-items: center; margin: 0rem 0.5rem;">
 							
 						</div>
 					</div>
 					<div style="width:50%; display: flex; flex-direction: row;">
-						<div style="height: 4rem; width: 30%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #edf2f8;">기업코드</div>
+						<div style="height: 4rem; width: 30%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #edf2f8; font-weight:700;">기업코드</div>
 						<div id="instDetailNo" style="height: 4rem; flex-grow:1; display: flex; align-items: center; margin: 0rem 0.5rem;">
 							
 						</div>
@@ -142,7 +142,7 @@
 				</div>
 				<div style="height: 4rem; display: flex; flex-direction: row;">
 					<div style="width:50%; display: flex; flex-direction: row;">
-						<div style="height: 4rem; width: 30%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #edf2f8;">분류</div>
+						<div style="height: 4rem; width: 30%; padding-left: 0.5rem; display: flex; align-items: center; background-color: #edf2f8; font-weight:700;">분류</div>
 						<div id="instDetailClsf" style="height: 4rem; flex-grow:1; display: flex; align-items: center; margin: 0rem 0.5rem;">
 							
 						</div>
@@ -162,15 +162,15 @@
 					</button>
 				</div>
 				<div style="height: 15rem; display: flex; flex-direction: row;">
-					<div style="height: 15rem; width: 100%; background-color:#F9FAFE;">
-						<div style="height:4rem; width:100%; display:flex; align-items:center; background-color:#edf2f8;">
+					<div style="height: 15rem; width: 100%; background-color:#F9FAFE; border:1.5px solid #e9ecef;">
+						<div style="height:4rem; width:100%; display:flex; align-items:center; background-color:#edf2f8; border-bottom:1.5px solid #e9ecef;">
 							<div style="width:10%; display:flex; justify-content:center; align-items:center;"></div>
 							<div style="width:35%; display:flex; justify-content:center; align-items:center; font-weight:700;">이름</div>
 							<div style="width:35%; display:flex; justify-content:center; align-items:center; font-weight:700;">코드</div>
 							<div style="width:20%;"></div>
 							<div id="instDetailIbpsTableHeaderGap" style="width:17px;"></div>
 						</div>
-						<div id="instDetailIbpsTableDiv" style="height: 11rem; width: 100%; overflow-y:auto; background-color:#F9FAFE;">
+						<div id="instDetailIbpsTableDiv" style="height: 11rem; width: 100%; overflow-y:auto; background-color:#F9FAFE; border-bottom:1.5px solid #e9ecef;">
 							<table id="instDetailIbpsTable" style="width:100%; text-align: center;">
 								<colgroup>
 									<col width="10%"/>
@@ -198,8 +198,8 @@
 					</button>
 				</div>
 				<div style="height: 15rem; display: flex; flex-direction: row;">
-					<div style="height: 15rem; width: 100%; background-color:#f9fafe;">
-						<div style="height:4rem; width:100%; display:flex; align-items:center; background-color:#edf2f8;">
+					<div style="height: 15rem; width: 100%; background-color:#f9fafe; border:1.5px solid #e9ecef;">
+						<div style="height:4rem; width:100%; display:flex; align-items:center; background-color:#edf2f8; border-bottom:1.5px solid #e9ecef;">
 							<div style="width:10%; display:flex; justify-content:center; align-items:center;"></div>
 							<div style="width:30%; display:flex; justify-content:center; align-items:center; font-weight:700;">이름</div>
 							<div style="width:30%; display:flex; justify-content:center; align-items:center; font-weight:700;">코드</div>
@@ -207,7 +207,7 @@
 							<div style="width:20%;"></div>
 							<div id="instDetailRoleTableHeaderGap" style="width:17px;"></div>
 						</div>
-						<div id="instDetailRoleTableDiv" style="height: 11rem; width: 100%; overflow-y:auto;">
+						<div id="instDetailRoleTableDiv" style="height: 11rem; width: 100%; overflow-y:auto; border-bottom:1.5px solid #e9ecef;">
 							<table id="instDetailRoleTable" style="width:100%; text-align: center;">
 								<colgroup>
 									<col width="10%"/>
@@ -235,16 +235,16 @@
 						저장
 					</button>
 				</div>
-				<div style="height: 15rem; display: flex; flex-direction: row;">
+				<div style="height: 15rem; display: flex; flex-direction: row; border:1.5px solid #e9ecef;">
 					<div style="height: 15rem; width: 100%; background-color:#f9fafe;">
-						<div style="height:4rem; width:100%; display:flex; align-items:center; background-color:#edf2f8;">
+						<div style="height:4rem; width:100%; display:flex; align-items:center; background-color:#edf2f8; border-bottom:1.5px solid #e9ecef;">
 							<div style="width:10%; display:flex; justify-content:center; align-items:center;"></div>
 							<div style="width:35%; display:flex; justify-content:center; align-items:center; font-weight:700;">이름</div>
 							<div style="width:35%; display:flex; justify-content:center; align-items:center; font-weight:700;">코드</div>
 							<div style="width:20%;"></div>
 							<div id="instDetailDeptTableHeaderGap" style="width:17px;"></div>
 						</div>
-						<div id="instDetailDeptTableDiv" style="height: 11rem; width: 100%; overflow-y:auto;">
+						<div id="instDetailDeptTableDiv" style="height: 11rem; width: 100%; overflow-y:auto; border-bottom:1.5px solid #e9ecef;">
 							<table id="instDetailDeptTable" style="width:100%; text-align: center;">
 								<colgroup>
 									<col width="10%"/>
