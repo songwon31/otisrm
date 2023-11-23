@@ -994,7 +994,24 @@
 			</div>
 		</div>
 	</div>
-
+	
+	<!-- 경고 모달 -->
+	<div id="warningModal" class="modal" data-backdrop="static">
+		<div class="modal-dialog modal-dialog-centered modal-sm">
+			<div class="modal-content">
+				<div class="modal-header" style="background-color:#d1322e; color:white; display:flex;  justify-content: flex-start;">					
+					<i class="material-icons">warning</i>
+					<div class="modal-title pl-2" style="font-size:2rem; font-weight:700;">경고</div>
+					<i class="material-icons close-icon" data-dismiss="modal" style="cursor: pointer; padding-left: 180px;" onclick="warningModalClose()">close</i>
+				</div>
+				<div class="modal-body" style="margin:0px; padding:0px; font-size:1.5rem;">
+					<div id="warningContent" style="height:11rem; font-size:1.7rem; font-weight:700; display:flex; justify-content:center; align-items:center; white-space: pre-wrap;">
+						
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
 
 <%@ include file="/WEB-INF/views/common/footer.jsp"%>

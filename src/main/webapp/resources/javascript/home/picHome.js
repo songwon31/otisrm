@@ -871,7 +871,7 @@ function showSrRqstBySrRqstNo(choiceSrRqstNo){
         	}
         	
         	//요청상태가 요청 또는 반려일때 삭제가능(버튼 속성 변경)
-        	if(data.srRqstSttsNo == "RQST" && loggedInUsrNo === data.usrNo || data.srRqstSttsNo == "APRV_RETURN" ||data.srRqstSttsNo == "RCPT_RETURN" && loggedInUsrNo === data.usrNo){
+        	if(data.srRqstSttsNo == "RQST" && loggedInUsrNo === data.usrNo || data.srRqstSttsNo == "APRV_RETURN" ||data.srRqstSttsNo == "RCPT_RETURN"){
         		$("#deleteButton").prop("disabled", false);
         		$("#deleteButton").css("opacity", 1);
         		$(".srRqstModify").prop("disabled", false);	
@@ -1159,6 +1159,8 @@ function alertModalClose(){
 }
 function warningModalClose(){
 	$("#warningModal").modal("hide");
+	var currentURL = window.location.href;
+    window.location.href = currentURL; // 원하는 URL로 변경
 }
 
 //sr요청 등록 폼에  체크여부
@@ -1355,7 +1357,8 @@ function proceedWriteOrModifySrForPicHome() {
         error: function (error) {
             // 요청 중 오류가 발생한 경우 실행할 코드
             console.error("오류 발생:", error);
-            alert("수정 실패");
+            $("#warningContent").text("필수항목을 모두입력해주세요.");
+        	$("#warningModal").modal("show");
             $('#srRqstModyfyModal').modal('hide'); // 모달 숨기기
         },
         cache: false,

@@ -190,6 +190,12 @@ public class PicHomeController {
 			log.info("수정");
 			srRqstService.modifySr(srSubmit);
 			
+			//상태 변경
+			SrRqstSubmit srRqstSubmit = new SrRqstSubmit();
+			srRqstSubmit.setSrRqstSttsNo("RCPT_WAIT");
+			srRqstService.modifySrRqst(srRqstSubmit);
+
+			
 			//변경요청 승인 시 이관계획에 목표완료일도 변경
 			if(srSubmit.getSrSchdlChgRqstAprvYn() == "Y") {
 				SrTrnsfPlanForm srTrnsfPlanForm = new SrTrnsfPlanForm();
@@ -221,9 +227,6 @@ public class PicHomeController {
 				}
 		    }
 			
-			SrRqstSubmit srRqstSubmit = new SrRqstSubmit();
-			srRqstSubmit.setSrRqstSttsNo("RCPT_WAIT");
-			srRqstService.modifySrRqst(srRqstSubmit);
 			
 		//해당 sr정보가 있을 경우 update(수정)
 		}else {
