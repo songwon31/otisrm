@@ -51,7 +51,7 @@ $(document).ready(function(){
 
 
 //소속기관 선택
-function myInst(){	
+/*function myInst(){	
 	//선택된 옵션 id
 	var selectedOptionId = $(event.target).find('option:selected').attr('id');
 	$("#submitInst").val(selectedOptionId);
@@ -79,7 +79,7 @@ function myInst(){
     showDept(selectedOptionId);
     showRoles(selectedOptionId);
     showIbps(selectedOptionId);
-}
+}*/
 //권한 선택
 function myAuthrt(){
 	//선택한 옵션 id
