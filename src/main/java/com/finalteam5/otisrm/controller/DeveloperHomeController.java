@@ -57,7 +57,7 @@ public class DeveloperHomeController {
 			log.info(""+usr);
 			return "/home/developerHome";
 		} else {
-			return "/home/login";
+			return "redirect:/";
 		}
 	}
 	

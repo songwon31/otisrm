@@ -517,10 +517,10 @@ function saveApproveResult() {
 	
 	if(approveResult == ""){
 		$('#alertModal').modal('show');
-		return false;
+		return false;s
 	}
 	
-	if(approveResult != "APPV" && (srRqstRvwRsn == "" || srRqstRvwRsn == null)){
+	if(approveResult != "APRV" && (srRqstRvwRsn == "" || srRqstRvwRsn == null)){
 		$('#alertModalContent').text("검토 의견을 작성해주십시오.");
 		$('#alertModal').modal('show');
 		return false;
