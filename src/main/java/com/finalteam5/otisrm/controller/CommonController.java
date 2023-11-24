@@ -154,6 +154,7 @@ public class CommonController {
 	@PostMapping("/join/join")
 	public String submitJoin(Usr usr, Model model) {
 	    JoinResult result = usrService.join(usr);
+	    log.info("유저: " + usr.toString());
 	    if (result == JoinResult.FAIL_DUPLICATED_UID) {
 	        String error1 = "이미 가입된 아이디입니다.";
 	        model.addAttribute("error1", error1);

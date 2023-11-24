@@ -51,7 +51,7 @@ $(document).ready(function(){
 
 
 //소속기관 선택
-/*function myInst(){	
+function myInst(){	
 	//선택된 옵션 id
 	var selectedOptionId = $(event.target).find('option:selected').attr('id');
 	$("#submitInst").val(selectedOptionId);
@@ -61,8 +61,11 @@ $(document).ready(function(){
 	if($("#submitInst").val() === "VSMG"){
 		$("#usrAthrt-select").val("CUSTOMER");
 		$("#usrAthrt-select").prop("disabled", true);
+		$("#submitUsrAuthrt").val("CUSTOMER");
 	}else if($("#submitInst").val() === "FRSUP" || $("#submitInst").val() === "EXOSYS" || $("#submitInst").val() === "TPSOL" || $("#submitInst").val() ==="STB"){
-		$("#usrAthrt-select").val("DEVELOPER");
+		$("#usrAthrt-select option[value='DEVELOPER']").prop("selected", true);
+		$("#submitUsrAuthrt").val("DEVELOPER");
+		console.log($("#usrAthrt-select").val());
 		$("#usrAthrt-select").prop("disabled", true);
 	}else{
 		$("#usrAthrt-select").val("none");
@@ -79,12 +82,11 @@ $(document).ready(function(){
     showDept(selectedOptionId);
     showRoles(selectedOptionId);
     showIbps(selectedOptionId);
-}*/
+}
 //권한 선택
 function myAuthrt(){
 	//선택한 옵션 id
 	var selectedOptionId = $(event.target).find('option:selected').attr('id');
-	console.log("선택한 권한: " + selectedOptionId);
 	$("#submitUsrAuthrt").val(selectedOptionId);
 	console.log($("#submitUsrAuthrt").val());
 }
