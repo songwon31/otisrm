@@ -61,7 +61,7 @@ function myInst(){
 	if($("#submitInst").val() === "VSMG"){
 		$("#usrAthrt-select").val("CUSTOMER");
 		$("#usrAthrt-select").prop("disabled", true);
-	}else if($("#submitInst").val() === "FRSUP" || $("#submitInst").val() === "EXOSYS" || $("#submitInst").val() === "TPSOL"){
+	}else if($("#submitInst").val() === "FRSUP" || $("#submitInst").val() === "EXOSYS" || $("#submitInst").val() === "TPSOL" || $("#submitInst").val() ==="STB"){
 		$("#usrAthrt-select").val("DEVELOPER");
 		$("#usrAthrt-select").prop("disabled", true);
 	}else{
