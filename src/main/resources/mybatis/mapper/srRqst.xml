@@ -490,6 +490,7 @@
 				where sr.pic_usr_no = #{usr, jdbcType=VARCHAR}
 				and sr.sr_trnsf_yn = 'Y' 
 				and sr_rqst_vld_yn = 'Y' 
+				and r.sr_rqst_stts_no != 'RCPT_WAIT'
 				order by sr_rqst_reg_dt desc
 			   )
 		<![CDATA[
@@ -510,6 +511,7 @@
 		where sr.pic_usr_no = #{usr, jdbcType=VARCHAR}
 		and sr.sr_trnsf_yn = 'Y' 
 		and sr_rqst_vld_yn = 'Y' 
+		and r.sr_rqst_stts_no != 'RCPT_WAIT'
 	</select>
 	
 	<!-- 처리항목 목록5: 개발 반영요청 -->

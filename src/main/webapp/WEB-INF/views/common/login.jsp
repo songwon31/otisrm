@@ -125,7 +125,7 @@
 			<form id="login" name="login" action="login" onsubmit="checkValidation()" class="id-modal-content modal-content animate" method="post">
 			  <div class="container d-flex justify-content-center">
 				  <div>
-				    <img id="login-logo" src="${pageContext.request.contextPath}/resources/images/logo.png" width="30">
+				    <img id="login-logo" class="pt-1" src="${pageContext.request.contextPath}/resources/images/logo.png" width="30">
 				  </div>
 			  	  <div>
 			  	  	<h6 class="title">SRM 시스템 로그인</h6>

@@ -179,19 +179,19 @@
 							<div class="pt-1" style="color: #36404a; text-align: center;">접수된 담당 SR</div>
 							<div style="text-align: center;"><span id="numOfRcptItems" style="padding-right:2px;font-size: 40px; color: #2278e7;">0</span>건</div>
 						</div>
-						<div id="itemOfTrnsfY" class="toDoItem"  style="width: 100%; margin-right: 0.5rem;">
-							<div class="pt-1" style="color: #36404a; text-align: center;">이관된 SR</div>
-							<div style="text-align: center;"><span id="numOfTrnsfYItems" style="padding-right:2px;font-size: 40px; color: #2278e7;">0</span>건</div>
-						</div>
-				 	</div>
-				 	<div class="d-flex">
-					 	<div id="itemOfApplyRqst" class="toDoItem" style="width: 100%; margin-right: 0.5rem;">
+						<div id="itemOfApplyRqst" class="toDoItem" style="width: 100%; margin-right: 0.5rem;">
 							<div class="pt-1" style="color: #36404a; text-align: center;">개발 반영 요청</div>
 							<div style="text-align: center;"><span id="numOfApplyRqstItems" style="padding-right:2px;font-size: 40px; color: #2278e7;">0</span>건</div>
 						</div>
+				 	</div>
+				 	<div class="d-flex">
 						<div id="itemOfSchdlChg"  class="toDoItem" style="width: 100%; margin-right: 0.5rem;">
 							<div class="pt-1" style="color: #36404a; text-align: center;">계획 변경 요청</div>
 							<div style="text-align: center;"><span id="numOfSchdlChgItems" style="padding-right:2px;font-size: 40px; color: #2278e7;">0</span>건</div>
+						</div>
+						<div id="itemOfTrnsfY" class="toDoItem"  style="width: 100%; margin-right: 0.5rem;">
+							<div class="pt-1" style="color: #36404a; text-align: center;">이관된 SR</div>
+							<div style="text-align: center;"><span id="numOfTrnsfYItems" style="padding-right:2px;font-size: 40px; color: #2278e7;">0</span>건</div>
 						</div>
 				 	</div>
 				</div>

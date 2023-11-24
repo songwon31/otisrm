@@ -871,7 +871,7 @@ function showSrRqstBySrRqstNo(choiceSrRqstNo){
         	}
         	
         	//요청상태가 요청 또는 반려일때 삭제가능(버튼 속성 변경)
-        	if(data.srRqstSttsNo == "RQST" && loggedInUsrNo === data.usrNo || data.srRqstSttsNo == "APRV_RETURN" ||data.srRqstSttsNo == "RCPT_RETURN"){
+        	if(data.srRqstSttsNo == "RQST" && loggedInUsrNo === data.usrNo || data.srRqstSttsNo == "APRV_RETURN" && loggedInUsrNo === data.usrNo  ||data.srRqstSttsNo == "RCPT_RETURN" && loggedInUsrNo === data.usrNo ){
         		$("#deleteButton").prop("disabled", false);
         		$("#deleteButton").css("opacity", 1);
         		$(".srRqstModify").prop("disabled", false);	
@@ -996,6 +996,16 @@ function showSrBySrRqstNo(choiceSrRqstNo){
 					$("#srSchdlChgRqstY").hide();
 					$("#srSchdlChgRqstAprvYn").hide();
 				}
+				
+				//요청상태가 요청 또는 반려일때 삭제가능(버튼 속성 변경)
+	        	if(data.srRqstSttsNo == "RQST" && loggedInUsrNo === data.picUsrNo || data.srRqstSttsNo == "APRV_RETURN" && loggedInUsrNo === data.picUsrNo  ||data.srRqstSttsNo == "RCPT_RETURN" && loggedInUsrNo === data.picUsrNo ){
+	        		$("#deleteButton").prop("disabled", false);
+	        		$("#deleteButton").css("opacity", 1);
+	        		$(".srRqstModify").prop("disabled", false);	
+	        	}else{
+	        		$("#deleteButton").prop("disabled", true);
+	        		$("#deleteButton").css("opacity", 0.5);
+	        	}
 				
 				//첨부파일
 				if (data.srAtchList && typeof data.srAtchList === "object") {
