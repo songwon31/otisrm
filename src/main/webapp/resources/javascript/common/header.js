@@ -44,11 +44,12 @@ function setRootFontSize() {
 	
 	let width = window.innerWidth + extraWidth;
 	let height = window.innerHeight + extraHeight;
+	/*
 	if (window.screen.availWidth != window.outerWidth) {
 		width += (window.outerWidth - window.innerWidth);
 		height += (window.outerWidth - window.innerWidth);
 	}
-	
+	*/
 	console.log("");
 	//console.log("originalWidth: " + (window.innerWidth || document.body.clientWidth));
 	//console.log("originalHeight: " + (window.innerHeight || document.body.clientHeight));
