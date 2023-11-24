@@ -65,6 +65,7 @@ function myInst(){
 		$("#usrAthrt-select").val("DEVELOPER");
 		$("#usrAthrt-select").prop("disabled", true);
 	}else{
+		$("#usrAthrt-select").val("none");
 		$("#usrAthrt-select option[value='CUSTOMER']").css("display", "none");
 		$("#usrAthrt-select option[value='DEVELOPER']").css("display", "none");
 	}
