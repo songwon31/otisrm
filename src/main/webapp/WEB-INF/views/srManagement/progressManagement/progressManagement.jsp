@@ -688,7 +688,7 @@
 								처리팀
 							</div>
 							<div style="height: 4rem; width: 25%; display: flex; align-items: center;">
-								<input id="setHrFindPicModalDeptInput" disabled value="" style="width:70%; height:3rem; margin:0rem 0.5rem;">
+								<input id="setHrFindPicModalDeptInput" value="" style="width:70%; height:3rem; margin:0rem 0.5rem;">
 							</div>
 							<div style="height: 4rem; width: 10%; padding-left: 0.5rem; display: flex; align-items: center;">
 								<svg style="width:0.5rem; height:0.5rem; margin: 0rem 0.5rem;"><rect width="0.5rem" height="0.5rem" fill="#222E3C" /></svg>
