@@ -21,7 +21,7 @@
 		   	  <div class="subcontentTitle">
 			   	  <div class="d-flex st-ct">
 			   	  	<i class="material-icons stt-ic">chevron_right</i>
-			   	  	<span style="font-size: 2rem;">나의 할일</span>			   	  
+			   	  	<span style="font-size: 2rem;">나의 할 일</span>			   	  
 			   	  </div>
 		   	  </div>
 		   	  <div class="tableContainer">

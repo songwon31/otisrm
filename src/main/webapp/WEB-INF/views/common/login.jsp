@@ -167,7 +167,7 @@
 			    <div class="d-flex">			    
 					<div id="find-container" class="find-container">
 					  <label id="saveId">
-					    <input type="checkbox" checked="checked" name="remember">아이디 저장
+					    <input type="checkbox" name="remember">아이디 저장
 					  </label>
 					  <span class="findIdOrPsw d-felx justify-content-end"><a id="findMyIdOrPswd" href="javascript:modalShow()">아이디/비밀번호 찾기</a></span>
 					</div>
