@@ -130,6 +130,21 @@ a, a:hover {
    background-color:#7c7c7c; 
 }
 
+.btn-5 {
+	border: none;
+	font-size:1.4rem;
+	font-weight: 700;
+	color: #f3ffff;
+	background-color:#de483a; 
+	border-radius:3px;
+	height: 2.8rem;
+	width: 76px;
+}
+
+.btn-5:active {
+	background-color:#c53d31; 
+}
+
 .close-icon:hover, a:hover, button:hover {
 	cursor: pointer;
 }
@@ -158,9 +173,21 @@ a, a:hover {
 }
 
 /* Modal */
-#detailmodal {
+#detailModal {
 	font-size: 1.5rem;
 	border-radius: 1rem;
+}
+
+.form-label {
+	font-weight: 700;
+}
+
+.w-30 {
+	width: 30%;
+}
+
+.w-45 {
+	width: 45%;
 }
 
 .w-label {
@@ -186,12 +213,12 @@ a, a:hover {
 	font-weight: 700;
 }
 
-#detailmodal i {
+#detailModal i {
 	font-size: 2.5rem;
 	font-weight: 700;
 }
 
-#detailmodal textarea {
+#detailModal textarea {
 	font-size: 1.5rem;
 	border:1px solid #ADB5BD;
 	border-radius:0.5rem;
@@ -201,7 +228,7 @@ select {
 	outline-style: none;
 }
 
-#detailmodal input, #detailmodal select {
+#detailModal input, #detailModal select {
 	font-size: 1.5rem;
 	height: 3rem;
 	display: flex;
@@ -209,7 +236,7 @@ select {
 	align-self: center;
 }
 
-#detailmodal input[type="text"], #detailmodal input[type="date"] {
+#detailModal input[type="text"], #detailModal input[type="date"] {
 	border:1px solid #ADB5BD; 
 	border-radius: 3px;
 }
